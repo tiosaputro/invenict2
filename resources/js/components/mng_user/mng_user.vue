@@ -1,0 +1,160 @@
+<template>
+  <div class="grid">
+    <div class="col-18">
+      <div class="card">
+        <Toast />
+        <ConfirmDialog/> 
+        <Toolbar class="mb-4">
+          <template v-slot:start>
+				        <h4>Management User</h4>
+          </template>
+        </Toolbar>
+        <DataTable
+          :value="user"
+          :paginator="true"
+          :rows="10"
+          v-model:filters="filters"
+          :loading="loading"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5,10,25]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Management User">
+        <template #header>
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+              <Button
+              label="Add"
+              class="p-button-raised"
+              icon="bi bi-file-earmark-plus"
+              @click="$router.push('/Add-mng-user')"
+            />
+              <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                <InputText v-model="filters['global'].value" placeholder="Search. . ." />
+              </span>
+            </div>
+          </template>
+          <template #empty>
+            Not Found
+          </template>
+          <template #loading>
+            Loading data. Please wait.
+          </template>
+          <Column field="usr_id" header="User ID" :sortable="true" style="min-width:8 rem"/>
+          <Column field="usr_fullname" header="User Fullname" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_name" header="User Name" :sortable="true" style="min-width:8rem"/>
+          <Column field="usr_email" header="User Email" :sortable="true" style="min-width:10rem"/>
+          <Column field="div_name" header="User Divisi" :sortable="true" style="min-width:10rem"/>
+          <Column header="User Photo" style="min-width:8rem">
+            <template #body="slotProps">
+                <img :src="'/profile/' +slotProps.data.usr_foto" class="profile-image" />
+            </template>
+          </Column>
+          <Column field="usr_stat" header="User Status" :sortable="true" style="min-width:8rem"/>
+          <Column style="min-width:8rem">
+            <template #body="slotProps">
+              <Button
+                class="p-button-rounded p-button-info mr-2"
+                icon="pi pi-pencil"
+                v-tooltip.left="'Edit'"
+                @click="
+                  $router.push({
+                    name: 'Edit Management User',
+                    params: { code: slotProps.data.usr_id},
+                    })"/>
+              <Button
+                icon="pi pi-trash"
+                v-tooltip.right="'Delete'"
+                class="p-button-rounded p-button-danger mr-2"
+                @click="DeleteUser(slotProps.data.usr_id)"/>
+            </template>
+          </Column>
+        </DataTable>   
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import {FilterMatchMode} from 'primevue/api';
+export default {
+  data() {
+    return {
+        loading: true,
+        token: localStorage.getItem('token'),
+        user: [],
+        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        checkname : [],
+        checkto : [],
+        id : localStorage.getItem('id'),
+    };
+  },
+  created() {
+    this.cekUser();
+  },
+  methods: {
+    cekUser(){
+      if(this.id){
+      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("User") || this.checkto.includes("/mng-user")){
+          this.getUser();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+      } else {
+        this.$router.push('/login');
+      }
+    },
+    getUser(){
+      this.axios.get('api/get-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.user = response.data;
+        this.loading = false;
+      }).catch(error=>{
+          if (error.response.status == 401){
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired","true")
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
+        });
+    },
+    DeleteUser(usr_id){
+       this.$confirm.require({
+        message: "Data ini benar-benar akan dihapus?",
+        header: "Delete Confirmation",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button-danger",
+        acceptLabel: "Ya",
+        rejectLabel: "Tidak",
+        accept: () => {
+          this.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Record deleted",
+            life: 3000,
+          });
+          this.axios.delete('api/delete-user/' +usr_id ,{headers: {'Authorization': 'Bearer '+this.token}});
+          this.getUser();
+        },
+        reject: () => {},
+      });
+    },
+    CetakPdf(){
+      window.open("api/report-lookups-pdf");
+    },
+    CetakExcel(){
+      window.open('api/report-lookups-excel');
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.profile-image {
+    width: 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</style>
