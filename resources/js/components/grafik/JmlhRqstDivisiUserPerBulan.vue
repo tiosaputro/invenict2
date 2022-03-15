@@ -2,10 +2,10 @@
 <Toast/>
     <div class="card">
         <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <Button class="p-button-lg p-button-rounded p-button-danger" @click="printperDivisiUserBulan()" icon="pi pi-file-pdf" label="PDF"/>
+            <Button class="p-button-lg p-button-rounded p-button-danger" v-if="this.tahunnUser && this.bulanUser" @click="printperDivisiUserBulan()" icon="pi pi-file-pdf" label="PDF"/>
             <ColorPicker v-model="color" v-if="this.tahunnUser && this.bulanUser" /> 
         </div>
-        <div class="p-text-center" id="perStatus">
+        <div class="text-center" id="perStatus">
             <h5 style="font-size:20pt; font-weight: bold;">Statistik Request Divisi User Per Bulan</h5>
             <Dropdown @change="getTahunUser()" :showClear="true" v-model="bulanUser" :options="bulan" optionValue="code" optionLabel="name" placeholder="Pilih Bulan" class="mr-2" />
             <Dropdown @change="getPerDivisiUserBulan()" :showClear="true" v-model="tahunnUser" :options="tahunn" optionValue="tahun" optionLabel="tahun" placeholder="Pilih Tahun" class="mr-2" v-if="this.bulanUser" />
@@ -98,11 +98,11 @@ export default {
                 }).catch(error => console.log(error.response))
             }
         },
-        printPerDivisiUserTahun(){
-            let bar = document.getElementById("perDivisiUserTahun");
+        printperDivisiUserBulan(){
+            let bar = document.getElementById("perDivisiUserBulan");
             const exp = new Exporter([bar]);
             exp.export_pdf().then((pdf) => {
-                pdf.save('Statistik Request Divisi User Tahun '+this.tahunUser);
+                pdf.save('Statistik Request Divisi User Per Bulan '+this.tahunUser);
             });
         },
     }

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
+use Appstract\Opcache\OpcacheFacade as OPcache;
 
 class DashboardController extends Controller
 {
+    function __construct(){
+        OPcache::clear();
+    }
     public function countUser($usr_name)
     {
         $grafik = DB::table('ireq_mst as im')
@@ -169,7 +173,8 @@ class DashboardController extends Controller
     {
         $grafik = DB::table('ireq_mst as im')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_requestor','dr.div_id')
-        ->select('dr.div_name',DB::raw("count(im.ireq_id) as jumlah"),DB::raw("TO_CHAR(im.ireq_date,'Month') as bulan"))
+        ->select('dr.div_name',DB::raw("count(im.ireq_id) as jumlah"),
+                  DB::raw("TO_CHAR(im.ireq_date,'Month') as bulan"))
         ->whereYear('im.ireq_date',$tahunRequestor)
         ->whereMonth('im.ireq_date',$bulanRequestor)
         ->orderBy('dr.div_name','ASC')

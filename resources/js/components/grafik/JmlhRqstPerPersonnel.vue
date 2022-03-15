@@ -5,7 +5,7 @@
             <Button class="p-button-lg p-button-rounded p-button-danger" @click="printstatusPerIctPersonnel()" icon="pi pi-file-pdf" label="PDF"/>
             <ColorPicker v-model="color"/> 
         </div>
-        <div class="p-text-center" id="statusPerIctPersonnel">
+        <div class="text-center" id="statusPerIctPersonnel">
             <h5 style="font-size:20pt; font-weight: bold;">Statistik Request Per ICT-Personnel</h5>
             <Chart type="bar" :data="statusPerIctPersonnel"/>
         </div>

@@ -10,6 +10,7 @@ use App\Mng_menu;
 use Auth;
 Use carbon\Carbon;
 use DB;
+
 class MngRoleMenuController extends Controller
 {
     function save(Request $request)

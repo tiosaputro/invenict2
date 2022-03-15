@@ -144,7 +144,7 @@ var _hoisted_2 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_3 = {
-  "class": "p-text-center",
+  "class": "text-center",
   id: "perStatus"
 };
 

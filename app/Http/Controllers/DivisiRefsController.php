@@ -6,9 +6,14 @@ use DB;
 Use carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
+// use Appstract\Opcache\OpcacheFacade as OPcache;
 
 class DivisiRefsController extends Controller
 {
+    // function __construct(){
+    //     OPcache::clear();
+        
+    // }
     public function index()
     {
         $divisi = Divisi_refs::select('div_id','div_code','div_name','div_verificator')->orderBy('div_name','ASC')->get();

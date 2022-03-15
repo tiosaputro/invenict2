@@ -12,7 +12,7 @@
 			leaveToClass: 'hidden', leaveActiveClass: 'fadeout', hideOnOutsideClick: true}">
 			<i class="pi pi-ellipsis-v"></i>
 		</button>
-		<ul class="layout-topbar-menu hidden lg:flex origin-top">
+		<ul class="layout-topbar-menu hidden lg:flex origin-top" v-if="this.user.usr_name">
 			<li> 
 				<button class="p-link layout-profile-link" @click="onClick">
 					<img :src="'/profile/' + user.usr_foto" width="30" height="30" v-if="this.user.usr_foto"/>
@@ -34,17 +34,18 @@
 export default {
 	data() {
 		return {
-		  loggedIn: localStorage.getItem("loggedIn"),
-          token: localStorage.getItem('token'),
+          token: null,
           user: [],
 		  expanded: false,
 		 }
 		},
 	created(){
-		this.getUser();
+		setTimeout( () => this.getUser(),1000);
 		},
     methods: {
 		getUser(){
+          this.token =localStorage.getItem('token');
+		  if(this.token){
 			this.axios.get('/api/user', {headers: {'Authorization': 'Bearer '+this.token}})
 			 .then((response) => {
 				this.user = response.data;
@@ -58,6 +59,7 @@ export default {
 					setTimeout( () => this.$router.push('/login'),2000);
 				}
 			  });
+		  	 }
 			},
 		Logout(){
 			this.axios.get('/api/logout', {headers: {'Authorization': 'Bearer '+this.token}}).then(() => {

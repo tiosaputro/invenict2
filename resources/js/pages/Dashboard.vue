@@ -79,7 +79,6 @@
 			</div>
     </div>
 </div>
-
 <div class="grid" v-if="this.role_name.includes('Requestor Divisi')">
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div class="card mb-0">
@@ -173,7 +172,7 @@
 			</div>
     </div>
   </div>
-  <div class="grid" v-if="this.role_name.includes('Atasan Requestor Divisi')">
+<div class="grid" v-if="this.role_name.includes('Atasan Requestor Divisi')">
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -252,7 +251,36 @@
 				</div>
 			</div>
     </div>
-    <div class="grid" v-if="this.role_name.includes('Supervisor')">
+    <div class="grid" v-if="this.role_name.includes('Manager')">
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
+						<div @click="blmDiverifikasiAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahdikerjakan}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
+						<div @click="sdhDiverifikasiAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahselesai}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-alltext-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+   </div>
+  </div>
+<div class="grid" v-if="this.role_name.includes('Supervisor')">
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -346,36 +374,7 @@
 				</div>
 			</div>
 		</div>
-    <div class="grid" v-if="this.role_name.includes('Manager')">
-		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
-				<div class="flex justify-content-between mb-3">
-					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
-						<div @click="blmDiverifikasiAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahdikerjakan}}</div>
-					</div>
-					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
-				<div class="flex justify-content-between mb-3">
-					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
-						<div @click="sdhDiverifikasiAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahselesai}}</div>
-					</div>
-					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-alltext-xl" style="color: green;"></i>
-					</div>
-				</div>
-			</div>
-		</div>
-   </div>
-  </div>
-</div>
+	</div>
 </template>
 <script>
 export default {

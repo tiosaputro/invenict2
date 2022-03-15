@@ -57,7 +57,7 @@ __webpack_require__.r(__webpack_exports__);
             return x.name;
           });
 
-          if (_this.checkname.includes("Approval Atasan") || _this.checkto.includes("/ict-request-divisi1")) {
+          if (_this.checkname.includes("Atasan Requestor Divisi") || _this.checkto.includes("/ict-request-divisi1")) {
             _this.getIctDetail();
 
             _this.getNoreq();

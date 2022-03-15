@@ -8,10 +8,48 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Appstract\Opcache\OpcacheFacade as OPcache;
+use Adldap\Laravel\Facades\Adldap;
 
 class LoginController extends Controller
 {
+    function __construct(){
+        OPcache::clear();
+    }
     public function index(Request $request){
+
+    //     $email = $request->email."@emp.id";
+    //         if (Adldap::auth()->attempt($email,$request->password)) {
+    //             $user = Mng_User::where('usr_email', $request->email)->first();
+    //               if (!is_null ($user)) {
+    //                 $token = $user->createToken('ApiToken')->plainTextToken;
+    //                 $authuser = Auth::user();
+    //                 $id = $user->usr_id;
+    //                 $usr_name = $user->usr_name;
+    //                  return response([
+    //                         "success" => true, "message" => "You have logged in successfully","token"=>$token,"id"=>$id,"usr_name"=>$usr_name],200);
+    //                  }else{
+    //                         return response(["success" => false, "email" => "Your Email not yet registered"],422);
+    //                       }
+    //                     }else{
+    //                         $email2 = $request->email."@emp-one.com";
+    //                         if (Adldap::auth()->attempt($email2,$request->password)) {
+    //                             $user = Mng_User::where('usr_email', $request->email)->first();
+    //                             if (!is_null ($user)) {
+    //                                 $token = $user->createToken('ApiToken')->plainTextToken;
+    //                                 $authuser = Auth::user();
+    //                                 $id = $user->usr_id;
+    //                                 $usr_name = $user->usr_name;
+    //                             return response([
+    //                                     "success" => true, "message" => "You have logged in successfully","token"=>$token,"id"=>$id,"usr_name"=>$usr_name],200);
+    //                             }else{
+    //                                 return response(["success" => false, "email" => "Your Email not yet registered"],422);
+    //                                 }
+    //                     }else{
+    //                             return response(["success" => false, "password" => "Unable to login. Incorrect domain account."],422);
+    //                         }
+    //                     }
+    // }
 
         $user= Mng_User::where('usr_email', $request->email)->first();
         

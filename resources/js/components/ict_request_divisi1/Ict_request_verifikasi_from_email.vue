@@ -24,7 +24,7 @@
         
        <template #header>
               <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-               <label style="width:110px">No. Request: {{kode.noreq}}</label>
+               <label style="width:150px">No. Request: {{kode.noreq}}</label>
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText

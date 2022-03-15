@@ -12,9 +12,14 @@ use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+// use Appstract\Opcache\OpcacheFacade as OPcache;
 
 class IctDetailController extends Controller
 {
+    // function __construct(){
+    //     OPcache::clear();
+        
+    // }
     Public function index($code)
     {
         $dtl = DB::table('ireq_dtl as id')

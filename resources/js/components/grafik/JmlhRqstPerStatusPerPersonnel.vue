@@ -5,7 +5,7 @@
             <Button class="p-button-lg p-button-rounded p-button-danger" v-if="this.ictPersonnel" @click="printPerStatusIct()" icon="pi pi-file-pdf" label="PDF"/>
             <ColorPicker v-model="color" v-if="this.ictPersonnel"/> 
         </div>
-        <div class="p-text-center" id="PerStatusIct">
+        <div class="text-center" id="PerStatusIct">
             <h5 style="font-size:20pt; font-weight: bold;">Statistik Per Status Request Per ICT-Personnel</h5>
             <Dropdown @change="getPerStatusIct()" :showClear="true" v-model="ictPersonnel" :options="personnel" optionValue="name" optionLabel="name" placeholder="Pilih Personnel"/>
             <Chart type="bar" :data="PerStatusIct" v-if="this.ictPersonnel" />

@@ -5,7 +5,7 @@
             <Button class="p-button-lg p-button-rounded p-button-danger" v-if="this.tahunUser" @click="printPerDivisiUserTahun()" icon="pi pi-file-pdf" label="PDF"/>
             <ColorPicker v-model="color" v-if="this.tahunUser"/> 
         </div>
-        <div class="p-text-center" id="perStatus">
+        <div class="text-center" id="perStatus">
             <h5 style="font-size:20pt; font-weight: bold;">Statistik Request Divisi User Per Tahun</h5>
             <Dropdown @change="getPerDivisiUserTahun()" :showClear="true" v-model="tahunUser" :options="tahunn" optionValue="tahun" optionLabel="tahun" placeholder="Pilih Tahun" />
             <Chart type="bar" :data="perDivisiUserTahun" v-if="this.tahunUser" />

@@ -1,6 +1,5 @@
 <template>
-    <Landing v-if="$route.path === '/landing'" @change-theme="changeTheme" />
-    <Login v-else-if="$route.path === '/login'" />
+    <Login v-if="$route.path === '/login'" />
     <Error v-else-if="$route.path === '/error'" />
     <NotFound v-else-if="$route.path === '/notfound'" />
     <Access v-else-if="$route.path === '/access'" />
@@ -10,7 +9,6 @@
 <script>
 import EventBus from './AppEventBus';
 import App from './App.vue';
-import Landing from './pages/LandingDemo';
 import Login from './pages/Login';
 import Error from './pages/Error';
 import NotFound from './pages/NotFound';
@@ -32,7 +30,6 @@ export default {
     },
     components: {
         App,
-        Landing,
         Login,
         Error,
         NotFound,

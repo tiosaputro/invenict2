@@ -36,19 +36,15 @@ export default {
         this.axios.get('/api/cek-verif-id/'+this.$route.params.code).then((res)=>{
             this.verif = res.data;
           if(res.data == null) {
-             this.$router.push({ name: 'Page Error', params: { stat: 'notvalid' } }) }
+             this.$router.push({ name: 'error', params: { stat: 'notvalid' } }) }
           else{
             this.ireq_id = res.data.ireq_id;
             this.todayyy = moment(new Date()).format('YYYY-MM-DD HH:mm:s')
-            console.log('today ',this.todayyy)
-            console.log('date expired ', this.verif.expired_at)
 
             if (this.verif.expired_at >= this.todayyy){
               this.loginUser();
             }
-            
             else if(this.verif.expired_at <= this.todayyy){
-             
               this.axios.get('/sanctum/csrf-cookie').then(() => {
               this.axios.post('/api/login-approval',this.verif).then((res)=>{
                 localStorage.clear();
@@ -56,7 +52,7 @@ export default {
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("id", res.data.id);
                 localStorage.setItem("usr_name", res.data.usr_name);
-                this.$router.push({ name: 'Page Error', params: { stat: 'expired' } }) 
+                this.$router.push({ name: 'error', params: { stat: 'expired' } }) 
                 this.loading = false;
 
 

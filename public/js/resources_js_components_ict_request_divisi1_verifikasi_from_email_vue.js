@@ -36,7 +36,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (res.data == null) {
           _this.$router.push({
-            name: 'Page Error',
+            name: 'error',
             params: {
               stat: 'notvalid'
             }
@@ -44,8 +44,6 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this.ireq_id = res.data.ireq_id;
           _this.todayyy = moment__WEBPACK_IMPORTED_MODULE_0___default()(new Date()).format('YYYY-MM-DD HH:mm:s');
-          console.log('today ', _this.todayyy);
-          console.log('date expired ', _this.verif.expired_at);
 
           if (_this.verif.expired_at >= _this.todayyy) {
             _this.loginUser();
@@ -59,7 +57,7 @@ __webpack_require__.r(__webpack_exports__);
                 localStorage.setItem("usr_name", res.data.usr_name);
 
                 _this.$router.push({
-                  name: 'Page Error',
+                  name: 'error',
                   params: {
                     stat: 'expired'
                   }

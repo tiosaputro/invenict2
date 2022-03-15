@@ -194,7 +194,7 @@ var _hoisted_5 = {
 };
 var _hoisted_6 = {
   style: {
-    "width": "110px"
+    "width": "150px"
   }
 };
 var _hoisted_7 = {

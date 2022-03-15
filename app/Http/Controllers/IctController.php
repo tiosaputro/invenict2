@@ -20,9 +20,14 @@ use App\Jobs\SendEmailJob;
 use Mail;
 use App\Mail\IctRequestApproval;
 use Illuminate\Support\Facades\Hash;
+// use Appstract\Opcache\OpcacheFacade as OPcache;
 
 class IctController extends Controller
 {
+    // function __construct(){
+    //     OPcache::clear();
+        
+    // }
     function getIctAdmin()
     {
         $ict = DB::table('ireq_mst as im')
