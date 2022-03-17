@@ -1,9 +1,9 @@
 <template>
-  <div class="grid crud-demo">
+  <div class="grid">
     <div class="col-12">
       <div class="card">
         <Toast />
-        <ConfirmDialog> </ConfirmDialog>
+        <ConfirmDialog/>
         <Toolbar class="mb-4">
           <template v-slot:start>
 				        <h4>Cash Advance</h4>
@@ -28,15 +28,15 @@
               class="p-button-raised"
               icon="bi bi-file-earmark-plus"
               @click="$router.push('/Add-cash-advance')"
-            />
-              <span class="p-input-icon-left">
+              />
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText
                   v-model="filters['global'].value"
                   placeholder="Search. . ."
                 />
               </span>
-            </div>
+          </div>
           </template>
            <template #empty>
             Not Found
@@ -64,7 +64,7 @@
               {{ formatDate(slotProps.data.ca_submit_date) }}
             </template>
           </Column>
-          <Column header="">
+          <Column headerStyle="min-width:10rem;">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-info mr-2"
@@ -79,7 +79,7 @@
               />
               <Button
                 icon="pi pi-trash"
-                class="p-button-rounded p-button-danger mr-2"
+                class="p-button-rounded p-button-danger mt-2"
                 @click="DeleteCash(slotProps.data.ca_id)"
                 v-tooltip.Right="'Delete'"
               />
@@ -157,10 +157,10 @@ export default {
         return formatter.format(value);
     },
     getCash(){
-      this.axios.get('api/cash', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.cash = response.data;
-        this.loading = false;
-      }).catch(error=>{
+        this.axios.get('/api/cash', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+          this.cash = response.data;
+          this.loading = false;
+        }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
             severity:'error', summary: 'Error', detail:'Sesi Login Expired'

@@ -17,11 +17,12 @@
           :loading="loading"
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5,10,25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Divisi Refs">
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Divisi Refs"
+          responsiveLayout="scroll">
         <template #header>
-            <div class="table-header p-text-right">
-                <span class="p-input-icon-left">
+            <div class="table-header text-right">
+                <span class="block mt-2 md:mt-0 p-input-icon-left">
                     <i class="pi pi-search" />
                         <InputText
                           v-model="filters['global'].value"
@@ -39,7 +40,7 @@
           <Column field="div_code" header="Divisi Code" :sortable="true" style="min-width:10rem"/>
           <Column field="div_name" header="Divisi Name" :sortable="true" style="min-width:10rem"/>
           <Column field="div_verificator" header="Divisi Verificator" :sortable="true" style="min-width:10rem"/>
-          <Column style="min-width:10rem">
+          <Column headerStyle="min-width:10rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-info mr-2"

@@ -10,11 +10,11 @@
             <div class="card-body">
              <form @submit.prevent="CreateIct">
                <div class="field grid">
-                <label style="width:120px">No. Request</label>
+                <label class="col-fixed w-9rem" style="width:120px">No. Request</label>
               </div>
               <div class="field grid">
-                <label style="width:120px">Tgl. Request</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Tgl. Request</label>
+                 <div class="col-10 md:col-3">
                       <DatePicker v-model="tgl" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -37,8 +37,8 @@
                 </div>
               
               <div class="field grid">
-                <label style="width:120px">Tipe Request</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
+                 <div class="field col-12 md:col-4">
                      <Dropdown 
                         v-model ="tipereq"
                         :options="type"
@@ -54,8 +54,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Pengguna</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Pengguna</label>
+                 <div class="col">
                      <InputText
                         type="text"
                         v-model="usr_name"
@@ -68,8 +68,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Divisi Pengguna</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
+                 <div class="field col-12 md:col-4">
                      <Dropdown 
                         v-model ="usr_divisi"
                         :options="divisi"
@@ -86,8 +86,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Bisnis Unit</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Bisnis Unit</label>
+                 <div class="field col-12 md:col-4">
                      <Dropdown 
                         v-model ="bisnis"
                         :options="bu"

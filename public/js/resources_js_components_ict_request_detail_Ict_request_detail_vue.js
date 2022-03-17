@@ -171,7 +171,9 @@ var _hoisted_3 = {
   "class": "card"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Detail) ", -1
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "my-2"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Detail) ")], -1
 /* HOISTED */
 );
 
@@ -185,7 +187,7 @@ var _hoisted_6 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_7 = {
-  "class": "p-input-icon-left"
+  "class": "block mt-2 md:mt-0 p-input-icon-left"
 };
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -324,7 +326,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'Reject' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 1,
         label: "Excel",
-        "class": "p-button-raised p-button-success mr-2",
+        "class": "p-button-raised p-button-success mt-2",
         icon: "pi pi-print",
         onClick: _cache[5] || (_cache[5] = function ($event) {
           return $options.CetakExcelReject();
@@ -340,7 +342,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status != 'Reject' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 3,
         label: "Excel",
-        "class": "p-button-raised p-button-success mr-2",
+        "class": "p-button-raised p-button-success mt-2",
         icon: "pi pi-print",
         onClick: _cache[7] || (_cache[7] = function ($event) {
           return $options.CetakExcel();

@@ -194,6 +194,7 @@ var _hoisted_4 = {
 };
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -202,13 +203,14 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_6 = {
-  "class": "col-3"
+  "class": "col"
 };
 var _hoisted_7 = {
   "class": "field grid"
 };
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -217,7 +219,7 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_9 = {
-  "class": "col-3"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_10 = {
   "class": "flex items-center"
@@ -232,6 +234,7 @@ var _hoisted_13 = {
 };
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -240,7 +243,7 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_15 = {
-  "class": "col-3"
+  "class": "field col-12 md:col-4"
 };
 var _hoisted_16 = {
   key: 0,
@@ -255,6 +258,7 @@ var _hoisted_18 = {
 };
 
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -263,7 +267,7 @@ var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_20 = {
-  "class": "col-3"
+  "class": "col"
 };
 var _hoisted_21 = {
   key: 0,
@@ -274,6 +278,7 @@ var _hoisted_22 = {
 };
 
 var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -282,7 +287,7 @@ var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_24 = {
-  "class": "col-3"
+  "class": "field col-12 md:col-4"
 };
 var _hoisted_25 = {
   key: 0,
@@ -293,6 +298,7 @@ var _hoisted_26 = {
 };
 
 var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -301,7 +307,7 @@ var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_28 = {
-  "class": "col-3"
+  "class": "field col-12 md:col-4"
 };
 var _hoisted_29 = {
   key: 0,

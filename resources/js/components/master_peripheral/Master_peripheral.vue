@@ -29,7 +29,7 @@
               icon="bi bi-file-earmark-plus"
               @click="$router.push('/Add-master-peripheral')"
             />
-              <span class="p-input-icon-left">
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
                <i class="pi pi-search" />
                 <InputText
                   v-model="filters['global'].value"
@@ -64,7 +64,7 @@
               {{ slotProps.data.invent_bu }}
             </template>
           </Column>
-          <Column header="">
+          <Column headerStyle="min-width:14rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-info mr-2"
@@ -85,7 +85,7 @@
               />
               <Button
                 icon="pi pi-qrcode"
-                class="p-button-rounded p-button-success mr-2"
+                class="p-button-rounded p-button-success mt-2"
                 @click="previewBarcode(slotProps.data.invent_code)"
                 v-tooltip.right="'Print QR-Code'"
               />
@@ -198,7 +198,7 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
+        });
     },
     DeleteMas(invent_code){
        this.$confirm.require({

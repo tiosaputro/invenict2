@@ -74,7 +74,7 @@ __webpack_require__.r(__webpack_exports__);
         this.$router.push('/login');
       }
     },
-    ClosingPerDetail: function ClosingPerDetail(ireqd_id, ireq_no) {
+    ClosingPerDetail: function ClosingPerDetail(ireqd_id, ireq_id) {
       var _this2 = this;
 
       this.$confirm.require({
@@ -92,7 +92,7 @@ __webpack_require__.r(__webpack_exports__);
             life: 3000
           });
 
-          _this2.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_no, {
+          _this2.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_id, {
             headers: {
               'Authorization': 'Bearer ' + _this2.token
             }
@@ -464,7 +464,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-raised p-button-text mr-2",
                     label: "Closing",
                     onClick: function onClick($event) {
-                      return $options.ClosingPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_no);
+                      return $options.ClosingPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */

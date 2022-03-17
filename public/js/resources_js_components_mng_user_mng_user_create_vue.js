@@ -467,7 +467,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["modelValue", "class"]), $data.errors.usr_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.usr_name[0]), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "email",
+    type: "text",
     modelValue: $data.user.usr_email,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.user.usr_email = $event;

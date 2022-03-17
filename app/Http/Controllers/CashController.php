@@ -15,14 +15,14 @@ class CashController extends Controller
 {
     function index()
     {
-        $cash = DB::table('v_cash_advance')->get();
-        return json_encode($cash);
+            $cash = DB::table('v_cash_advance')->get();
+            return json_encode($cash);
     }
     function save(Request $request)
     {
         $message = [
             'noreq.required'=>'No Request Wajib Diisi',
-            'noreq.unique'=>'Pada nomer request ini sudah pernah dibuatkan cash advancenya',
+            'noreq.unique'=>'No request ini sudah pernah dibuatkan cash advancenya',
             'jum.numeric'=>'Jumlah Wajib Diisi',
             'tglsub.required'=>'Tgl Submit Wajib diisi',
             'tglrecvunit.required'=>'Tgl Terima Barang Wajib Diisi',

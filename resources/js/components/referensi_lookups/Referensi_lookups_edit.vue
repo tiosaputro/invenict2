@@ -11,8 +11,8 @@
             <div class="card-body">
              <form @submit.prevent="UpdateLookup">
                <div class="field grid">
-                <label style="width:120px">Tipe</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Tipe</label>
+                 <div class="col">
                   <InputText
                     type="text"
                     v-model="ref.lookup_type"
@@ -21,8 +21,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Kode</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Kode</label>
+                 <div class="col">
                   <InputText
                     type="text"
                     v-model="ref.lookup_code"
@@ -31,8 +31,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Deskripsi</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Deskripsi</label>
+                 <div class="col">
                 <InputText
                   type="text"
                   v-model="ref.lookup_desc"
@@ -44,8 +44,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Status</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Status</label>
+                 <div class="field col-12 md:col-4">
                <Dropdown
                   v-model="ref.lookup_status"
                   :options="stat"

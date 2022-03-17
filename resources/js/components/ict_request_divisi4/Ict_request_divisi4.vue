@@ -57,7 +57,7 @@
                           v-if="slotProps.data.ireq_status != 'Close'"
                           class="p-button-raised p-button-text mr-2"
                           label="Closing"
-                          @click="ClosingPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_no)"
+                          @click="ClosingPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -197,7 +197,7 @@ export default {
         this.$router.push('/login');
       }
     },
-    ClosingPerDetail(ireqd_id,ireq_no){
+    ClosingPerDetail(ireqd_id,ireq_id){
         this.$confirm.require({
           message: "Closing Permohonan Dilanjutkan?",
           header: "Closing Per Detail",
@@ -212,7 +212,7 @@ export default {
               detail: "Berhasil Diclosing",
               life: 3000,
             });
-            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_no, {headers: {'Authorization': 'Bearer '+this.token}});
+            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
            this.getSudahDikerjakan();
           },
           reject: () => {},

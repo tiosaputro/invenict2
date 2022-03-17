@@ -11,8 +11,8 @@
             <div class="card-body">
              <form @submit.prevent="CreateLookup">
                <div class="field grid">
-                <label style="width:120px">Tipe</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Tipe</label>
+                 <div class="col">
                 <InputText
                   type="text"
                   v-model="lookup_type"
@@ -25,8 +25,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Kode</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Kode</label>
+                 <div class="col">
                   <InputText
                     type="text"
                     v-model="lookup_code"
@@ -40,8 +40,8 @@
               </div>
               
               <div class="field grid">
-                <label style="width:120px">Deskripsi</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Deskripsi</label>
+                 <div class="col">
                 <InputText
                   type="text"
                   v-model="lookup_desc"
@@ -54,8 +54,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Status</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:120px">Status</label>
+                 <div class="field col-12 md:col-4">
                <Dropdown
                   v-model="lookup_status"
                   :options="stat"

@@ -31,7 +31,7 @@
                       icon="bi bi-file-earmark-plus"
                       @click="$router.push('/Add-ict-request')"
                     />
-                      <span class="p-input-icon-left">
+                      <span class="block mt-2 md:mt-0 p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
                           v-model="filters['global'].value"
@@ -53,7 +53,7 @@
                     </template>
                   </Column>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-                  <Column style="min-width:12rem">
+                  <Column headerStyle="min-width:14rem">
                     <template #body="slotProps">
                       <Button
                         v-if="slotProps.data.ireq_status == null"
@@ -82,7 +82,7 @@
                       />
                       <Button
                         v-if="slotProps.data.count > 0 && slotProps.data.ireq_status == null"
-                        class="p-button-rounded p-button-success mr-2"
+                        class="p-button-rounded p-button-success mt-2"
                         icon="pi pi-check"
                         @click="SubmitIct(slotProps.data.ireq_id)"
                         v-tooltip.Right="'Submit'"

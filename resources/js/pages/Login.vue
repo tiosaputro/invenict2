@@ -1,4 +1,5 @@
 <template v-if="this.loggedIn">
+<Toast />
     <div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
         <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
             <div class="col-12 mt-5 xl:mt-0 text-center">
@@ -8,25 +9,24 @@
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                   <form @submit.prevent="Login">
                     <div class="text-center mb-5">
-                        <div class="text-900 text-3xl font-medium mb-3">Welcome</div>
+                        <div class="text-900 text-3xl font-medium mb-3">ICT Request & Inventory</div>
                         <span class="text-600 font-medium">Sign in to continue</span>
                     </div>
                         <div class="w-full md:w-10 mx-auto">
-                          <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
+                          <label for="email1" class="block text-900 text-xl font-medium mb-2">Domain Account</label>
                             <InputText 
                                 type="text"
                                 v-model="email"
                                 class="w-full mb-3" 
-                                placeholder="Email" 
+                                placeholder="Domain Account" 
                                 style="padding:1rem;"
                             />
                             <small class="p-error" v-if="submitted && !email"
                                 >Email Wajib Diisi.
                             </small>
                             <small v-if="errors.email" class="p-error"
-                                > Email doesnt exist.   
+                                > {{errors.email[0]}} 
                             </small>
-                    
                           <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
                             <Password 
                                 v-model="password"
@@ -41,7 +41,7 @@
                                 >Password Wajib Diisi.
                             </small>
                             <small v-if="errors.password" class="p-error"
-                                > Unable to login. Incorrect password.  
+                                > {{errors.password[0]}}  
                             </small>
                             <Button label="Sign In" type="submit" class="w-full p-3 text-xl"/>
                         </div>
@@ -59,6 +59,7 @@ export default {
             email: '',
             password: '',
             errors :[],
+            error:[],
             submitted: false,
             loggedIn: null
         }
@@ -109,6 +110,9 @@ export default {
                if (error.response.status == 422) {
                    this.errors = error.response.data;
                    };
+                if (error.response.status == 404){
+                    this.error = error.response.data;
+                }
                   });
                 });
               }

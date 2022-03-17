@@ -2,7 +2,7 @@
 <Toast/>
     <div class="card">
         <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <Button class="p-button-lg p-button-rounded p-button-danger" v-if="this.tahunnRequestor && this.bulanRequestor" @click="printperDivisiRequestorBulan()" icon="pi pi-file-pdf" label="PDF"/>
+            <Button class="p-button-lg p-button-rounded p-button-danger mr-2" v-if="this.tahunnRequestor && this.bulanRequestor" @click="printperDivisiRequestorBulan()" icon="pi pi-file-pdf" label="PDF"/>
             <ColorPicker v-model="color" v-if="this.tahunnRequestor && this.bulanRequestor" /> 
         </div>
         <div class="text-center" id="perDivisiRequestorBulan">

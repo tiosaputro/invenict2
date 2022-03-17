@@ -9,10 +9,10 @@
           </Toolbar>
             <form @submit.prevent="UpdateCash" v-if="this.ca">
            <div class="card">
-              <div class="fluid formgrid grid">
+              <div class="p-fluid formgrid grid">
                <div class="field grid col">
-                <label style="width:160px">No. Request</label>
-                  <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:160px">No. Request</label>
+                  <div class="col">
                     <InputText
                       type="text"
                       v-model="ca.ca_idd"
@@ -21,8 +21,8 @@
                   </div>
               </div>
               <div class="field grid col">
-                <label style="width:160px">Requester</label>
-                  <div class="col-4">
+                <label class="col-fixed w-9rem" style="width:160px">Requester</label>
+                  <div class="col">
                     <InputText
                       type ="text"
                       v-model="ca.req"
@@ -31,10 +31,10 @@
                   </div>
               </div>
               </div>
-              <div class="fluid formgrid grid">
+              <div class="p-fluid formgrid grid">
                 <div class="field grid col">
-                   <label style="width:160px">Tgl. Request</label>
-                    <div class="col-4">
+                   <label class="col-fixed w-9rem" style="width:160px">Tgl. Request</label>
+                    <div class="col">
                        <InputText
                             type ="text"
                             v-model="ca.ireq_date"
@@ -43,8 +43,8 @@
                     </div>
                   </div>
                   <div class="field grid col">
-                    <label style="width:160px">Bisnis Unit</label>
-                      <div class="col-4">
+                    <label class="col-fixed w-9rem" style="width:160px">Bisnis Unit</label>
+                      <div class="col">
                         <InputText
                             type ="text"
                             v-model="ca.bu"
@@ -54,10 +54,9 @@
                   </div>
                 </div>
               </div>
-              <div class="field col-12 md:col-12">
               <div class="field grid">
-                  <label style="width:180px">Jumlah</label>
-                    <div class="col-3">
+                  <label class="col-fixed w-9rem" style="width:180px">Jumlah</label>
+                    <div class="col">
                       <InputNumber
                         mode="currency" 
                         currency="IDR" 
@@ -72,8 +71,8 @@
                 </div>
               </div>
               <div class="field grid">
-                  <label style="width:180px">Tgl. Submit</label>
-                    <div class="col-12 md:col-4">
+                  <label class="col-fixed w-9rem" style="width:180px">Tgl. Submit</label>
+                    <div class="col-12 md:col-3">
                         <DatePicker v-model="ca.ca_submit_date" :masks="mask" >
                           <template v-slot="{ inputValue, togglePopover }">
                            <div class="flex items-center">
@@ -95,8 +94,8 @@
                 </div>
               </div>
                <div class="field grid">
-                <label style="width:180px">Tgl. Terima Cash</label>
-                  <div class="col-12 md:col-4">
+                <label class="col-fixed w-9rem" style="width:180px">Tgl. Terima Cash</label>
+                  <div class="col-12 md:col-3">
                       <DatePicker v-model="ca.ca_recv_cash_date" :min-date="this.ca.ca_submit_date" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -118,8 +117,8 @@
                </div>
               </div>
                 <div class="field grid">
-                  <label style="width:180px">Tgl. Pembelian</label>
-                    <div class="col-12 md:col-4">
+                  <label class="col-fixed w-9rem" style="width:180px">Tgl. Pembelian</label>
+                    <div class="col-12 md:col-3">
                       <DatePicker v-model="ca.ca_purchase_date" :min-date="this.ca.ca_recv_cash_date" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -141,8 +140,8 @@
                 </div>
               </div>
                <div class="field grid">
-                <label style="width:180px">Tgl. Terima Barang</label>
-                 <div class="col-12 md:col-4">
+                <label class="col-fixed w-9rem" style="width:180px">Tgl. Terima Barang</label>
+                 <div class="col-12 md:col-3">
                       <DatePicker v-model="ca.ca_recv_item_date" :min-date="this.ca.ca_purchase_date" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -164,8 +163,8 @@
                  </div>
                </div>
                 <div class="field grid">
-                 <label style="width:180px">Tgl. Penyerahan Ke User</label>
-                    <div class="col-12 md:col-4">
+                 <label class="col-fixed w-9rem" style="width:180px">Tgl. Penyerahan Ke User</label>
+                    <div class="col-12 md:col-3">
                       <DatePicker v-model="ca.ca_hand_over_date" :min-date="this.ca.ca_recv_item_date" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -187,8 +186,8 @@
                       </div>
                   </div>
                <div class="field grid">
-                <label style="width:180px">Tgl. Closing</label>
-                 <div class="col-12 md:col-4">
+                <label class="col-fixed w-9rem" style="width:180px">Tgl. Closing</label>
+                 <div class="col-12 md:col-3">
                       <DatePicker v-model="ca.ca_settlement_date" :min-date="this.ca.ca_recv_item_date" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -211,19 +210,19 @@
                </div>
               <div class="form-group">
                  <Button
-                  class="p-button-rounded p-button-primary mr-2"
+                  class="p-button-rounded p-button-primary mr-2 mb-2"
                   icon="pi pi-check"
                   label="Simpan"
                  type="submit"
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mr-2 mb-2"
                   icon="pi pi-times"
                   @click="$router.push('/cash-advance')"
                 />
               </div>
-              </div>
+              <!-- </div> -->
             </form>
       </div>
     </div>

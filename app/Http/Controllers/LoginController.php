@@ -17,7 +17,6 @@ class LoginController extends Controller
         OPcache::clear();
     }
     public function index(Request $request){
-
     //     $email = $request->email."@emp.id";
     //         if (Adldap::auth()->attempt($email,$request->password)) {
     //             $user = Mng_User::where('usr_email', $request->email)->first();
@@ -29,7 +28,7 @@ class LoginController extends Controller
     //                  return response([
     //                         "success" => true, "message" => "You have logged in successfully","token"=>$token,"id"=>$id,"usr_name"=>$usr_name],200);
     //                  }else{
-    //                         return response(["success" => false, "email" => "Your Email not yet registered"],422);
+    //                         return response(["success" => false, "email" => "Email anda belum terdaftar di system"],422);
     //                       }
     //                     }else{
     //                         $email2 = $request->email."@emp-one.com";
@@ -46,7 +45,7 @@ class LoginController extends Controller
     //                                 return response(["success" => false, "email" => "Your Email not yet registered"],422);
     //                                 }
     //                     }else{
-    //                             return response(["success" => false, "password" => "Unable to login. Incorrect domain account."],422);
+    //                             return response(["success" => false, "password" => "Unable to login. Incorrect domain account."],404);
     //                         }
     //                     }
     // }

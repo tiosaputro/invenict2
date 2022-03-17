@@ -77,7 +77,7 @@ __webpack_require__.r(__webpack_exports__);
     getCash: function getCash() {
       var _this2 = this;
 
-      this.axios.get('api/cash', {
+      this.axios.get('/api/cash', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -154,7 +154,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "grid crud-demo"
+  "class": "grid"
 };
 var _hoisted_2 = {
   "class": "col-12"
@@ -171,7 +171,7 @@ var _hoisted_5 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_6 = {
-  "class": "p-input-icon-left"
+  "class": "block mt-2 md:mt-0 p-input-icon-left"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -338,7 +338,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        header: ""
+        headerStyle: "min-width:10rem;"
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
@@ -358,7 +358,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             left: true
           }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             icon: "pi pi-trash",
-            "class": "p-button-rounded p-button-danger mr-2",
+            "class": "p-button-rounded p-button-danger mt-2",
             onClick: function onClick($event) {
               return $options.DeleteCash(slotProps.data.ca_id);
             }

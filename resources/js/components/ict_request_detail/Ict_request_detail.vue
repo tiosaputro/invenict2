@@ -6,7 +6,9 @@
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
+						<div class="my-2">
 				        <h4>ICT Request (Detail) </h4>
+            </div>
           </template>
           <template v-slot:end>
               <label style="width:130px">No. Request: {{this.kode}}</label>
@@ -36,7 +38,7 @@
                 params: { code: code },
               })"
             />
-              <span class="p-input-icon-left">
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText
                   v-model="filters['global'].value"
@@ -122,7 +124,7 @@
                   <Button
                     v-if="this.status == 'Reject'" 
                     label="Excel"
-                    class="p-button-raised p-button-success mr-2"
+                    class="p-button-raised p-button-success mt-2"
                     icon="pi pi-print"
                     @click="CetakExcelReject()" 
                   />
@@ -136,7 +138,7 @@
                   <Button
                     v-if="this.status != 'Reject'" 
                     label="Excel"
-                    class="p-button-raised p-button-success mr-2"
+                    class="p-button-raised p-button-success mt-2"
                     icon="pi pi-print"
                     @click="CetakExcel()" 
                   />

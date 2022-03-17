@@ -11,8 +11,8 @@
           <div class="col-sm-6">
             <form @submit.prevent="UpdateMutasi">
               <div class="field grid">
-                    <label style="width:155px">Kode Peripheral</label>
-                    <div class="col-6">
+                    <label class="col-fixed w-9rem" style="width:155px">Kode Peripheral</label>
+                    <div class="col">
                       <InputText
                         type="text" 
                         v-model="mutasi.invent_code"
@@ -21,7 +21,7 @@
                   </div>
                  </div>
                  <div class="field grid">
-                  <label style="width:155px">Dari Tgl</label>
+                  <label class="col-fixed w-9rem" style="width:155px">Dari Tgl</label>
                     <div class="col-12 md:col-6">
                       <DatePicker v-model="mutasi.imutasi_tgl_dari" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
@@ -44,7 +44,7 @@
                     </div>
                   </div>
                   <div class="field grid">
-                    <label style="width:155px">SD Tgl</label>
+                    <label class="col-fixed w-9rem" style="width:155px">SD Tgl</label>
                       <div class="col-12 md:col-6">
                         <DatePicker v-model="mutasi.imutasi_tgl_sd" :min-date="mutasi.imutasi_tgl_dari" :masks="mask" >
                           <template v-slot="{ inputValue, togglePopover }">
@@ -64,8 +64,8 @@
                       </div>
                   </div>
                   <div class="field grid">
-                    <label style="width:155px">Lokasi</label>
-                      <div class="col-7">
+                    <label class="col-fixed w-9rem" style="width:155px">Lokasi</label>
+                      <div class="col">
                         <InputText
                           type ="text"
                           v-model="mutasi.imutasi_lokasi"
@@ -78,8 +78,8 @@
                       </div>
                   </div>
                   <div class="field grid">
-                    <label style="width:155px">Pengguna</label>
-                      <div class="col-4">
+                    <label class="col-fixed w-9rem" style="width:155px">Pengguna</label>
+                      <div class="col">
                         <InputText
                           type="text"
                           v-model="mutasi.imutasi_pengguna"
@@ -92,8 +92,8 @@
                     </div>
                   </div>
               <div class="field grid">
-                <label style="width:155px">Keterangan</label>
-                 <div class="col-6">
+                <label class="col-fixed w-9rem" style="width:155px">Keterangan</label>
+                 <div class="col">
                   <Textarea
                     v-model="mutasi.imutasi_keterangan"
                     :autoResize="true" 

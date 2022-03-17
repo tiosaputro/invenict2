@@ -18,7 +18,9 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5,10,25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Management User">
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Management User"
+          responsiveLayout="scroll"
+        >
         <template #header>
             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
               <Button
@@ -27,7 +29,7 @@
               icon="bi bi-file-earmark-plus"
               @click="$router.push('/Add-mng-user')"
             />
-              <span class="p-input-icon-left">
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText v-model="filters['global'].value" placeholder="Search. . ." />
               </span>

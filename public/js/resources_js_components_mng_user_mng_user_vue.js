@@ -159,7 +159,7 @@ var _hoisted_5 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_6 = {
-  "class": "p-input-icon-left"
+  "class": "block mt-2 md:mt-0 p-input-icon-left"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -214,7 +214,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 25],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Management User"
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Management User",
+    responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {

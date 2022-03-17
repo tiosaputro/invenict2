@@ -246,6 +246,7 @@ var _hoisted_5 = {
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -254,13 +255,14 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_7 = {
-  "class": "col-7"
+  "class": "col"
 };
 var _hoisted_8 = {
   "class": "field grid"
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -269,7 +271,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_10 = {
-  "class": "col-6 md-8"
+  "class": "field col-12 md:col-4"
 };
 var _hoisted_11 = {
   key: 0,
@@ -284,6 +286,7 @@ var _hoisted_13 = {
 };
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -292,7 +295,7 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_15 = {
-  "class": "col-7 md-4"
+  "class": "field col-12 md:col-4"
 };
 var _hoisted_16 = {
   key: 0,
@@ -307,6 +310,7 @@ var _hoisted_18 = {
 };
 
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -315,7 +319,7 @@ var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_20 = {
-  "class": "col-7 md-4"
+  "class": "col"
 };
 var _hoisted_21 = {
   key: 0,
@@ -326,6 +330,7 @@ var _hoisted_22 = {
 };
 
 var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -334,7 +339,7 @@ var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_24 = {
-  "class": "col-6 md-4"
+  "class": "col"
 };
 var _hoisted_25 = {
   key: 0,
@@ -345,6 +350,7 @@ var _hoisted_26 = {
 };
 
 var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
@@ -353,7 +359,7 @@ var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_28 = {
-  "class": "col-7 md-4"
+  "class": "col"
 };
 var _hoisted_29 = {
   key: 0,
@@ -484,7 +490,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.ket = $event;
     }),
     rows: "5",
-    cols: "30",
     placeholder: "Masukan Keterangan",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.ket
@@ -507,7 +512,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
-    "class": "p-button-rounded p-button-secondary mr-2",
+    "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
     onClick: _cache[7] || (_cache[7] = function ($event) {
       return _ctx.$router.push({

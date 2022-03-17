@@ -1,5 +1,5 @@
 <template>
-  <div class="grid crud-demo">
+  <div class="grid">
     <div class="col-12">
       <div class="card">
         <Toast />
@@ -18,7 +18,8 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5,10,25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Referensi Lookups">
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Referensi Lookups"
+          responsiveLayout="scroll">
        <template #header>
             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
               <Button
@@ -27,7 +28,7 @@
               icon="bi bi-file-earmark-plus"
               @click="$router.push('/Add-referensi-lookups')"
             />
-              <span class="p-input-icon-left">
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText v-model="filters['global'].value" placeholder="Search. . ." />
               </span>
@@ -43,7 +44,7 @@
           <Column field="lookup_code" header="Kode" :sortable="true" style="min-width:10rem"/>
           <Column field="lookup_desc" header="Deskripsi" :sortable="true" style="min-width:10rem"/>
           <Column field="lookup_status" header="Status" :sortable="true" style="min-width:10rem"/>
-          <Column style="min-width:10rem">
+          <Column headerStyle="min-width:10rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-info mr-2"

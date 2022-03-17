@@ -11,8 +11,8 @@
           <div class="col-sm-6">
              <form @submit.prevent="CreateIctDetail">
                <div class="field grid">
-                <label style="width:120px">No. Request</label>
-                 <div class="col-7">
+                <label class="col-fixed w-9rem" style="width:120px">No. Request</label>
+                 <div class="col">
                 <InputText
                   type="text"
                   v-model="detail.noreq"
@@ -21,8 +21,8 @@
                 </div>
               </div>
             <div class="field grid">
-                <label style="width:120px">Tipe Request</label>
-                 <div class="col-6 md-8">
+                <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
+                 <div class="field col-12 md:col-4">
                      <Dropdown 
                         v-model ="tipereq"
                         :options="type"
@@ -42,8 +42,8 @@
               </div>
 
               <div class="field grid">
-                <label style="width:120px">Nama Peripheral</label>
-                 <div class="col-7 md-4">
+                <label class="col-fixed w-9rem" style="width:120px">Nama Peripheral</label>
+                 <div class="field col-12 md:col-4">
                      <Dropdown 
                         v-model="kode"
                         :options="kodeperi"
@@ -64,8 +64,8 @@
               </div>
 
               <div class="field grid">
-                <label style="width:120px">Deskripsi</label>
-                 <div class="col-7 md-4">
+                <label class="col-fixed w-9rem" style="width:120px">Deskripsi</label>
+                 <div class="col">
                      <InputText
                         type="text"
                         v-model="desk"
@@ -79,8 +79,8 @@
               </div>
 
               <div class="field grid">
-                <label style="width:120px">Qty</label>
-                 <div class="col-6 md-4">
+                <label class="col-fixed w-9rem" style="width:120px">Qty</label>
+                 <div class="col">
                      <InputNumber
                         v-model="qty"
                         placeholder="Masukan Qty"
@@ -93,14 +93,13 @@
               </div>
 
               <div class="field grid">
-                <label style="width:120px">Keterangan</label>
-                 <div class="col-7 md-4">
+                <label class="col-fixed w-9rem" style="width:120px">Keterangan</label>
+                 <div class="col">
                      <Textarea
                         :autoResize="true"
                         type="text"
                         v-model="ket"
                         rows="5" 
-                        cols="30"
                         placeholder="Masukan Keterangan"
                         :class="{ 'p-invalid': errors.ket }"
                      />
@@ -124,7 +123,7 @@
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push({
                             name: 'Ict Request Detail',

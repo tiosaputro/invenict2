@@ -3,8 +3,8 @@
     <div class="col-12">
       <div class="card">
         <Toast />
-        <Dialog> </Dialog>
-        <ConfirmDialog> </ConfirmDialog>
+        <Dialog/>
+        <ConfirmDialog/>
         <Toolbar class="mb-4">
           <template v-slot:start>
 				        <h4>Referensi - Suplier</h4>
@@ -30,7 +30,7 @@
               icon="bi bi-file-earmark-plus"
               @click="$router.push('/Add-referensi-supplier')"
             />
-              <span class="p-input-icon-left">
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText
                   v-model="filters['global'].value"
@@ -49,7 +49,7 @@
           <Column field="suplier_name" header="Nama" :sortable="true" style="min-width:12rem"/>
           <Column field="suplier_contact" header="Contact Person" :sortable="true" style="min-width:12rem"/>
           <Column field="suplier_fax" header="No. Fax" :sortable="true" style="min-width:12rem"/>
-          <Column style="min-width:12rem">
+          <Column headerStyle="min-width:12rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-info mr-2"

@@ -240,7 +240,7 @@ class IctDetailController extends Controller
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
         return json_encode('Updated Successfully');
     }
-    public function updateStatusClosingDetail($ireqd_id,$ireq_no){
+    public function updateStatusClosingDetail($ireqd_id,$ireq_id){
         $date = Carbon::now();
         $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $dtl = IctDetail::find($ireqd_id);
@@ -249,7 +249,7 @@ class IctDetailController extends Controller
         $dtl->last_updated_by = Auth::user()->usr_name;
         $dtl->program_name = "IctDetail_updateStatusClosingDetail";
         $dtl->save();
-        $result = DB::connection('oracle')->getPdo()->exec("begin SP_CLOSING_IREQ_MST($ireq_no); end;");
+        $result = DB::connection('oracle')->getPdo()->exec("begin SP_CLOSING_IREQ_MST($ireq_id); end;");
         return json_encode('Updated Successfully');
     }
 }

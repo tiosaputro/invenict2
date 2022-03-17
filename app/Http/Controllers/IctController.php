@@ -309,7 +309,7 @@ class IctController extends Controller
         $ict = Ict::select('ireq_no as name','ireq_id as code')
                 ->orderBy('ireq_no','ASC')
                 ->get();
-                return json_encode($ict);
+            return json_encode($ict);
     }
     Public function getNameBu($noreq)
     {

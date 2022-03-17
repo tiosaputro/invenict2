@@ -11,8 +11,8 @@
           <div class="col-sm-6">
             <form @submit.prevent="CreateMutasi">
                <div class="field grid">
-                    <label style="width:145px">Nama Peripheral</label>
-                    <div class="col-6">
+                    <label class="col-fixed w-9rem" style="width:145px">Nama Peripheral</label>
+                    <div class="field col-12 md:col-4">
                       <Dropdown 
                         v-model="kode"
                         :options="kodeperi"
@@ -33,7 +33,7 @@
                     </div>
                   </div>
                   <div class="field grid ">
-                   <label style="width:145px">Dari Tgl</label>
+                   <label class="col-fixed w-9rem" style="width:145px">Dari Tgl</label>
                     <div class="col-12 md:col-6">
                       <DatePicker v-model="fromdate" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
@@ -56,7 +56,7 @@
                   </div>
                 </div>
                 <div class="field grid">
-                 <label style="width:145px">SD Tgl</label>
+                 <label class="col-fixed w-9rem" style="width:145px">SD Tgl</label>
                   <div class="col-12 md:col-6">
                       <DatePicker v-model="todate" :masks="mask" :min-date="fromdate" >
                         <template v-slot="{ inputValue, togglePopover }">
@@ -76,8 +76,8 @@
                   </div>
               </div>
                 <div class="field grid">
-                  <label style="width:145px">Lokasi</label>
-                    <div class="col-7">
+                  <label class="col-fixed w-9rem" style="width:145px">Lokasi</label>
+                    <div class="col">
                     <InputText
                       type ="text"
                       v-model="lokasi"
@@ -90,8 +90,8 @@
                   </div>
               </div>
                 <div class="field grid">
-                  <label style="width:145px">Pengguna</label>
-                    <div class="col-4">
+                  <label class="col-fixed w-9rem" style="width:145px">Pengguna</label>
+                    <div class="col">
                       <InputText
                           type="text"
                           v-model="user"
@@ -108,8 +108,8 @@
                 </div>
               </div>
                <div class="field grid">
-                <label style="width:145px">Keterangan</label>
-                 <div class="col-6">
+                <label class="col-fixed w-9rem" style="width:145px">Keterangan</label>
+                 <div class="col">
                   <Textarea
                     v-model="ket"
                     :autoResize="true" 

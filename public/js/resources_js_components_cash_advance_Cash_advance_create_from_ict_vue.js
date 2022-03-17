@@ -176,13 +176,14 @@ var _hoisted_3 = {
   "class": "card"
 };
 var _hoisted_4 = {
-  "class": "fluid formgrid grid"
+  "class": "p-fluid formgrid grid"
 };
 var _hoisted_5 = {
   "class": "field grid col"
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -191,7 +192,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_7 = {
-  "class": "col-8 md-6"
+  "class": "col"
 };
 var _hoisted_8 = {
   key: 0,
@@ -199,6 +200,7 @@ var _hoisted_8 = {
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -207,7 +209,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_10 = {
-  "class": "col-8 md-6"
+  "class": "col"
 };
 var _hoisted_11 = {
   key: 0,
@@ -218,6 +220,7 @@ var _hoisted_12 = {
 };
 
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -226,7 +229,7 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_14 = {
-  "class": "col-8 md-6"
+  "class": "col"
 };
 var _hoisted_15 = {
   key: 0,
@@ -235,6 +238,7 @@ var _hoisted_15 = {
 
 var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "file",
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -243,7 +247,7 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_17 = {
-  "class": "col-8 md-6"
+  "class": "col"
 };
 var _hoisted_18 = {
   "class": "card-body"
@@ -253,6 +257,7 @@ var _hoisted_19 = {
 };
 
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -261,7 +266,7 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_21 = {
-  "class": "col-10 md:col-2"
+  "class": "col"
 };
 var _hoisted_22 = {
   key: 0,
@@ -272,6 +277,7 @@ var _hoisted_23 = {
 };
 
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -280,7 +286,7 @@ var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_25 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_26 = {
   "class": "flex items-center"
@@ -295,6 +301,7 @@ var _hoisted_29 = {
 };
 
 var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -303,7 +310,7 @@ var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_31 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_32 = {
   "class": "flex items-center"
@@ -318,6 +325,7 @@ var _hoisted_35 = {
 };
 
 var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -326,7 +334,7 @@ var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_37 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_38 = {
   "class": "flex items-center"
@@ -341,6 +349,7 @@ var _hoisted_41 = {
 };
 
 var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -349,7 +358,7 @@ var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_43 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_44 = {
   "class": "flex items-center"
@@ -364,6 +373,7 @@ var _hoisted_47 = {
 };
 
 var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -372,7 +382,7 @@ var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_49 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_50 = {
   "class": "flex items-center"
@@ -676,7 +686,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
-    "class": "p-button-rounded p-button-secondary mr-2",
+    "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
     onClick: _cache[15] || (_cache[15] = function ($event) {
       return _ctx.$router.push('/ict-request-divisi3');

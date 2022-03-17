@@ -44,7 +44,7 @@
                 <label style="width:120px">Email</label>
                  <div class="col-4">
                   <InputText
-                    type="email"
+                    type="text"
                     v-model="user.usr_email"
                     placeholder="Masukan Email"
                     :class="{ 'p-invalid': errors.usr_email  }"

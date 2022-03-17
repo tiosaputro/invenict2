@@ -9,10 +9,10 @@
           </Toolbar>
             <form @submit.prevent="CreateCash">
               <div class="card"> <!-- card-->
-              <div class="fluid formgrid grid">
+              <div class="p-fluid formgrid grid">
                <div class="field grid col">
-                    <label style="width:160px">No. Request</label>
-                    <div class="col-8 md-6">
+                    <label class="col-fixed w-9rem" style="width:160px">No. Request</label>
+                    <div class="col">
                       <InputText
                         v-model="ca.ireq_no"
                         disabled
@@ -20,8 +20,8 @@
                     </div>
                   </div>
                    <div class="field grid col" v-if="noreq">
-                    <label  style="width:160px">Requester</label>
-                    <div class="col-8 md-6">
+                    <label class="col-fixed w-9rem" style="width:160px">Requester</label>
+                    <div class="col">
                         <InputText
                             type ="text"
                             v-model="ca.req"
@@ -32,8 +32,8 @@
                  </div>
                  <div class="fluid formgrid grid" v-if="noreq">
                   <div class="field grid col">
-                      <label  style="width:160px">Tgl. Request</label>
-                    <div class="col-8 md-6">
+                      <label class="col-fixed w-9rem" style="width:160px">Tgl. Request</label>
+                    <div class="col">
                        <InputText
                             type ="text"
                             v-model="ca.ireq_date"
@@ -42,8 +42,8 @@
                   </div>
                   </div>
                   <div class="field grid col" v-if="noreq">
-                  <label for="file"  style="width:160px">Bisnis Unit</label>
-                    <div class="col-8 md-6">
+                  <label for="file" class="col-fixed w-9rem" style="width:160px">Bisnis Unit</label>
+                    <div class="col">
                         <InputText
                             type ="text"
                             v-model="ca.bu"
@@ -55,8 +55,8 @@
                  </div><!-- card-->
                  <div class="card-body"><!-- card body -->
                   <div class="field grid">
-                    <label style="width:180px">Jumlah</label>
-                      <div class="col-10 md:col-2">
+                    <label class="col-fixed w-9rem" style="width:180px">Jumlah</label>
+                      <div class="col">
                         <InputNumber
                           mode="currency" 
                           currency="IDR" 
@@ -71,8 +71,8 @@
                       </div>
                 </div>
                 <div class="field grid">
-                  <label style="width:180px">Tgl. Submit</label>
-                    <div class="col-12 md:col-4">
+                  <label class="col-fixed w-9rem" style="width:180px">Tgl. Submit</label>
+                    <div class="col-12 md:col-3">
                       <DatePicker v-model="tglsub" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -94,8 +94,8 @@
                   </div>
               </div>
               <div class="field grid">
-                    <label style="width:180px">Tgl. Terima Cash</label>
-                    <div class="col-12 md:col-4">
+                    <label class="col-fixed w-9rem" style="width:180px">Tgl. Terima Cash</label>
+                    <div class="col-12 md:col-3">
                       <DatePicker v-model="tglrecvcash" :min-date="this.tglsub" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -117,8 +117,8 @@
                   </div>
                 </div>
                <div class="field grid">
-                  <label style="width:180px">Tgl. Pembelian</label>
-                    <div class="col-12 md:col-4">
+                  <label class="col-fixed w-9rem" style="width:180px">Tgl. Pembelian</label>
+                    <div class="col-12 md:col-3">
                       <DatePicker v-model="tglbuy" :min-date="this.tglrecvcash" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -140,8 +140,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:180px">Tgl. Terima Barang</label>
-                 <div class="col-12 md:col-4">
+                <label class="col-fixed w-9rem" style="width:180px">Tgl. Terima Barang</label>
+                 <div class="col-12 md:col-3">
                       <DatePicker v-model="tglrecvunit" :min-date="this.tglbuy" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -163,8 +163,8 @@
                  </div>
               </div>
               <div class="field grid">
-                 <label style="width:180px">Tgl. Penyerahan Ke User</label>
-                    <div class="col-12 md:col-4">
+                 <label class="col-fixed w-9rem" style="width:180px">Tgl. Penyerahan Ke User</label>
+                    <div class="col-12 md:col-3">
                       <DatePicker v-model="tgltouser" :min-date="this.tglrecvunit" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -194,7 +194,7 @@
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push('/ict-request-divisi3')"
                 />

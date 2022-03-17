@@ -205,13 +205,14 @@ var _hoisted_3 = {
   "class": "card"
 };
 var _hoisted_4 = {
-  "class": "fluid formgrid grid"
+  "class": "p-fluid formgrid grid"
 };
 var _hoisted_5 = {
   "class": "field grid col"
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -220,7 +221,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_7 = {
-  "class": "col-3"
+  "class": "col"
 };
 var _hoisted_8 = {
   key: 0,
@@ -236,6 +237,7 @@ var _hoisted_10 = {
 };
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -244,17 +246,18 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_12 = {
-  "class": "col-4"
+  "class": "col"
 };
 var _hoisted_13 = {
   key: 0,
-  "class": "fluid formgrid grid"
+  "class": "p-fluid formgrid grid"
 };
 var _hoisted_14 = {
   "class": "field grid col"
 };
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -263,7 +266,7 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_16 = {
-  "class": "col-4"
+  "class": "col"
 };
 var _hoisted_17 = {
   key: 0,
@@ -271,6 +274,7 @@ var _hoisted_17 = {
 };
 
 var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -279,7 +283,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_19 = {
-  "class": "col-4"
+  "class": "col"
 };
 var _hoisted_20 = {
   "class": "card-body"
@@ -289,6 +293,7 @@ var _hoisted_21 = {
 };
 
 var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -297,7 +302,7 @@ var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_23 = {
-  "class": "col-3"
+  "class": "col"
 };
 var _hoisted_24 = {
   key: 0,
@@ -308,6 +313,7 @@ var _hoisted_25 = {
 };
 
 var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -316,7 +322,7 @@ var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_27 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_28 = {
   "class": "flex items-center"
@@ -331,6 +337,7 @@ var _hoisted_31 = {
 };
 
 var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -339,7 +346,7 @@ var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_33 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_34 = {
   "class": "flex items-center"
@@ -354,6 +361,7 @@ var _hoisted_37 = {
 };
 
 var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -362,7 +370,7 @@ var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_39 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_40 = {
   "class": "flex items-center"
@@ -377,6 +385,7 @@ var _hoisted_43 = {
 };
 
 var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -385,7 +394,7 @@ var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_45 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_46 = {
   "class": "flex items-center"
@@ -400,6 +409,7 @@ var _hoisted_49 = {
 };
 
 var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -408,7 +418,7 @@ var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_51 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_52 = {
   "class": "flex items-center"
@@ -423,6 +433,7 @@ var _hoisted_55 = {
 };
 
 var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -431,7 +442,7 @@ var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_57 = {
-  "class": "col-12 md:col-4"
+  "class": "col-12 md:col-3"
 };
 var _hoisted_58 = {
   "class": "flex items-center"
@@ -794,7 +805,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
-    "class": "p-button-rounded p-button-secondary mr-2",
+    "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
     onClick: _cache[18] || (_cache[18] = function ($event) {
       return _ctx.$router.push('/cash-advance');

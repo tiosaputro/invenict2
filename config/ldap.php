@@ -13,7 +13,7 @@ return [
                 'hosts' => explode(' ', env('LDAP_HOSTS', '172.25.1.38')),
                 'port' => env('LDAP_PORT', 389),
                 'timeout' => env('LDAP_TIMEOUT', 5),
-                'base_dn' => env('LDAP_BASE_DN', 'EMP-ONE\LDAP_USER'),
+                'base_dn' => env('LDAP_BASE_DN', 'dc=emp-one,dc=com'),
                 'username' => env('LDAP_USERNAME', ''),
                 'password' => env('LDAP_PASSWORD', ''),
                 'follow_referrals' => false,

@@ -222,7 +222,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/detail/{ireqd_id}','IctDetailController@getDetail');
     Route::put('/update-status-done/{code}','IctDetailController@updateStatusDone');
     Route::put('/updateAssignPerDetail/{code}','IctDetailController@updateAssign');
-    Route::get('/updateStatusClosingDetail/{ireqd_id}/{code}','IctDetailController@updateStatusClosingDetail');
+    Route::get('/updateStatusClosingDetail/{ireqd_id}/{ireq_no}','IctDetailController@updateStatusClosingDetail');
     //Route::get('/report-ict-detail-pdf/{code}','IctDetailController@cetak_pdf');
     //Route::get('/report-ict-detail-excel/{code}','IctDetailController@cetak_excel');
 

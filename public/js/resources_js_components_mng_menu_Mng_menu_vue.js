@@ -142,7 +142,7 @@ var _hoisted_1 = {
   "class": "grid"
 };
 var _hoisted_2 = {
-  "class": "col-16"
+  "class": "col-12"
 };
 var _hoisted_3 = {
   "class": "card"
@@ -156,7 +156,7 @@ var _hoisted_5 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_6 = {
-  "class": "p-input-icon-left"
+  "class": "block mt-2 md:mt-0 p-input-icon-left"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -206,8 +206,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     loading: $data.loading,
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
-    rowsPerPageOptions: [5, 10, 25],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Management Menu"
+    rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Management Menu",
+    responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
@@ -237,10 +238,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "menu_id",
         header: "ID Menu",
-        sortable: true,
-        style: {
-          "min-width": "10rem"
-        }
+        sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "mod_name",
         header: "Name Module",
@@ -270,9 +268,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "10rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        style: {
-          "min-width": "10rem"
-        }
+        headerStyle: "min-width:8rem"
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {

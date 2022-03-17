@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <div class="col-16">
+    <div class="col-12">
       <div class="card">
         <Toast />
         <ConfirmDialog/> 
@@ -17,8 +17,9 @@
           :loading="loading"
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5,10,25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Management Menu">
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Management Menu"
+          responsiveLayout="scroll">
        <template #header>
             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
               <Button
@@ -27,7 +28,7 @@
               icon="bi bi-file-earmark-plus"
               @click="$router.push('/Add-mng-menu')"
             />
-              <span class="p-input-icon-left">
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText v-model="filters['global'].value" placeholder="Search. . ." />
               </span>
@@ -39,12 +40,12 @@
           <template #loading>
             Loading data. Please wait.
           </template>
-          <Column field="menu_id" header="ID Menu" :sortable="true" style="min-width:10rem"/>
+          <Column field="menu_id" header="ID Menu" :sortable="true"/>
           <Column field="mod_name" header="Name Module" :sortable="true" style="min-width:10rem"/>
           <Column field="menu_name" header="Menu Name" :sortable="true" style="min-width:10rem"/>
           <Column field="menu_desc" header="Description Menu" :sortable="true" style="min-width:10rem"/>
           <Column field="menu_display" header="Display Menu" :sortable="true" style="min-width:10rem"/>
-          <Column style="min-width:10rem">
+          <Column headerStyle="min-width:8rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-info mr-2"

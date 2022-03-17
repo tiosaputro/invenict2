@@ -131,13 +131,14 @@ var _hoisted_3 = {
   "class": "card"
 };
 var _hoisted_4 = {
-  "class": "fluid formgrid grid"
+  "class": "p-fluid formgrid grid"
 };
 var _hoisted_5 = {
   "class": "field grid col"
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -146,13 +147,14 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_7 = {
-  "class": "col-3"
+  "class": "col"
 };
 var _hoisted_8 = {
   "class": "field grid col"
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -161,16 +163,17 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_10 = {
-  "class": "col-4"
+  "class": "col"
 };
 var _hoisted_11 = {
-  "class": "fluid formgrid grid"
+  "class": "p-fluid formgrid grid"
 };
 var _hoisted_12 = {
   "class": "field grid col"
 };
 
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -179,13 +182,14 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_14 = {
-  "class": "col-4"
+  "class": "col"
 };
 var _hoisted_15 = {
   "class": "field grid col"
 };
 
 var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "160px"
   }
@@ -194,16 +198,14 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_17 = {
-  "class": "col-4"
+  "class": "col"
 };
 var _hoisted_18 = {
-  "class": "field col-12 md:col-12"
-};
-var _hoisted_19 = {
   "class": "field grid"
 };
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -211,18 +213,19 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_21 = {
-  "class": "col-3"
+var _hoisted_20 = {
+  "class": "col"
 };
-var _hoisted_22 = {
+var _hoisted_21 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_23 = {
+var _hoisted_22 = {
   "class": "field grid"
 };
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -230,22 +233,23 @@ var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_25 = {
-  "class": "col-12 md:col-4"
+var _hoisted_24 = {
+  "class": "col-12 md:col-3"
 };
-var _hoisted_26 = {
+var _hoisted_25 = {
   "class": "flex items-center"
 };
-var _hoisted_27 = ["value", "onClick"];
-var _hoisted_28 = {
+var _hoisted_26 = ["value", "onClick"];
+var _hoisted_27 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_29 = {
+var _hoisted_28 = {
   "class": "field grid"
 };
 
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -253,22 +257,23 @@ var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_31 = {
-  "class": "col-12 md:col-4"
+var _hoisted_30 = {
+  "class": "col-12 md:col-3"
 };
-var _hoisted_32 = {
+var _hoisted_31 = {
   "class": "flex items-center"
 };
-var _hoisted_33 = ["value", "onClick"];
-var _hoisted_34 = {
+var _hoisted_32 = ["value", "onClick"];
+var _hoisted_33 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_35 = {
+var _hoisted_34 = {
   "class": "field grid"
 };
 
-var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -276,22 +281,23 @@ var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_37 = {
-  "class": "col-12 md:col-4"
+var _hoisted_36 = {
+  "class": "col-12 md:col-3"
 };
-var _hoisted_38 = {
+var _hoisted_37 = {
   "class": "flex items-center"
 };
-var _hoisted_39 = ["value", "onClick"];
-var _hoisted_40 = {
+var _hoisted_38 = ["value", "onClick"];
+var _hoisted_39 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_41 = {
+var _hoisted_40 = {
   "class": "field grid"
 };
 
-var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -299,22 +305,23 @@ var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_43 = {
-  "class": "col-12 md:col-4"
+var _hoisted_42 = {
+  "class": "col-12 md:col-3"
 };
-var _hoisted_44 = {
+var _hoisted_43 = {
   "class": "flex items-center"
 };
-var _hoisted_45 = ["value", "onClick"];
-var _hoisted_46 = {
+var _hoisted_44 = ["value", "onClick"];
+var _hoisted_45 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_47 = {
+var _hoisted_46 = {
   "class": "field grid"
 };
 
-var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -322,22 +329,23 @@ var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_49 = {
-  "class": "col-12 md:col-4"
+var _hoisted_48 = {
+  "class": "col-12 md:col-3"
 };
-var _hoisted_50 = {
+var _hoisted_49 = {
   "class": "flex items-center"
 };
-var _hoisted_51 = ["value", "onClick"];
-var _hoisted_52 = {
+var _hoisted_50 = ["value", "onClick"];
+var _hoisted_51 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_53 = {
+var _hoisted_52 = {
   "class": "field grid"
 };
 
-var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
   style: {
     "width": "180px"
   }
@@ -345,18 +353,18 @@ var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_55 = {
-  "class": "col-12 md:col-4"
+var _hoisted_54 = {
+  "class": "col-12 md:col-3"
 };
-var _hoisted_56 = {
+var _hoisted_55 = {
   "class": "flex items-center"
 };
-var _hoisted_57 = ["value", "onClick"];
-var _hoisted_58 = {
+var _hoisted_56 = ["value", "onClick"];
+var _hoisted_57 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_59 = {
+var _hoisted_58 = {
   "class": "form-group"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -422,7 +430,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
+  , ["modelValue"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
     mode: "currency",
     currency: "IDR",
     locale: "id",
@@ -436,9 +444,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.errors.ca_pic_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_pic_name[0]), 1
+  , ["modelValue", "class"]), $data.errors.ca_pic_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_pic_name[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
     modelValue: $data.ca.ca_submit_date,
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.ca.ca_submit_date = $event;
@@ -448,7 +456,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref) {
       var inputValue = _ref.inputValue,
           togglePopover = _ref.togglePopover;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none",
         value: inputValue,
         onClick: togglePopover,
@@ -456,7 +464,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Pilih Tgl. Submit"
       }, null, 8
       /* PROPS */
-      , _hoisted_27), !$data.ca.ca_submit_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+      , _hoisted_26), !$data.ca.ca_submit_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 0,
         icon: "pi pi-calendar",
         onClick: togglePopover
@@ -476,9 +484,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["modelValue", "masks"]), $data.errors.ca_submit_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_submit_date[0]), 1
+  , ["modelValue", "masks"]), $data.errors.ca_submit_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_submit_date[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
     modelValue: $data.ca.ca_recv_cash_date,
     "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $data.ca.ca_recv_cash_date = $event;
@@ -489,7 +497,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref2) {
       var inputValue = _ref2.inputValue,
           togglePopover = _ref2.togglePopover;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none",
         value: inputValue,
         onClick: togglePopover,
@@ -497,7 +505,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Pilih Tgl. Terima Cash"
       }, null, 8
       /* PROPS */
-      , _hoisted_33), !$data.ca.ca_recv_cash_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+      , _hoisted_32), !$data.ca.ca_recv_cash_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 0,
         icon: "pi pi-calendar",
         onClick: togglePopover
@@ -517,9 +525,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["modelValue", "min-date", "masks"]), $data.errors.ca_recv_cash_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_recv_cash_date[0]), 1
+  , ["modelValue", "min-date", "masks"]), $data.errors.ca_recv_cash_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_recv_cash_date[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
     modelValue: $data.ca.ca_purchase_date,
     "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
       return $data.ca.ca_purchase_date = $event;
@@ -530,7 +538,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref3) {
       var inputValue = _ref3.inputValue,
           togglePopover = _ref3.togglePopover;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none",
         value: inputValue,
         onClick: togglePopover,
@@ -538,7 +546,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Pilih Tgl. Pembelian"
       }, null, 8
       /* PROPS */
-      , _hoisted_39), !$data.ca.ca_purchase_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+      , _hoisted_38), !$data.ca.ca_purchase_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 0,
         icon: "pi pi-calendar",
         onClick: togglePopover
@@ -558,9 +566,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["modelValue", "min-date", "masks"]), $data.errors.ca_purchase_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_purchase_date[0]), 1
+  , ["modelValue", "min-date", "masks"]), $data.errors.ca_purchase_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_purchase_date[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [_hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
     modelValue: $data.ca.ca_recv_item_date,
     "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
       return $data.ca.ca_recv_item_date = $event;
@@ -571,7 +579,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref4) {
       var inputValue = _ref4.inputValue,
           togglePopover = _ref4.togglePopover;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none",
         value: inputValue,
         onClick: togglePopover,
@@ -579,7 +587,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Pilih Tgl Terima Barang"
       }, null, 8
       /* PROPS */
-      , _hoisted_45), !$data.ca.ca_recv_item_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+      , _hoisted_44), !$data.ca.ca_recv_item_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 0,
         icon: "pi pi-calendar",
         onClick: togglePopover
@@ -599,9 +607,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["modelValue", "min-date", "masks"]), $data.errors.ca_recv_item_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_recv_item_date[0]), 1
+  , ["modelValue", "min-date", "masks"]), $data.errors.ca_recv_item_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_recv_item_date[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
     modelValue: $data.ca.ca_hand_over_date,
     "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
       return $data.ca.ca_hand_over_date = $event;
@@ -612,7 +620,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref5) {
       var inputValue = _ref5.inputValue,
           togglePopover = _ref5.togglePopover;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none",
         value: inputValue,
         onClick: togglePopover,
@@ -620,7 +628,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Pilih Tgl Penyerahan"
       }, null, 8
       /* PROPS */
-      , _hoisted_51), !$data.ca.ca_hand_over_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+      , _hoisted_50), !$data.ca.ca_hand_over_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 0,
         icon: "pi pi-calendar",
         onClick: togglePopover
@@ -640,9 +648,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["modelValue", "min-date", "masks"]), $data.errors.ca_hand_over_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_hand_over_date[0]), 1
+  , ["modelValue", "min-date", "masks"]), $data.errors.ca_hand_over_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_hand_over_date[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [_hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [_hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
     modelValue: $data.ca.ca_settlement_date,
     "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
       return $data.ca.ca_settlement_date = $event;
@@ -653,7 +661,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref6) {
       var inputValue = _ref6.inputValue,
           togglePopover = _ref6.togglePopover;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none",
         value: inputValue,
         onClick: togglePopover,
@@ -661,7 +669,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Pilih Tgl Terima Barang"
       }, null, 8
       /* PROPS */
-      , _hoisted_57), !$data.ca.ca_settlement_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+      , _hoisted_56), !$data.ca.ca_settlement_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 0,
         icon: "pi pi-calendar",
         onClick: togglePopover
@@ -681,21 +689,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["modelValue", "min-date", "masks"]), $data.errors.ca_settlement_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_58, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_settlement_date[0]), 1
+  , ["modelValue", "min-date", "masks"]), $data.errors.ca_settlement_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ca_settlement_date[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-    "class": "p-button-rounded p-button-primary mr-2",
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+    "class": "p-button-rounded p-button-primary mr-2 mb-2",
     icon: "pi pi-check",
     label: "Simpan",
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
-    "class": "p-button-rounded p-button-secondary mr-2",
+    "class": "p-button-rounded p-button-secondary mr-2 mb-2",
     icon: "pi pi-times",
     onClick: _cache[17] || (_cache[17] = function ($event) {
       return _ctx.$router.push('/cash-advance');
     })
-  })])])], 32
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")], 32
   /* HYDRATE_EVENTS */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
 }
