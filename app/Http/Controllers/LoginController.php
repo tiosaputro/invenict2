@@ -28,7 +28,7 @@ class LoginController extends Controller
     //                  return response([
     //                         "success" => true, "message" => "You have logged in successfully","token"=>$token,"id"=>$id,"usr_name"=>$usr_name],200);
     //                  }else{
-    //                         return response(["success" => false, "email" => "Email anda belum terdaftar di system"],422);
+    //                         return response(["success" => false, "email" => "Username belum terdaftar"],422);
     //                       }
     //                     }else{
     //                         $email2 = $request->email."@emp-one.com";
@@ -42,10 +42,10 @@ class LoginController extends Controller
     //                             return response([
     //                                     "success" => true, "message" => "You have logged in successfully","token"=>$token,"id"=>$id,"usr_name"=>$usr_name],200);
     //                             }else{
-    //                                 return response(["success" => false, "email" => "Your Email not yet registered"],422);
+    //                                 return response(["success" => false, "email" => "Username belum terdaftar"],422);
     //                                 }
     //                     }else{
-    //                             return response(["success" => false, "password" => "Unable to login. Incorrect domain account."],404);
+    //                             return response(["success" => false, "password" => "Login gagal, silahkan cek kembali password anda."],404);
     //                         }
     //                     }
     // }
@@ -65,10 +65,10 @@ class LoginController extends Controller
                     ];
                     return json_encode($response, 201);
                 }else{
-                    return response(["password" => "Unable to login. Incorrect password."],422);
+                    return response(["password" => "Login gagal, silahkan cek kembali password anda"],422);
                     }
                  }else{
-                    return response(["email" => "Email doesnt exist."],422);
+                    return response(["email" => "Username belum terdaftar."],422);
                 }
     } 
 

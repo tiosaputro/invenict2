@@ -16,7 +16,7 @@ class MngUserController extends Controller
     public function index()
     {
         $user = DB::table('v_mng_users')->get();
-        return json_encode($user);
+        return response()->json($user);
     }
     public function save(Request $request)
     {
@@ -27,12 +27,12 @@ class MngUserController extends Controller
             'usr_email.unique'=>'Email Sudah Pernah Didaftarkan',
             'usr_alamat.required'=>'Alamat Wajib Diisi',
             'usr_status.required'=>'Status Wajib Diisi',
-            'usr_passwd.required'=>'Password Wajib Diisi',
+            // 'usr_passwd.required'=>'Password Wajib Diisi',
             'div.required'=>'Divisi Wajib Diisi',
         ];
         $request->validate([
             'usr_name' => 'required',
-            'usr_passwd'=>'required',
+            // 'usr_passwd'=>'required',
             'usr_email'=>'required|unique:mng_users,usr_email',
             'usr_alamat'=>'required',
             'usr_fullname'=>'required',
@@ -52,7 +52,7 @@ class MngUserController extends Controller
         $user = Mng_user::create([
             'usr_name'=>$request->usr_name,
             'usr_fullname'=>$request->usr_fullname,
-            'usr_passwd'=> Hash::make($request->usr_passwd),
+            // 'usr_passwd'=> Hash::make($request->usr_passwd),
             'usr_alamat'=> $request->usr_alamat,
             'usr_stat'=> $request->usr_status,
             'usr_email'=> $request->usr_email,
@@ -64,7 +64,7 @@ class MngUserController extends Controller
             'program_name'=>'MngUser_SAVE'
         ]);
        
-        return json_encode([
+        return response()->json([
             'success' => true,
             'message' => 'Created Successfully'
         ]);
@@ -76,7 +76,7 @@ class MngUserController extends Controller
         ->join('mng_usr_roles as mg','mu.usr_id','mg.usr_id')
         ->where('mu.usr_id',$code)
         ->first();
-        return json_encode($user);
+        return response()->json($user);
     }
     public function update(Request $request,$code)
     {
@@ -110,19 +110,6 @@ class MngUserController extends Controller
                 $foto= str_replace(' ', '+', $fotoo); 
                 $nama_file = time().".".$extension;
                 Storage::disk('profile')->put($nama_file, base64_decode($foto));
-            if($request->usr_password){
-                $user->usr_fullname = $request->usr_fullname;
-                $user->usr_alamat = $request->usr_alamat;
-                $user->usr_passwd = Hash::make($request->usr_password);
-                $user->usr_stat = $request->usr_stat;
-                $user->usr_email = $request->usr_email;
-                $user->div_id = $request->div_id;
-                $user->usr_foto = $nama_file;
-                $user->last_update_date = $newUpdate;
-                $user->last_updated_by = Auth::user()->usr_name;
-                $user->program_name = 'MngUserController_UPDATE';
-                $user->save();
-            } else{
                 $user->usr_fullname = $request->usr_fullname;
                 $user->usr_alamat = $request->usr_alamat;
                 $user->usr_stat = $request->usr_stat;
@@ -133,20 +120,7 @@ class MngUserController extends Controller
                 $user->last_updated_by = Auth::user()->usr_name;
                 $user->program_name = 'MngUserController_UPDATE';
                 $user->save();
-            }
         }else{
-            if($request->usr_password){
-                $user->usr_fullname = $request->usr_fullname;
-                $user->usr_alamat = $request->usr_alamat;
-                $user->div_id = $request->div_id;
-                $user->usr_passwd = Hash::make($request->usr_password);
-                $user->usr_stat = $request->usr_stat;
-                $user->usr_email = $request->usr_email;
-                $user->last_update_date = $newUpdate;
-                $user->last_updated_by = Auth::user()->usr_name;
-                $user->program_name = 'MngUserController_UPDATE';
-                $user->save();
-            } else{
                 $user->usr_fullname = $request->usr_fullname;
                 $user->usr_alamat = $request->usr_alamat;
                 $user->usr_stat = $request->usr_stat;
@@ -156,25 +130,24 @@ class MngUserController extends Controller
                 $user->last_updated_by = Auth::user()->usr_name;
                 $user->program_name = 'MngUserController_UPDATE';
                 $user->save();
-            }
         }
         $msg = [
             'success' => true,
             'message' => 'Updated Successfully'
         ];
  
-        return json_encode($msg);
+        return response()->json($msg);
     }
     public function delete($usr_id)
     {
         $user = Mng_user::find($usr_id);
         unlink(Storage_path('app/public/profile/'.$user->usr_foto));
         $user->delete();
-            return json_encode('Successfully deleted');
+            return response()->json('Successfully deleted');
     }
     public function getVerif($div_id)
     {
         $user = Mng_user::select('usr_name as name')->where('div_id',$div_id)->get();
-        return json_encode($user);
+        return response()->json($user);
     }
 }

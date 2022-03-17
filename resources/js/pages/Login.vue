@@ -9,30 +9,32 @@
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                   <form @submit.prevent="Login">
                     <div class="text-center mb-5">
-                        <div class="text-900 text-3xl font-medium mb-3">ICT Request & Inventory</div>
-                        <span class="text-600 font-medium">Sign in to continue</span>
+                        <div class="text-900 text-3xl font-medium mb-3">Selamat Datang di</div>
+                        <span class="text-600 font-medium">ICT Request & Inventory 👋</span>
                     </div>
                         <div class="w-full md:w-10 mx-auto">
-                          <label for="email1" class="block text-900 text-xl font-medium mb-2">Domain Account</label>
+                          <label for="email1" class="block text-900 text-xl font-medium mb-2">Username</label>
                             <InputText 
                                 type="text"
                                 v-model="email"
-                                class="w-full mb-3" 
-                                placeholder="Domain Account" 
+                                class="w-full mb-3"
+                                :class="{ 'p-invalid': submitted && !email }" 
+                                placeholder="Masukan Username" 
                                 style="padding:1rem;"
                             />
                             <small class="p-error" v-if="submitted && !email"
-                                >Email Wajib Diisi.
+                                >Username Wajib Diisi.
                             </small>
                             <small v-if="errors.email" class="p-error"
-                                > {{errors.email[0]}} 
+                                > {{ errors.email }} 
                             </small>
                           <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
                             <Password 
                                 v-model="password"
-                                placeholder="Password"
+                                placeholder="*******"
                                 class="w-full mb-3"
                                 :toggleMask="true"
+                                :class="{ 'p-invalid': submitted && !password }" 
                                 :feedback="false"
                                 inputClass="w-full" 
                                 inputStyle="padding:1rem"
@@ -41,9 +43,12 @@
                                 >Password Wajib Diisi.
                             </small>
                             <small v-if="errors.password" class="p-error"
-                                > {{errors.password[0]}}  
+                                > {{errors.password}}  
                             </small>
-                            <Button label="Sign In" type="submit" class="w-full p-3 text-xl"/>
+                            <div class="text-center">
+                                <Button v-if="!this.loading" label="Sign In" type="submit" class="w-full p-2 text-xl"/>
+                                <img :src="'assets/loading.gif'" v-else height="70" class="mb-3" >
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -56,6 +61,7 @@
 export default {
     data() {
         return {
+            loading: false,
             email: '',
             password: '',
             errors :[],
@@ -88,6 +94,7 @@ export default {
         this.password != ''
         )
         {
+            this.loading = true;
             const data = new FormData();
             data.append("email", this.email);
             data.append("password", this.password);
@@ -96,9 +103,8 @@ export default {
             this.axios.post('api/login', data).then((response) => {
               this.$toast.add({
                 severity: "success",
-                summary: "Success Message",
-                detail: "Success Login",
-                life: 1000,
+                summary: "Akun berhasil login!",
+                detail: "Selamat Datang " + response.data.usr_name,
               });
               localStorage.clear();
               localStorage.setItem("loggedIn", "true");
@@ -107,6 +113,8 @@ export default {
               localStorage.setItem("usr_name", response.data.usr_name);
               setTimeout( () => this.$router.push('/dashboard'), 1000);
             }).catch(error=> {
+                this.submitted = false;
+                this.loading = false;
                if (error.response.status == 422) {
                    this.errors = error.response.data;
                    };

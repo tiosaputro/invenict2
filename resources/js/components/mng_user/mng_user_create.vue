@@ -54,7 +54,7 @@
                   </small>
                 </div>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label style="width:120px">Password</label>
                  <div class="col-5">
                    <Password
@@ -68,7 +68,7 @@
                       {{ errors.usr_passwd[0] }}
                   </small>
                 </div>
-              </div>
+              </div> -->
               
               <div class="field grid">
                 <label style="width:120px">Alamat</label>
@@ -126,63 +126,62 @@
               <div class="card" style="width: 33rem;">
                 <div class="p-fluid">
               <div class="field grid">
-                <label style="width:120px">Roles</label>
+                <label class="col-fixed w-7rem">Roles</label>
                  <div class="col-4">
-               <MultiSelect 
-                v-model="user.usr_roles" 
-                :options="roles" 
-                optionValue="code"
-                optionLabel="name" 
-                display="chip"
-                placeholder="Select Roles" 
-                :class="{ 'p-invalid': errors.usr_roles }"
-               />
-                      <small class="p-error" v-if="submitted && !user.image">
-                        Foto Wajib Disi 
-                      </small>
-                  </div>
-                  </div>
-              </div>
-              </div>
-              <div class="form-group">
-                 <Button
-                  class="p-button-rounded p-button-primary mr-2"
-                  icon="pi pi-check"
-                  label="Simpan"
-                  type="submit"
-                />
-                <Button
-                  label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
-                  icon="pi pi-times"
-                  @click="$router.push('/mng-user')"
-                />
-              </div>
-            </form>
-          </div>
-          
-              <div class="col-sm-6">
-                  <div class="field grid">
-                      <label style="width:155px"></label>
-                      <div class="col-10 md-6">
-                        <div class="card" style="height: 23.5rem;">
-                          <img :src="preview" class="user-image"/>
-                        </div>
-                 </div>
-                 </div>
-                 <div class="field grid">
-                      <label style="width:155px"></label>
-                    <div class="col-10 md-6">
-                      <InputText type="file" name="foto" :class="{ 'p-invalid': submitted && !user.image }" ref="fileInput" class="form-control" @change="fileImage" />
-                      <small class="p-error" v-if="submitted && !user.image">
-                        Foto Wajib Disi 
-                      </small>
-                    </div>
-                  </div>
+                  <MultiSelect 
+                    v-model="user.usr_roles" 
+                    :options="roles" 
+                    optionValue="code"
+                    optionLabel="name" 
+                    display="chip"
+                    placeholder="Select Roles" 
+                    :class="{ 'p-invalid': errors.usr_roles }"
+                  />
+                  <small class="p-error" v-if="submitted && !user.image">
+                    Foto Wajib Disi 
+                  </small>
                 </div>
               </div>
-             </div>
+            </div>
           </div>
+          <div class="form-group">
+            <Button
+              class="p-button-rounded p-button-primary mr-2"
+              icon="pi pi-check"
+              label="Simpan"
+              type="submit"
+            />
+            <Button
+              label="Cancel"
+              class="p-button-rounded p-button-secondary mr-2"
+              icon="pi pi-times"
+              @click="$router.push('/mng-user')"
+            />
+          </div>
+        </form>
+        </div>
+        <div class="col-sm-6">
+          <div class="field grid">
+            <label style="width:155px"></label>
+              <div class="col-10 md-6">
+                <div class="card" style="height: 22.5rem;">
+                  <img :src="preview" class="user-image"/>
+                </div>
+              </div>
+            </div>
+            <div class="field grid">
+              <label style="width:155px"></label>
+                <div class="col-10 md-6">
+                  <InputText type="file" name="foto" :class="{ 'p-invalid': submitted && !user.image }" ref="fileInput" class="form-control" @change="fileImage" />
+                    <small class="p-error" v-if="submitted && !user.image">
+                      Foto Wajib Disi 
+                    </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 </template>
 <script>
 export default {

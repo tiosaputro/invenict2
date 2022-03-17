@@ -128,6 +128,7 @@
                  <div class="col-12 md:col-6">
                 <div class="p-inputgroup">
                   <InputText v-model="master.invent_barcode" readonly v-if="master.invent_barcode"/>
+                  <img :src="'/assets/loading2.gif'" height="50" class="mb-3" v-if="!aktif && !master.invent_barcode" >
                  <Button icon="pi pi-trash" class="p-button-danger" v-if="master.invent_barcode" @click="hapus()" v-tooltip="'Click to delete'"/>
                   <Button icon="bi bi-qr-code-scan" v-if="aktif" class="p-button p-button-info" @click="Scan()" v-tooltip="'Click to scan'" />
                 </div>
@@ -412,6 +413,6 @@ export default {
 <style scoped lang="scss">
 .master-image {
   height:227pt;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }
 </style>

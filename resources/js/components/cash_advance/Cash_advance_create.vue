@@ -12,7 +12,7 @@
               <div class="p-fluid formgrid grid">
                <div class="field grid col">
                     <label class="col-fixed w-9rem" style="width:160px">No. Request</label>
-                    <div class="col">
+                    <div class="col-fixed">
                       <Dropdown
                         v-model="noreq"
                         :options="req"
@@ -34,7 +34,7 @@
                   </div>
                    <div class="field grid col" v-if="noreq">
                     <label class="col-fixed w-9rem" style="width:160px">Requester</label>
-                    <div class="col">
+                    <div class="col-fixed">
                         <InputText
                             type ="text"
                             v-model="ca.req"
@@ -46,7 +46,7 @@
                  <div class="p-fluid formgrid grid" v-if="noreq">
                   <div class="field grid col">
                    <label class="col-fixed w-9rem" style="width:160px">Tgl. Request</label>
-                    <div class="col">
+                    <div class="col-fixed">
                        <InputText
                             type ="text"
                             v-model="ca.ireq_date"
@@ -56,7 +56,7 @@
                   </div>
                   <div class="field grid col" v-if="noreq">
                   <label class="col-fixed w-9rem" style="width:160px">Bisnis Unit</label>
-                    <div class="col">
+                    <div class="col-fixed">
                         <InputText
                             type ="text"
                             v-model="ca.bu"

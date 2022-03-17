@@ -134,6 +134,7 @@ app.component('AutoComplete', AutoComplete);
 app.component('Avatar', Avatar);
 app.component('AvatarGroup', AvatarGroup);
 app.component('Badge', Badge);
+app.component('BlockViewer', BlockViewer);
 app.component('Breadcrumb', Breadcrumb);
 app.component('Button', Button);
 app.component('Calendar', Calendar);
@@ -209,7 +210,5 @@ app.component('Tree', Tree);
 app.component('TreeSelect', Treeselect);
 app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
-
-app.component('BlockViewer', BlockViewer);
 
 app.mount('#app');

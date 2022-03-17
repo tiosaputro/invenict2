@@ -221,7 +221,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_7 = {
-  "class": "col"
+  "class": "col-fixed"
 };
 var _hoisted_8 = {
   key: 0,
@@ -246,7 +246,7 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_12 = {
-  "class": "col"
+  "class": "col-fixed"
 };
 var _hoisted_13 = {
   key: 0,
@@ -266,7 +266,7 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_16 = {
-  "class": "col"
+  "class": "col-fixed"
 };
 var _hoisted_17 = {
   key: 0,
@@ -283,7 +283,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_19 = {
-  "class": "col"
+  "class": "col-fixed"
 };
 var _hoisted_20 = {
   "class": "card-body"

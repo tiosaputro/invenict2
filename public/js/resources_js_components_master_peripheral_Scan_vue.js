@@ -94,7 +94,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     style: {
       width: '500px'
     },
-    header: "Scan Barcode",
+    header: "Scan QR-Code",
     modal: true,
     "class": "p-fluid"
   }, {
