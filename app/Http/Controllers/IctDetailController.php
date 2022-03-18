@@ -24,7 +24,8 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc',
-        DB::raw("CASE WHEN id.ireq_status = 'A' Then 'Approved' WHEN id.ireq_status = 'T' Then 'Penugasan' WHEN id.ireq_status = 'R' Then 'Reject' WHEN id.ireq_status = 'D' Then 'Done' WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
+        DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN id.ireq_status = 'A2' Then 'Approved By Manager'
+         WHEN id.ireq_status = 'T' Then 'Penugasan' WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
         ->join('invent_mst as im','id.invent_code','im.invent_code')
         ->join('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireq_id',$code)
@@ -36,10 +37,11 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc',
-        DB::raw("CASE WHEN id.ireq_status = 'A' Then 'Approved' WHEN id.ireq_status = 'T' Then 'Penugasan' WHEN id.ireq_status = 'R' Then 'Reject' WHEN id.ireq_status = 'D' Then 'Done' WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
+        DB::raw("CASE WHEN id.ireq_status = 'T' Then 'Penugasan' end as ireq_status "))
         ->join('invent_mst as im','id.invent_code','im.invent_code')
         ->join('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireq_id',$code)
+        ->where('id.ireq_status','T')
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->get();
             return json_encode($dtl);
@@ -61,7 +63,8 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_mst as im')
         ->select('im.ireq_no as noreq',
-        DB::raw("CASE WHEN im.ireq_status = 'A' Then 'Approved' WHEN im.ireq_status = 'T' Then 'Penugasan' WHEN im.ireq_status = 'R' Then 'Reject' WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
+                DB::raw("CASE WHEN im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By Manager'
+         WHEN im.ireq_status = 'T' Then 'Penugasan' WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By Manager' WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
         ->where('im.ireq_id',$code)
         ->first();
             return json_encode($dtl);

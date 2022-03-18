@@ -13,7 +13,7 @@ import 'bootstrap/dist/js/bootstrap.min';
 import { createApp, reactive } from 'vue';
 import axios from 'axios';
 import router from './router';
-import AppWrapper from './AppWrapper.vue';
+import AppWrapper from './pages/AppWrapper.vue';
 import PrimeVue from 'primevue/config';
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
@@ -104,8 +104,8 @@ import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VueAxios from 'vue-axios';
 
-import CodeHighlight from './AppCodeHighlight.js';
-import BlockViewer from './BlockViewer.vue';
+import CodeHighlight from './pages/AppCodeHighlight.js';
+import BlockViewer from './pages/BlockViewer.vue';
 
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);

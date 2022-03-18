@@ -179,6 +179,20 @@ Route::middleware('auth:sanctum')->group(function(){
 
 });
 Route::middleware('auth:sanctum')->group(function(){
+    //ict request reviewer
+    Route::get('/get-data-reviewer','IctController@getDataReviewer');
+    Route::put('/reject-by-reviewer/{code}','IctController@rejectReviewer');
+    Route::get('/naa/{ireq_id}','IctController@needApprovalAtasan');
+    Route::get('/nam/{ireq_id}','IctController@needApprovalManager');
+    Route::post('/aprr','IctController@asignPerRequestReviewer');
+    Route::get('/sapr/{ireq_id}','IctController@submitAssignPerRequest');
+
+    //ict request manager
+    Route::get('/get-data-manager','IctController@getDataManager');
+    Route::get('/get-data-manager-verifikasi/{code}','IctController@getDataManagerVerifikasi');
+    Route::get('/abm/{code}','IctController@approveByManager');
+    Route::put('/rbm/{code}','IctController@rejectByManager');
+
     //ict request
     Route::get('/get-ict/{usr_name}','IctController@getIct');
     Route::post('/add-ict','IctController@save');
