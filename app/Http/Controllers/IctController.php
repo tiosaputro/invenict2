@@ -165,9 +165,12 @@ class IctController extends Controller
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
-        ->where('im.ireq_status','RR')
-        ->OrWhere('im.ireq_status','RA1')
-        ->OrWhere('im.ireq_status','RA2')
+        ->where(function ($query){
+            return $query
+            ->where('im.ireq_status','RR')
+            ->OrWhere('im.ireq_status','RA1')
+            ->OrWhere('im.ireq_status','RA2');
+            })
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
@@ -181,32 +184,8 @@ class IctController extends Controller
         ->orderBy('im.creation_date','ASC')
         ->get();
 
-        // $ict5 = DB::table('ireq_mst as im')
-        // ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
-        //         DB::raw("CASE WHEN im.ireq_status = 'P' Then 'Permohonan' WHEN im.ireq_status = 'R' Then 'Reject' 
-        //         WHEN im.ireq_status = 'A' Then 'Approve' WHEN im.ireq_status = 'T' Then 'Penugasan' 
-        //         WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' end as ireq_status "))
-        // ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        // ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
-        // ->where('im.ireq_status','D')
-        // ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
-        // ->orderBy('im.creation_date','ASC')
-        // ->get();
-
-        // $ict6 = DB::table('ireq_mst as im')
-        // ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
-        //         DB::raw("CASE WHEN im.ireq_status = 'P' Then 'Permohonan' WHEN im.ireq_status = 'R' Then 'Reject' 
-        //         WHEN im.ireq_status = 'A' Then 'Approve' WHEN im.ireq_status = 'T' Then 'Penugasan' 
-        //         WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' end as ireq_status "))
-        // ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        // ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
-        // ->where('im.ireq_status','C')
-        // ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
-        // ->orderBy('im.creation_date','ASC')
-        // ->get();
-
-        
         $ict5 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
+
         $ict6 = DB::Table('v_ireq_mst_selesai')->get();
 
         return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
@@ -422,7 +401,11 @@ class IctController extends Controller
         $ict1 = DB::table('ireq_mst')
         ->select('ireq_id','ireq_no','ireq_date','ireq_user')
         ->where('created_by',$usr_name)
-        ->where('ireq_status','A')
+        ->where(function($query){
+            return $query
+            ->where('ireq_status','A1')
+            ->orWhere('ireq_status','A2');
+        })
         ->orderBy('creation_date','ASC')
         ->get();
 
@@ -443,18 +426,42 @@ class IctController extends Controller
         ->orderBy('creation_date','ASC')
         ->get();
 
-        $ict4 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user')
-        ->where('created_by',$usr_name)
-        ->where('ireq_status','D')
-        ->orderBy('creation_date','ASC')
+        // $ict4 = DB::table('ireq_mst')
+        // ->select('ireq_id','ireq_no','ireq_date','ireq_user')
+        // ->where('created_by',$usr_name)
+        // ->where('ireq_status','D')
+        // ->orderBy('creation_date','ASC')
+        // ->get();
+
+        // $ict5 = DB::table('ireq_mst')
+        // ->select('ireq_id','ireq_no','ireq_date','ireq_user')
+        // ->where('created_by',$usr_name)
+        // ->where('ireq_status','C')
+        // ->orderBy('creation_date','ASC')
+        // ->get();
+
+        $ict4 = DB::table('ireq_mst as im')
+        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+        ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
+                 'im.ireq_user','idd.ireq_assigned_to','idd.ireqd_id',
+                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),DB::raw("CASE WHEN idd.ireq_status = 'D' Then 'Done' end as ireq_status "))
+        ->where('idd.ireq_status','D')
+        ->where('im.created_by',$usr_name)
+        ->orderBy('idd.ireqd_id','ASC')
         ->get();
 
-        $ict5 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user')
-        ->where('created_by',$usr_name)
-        ->where('ireq_status','C')
-        ->orderBy('creation_date','ASC')
+        $ict5 = DB::table('ireq_mst as im')
+        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+        ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
+                 'im.ireq_user','idd.ireq_assigned_to','idd.ireqd_id',
+                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),DB::raw("CASE WHEN idd.ireq_status = 'C' Then 'Closing' end as ireq_status "))
+        ->where('idd.ireq_status','C')
+        ->where('im.created_by',$usr_name)
+        ->orderBy('idd.ireqd_id','ASC')
         ->get();
 
         return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5],200);
@@ -474,8 +481,11 @@ class IctController extends Controller
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('dr.div_verificator',$usr_name)
-        ->where('im.ireq_status','A1')
-        ->orwhere('im.ireq_status','A2')
+        ->where(function($query){
+            return $query
+            ->Where('im.ireq_status','A1')
+            ->orwhere('im.ireq_status','A2');
+            })
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
         ->orderBy('im.creation_date','ASC')
         ->get();
@@ -484,9 +494,12 @@ class IctController extends Controller
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor','im.ireq_reason')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('dr.div_verificator',$usr_name)
-        ->where('im.ireq_status','RR')
-        ->orwhere('im.ireq_status','RA1')
-        ->orwhere('im.ireq_status','RA2')
+        ->where(function($query){
+            return $query
+            ->Where('im.ireq_status','RR')
+            ->orwhere('im.ireq_status','RA1')
+            ->orwhere('im.ireq_status','RA2');
+            })
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','im.ireq_reason')
         ->orderBy('im.creation_date','ASC')
         ->get();
@@ -500,22 +513,46 @@ class IctController extends Controller
         ->orderBy('im.creation_date','ASC')
         ->get();
         
+        // $ict4 = DB::table('ireq_mst as im')
+        // ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor')
+        // ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        // ->where('dr.div_verificator',$usr_name)
+        // ->where('im.ireq_status','D')
+        // ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
+        // ->orderBy('im.creation_date','ASC')
+        // ->get();
+
+        // $ict5 = DB::table('ireq_mst as im')
+        // ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor')
+        // ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        // ->where('dr.div_verificator',$usr_name)
+        // ->where('im.ireq_status','C')
+        // ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
+        // ->orderBy('im.creation_date','ASC')
+        // ->get();
+
         $ict4 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor')
+        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+        ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
+                 'im.ireq_user','idd.ireq_assigned_to','idd.ireqd_id',
+                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),DB::raw("CASE WHEN idd.ireq_status = 'D' Then 'Done' end as ireq_status "))
+        ->where('idd.ireq_status','D')
         ->where('dr.div_verificator',$usr_name)
-        ->where('im.ireq_status','D')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
-        ->orderBy('im.creation_date','ASC')
+        ->orderBy('idd.ireqd_id','ASC')
         ->get();
 
         $ict5 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor')
+        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+        ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
+                 'im.ireq_user','idd.ireq_assigned_to','idd.ireqd_id',
+                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),DB::raw("CASE WHEN idd.ireq_status = 'C' Then 'Closing' end as ireq_status "))
+        ->where('idd.ireq_status','C')
         ->where('dr.div_verificator',$usr_name)
-        ->where('im.ireq_status','C')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
-        ->orderBy('im.creation_date','ASC')
+        ->orderBy('idd.ireqd_id','ASC')
         ->get();
 
         return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5]);

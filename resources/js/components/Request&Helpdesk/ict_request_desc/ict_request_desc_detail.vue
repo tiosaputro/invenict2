@@ -28,25 +28,7 @@
         >
         
        <template #header>
-         <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center" v-if="this.status == null">
-                <Button
-                  label="Add"
-                  class="p-button-raised"
-                  icon="bi bi-file-earmark-plus"
-                  @click="$router.push({
-                    name: 'Add Ict Request Detail',
-                    params: { code: code },
-                  })"
-              />
-              <span class="p-input-icon-left">
-                <i class="pi pi-search" />
-                <InputText
-                  v-model="filters['global'].value"
-                  placeholder="Search. . ."
-                />
-              </span>
-            </div>
-            <div class="table-header text-right" v-else-if="this.status != null">
+            <div class="table-header text-right">
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
                   <InputText

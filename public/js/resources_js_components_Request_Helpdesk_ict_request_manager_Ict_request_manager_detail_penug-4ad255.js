@@ -52,7 +52,7 @@ __webpack_require__.r(__webpack_exports__);
             return x.name;
           });
 
-          if (_this.checkname.includes("Closing Request") || _this.checkto.includes("/ict-request-divisi4")) {
+          if (_this.checkname.includes("Approval Manager") || _this.checkto.includes("/ict-request-manager")) {
             _this.getIctDetail();
 
             _this.getNoreq();

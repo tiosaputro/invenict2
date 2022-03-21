@@ -153,8 +153,7 @@ var _hoisted_5 = {
   }
 };
 var _hoisted_6 = {
-  key: 0,
-  "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+  "class": "table-header text-right"
 };
 var _hoisted_7 = {
   "class": "p-input-icon-left"
@@ -166,31 +165,17 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_9 = {
-  key: 1,
-  "class": "table-header text-right"
-};
-var _hoisted_10 = {
-  "class": "p-input-icon-left"
-};
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Not Found ");
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-search"
-}, null, -1
-/* HOISTED */
-);
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Loading ICT Request (Detail) data. Please wait. ");
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Not Found ");
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Loading ICT Request (Detail) data. Please wait. ");
-
-var _hoisted_14 = {
+var _hoisted_11 = {
   "class": "grid dir-col"
 };
-var _hoisted_15 = {
+var _hoisted_12 = {
   "class": "col"
 };
-var _hoisted_16 = {
+var _hoisted_13 = {
   "class": "box"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -202,11 +187,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
 
-  var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
 
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
+
+  var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
 
@@ -239,48 +224,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_this.status == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Add",
-        "class": "p-button-raised",
-        icon: "bi bi-file-earmark-plus",
-        onClick: _cache[0] || (_cache[0] = function ($event) {
-          return _ctx.$router.push({
-            name: 'Add Ict Request Detail',
-            params: {
-              code: $data.code
-            }
-          });
-        })
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.filters['global'].value,
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $data.filters['global'].value = $event;
         }),
         placeholder: "Search. . ."
       }, null, 8
       /* PROPS */
-      , ["modelValue"])])])) : _this.status != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-        modelValue: $data.filters['global'].value,
-        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-          return $data.filters['global'].value = $event;
-        }),
-        placeholder: "Search. . ."
-      }, null, 8
-      /* PROPS */
-      , ["modelValue"])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+      , ["modelValue"])])])];
     }),
     empty: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_12];
+      return [_hoisted_9];
     }),
     loading: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_13];
+      return [_hoisted_10];
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Kembali",
         "class": "p-button-raised p-button mr-2",
         icon: "pi pi-chevron-left",
-        onClick: _cache[3] || (_cache[3] = function ($event) {
+        onClick: _cache[1] || (_cache[1] = function ($event) {
           return _ctx.$router.push({
             name: 'Desc'
           });
@@ -290,7 +255,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         label: "Pdf",
         "class": "p-button-raised p-button-danger mr-2",
         icon: "pi pi-file-pdf",
-        onClick: _cache[4] || (_cache[4] = function ($event) {
+        onClick: _cache[2] || (_cache[2] = function ($event) {
           return $options.CetakPdfReject();
         })
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'Reject' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
@@ -298,7 +263,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         label: "Excel",
         "class": "p-button-raised p-button-success mr-2",
         icon: "pi pi-print",
-        onClick: _cache[5] || (_cache[5] = function ($event) {
+        onClick: _cache[3] || (_cache[3] = function ($event) {
           return $options.CetakExcelReject();
         })
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status != 'Reject' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
@@ -306,7 +271,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         label: "Pdf",
         "class": "p-button-raised p-button-danger mr-2",
         icon: "pi pi-file-pdf",
-        onClick: _cache[6] || (_cache[6] = function ($event) {
+        onClick: _cache[4] || (_cache[4] = function ($event) {
           return $options.CetakPdf();
         })
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status != 'Reject' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
@@ -314,7 +279,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         label: "Excel",
         "class": "p-button-raised p-button-success mr-2",
         icon: "pi pi-print",
-        onClick: _cache[7] || (_cache[7] = function ($event) {
+        onClick: _cache[5] || (_cache[5] = function ($event) {
           return $options.CetakExcel();
         })
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];

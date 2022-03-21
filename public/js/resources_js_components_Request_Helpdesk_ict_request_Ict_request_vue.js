@@ -1003,17 +1003,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_no",
-                header: "No. Request",
+                header: "No.Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireqd_id",
+                header: "No.Detail",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "invent_code",
+                header: "Nama Peripheral",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
                 header: "Tgl.Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1025,38 +1039,40 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_requestor",
+                header: "Pemohon",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "Pengguna",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_assigned_to",
+                header: "Petugas ICT",
+                sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
                 }
-              }, {
-                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                    "class": "p-button-rounded p-button-secondary mr-2",
-                    icon: "pi pi-info-circle",
-                    onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
-                    }
-                  }, null, 8
-                  /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
-                  }]])];
-                }),
-                _: 1
-                /* STABLE */
-
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "Divisi Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_status",
+                header: "Status",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
               })];
             }),
             _: 1
@@ -1122,17 +1138,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_no",
-                header: "No. Request",
+                header: "No.Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireqd_id",
+                header: "No.Detail",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "invent_code",
+                header: "Nama Peripheral",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
                 header: "Tgl.Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1144,38 +1174,40 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_requestor",
+                header: "Pemohon",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "Pengguna",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_assigned_to",
+                header: "Petugas ICT",
+                sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
                 }
-              }, {
-                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                    "class": "p-button-rounded p-button-secondary mr-2",
-                    icon: "pi pi-info-circle",
-                    onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
-                    }
-                  }, null, 8
-                  /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
-                  }]])];
-                }),
-                _: 1
-                /* STABLE */
-
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "Divisi Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_status",
+                header: "Status",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
               })];
             }),
             _: 1

@@ -66,7 +66,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return x.name;
           });
 
-          if (_this.checkname.includes("Request") || _this.checkto.includes("/ict-request/reviewer")) {
+          if (_this.checkname.includes("Reviewer") || _this.checkto.includes("/ict-request-reviewer")) {
             _this.getIct();
           } else {
             _this.$router.push('/access');

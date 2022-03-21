@@ -60,7 +60,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return x.name;
           });
 
-          if (_this.checkname.includes("Assign Request Ke ICT Personnel") || _this.checkto.includes("/ict-request-divisi2")) {
+          if (_this.checkname.includes("Reviewer") || _this.checkto.includes("/ict-request-reviewer")) {
             _this.getIctDetail();
 
             _this.getNoreq();
