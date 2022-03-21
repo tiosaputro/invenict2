@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class MngRolesController extends Controller
 {
+    function __construct(){
+        $date = Carbon::now();
+        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    }
     function index()
     {
        $roles = DB::table('mng_roles as mr')
@@ -36,14 +41,12 @@ class MngRolesController extends Controller
             'rol_stat'=>'required'
         ],$message);
 
-        $date = Carbon::now();
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
             $role = Mng_roles::create([
                 'rol_name'=>$request->rol_name,
                 'rol_desc'=>$request->rol_desc,
                 'rol_stat'=>$request->rol_stat,
                 'created_by'=> Auth::user()->usr_name,
-                'creation_date'=>$newCreation,
+                'creation_date'=>$this->newCreation,
                 'program_name'=>'MngRoles_SAVE'
             ]);
     }
@@ -66,15 +69,13 @@ class MngRolesController extends Controller
             'rol_desc'=>'required',
             'rol_stat'=>'required'
         ],$message);
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         
         $role = Mng_roles::find($code);
         $role->rol_name = $request->rol_name;
         $role->rol_desc = $request->rol_desc;
         $role->rol_stat = $request->rol_stat;
         $role->last_updated_by = Auth::user()->usr_name;
-        $role->last_update_date = $newUpdate;
+        $role->last_update_date = $this->newUpdate;
         $role->program_name = 'MngRolesController_UUPDATE';
         $role->save();
 

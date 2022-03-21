@@ -12,6 +12,11 @@ use Excel;
 
 class MasterController extends Controller
 {
+    function __construct(){
+        $date = Carbon::now();
+        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    }
     public function index()
         {
             $mas = DB::table('invent_mst as im')
@@ -60,9 +65,6 @@ class MasterController extends Controller
             'bu'=> 'required'
         ],$message);
 
-        $date = Carbon::now();
-        $newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-
         $newDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgl)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         $image= $request->foto;
         $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -80,7 +82,7 @@ class MasterController extends Controller
             'invent_tgl_perolehan' => $newDate,
             'invent_lama_garansi' => $request->garansi,
             'invent_kondisi' => $request->kondisi,
-            'creation_date' => $newCreation,
+            'creation_date' => $this->newCreation,
             'created_by' => Auth::user()->usr_name,
             'program_name' => "Master_Save",
             'invent_barcode' => $request->barcode,
@@ -111,12 +113,9 @@ class MasterController extends Controller
     public function update(Request $request, $code)
     {
         $newDate = Carbon::parse($request->invent_tgl_perolehan)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $mas = Master::find($code);
         //jika user update photo
         if($request->image) {
-
             unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
             $image= $request->image;
             $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
@@ -133,7 +132,7 @@ class MasterController extends Controller
             $mas->invent_tgl_perolehan =$newDate;
             $mas->invent_lama_garansi = $request->invent_lama_garansi;
             $mas->invent_kondisi = $request->invent_kondisi;
-            $mas->last_update_date = $newUpdate;
+            $mas->last_update_date = $this->newUpdate;
             $mas->last_updated_by = Auth::user()->usr_name;
             $mas->program_name = "Master_Update";
             $mas->invent_barcode = $request->invent_barcode;
@@ -153,7 +152,7 @@ class MasterController extends Controller
             $mas->invent_tgl_perolehan =$newDate;
             $mas->invent_lama_garansi = $request->invent_lama_garansi;
             $mas->invent_kondisi = $request->invent_kondisi;
-            $mas->last_update_date = $newUpdate;
+            $mas->last_update_date = $this->newUpdate;
             $mas->last_updated_by = $request->name;
             $mas->program_name = "Master_Update";
             $mas->invent_barcode = $request->invent_barcode;

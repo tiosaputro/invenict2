@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <div class="col-30">
+    <div class="col-25">
       <div class="card">
         <Toast />
         <ConfirmDialog> </ConfirmDialog>
@@ -24,7 +24,7 @@
                   responsiveLayout="scroll"
                 >
                 <template #header>
-                    <div class="text-header text-right">
+                    <div class="table-header text-left">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -62,19 +62,19 @@
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        class="p-button-raised p-button-text mr-2"
                         @click="Reject(slotProps.data.ireq_id)"
                         label="Reject"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-raised p-button-text p-button-sm"
+                        class="p-button-raised p-button-text"
                         @click="ApproveAtasan(slotProps.data.ireq_id)"
                         label="Persetujuan Atasannya"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-raised p-button-text p-button-sm"
+                        class="p-button-raised p-button-text"
                         @click="ApproveManager(slotProps.data.ireq_id)"
                         label="Persetujuan ICT Manager"
                       />
@@ -103,12 +103,14 @@
                       <div class="col">
                         <div class="box">
                           <Button
+                            v-if="this.permohonan.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
                             @click="CetakPdfPermohonan()"
                           />
                           <Button 
+                            v-if="this.permohonan.length"
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
@@ -134,7 +136,7 @@
                     responsiveLayout="scroll"
                  >
                 <template #header>
-                    <div class="table-header text-right">
+                    <div class="table-header text-left">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -203,12 +205,14 @@
                       <div class="p-col">
                         <div class="box">
                           <Button
+                            v-if="this.atasandivisi.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
                             @click="CetakPdfVerifikasi()"
                           />
-                          <Button 
+                          <Button
+                            v-if="this.atasandivisi.length" 
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
@@ -234,7 +238,7 @@
                     responsiveLayout="scroll"
                  >
                 <template #header>
-                    <div class="table-header text-right">
+                    <div class="table-header text-left">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -271,13 +275,13 @@
                             params: { code: slotProps.data.ireq_id }, })"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_status == 'Sudah Diapprove Manager'"
+                        v-if="slotProps.data.ireq_status == 'Sudah Diapprove ICT Manager'"
                         class="p-button-raised p-button-text p-button-sm mt-2"
                         @click="AssignPerRequest(slotProps.data.ireq_id)"
                         label="Assign Per-Request"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_status == 'Sudah Diapprove Manager'"
+                        v-if="slotProps.data.ireq_status == 'Sudah Diapprove ICT Manager'"
                         class="p-button-raised p-button-text p-button-sm mt-2"
                         @click="$router.push({
                             name: 'Ict Request Reviewer Assign Per Detail',
@@ -297,12 +301,14 @@
                       <div class="p-col">
                         <div class="box">
                           <Button
+                            v-if="this.manager.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
                             @click="CetakPdfReject()"
                           />
                           <Button 
+                            v-if="this.manager.length"
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
@@ -328,7 +334,7 @@
                     responsiveLayout="scroll"
                  >
                  <template #header>
-                    <div class="table-header text-right">
+                    <div class="table-header text-left">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -371,12 +377,14 @@
                       <div class="p-col">
                         <div class="box">
                           <Button
+                            v-if="this.reject.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
                             @click="CetakPdfSedangDikerjakan()"
                           />
                           <Button 
+                            v-if="this.reject.length"
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
@@ -402,7 +410,7 @@
                     responsiveLayout="scroll"
                  >
                  <template #header>
-                    <div class="table-header text-right">
+                    <div class="table-header text-left">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -446,12 +454,14 @@
                       <div class="col">
                         <div class="box">
                           <Button
+                            v-if="this.sedangDikerjakan.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
                             @click="CetakPdfSudahDikerjakan()"
                           />
                           <Button 
+                            v-if="this.sedangDikerjakan.length"
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
@@ -477,7 +487,7 @@
                     responsiveLayout="scroll"
                  >
                  <template #header>
-                    <div class="table-header text-right">
+                    <div class="table-header text-left">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -521,12 +531,14 @@
                       <div class="col">
                         <div class="box">
                           <Button
+                            v-if="this.sudahDikerjakan.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
                             @click="CetakPdfSelesai()"
                           />
-                          <Button 
+                          <Button
+                            v-if="this.sudahDikerjakan.length" 
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
@@ -552,7 +564,7 @@
                     responsiveLayout="scroll"
                  >
                  <template #header>
-                    <div class="table-header text-right">
+                    <div class="table-header text-left">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -586,12 +598,14 @@
                       <div class="col">
                         <div class="box">
                           <Button
+                            v-if="this.selesai.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
                             @click="CetakPdfSelesai()"
                           />
                           <Button 
+                            v-if="this.selesai.length"
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
@@ -618,7 +632,7 @@
                           <Textarea
                             :autoResize="true"
                             type="text"
-                            v-model="Reject.ket"
+                            v-model="reject.ket"
                             rows="5" 
                             placeholder="Masukan Alasan"
                             :class="{ 'p-invalid': submitted && !reject.ket }"
@@ -890,6 +904,13 @@ export default {
           },
           reject: () => {},
         });
+    },
+    CetakPdfPermohonan()
+    {
+       window.open('api/report-ict-pdf-permohonan');
+    },
+    CetakExcelPermohonan(){
+      window.open('api/report-ict-excel-permohonan');
     },
   },
 };

@@ -14,10 +14,11 @@ class IctExportPermohonan implements FromView
     public function view(): View
     {
         return view('excel/Laporan_Ict_Permohonan', [ 'Ict' => DB::table('ireq_mst as im')
-        ->select('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type',
+        ->select('im.ireq_no','im.ireq_user','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','dr.div_name',
                 DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"))
-        ->join('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->join('lookup_refs as lr','im.ireq_type','lr.lookup_code')
+        ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
+        ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('im.ireq_status','P')
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->get()

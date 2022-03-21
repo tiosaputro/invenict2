@@ -18,6 +18,7 @@
                   type="text"
                   v-model="user.usr_fullname"
                   placeholder="Masukan Full Name"
+                  style="text-transform:uppercase;"
                   :class="{ 'p-invalid': errors.usr_fullname }"
                 />
                    <small v-if="errors.usr_fullname" class="p-error">

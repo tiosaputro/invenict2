@@ -13,34 +13,23 @@
                <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">No. Request</label>
                  <div class="col">
-                <InputText
-                  type="text"
-                  v-model="detail.noreq"
-                  disabled
-                />
+                  <InputText
+                    type="text"
+                    v-model="detail.noreq"
+                    disabled
+                  />
                 </div>
               </div>
             <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
-                 <div class="field col-12 md:col-4">
-                     <Dropdown 
-                        v-model ="tipereq"
-                        :options="type"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Pilih Tipe Request"
-                        :showClear="true"
-                        :class="{ 'p-invalid': error.tipereq }"
-                     />
-                     <small v-if="errors.tipereq" class="p-error">
-                      {{ errors.tipereq[0] }}
-                     </small>
-                     <small v-if="error.tipereq" class="p-error">
-                      {{ error.tipereq }}
-                  </small>
+              <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
+                <div class="field col-12 md:col-4">
+                  <InputText
+                    type="text"
+                    v-model="detail.lookup_desc"
+                    disabled
+                  />
                 </div>
               </div>
-
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Nama Peripheral</label>
                  <div class="field col-12 md:col-4">
@@ -169,15 +158,14 @@ export default {
       this.errors = [];
       this.error = [];
        if (
-        this.kode != null &&
-        this.tipereq != null
+        this.kode != null 
       ) {
         const data = new FormData();
         data.append("invent_code", this.kode);
         data.append("desk", this.desk);
         data.append("qty", this.qty);
         data.append("ket", this.ket);
-        data.append("tipereq", this.tipereq);
+        data.append("tipereq", this.detail.ireq_type);
 
         this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
@@ -193,9 +181,6 @@ export default {
       }else{
         if(this.kode == null){
           this.error.kode = "Nama Peripheral Wajib Diisi"
-        }
-        if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Wajib Diisi"
         }
       }
     },
@@ -252,15 +237,14 @@ export default {
       this.errors = [];
       this.error = [];
        if (
-        this.kode != null &&
-        this.tipereq != null
+        this.kode != null
       ) {
         const data = new FormData();
         data.append("invent_code", this.kode);
         data.append("desk", this.desk);
         data.append("qty", this.qty);
         data.append("ket", this.ket);
-        data.append("tipereq", this.tipereq);
+        data.append("tipereq", this.detail.ireq_type);
 
         this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
@@ -275,9 +259,6 @@ export default {
       }else{
         if(this.kode == null){
           this.error.kode = "Nama Peripheral Wajib Diisi"
-        }
-        if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Wajib Diisi"
         }
       }
       },

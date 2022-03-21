@@ -192,15 +192,15 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = {
-  "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
-};
-var _hoisted_6 = {
   style: {
     "width": "140px"
   }
 };
+var _hoisted_6 = {
+  "class": "table-header text-right"
+};
 var _hoisted_7 = {
-  "class": "block mt-2 md:mt-0 p-input-icon-left"
+  "class": "p-input-icon-left"
 };
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -308,6 +308,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_4];
     }),
+    end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_5, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.kode.noreq), 1
+      /* TEXT */
+      )];
+    }),
     _: 1
     /* STABLE */
 
@@ -324,9 +329,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_6, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.kode.noreq), 1
-      /* TEXT */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.filters['global'].value,
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $data.filters['global'].value = $event;
@@ -344,8 +347,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Back",
-        "class": "p-button-raised p-button p-mr-2 p-mb-2",
+        label: "Kembali",
+        "class": "p-button-raised p-button mr-2",
         icon: "pi pi-chevron-left",
         onClick: _cache[1] || (_cache[1] = function ($event) {
           return _ctx.$router.push({

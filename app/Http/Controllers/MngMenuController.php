@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class MngMenuController extends Controller
 {
+    function __construct(){
+        $date = Carbon::now();
+        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    }
     Public function index()
     {
         $menu = DB::table('mng_menus as mm')
@@ -56,8 +61,6 @@ class MngMenuController extends Controller
             'menu_stat'=>'required',
         ],$message);
 
-        $date = Carbon::now();
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $menu = Mng_menu::create([
             'mod_id'=>$request->mod_id,
             'menu_name'=>$request->menu_name,
@@ -68,7 +71,7 @@ class MngMenuController extends Controller
             'controller'=>$request->controller,
             'action'=>$request->action,
             'parent_id'=>$request->parent_id,
-            'creation_date'=>$newCreation,
+            'creation_date'=>$this->newCreation,
             'created_by'=> Auth::user()->usr_name,
             'program_name'=> 'MngMenuController_Save'
         ]);
@@ -102,8 +105,6 @@ class MngMenuController extends Controller
             'menu_stat'=>'required',    
         ],$message);
 
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $menu = Mng_menu::find($code);
         $menu->mod_id = $request->mod_id;
         $menu->menu_name = $request->menu_name;
@@ -115,7 +116,7 @@ class MngMenuController extends Controller
         $menu->action = $request->action;
         $menu->parent_id = $request->parent_id;
         $menu->last_updated_by = Auth::user()->usr_name;
-        $menu->last_update_date = $newUpdate;
+        $menu->last_update_date = $this->newUpdate;
         $menu->program_name = "MngMenuController@update";
         $menu->save();
         $msg = [

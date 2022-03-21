@@ -111,6 +111,78 @@
                   </template>
                 </DataTable>   
               </TabPanel>
+              <TabPanel header="Reviewer">
+                <DataTable
+                  :value="reviewer"
+                  :paginator="true"
+                  :rows="10"
+                  :loading="loading"
+                  :filters="filters"
+                  :rowHover="true"
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                  :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                  responsiveLayout="scroll"
+                >
+                <template #header>
+                    <div class="table-header text-right">
+                      <span class="block mt-2 md:mt-0 p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                      </span>
+                    </div>
+                  </template>
+                  <template #empty>
+                    Not Found
+                  </template>
+                  <template #loading>
+                    Loading ICT Request data. Please wait.
+                  </template>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                    <template #body="slotProps">
+                      {{ formatDate(slotProps.data.ireq_date) }}
+                    </template>
+                  </Column>
+                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column headerStyle="min-width:14rem">
+                    <template #body="slotProps">
+                      <Button
+                        class="p-button-rounded p-button-secondary mr-2"
+                        icon="pi pi-info-circle"
+                        v-tooltip.bottom="'Detail'"
+                        @click="$router.push({
+                            name: 'Ict Request Detail',
+                            params: { code: slotProps.data.ireq_id }, })"
+                      />
+                    </template>
+                  </Column>
+                  <template #footer>
+                      <div class="grid p-dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfPermohonan()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelPermohonan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </DataTable>   
+              </TabPanel>
                 <TabPanel header="Yang Telah Diverifikasi">
                   <DataTable
                     :value="verif"
@@ -148,6 +220,7 @@
                     </template>
                   </Column>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -219,6 +292,7 @@
                     </template>
                   </Column>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
@@ -471,6 +545,7 @@ export default {
         ict: [],
         verif:[],
         reject:[],
+        reviewer:[],
         sedangDikerjakan:[],
         sudahDikerjakan:[],
         selesai:[],
@@ -511,6 +586,7 @@ export default {
           this.sedangDikerjakan = response.data.ict3
           this.sudahDikerjakan = response.data.ict4
           this.selesai = response.data.ict5
+          this.reviewer = response.data.ict6
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({

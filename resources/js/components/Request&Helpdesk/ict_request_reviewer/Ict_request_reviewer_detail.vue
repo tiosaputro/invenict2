@@ -75,6 +75,20 @@
                     @click="$router.push({
                     name: 'Ict Request Reviewer'})"
                   />
+                  <Button
+                    v-if="this.status == 'Permohonan'"
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdf()"
+                  />
+                  <Button
+                    v-if="this.status == 'Permohonan'" 
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcel()" 
+                  />
                 </div>
 			        </div>
             </div>
@@ -142,6 +156,12 @@ export default {
         this.kode = response.data.noreq;
         this.status = response.data.ireq_status;
       });
+    },
+    CetakPdf(){
+      window.open('/api/report-ict-detail-pdf/' +this.code);
+    },
+    CetakExcel(){
+      window.open('/api/report-ict-detail-excel/' +this.code);
     },
   },
 };

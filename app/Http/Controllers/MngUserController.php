@@ -13,6 +13,11 @@ use Illuminate\Validation\Rule;
 
 class MngUserController extends Controller
 {
+    function __construct(){
+        $date = Carbon::now();
+        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    }
     public function index()
     {
         $user = DB::table('v_mng_users')->get();
@@ -40,8 +45,7 @@ class MngUserController extends Controller
             'div'=>'required',
         ],$message);
 
-        $date = Carbon::now();
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newfullName = strtoupper($request->usr_fullname);
         $image = $request->image;
         $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
         $replace = substr($image, 0, strpos($image, ',')+1); 
@@ -51,7 +55,7 @@ class MngUserController extends Controller
         Storage::disk('profile')->put($nama_file, base64_decode($foto));
         $user = Mng_user::create([
             'usr_name'=>$request->usr_name,
-            'usr_fullname'=>$request->usr_fullname,
+            'usr_fullname'=>$newfullName,
             // 'usr_passwd'=> Hash::make($request->usr_passwd),
             'usr_alamat'=> $request->usr_alamat,
             'usr_stat'=> $request->usr_status,
@@ -60,7 +64,7 @@ class MngUserController extends Controller
             'div_id'=>$request->div,
             'usr_foto'=> $nama_file,
             'created_by'=> Auth::user()->usr_name,
-            'creation_date'=> $newCreation,
+            'creation_date'=> $this->newCreation,
             'program_name'=>'MngUser_SAVE'
         ]);
        
@@ -99,8 +103,7 @@ class MngUserController extends Controller
             'usr_stat'=>'required',
             'div_id'=>'required'
         ],$message);
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newfullName = strtoupper($request->usr_fullname);
         if($request->image){
             unlink(Storage_path('app/public/profile/'.$user->usr_foto));
                 $image= $request->image;
@@ -110,23 +113,23 @@ class MngUserController extends Controller
                 $foto= str_replace(' ', '+', $fotoo); 
                 $nama_file = time().".".$extension;
                 Storage::disk('profile')->put($nama_file, base64_decode($foto));
-                $user->usr_fullname = $request->usr_fullname;
+                $user->usr_fullname = $newfullName;
                 $user->usr_alamat = $request->usr_alamat;
                 $user->usr_stat = $request->usr_stat;
                 $user->usr_email = $request->usr_email;
                 $user->div_id = $request->div_id;
                 $user->usr_foto = $nama_file;
-                $user->last_update_date = $newUpdate;
+                $user->last_update_date = $this->newUpdate;
                 $user->last_updated_by = Auth::user()->usr_name;
                 $user->program_name = 'MngUserController_UPDATE';
                 $user->save();
         }else{
-                $user->usr_fullname = $request->usr_fullname;
+                $user->usr_fullname = $newfullName;
                 $user->usr_alamat = $request->usr_alamat;
                 $user->usr_stat = $request->usr_stat;
                 $user->usr_email = $request->usr_email;
                 $user->div_id = $request->div_id;
-                $user->last_update_date = $newUpdate;
+                $user->last_update_date = $this->newUpdate;
                 $user->last_updated_by = Auth::user()->usr_name;
                 $user->program_name = 'MngUserController_UPDATE';
                 $user->save();

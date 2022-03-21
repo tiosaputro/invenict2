@@ -20,15 +20,6 @@
                     />
                 </div>
               </div>
-              <div class="field grid">
-                <label style="width:120px">Username</label>
-                 <div class="col-3 md-6">
-                  <InputText
-                    v-model="user.usr_name"
-                    disabled
-                  />
-                </div>
-              </div>
                <div class="field grid">
                 <label style="width:120px">Full Name</label>
                  <div class="col-6">
@@ -36,12 +27,22 @@
                       type="text"
                       v-model="user.usr_fullname"
                       placeholder="Masukan Full Name"
+                      style="text-transform:uppercase;"
                       :class="{ 'p-invalid': errors.usr_fullname }"
                       autofocus
                     />
                    <small v-if="errors.usr_fullname" class="p-error">
                       {{ errors.usr_fullname[0] }}
                   </small>
+                </div>
+              </div>
+              <div class="field grid">
+                <label style="width:120px">Username</label>
+                 <div class="col-3 md-6">
+                  <InputText
+                    v-model="user.usr_name"
+                    disabled
+                  />
                 </div>
               </div>
               <div class="field grid">
@@ -58,7 +59,7 @@
                   </small>
                 </div>
               </div>
-               <div class="field grid">
+               <!-- <div class="field grid">
                 <label style="width:120px">Password</label>
                  <div class="col-3 md-6">
                    <Password
@@ -68,7 +69,7 @@
                     :feedback="false"
                    />
                 </div>
-              </div>
+              </div> -->
               <div class="field grid">
                 <label style="width:120px">Alamat</label>
                  <div class="col-4">

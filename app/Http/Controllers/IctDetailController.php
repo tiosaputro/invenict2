@@ -16,18 +16,23 @@ use Illuminate\Validation\Rule;
 
 class IctDetailController extends Controller
 {
-    // function __construct(){
-    //     OPcache::clear();
-        
-    // }
+     function __construct(){
+        $date = Carbon::now();
+        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    }
     Public function index($code)
     {
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc',
-        DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN id.ireq_status = 'A2' Then 'Approved By Manager'
-         WHEN id.ireq_status = 'T' Then 'Penugasan' WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
-        ->join('invent_mst as im','id.invent_code','im.invent_code')
-        ->join('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+            DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
+            id.ireq_status = 'A2' Then 'Approved By Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
+            WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
+            WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' 
+            WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
+            end as ireq_status "))
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->get();
@@ -62,17 +67,18 @@ class IctDetailController extends Controller
     Public function getNo_req($code)
     {
         $dtl = DB::table('ireq_mst as im')
-        ->select('im.ireq_no as noreq',
-                DB::raw("CASE WHEN im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By Manager'
+        ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
+        ->select('im.ireq_no as noreq','lr.lookup_desc','im.ireq_type',
+                DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN im.ireq_status = 'NA2' Then 'Menunggu Diapprove Manager' WHEN im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By Manager'
          WHEN im.ireq_status = 'T' Then 'Penugasan' WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By Manager' WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
-        ->where('im.ireq_id',$code)
+         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+         ->where('im.ireq_id',$code)
         ->first();
             return json_encode($dtl);
     }
     Public function save(Request $request,$code)
     {
         $message = [
-            'tipereq.required'=>'Tipe Request Wajib Diisi',
             'invent_code.required'=>'Nama Peripheral Wajib Diisi',
             'desk.required'=>'Deskripsi Wajib Diisi',
             'qty.required'=>'Qty Wajib diisi',
@@ -80,15 +86,12 @@ class IctDetailController extends Controller
             'ket.required'=>'Keterangan Wajib Diisi'
         ];
             $request->validate([
-                'tipereq' => 'required',
                 'invent_code'=>'required',
                 'desk'=>'required',
                 'qty'=>'required|numeric',
                 'ket' => 'required'
             ],$message);
 
-        $date = Carbon::now();
-        $newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $dtl = IctDetail::create([
             'ireq_id' => $code,
             'ireq_type' => $request->tipereq,
@@ -97,7 +100,7 @@ class IctDetailController extends Controller
             'ireq_qty'=> $request->qty,
             'ireq_reason'=>$request->alasan,
             'ireq_remark'=>$request->ket,
-            'creation_date'=>$newCreation,
+            'creation_date'=>$this->newCreation,
             'created_by' => Auth::user()->usr_name,
             'program_name'=>"IctDetail_Save"
         ]);
@@ -109,10 +112,12 @@ class IctDetailController extends Controller
     Public function edit($code,$ireq)
     {
         $ict = DB::table('ireq_dtl as id')
-        ->select('id.ireqd_id','id.ireq_type','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_photo as photo','imm.ireq_no')
-        ->join('invent_mst as im','id.invent_code','im.invent_code')
-        ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->select('id.ireqd_id','id.ireq_type','lr.lookup_desc','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_photo as photo','imm.ireq_no')
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireqd_id',$ireq)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->first();
             return json_encode($ict);
     }
@@ -132,8 +137,7 @@ class IctDetailController extends Controller
                 'ireq_qty'=>'required',
                 'ireq_remark' => 'required'
             ],$message);
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $dtl = IctDetail::find($ireq);
 
         $dtl->ireq_type = $request->ireq_type;
@@ -143,7 +147,7 @@ class IctDetailController extends Controller
         $dtl->ireq_remark = $request->ireq_remark;
         // $dtl->ireq_status = $request->ireq_status;
         $dtl->ireq_reason = $request->ireq_reason;
-        $dtl->last_update_date = $newUpdate;
+        $dtl->last_update_date = $this->newUpdate;
         $dtl->last_updated_by = Auth::user()->usr_name;
         $dtl->program_name = "IctDetail_Update";
         $dtl->save();
@@ -223,32 +227,29 @@ class IctDetailController extends Controller
     }
     public function updateAssign(Request $request,$code)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $dtl = IctDetail::find($request->ireqd_id);
         $dtl->ireq_assigned_to = $request->ireq_assigned_to;
-        $dtl->last_update_date = $newUpdate;
+        $dtl->last_update_date = $this->newUpdate;
         $dtl->last_updated_by = Auth::user()->usr_name;
         $dtl->save();
         return json_encode('Updated Successfully');
     }
     public function updateStatusDone(Request $request,$code){
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $dtl = IctDetail::find($request->ireqd_id);
         $dtl->ireq_status = $request->status;
-        $dtl->last_update_date = $newUpdate;
+        $dtl->last_update_date = $this->newUpdate;
         $dtl->last_updated_by = Auth::user()->usr_name;
         $dtl->save();
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
         return json_encode('Updated Successfully');
     }
     public function updateStatusClosingDetail($ireqd_id,$ireq_id){
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $dtl = IctDetail::find($ireqd_id);
         $dtl->ireq_status = 'C';
-        $dtl->last_update_date = $newUpdate;
+        $dtl->last_update_date = $this->newUpdate;
         $dtl->last_updated_by = Auth::user()->usr_name;
         $dtl->program_name = "IctDetail_updateStatusClosingDetail";
         $dtl->save();

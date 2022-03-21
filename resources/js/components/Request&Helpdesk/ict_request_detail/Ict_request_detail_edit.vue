@@ -13,32 +13,22 @@
                <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">No. Request</label>
                  <div class="col">
-                <InputText
-                  type="text"
-                  v-model="ict.ireq_no"
-                  disabled
-                />
+                  <InputText
+                    type="text"
+                    v-model="ict.ireq_no"
+                    disabled
+                  />
                 </div>
               </div>
 
             <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
                  <div class="field col-12 md:col-4">
-                     <Dropdown 
-                        v-model ="ict.ireq_type"
-                        :options="type"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Pilih Tipe Request"
-                        :showClear="true"
-                        :class="{ 'p-invalid': errors.ireq_type }"
-                     />
-                     <small v-if="errors.ireq_type" class="p-error">
-                      {{ errors.ireq_type[0] }}
-                    </small>
-                     <small v-if="error.ireq_type" class="p-error">
-                      {{ error.ireq_type }}
-                    </small>
+                       <InputText
+                        type="text"
+                        v-model="ict.lookup_desc"
+                        disabled
+                      />
                 </div>
               </div>
               <div class="field grid">

@@ -43,6 +43,7 @@
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tgl Request</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tipe Request</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Bisnis Unit</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Divisi Pengguna</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pemohon</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pengguna</th>
 							</tr>
@@ -54,8 +55,9 @@
 									<td>{{$i->ireq_date}}</td>
 									<td>{{$i->ireq_type}}</td>
 									<td>{{$i->ireq_bu}}</td>
+									<td>{{$i->div_name}}</td>
 									<td>{{$i->ireq_requestor}}</td>
-									<td>{{$i->ireq_requestor}}</td>
+									<td>{{$i->ireq_user}}</td>
 								</tr>	
 							@endforeach							
 						</tbody>

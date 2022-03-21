@@ -8,6 +8,9 @@
           <template v-slot:start>
 				        <h4>ICT Request (Detail) </h4>
           </template>
+          <template v-slot:end>
+              <label style="width:140px">No. Request: {{kode.noreq}}</label>
+          </template>
         </Toolbar>
         <DataTable
           :value="detail"
@@ -21,20 +24,18 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-        
-       <template #header>
-              <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                  <label style="width:140px">No. Request: {{kode.noreq}}</label>
-                    <span class="block mt-2 md:mt-0 p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText
-                        v-model="filters['global'].value"
-                        placeholder="Search. . ."
-                        />
-                    </span>
-            </div>
-          </template>
-           <template #empty>
+         <template #header>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
+         </template>
+         <template #empty>
             Not Found
           </template>
           <template #loading>
@@ -57,8 +58,8 @@
 			        <div class="p-col">
 				        <div class="box">
                    <Button
-                    label="Back"
-                    class="p-button-raised p-button p-mr-2 p-mb-2"
+                    label="Kembali"
+                    class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Ict Request Reviewer'})"

@@ -14,6 +14,11 @@ use carbon\Carbon;
 
 class MngUsrRoleController extends Controller
 {
+    function __construct(){
+        $date = Carbon::now();
+        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    }
     public function getRole($id) {
         
         $role = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
@@ -44,8 +49,6 @@ class MngUsrRoleController extends Controller
     }
     public function save(Request $request)
     {
-        $date = Carbon::now();
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $user = Mng_User::select('usr_id')->where('usr_name',$request->usr_name)->first();
         $roles = $request->usr_roles;
         foreach( $roles as $r){
@@ -53,7 +56,7 @@ class MngUsrRoleController extends Controller
                 'usr_id' => $user->usr_id,
                 'rol_id' => $r,
                 'urol_stat' => 'T',
-                'creation_date' => $newCreation,
+                'creation_date' => $this->newCreation,
                 'created_by'=> Auth::user()->usr_name,
                 'program_name'=>'MngUsrRoleController_SAVE'
             ]);
@@ -66,8 +69,6 @@ class MngUsrRoleController extends Controller
     }
     public function update(Request $request, $code)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $role = $request->role;
         $roles = Mng_usr_roles::where('usr_id',$code)->first();
         $createday = $roles->creation_date;
@@ -81,6 +82,7 @@ class MngUsrRoleController extends Controller
                 'creation_date' => $createday,
                 'created_by'=> $created_by,
                 'last_updated_by'=> Auth::user()->usr_name,
+                'last_updated_date'=>$this->newUpdate,
                 'program_name'=>'MngUsrRoleController_UPDATE'
             ]);
         }

@@ -24,6 +24,11 @@ use Illuminate\Support\Facades\Hash;
 
 class IctController extends Controller
 {
+    function __construct(){
+        $date = Carbon::now();
+        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    }
 
     function getDataManager()
     {
@@ -78,20 +83,19 @@ class IctController extends Controller
     }
     function approveByManager($code)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'A2';
         $ict->ireq_approver1 = Auth::user()->usr_name;
         $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->program_name = "IctController_approveByManager";
         $ict->save();
 
         $dtl = IctDetail::where('ireq_id',$code)->get();
         foreach ($dtl as $d){
             $d->ireq_status = 'A2';
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_approveByManager";
             $d->save();
@@ -100,14 +104,13 @@ class IctController extends Controller
     }
     function rejectByManager(Request $request,$code)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'RA2';
         $ict->ireq_reason = $request->ket;
         $ict->ireq_approver1 = Auth::user()->usr_name;
         $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->program_name = "IctController_rejectByManager";
         $ict->save();
 
@@ -115,7 +118,7 @@ class IctController extends Controller
         foreach ($dtl as $d){
             $d->ireq_status = 'RA2';
             $d->ireq_reason = $request->ket;
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_rejectByManager";
             $d->save();
@@ -149,7 +152,7 @@ class IctController extends Controller
 
         $ict2 = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
-                DB::raw("CASE WHEN im.ireq_status = 'NA2' Then 'Belum Diapprove Manager' WHEN im.ireq_status = 'A2' Then 'Sudah Diapprove Manager' end as ireq_status "),
+                DB::raw("CASE WHEN im.ireq_status = 'NA2' Then 'Belum Diapprove ICT Manager' WHEN im.ireq_status = 'A2' Then 'Sudah Diapprove ICT Manager' end as ireq_status "),
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
@@ -161,7 +164,7 @@ class IctController extends Controller
 
         $ict3 = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
-                DB::raw("CASE WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By Manager' end as ireq_status "),
+                DB::raw("CASE WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' end as ireq_status "),
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
@@ -170,7 +173,7 @@ class IctController extends Controller
             ->where('im.ireq_status','RR')
             ->OrWhere('im.ireq_status','RA1')
             ->OrWhere('im.ireq_status','RA2');
-            })
+        })
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
@@ -192,12 +195,11 @@ class IctController extends Controller
     }
     function rejectReviewer(Request $request, $code)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'RR';
         $ict->ireq_reason = $request->ket;
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->program_name = "IctController_rejectReviewer";
         $ict->save();
@@ -206,7 +208,7 @@ class IctController extends Controller
         foreach ($dtl as $d){
             $d->ireq_status = 'RR';
             $d->ireq_reason = $request->ket;
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_rejectReviewer";
             $d->save();
@@ -215,12 +217,11 @@ class IctController extends Controller
     }
     function needApprovalAtasan($ireq_id)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ICT = Ict::where('ireq_id',$ireq_id)->first();
         $divisiPengguna = $ICT->ireq_divisi_user;
         $ICT->ireq_status = 'NA1';
-        $ICT->last_update_date = $newUpdate;
+        $ICT->last_update_date = $this->newUpdate;
         $ICT->last_updated_by = Auth::user()->usr_name;
         $ICT->program_name = "IctController_needApprovalAtasan";
         $ICT->save();
@@ -228,7 +229,7 @@ class IctController extends Controller
         $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
         foreach ($dtl as $d){
             $d->ireq_status = 'NA1';
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_needApprovalAtasan";
             $d->save();
@@ -266,40 +267,38 @@ class IctController extends Controller
     }
     function needApprovalManager($ireq_id)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_status = 'NA2';
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->program_name = "IctController_needApprovalAtasan";
+        $ict->program_name = "IctController_needApprovalManager";
         $ict->save();
 
         $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
         foreach ($dtl as $d){
             $d->ireq_status = 'NA2';
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_needApprovalAtasan";
+            $d->program_name = "IctController_needApprovalManager";
             $d->save();
         }
         return json_encode('Success Update Status');
     }
     function asignPerRequestReviewer(Request $request)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$request->id)->first();
         $ict->ireq_assigned_to = $request->name;
         $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->program_name = "IctController_asignPerRequestReviewer";
         $ict->save();
 
         $dtl = IctDetail::where('ireq_id',$request->id)->get();
         foreach ($dtl as $d){
             $d->ireq_assigned_to = $request->name;
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_asignPerRequestReviewer";
             $d->save();
@@ -308,12 +307,11 @@ class IctController extends Controller
     }
     function submitAssignPerRequest($ireq_id)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_status = 'T';
         $ict->ireq_verificator = Auth::user()->usr_name;
-        $ict->last_update_date = $newUpdate;    
+        $ict->last_update_date = $this->newUpdate;    
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->program_name = "IctController_submitAssignPerRequest";
         $ict->save();
@@ -321,7 +319,7 @@ class IctController extends Controller
         $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
         foreach ($dtl as $d){
             $d->ireq_status = 'T';
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_submitAssignPerRequest";
             $d->save();
@@ -374,8 +372,15 @@ class IctController extends Controller
         
         $ict6 = DB::table('ireq_mst')
         ->select('ireq_id','ireq_no','ireq_user','ireq_date',
-            DB::raw("CASE WHEN ireq_status = 'P' Then 'Permohonan' WHEN ireq_status = 'R' Then 'Reject' WHEN ireq_status = 'A' Then 'Approve' WHEN ireq_status = 'T' Then 'Penugasan' WHEN ireq_status = 'D' Then 'Done' WHEN ireq_status = 'C' Then 'Close' end as ireq_status "))
+            DB::raw("CASE WHEN ireq_status = 'P' Then 'Permohonan' WHEN ireq_status = 'NA1' Then 
+            'Menunggu Diapprove Atasan' When ireq_status = 'NA2' Then 'Menunggu Diapprove Manager' 
+            WHEN ireq_status = 'RR' Then 'Reject By Reviewer' WHEN ireq_status = 'RA1' Then 
+            'Reject By Atasan' WHEN ireq_status = 'RA2' Then 'Reject By Manager' WHEN 
+            ireq_status = 'A1' Then 'Sudah Diapprove Atasan' WHEN ireq_status = 'A2' 
+            Then 'Sudah Diapprove Manager' WHEN ireq_status = 'T' Then 'Penugasan' WHEN 
+            ireq_status = 'D' Then 'Done' WHEN ireq_status = 'C' Then 'Close' end as ireq_status "))
         ->whereNotNull('ireq_status')
+        ->orderBy('ireq_status','ASC')
         ->get();
 
         return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
@@ -387,7 +392,7 @@ class IctController extends Controller
         ->leftjoin('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','dr.div_name',
-                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'))
+                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'), DB::raw("CASE WHEN im.ireq_status = 'P' Then 'Permohonan' WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status ='NA2' Then 'Belum Diapprove ICT Manager' END as ireq_status "))
         ->where('im.created_by',$usr_name)
         ->where(function($query){
             return $query
@@ -399,7 +404,9 @@ class IctController extends Controller
         ->get();
 
         $ict1 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user')
+        ->select('ireq_id','ireq_no','ireq_date','ireq_user',
+          DB::raw("CASE WHEN ireq_status = 'A1' Then 'Sudah Diapprove Atasan' 
+          WHEN ireq_status = 'A2' Then 'Sudah Diapprove ICT Manager' End as ireq_status"))
         ->where('created_by',$usr_name)
         ->where(function($query){
             return $query
@@ -410,10 +417,12 @@ class IctController extends Controller
         ->get();
 
         $ict2 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user','ireq_reason')
+        ->select('ireq_id','ireq_no','ireq_date','ireq_user','ireq_reason',
+          DB::raw("CASE WHEN ireq_status ='RR' Then 'Reject By Reviewer' WHEN 
+          ireq_status = 'RA1' Then 'Reject By Atasan' WHEN ireq_status = 'RA2' Then 'Reject By ICT Manager'
+           END as ireq_status"))
         ->where('created_by',$usr_name)
-        ->where('ireq_status','R')
-        ->orwhere('ireq_status','RR')
+        ->where('ireq_status','RR')
         ->orwhere('ireq_status','RA1')
         ->orwhere('ireq_status','RA2')
         ->orderBy('creation_date','ASC')
@@ -463,8 +472,18 @@ class IctController extends Controller
         ->where('im.created_by',$usr_name)
         ->orderBy('idd.ireqd_id','ASC')
         ->get();
+        
+        $ict6 = DB::table('ireq_mst')
+        ->select('ireq_id','ireq_no','ireq_date','ireq_user',
+          DB::raw("CASE WHEN ireq_status ='NA1' Then 'Menunggu Diapprove Atasan' WHEN 
+          ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' END as ireq_status"))
+        ->where('created_by',$usr_name)
+        ->where('ireq_status','NA1')
+        ->orwhere('ireq_status','NA2')
+        ->orderBy('creation_date','ASC')
+        ->get();
 
-        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5],200);
+        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
     }
     Public function getPermohonan($usr_name)
     {
@@ -603,8 +622,6 @@ class IctController extends Controller
             $request->validate([
                 'tgl' => 'required',
             ],$message);
-        $date = Carbon::now();
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $newDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgl)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         $ict = Ict::Create([
             'ireq_date' => $newDate,
@@ -614,7 +631,7 @@ class IctController extends Controller
             'ireq_user' => $request->user_name,
             'ireq_divisi_user'=>$request->user_divisi,
             'ireq_bu' => $request->bisnis,
-            'creation_date' => $newCreation,
+            'creation_date' => $this->newCreation,
             'created_by' => Auth::user()->usr_name,
             'program_name'=>"Ict_Save",
         ]);
@@ -642,8 +659,6 @@ class IctController extends Controller
                 'ireq_divisi_user'=>'required'
         ],$message);
 
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $newDate = Carbon::parse($request->ireq_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_date = $newDate;
@@ -651,7 +666,7 @@ class IctController extends Controller
         $ict->ireq_user = $request->ireq_user;
         $ict->ireq_divisi_user = $request->ireq_divisi_user;
         $ict->ireq_bu = $request->ireq_bu;
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->program_name = "Ict_Update";
         $ict->save();
@@ -688,10 +703,11 @@ class IctController extends Controller
     Public function cetak_pdf_permohonan()
     {
         $ict =  DB::table('ireq_mst as im')
-        ->select('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type',
+        ->select('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
                 DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"))
-        ->join('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->join('lookup_refs as lr','im.ireq_type','lr.lookup_code')
+        ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
+        ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('im.ireq_status','P')
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->orderBy('im.creation_date','ASC')
@@ -700,7 +716,8 @@ class IctController extends Controller
     }
     public function cetak_excel_permohonan()
     {
-        return Excel::download(new IctExportPermohonan,'Laporan_Ict_Permohonan.xlsx');
+        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        return Excel::download(new IctExportPermohonan,'Laporan Ict Status Permohonan '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_verifikasi()
     {
@@ -789,13 +806,12 @@ class IctController extends Controller
     }
     public function updateAssign(Request $request)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$request->id)->first();
         $ict->ireq_status = 'T';
         $ict->ireq_assigned_to = $request->name;
         $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->program_name = "IctController_updateAssign";
         $ict->save();
 
@@ -803,7 +819,7 @@ class IctController extends Controller
         foreach ($dtl as $d){
             $d->ireq_status = 'T';
             $d->ireq_assigned_to = $request->name;
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_updateAssign";
             $d->save();
@@ -812,20 +828,19 @@ class IctController extends Controller
     }
     public function updateStatusPermohonan($code)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'A1';
         $ict->ireq_approver1 = Auth::user()->usr_name;
         $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->program_name = "IctController_updateStatusPermohonan";
         $ict->save();
 
         $dtl = IctDetail::where('ireq_id',$code)->get();
         foreach ($dtl as $d){
             $d->ireq_status = 'A1';
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_updateStatusPermohonan";
             $d->save();
@@ -834,12 +849,11 @@ class IctController extends Controller
     }
     public function updateStatusReject(Request $request, $code)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'RA1';
         $ict->ireq_reason = $request->ket;
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->program_name = "IctController_updateStatusReject";
         $ict->save();
@@ -848,7 +862,7 @@ class IctController extends Controller
         foreach ($dtl as $d){
             $d->ireq_status = 'RA1';
             $d->ireq_reason = $request->ket;
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_updateStatusReject";
             $d->save();
@@ -857,12 +871,11 @@ class IctController extends Controller
     }
     public function updateStatusSubmit($ireq_id)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ICT = Ict::where('ireq_id',$ireq_id)->first();
         $divisiPengguna = $ICT->ireq_divisi_user;
             $ICT->ireq_status = 'P';
-            $ICT->last_update_date = $newUpdate;
+            $ICT->last_update_date = $this->newUpdate;
             $ICT->last_updated_by = Auth::user()->usr_name;
             $ICT->program_name = "IctController_updateStatusSubmit";
             $ICT->save();
@@ -870,7 +883,7 @@ class IctController extends Controller
         $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
         foreach ($dtl as $d){
             $d->ireq_status = 'P';
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_updateStatusSubmit";
             $d->save();
@@ -884,12 +897,11 @@ class IctController extends Controller
     }
     public function updateStatusPenugasan($ireq_id)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_status = 'T';
         $ict->ireq_verificator = Auth::user()->usr_name;
-        $ict->last_update_date = $newUpdate;    
+        $ict->last_update_date = $this->newUpdate;    
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->program_name = "IctController_updateStatusPenugasan";
         $ict->save();
@@ -897,22 +909,20 @@ class IctController extends Controller
         $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
         foreach ($dtl as $d){
             $d->ireq_status = 'T';
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_updateStatusPenugasan";
             $d->save();
         }
         return json_encode('Success Update');
     }
-    
     public function updateStatusClosing($ireq_id)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_approver2 = Auth::user()->usr_name;
         $ict->ireq_status = 'C';
-        $ict->last_update_date = $newUpdate;
+        $ict->last_update_date = $this->newUpdate;
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->program_name = "IctController_updateStatusClosing";
         $ict->save();
@@ -920,7 +930,7 @@ class IctController extends Controller
         $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
         foreach ($dtl as $d){
             $d->ireq_status = 'C';
-            $d->last_update_date = $newUpdate;
+            $d->last_update_date = $this->newUpdate;
             $d->last_updated_by = Auth::user()->usr_name;
             $d->program_name = "IctController_updateStatusClosing";
             $d->save();

@@ -13,10 +13,13 @@ use DB;
 
 class MngRoleMenuController extends Controller
 {
+    function __construct(){
+        $date = Carbon::now();
+        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    }
     function save(Request $request)
     {
-        $date = Carbon::now();
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $role = Mng_roles::select('rol_id')->where('rol_name',$request->rol_name)->first();
         $menus = $request->menu;
         foreach($menus as $m){
@@ -24,7 +27,7 @@ class MngRoleMenuController extends Controller
                 'menu_id' => $m,
                 'rol_id' => $role->rol_id,
                 'rolm_stat' => 'T',
-                'creation_date' => $newCreation,
+                'creation_date' => $this->newCreation,
                 'created_by'=> Auth::user()->usr_name,
                 'program_name'=>'MngRoleMenuController_SAVE'
             ]);
@@ -38,8 +41,6 @@ class MngRoleMenuController extends Controller
     }
     function update(Request $request,$code)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $menus = $request->menu;
         $menu = Mng_role_menu::select('creation_date','created_by')->where('rol_id',$code)->first();
         $createday = $menu->creation_date;
@@ -53,7 +54,7 @@ class MngRoleMenuController extends Controller
                 'creation_date' => $createday,
                 'created_by'=> $createdby,
                 'last_updated_by'=> Auth::user()->usr_name,
-                'last_update_date'=> $newUpdate,
+                'last_update_date'=> $this->newUpdate,
                 'program_name'=>'MngRoleMenuController_UPDATE'
             ]);
         }

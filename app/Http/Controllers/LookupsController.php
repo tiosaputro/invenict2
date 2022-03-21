@@ -13,6 +13,11 @@ use Illuminate\Validation\Rule;
 
 class LookupsController extends Controller
 {
+    function __construct(){
+        $date = Carbon::now();
+        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    }
     public function index()
     {
         $ref = DB::Table('v_lookup_refs')->get();
@@ -48,14 +53,13 @@ class LookupsController extends Controller
             'lookup_desc'=>'required',
             'lookup_status'=>'required',
         ],$message);
-        $date = Carbon::now();
-        $newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        
         $lookup = Lookup_Refs::Create([
             'lookup_code' => $request->lookup_code,
             'lookup_type' => $request->lookup_type,
             'lookup_desc' => $request->lookup_desc,
             'lookup_status' => $request->lookup_status,
-            'creation_date' => $newCreation,
+            'creation_date' => $this->newCreation,
             'created_by' => Auth::user()->usr_name,
             'program_name' => "Lookups_Save",
         ]);
@@ -79,13 +83,11 @@ class LookupsController extends Controller
             'lookup_desc'=>'required',
             'lookup_status'=>'required',
         ],$message);
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
 
         $ref = Lookup_Refs::where('lookup_code',$code)->where('lookup_type',$type)->first();
         $ref->lookup_desc = $request->lookup_desc;
         $ref->lookup_status = $request->lookup_status;
-        $ref->last_update_date = $newUpdate;
+        $ref->last_update_date = $this->newUpdate;
         $ref->last_updated_by = Auth::user()->usr_name;
         $ref->program_name = "Lookups_Update";
         $ref->save();

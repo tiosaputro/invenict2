@@ -156,27 +156,27 @@ const routes = [
     {
         name: 'Ict Request Divisi 1',
         path: '/ict-request-divisi1',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi1/Ict_request_divisi1.vue'),
+        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_divisi1.vue'),
     },
     {
         name: 'Ict Request Divisi 1 Detail',
         path: '/ict-request-divisi1-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi1/Ict_request_divisi1_detail.vue'),
+        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_divisi1_detail.vue'),
     },
     {
         name: 'Ict Request Verifikasi',
         path: '/ict-request-verifikasi/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi1/Ict_request_verifikasi.vue'),
+        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_verifikasi.vue'),
     },
     {
         name: 'Verifikasi From Email',
         path: '/ictinv_resp/:code/:status',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi1/Verifikasi_from_email.vue'),
+        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Verifikasi_from_email.vue'),
     },
     {
         name: 'Ict Request Verifikasi From Email',
         path: '/verifikasi-request/:code/:status',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi1/Ict_request_verifikasi_from_email.vue'),
+        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_verifikasi_from_email.vue'),
     },
      //ict_request_divisi2
      {
@@ -203,12 +203,12 @@ const routes = [
     {
         name: 'Ict Request Divisi 3',
         path: '/ict-request-divisi3',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi3/Ict_request_divisi3.vue'),
+        component: ()=> import('./components/Request&Helpdesk/Status_change_request/Ict_request_divisi3.vue'),
     },
     {
         name: 'Ict Request Divisi 3 Detail',
         path: '/ict-request-divisi3-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi3/Ict_request_divisi3_detail.vue'),
+        component: ()=> import('./components/Request&Helpdesk/Status_change_request/Ict_request_divisi3_detail.vue'),
     },
     //ict request (detail)
     {
