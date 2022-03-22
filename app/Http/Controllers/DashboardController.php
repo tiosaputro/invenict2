@@ -12,10 +12,10 @@ class DashboardController extends Controller
     }
     public function countUser($usr_name)
     {
-        $grafik = DB::table('ireq_mst as im')
+        $grafik = DB::table('ireq_mst')
         ->select(DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'P' AND ireq_mst.created_by = '$usr_name') as belumdiverifikasi"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'A' AND ireq_mst.created_by = '$usr_name') as sudahdiverifikasi"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'R' AND ireq_mst.created_by = '$usr_name') as direject"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.created_by = '$usr_name' AND ireq_mst.ireq_status IN ('A1','A2')) as sudahdiverifikasi"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IN ('RR', 'RA1','RA2') AND ireq_mst.created_by = '$usr_name') as direject"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'T' AND ireq_mst.created_by = '$usr_name') as sedangdikerjakan"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'D' AND ireq_mst.created_by = '$usr_name') as sudahdikerjakan"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'C' AND ireq_mst.created_by = '$usr_name') as sudahselesai"),
@@ -26,9 +26,9 @@ class DashboardController extends Controller
     public function countDivisi1($usr_name)
     {
         $grafik = DB::table('ireq_mst as im')
-        ->select(DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'P' AND divisi_refs.div_verificator = '$usr_name') as belumdiverifikasi"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'A' AND divisi_refs.div_verificator = '$usr_name') as sudahdiverifikasi"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'R' AND divisi_refs.div_verificator = '$usr_name') as direject"),
+        ->select(DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'NA1' AND divisi_refs.div_verificator = '$usr_name') as belumdiverifikasi"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'A1' AND divisi_refs.div_verificator = '$usr_name') as sudahdiverifikasi"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'RA1' AND divisi_refs.div_verificator = '$usr_name') as direject"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'T' AND divisi_refs.div_verificator = '$usr_name') as sedangdikerjakan"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'D' AND divisi_refs.div_verificator = '$usr_name') as sudahdikerjakan"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'C' AND divisi_refs.div_verificator = '$usr_name') as sudahselesai"))
@@ -37,6 +37,11 @@ class DashboardController extends Controller
     }
     public function countDivisi2()
     {
+        $blmdiverifikasi = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as blmdiverifikasi'))
+            ->where('ireq_status','P')
+            ->pluck('blmdiverifikasi')
+            ->first();
         $blmdiassign = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as blmdiassign'))
             ->where('ireq_status','A')
@@ -57,7 +62,7 @@ class DashboardController extends Controller
             ->where('ireq_status','C')
             ->pluck('sdhselesai')
             ->first();
-        return json_encode(['blmdiassign'=>$blmdiassign,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai]);
+        return json_encode(['blmDiverifikasi'=>$blmdiverifikasi,'blmdiassign'=>$blmdiassign,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai]);
     }
     public function countDivisi3($fullname)
     {
@@ -71,7 +76,10 @@ class DashboardController extends Controller
     function countDivisi4()
     {  
         $grafik = DB::table('ireq_dtl as im')
-        ->select(DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'D') as sudahdikerjakan"),
+        ->select(DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'NA2') as blmdiverifikasi"),
+                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'A2') as sudahdiverifikasi"),
+                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'T') as sedangdikerjakan"),
+                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'D') as sudahdikerjakan"),
                  DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'C') as sudahselesai"))
         ->first();
         return json_encode($grafik);

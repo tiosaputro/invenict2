@@ -140,7 +140,7 @@
 						<div @click="sdgDikerjakan()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-arrow-repeat text-xl" style="fontSize: 3.5rem; color: green;"></i>
+						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -190,7 +190,7 @@
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Menunggu Diverifikasi </span>
+						<span class="block text-500 font-medium mb-3">Belum Diverifikasi </span>
 						<div @click="blmDiverifikasi1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.belumdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -266,6 +266,32 @@
     </div>
 </div>
 <div class="grid" v-if="this.role_name.includes('Supervisor')">
+	<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Belum Diverifikasi</span>
+						<div @click="blmDiassign2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.blmDiverifikasi}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-check text-xl" style="color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Belum Di Assign</span>
+						<div @click="blmDiassign2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.blmdiassign}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-check text-xl" style="color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -361,6 +387,44 @@
 		</div>
 </div>
 <div class="grid" v-if="this.role_name.includes('Manager')">
+	<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Belum Diverifikasi</span>
+						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.blmdiverifikasi}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
+						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahdiverifikasi}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div><div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
+						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sedangdikerjakan}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">

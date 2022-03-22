@@ -126,7 +126,7 @@
                 >
                 <template #header>
                     <div class="table-header text-right">
-                      <span class="block mt-2 md:mt-0 p-input-icon-left">
+                      <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
                           v-model="filters['global'].value"

@@ -26,6 +26,7 @@ class IctController extends Controller
 {
     function __construct(){
         $date = Carbon::now();
+        $this->date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
@@ -250,10 +251,10 @@ class IctController extends Controller
         ->where('im.ireq_id',$ireq_id)
         ->get();
 
-        $Date = $date->addDays(1);
+        $Date = $this->date->addDays(1);
         $expiredDate = Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $link = Link::create([
-            'link_id'=> md5($date),
+            'link_id'=> md5($this->date),
             'link_action'=> 'http://localhost:8000/ict-request-verifikasi/'.''.$ireq_id,
             'expired_at'=>$expiredDate,
             'usr_id'=>$emailVerifikator->usr_id,
@@ -261,7 +262,7 @@ class IctController extends Controller
         ]);
         $LINK = Link::where('ireq_id',$ireq_id)->first();
         $send_mail = $emailVerifikator->usr_email;
-        $emailJob = (new SendEmailJob($send_mail,$ict,$LINK))->delay(Carbon::now()->addSeconds(5));
+        $emailJob = (new SendEmailJob($send_mail,$ict,$LINK))->delay(Carbon::now()->addSeconds(2));
         dispatch($emailJob);
         return json_encode('Success Update Status');
     }
@@ -422,9 +423,12 @@ class IctController extends Controller
           ireq_status = 'RA1' Then 'Reject By Atasan' WHEN ireq_status = 'RA2' Then 'Reject By ICT Manager'
            END as ireq_status"))
         ->where('created_by',$usr_name)
+        ->where(function($query){
+            return $query
         ->where('ireq_status','RR')
         ->orwhere('ireq_status','RA1')
-        ->orwhere('ireq_status','RA2')
+        ->orwhere('ireq_status','RA2');
+        })
         ->orderBy('creation_date','ASC')
         ->get();
 
@@ -502,8 +506,7 @@ class IctController extends Controller
         ->where('dr.div_verificator',$usr_name)
         ->where(function($query){
             return $query
-            ->Where('im.ireq_status','A1')
-            ->orwhere('im.ireq_status','A2');
+            ->Where('im.ireq_status','A1');
             })
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
         ->orderBy('im.creation_date','ASC')
@@ -515,9 +518,7 @@ class IctController extends Controller
         ->where('dr.div_verificator',$usr_name)
         ->where(function($query){
             return $query
-            ->Where('im.ireq_status','RR')
-            ->orwhere('im.ireq_status','RA1')
-            ->orwhere('im.ireq_status','RA2');
+            ->where('im.ireq_status','RA1');
             })
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','im.ireq_reason')
         ->orderBy('im.creation_date','ASC')

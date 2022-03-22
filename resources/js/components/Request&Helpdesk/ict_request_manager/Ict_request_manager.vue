@@ -1,5 +1,5 @@
 <template>
-  <div class="grid crud-demo">
+  <div class="grid">
     <div class="col-12">
       <div class="card">
         <Toast />
@@ -62,9 +62,7 @@
                         class="p-button-rounded p-button-success mr-2"
                         icon="pi pi-check-square"
                         v-tooltip.right="'Verifikasi'"
-                        @click="$router.push({
-                            name: 'Ict Request Manager Verifikasi',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="Verifikasi(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -321,6 +319,46 @@
                 </DataTable>
                 </TabPanel>
             </TabView>
+            <Dialog
+              v-model:visible="dialogReject"
+              :style="{ width: '400px' }"
+              header="ICT Request"
+              :modal="true"
+              class="field"
+            >
+            <div class="field">
+              <div class="field grid">
+                <label class="col-fixed w-9rem">Alasan</label>
+                  <div class="co-fixed">
+                    <Textarea
+                    :autoResize="true"
+                    type="text"
+                    v-model="reason.ket"
+                    rows="5"
+                    placeholder="Masukan Alasan"
+                    :class="{ 'p-invalid': submitted && !reason.ket }"
+                  />
+                    <small v-if="submitted && !reason.ket" class="p-error">
+                    Alasan Harus Diisi
+                    </small>
+                </div>
+              </div>
+            </div>
+        <template #footer>
+            <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
+            <Button label="No" @click="cancelReject()" class="p-button-text" />
+        </template>
+      </Dialog>
+      <Dialog header="Confirmation" v-model:visible="ConfirmationVerifikasi" :style="{width: '350px'}" :modal="true">
+            <div class="confirmation-content">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span>Verifikasi Request</span>
+            </div>
+            <template #footer>
+                <Button label="Reject" icon="pi pi-times" @click="rejectRequest" class="p-button-raised p-button-danger p-button-text"/>
+                <Button label="Approve" icon="pi pi-check" @click="approve" class="p-button-raised p-button-text" autofocus />
+            </template>
+        </Dialog>
       </div>
     </div>
   </div>
@@ -331,7 +369,13 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
-        active1:0,
+        dialogReject:false,
+        ConfirmationVerifikasi:false,
+        reason :{
+          ket:null,
+          id:null,
+        },
+        submitted:false,
         loading: true,
         blmdiverifikasi: [],
         sedangDikerjakan:[],
@@ -345,6 +389,7 @@ export default {
         checkname : [],
         checkto : [],
         id : localStorage.getItem('id'),
+        code:null
     };
   },
   created() {
@@ -390,6 +435,59 @@ export default {
     formatDate(date) {
       return moment(date).format("DD MMM YYYY")
     },
+    Verifikasi(ireq_id){
+      this.code = ireq_id;
+      this.ConfirmationVerifikasi = true;
+    },
+    approve(){
+      this.ConfirmationVerifikasi = false;
+      this.$confirm.require({
+            message: "Approval Permohonan Dilanjutkan?",
+            header: "ICT Request    ",
+            icon: "pi pi-info-circle",
+            acceptClass: "p-button",
+            acceptLabel: "Ya",
+            rejectLabel: "Tidak",
+            accept: () => {
+              this.$toast.add({
+                severity: "info",
+                summary: "Confirmed",
+                detail: "Permohonan Dilanjutkan",
+                life : 1000
+              });
+              this.axios.get('/api/abm/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
+              this.code = null;
+              this.getPermohonan();
+        },
+        reject: () => {},
+      });
+    },
+    rejectRequest(){
+      this.ConfirmationVerifikasi = false;
+      this.dialogReject = true;
+    },
+    cancelReject(){
+      this.dialogReject = false;
+      this.code = null;
+      this.reason.ket = null;
+      this.submitted = false;
+    },
+    updateReject(){
+          this.submitted = true;
+           if(this.reason.ket != null){
+            this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+              this.dialogReject = false;
+              this.$toast.add({
+                severity: "info",
+                summary: "Confirmed",
+                detail: "Berhasil Direject",
+                life: 1000
+              });
+               this.code = null;
+               this.getPermohonan();
+            });
+          }
+      },
   },
 };
 </script>

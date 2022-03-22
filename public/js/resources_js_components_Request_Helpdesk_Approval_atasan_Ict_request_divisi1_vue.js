@@ -19,6 +19,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      confirmationVerifikasi: false,
+      dialogReject: false,
       active1: 0,
       loading: true,
       permohonan: [],
@@ -37,7 +39,12 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id')
+      id: localStorage.getItem('id'),
+      code: null,
+      reason: {
+        ket: null
+      },
+      submitted: false
     };
   },
   created: function created() {
@@ -103,6 +110,79 @@ __webpack_require__.r(__webpack_exports__);
     },
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+    },
+    VerifikasiRequest: function VerifikasiRequest(ireq_id) {
+      this.code = ireq_id;
+      this.confirmationVerifikasi = true;
+    },
+    approve: function approve() {
+      var _this3 = this;
+
+      this.confirmationVerifikasi = false;
+
+      this.$confirm.require({
+        message: "Approval Permohonan Dilanjutkan?",
+        header: "ICT Request    ",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button",
+        acceptLabel: "Ya",
+        rejectLabel: "Tidak",
+        accept: function accept() {
+          _this3.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Permohonan Dilanjutkan",
+            life: 1000
+          });
+
+          _this3.axios.get('/api/updateStatusPermohonan/' + _this3.code, {
+            headers: {
+              'Authorization': 'Bearer ' + _this3.token
+            }
+          });
+
+          _this3.code = null;
+
+          _this3.getPermohonan();
+        },
+        reject: function reject() {}
+      });
+    },
+    rejectRequest: function rejectRequest() {
+      this.confirmationVerifikasi = false;
+      this.dialogReject = true;
+    },
+    cancelReject: function cancelReject() {
+      this.dialogReject = false;
+      this.code = null;
+      this.reason.ket = null;
+      this.submitted = false;
+    },
+    updateReject: function updateReject() {
+      var _this4 = this;
+
+      this.submitted = true;
+
+      if (this.reason.ket != null) {
+        this.axios.put('/api/updateStatusReject/' + this.code, this.reason, {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function () {
+          _this4.dialogReject = false;
+
+          _this4.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Berhasil Direject",
+            life: 1000
+          });
+
+          _this4.code = null;
+
+          _this4.getPermohonan();
+        });
+      }
     }
   }
 });
@@ -238,6 +318,37 @@ var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Loading ICT Request data. Please wait. ");
 
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "confirmation-content"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "pi pi-exclamation-triangle mr-3",
+  style: {
+    "font-size": "2rem"
+  }
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Verifikasi Request")], -1
+/* HOISTED */
+);
+
+var _hoisted_36 = {
+  "class": "field"
+};
+var _hoisted_37 = {
+  "class": "field grid"
+};
+
+var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, "Alasan", -1
+/* HOISTED */
+);
+
+var _hoisted_39 = {
+  "class": "fol-fixed"
+};
+var _hoisted_40 = {
+  key: 0,
+  "class": "p-error"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
@@ -256,6 +367,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TabPanel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TabPanel");
 
   var _component_TabView = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TabView");
+
+  var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
+
+  var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
 
   var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
 
@@ -372,12 +487,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-success mr-2",
                     icon: "pi pi-check-square",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Verifikasi',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.VerifikasiRequest(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -977,7 +1087,97 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["activeIndex"])])])]);
+  , ["activeIndex"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    header: "Confirmation",
+    visible: $data.confirmationVerifikasi,
+    "onUpdate:visible": _cache[7] || (_cache[7] = function ($event) {
+      return $data.confirmationVerifikasi = $event;
+    }),
+    style: {
+      width: '350px'
+    },
+    modal: true
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Reject",
+        icon: "pi pi-times",
+        onClick: $options.rejectRequest,
+        "class": "p-button-raised p-button-danger p-button-text"
+      }, null, 8
+      /* PROPS */
+      , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Approve",
+        icon: "pi pi-check",
+        onClick: $options.approve,
+        "class": "p-button-raised p-button-text",
+        autofocus: ""
+      }, null, 8
+      /* PROPS */
+      , ["onClick"])];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_35];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogReject,
+    "onUpdate:visible": _cache[11] || (_cache[11] = function ($event) {
+      return $data.dialogReject = $event;
+    }),
+    breakpoints: {
+      '960px': '75vw'
+    },
+    style: {
+      width: '400px'
+    },
+    header: "Form Dialog Reject",
+    modal: true,
+    "class": "field grid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[9] || (_cache[9] = function ($event) {
+          return $options.updateReject();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[10] || (_cache[10] = function ($event) {
+          return $options.cancelReject();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        autoResize: true,
+        type: "text",
+        modelValue: $data.reason.ket,
+        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+          return $data.reason.ket = $event;
+        }),
+        rows: "5",
+        placeholder: "Masukan Alasan",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+          'p-invalid': $data.submitted && !$data.reason.ket
+        })
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_40, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"])])])]);
 }
 
 /***/ }),

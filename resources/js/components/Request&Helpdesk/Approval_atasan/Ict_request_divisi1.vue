@@ -62,9 +62,7 @@
                         class="p-button-rounded p-button-success mr-2"
                         icon="pi pi-check-square"
                         v-tooltip.right="'Verifikasi'"
-                        @click="$router.push({
-                            name: 'Ict Request Verifikasi',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="VerifikasiRequest(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -318,6 +316,40 @@
                 </DataTable>
                 </TabPanel>
             </TabView>
+            <Dialog header="Confirmation" v-model:visible="confirmationVerifikasi" :style="{width: '350px'}" :modal="true">
+            <div class="confirmation-content">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span>Verifikasi Request</span>
+            </div>
+            <template #footer>
+                <Button label="Reject" icon="pi pi-times" @click="rejectRequest" class="p-button-raised p-button-danger p-button-text"/>
+                <Button label="Approve" icon="pi pi-check" @click="approve" class="p-button-raised p-button-text" autofocus />
+            </template>
+        </Dialog>
+        <Dialog v-model:visible="dialogReject" :breakpoints="{'960px': '75vw'}" :style="{ width: '400px' }" header="Form Dialog Reject" :modal="true" class="field grid">
+         <div class="field"> 
+          <div class="field grid">
+            <label class="col-fixed w-9rem">Alasan</label>
+              <div class="fol-fixed">
+                <Textarea
+                  :autoResize="true"
+                  type="text"
+                  v-model="reason.ket"
+                  rows="5" 
+                  placeholder="Masukan Alasan"
+                  :class="{ 'p-invalid': submitted && !reason.ket }"
+                />
+                  <small v-if="submitted && !reason.ket" class="p-error">
+                    Alasan Harus Diisi
+                  </small>
+              </div>
+            </div>
+          </div>
+        <template #footer>
+            <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
+            <Button label="No" @click="cancelReject()" class="p-button-text" />
+        </template>
+        </Dialog>
       </div>
     </div>
   </div>
@@ -328,6 +360,8 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+        confirmationVerifikasi:false,
+        dialogReject:false,
         active1:0,
         loading: true,
         permohonan: [],
@@ -342,6 +376,9 @@ export default {
         checkname : [],
         checkto : [],
         id : localStorage.getItem('id'),
+        code:null,
+        reason:{ ket:null },
+        submitted:false
     };
   },
   created() {
@@ -364,8 +401,7 @@ export default {
         this.$router.push('/login');
       }
     },
-     getPermohonan(){
-
+    getPermohonan(){
       this.axios.get('/api/get-permohonan/'+this.usr_name,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.permohonan = response.data.ict;
         this.verif = response.data.ict1;
@@ -388,6 +424,59 @@ export default {
     formatDate(date) {
       return moment(date).format("DD MMM YYYY")
     },
+    VerifikasiRequest(ireq_id){
+      this.code = ireq_id;
+      this.confirmationVerifikasi = true;
+    },
+    approve(){
+      this.confirmationVerifikasi = false;
+      this.$confirm.require({
+            message: "Approval Permohonan Dilanjutkan?",
+            header: "ICT Request    ",
+            icon: "pi pi-info-circle",
+            acceptClass: "p-button",
+            acceptLabel: "Ya",
+            rejectLabel: "Tidak",
+            accept: () => {
+              this.$toast.add({
+                severity: "info",
+                summary: "Confirmed",
+                detail: "Permohonan Dilanjutkan",
+                life : 1000
+              });
+              this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
+              this.code = null;
+              this.getPermohonan();
+        },
+        reject: () => {},
+      });
+    },
+    rejectRequest(){
+      this.confirmationVerifikasi = false;
+      this.dialogReject = true;
+    },
+    cancelReject(){
+      this.dialogReject = false;
+      this.code = null;
+      this.reason.ket = null;
+      this.submitted = false;
+    },
+    updateReject(){
+          this.submitted = true;
+           if(this.reason.ket != null){
+            this.axios.put('/api/updateStatusReject/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+              this.dialogReject = false;
+              this.$toast.add({
+                severity: "info",
+                summary: "Confirmed",
+                detail: "Berhasil Direject",
+                life: 1000
+              });
+               this.code = null;
+               this.getPermohonan();
+            });
+          }
+      },
   },
 };
 </script>

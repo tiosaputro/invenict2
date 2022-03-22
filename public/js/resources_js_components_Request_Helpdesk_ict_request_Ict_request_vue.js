@@ -262,7 +262,7 @@ var _hoisted_13 = {
   "class": "table-header text-right"
 };
 var _hoisted_14 = {
-  "class": "block mt-2 md:mt-0 p-input-icon-left"
+  "class": "p-input-icon-left"
 };
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {

@@ -289,7 +289,7 @@
                         label="Assign Per-Detail"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove Manager'"
+                        v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove ICT Manager'"
                         class="p-button-raised p-button-text p-button-sm mr-2"
                         @click="Submit(slotProps.data.ireq_id)"
                         label="Submit"
