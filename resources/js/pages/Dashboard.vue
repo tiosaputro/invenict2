@@ -412,7 +412,21 @@
 					</div>
 				</div>
 			</div>
-		</div><div class="col-12 lg:col-6 xl:col-3" >
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Direject</span>
+						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.direject}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
