@@ -164,7 +164,7 @@ class IctController extends Controller
         ->get(); 
 
         $ict3 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_reason',
                 DB::raw("CASE WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' end as ireq_status "),
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
@@ -175,7 +175,7 @@ class IctController extends Controller
             ->OrWhere('im.ireq_status','RA1')
             ->OrWhere('im.ireq_status','RA2');
         })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status','im.ireq_reason')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 

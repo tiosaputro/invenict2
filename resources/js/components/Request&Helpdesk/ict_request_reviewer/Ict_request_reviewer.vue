@@ -359,6 +359,7 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column headerStyle="min-width:8rem">
                     <template #body="slotProps">
@@ -632,12 +633,12 @@
                           <Textarea
                             :autoResize="true"
                             type="text"
-                            v-model="reject.ket"
+                            v-model="rbr.ket"
                             rows="5" 
                             placeholder="Masukan Alasan"
-                            :class="{ 'p-invalid': submitted && !reject.ket }"
+                            :class="{ 'p-invalid': submitted && !rbr.ket }"
                           />
-                            <small v-if="submitted && !reject.ket" class="p-error">
+                            <small v-if="submitted && !rbr.ket" class="p-error">
                             Alasan Harus Diisi
                             </small>
                      </div>
@@ -697,7 +698,7 @@ export default {
         petugas:[],
         dialogReject: false,
         submmited: false,
-        reject:{
+        rbr:{
           ket:null,
           id:null
         },
@@ -785,19 +786,19 @@ export default {
     },
     Reject(ireq_id){
         this.dialogReject = true;
-        this.reject.id = ireq_id;
+        this.rbr.id = ireq_id;
     },
     cancelReject(){
         this.dialogReject = false;
-        this.reject.id = null;
-        this.reject.ket = null;
+        this.rbr.id = null;
+        this.rbr.ket = null;
     },
     updateReject(){
         this.submmited = true;
-        this.axios.put('/api/reject-by-reviewer/'+this.reject.id, this.reject, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
             this.dialogReject = false;    
-            this.reject.id = null;
-            this.reject.ket = null;
+            this.rbr.id = null;
+            this.rbr.ket = null;
             this.submmited = false;
               this.$toast.add({
                 severity: "info",

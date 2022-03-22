@@ -14,13 +14,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var primevue_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primevue/api */ "./node_modules/primevue/api/api.esm.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return _defineProperty({
+    return {
       atasanDivisi: [],
       ictManager: [],
       direject2: [],
@@ -71,11 +69,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       },
       usr_name: localStorage.getItem('usr_name'),
-      user: []
-    }, "reject", {
-      ket: null,
-      id: null
-    });
+      user: [],
+      rbr: {
+        ket: null,
+        id: null
+      }
+    };
   },
   mounted: function mounted() {
     this.getActive();
@@ -398,25 +397,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     Reject: function Reject(ireq_id) {
       this.dialogReject = true;
-      this.reject.id = ireq_id;
+      this.rbr.id = ireq_id;
     },
     cancelReject: function cancelReject() {
       this.dialogReject = false;
-      this.reject.id = null;
-      this.reject.ket = null;
+      this.rbr.id = null;
+      this.rbr.ket = null;
     },
     updateReject: function updateReject() {
       var _this15 = this;
 
       this.submmited = true;
-      this.axios.put('/api/reject-by-reviewer/' + this.reject.id, this.reject, {
+      this.axios.put('/api/reject-by-reviewer/' + this.rbr.id, this.rbr, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (res) {
         _this15.dialogReject = false;
-        _this15.reject.id = null;
-        _this15.reject.ket = null;
+        _this15.rbr.id = null;
+        _this15.rbr.ket = null;
         _this15.submmited = false;
 
         _this15.$toast.add({
@@ -5844,18 +5843,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_298, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_299, [_hoisted_300, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_301, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
         autoResize: true,
         type: "text",
-        modelValue: $data.reject.ket,
+        modelValue: $data.rbr.ket,
         "onUpdate:modelValue": _cache[68] || (_cache[68] = function ($event) {
-          return $data.reject.ket = $event;
+          return $data.rbr.ket = $event;
         }),
         rows: "5",
         placeholder: "Masukan Alasan",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-          'p-invalid': $data.submitted && !$data.reject.ket
+          'p-invalid': $data.submitted && !$data.rbr.ket
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.reject.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_302, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "class"]), $data.submitted && !$data.rbr.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_302, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */

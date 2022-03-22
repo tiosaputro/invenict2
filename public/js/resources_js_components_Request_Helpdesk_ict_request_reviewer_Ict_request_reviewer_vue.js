@@ -14,15 +14,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var primevue_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primevue/api */ "./node_modules/primevue/api/api.esm.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       dialogAssign: false,
       assign: {
         id: null,
@@ -31,20 +27,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       petugas: [],
       dialogReject: false,
       submmited: false,
-      reject: {
+      rbr: {
         ket: null,
         id: null
       },
       loading: true,
       permohonan: [],
       atasandivisi: [],
-      manager: []
-    }, _defineProperty(_ref, "reject", []), _defineProperty(_ref, "sedangDikerjakan", []), _defineProperty(_ref, "sudahDikerjakan", []), _defineProperty(_ref, "selesai", []), _defineProperty(_ref, "filters", {
-      'global': {
-        value: null,
-        matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
-      }
-    }), _defineProperty(_ref, "token", localStorage.getItem('token')), _defineProperty(_ref, "usr_name", localStorage.getItem('usr_name')), _defineProperty(_ref, "checkname", []), _defineProperty(_ref, "checkto", []), _defineProperty(_ref, "id", localStorage.getItem('id')), _ref;
+      manager: [],
+      reject: [],
+      sedangDikerjakan: [],
+      sudahDikerjakan: [],
+      selesai: [],
+      filters: {
+        'global': {
+          value: null,
+          matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
+        }
+      },
+      token: localStorage.getItem('token'),
+      usr_name: localStorage.getItem('usr_name'),
+      checkname: [],
+      checkto: [],
+      id: localStorage.getItem('id')
+    };
   },
   created: function created() {
     this.cekUser();
@@ -142,25 +148,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     Reject: function Reject(ireq_id) {
       this.dialogReject = true;
-      this.reject.id = ireq_id;
+      this.rbr.id = ireq_id;
     },
     cancelReject: function cancelReject() {
       this.dialogReject = false;
-      this.reject.id = null;
-      this.reject.ket = null;
+      this.rbr.id = null;
+      this.rbr.ket = null;
     },
     updateReject: function updateReject() {
       var _this4 = this;
 
       this.submmited = true;
-      this.axios.put('/api/reject-by-reviewer/' + this.reject.id, this.reject, {
+      this.axios.put('/api/reject-by-reviewer/' + this.rbr.id, this.rbr, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (res) {
         _this4.dialogReject = false;
-        _this4.reject.id = null;
-        _this4.reject.ket = null;
+        _this4.rbr.id = null;
+        _this4.rbr.ket = null;
         _this4.submmited = false;
 
         _this4.$toast.add({
@@ -1267,6 +1273,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_reason",
+                header: "Alasan",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
                 header: "Status",
                 sortable: true,
@@ -1785,18 +1798,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [_hoisted_63, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
         autoResize: true,
         type: "text",
-        modelValue: $data.reject.ket,
+        modelValue: $data.rbr.ket,
         "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
-          return $data.reject.ket = $event;
+          return $data.rbr.ket = $event;
         }),
         rows: "5",
         placeholder: "Masukan Alasan",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-          'p-invalid': _ctx.submitted && !$data.reject.ket
+          'p-invalid': _ctx.submitted && !$data.rbr.ket
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), _ctx.submitted && !$data.reject.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_65, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "class"]), _ctx.submitted && !$data.rbr.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_65, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */

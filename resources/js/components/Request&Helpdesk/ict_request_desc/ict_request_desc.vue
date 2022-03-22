@@ -2448,12 +2448,12 @@
                           <Textarea
                             :autoResize="true"
                             type="text"
-                            v-model="reject.ket"
+                            v-model="rbr.ket"
                             rows="5" 
                             placeholder="Masukan Alasan"
-                            :class="{ 'p-invalid': submitted && !reject.ket }"
+                            :class="{ 'p-invalid': submitted && !rbr.ket }"
                           />
-                            <small v-if="submitted && !reject.ket" class="p-error">
+                            <small v-if="submitted && !rbr.ket" class="p-error">
                             Alasan Harus Diisi
                             </small>
                      </div>
@@ -2520,7 +2520,7 @@ export default {
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         usr_name: localStorage.getItem('usr_name'),
         user:[],
-        reject:{ ket:null, id:null },
+        rbr:{ ket:null, id:null },
     };
   },
   mounted() {
@@ -2755,19 +2755,19 @@ export default {
       },
       Reject(ireq_id){
         this.dialogReject = true;
-        this.reject.id = ireq_id;
+        this.rbr.id = ireq_id;
       },
       cancelReject(){
         this.dialogReject = false;
-        this.reject.id = null;
-        this.reject.ket = null;
+        this.rbr.id = null;
+        this.rbr.ket = null;
       },
       updateReject(){
         this.submmited = true;
-        this.axios.put('/api/reject-by-reviewer/'+this.reject.id, this.reject, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
             this.dialogReject = false;    
-            this.reject.id = null;
-            this.reject.ket = null;
+            this.rbr.id = null;
+            this.rbr.ket = null;
             this.submmited = false;
               this.$toast.add({
                 severity: "info",
