@@ -283,11 +283,11 @@
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Belum Di Assign</span>
-						<div @click="blmDiassign2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.blmdiassign}}</div>
+						<span class="block text-500 font-medium mb-3">Atasan Divisi</span>
+						<div @click="atasanDivisi2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.atasandivisi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-check text-xl" style="color: red;"></i>
+						<i class="bi bi-clipboard-check text-xl" style="color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -296,11 +296,24 @@
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Belum Di Assign</span>
-						<div @click="blmDiassign2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.blmdiassign}}</div>
+						<span class="block text-500 font-medium mb-3">ICT Manager</span>
+						<div @click="IctManager2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.manager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-check text-xl" style="color: red;"></i>
+						<i class="bi bi-journal-bookmark-fill text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Direject</span>
+						<div @click="direject2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.reject}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-times text-xl" style="color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -465,7 +478,7 @@
 				</div>
 			</div>
 		</div>
-   </div>
+</div>
 </template>
 <script>
 export default {
@@ -611,6 +624,18 @@ export default {
                 this.count2 = response.data;
             });
         },
+		atasanDivisi2(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',30)
+		},
+		IctManager2(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',31)
+		},
+		direject2(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',32)
+		},
         blmDiassign2(){
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',13)

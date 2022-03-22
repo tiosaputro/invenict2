@@ -1,23 +1,23 @@
 <template>
-  <div class="grid crud-demo">
+  <div class="grid">
     <div class="col-12">
       <div class="card">
         <Toast />
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
+						<div class="my-2">
 				        <h4>ICT Request (Detail) </h4>
+            </div>
           </template>
           <template v-slot:end>
-            <div>
               <label style="width:140px">No. Request: {{this.kode}}</label>
-            </div>
           </template>
         </Toolbar>
         <DataTable
           :value="detail"
           :paginator="true"
-          :rows="25"
+          :rows="10"
           :loading="loading"
           :filters="filters"
           :rowHover="true"
@@ -26,7 +26,6 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-        
        <template #header>
             <div class="table-header text-right">
               <span class="p-input-icon-left">
@@ -44,26 +43,10 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-              {{ slotProps.data.ireq_type }}
-            </template>
-          </Column>
-          <Column field="invent_code" header="Kode" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_code }}
-            </template>
-          </Column>
-          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_desc }}
-            </template>
-          </Column>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-              {{ slotProps.data.ireq_status }}
-            </template>
-          </Column>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
+          <Column field="invent_code" header="Kode" :sortable="true" style="min-width:12rem"/>
+          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button

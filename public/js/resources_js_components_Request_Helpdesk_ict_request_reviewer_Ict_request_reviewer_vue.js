@@ -339,7 +339,7 @@ var _hoisted_1 = {
   "class": "grid"
 };
 var _hoisted_2 = {
-  "class": "col-25"
+  "class": "col-12"
 };
 var _hoisted_3 = {
   "class": "card"
@@ -350,7 +350,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = {
-  "class": "table-header text-left"
+  "class": "table-header text-right"
 };
 var _hoisted_6 = {
   "class": "p-input-icon-left"
@@ -376,7 +376,7 @@ var _hoisted_12 = {
   "class": "box"
 };
 var _hoisted_13 = {
-  "class": "table-header text-left"
+  "class": "table-header text-right"
 };
 var _hoisted_14 = {
   "class": "p-input-icon-left"
@@ -402,7 +402,7 @@ var _hoisted_20 = {
   "class": "box"
 };
 var _hoisted_21 = {
-  "class": "table-header text-left"
+  "class": "table-header text-right"
 };
 var _hoisted_22 = {
   "class": "p-input-icon-left"
@@ -428,7 +428,7 @@ var _hoisted_28 = {
   "class": "box"
 };
 var _hoisted_29 = {
-  "class": "table-header text-left"
+  "class": "table-header text-right"
 };
 var _hoisted_30 = {
   "class": "p-input-icon-left"
@@ -454,7 +454,7 @@ var _hoisted_36 = {
   "class": "box"
 };
 var _hoisted_37 = {
-  "class": "table-header text-left"
+  "class": "table-header text-right"
 };
 var _hoisted_38 = {
   "class": "p-input-icon-left"
@@ -480,7 +480,7 @@ var _hoisted_44 = {
   "class": "box"
 };
 var _hoisted_45 = {
-  "class": "table-header text-left"
+  "class": "table-header text-right"
 };
 var _hoisted_46 = {
   "class": "p-input-icon-left"
@@ -506,7 +506,7 @@ var _hoisted_52 = {
   "class": "box"
 };
 var _hoisted_53 = {
-  "class": "table-header text-left"
+  "class": "table-header text-right"
 };
 var _hoisted_54 = {
   "class": "p-input-icon-left"

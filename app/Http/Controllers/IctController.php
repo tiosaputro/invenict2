@@ -432,11 +432,14 @@ class IctController extends Controller
         ->orderBy('creation_date','ASC')
         ->get();
 
-        $ict3 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user')
-        ->where('created_by',$usr_name)
-        ->where('ireq_status','T')
-        ->orderBy('creation_date','ASC')
+        $ict3 =  DB::table('ireq_mst as im')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_assigned_to',
+                DB::raw("CASE WHEN im.ireq_status = 'T' Then 'Penugasan' end as ireq_status"))
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->where('im.ireq_status','T')
+        ->where('im.created_by',$usr_name)
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status','im.ireq_assigned_to')
+        ->orderBy('im.creation_date','ASC')
         ->get();
 
         // $ict4 = DB::table('ireq_mst')
@@ -579,11 +582,71 @@ class IctController extends Controller
     }
     Public function getPermohonanDivisi()
     {
-        $ict = DB::Table('v_ireq_mst_permohonan_divisi')->get();
-        $ict1 = DB::Table('v_ireq_mst_sedang_dikerjakan')->get();
-        $ict2 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
-        $ict3 = DB::Table('v_ireq_mst_selesai')->get();
-        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3]);
+        $ict1 = $ict = DB::table('ireq_mst as im')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name', 
+                DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),
+                DB::raw("CASE WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->where('im.ireq_status','P')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->orderBy('im.creation_date','ASC')
+        ->get(); 
+
+        $ict2 = DB::table('ireq_mst as im')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
+                DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status = 'A1' Then 'Sudah Diapprove Atasan' end as ireq_status "),
+                DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->where('im.ireq_status','NA1')
+        ->orwhere('im.ireq_status','A1')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->orderBy('im.creation_date','ASC')
+        ->get(); 
+
+        $ict3 = DB::table('ireq_mst as im')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
+                DB::raw("CASE WHEN im.ireq_status = 'NA2' Then 'Belum Diapprove ICT Manager' WHEN im.ireq_status = 'A2' Then 'Sudah Diapprove ICT Manager' end as ireq_status "),
+                DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->where('im.ireq_status','NA2')
+        ->orwhere('im.ireq_status','A2')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->orderBy('im.creation_date','ASC')
+        ->get(); 
+
+        $ict4 = DB::table('ireq_mst as im')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','dr.div_name','im.ireq_reason',
+                DB::raw("CASE WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' end as ireq_status "),
+                DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->where(function ($query){
+            return $query
+            ->where('im.ireq_status','RR')
+            ->OrWhere('im.ireq_status','RA1')
+            ->OrWhere('im.ireq_status','RA2');
+        })
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_reason','dr.div_name','im.creation_date','im.ireq_status')
+        ->orderBy('im.creation_date','ASC')
+        ->get(); 
+
+        
+        $ict5 = DB::table('ireq_mst as im')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_assigned_to',
+                DB::raw("CASE WHEN im.ireq_status = 'T' Then 'Penugasan' end as ireq_status"))
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->where('im.ireq_status','T')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status','im.ireq_assigned_to')
+        ->orderBy('im.creation_date','ASC')
+        ->get();
+
+        $ict6 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
+
+        $ict7 = DB::Table('v_ireq_mst_selesai')->get();
+        return json_encode(['ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7]);
     }
     Public function getSedangDikerjakan($usr_fullname)
     {

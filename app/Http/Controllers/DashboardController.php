@@ -7,9 +7,6 @@ use Appstract\Opcache\OpcacheFacade as OPcache;
 
 class DashboardController extends Controller
 {
-    function __construct(){
-        OPcache::clear();
-    }
     public function countUser($usr_name)
     {
         $grafik = DB::table('ireq_mst')
@@ -42,6 +39,28 @@ class DashboardController extends Controller
             ->where('ireq_status','P')
             ->pluck('blmdiverifikasi')
             ->first();
+        $atasandivisi = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as atasandivisi'))
+            ->where('ireq_status','NA1')
+            ->orWhere('ireq_status','A1')
+            ->pluck('atasandivisi')
+            ->first();
+        $manager = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as manager'))
+            ->where('ireq_status','NA1')
+            ->orWhere('ireq_status','A2')
+            ->pluck('manager')
+            ->first();
+        $reject = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as reject'))
+            ->where(function($query){
+                return $query
+                ->where('ireq_status','RR')
+                ->orWhere('ireq_status','RA1')
+                ->orWhere('ireq_status','RA2');
+            })
+            ->pluck('reject')
+            ->first();
         $blmdiassign = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as blmdiassign'))
             ->where('ireq_status','A')
@@ -62,7 +81,7 @@ class DashboardController extends Controller
             ->where('ireq_status','C')
             ->pluck('sdhselesai')
             ->first();
-        return json_encode(['blmDiverifikasi'=>$blmdiverifikasi,'blmdiassign'=>$blmdiassign,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai]);
+        return json_encode(['blmDiverifikasi'=>$blmdiverifikasi,'atasandivisi'=>$atasandivisi,'manager'=>$manager,'reject'=>$reject,'blmdiassign'=>$blmdiassign,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai]);
     }
     public function countDivisi3($fullname)
     {

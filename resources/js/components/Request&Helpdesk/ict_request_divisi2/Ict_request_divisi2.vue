@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <div class="col-16">
+    <div class="col-12">
       <div class="card">
         <Toast />
           <ConfirmDialog> </ConfirmDialog>

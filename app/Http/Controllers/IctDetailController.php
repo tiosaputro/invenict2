@@ -48,6 +48,7 @@ class IctDetailController extends Controller
         ->where('id.ireq_id',$code)
         ->where('id.ireq_status','T')
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->orderBy('id.ireqd_id','ASC')
         ->get();
             return json_encode($dtl);
     }

@@ -38,6 +38,12 @@ const routes = [
         path: '/ict-request-desc-assign/:code',
         component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_assign_per_detail_desc.vue'),
     },
+    
+    {
+        name: 'Ict Request Desc Detail Penugasan',
+        path: '/ict-request-desc-detail-penugasan/:code',
+        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_detail_penugasan.vue'),
+    },
     {
         name: 'Desc',
         path: '/ict-request-desc',

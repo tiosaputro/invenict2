@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <div class="col-25">
+    <div class="col-12">
       <div class="card">
         <Toast />
         <ConfirmDialog> </ConfirmDialog>
@@ -24,7 +24,7 @@
                   responsiveLayout="scroll"
                 >
                 <template #header>
-                    <div class="table-header text-left">
+                    <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -136,7 +136,7 @@
                     responsiveLayout="scroll"
                  >
                 <template #header>
-                    <div class="table-header text-left">
+                    <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -238,7 +238,7 @@
                     responsiveLayout="scroll"
                  >
                 <template #header>
-                    <div class="table-header text-left">
+                    <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -334,7 +334,7 @@
                     responsiveLayout="scroll"
                  >
                  <template #header>
-                    <div class="table-header text-left">
+                    <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -410,7 +410,7 @@
                     responsiveLayout="scroll"
                  >
                  <template #header>
-                    <div class="table-header text-left">
+                    <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -487,7 +487,7 @@
                     responsiveLayout="scroll"
                  >
                  <template #header>
-                    <div class="table-header text-left">
+                    <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -564,7 +564,7 @@
                     responsiveLayout="scroll"
                  >
                  <template #header>
-                    <div class="table-header text-left">
+                    <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
@@ -878,11 +878,11 @@ export default {
         }
     },
     cancelAssign(){
-          this.assign =
-          { id : null, name : null };
-          this.petugas = [];
-          this.dialogAssign = false;
-          this.submitted = false;
+      this.assign =
+      { id : null, name : null };
+      this.petugas = [];
+      this.dialogAssign = false;
+      this.submitted = false;
     }, 
     ClosingPerDetail(ireqd_id,ireq_id){
         this.$confirm.require({
