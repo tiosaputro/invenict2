@@ -233,7 +233,7 @@
 						<div @click="sdgDikerjakan1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-arrow-repeat text-xl" style="fontSize: 3.5rem; color: green;"></i>
+						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -405,10 +405,10 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Belum Diverifikasi</span>
-						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.blmdiverifikasi}}</div>
+						<div @click="blmDiverifikasi4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.blmdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+						<i class="pi pi-check text-xl text-xl" style="color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -418,10 +418,10 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
-						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahdiverifikasi}}</div>
+						<div @click="sdhDiverifikasi4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+						<i class="pi pi-check text-xl text-xl" style="color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -431,10 +431,10 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Direject</span>
-						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.direject}}</div>
+						<div @click="direject4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.direject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+						<i class="pi pi-times text-xl" style="color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -444,10 +444,10 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
-						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sedangdikerjakan}}</div>
+						<div @click="sdgdikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -460,7 +460,7 @@
 						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="color: gray;"></i>
+						<i class="bi bi-check2-all text-xl" style="color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -473,7 +473,7 @@
 						<div @click="sdhSelesai4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-alltext-xl" style="color: green;"></i>
+						<i class="bi bi-check2-all text-xl" style="color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -680,6 +680,22 @@ export default {
                 this.count4 = response.data;
             });
         },
+		blmDiverifikasi4(){
+		  this.$router.push('/ict-request-desc');
+          localStorage.setItem('active',33)
+		},
+		sdhDiverifikasi4(){
+		  this.$router.push('/ict-request-desc');
+          localStorage.setItem('active',34)
+		},
+		direject4(){
+		  this.$router.push('/ict-request-desc');
+          localStorage.setItem('active',35);
+		},
+		sdgdikerjakan4(){
+ 		  this.$router.push('/ict-request-desc');
+          localStorage.setItem('active',36)
+		},
         sdHDikerjakan4(){
           this.$router.push('/ict-request-desc');
           localStorage.setItem('active',20)

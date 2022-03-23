@@ -184,13 +184,6 @@ export default {
           this.ireq = this.tes
         }
         else{}
-        // if( cek == 'null'){
-        //   this.tes=['klk'];
-        // console.log(this.tes);
-        // }
-        // else{
-        // this.tes = response.data.map((x)=>x.ireq_assigned_to);
-        // }
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {

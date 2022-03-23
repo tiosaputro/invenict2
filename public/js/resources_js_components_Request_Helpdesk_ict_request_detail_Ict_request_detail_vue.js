@@ -82,14 +82,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (_this2.tes.length > 0 && _this2.tes[0] != null) {
           _this2.ireq = _this2.tes;
-        } else {} // if( cek == 'null'){
-        //   this.tes=['klk'];
-        // console.log(this.tes);
-        // }
-        // else{
-        // this.tes = response.data.map((x)=>x.ireq_assigned_to);
-        // }
-
+        } else {}
 
         _this2.loading = false;
       })["catch"](function (error) {

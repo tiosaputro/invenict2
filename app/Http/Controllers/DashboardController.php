@@ -10,7 +10,7 @@ class DashboardController extends Controller
     public function countUser($usr_name)
     {
         $grafik = DB::table('ireq_mst')
-        ->select(DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'P' AND ireq_mst.created_by = '$usr_name') as belumdiverifikasi"),
+        ->select(DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IN ('P','NA1','NA2') AND ireq_mst.created_by = '$usr_name') as belumdiverifikasi"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.created_by = '$usr_name' AND ireq_mst.ireq_status IN ('A1','A2')) as sudahdiverifikasi"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IN ('RR', 'RA1','RA2') AND ireq_mst.created_by = '$usr_name') as direject"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'T' AND ireq_mst.created_by = '$usr_name') as sedangdikerjakan"),
@@ -172,7 +172,6 @@ class DashboardController extends Controller
         ->get();
         return json_encode($grafik);
     }
-    
     public function countPerDivRequestorTahun($tahunRequestor)
     {
         $grafik = DB::table('ireq_mst as im')
@@ -196,7 +195,6 @@ class DashboardController extends Controller
         ->get();
         return json_encode($grafik);
     }
-    
     public function countPerDivRequestorBulan($tahunRequestor,$bulanRequestor)
     {
         $grafik = DB::table('ireq_mst as im')

@@ -211,6 +211,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -255,7 +256,7 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
                   <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">

@@ -45,6 +45,7 @@
           <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
           <Column field="invent_code" header="Kode" :sortable="true" style="min-width:12rem"/>
           <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
           <template #footer>
                <div class="p-grid p-dir-col">
 			        <div class="p-col">
@@ -79,6 +80,8 @@ export default {
         checkname : [],
         checkto : [],
         id : localStorage.getItem('id'),
+        tes:[],
+        ireq:[]
     };
   },
   mounted() {
@@ -105,6 +108,11 @@ export default {
     getIctDetail(){
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
+        this.tes = response.data.map((x)=>x.ireq_assigned_to);
+        if(this.tes.length > 0 && this.tes[0] != null){
+          this.ireq = this.tes
+        }
+        else{}
         this.loading = false;
       }).catch(error=>{
         if (error.response.status == 401) {

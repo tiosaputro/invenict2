@@ -26,9 +26,9 @@ class IctDetailController extends Controller
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc',
             DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
-            id.ireq_status = 'A2' Then 'Approved By Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
+            id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
             WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
-            WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' 
+            WHEN id.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN id.ireq_status = 'D' Then 'Done' 
             WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
             end as ireq_status "))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -70,8 +70,8 @@ class IctDetailController extends Controller
         $dtl = DB::table('ireq_mst as im')
         ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
         ->select('im.ireq_no as noreq','lr.lookup_desc','im.ireq_type',
-                DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN im.ireq_status = 'NA2' Then 'Menunggu Diapprove Manager' WHEN im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By Manager'
-         WHEN im.ireq_status = 'T' Then 'Penugasan' WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By Manager' WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
+                DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN im.ireq_status = 'NA2' Then 'Menunggu Diapprove Manager' WHEN im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager'
+         WHEN im.ireq_status = 'T' Then 'Penugasan' WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
          ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
          ->where('im.ireq_id',$code)
         ->first();

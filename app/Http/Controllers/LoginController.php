@@ -16,7 +16,8 @@ class LoginController extends Controller
     function __construct(){
         OPcache::clear();
     }
-    public function index(Request $request){
+    public function index(Request $request)
+    {
     //     $email = $request->email."@emp.id";
     //         if (Adldap::auth()->attempt($email,$request->password)) {
     //             $user = Mng_User::where('usr_email', $request->email)->first();
@@ -89,6 +90,7 @@ class LoginController extends Controller
     }
     public function logout(Request $request)
     {
+        OPcache::clear();
         $user = Auth::user();
         $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
         return json_encode([
