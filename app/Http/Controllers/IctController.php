@@ -69,7 +69,7 @@ class IctController extends Controller
         $ict4 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
         $ict5 = DB::Table('v_ireq_mst_selesai')->get();
 
-        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5],200);
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5],200);
     }
     function getDataManagerVerifikasi($code)
     {
@@ -80,7 +80,7 @@ class IctController extends Controller
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->get();
-            return json_encode($dtl);
+            return response()->json($dtl);
     }
     function approveByManager($code)
     {
@@ -101,7 +101,7 @@ class IctController extends Controller
             $d->program_name = "IctController_approveByManager";
             $d->save();
         }
-        return json_encode('Success Update');
+        return response()->json('Success Update');
     }
     function rejectByManager(Request $request,$code)
     {
@@ -124,7 +124,7 @@ class IctController extends Controller
             $d->program_name = "IctController_rejectByManager";
             $d->save();
         }
-        return json_encode('Success Update');
+        return response()->json('Success Update');
     }
     function getDataReviewer()
     {
@@ -192,7 +192,7 @@ class IctController extends Controller
 
         $ict6 = DB::Table('v_ireq_mst_selesai')->get();
 
-        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
     }
     function rejectReviewer(Request $request, $code)
     {
@@ -214,7 +214,7 @@ class IctController extends Controller
             $d->program_name = "IctController_rejectReviewer";
             $d->save();
         }
-        return json_encode('Success Update Status');
+        return response()->json('Success Update Status');
     }
     function needApprovalAtasan($ireq_id)
     {
@@ -242,12 +242,12 @@ class IctController extends Controller
                     ->where('dr.div_id',$divisiPengguna)
                     ->first();
         $ict = DB::table('ireq_mst as im')
-        ->join('ireq_dtl as id','im.ireq_id','id.ireq_id')
-        ->join('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('ireq_dtl as id','im.ireq_id','id.ireq_id')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
         ->join('invent_mst as imm','id.invent_code','imm.invent_code')
-        ->select('im.ireq_no','im.ireq_id', 'id.invent_code','mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
-                 'im.ireq_user','imm.invent_desc','id.ireq_qty')
+        ->select('im.ireq_no','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
+                 'im.ireq_user',DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'id.ireq_qty')
         ->where('im.ireq_id',$ireq_id)
         ->get();
 
@@ -264,7 +264,8 @@ class IctController extends Controller
         $send_mail = $emailVerifikator->usr_email;
         $emailJob = (new SendEmailJob($send_mail,$ict,$LINK));
         dispatch($emailJob);
-        return json_encode('Success Update Status');
+        // $tes = Mail::to($send_mail)->send(new IctRequestApproval($ict,$LINK));
+        return response()->json($emailJob);
     }
     function needApprovalManager($ireq_id)
     {
@@ -284,7 +285,7 @@ class IctController extends Controller
             $d->program_name = "IctController_needApprovalManager";
             $d->save();
         }
-        return json_encode('Success Update Status');
+        return response()->json('Success Update Status');
     }
     function asignPerRequestReviewer(Request $request)
     {
@@ -304,7 +305,7 @@ class IctController extends Controller
             $d->program_name = "IctController_asignPerRequestReviewer";
             $d->save();
         }
-        return json_encode('Success Update');
+        return response()->json('Success Update');
     }
     function submitAssignPerRequest($ireq_id)
     {
@@ -325,51 +326,59 @@ class IctController extends Controller
             $d->program_name = "IctController_submitAssignPerRequest";
             $d->save();
         }
-        return json_encode('Success Update');
+        return response()->json('Success Update');
     }
     function getIctAdmin()
     {
         $ict = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','dr.div_name')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','dr.div_name',
+        'im.ireq_user','dr.div_name', DB::RAW("CASE WHEN im.ireq_status = 'P' THEN 'Permohonan' WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status = 'NA2' 
+         Then 'Belum Diapprove ICT Manager' END as ireq_status"))
         ->where(function($query){
             return $query
-            ->Where('im.ireq_status','P');
+            ->Where('im.ireq_status','P')
+            ->OrWhere('im.ireq_status','NA1')
+            ->OrWhere('im.ireq_status','NA2');
             })
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','dr.div_name')
         ->orderBy('im.creation_date','ASC')
         ->get();
 
-        $ict1 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user')
-        ->where('ireq_status','A')
-        ->orderBy('creation_date','ASC')
+        $ict1 = DB::table('ireq_mst as im')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','dr.div_name',
+        DB::RAW("CASE WHEN im.ireq_status = 'A1' THEN 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager' END as ireq_status"))
+        ->where(function($query){
+            return $query
+            ->where('im.ireq_status','A1')
+            ->Orwhere('im.ireq_status','A2');
+        })
+        ->orderBy('im.creation_date','ASC')
         ->get();
 
         $ict2 = DB::table('ireq_mst')
         ->select('ireq_id','ireq_no','ireq_date','ireq_user','ireq_reason')
-        ->where('ireq_status','R')
+        ->where(function($query){
+            return $query
+            ->where('ireq_status','RR')
+            ->Orwhere('ireq_status','RA1')
+            ->Orwhere('ireq_status','RA2');
+        })
+        
         ->orderBy('creation_date','ASC')
         ->get();
 
         $ict3 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user')
+        ->select('ireq_id','ireq_no','ireq_date','ireq_user','ireq_assigned_to')
         ->where('ireq_status','T')
         ->orderBy('creation_date','ASC')
         ->get();
 
-        $ict4 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user')
-        ->where('ireq_status','D')
-        ->orderBy('creation_date','ASC')
-        ->get();
+        $ict4 =  DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
 
-        $ict5 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user')
-        ->where('ireq_status','C')
-        ->orderBy('creation_date','ASC')
-        ->get();
+        $ict5 = DB::Table('v_ireq_mst_selesai')->get();
         
         $ict6 = DB::table('ireq_mst')
         ->select('ireq_id','ireq_no','ireq_user','ireq_date',
@@ -384,7 +393,7 @@ class IctController extends Controller
         ->orderBy('ireq_status','ASC')
         ->get();
 
-        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
 
     }
     Public function getIct($usr_name)
@@ -506,7 +515,7 @@ class IctController extends Controller
         ->orderBy('im.creation_date','ASC')
         ->get();
 
-        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7],200);
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7],200);
     }
     Public function getPermohonan($usr_name)
     {
@@ -594,7 +603,7 @@ class IctController extends Controller
         ->orderBy('idd.ireqd_id','ASC')
         ->get();
 
-        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5]);
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5]);
     }
     Public function getPermohonanDivisi()
     {
@@ -662,7 +671,7 @@ class IctController extends Controller
         $ict6 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
 
         $ict7 = DB::Table('v_ireq_mst_selesai')->get();
-        return json_encode(['ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7]);
+        return response()->json(['ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7]);
     }
     Public function getSedangDikerjakan($usr_fullname)
     {
@@ -676,7 +685,7 @@ class IctController extends Controller
 
         $ict1 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
         $ict2 = DB::Table('v_ireq_mst_selesai')->get();
-        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2]);
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2]);
     }
     public function ictDivisi4()
     {
@@ -718,7 +727,7 @@ class IctController extends Controller
         $ict4 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
         $ict5 = DB::Table('v_ireq_mst_selesai')->get();
 
-        return json_encode(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5],200);
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5],200);
     }
     function totalRequest($usr_name)
     {
@@ -739,7 +748,7 @@ class IctController extends Controller
               WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'T' Then 9 
               WHEN id.ireq_status = 'D' Then 10 WHEN id.ireq_status = 'C' Then 11 end "))
             ->get();
-        return json_encode($ict);
+        return response()->json($ict);
     }
     Public function save(Request $request)
     {
@@ -762,12 +771,12 @@ class IctController extends Controller
             'created_by' => Auth::user()->usr_name,
             'program_name'=>"Ict_Save",
         ]);
-        return json_encode($ict,200);
+        return response()->json($ict,200);
     }
     Public function edit($code)
     {
         $ict = Ict::find($code);
-            return json_encode($ict);
+            return response()->json($ict);
     }
     Public function update(Request $request, $code)
     {
@@ -801,21 +810,21 @@ class IctController extends Controller
             'success' => true,
             'message' => 'Updated Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     Public function delete($ireq_id)
     {
         $ict = Ict::find($ireq_id);
         $dtl= DB::table('ireq_dtl')->where('ireq_id',$ireq_id)->delete();
           $ict->delete();
-          return json_encode('Successfully deleted');
+          return response()->json('Successfully deleted');
     }
     Public function getNoreq()
     {
         $ict = Ict::select('ireq_no as name','ireq_id as code')
                 ->orderBy('ireq_no','ASC')
                 ->get();
-            return json_encode($ict);
+            return response()->json($ict);
     }
     Public function getNameBu($noreq)
     {
@@ -825,7 +834,7 @@ class IctController extends Controller
         ->join('vcompany_refs as vr','im.ireq_bu','vr.company_code')
         ->where('im.ireq_id',$noreq)
         ->first();
-            return json_encode($ict);
+            return response()->json($ict);
     }
     Public function cetak_pdf_permohonan()
     {
@@ -951,7 +960,7 @@ class IctController extends Controller
             $d->program_name = "IctController_updateAssign";
             $d->save();
         }
-        return json_encode('Success Update');
+        return response()->json('Success Update');
     }
     public function updateStatusPermohonan($code)
     {
@@ -972,7 +981,7 @@ class IctController extends Controller
             $d->program_name = "IctController_updateStatusPermohonan";
             $d->save();
         }
-        return json_encode('Success Update');
+        return response()->json('Success Update');
     }
     public function updateStatusReject(Request $request, $code)
     {
@@ -994,7 +1003,7 @@ class IctController extends Controller
             $d->program_name = "IctController_updateStatusReject";
             $d->save();
         }
-        return json_encode('Success Update');
+        return response()->json('Success Update');
     }
     public function updateStatusSubmit($ireq_id)
     {
@@ -1015,12 +1024,12 @@ class IctController extends Controller
             $d->program_name = "IctController_updateStatusSubmit";
             $d->save();
         }
-        return json_encode('Success Update Status');
+        return response()->json('Success Update Status');
     }
     public function cekVerif($code)
     {
         $link = Link::where('link_id',$code)->first();
-        return json_encode($link);
+        return response()->json($link);
     }
     public function updateStatusPenugasan($ireq_id)
     {
@@ -1041,7 +1050,7 @@ class IctController extends Controller
             $d->program_name = "IctController_updateStatusPenugasan";
             $d->save();
         }
-        return json_encode('Success Update');
+        return response()->json('Success Update');
     }
     public function updateStatusClosing($ireq_id)
     {
@@ -1062,6 +1071,6 @@ class IctController extends Controller
             $d->program_name = "IctController_updateStatusClosing";
             $d->save();
         }
-        return json_encode('Success Update');
+        return response()->json('Success Update');
     }
 }

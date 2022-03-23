@@ -29,7 +29,7 @@ class IctRequestApproval extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('testIctRequest@emp.id')
+        return $this->from('tes@emp.id')
                     ->view('emailcontoh')
                     ->with(['ict' => $this->ict,
                             'link'=>$this->LINK]);

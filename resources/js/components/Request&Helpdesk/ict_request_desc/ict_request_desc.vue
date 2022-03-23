@@ -1724,6 +1724,8 @@
             </template>
           </Column>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -1794,6 +1796,7 @@
           </Column>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -1864,6 +1867,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
