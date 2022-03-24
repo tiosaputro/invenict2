@@ -48,6 +48,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -59,6 +61,7 @@
                             params: { code: slotProps.data.ireq_id }, })"
                       />
                       <Button
+                        v-if="slotProps.data.ireq_status == 'NA2'"
                         class="p-button-rounded p-button-success mr-2"
                         icon="pi pi-check-square"
                         v-tooltip.right="'Verifikasi'"
@@ -106,6 +109,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -158,6 +163,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">

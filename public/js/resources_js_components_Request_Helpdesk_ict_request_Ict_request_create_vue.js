@@ -31,10 +31,11 @@ __webpack_require__.r(__webpack_exports__);
       checkname: [],
       checkto: [],
       id: localStorage.getItem('id'),
-      code: null
+      code: null,
+      user: []
     };
   },
-  created: function created() {
+  mounted: function mounted() {
     this.cekUser();
   },
   methods: {
@@ -58,6 +59,10 @@ __webpack_require__.r(__webpack_exports__);
             _this.getBisnis();
 
             _this.getDivisi();
+
+            _this.getUser();
+
+            _this.getType();
           } else {
             _this.$router.push('/access');
           }
@@ -66,57 +71,55 @@ __webpack_require__.r(__webpack_exports__);
         this.$router.push('/login');
       }
     },
-    getDivisi: function getDivisi() {
+    getUser: function getUser() {
       var _this2 = this;
+
+      this.axios.get('api/user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this2.user = response.data;
+        _this2.usr_name = _this2.user.usr_name;
+        _this2.bisnis = _this2.user.usr_bu;
+        _this2.usr_divisi = _this2.user.div_id;
+      });
+    },
+    getDivisi: function getDivisi() {
+      var _this3 = this;
 
       this.axios.get('api/get-divisi', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.divisi = response.data;
+        _this3.divisi = response.data;
       });
     },
     getBisnis: function getBisnis() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.axios.get('api/get-bisnis', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.bu = response.data;
-
-        _this3.getType();
-      })["catch"](function (error) {
-        if (error.response.status == 401) {
-          _this3.$toast.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Sesi Login Expired'
-          });
-
-          localStorage.clear();
-          localStorage.setItem("Expired", "true");
-          setTimeout(function () {
-            return _this3.$router.push('/login');
-          }, 2000);
-        }
+        _this4.bu = response.data;
       });
     },
     getType: function getType() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.axios.get('api/getType', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.type = response.data;
+        _this5.type = response.data;
       });
     },
     CreateIct: function CreateIct() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.errors = [];
       this.error = [];
@@ -133,23 +136,23 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (response) {
-          _this5.$toast.add({
+          _this6.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
 
-          _this5.code = response.data.ireq_id;
+          _this6.code = response.data.ireq_id;
           setTimeout(function () {
-            return _this5.$router.push({
+            return _this6.$router.push({
               name: 'Add Ict Request Detail',
               params: {
-                code: _this5.code
+                code: _this6.code
               }
             });
           }, 1000);
         })["catch"](function (error) {
-          _this5.errors = error.response.data.errors;
+          _this6.errors = error.response.data.errors;
         });
       } else {
         if (this.tipereq == null) {
@@ -262,58 +265,14 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "120px"
   }
-}, "Pengguna", -1
-/* HOISTED */
-);
-
-var _hoisted_17 = {
-  "class": "col"
-};
-var _hoisted_18 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_19 = {
-  "class": "field grid"
-};
-
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "120px"
-  }
-}, "Divisi Pengguna", -1
-/* HOISTED */
-);
-
-var _hoisted_21 = {
-  "class": "field col-12 md:col-4"
-};
-var _hoisted_22 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_23 = {
-  "class": "field grid"
-};
-
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "120px"
-  }
 }, "Bisnis Unit", -1
 /* HOISTED */
 );
 
-var _hoisted_25 = {
+var _hoisted_17 = {
   "class": "field col-12 md:col-4"
 };
-var _hoisted_26 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_27 = {
+var _hoisted_18 = {
   "class": "form-group"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -327,8 +286,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
 
-  var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
@@ -339,7 +296,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.CreateIct && $options.CreateIct.apply($options, arguments);
     }, ["prevent"]))
   }, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
@@ -399,57 +356,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "options", "class"]), $data.error.tipereq ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.tipereq), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.usr_name,
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.usr_name = $event;
-    }),
-    placeholder: "Masukan Pengguna",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.error.usr_name
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), $data.error.usr_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.bisnis), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
-    modelValue: $data.usr_divisi,
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-      return $data.usr_divisi = $event;
-    }),
-    options: $data.divisi,
-    optionLabel: "name",
-    optionValue: "code",
-    placeholder: "Pilih Divisi Pengguna",
-    showClear: true,
-    filter: true,
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.error.usr_divisi
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.error.usr_divisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.usr_divisi), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Pengguna</label>\n                 <div class=\"col\">\n                     <InputText\n                        type=\"text\"\n                        v-model=\"usr_name\"\n                        placeholder=\"Masukan Pengguna\"\n                        :class=\"{ 'p-invalid': error.usr_name }\"\n                        disabled\n                     />\n                        <small v-if=\"error.usr_name\" class=\"p-error\">\n                          {{error.bisnis}}\n                        </small>\n                </div>\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Divisi Pengguna</label>\n                 <div class=\"field col-12 md:col-4\">\n                     <Dropdown \n                        v-model =\"usr_divisi\"\n                        :options=\"divisi\"\n                        optionLabel=\"name\"\n                        optionValue=\"code\"\n                        disabled\n                     />\n                        <small v-if=\"error.usr_divisi\" class=\"p-error\">\n                          {{error.usr_divisi}}\n                        </small>\n                </div>\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.bisnis,
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.bisnis = $event;
     }),
     options: $data.bu,
     optionLabel: "name",
     optionValue: "code",
-    placeholder: "Pilih Bisnis Unit",
-    showClear: true,
-    filter: true,
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.error.bisnis
-    })
+    disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.error.bisnis ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.bisnis), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"error.bisnis\" class=\"p-error\">\n                          {{error.bisnis}}\n                        </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -458,7 +376,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mr-2",
     icon: "pi pi-times",
-    onClick: _cache[6] || (_cache[6] = function ($event) {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
       return _ctx.$router.push('/ict-request');
     })
   })])], 32

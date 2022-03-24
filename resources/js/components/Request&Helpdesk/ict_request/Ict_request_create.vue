@@ -53,7 +53,7 @@
                         </small>
                 </div>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Pengguna</label>
                  <div class="col">
                      <InputText
@@ -61,13 +61,14 @@
                         v-model="usr_name"
                         placeholder="Masukan Pengguna"
                         :class="{ 'p-invalid': error.usr_name }"
+                        disabled
                      />
                         <small v-if="error.usr_name" class="p-error">
                           {{error.bisnis}}
                         </small>
                 </div>
-              </div>
-              <div class="field grid">
+              </div> -->
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
                  <div class="field col-12 md:col-4">
                      <Dropdown 
@@ -75,16 +76,13 @@
                         :options="divisi"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Divisi Pengguna"
-                        :showClear="true"
-                        :filter="true"
-                        :class="{ 'p-invalid': error.usr_divisi }"
+                        disabled
                      />
                         <small v-if="error.usr_divisi" class="p-error">
                           {{error.usr_divisi}}
                         </small>
                 </div>
-              </div>
+              </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Bisnis Unit</label>
                  <div class="field col-12 md:col-4">
@@ -93,14 +91,11 @@
                         :options="bu"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Bisnis Unit"
-                        :showClear="true"
-                        :filter="true"
-                        :class="{ 'p-invalid': error.bisnis }"
+                        disabled
                      />
-                        <small v-if="error.bisnis" class="p-error">
+                        <!-- <small v-if="error.bisnis" class="p-error">
                           {{error.bisnis}}
-                        </small>
+                        </small> -->
                 </div>
               </div>
               <div class="form-group">
@@ -144,9 +139,10 @@ export default {
       checkto : [],
       id : localStorage.getItem('id'),
       code: null,
+      user:[],
     };
   },
-  created(){
+  mounted(){
       this.cekUser();
   },
   methods: {
@@ -158,6 +154,8 @@ export default {
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
           this.getBisnis();
           this.getDivisi();
+          this.getUser();
+          this.getType();
         }
         else {
           this.$router.push('/access');
@@ -167,6 +165,14 @@ export default {
         this.$router.push('/login');
       }
     },
+    getUser(){
+      this.axios.get('api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.user = response.data;
+        this.usr_name = this.user.usr_name;
+        this.bisnis = this.user.usr_bu;
+        this.usr_divisi = this.user.div_id
+      });
+    },
     getDivisi(){
       this.axios.get('api/get-divisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.divisi = response.data;
@@ -175,18 +181,8 @@ export default {
     getBisnis(){
       this.axios.get('api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.bu = response.data;
-        this.getType();
-          }).catch(error=>{
-          if (error.response.status == 401) {
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-        });
-      },
+      });
+    },
     getType(){
       this.axios.get('api/getType', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.type = response.data;
@@ -234,7 +230,7 @@ export default {
         }
         
       }
-      },
+    },
   },
 };
 </script>

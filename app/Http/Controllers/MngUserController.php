@@ -34,6 +34,7 @@ class MngUserController extends Controller
             'usr_status.required'=>'Status Wajib Diisi',
             // 'usr_passwd.required'=>'Password Wajib Diisi',
             'div.required'=>'Divisi Wajib Diisi',
+            'usr_bu.required'=>'Bisnis Unit Wajib Diisi',
         ];
         $request->validate([
             'usr_name' => 'required',
@@ -43,6 +44,7 @@ class MngUserController extends Controller
             'usr_fullname'=>'required',
             'usr_status'=>'required',
             'div'=>'required',
+            'usr_bu'=>'required'
         ],$message);
 
         $newfullName = strtoupper($request->usr_fullname);
@@ -61,6 +63,7 @@ class MngUserController extends Controller
             'usr_stat'=> $request->usr_status,
             'usr_email'=> $request->usr_email,
             'usr_stat'=>$request->usr_status,
+            'usr_bu'=>$request->usr_bu,
             'div_id'=>$request->div,
             'usr_foto'=> $nama_file,
             'created_by'=> Auth::user()->usr_name,
@@ -70,13 +73,13 @@ class MngUserController extends Controller
        
         return response()->json([
             'success' => true,
-            'message' => 'Created Successfully'
+            'message' => $user
         ]);
     }
     public function edit($code)
     {
         $user = DB::table('mng_users as mu')
-        ->select('mu.usr_id','mu.usr_name','mu.usr_stat','mu.div_id','mu.usr_fullname', 'mu.usr_email','mu.usr_alamat','mu.usr_foto','mg.rol_id')
+        ->select('mu.usr_id','mu.usr_name','mu.usr_bu','mu.usr_stat','mu.div_id','mu.usr_fullname', 'mu.usr_email','mu.usr_alamat','mu.usr_foto','mg.rol_id')
         ->join('mng_usr_roles as mg','mu.usr_id','mg.usr_id')
         ->where('mu.usr_id',$code)
         ->first();
@@ -91,7 +94,8 @@ class MngUserController extends Controller
             'usr_email.unique'=>'Email Sudah Pernah Didaftarkan',
             'usr_alamat.required'=>'Alamat Wajib Diisi',
             'usr_stat.required'=>'Status Wajib Diisi',
-            'div_id.required'=>'Divisi Wajib Diisi'
+            'div_id.required'=>'Divisi Wajib Diisi',
+            'usr_bu.required'=>'Bisnis Unit Wajib Diisi',
         ];
         $request->validate([
             'usr_email'=>[
@@ -101,7 +105,8 @@ class MngUserController extends Controller
             'usr_alamat'=>'required',
             'usr_fullname'=>'required',
             'usr_stat'=>'required',
-            'div_id'=>'required'
+            'div_id'=>'required',
+            'usr_bu'=>'required'
         ],$message);
         $newfullName = strtoupper($request->usr_fullname);
         if($request->image){
@@ -118,6 +123,7 @@ class MngUserController extends Controller
                 $user->usr_stat = $request->usr_stat;
                 $user->usr_email = $request->usr_email;
                 $user->div_id = $request->div_id;
+                $user->usr_bu = $request->usr_bu;
                 $user->usr_foto = $nama_file;
                 $user->last_update_date = $this->newUpdate;
                 $user->last_updated_by = Auth::user()->usr_name;
@@ -129,6 +135,7 @@ class MngUserController extends Controller
                 $user->usr_stat = $request->usr_stat;
                 $user->usr_email = $request->usr_email;
                 $user->div_id = $request->div_id;
+                $user->usr_bu = $request->usr_bu;
                 $user->last_update_date = $this->newUpdate;
                 $user->last_updated_by = Auth::user()->usr_name;
                 $user->program_name = 'MngUserController_UPDATE';

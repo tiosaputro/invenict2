@@ -175,6 +175,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push('/ict-request-desc');
       localStorage.setItem('active', 12);
     },
+    totalRequest1: function totalRequest1() {
+      this.$router.push('/ict-request-desc');
+      localStorage.setItem('active', 38);
+    },
     getData2: function getData2() {
       var _this4 = this;
 
@@ -213,6 +217,10 @@ __webpack_require__.r(__webpack_exports__);
     sdhSelesai2: function sdhSelesai2() {
       this.$router.push('/ict-request-desc');
       localStorage.setItem('active', 16);
+    },
+    totalRequest2: function totalRequest2() {
+      this.$router.push('/ict-request-desc');
+      localStorage.setItem('active', 37);
     },
     getUser: function getUser() {
       var _this5 = this;
@@ -284,6 +292,10 @@ __webpack_require__.r(__webpack_exports__);
     sdhSelesai4: function sdhSelesai4() {
       this.$router.push('/ict-request-desc');
       localStorage.setItem('active', 21);
+    },
+    totalRequest4: function totalRequest4() {
+      this.$router.push('/ict-request-desc');
+      localStorage.setItem('active', 39);
     },
     getData5: function getData5() {
       var _this8 = this;
@@ -959,40 +971,41 @@ var _hoisted_103 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
 );
 
 var _hoisted_104 = {
-  key: 3,
-  "class": "grid"
-};
-var _hoisted_105 = {
   "class": "col-12 lg:col-6 xl:col-3"
 };
-var _hoisted_106 = {
+var _hoisted_105 = {
   "class": "card mb-0"
 };
-var _hoisted_107 = {
+var _hoisted_106 = {
   "class": "flex justify-content-between mb-3"
 };
 
-var _hoisted_108 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_107 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Belum Diverifikasi", -1
+}, "Total Request", -1
 /* HOISTED */
 );
 
-var _hoisted_109 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_108 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
   style: {
     "width": "2.5rem",
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-check text-xl",
+  "class": "pi pi-book text-xl",
   style: {
-    "color": "red"
+    "fontSize": "4rem",
+    "color": "green"
   }
 })], -1
 /* HOISTED */
 );
 
+var _hoisted_109 = {
+  key: 3,
+  "class": "grid"
+};
 var _hoisted_110 = {
   "class": "col-12 lg:col-6 xl:col-3"
 };
@@ -1005,7 +1018,7 @@ var _hoisted_112 = {
 
 var _hoisted_113 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Atasan Divisi", -1
+}, "Belum Diverifikasi", -1
 /* HOISTED */
 );
 
@@ -1016,9 +1029,9 @@ var _hoisted_114 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-clipboard-check text-xl",
+  "class": "pi pi-check text-xl",
   style: {
-    "color": "green"
+    "color": "red"
   }
 })], -1
 /* HOISTED */
@@ -1036,7 +1049,7 @@ var _hoisted_117 = {
 
 var _hoisted_118 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "ICT Manager", -1
+}, "Atasan Divisi", -1
 /* HOISTED */
 );
 
@@ -1047,7 +1060,7 @@ var _hoisted_119 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-journal-bookmark-fill text-xl",
+  "class": "bi bi-clipboard-check text-xl",
   style: {
     "color": "green"
   }
@@ -1067,7 +1080,7 @@ var _hoisted_122 = {
 
 var _hoisted_123 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Direject", -1
+}, "ICT Manager", -1
 /* HOISTED */
 );
 
@@ -1078,9 +1091,9 @@ var _hoisted_124 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-times text-xl",
+  "class": "bi bi-journal-bookmark-fill text-xl",
   style: {
-    "color": "red"
+    "color": "green"
   }
 })], -1
 /* HOISTED */
@@ -1098,7 +1111,7 @@ var _hoisted_127 = {
 
 var _hoisted_128 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Dikerjakan", -1
+}, "Direject", -1
 /* HOISTED */
 );
 
@@ -1109,9 +1122,9 @@ var _hoisted_129 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-check text-xl",
+  "class": "pi pi-times text-xl",
   style: {
-    "color": "green"
+    "color": "red"
   }
 })], -1
 /* HOISTED */
@@ -1129,7 +1142,7 @@ var _hoisted_132 = {
 
 var _hoisted_133 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Dikerjakan", -1
+}, "Sedang Dikerjakan", -1
 /* HOISTED */
 );
 
@@ -1140,10 +1153,9 @@ var _hoisted_134 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-check2-all text-xl",
+  "class": "pi pi-check text-xl",
   style: {
-    "fontSize": "3.5rem",
-    "color": "red"
+    "color": "green"
   }
 })], -1
 /* HOISTED */
@@ -1161,11 +1173,43 @@ var _hoisted_137 = {
 
 var _hoisted_138 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Selesai", -1
+}, "Sudah Dikerjakan", -1
 /* HOISTED */
 );
 
 var _hoisted_139 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
+  style: {
+    "width": "2.5rem",
+    "height": "2.5rem"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-check2-all text-xl",
+  style: {
+    "fontSize": "3.5rem",
+    "color": "red"
+  }
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_140 = {
+  "class": "col-12 lg:col-6 xl:col-3"
+};
+var _hoisted_141 = {
+  "class": "card mb-0"
+};
+var _hoisted_142 = {
+  "class": "flex justify-content-between mb-3"
+};
+
+var _hoisted_143 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "block text-500 font-medium mb-3"
+}, "Sudah Selesai", -1
+/* HOISTED */
+);
+
+var _hoisted_144 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
   style: {
     "width": "2.5rem",
@@ -1181,27 +1225,59 @@ var _hoisted_139 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
 /* HOISTED */
 );
 
-var _hoisted_140 = {
-  key: 4,
-  "class": "grid"
-};
-var _hoisted_141 = {
+var _hoisted_145 = {
   "class": "col-12 lg:col-6 xl:col-3"
 };
-var _hoisted_142 = {
+var _hoisted_146 = {
   "class": "card mb-0"
 };
-var _hoisted_143 = {
+var _hoisted_147 = {
   "class": "flex justify-content-between mb-3"
 };
 
-var _hoisted_144 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_148 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Belum Selesai", -1
+}, "Total Request", -1
 /* HOISTED */
 );
 
-var _hoisted_145 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_149 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
+  style: {
+    "width": "2.5rem",
+    "height": "2.5rem"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "pi pi-book text-xl",
+  style: {
+    "fontSize": "3.5rem",
+    "color": "green"
+  }
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_150 = {
+  key: 4,
+  "class": "grid"
+};
+var _hoisted_151 = {
+  "class": "col-12 lg:col-6 xl:col-3"
+};
+var _hoisted_152 = {
+  "class": "card mb-0"
+};
+var _hoisted_153 = {
+  "class": "flex justify-content-between mb-3"
+};
+
+var _hoisted_154 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "block text-500 font-medium mb-3"
+}, "Sedang Dikerjakan", -1
+/* HOISTED */
+);
+
+var _hoisted_155 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
   style: {
     "width": "2.5rem",
@@ -1216,127 +1292,30 @@ var _hoisted_145 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
 /* HOISTED */
 );
 
-var _hoisted_146 = {
+var _hoisted_156 = {
   "class": "col-12 lg:col-6 xl:col-3"
 };
-var _hoisted_147 = {
+var _hoisted_157 = {
   "class": "card mb-0"
 };
-var _hoisted_148 = {
+var _hoisted_158 = {
   "class": "flex justify-content-between mb-3"
 };
 
-var _hoisted_149 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_159 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
 }, "Sudah Dikerjakan", -1
 /* HOISTED */
 );
 
-var _hoisted_150 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_160 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
   style: {
     "width": "2.5rem",
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-check2-all text-xl",
-  style: {
-    "color": "red"
-  }
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_151 = {
-  "class": "col-12 lg:col-6 xl:col-3"
-};
-var _hoisted_152 = {
-  "class": "card mb-0"
-};
-var _hoisted_153 = {
-  "class": "flex justify-content-between mb-3"
-};
-
-var _hoisted_154 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "block text-500 font-medium mb-3"
-}, "Sudah Selesai", -1
-/* HOISTED */
-);
-
-var _hoisted_155 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
-  style: {
-    "width": "2.5rem",
-    "height": "2.5rem"
-  }
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-check2-all text-xl",
-  style: {
-    "color": "red"
-  }
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_156 = {
-  key: 5,
-  "class": "grid"
-};
-var _hoisted_157 = {
-  "class": "col-12 lg:col-6 xl:col-3"
-};
-var _hoisted_158 = {
-  "class": "card mb-0"
-};
-var _hoisted_159 = {
-  "class": "flex justify-content-between mb-3"
-};
-
-var _hoisted_160 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "block text-500 font-medium mb-3"
-}, "Belum Diverifikasi", -1
-/* HOISTED */
-);
-
-var _hoisted_161 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
-  style: {
-    "width": "2.5rem",
-    "height": "2.5rem"
-  }
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-check text-xl text-xl",
-  style: {
-    "color": "red"
-  }
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_162 = {
-  "class": "col-12 lg:col-6 xl:col-3"
-};
-var _hoisted_163 = {
-  "class": "card mb-0"
-};
-var _hoisted_164 = {
-  "class": "flex justify-content-between mb-3"
-};
-
-var _hoisted_165 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "block text-500 font-medium mb-3"
-}, "Sudah Diverifikasi", -1
-/* HOISTED */
-);
-
-var _hoisted_166 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
-  style: {
-    "width": "2.5rem",
-    "height": "2.5rem"
-  }
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-check text-xl text-xl",
+  "class": "pi pi-check text-xl",
   style: {
     "color": "green"
   }
@@ -1344,6 +1323,41 @@ var _hoisted_166 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
 /* HOISTED */
 );
 
+var _hoisted_161 = {
+  "class": "col-12 lg:col-6 xl:col-3"
+};
+var _hoisted_162 = {
+  "class": "card mb-0"
+};
+var _hoisted_163 = {
+  "class": "flex justify-content-between mb-3"
+};
+
+var _hoisted_164 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "block text-500 font-medium mb-3"
+}, "Sudah Selesai", -1
+/* HOISTED */
+);
+
+var _hoisted_165 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
+  style: {
+    "width": "2.5rem",
+    "height": "2.5rem"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-check2-all text-xl",
+  style: {
+    "color": "green"
+  }
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_166 = {
+  key: 5,
+  "class": "grid"
+};
 var _hoisted_167 = {
   "class": "col-12 lg:col-6 xl:col-3"
 };
@@ -1356,7 +1370,7 @@ var _hoisted_169 = {
 
 var _hoisted_170 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Direject", -1
+}, "Belum Diverifikasi", -1
 /* HOISTED */
 );
 
@@ -1367,7 +1381,7 @@ var _hoisted_171 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-times text-xl",
+  "class": "pi pi-check text-xl text-xl",
   style: {
     "color": "red"
   }
@@ -1387,7 +1401,7 @@ var _hoisted_174 = {
 
 var _hoisted_175 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Dikerjakan", -1
+}, "Sudah Diverifikasi", -1
 /* HOISTED */
 );
 
@@ -1398,9 +1412,8 @@ var _hoisted_176 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-spin pi-spinner",
+  "class": "pi pi-check text-xl text-xl",
   style: {
-    "fontSize": "2rem",
     "color": "green"
   }
 })], -1
@@ -1419,7 +1432,7 @@ var _hoisted_179 = {
 
 var _hoisted_180 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Dikerjakan", -1
+}, "Direject", -1
 /* HOISTED */
 );
 
@@ -1430,7 +1443,7 @@ var _hoisted_181 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-check2-all text-xl",
+  "class": "pi pi-times text-xl",
   style: {
     "color": "red"
   }
@@ -1450,7 +1463,7 @@ var _hoisted_184 = {
 
 var _hoisted_185 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Selesai", -1
+}, "Sedang Dikerjakan", -1
 /* HOISTED */
 );
 
@@ -1461,8 +1474,103 @@ var _hoisted_186 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "pi pi-spin pi-spinner",
+  style: {
+    "fontSize": "2rem",
+    "color": "green"
+  }
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_187 = {
+  "class": "col-12 lg:col-6 xl:col-3"
+};
+var _hoisted_188 = {
+  "class": "card mb-0"
+};
+var _hoisted_189 = {
+  "class": "flex justify-content-between mb-3"
+};
+
+var _hoisted_190 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "block text-500 font-medium mb-3"
+}, "Sudah Dikerjakan", -1
+/* HOISTED */
+);
+
+var _hoisted_191 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
+  style: {
+    "width": "2.5rem",
+    "height": "2.5rem"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "bi bi-check2-all text-xl",
   style: {
+    "color": "red"
+  }
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_192 = {
+  "class": "col-12 lg:col-6 xl:col-3"
+};
+var _hoisted_193 = {
+  "class": "card mb-0"
+};
+var _hoisted_194 = {
+  "class": "flex justify-content-between mb-3"
+};
+
+var _hoisted_195 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "block text-500 font-medium mb-3"
+}, "Sudah Selesai", -1
+/* HOISTED */
+);
+
+var _hoisted_196 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
+  style: {
+    "width": "2.5rem",
+    "height": "2.5rem"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-check2-all text-xl",
+  style: {
+    "color": "green"
+  }
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_197 = {
+  "class": "col-12 lg:col-6 xl:col-3"
+};
+var _hoisted_198 = {
+  "class": "card mb-0"
+};
+var _hoisted_199 = {
+  "class": "flex justify-content-between mb-3"
+};
+
+var _hoisted_200 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "block text-500 font-medium mb-3"
+}, "Total Request", -1
+/* HOISTED */
+);
+
+var _hoisted_201 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex align-items-center justify-content-center bg-gray-100 border-round",
+  style: {
+    "width": "2.5rem",
+    "height": "2.5rem"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "pi pi-book text-xl",
+  style: {
+    "fontSize": "3.5rem",
     "color": "green"
   }
 })], -1
@@ -1670,8 +1778,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count1.sudahselesai), 1
   /* TEXT */
-  )]), _hoisted_103])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.role_name.includes('Supervisor') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_104, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_105, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_106, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_107, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_108, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  )]), _hoisted_103])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_104, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_105, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_106, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_107, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[20] || (_cache[20] = function ($event) {
+      return $options.totalRequest1();
+    }),
+    style: {
+      "cursor": "pointer"
+    },
+    "class": "text-900 font-medium text-xl"
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count1.total), 1
+  /* TEXT */
+  )]), _hoisted_108])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.role_name.includes('Supervisor') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_109, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_111, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_112, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_113, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[21] || (_cache[21] = function ($event) {
       return $options.blmDiassign2();
     }),
     style: {
@@ -1680,8 +1798,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count2.blmDiverifikasi), 1
   /* TEXT */
-  )]), _hoisted_109])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_111, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_112, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_113, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[21] || (_cache[21] = function ($event) {
+  )]), _hoisted_114])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_115, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_116, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_117, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_118, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[22] || (_cache[22] = function ($event) {
       return $options.atasanDivisi2();
     }),
     style: {
@@ -1690,8 +1808,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count2.atasandivisi), 1
   /* TEXT */
-  )]), _hoisted_114])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_115, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_116, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_117, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_118, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[22] || (_cache[22] = function ($event) {
+  )]), _hoisted_119])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_120, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_121, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_122, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_123, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[23] || (_cache[23] = function ($event) {
       return $options.IctManager2();
     }),
     style: {
@@ -1700,8 +1818,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count2.manager), 1
   /* TEXT */
-  )]), _hoisted_119])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_120, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_121, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_122, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_123, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[23] || (_cache[23] = function ($event) {
+  )]), _hoisted_124])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_125, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_126, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_127, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_128, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[24] || (_cache[24] = function ($event) {
       return $options.direject2();
     }),
     style: {
@@ -1710,8 +1828,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count2.reject), 1
   /* TEXT */
-  )]), _hoisted_124])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_125, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_126, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_127, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_128, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[24] || (_cache[24] = function ($event) {
+  )]), _hoisted_129])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_130, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_131, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_132, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_133, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[25] || (_cache[25] = function ($event) {
       return $options.sdgDikerjakan2();
     }),
     style: {
@@ -1720,8 +1838,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count2.sdgdikerjakan), 1
   /* TEXT */
-  )]), _hoisted_129])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_130, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_131, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_132, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_133, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[25] || (_cache[25] = function ($event) {
+  )]), _hoisted_134])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_135, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_136, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_137, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_138, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[26] || (_cache[26] = function ($event) {
       return $options.sdhDikerjakan2();
     }),
     style: {
@@ -1730,8 +1848,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count2.sdhdikerjakan), 1
   /* TEXT */
-  )]), _hoisted_134])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_135, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_136, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_137, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_138, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[26] || (_cache[26] = function ($event) {
+  )]), _hoisted_139])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_140, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_141, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_142, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_143, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[27] || (_cache[27] = function ($event) {
       return $options.sdhSelesai2();
     }),
     style: {
@@ -1740,8 +1858,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count2.sdhselesai), 1
   /* TEXT */
-  )]), _hoisted_139])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.role_name.includes('Personel ICT') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_140, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_141, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_142, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_143, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_144, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[27] || (_cache[27] = function ($event) {
+  )]), _hoisted_144])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_145, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_146, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_147, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_148, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[28] || (_cache[28] = function ($event) {
+      return $options.totalRequest2();
+    }),
+    style: {
+      "cursor": "pointer"
+    },
+    "class": "text-900 font-medium text-xl"
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count2.totalRequest), 1
+  /* TEXT */
+  )]), _hoisted_149])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.role_name.includes('Personel ICT') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_150, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_151, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_152, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_153, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_154, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[29] || (_cache[29] = function ($event) {
       return $options.blmSelesai3();
     }),
     style: {
@@ -1750,9 +1878,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count3.belumselesai), 1
   /* TEXT */
-  )]), _hoisted_145])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_146, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_147, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_148, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_149, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[28] || (_cache[28] = function ($event) {
-      return $options.sdhSelesai3();
+  )]), _hoisted_155])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_156, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_157, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_158, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_159, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[30] || (_cache[30] = function ($event) {
+      return $options.sdHDikerjakan3();
     }),
     style: {
       "cursor": "pointer"
@@ -1760,9 +1888,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count3.sudahdikerjakan), 1
   /* TEXT */
-  )]), _hoisted_150])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_151, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_152, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_153, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_154, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[29] || (_cache[29] = function ($event) {
-      return $options.diRejectAdmin();
+  )]), _hoisted_160])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_161, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_162, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_163, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_164, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[31] || (_cache[31] = function ($event) {
+      return $options.sdhSelesai3();
     }),
     style: {
       "cursor": "pointer"
@@ -1770,8 +1898,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count3.sudahselesai), 1
   /* TEXT */
-  )]), _hoisted_155])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.role_name.includes('Manager') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_156, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_157, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_158, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_159, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_160, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[30] || (_cache[30] = function ($event) {
+  )]), _hoisted_165])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.role_name.includes('Manager') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_166, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_167, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_168, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_169, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_170, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[32] || (_cache[32] = function ($event) {
       return $options.blmDiverifikasi4();
     }),
     style: {
@@ -1780,8 +1908,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count4.blmdiverifikasi), 1
   /* TEXT */
-  )]), _hoisted_161])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_162, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_163, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_164, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_165, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[31] || (_cache[31] = function ($event) {
+  )]), _hoisted_171])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_172, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_173, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_174, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_175, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[33] || (_cache[33] = function ($event) {
       return $options.sdhDiverifikasi4();
     }),
     style: {
@@ -1790,8 +1918,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count4.sudahdiverifikasi), 1
   /* TEXT */
-  )]), _hoisted_166])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_167, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_168, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_169, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_170, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[32] || (_cache[32] = function ($event) {
+  )]), _hoisted_176])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_177, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_178, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_179, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_180, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[34] || (_cache[34] = function ($event) {
       return $options.direject4();
     }),
     style: {
@@ -1800,8 +1928,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count4.direject), 1
   /* TEXT */
-  )]), _hoisted_171])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_172, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_173, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_174, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_175, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[33] || (_cache[33] = function ($event) {
+  )]), _hoisted_181])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_182, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_183, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_184, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_185, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[35] || (_cache[35] = function ($event) {
       return $options.sdgdikerjakan4();
     }),
     style: {
@@ -1810,8 +1938,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count4.sedangdikerjakan), 1
   /* TEXT */
-  )]), _hoisted_176])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_177, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_178, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_179, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_180, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[34] || (_cache[34] = function ($event) {
+  )]), _hoisted_186])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_187, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_188, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_189, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_190, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[36] || (_cache[36] = function ($event) {
       return $options.sdHDikerjakan4();
     }),
     style: {
@@ -1820,8 +1948,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count4.sudahdikerjakan), 1
   /* TEXT */
-  )]), _hoisted_181])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_182, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_183, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_184, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_185, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[35] || (_cache[35] = function ($event) {
+  )]), _hoisted_191])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_192, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_193, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_194, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_195, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[37] || (_cache[37] = function ($event) {
       return $options.sdhSelesai4();
     }),
     style: {
@@ -1830,7 +1958,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "text-900 font-medium text-xl"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count4.sudahselesai), 1
   /* TEXT */
-  )]), _hoisted_186])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
+  )]), _hoisted_196])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_197, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_198, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_199, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_200, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[38] || (_cache[38] = function ($event) {
+      return $options.totalRequest4();
+    }),
+    style: {
+      "cursor": "pointer"
+    },
+    "class": "text-900 font-medium text-xl"
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count4.totalrequest), 1
+  /* TEXT */
+  )]), _hoisted_201])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
   /* STABLE_FRAGMENT */
   );
 }

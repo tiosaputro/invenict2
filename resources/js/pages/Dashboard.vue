@@ -256,10 +256,23 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
-						<div @click="sdhSelesai1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.sudahselesai}}</div>
+						<div @click="sdhSelesai1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{ count1.sudahselesai }}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
+					</div>
+				</div>
+			</div>
+    </div>
+	<div class="col-12 lg:col-6 xl:col-3">
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Total Request</span>
+						<div @click="totalRequest1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.total}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-book text-xl" style="fontSize: 4rem; color : green;"></i>
 					</div>
 				</div>
 			</div>
@@ -357,13 +370,26 @@
 				</div>
 			</div>
 		</div>	
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Total Request</span>
+						<div @click="totalRequest2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.totalRequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>	
 </div>
 <div class="grid" v-if="this.role_name.includes('Personel ICT')">
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Belum Selesai</span>
+						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
 						<div @click="blmSelesai3()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count3.belumselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -377,10 +403,10 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
-						<div @click="sdhSelesai3()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count3.sudahdikerjakan}}</div>
+						<div @click="sdHDikerjakan3()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count3.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="color: red;"></i>
+						<i class="pi pi-check text-xl" style="color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -390,10 +416,10 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
-						<div @click="diRejectAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count3.sudahselesai}}</div>
+						<div @click="sdhSelesai3()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count3.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="color: red;"></i>
+						<i class="bi bi-check2-all text-xl" style="color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -474,6 +500,19 @@
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Total Request</span>
+						<div @click="totalRequest4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.totalrequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-book text-xl" style="fontSize: 3.5rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -619,6 +658,10 @@ export default {
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',12);
         },
+		totalRequest1(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',38);
+		},
         getData2(){
             this.axios.get('api/getCountDivisi2',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.count2 = response.data;
@@ -652,6 +695,10 @@ export default {
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',16)
         },
+		totalRequest2(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',37)
+		},
         getUser(){
           this.axios.get('api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.user = response.data;
@@ -704,6 +751,10 @@ export default {
           this.$router.push('/ict-request-desc');
           localStorage.setItem('active',21)
         },
+		totalRequest4(){
+		  this.$router.push('/ict-request-desc');
+          localStorage.setItem('active',39)
+		},
         getData5(){
           this.axios.get('api/getCountAdmin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.count5 = response.data;

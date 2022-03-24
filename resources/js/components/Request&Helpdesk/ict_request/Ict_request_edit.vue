@@ -46,24 +46,13 @@
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
                  <div class="field col-12 md:col-4">
-                     <Dropdown 
-                        v-model ="mutasi.ireq_type"
-                        :options="type"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Pilih Tipe Request"
-                        :showClear="true"
-                        :class="{ 'p-invalid': errors.ireq_type }"
+                     <InputText 
+                        v-model ="mutasi.lookup_desc"
+                        disabled
                      />
-                        <small v-if="errors.ireq_type" class="p-error">
-                          {{ errors.ireq_type[0] }}
-                        </small>
-                        <small v-if="error.ireq_type" class="p-error">
-                          {{ error.ireq_type }}
-                        </small>
                 </div>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Pengguna</label>
                  <div class="col">
                      <InputText
@@ -71,6 +60,7 @@
                         v-model="mutasi.ireq_user"
                         placeholder="Masukan Pengguna"
                         :class="{ 'p-invalid': errors.ireq_user }"
+                        disabled
                      />
                         <small v-if="errors.ireq_user" class="p-error">
                           {{ errors.ireq_user[0] }}
@@ -86,7 +76,7 @@
                         optionLabel="name"
                         optionValue="code"
                         placeholder="Pilih Divisi Pengguna"
-                        :showClear="true"
+                        disabled
                         :filter="true"
                         :class="{ 'p-invalid': error.ireq_divisi_user }"
                      />
@@ -94,7 +84,7 @@
                           {{error.ireq_divisi_user}}
                         </small>
                 </div>
-              </div>
+              </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Bisnis Unit</label>
                  <div class="field col-12 md:col-4">
@@ -104,7 +94,7 @@
                         optionLabel="name"
                         optionValue="code"
                         placeholder="Pilih Bisnis Unit"
-                        :showClear="true"
+                        disabled
                         :filter="true"
                         :class="{ 'p-invalid': errors.ireq_bu }"
                      />
@@ -211,7 +201,6 @@ export default {
       this.error = [];
       if(
         this.mutasi.ireq_bu != null &&
-        this.mutasi.ireq_type != null &&
         this.mutasi.ireq_divisi_user != null 
       ){
         this.axios.put('/api/update-ict/'+ this.$route.params.code, this.mutasi, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
@@ -228,10 +217,7 @@ export default {
       else{
         if(this.mutasi.ireq_type == null){
           this.error.ireq_type = "Tipe Request Wajib Diisi"
-        }
-        if(this.mutasi.ireq_bu == null){
-          this.error.ireq_bu = "Bisnis Unit Wajib Diisi"
-        }
+      }
          if(this.mutasi.ireq_divisi_user == null){
           this.error.ireq_divisi_user = "Divisi User Wajib Diisi"
         }

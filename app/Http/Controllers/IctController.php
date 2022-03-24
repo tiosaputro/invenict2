@@ -33,26 +33,32 @@ class IctController extends Controller
     function getDataManager()
     {
         $ict = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','im.ireq_status','dr.div_name',
+        DB::raw("CASE WHEN im.ireq_status =  'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status = 'NA2' Then 'Belum Diapprove ICT Manager' end as ireq_statuss"))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('im.ireq_status','NA2')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->Orwhere('im.ireq_status','NA1')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status',)
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict1 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor',
+        'dr.div_name',DB::raw("CASE WHEN im.ireq_status =  'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager' end as ireq_status"))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('im.ireq_status','A2')
+        ->orwhere('im.ireq_status','A1')
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict2 = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_reason',
-          DB::raw("CASE WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' end as ireq_status "))
+          DB::raw("CASE WHEN im.ireq_status = 'RR' Then 'Reject By ICT Manager' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' end as ireq_status "))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->where('im.ireq_status','RA2')
+        ->where('im.ireq_status','RR')
+        ->orwhere('im.ireq_status','RA1')
+        ->orwhere('im.ireq_status','RA2')
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status','im.ireq_reason')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
@@ -235,7 +241,6 @@ class IctController extends Controller
             $d->program_name = "IctController_needApprovalAtasan";
             $d->save();
         }
-
         $emailVerifikator = DB::table('divisi_refs as dr')
                     ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
                     ->select('mu.usr_email','mu.usr_id')
@@ -520,35 +525,44 @@ class IctController extends Controller
     Public function getPermohonan($usr_name)
     {
         $ict = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
+        'im.ireq_requestor',DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status ='NA2' Then 'Belum Diapprove ICT Manager' When im.ireq_status = 'P' Then 'Belum Diverifikasi Reviewer' END as ireq_status "))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('dr.div_verificator',$usr_name)
-        ->where('im.ireq_status','NA1')
+        ->where(function($query){
+            return $query
+            ->where('im.ireq_status','NA1')
+            ->orwhere('im.ireq_status','NA2')
+            ->orwhere('im.ireq_status','P');
+        })
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
         ->orderBy('im.creation_date','ASC')
         ->get();
         
         $ict1 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user',
+        'im.ireq_requestor',DB::raw("CASE When im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager' END as ireq_status"))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('dr.div_verificator',$usr_name)
         ->where(function($query){
             return $query
-            ->Where('im.ireq_status','A1');
+            ->Where('im.ireq_status','A1')
+            ->orwhere('im.ireq_status','A2');
             })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
         ->orderBy('im.creation_date','ASC')
         ->get();
 
         $ict2 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor','im.ireq_reason')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user',
+        'im.ireq_requestor','im.ireq_reason',DB::raw("CASE WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status ='RA2' Then 'Reject By ICT Manager' WHEN im.ireq_status ='RR' Then 'Reject By Reviewer' END as ireq_status"))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('dr.div_verificator',$usr_name)
         ->where(function($query){
             return $query
-            ->where('im.ireq_status','RA1');
+            ->where('im.ireq_status','RA1')
+            ->orwhere('im.ireq_status','RA2')
+            ->orwhere('im.ireq_status','RR');
             })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','im.ireq_reason')
         ->orderBy('im.creation_date','ASC')
         ->get();
 
@@ -560,24 +574,6 @@ class IctController extends Controller
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','im.ireq_assigned_to')
         ->orderBy('im.creation_date','ASC')
         ->get();
-        
-        // $ict4 = DB::table('ireq_mst as im')
-        // ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor')
-        // ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        // ->where('dr.div_verificator',$usr_name)
-        // ->where('im.ireq_status','D')
-        // ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
-        // ->orderBy('im.creation_date','ASC')
-        // ->get();
-
-        // $ict5 = DB::table('ireq_mst as im')
-        // ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor')
-        // ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        // ->where('dr.div_verificator',$usr_name)
-        // ->where('im.ireq_status','C')
-        // ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
-        // ->orderBy('im.creation_date','ASC')
-        // ->get();
 
         $ict4 = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
@@ -603,7 +599,26 @@ class IctController extends Controller
         ->orderBy('idd.ireqd_id','ASC')
         ->get();
 
-        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5]);
+        $ict6 = DB::table('ireq_mst as id')
+            ->select('id.ireq_id','id.ireq_no','id.ireq_user','id.ireq_date','dr.div_name','id.ireq_requestor',
+                DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
+                id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
+                WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
+                WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' 
+                WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
+                end as ireq_status "))
+            ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
+            ->where('dr.div_verificator',$usr_name)
+            ->whereNotNull('id.ireq_status')
+            ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
+             2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
+              id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
+              WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
+              WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'T' Then 9 
+              WHEN id.ireq_status = 'D' Then 10 WHEN id.ireq_status = 'C' Then 11 end "))
+            ->get();
+
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6]);
     }
     Public function getPermohonanDivisi()
     {
@@ -671,46 +686,88 @@ class IctController extends Controller
         $ict6 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
 
         $ict7 = DB::Table('v_ireq_mst_selesai')->get();
-        return response()->json(['ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7]);
+        $ict8 = DB::table('ireq_mst as id')
+        ->select('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.ireq_requestor','dr.div_name','id.ireq_assigned_to',
+        DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
+        id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
+        WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
+        WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' 
+        WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
+        end as ireq_status "))
+        ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
+        ->whereNotNull('id.ireq_status')
+        ->groupBy('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.ireq_requestor','dr.div_name','id.creation_date','id.ireq_status','id.ireq_assigned_to')
+        ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
+             2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
+              id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
+              WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
+              WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'T' Then 9 
+              WHEN id.ireq_status = 'D' Then 10 WHEN id.ireq_status = 'C' Then 11 end "))
+        ->get();
+        return response()->json(['ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8]);
     }
     Public function getSedangDikerjakan($usr_fullname)
     {
         $ict = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','im.ireq_assigned_to')
-        ->leftjoin('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
-        ->where('im.ireq_status','T')
+        ->select('im.ireq_id','im.ireq_no','idm.ireqd_id','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"))
+        ->join('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
+        ->join('invent_mst as imm','idm.invent_code','imm.invent_code')
+        ->where('idm.ireq_status','T')
         ->where('idm.ireq_assigned_to',$usr_fullname)
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','im.ireq_assigned_to')
+        ->orderBy('idm.ireqd_id','ASC')
         ->get();
 
-        $ict1 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
-        $ict2 = DB::Table('v_ireq_mst_selesai')->get();
+        $ict1 = DB::table('ireq_mst as im')
+        ->select('im.ireq_id','im.ireq_no','idm.ireqd_id','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',
+        DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"))
+        ->join('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
+        ->join('invent_mst as imm','idm.invent_code','imm.invent_code')
+        ->where('idm.ireq_status','D')
+        ->where('idm.ireq_assigned_to',$usr_fullname)
+        ->orderBy('idm.ireqd_id','ASC')
+        ->get();
+
+        $ict2 = DB::table('ireq_mst as im')
+        ->select('im.ireq_id','im.ireq_no','idm.ireqd_id','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"))
+        ->join('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
+        ->join('invent_mst as imm','idm.invent_code','imm.invent_code')
+        ->where('idm.ireq_status','C')
+        ->where('idm.ireq_assigned_to',$usr_fullname)
+        ->orderBy('idm.ireqd_id','ASC')
+        ->get();
+        
         return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2]);
     }
     public function ictDivisi4()
     {
 
         $ict = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','im.ireq_status','dr.div_name',
+        DB::raw("CASE WHEN im.ireq_status =  'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status = 'NA2' Then 'Belum Diapprove ICT Manager' end as ireq_statuss"))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('im.ireq_status','NA2')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->Orwhere('im.ireq_status','NA1')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status',)
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict1 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor',
+        'dr.div_name',DB::raw("CASE WHEN im.ireq_status =  'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager' end as ireq_status"))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('im.ireq_status','A2')
+        ->orwhere('im.ireq_status','A1')
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict2 = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_reason',
-          DB::raw("CASE WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' end as ireq_status "))
+          DB::raw("CASE WHEN im.ireq_status = 'RR' Then 'Reject By ICT Manager' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' end as ireq_status "))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->where('im.ireq_status','RA2')
+        ->where('im.ireq_status','RR')
+        ->orwhere('im.ireq_status','RA1')
+        ->orwhere('im.ireq_status','RA2')
         ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status','im.ireq_reason')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
@@ -727,7 +784,25 @@ class IctController extends Controller
         $ict4 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
         $ict5 = DB::Table('v_ireq_mst_selesai')->get();
 
-        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5],200);
+        $ict6 = DB::table('ireq_mst as id')
+        ->select('id.ireq_id','id.ireq_no','id.ireq_user','id.ireq_date','dr.div_name','id.ireq_requestor',
+            DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
+            id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
+            WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
+            WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' 
+            WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
+            end as ireq_status "))
+        ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
+        ->whereNotNull('id.ireq_status')
+        ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
+         2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
+          id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
+          WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
+          WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'T' Then 9 
+          WHEN id.ireq_status = 'D' Then 10 WHEN id.ireq_status = 'C' Then 11 end "))
+        ->get();
+
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
     }
     function totalRequest($usr_name)
     {
@@ -775,21 +850,26 @@ class IctController extends Controller
     }
     Public function edit($code)
     {
-        $ict = Ict::find($code);
+        $ict = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','lr.lookup_desc','im.ireq_date','im.ireq_bu','im.ireq_divisi_user','im.ireq_user')
+            ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
+            ->where('im.ireq_id',$code)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+            ->first();
             return response()->json($ict);
     }
     Public function update(Request $request, $code)
     {
         $message = [
             'ireq_date.required'=>'Tgl. Request Wajib Diisi',
-            'ireq_type.required'=>'Tipe Request Wajib diisi',
+            // 'ireq_type.required'=>'Tipe Request Wajib diisi',
             'ireq_bu.required'=>'Bisnis Unit Wajib Diisi',
             'ireq_user.required'=>'Pengguna Wajib diisi',
             'ireq_divisi_user.required'=>'Divisi Pengguna Wajib Diisi'
         ];
         $request->validate([
                 'ireq_date' => 'required',
-                'ireq_type'=>'required',
+                // 'ireq_type'=>'required',
                 'ireq_bu'=>'required',
                 'ireq_user' =>'required',
                 'ireq_divisi_user'=>'required'
@@ -798,7 +878,7 @@ class IctController extends Controller
         $newDate = Carbon::parse($request->ireq_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_date = $newDate;
-        $ict->ireq_type = $request->ireq_type;
+        // $ict->ireq_type = $request->ireq_type;
         $ict->ireq_user = $request->ireq_user;
         $ict->ireq_divisi_user = $request->ireq_divisi_user;
         $ict->ireq_bu = $request->ireq_bu;

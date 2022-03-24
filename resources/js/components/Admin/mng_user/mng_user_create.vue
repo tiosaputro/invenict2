@@ -88,18 +88,36 @@
                 </div>
               </div>
               <div class="field grid">
+                <label style="width:120px">Bisnis Unit</label>
+                 <div class="col-4">
+                  <Dropdown
+                      v-model="user.usr_bu"
+                      :options="bu"
+                      :showClear="true"
+                      :filter="true"
+                      optionLabel="name"
+                      optionValue="code"
+                      placeholder="Select A Bisnis Unit"
+                      :class="{ 'p-invalid': errors.div }"
+                    />
+                   <small v-if="errors.usr_bu" class="p-error">
+                      {{ errors.usr_bu[0] }}
+                  </small>
+                </div>
+              </div>
+              <div class="field grid">
                 <label style="width:120px">Divisi</label>
                  <div class="col-4">
-               <Dropdown
-                  v-model="user.div"
-                  :options="divisi"
-                  :showClear="true"
-                  :filter="true"
-                  optionLabel="name"
-                  optionValue="code"
-                  placeholder="Select A Divisi"
-                  :class="{ 'p-invalid': errors.div }"
-                />
+                  <Dropdown
+                      v-model="user.div"
+                      :options="divisi"
+                      :showClear="true"
+                      :filter="true"
+                      optionLabel="name"
+                      optionValue="code"
+                      placeholder="Select A Divisi"
+                      :class="{ 'p-invalid': errors.div }"
+                    />
                    <small v-if="errors.div" class="p-error">
                       {{ errors.div[0] }}
                   </small>
@@ -108,16 +126,16 @@
               <div class="field grid">
                 <label style="width:120px">Status</label>
                  <div class="col-4">
-               <Dropdown
-                  v-model="user.usr_status"
-                  :options="stat"
-                  :showClear="true"
-                  :filter="true"
-                  optionLabel="nama"
-                  optionValue="code"
-                  placeholder="Select A Status"
-                  :class="{ 'p-invalid': errors.usr_status }"
-                />
+                  <Dropdown
+                      v-model="user.usr_status"
+                      :options="stat"
+                      :showClear="true"
+                      :filter="true"
+                      optionLabel="nama"
+                      optionValue="code"
+                      placeholder="Select A Status"
+                      :class="{ 'p-invalid': errors.usr_status }"
+                    />
                    <small v-if="errors.usr_status" class="p-error">
                       {{ errors.usr_status[0] }}
                   </small>
@@ -200,7 +218,8 @@ export default {
           usr_alamat:'',
           usr_roles:'',
           image:'',
-          div:''
+          div:'',
+          usr_bu:''
         },
       preview:'',
       stat: [
@@ -213,6 +232,7 @@ export default {
       checkname : [],
       checkto : [],
       id : localStorage.getItem('id'),
+      bu:[]
     };
   },
   created(){
@@ -227,6 +247,7 @@ export default {
         if(this.checkname.includes("User") || this.checkto.includes("/mng-user")){ 
           this.getRoles();
           this.getDivisi();
+          this.getBisnis();
         }
         else {
           this.$router.push('/access');
@@ -235,6 +256,11 @@ export default {
       } else {
         this.$router.push('/login');
       }
+    },
+    getBisnis(){
+      this.axios.get('api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.bu = response.data;
+        });
     },
     fileImage(event) {
       this.foto = event.target.files[0];

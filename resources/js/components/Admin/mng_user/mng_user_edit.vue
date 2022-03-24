@@ -87,6 +87,24 @@
                 </div>
               </div>
               <div class="field grid">
+                <label style="width:120px">Bisnis Unit</label>
+                 <div class="col-4">
+                  <Dropdown
+                      v-model="user.usr_bu"
+                      :options="bu"
+                      :showClear="true"
+                      :filter="true"
+                      optionLabel="name"
+                      optionValue="code"
+                      placeholder="Select A Bisnis Unit"
+                      :class="{ 'p-invalid': errors.div }"
+                    />
+                   <small v-if="errors.usr_bu" class="p-error">
+                      {{ errors.usr_bu[0] }}
+                  </small>
+                </div>
+              </div>
+              <div class="field grid">
                 <label style="width:120px">Divisi</label>
                  <div class="col-4">
                <Dropdown
@@ -202,6 +220,7 @@ export default {
       checkname : [],
       checkto : [],
       id : localStorage.getItem('id'),
+      bu:[]
     };
   },
   created(){
@@ -218,6 +237,7 @@ export default {
           this.getRole();
           this.getRoles();
           this.getDivisi();
+          this.getBisnis();
         }
         else {
           this.$router.push('/access');
@@ -226,6 +246,11 @@ export default {
       } else {
         this.$router.push('/login');
       }
+    },
+    getBisnis(){
+      this.axios.get('/api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.bu = response.data;
+        });
     },
     getRole(){
       this.axios.get('/api/edit-usr-role/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

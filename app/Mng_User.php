@@ -34,7 +34,8 @@ class Mng_User extends Authenticatable
         'kddept_unit',
         'waba_id',
         'usr_foto',
-        'div_id'
+        'div_id',
+        'usr_bu'
     ];
     protected $hidden = [
         'user_passwd'

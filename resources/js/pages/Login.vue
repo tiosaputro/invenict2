@@ -10,7 +10,7 @@
                   <form @submit.prevent="Login">
                     <div class="text-center mb-5">
                         <div class="text-900 text-3xl font-medium mb-3">Selamat Datang di</div>
-                        <span class="text-600 font-medium">System ICT Request & Inventory 👋</span>
+                        <span class="text-600 font-medium">System ICT Request & Helpdesk 👋</span>
                     </div>
                         <div class="w-full md:w-10 mx-auto">
                           <label for="email1" class="block text-900 text-xl font-medium mb-2">Username</label>

@@ -475,6 +475,7 @@
           </Column>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -486,6 +487,7 @@
                   params: { code: slotProps.data.ireq_id }, })"
                 />
               <Button
+                v-if="slotProps.data.ireq_statuss == 'NA1'"
                 class="p-button-rounded p-button-success mr-2"
                 icon="pi pi-check-square"
                 v-tooltip.right="'Verifikasi'"
@@ -551,7 +553,8 @@
             </template>
           </Column>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>\
+          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -624,6 +627,7 @@
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -1174,7 +1178,7 @@
         </template>
         </DataTable>     
         <Toolbar class="mb-4" v-if="this.active == 17">
-          <template v-slot:start>>
+          <template v-slot:start>
                 <h4>ICT Request (Request Yang Sedang Dikerjakan)</h4>
           </template>
         </Toolbar>   
@@ -1214,6 +1218,7 @@
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
@@ -1282,7 +1287,7 @@
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
@@ -1290,18 +1295,6 @@
           </Column>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column style="min-width:12rem">
-            <template #body="slotProps">
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
-                @click="$router.push({
-                  name: 'Ict Request Desc Detail Divisi 3',
-                  params: { code: slotProps.data.ireq_id }, })"
-                />
-            </template>
-          </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -2401,8 +2394,7 @@
           </Column>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
           <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2473,7 +2465,6 @@
           </Column>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
           <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
@@ -2546,7 +2537,7 @@
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
           <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2625,6 +2616,222 @@
                 icon="pi pi-info-circle"
                 @click="$router.push({
                       name: 'Ict Request Desc Detail Penugasan',
+                      params: { code: slotProps.data.ireq_id }, })"
+              />
+            </template>
+          </Column>
+          <template #footer>
+            <div class="grid dir-col">
+              <div class="col">
+                <div class="box">
+                  <Button
+                    label="Kembali"
+                    class="p-button-raised p-button mr-2"
+                    icon="bi bi-skip-backward-fill"
+                    @click="$router.push({
+                    name: 'Dashboard'})"
+                  />
+                </div>
+			      </div>
+          </div>
+        </template>
+        </DataTable>
+        <Toolbar class="mb-4" v-if="this.active == 37">
+          <template v-slot:start>
+                <h4>ICT Request (Total Request)</h4>
+          </template>
+        </Toolbar>
+        <DataTable
+          v-if="this.active == 37"
+          :value="totalRequest2"
+          :paginator="true"
+          :rows="10"
+          :loading="loading"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          responsiveLayout="scroll"
+        >
+        <template #header>
+            <div class="table-header text-right">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                </span>
+             </div>
+        </template>
+        <template #empty>
+            Not Found
+        </template>
+        <template #loading>
+            Loading ICT Request data. Please wait.
+        </template>
+        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+          <Column style="min-width:12rem">
+            <template #body="slotProps">
+              <Button
+                class="p-button-rounded p-button-secondary mr-2"
+                icon="pi pi-info-circle"
+                @click="$router.push({
+                      name: 'Ict Request Detail Desc',
+                      params: { code: slotProps.data.ireq_id }, })"
+              />
+            </template>
+          </Column>
+          <template #footer>
+            <div class="grid dir-col">
+              <div class="col">
+                <div class="box">
+                  <Button
+                    label="Kembali"
+                    class="p-button-raised p-button mr-2"
+                    icon="bi bi-skip-backward-fill"
+                    @click="$router.push({
+                    name: 'Dashboard'})"
+                  />
+                </div>
+			      </div>
+          </div>
+        </template>
+        </DataTable>
+         <Toolbar class="mb-4" v-if="this.active == 38">
+          <template v-slot:start>
+                <h4>ICT Request (Total Request)</h4>
+          </template>
+        </Toolbar>
+        <DataTable
+          v-if="this.active == 38"
+          :value="totalRequest1"
+          :paginator="true"
+          :rows="10"
+          :loading="loading"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          responsiveLayout="scroll"
+        >
+        <template #header>
+            <div class="table-header text-right">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                </span>
+             </div>
+        </template>
+        <template #empty>
+            Not Found
+        </template>
+        <template #loading>
+            Loading ICT Request data. Please wait.
+        </template>
+        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+          <Column style="min-width:12rem">
+            <template #body="slotProps">
+              <Button
+                class="p-button-rounded p-button-secondary mr-2"
+                icon="pi pi-info-circle"
+                @click="$router.push({
+                      name: 'Ict Request Detail Desc',
+                      params: { code: slotProps.data.ireq_id }, })"
+              />
+            </template>
+          </Column>
+          <template #footer>
+            <div class="grid dir-col">
+              <div class="col">
+                <div class="box">
+                  <Button
+                    label="Kembali"
+                    class="p-button-raised p-button mr-2"
+                    icon="bi bi-skip-backward-fill"
+                    @click="$router.push({
+                    name: 'Dashboard'})"
+                  />
+                </div>
+			      </div>
+          </div>
+        </template>
+        </DataTable>
+         <Toolbar class="mb-4" v-if="this.active == 39">
+          <template v-slot:start>
+                <h4>ICT Request (Total Request)</h4>
+          </template>
+        </Toolbar>
+        <DataTable
+          v-if="this.active == 39"
+          :value="totalRequest4"
+          :paginator="true"
+          :rows="10"
+          :loading="loading"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          responsiveLayout="scroll"
+        >
+        <template #header>
+            <div class="table-header text-right">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                </span>
+             </div>
+        </template>
+        <template #empty>
+            Not Found
+        </template>
+        <template #loading>
+            Loading ICT Request data. Please wait.
+        </template>
+        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+          <Column style="min-width:12rem">
+            <template #body="slotProps">
+              <Button
+                class="p-button-rounded p-button-secondary mr-2"
+                icon="pi pi-info-circle"
+                @click="$router.push({
+                      name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
               />
             </template>
@@ -2798,6 +3005,9 @@ export default {
         dialogRejectAtasan:false,
         code:null,
         reason:{ ket:null },
+        totalRequest2:[],
+        totalRequest1:[],
+        totalRequest4:[]
     };
   },
   mounted() {
@@ -2816,13 +3026,22 @@ export default {
           else if (this.active >= 7 && this.active <= 12){
             this.getIct2();
           } 
+          else if (this.active == 38){
+            this.getIct2();
+          } 
           else if (this.active > 12 && this.active <=16){
+            this.getIct3();
+          }
+          else if (this.active == 37){
             this.getIct3();
           }
           else if (this.active > 16 && this.active <=19){
             this.getUser();
           }
           else if (this.active > 19 && this.active <=21){
+            this.getIct5();
+          }
+          else if (this.active == 39){
             this.getIct5();
           }
           else if (this.active == 22){
@@ -2858,6 +3077,7 @@ export default {
         this.sedangDikerjakan = response.data.ict3;
         this.sudahDikerjakan = response.data.ict4;
         this.selesai = response.data.ict5;
+        this.totalRequest1 = response.data.ict6;
         this.loading = false;
         });
       },
@@ -2869,7 +3089,8 @@ export default {
           this.direject2 = response.data.ict4;
           this.sudahDiassign = response.data.ict5;
           this.sudahDikerjakann = response.data.ict6;
-          this.sudahslsi = response.data.ict7;
+          this.sudahslsi = response.data.ict7
+          this.totalRequest2 = response.data.ict8;
           this.loading = false;
         });
       },
@@ -2895,6 +3116,7 @@ export default {
         this.sdgDikerjakan4 = response.data.ict3;
         this.sdHDikerjakan4 = response.data.ict4
         this.selesai4 = response.data.ict5;
+        this.totalRequest4 = response.data.ict6;
         this.loading = false;
         });
       },

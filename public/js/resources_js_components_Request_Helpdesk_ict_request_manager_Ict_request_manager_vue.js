@@ -464,6 +464,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "Divisi Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_statuss",
+                header: "Status",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
                   "min-width": "12rem"
                 }
@@ -484,7 +498,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   /* PROPS */
                   , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
                     left: true
-                  }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                  }]]), slotProps.data.ireq_status == 'NA2' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                    key: 0,
                     "class": "p-button-rounded p-button-success mr-2",
                     icon: "pi pi-check-square",
                     onClick: function onClick($event) {
@@ -492,9 +507,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Verifikasi', void 0, {
+                  , ["onClick"])), [[_directive_tooltip, 'Verifikasi', void 0, {
                     right: true
-                  }]])];
+                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
                 }),
                 _: 1
                 /* STABLE */
@@ -578,6 +593,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "Divisi Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_status",
+                header: "Status",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -687,6 +716,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "Divisi Pengguna",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
