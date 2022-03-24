@@ -16,7 +16,11 @@ const routes = [
         name: 'Ict Request Detail Desc',
         path: '/ict-request-desc/:code',
         component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_detail.vue'),
-
+    },
+    {
+        name: 'Ict Request Detail Desc Requestor',
+        path: '/ict-request-desc/:code',
+        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_detail_requestor.vue'),
     },
     {
         name: 'Ict Request Desc Detail Divisi 3',

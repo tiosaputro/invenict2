@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      dialogEdit: false,
       active1: 0,
       loading: true,
       submitted: false,
@@ -35,7 +36,10 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id')
+      id: localStorage.getItem('id'),
+      editDetail: [],
+      status: [],
+      code: null
     };
   },
   mounted: function mounted() {
@@ -81,42 +85,36 @@ __webpack_require__.r(__webpack_exports__);
         _this2.getData();
       });
     },
-    submit: function submit(ireq_id) {
+    cancel: function cancel() {
+      this.code = null;
+      this.dialogEdit = false;
+      this.status = [];
+      this.editDetail = [];
+      this.submitted = false;
+    },
+    submit: function submit() {
       var _this3 = this;
 
-      this.$confirm.require({
-        message: "Apakah Anda Yakin Ingin Mensubmit?",
-        header: "ICT Request    ",
-        icon: "pi pi-info-circle",
-        acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
-        accept: function accept() {
+      this.submitted = true;
+
+      if (this.editDetail.status != null) {
+        this.axios.put('/api/update-status-done/' + this.code, this.editDetail, {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function () {
           _this3.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Disubmit",
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Status Berhasil Dirubah',
             life: 3000
           });
 
-          _this3.axios.get('/api/updateStatusPenugasan/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          });
+          _this3.cancel();
 
-          _this3.getSedangDikerjakan();
-        },
-        reject: function reject() {}
-      });
-    },
-    AssignPerRequest: function AssignPerRequest(ireq_id) {
-      this.assign.id = ireq_id;
-      this.dialogAssign = true;
-    },
-    cancelAssign: function cancelAssign() {
-      this.assign = [];
-      this.dialogAssign = false;
+          _this3.getData();
+        });
+      }
     },
     getData: function getData() {
       var _this4 = this;
@@ -148,6 +146,31 @@ __webpack_require__.r(__webpack_exports__);
     },
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+    },
+    edit: function edit(ireqd_id, ireq_id) {
+      var _this5 = this;
+
+      this.code = ireq_id;
+      this.dialogEdit = true;
+      this.axios.get('/api/detail/' + ireqd_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this5.editDetail = response.data;
+      });
+      this.getStatus();
+    },
+    getStatus: function getStatus() {
+      var _this6 = this;
+
+      this.axios.get('/api/getStatusIct', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this6.status = response.data;
+      });
     }
   }
 });
@@ -232,6 +255,67 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Loading ICT Request data. Please wait. ");
 
+var _hoisted_20 = {
+  "class": "fluid"
+};
+var _hoisted_21 = {
+  "class": "field grid"
+};
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "No. Request", -1
+/* HOISTED */
+);
+
+var _hoisted_23 = {
+  "class": "col-fixed"
+};
+var _hoisted_24 = {
+  "class": "fluid"
+};
+var _hoisted_25 = {
+  "class": "field grid"
+};
+
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Nama Peripheral", -1
+/* HOISTED */
+);
+
+var _hoisted_27 = {
+  "class": "col-fixed"
+};
+var _hoisted_28 = {
+  "class": "fluid"
+};
+var _hoisted_29 = {
+  "class": "field grid"
+};
+
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Status", -1
+/* HOISTED */
+);
+
+var _hoisted_31 = {
+  "class": "col-fixed"
+};
+var _hoisted_32 = {
+  key: 0,
+  "class": "p-error"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
@@ -251,7 +335,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_TabView = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TabView");
 
-  var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
+  var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
+
+  var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
@@ -312,6 +398,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireqd_id",
+                header: "No. Detail",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "name",
+                header: "Nama Peripheral",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
                 header: "Tgl.Request",
                 sortable: true,
@@ -342,6 +442,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "Divisi Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
                 header: "Petugas (ICT)",
                 sortable: true,
@@ -350,26 +457,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "15rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                    "class": "p-button-rounded p-button-secondary mr-2",
-                    icon: "pi pi-info-circle",
+                  return [slotProps.data.ireq_status == 'Penugasan' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                    key: 0,
+                    "class": "p-button-rounded p-button-info mr-2",
+                    icon: "pi pi-pencil",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Divisi 3 Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.edit(slotProps.data.ireqd_id, slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
-                  }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                  , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                     "class": "p-button-raised p-button-info p-button-text mr-2",
                     label: "CA",
                     onClick: function onClick($event) {
@@ -383,7 +484,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }, null, 8
                   /* PROPS */
                   , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                    "class": "p-button-raised p-button-text mr-2",
+                    "class": "p-button-raised p-button-text mt-2",
                     label: "PR"
                   })];
                 }),
@@ -451,7 +552,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "invent_code",
+                field: "name",
                 header: "Nama Peripheral",
                 sortable: true,
                 style: {
@@ -483,6 +584,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "Divisi Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_assigned_to",
+                header: "Petugas (ICT)",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -548,7 +663,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "invent_code",
+                field: "name",
                 header: "Nama Peripheral",
                 sortable: true,
                 style: {
@@ -584,6 +699,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "8rem"
                 }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "Divisi Pengguna",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_assigned_to",
+                header: "Petugas (ICT)",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
               })];
             }),
             _: 1
@@ -603,7 +732,73 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["activeIndex"])])])]);
+  , ["activeIndex"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogEdit,
+    "onUpdate:visible": _cache[9] || (_cache[9] = function ($event) {
+      return $data.dialogEdit = $event;
+    }),
+    style: {
+      width: '500px'
+    },
+    header: "ICT Request",
+    modal: true,
+    "class": "fluid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[7] || (_cache[7] = function ($event) {
+          return $options.submit();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[8] || (_cache[8] = function ($event) {
+          return $options.cancel();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.editDetail.ireq_no,
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+          return $data.editDetail.ireq_no = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.editDetail.name,
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+          return $data.editDetail.name = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+        modelValue: $data.editDetail.status,
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+          return $data.editDetail.status = $event;
+        }),
+        options: $data.status,
+        optionLabel: "name",
+        optionValue: "code",
+        showClear: true,
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+          'p-invalid': $data.submitted && !$data.editDetail.status
+        })
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.editDetail.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_32, "Status Wajib Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"])])])]);
 }
 
 /***/ }),

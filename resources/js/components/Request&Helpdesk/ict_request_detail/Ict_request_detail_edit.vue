@@ -24,14 +24,26 @@
             <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
                  <div class="field col-12 md:col-4">
-                       <InputText
+                       <Dropdown
+                       :options="type"
                         type="text"
-                        v-model="ict.lookup_desc"
-                        disabled
-                      />
+                        v-model="ict.ireq_type"
+                        optionLabel="name"
+                        optionValue="code"
+                        placeholder="Pilih Tipe Request"
+                        @change="getIreq()"
+                        :showClear="true"
+                        :class="{ 'p-invalid': error.ireq_type }"
+                  />
+                     <small v-if="errors.ireq_type" class="p-error">
+                      {{ errors.ireq_type[0] }}
+                    </small>
+                     <small v-if="error.ireq_type" class="p-error">
+                      {{ error.ireq_type }}
+                  </small>
                 </div>
               </div>
-              <div class="field grid">
+              <div class="field grid" v-if="this.cekTipeReq =='P'">
                 <label class="col-fixed w-9rem" style="width:120px">Nama Peripheral</label>
                  <div class="field col-12 md:col-4">
                      <Dropdown 
@@ -58,16 +70,12 @@
                      <InputText
                         type="text"
                         v-model="ict.ireq_desc"
-                        placeholder="Masukan Deskripsi"
-                        :class="{ 'p-invalid': errors.ireq_desc }"
+                        placeholder="Masukan Deskripsi(Optional)"
                      />
-                     <small v-if="errors.ireq_desc" class="p-error">
-                      {{ errors.ireq_desc[0] }}
-                    </small>
                 </div>
               </div>
 
-              <div class="field grid">
+              <div class="field grid" v-if="this.cekTipeReq =='P'">
                 <label class="col-fixed w-9rem" style="width:120px">Qty</label>
                  <div class="col">
                      <InputNumber
@@ -113,8 +121,8 @@
               </div>
             </form>
           </div>
-          <div class="col-6">
-                    <img :src="'/master_peripheral/' + ict.photo" class="ict-image" v-if="!this.kode" />
+          <div class="col-6" v-if="this.cekTipeReq =='P'">
+                    <img :src="'/master_peripheral/' + ict.photo" class="ict-image" v-if="this.ict.photo && !this.kode" />
                     <img :src="'/master_peripheral/' + ict.photo.photo" class="ict-image" v-if="this.kode" />
               </div>
           </div>
@@ -130,19 +138,23 @@ export default {
       detail: [],
       ict:[],
       kodeperi:[],
-      kode:null,
+      kode:'',
       type: [],
       bu: [],
       token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
       id : localStorage.getItem('id'),
+      cekTipeReq:'',
     };
   },
   created(){
       this.cekUser();
   },
   methods: {
+    getIreq(){
+      this.cekTipeReq = this.ict.ireq_type
+    },
     cekUser(){
       if(this.id){
       this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -178,6 +190,7 @@ export default {
       getIct(){
           this.axios.get('/api/edit-ict-detail/'+this.$route.params.code + '/' +this.$route.params.ireq,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
               this.ict = response.data;
+              this.cekTipeReq = this.ict.ireq_type
           });
       },
       getReq(){
@@ -196,10 +209,9 @@ export default {
     UpdateIctDetail() {
       this.errors = [];
       this.error = [];
-       if (
-        this.ict.ireq_type != null &&
-        this.ict.invent_code != null
-      ) {
+      if(this.ict.ireq_type == 'P'){
+       if ( this.ict.ireq_type != null && this.ict.invent_code != null) 
+       {
         this.axios.put('/api/update-ict-detail/' + this.$route.params.code + '/' + this.$route.params.ireq, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
@@ -217,6 +229,25 @@ export default {
         if(this.ict.invent_code == null){
           this.error.invent_code = "Nama Peripheral Wajib Diisi"
         }
+      }
+      }else{
+        if ( this.ict.ireq_type != null) 
+       {
+        this.axios.put('/api/update-ict-detail/' + this.$route.params.code + '/' + this.$route.params.ireq, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.$toast.add({
+          severity: "success",
+          summary: "Success Message",
+          detail: "Success Update",
+        });
+        setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
+        }).catch(error=>{
+          this.errors = error.response.data.errors;
+         });
+      }else{
+        if(this.ict.ireq_type == null){
+          this.error.ireq_type = "Tipe Request Wajib Diisi"
+        }
+      }
       }
       },
   },

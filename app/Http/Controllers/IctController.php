@@ -709,8 +709,11 @@ class IctController extends Controller
     Public function getSedangDikerjakan($usr_fullname)
     {
         $ict = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','idm.ireqd_id','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"))
+        ->select('im.ireq_id','im.ireq_no','dr.div_name','idm.ireqd_id','im.ireq_date',
+          'im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',
+          DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"),DB::raw("CASE WHEN idm.ireq_status = 'T' Then 'Penugasan' END as ireq_status "))
         ->join('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->join('invent_mst as imm','idm.invent_code','imm.invent_code')
         ->where('idm.ireq_status','T')
         ->where('idm.ireq_assigned_to',$usr_fullname)
@@ -718,8 +721,9 @@ class IctController extends Controller
         ->get();
 
         $ict1 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','idm.ireqd_id','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',
-        DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"))
+        ->select('im.ireq_id','im.ireq_no','dr.div_name','idm.ireqd_id','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',
+        DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"),DB::raw("CASE WHEN idm.ireq_status = 'D' Then 'Done' END as ireq_status "))
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->join('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
         ->join('invent_mst as imm','idm.invent_code','imm.invent_code')
         ->where('idm.ireq_status','D')
@@ -728,8 +732,11 @@ class IctController extends Controller
         ->get();
 
         $ict2 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','idm.ireqd_id','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"))
+        ->select('im.ireq_id','im.ireq_no','dr.div_name','idm.ireqd_id','im.ireq_date',
+         'im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',
+         DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"),DB::raw("CASE WHEN idm.ireq_status = 'C' Then 'Close' END as ireq_status "))
         ->join('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->join('invent_mst as imm','idm.invent_code','imm.invent_code')
         ->where('idm.ireq_status','C')
         ->where('idm.ireq_assigned_to',$usr_fullname)

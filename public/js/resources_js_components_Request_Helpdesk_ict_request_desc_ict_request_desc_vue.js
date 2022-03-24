@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      dialogEdit: false,
       atasanDivisi: [],
       ictManager: [],
       direject2: [],
@@ -86,7 +87,9 @@ __webpack_require__.r(__webpack_exports__);
       },
       totalRequest2: [],
       totalRequest1: [],
-      totalRequest4: []
+      totalRequest4: [],
+      editDetail: [],
+      status: []
     };
   },
   mounted: function mounted() {
@@ -528,6 +531,62 @@ __webpack_require__.r(__webpack_exports__);
           _this17.getActive();
         });
       }
+    },
+    cancel: function cancel() {
+      this.code = null;
+      this.dialogEdit = false;
+      this.status = [];
+      this.editDetail = [];
+      this.submitted = false;
+    },
+    submitt: function submitt() {
+      var _this18 = this;
+
+      this.submitted = true;
+
+      if (this.editDetail.status != null) {
+        this.axios.put('/api/update-status-done/' + this.code, this.editDetail, {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function () {
+          _this18.$toast.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Status Berhasil Dirubah',
+            life: 3000
+          });
+
+          _this18.cancel();
+
+          _this18.getIct4();
+        });
+      }
+    },
+    edit: function edit(ireqd_id, ireq_id) {
+      var _this19 = this;
+
+      this.code = ireq_id;
+      this.dialogEdit = true;
+      this.axios.get('/api/detail/' + ireqd_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this19.editDetail = response.data;
+      });
+      this.getStatus();
+    },
+    getStatus: function getStatus() {
+      var _this20 = this;
+
+      this.axios.get('/api/getStatusIct', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this20.status = response.data;
+      });
     }
   }
 });
@@ -1839,6 +1898,67 @@ var _hoisted_369 = {
   key: 0,
   "class": "p-error"
 };
+var _hoisted_370 = {
+  "class": "fluid"
+};
+var _hoisted_371 = {
+  "class": "field grid"
+};
+
+var _hoisted_372 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "No. Request", -1
+/* HOISTED */
+);
+
+var _hoisted_373 = {
+  "class": "col-fixed"
+};
+var _hoisted_374 = {
+  "class": "fluid"
+};
+var _hoisted_375 = {
+  "class": "field grid"
+};
+
+var _hoisted_376 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Nama Peripheral", -1
+/* HOISTED */
+);
+
+var _hoisted_377 = {
+  "class": "col-fixed"
+};
+var _hoisted_378 = {
+  "class": "fluid"
+};
+var _hoisted_379 = {
+  "class": "field grid"
+};
+
+var _hoisted_380 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Status", -1
+/* HOISTED */
+);
+
+var _hoisted_381 = {
+  "class": "col-fixed"
+};
+var _hoisted_382 = {
+  key: 0,
+  "class": "p-error"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
@@ -1990,7 +2110,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
               return _ctx.$router.push({
-                name: 'Ict Request Detail Desc',
+                name: 'Ict Request Detail Desc Requestor',
                 params: {
                   code: slotProps.data.ireq_id
                 }
@@ -2113,7 +2233,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
               return _ctx.$router.push({
-                name: 'Ict Request Detail Desc',
+                name: 'Ict Request Detail Desc Requestor',
                 params: {
                   code: slotProps.data.ireq_id
                 }
@@ -2243,7 +2363,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
               return _ctx.$router.push({
-                name: 'Ict Request Detail Desc',
+                name: 'Ict Request Detail Desc Requestor',
                 params: {
                   code: slotProps.data.ireq_id
                 }
@@ -4119,6 +4239,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireqd_id",
+        header: "No. Detail",
+        sortable: true,
+        style: {
+          "min-width": "8rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "name",
+        header: "Nama Peripheral",
+        sortable: true,
+        style: {
+          "min-width": "8rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_date",
         header: "Tgl.Request",
         sortable: true,
@@ -4135,13 +4269,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "name",
-        header: "Nama Peripheral",
-        sortable: true,
-        style: {
-          "min-width": "8rem"
-        }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_requestor",
         header: "Pemohon",
         sortable: true,
@@ -4156,6 +4283,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "div_name",
+        header: "Divisi Pengguna",
+        sortable: true,
+        style: {
+          "min-width": "8rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_assigned_to",
         header: "Petugas (ICT)",
         sortable: true,
@@ -4164,16 +4298,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
-          "min-width": "12rem"
+          "min-width": "15rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-            "class": "p-button-rounded p-button-secondary mr-2",
-            icon: "pi pi-info-circle",
+          return [slotProps.data.ireq_status == 'Penugasan' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+            key: 0,
+            "class": "p-button-rounded p-button-info mr-2",
+            icon: "pi pi-pencil",
+            onClick: function onClick($event) {
+              return $options.edit(slotProps.data.ireqd_id, slotProps.data.ireq_id);
+            }
+          }, null, 8
+          /* PROPS */
+          , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+            "class": "p-button-raised p-button-info p-button-text mr-2",
+            label: "CA",
             onClick: function onClick($event) {
               return _ctx.$router.push({
-                name: 'Ict Request Desc Detail Divisi 3',
+                name: 'add Cash Advance',
                 params: {
                   code: slotProps.data.ireq_id
                 }
@@ -4181,9 +4324,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-            left: true
-          }]])];
+          , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+            "class": "p-button-raised p-button-text mt-2",
+            label: "PR"
+          })];
         }),
         _: 1
         /* STABLE */
@@ -4299,6 +4443,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "8rem"
         }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "div_name",
+        header: "Divisi Pengguna",
+        sortable: true,
+        style: {
+          "min-width": "8rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_assigned_to",
+        header: "Petugas (ICT)",
+        sortable: true,
+        style: {
+          "min-width": "8rem"
+        }
       })];
     }),
     _: 1
@@ -4374,7 +4532,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "invent_code",
+        field: "name",
         header: "Nama Peripheral",
         sortable: true,
         style: {
@@ -4411,16 +4569,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "div_name",
+        header: "Divisi Pengguna",
+        sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <template #body=\"slotProps\">\n              <Button\n                class=\"p-button-rounded p-button-secondary mr-2\"\n                icon=\"pi pi-info-circle\"\n                @click=\"$router.push({\n                  name: 'Ict Request Desc Detail Divisi 3',\n                  params: { code: slotProps.data.ireq_id }, })\"\n                />\n            </template> ")];
-        }),
-        _: 1
-        /* STABLE */
-
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_assigned_to",
+        header: "Petugas (ICT)",
+        sortable: true,
+        style: {
+          "min-width": "8rem"
+        }
       })];
     }),
     _: 1
@@ -7299,6 +7460,72 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_369, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogEdit,
+    "onUpdate:visible": _cache[96] || (_cache[96] = function ($event) {
+      return $data.dialogEdit = $event;
+    }),
+    style: {
+      width: '500px'
+    },
+    header: "ICT Request",
+    modal: true,
+    "class": "fluid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[94] || (_cache[94] = function ($event) {
+          return $options.submitt();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[95] || (_cache[95] = function ($event) {
+          return $options.cancel();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_370, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_371, [_hoisted_372, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_373, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.editDetail.ireq_no,
+        "onUpdate:modelValue": _cache[91] || (_cache[91] = function ($event) {
+          return $data.editDetail.ireq_no = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_374, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_375, [_hoisted_376, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_377, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.editDetail.name,
+        "onUpdate:modelValue": _cache[92] || (_cache[92] = function ($event) {
+          return $data.editDetail.name = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_378, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_379, [_hoisted_380, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_381, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+        modelValue: $data.editDetail.status,
+        "onUpdate:modelValue": _cache[93] || (_cache[93] = function ($event) {
+          return $data.editDetail.status = $event;
+        }),
+        options: $data.status,
+        optionLabel: "name",
+        optionValue: "code",
+        showClear: true,
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+          'p-invalid': $data.submitted && !$data.editDetail.status
+        })
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.editDetail.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_382, "Status Wajib Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */

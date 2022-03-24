@@ -24,8 +24,8 @@ class IctDetailController extends Controller
     Public function index($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc',
-            DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
+        ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc',
+        DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
             id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
             WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
             WHEN id.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN id.ireq_status = 'D' Then 'Done' 
@@ -35,6 +35,7 @@ class IctDetailController extends Controller
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->orderBy('id.ireqd_id','ASC')
         ->get();
             return json_encode($dtl);
     }
@@ -79,41 +80,61 @@ class IctDetailController extends Controller
     }
     Public function save(Request $request,$code)
     {
-        $message = [
-            'invent_code.required'=>'Nama Peripheral Wajib Diisi',
-            'desk.required'=>'Deskripsi Wajib Diisi',
-            'qty.required'=>'Qty Wajib diisi',
-            'qty.numeric'=>'Qty Wajib diisi',
-            'ket.required'=>'Keterangan Wajib Diisi'
-        ];
-            $request->validate([
-                'invent_code'=>'required',
-                'desk'=>'required',
-                'qty'=>'required|numeric',
-                'ket' => 'required'
-            ],$message);
+        if($request->tipereq == 'P'){
+            $message = [
+                'invent_code.required'=>'Nama Peripheral Wajib Diisi',
+                'qty.required'=>'Qty Wajib diisi',
+                'qty.numeric'=>'Qty Wajib diisi',
+                'ket.required'=>'Keterangan Wajib Diisi'
+            ];
+                $request->validate([
+                    'invent_code'=>'required',
+                    'qty'=>'required|numeric',
+                    'ket' => 'required'
+                ],$message);
 
-        $dtl = IctDetail::create([
-            'ireq_id' => $code,
-            'ireq_type' => $request->tipereq,
-            'invent_code'=>$request->invent_code,
-            'ireq_desc'=> $request->desk,
-            'ireq_qty'=> $request->qty,
-            'ireq_reason'=>$request->alasan,
-            'ireq_remark'=>$request->ket,
-            'creation_date'=>$this->newCreation,
-            'created_by' => Auth::user()->usr_name,
-            'program_name'=>"IctDetail_Save"
-        ]);
-        return json_encode([
-            'success' => true,
-            'message' => 'Created Successfully '
-        ]);
+            $dtl = IctDetail::create([
+                'ireq_id' => $code,
+                'ireq_type' => $request->tipereq,
+                'invent_code'=>$request->invent_code,
+                'ireq_desc'=> $request->desk,
+                'ireq_qty'=> $request->qty,
+                'ireq_remark'=>$request->ket,
+                'creation_date'=>$this->newCreation,
+                'created_by' => Auth::user()->usr_name,
+                'program_name'=>"IctDetail_Save"
+            ]);
+            return json_encode([
+                'success' => true,
+                'message' => 'Created Successfully '
+            ]);
+        } else{
+            $message = [
+                'ket.required'=>'Keterangan Wajib Diisi'
+            ];
+                $request->validate([
+                    'ket' => 'required'
+                ],$message);
+
+            $dtl = IctDetail::create([
+                'ireq_id' => $code,
+                'ireq_type' => $request->tipereq,
+                'ireq_desc'=> $request->desk,
+                'ireq_remark'=>$request->ket,
+                'creation_date'=>$this->newCreation,
+                'created_by' => Auth::user()->usr_name,
+                'program_name'=>"IctDetail_Save"
+            ]);
+            return json_encode([
+                'success' => true,
+                'message' => 'Created Successfully '
+            ]);
+        }
     }
     Public function edit($code,$ireq)
     {
         $ict = DB::table('ireq_dtl as id')
-        ->select('id.ireqd_id','id.ireq_type','lr.lookup_desc','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_photo as photo','imm.ireq_no')
+        ->select('id.ireqd_id','id.ireq_type','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_photo as photo','imm.ireq_no')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
@@ -124,17 +145,16 @@ class IctDetailController extends Controller
     }
     Public function update(Request $request,$code,$ireq)
     {
+        if($request->ireq_type == 'P'){
         $message = [
             'ireq_type.required'=>'Tipe Request Wajib Diisi',
             'invent_code.required'=>'Nama Peripheral Wajib Diisi',
-            'ireq_desc.required'=>'Deskripsi Wajib Diisi',
             'ireq_qty.required'=>'Qty Wajib diisi',
             'ireq_remark.required'=>'Keterangan Wajib Diisi'
         ];
             $request->validate([
                 'ireq_type' => 'required',
                 'invent_code'=>'required',
-                'ireq_desc'=>'required',
                 'ireq_qty'=>'required',
                 'ireq_remark' => 'required'
             ],$message);
@@ -146,8 +166,6 @@ class IctDetailController extends Controller
         $dtl->ireq_desc = $request->ireq_desc;
         $dtl->ireq_qty = $request->ireq_qty;
         $dtl->ireq_remark = $request->ireq_remark;
-        // $dtl->ireq_status = $request->ireq_status;
-        $dtl->ireq_reason = $request->ireq_reason;
         $dtl->last_update_date = $this->newUpdate;
         $dtl->last_updated_by = Auth::user()->usr_name;
         $dtl->program_name = "IctDetail_Update";
@@ -157,6 +175,31 @@ class IctDetailController extends Controller
             'message' => 'Updated Successfully'
         ];
         return json_encode($msg);
+
+    }else{
+        $message = [
+            'ireq_type.required'=>'Tipe Request Wajib Diisi',
+            'ireq_remark.required'=>'Keterangan Wajib Diisi'
+        ];
+            $request->validate([
+                'ireq_type' => 'required',
+                'ireq_remark' => 'required'
+            ],$message);
+        
+        $dtl = IctDetail::find($ireq);
+
+        $dtl->ireq_type = $request->ireq_type;
+        $dtl->ireq_desc = $request->ireq_desc;
+        $dtl->ireq_remark = $request->ireq_remark;
+        $dtl->last_update_date = $this->newUpdate;
+        $dtl->last_updated_by = Auth::user()->usr_name;
+        $dtl->program_name = "IctDetail_Update";
+        $dtl->save();
+        $msg = [
+            'success' => true,
+            'message' => 'Updated Successfully'
+        ];
+    }
     }
     Public function delete($ireq_id)
     {
@@ -244,7 +287,7 @@ class IctDetailController extends Controller
         $dtl->last_updated_by = Auth::user()->usr_name;
         $dtl->save();
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
-        return json_encode('Updated Successfully');
+        return json_encode($result);
     }
     public function updateStatusClosingDetail($ireqd_id,$ireq_id){
         
