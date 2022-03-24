@@ -1931,25 +1931,19 @@
         <template #loading>
             Loading ICT Request data. Please wait.
         </template>
-          <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-                {{ formatDate(slotProps.data.ireq_date) }}
-            </template>
-          </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column style="min-width:12rem">
-            <template #body="slotProps">
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
-                @click="$router.push({
-                      name: 'Ict Request Detail Desc',
-                      params: { code: slotProps.data.ireq_id }, })"
-              />
-            </template>
-          </Column>
+        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
+        <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -1996,29 +1990,24 @@
              </div>
         </template>
         <template #empty>
-            Not Found
+          Not Found
         </template>
         <template #loading>
-            Loading ICT Request data. Please wait.
+          Loading ICT Request data. Please wait.
         </template>
-          <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-                {{ formatDate(slotProps.data.ireq_date) }}
-            </template>
-          </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column style="min-width:12rem">
-            <template #body="slotProps">
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                @click="$router.push({
-                      name: 'Ict Request Detail Desc',
-                      params: { code: slotProps.data.ireq_id }, })"
-              />
-            </template>
-          </Column>
+        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
+        <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
