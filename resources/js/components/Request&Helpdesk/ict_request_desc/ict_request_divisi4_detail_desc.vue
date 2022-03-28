@@ -40,8 +40,9 @@
           <template #loading>
             Loading data. Please wait.
           </template>
-          <Column field="invent_code" header="Kode" :sortable="true" style="min-width:4rem"/>
-          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:4rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:6rem"/>
           <template #footer>
                <div class="grid dir-col">
 			        <div class="col">

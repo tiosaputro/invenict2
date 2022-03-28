@@ -43,8 +43,10 @@
             Loading data. Please wait.
           </template>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:4rem"/>
-          <Column field="invent_code" header="Kode" :sortable="true" style="min-width:4rem"/>
-          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:6rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:4rem"/>
           <template #footer>

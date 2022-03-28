@@ -44,26 +44,11 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-              {{ slotProps.data.ireq_type }}
-            </template>
-          </Column>
-          <Column field="invent_code" header="Kode" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_code }}
-            </template>
-          </Column>
-          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_desc }}
-            </template>
-          </Column>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-              {{ slotProps.data.ireq_status }}
-            </template>
-          </Column>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
+          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <template #footer>
                <div class="grid dir-col">
 			        <div class="col">

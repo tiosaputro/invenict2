@@ -41,8 +41,9 @@
             Loading ICT Request (Detail) data. Please wait.
           </template>
           <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="invent_code" header="Kode" :sortable="true" style="min-width:12rem"/>
-          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
           <template #footer>
             <div class="grid p-dir-col">
               <div class="col">

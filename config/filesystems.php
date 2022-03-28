@@ -90,8 +90,8 @@ return [
     */
 
     'links' => [
-        public_path('master_peripheral') => storage_path('app/public/master_peripheral'),
-        public_path('profile') => storage_path('app/public/profile'),
+        public_path('master_peripheral') => storage_path('app\public\master_peripheral'),
+        public_path('profile') => storage_path('app\public\profile'),
     ],
 
 ];

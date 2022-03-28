@@ -271,7 +271,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "invent_code",
+        field: "name",
         header: "Kode",
         sortable: true,
         style: {
@@ -280,6 +280,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "invent_desc",
         header: "Deskripsi",
+        sortable: true,
+        style: {
+          "min-width": "12rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_desc",
+        header: "Keterangan",
         sortable: true,
         style: {
           "min-width": "12rem"

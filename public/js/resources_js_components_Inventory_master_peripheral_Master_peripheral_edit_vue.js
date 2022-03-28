@@ -192,8 +192,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: "Success Message",
             detail: "Success Update"
           });
-
-          console.log(response.data);
         })["catch"](function (error) {
           if (error.response.status == 422) {
             _this8.submitted = false;

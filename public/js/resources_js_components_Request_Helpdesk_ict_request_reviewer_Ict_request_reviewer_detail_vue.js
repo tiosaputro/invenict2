@@ -269,31 +269,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "12rem"
         }
-      }, {
-        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_type), 1
-          /* TEXT */
-          )];
-        }),
-        _: 1
-        /* STABLE */
-
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "invent_code",
-        header: "Kode",
+        field: "name",
+        header: "Nama Peripheral",
         sortable: true,
         style: {
           "min-width": "12rem"
         }
-      }, {
-        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.invent_code), 1
-          /* TEXT */
-          )];
-        }),
-        _: 1
-        /* STABLE */
-
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "invent_desc",
         header: "Deskripsi",
@@ -301,15 +283,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "12rem"
         }
-      }, {
-        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.invent_desc), 1
-          /* TEXT */
-          )];
-        }),
-        _: 1
-        /* STABLE */
-
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_remark",
+        header: "Keterangan",
+        sortable: true,
+        style: {
+          "min-width": "12rem"
+        }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_status",
         header: "Status",
@@ -317,15 +297,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "12rem"
         }
-      }, {
-        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 1
-          /* TEXT */
-          )];
-        }),
-        _: 1
-        /* STABLE */
-
       })];
     }),
     _: 1

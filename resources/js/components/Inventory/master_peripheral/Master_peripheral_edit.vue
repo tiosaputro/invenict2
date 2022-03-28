@@ -398,7 +398,6 @@ export default {
             summary: "Success Message",
             detail: "Success Update",
           });
-          console.log(response.data); 
         }).catch(error=>{
           if (error.response.status == 422) {
             this.submitted = false;

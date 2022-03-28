@@ -116,7 +116,7 @@ class MasterController extends Controller
         $mas = Master::find($code);
         //jika user update photo
         if($request->image) {
-            unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
+            // unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
             $image= $request->image;
             $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
             $replace = substr($image, 0, strpos($image, ',')+1); 

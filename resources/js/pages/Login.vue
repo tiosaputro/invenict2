@@ -11,6 +11,8 @@
                     <div class="text-center mb-5">
                         <div class="text-900 text-3xl font-medium mb-3">Selamat Datang di</div>
                         <span class="text-600 font-medium">System ICT Request & Helpdesk 👋</span>
+                        <Message severity="warn" v-if="this.error">Periksa kembali koneksi sophos atau wifi anda</Message>
+                        <Message severity="warn" v-if="this.errorr">Periksa kembali domain account anda</Message>
                     </div>
                         <div class="w-full md:w-10 mx-auto">
                           <label for="email1" class="block text-900 text-xl font-medium mb-2">Username</label>
@@ -65,7 +67,8 @@ export default {
             email: '',
             password: '',
             errors :[],
-            error:[],
+            error:false,
+            errorr:false,
             submitted: false,
             loggedIn: null
         }
@@ -89,11 +92,9 @@ export default {
     Login() {
       this.errors = [];
       this.submitted = true;
-        if (
-        this.email != '' &&
-        this.password != ''
-        )
-        {
+      this.error = false;
+      this.errorr = false;
+        if ( this.email != '' && this.password != '') {
             this.loading = true;
             const data = new FormData();
             data.append("email", this.email);
@@ -118,8 +119,11 @@ export default {
                if (error.response.status == 422) {
                    this.errors = error.response.data;
                    };
+                if (error.response.status == 500){
+                    this.error = true;
+                }
                 if (error.response.status == 404){
-                    this.error = error.response.data;
+                    this.errorr = true;
                 }
                   });
                 });
