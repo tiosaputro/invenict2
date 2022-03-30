@@ -43,6 +43,7 @@
           <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
           <Column field="invent_code" header="Kode" :sortable="true" style="min-width:12rem"/>
           <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <template #footer>
             <div class="grid p-dir-col">
               <div class="col">

@@ -32,13 +32,13 @@ class MngUserController extends Controller
             'usr_email.unique'=>'Email Sudah Pernah Didaftarkan',
             'usr_alamat.required'=>'Alamat Wajib Diisi',
             'usr_status.required'=>'Status Wajib Diisi',
-            // 'usr_passwd.required'=>'Password Wajib Diisi',
+            'usr_passwd.required'=>'Password Wajib Diisi',
             'div.required'=>'Divisi Wajib Diisi',
             'usr_bu.required'=>'Bisnis Unit Wajib Diisi',
         ];
         $request->validate([
             'usr_name' => 'required',
-            // 'usr_passwd'=>'required',
+            'usr_passwd'=>'required',
             'usr_email'=>'required|unique:mng_users,usr_email',
             'usr_alamat'=>'required',
             'usr_fullname'=>'required',
@@ -58,7 +58,7 @@ class MngUserController extends Controller
         $user = Mng_user::create([
             'usr_name'=>$request->usr_name,
             'usr_fullname'=>$newfullName,
-            // 'usr_passwd'=> Hash::make($request->usr_passwd),
+            'usr_passwd'=> Hash::make($request->usr_passwd),
             'usr_alamat'=> $request->usr_alamat,
             'usr_stat'=> $request->usr_status,
             'usr_email'=> $request->usr_email,
@@ -110,37 +110,75 @@ class MngUserController extends Controller
         ],$message);
         $newfullName = strtoupper($request->usr_fullname);
         if($request->image){
-            unlink(Storage_path('app/public/profile/'.$user->usr_foto));
-                $image= $request->image;
-                $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-                $replace = substr($image, 0, strpos($image, ',')+1); 
-                $fotoo = str_replace($replace, '', $image);
-                $foto= str_replace(' ', '+', $fotoo); 
-                $nama_file = time().".".$extension;
-                Storage::disk('profile')->put($nama_file, base64_decode($foto));
-                $user->usr_fullname = $newfullName;
-                $user->usr_alamat = $request->usr_alamat;
-                $user->usr_stat = $request->usr_stat;
-                $user->usr_email = $request->usr_email;
-                $user->div_id = $request->div_id;
-                $user->usr_bu = $request->usr_bu;
-                $user->usr_foto = $nama_file;
-                $user->last_update_date = $this->newUpdate;
-                $user->last_updated_by = Auth::user()->usr_name;
-                $user->program_name = 'MngUserController_UPDATE';
-                $user->save();
+            if($request->usr_password){
+                unlink(Storage_path('app/public/profile/'.$user->usr_foto));
+                    $image= $request->image;
+                    $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+                    $replace = substr($image, 0, strpos($image, ',')+1); 
+                    $fotoo = str_replace($replace, '', $image);
+                    $foto= str_replace(' ', '+', $fotoo); 
+                    $nama_file = time().".".$extension;
+                    Storage::disk('profile')->put($nama_file, base64_decode($foto));
+                    $user->usr_fullname = $newfullName;
+                    $user->usr_alamat = $request->usr_alamat;
+                    $user->usr_passwd = Hash::make($request->usr_password);
+                    $user->usr_stat = $request->usr_stat;
+                    $user->usr_email = $request->usr_email;
+                    $user->div_id = $request->div_id;
+                    $user->usr_bu = $request->usr_bu;
+                    $user->usr_foto = $nama_file;
+                    $user->last_update_date = $this->newUpdate;
+                    $user->last_updated_by = Auth::user()->usr_name;
+                    $user->program_name = 'MngUserController_UPDATE';
+                    $user->save();
+            } else{
+                    unlink(Storage_path('app/public/profile/'.$user->usr_foto));
+                    $image= $request->image;
+                    $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+                    $replace = substr($image, 0, strpos($image, ',')+1); 
+                    $fotoo = str_replace($replace, '', $image);
+                    $foto= str_replace(' ', '+', $fotoo); 
+                    $nama_file = time().".".$extension;
+                    Storage::disk('profile')->put($nama_file, base64_decode($foto));
+                    $user->usr_fullname = $newfullName;
+                    $user->usr_alamat = $request->usr_alamat;
+                    $user->usr_stat = $request->usr_stat;
+                    $user->usr_email = $request->usr_email;
+                    $user->div_id = $request->div_id;
+                    $user->usr_bu = $request->usr_bu;
+                    $user->usr_foto = $nama_file;
+                    $user->last_update_date = $this->newUpdate;
+                    $user->last_updated_by = Auth::user()->usr_name;
+                    $user->program_name = 'MngUserController_UPDATE';
+                    $user->save();
+                    }
         }else{
+            if($request->usr_password){
                 $user->usr_fullname = $newfullName;
                 $user->usr_alamat = $request->usr_alamat;
                 $user->usr_stat = $request->usr_stat;
                 $user->usr_email = $request->usr_email;
+                $user->usr_passwd = Hash::make($request->usr_password);
                 $user->div_id = $request->div_id;
                 $user->usr_bu = $request->usr_bu;
                 $user->last_update_date = $this->newUpdate;
                 $user->last_updated_by = Auth::user()->usr_name;
                 $user->program_name = 'MngUserController_UPDATE';
                 $user->save();
+            }
+        else{
+            $user->usr_fullname = $newfullName;
+            $user->usr_alamat = $request->usr_alamat;
+            $user->usr_stat = $request->usr_stat;
+            $user->usr_email = $request->usr_email;
+            $user->div_id = $request->div_id;
+            $user->usr_bu = $request->usr_bu;
+            $user->last_update_date = $this->newUpdate;
+            $user->last_updated_by = Auth::user()->usr_name;
+            $user->program_name = 'MngUserController_UPDATE';
+            $user->save();
         }
+    }
         $msg = [
             'success' => true,
             'message' => 'Updated Successfully'

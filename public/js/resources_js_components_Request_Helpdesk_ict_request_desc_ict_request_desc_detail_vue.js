@@ -319,6 +319,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_qty",
+        header: "Qty",
+        sortable: true,
+        style: {
+          "min-width": "6rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_remark",
         header: "Keterangan",
         sortable: true,

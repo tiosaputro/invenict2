@@ -218,12 +218,13 @@ class DashboardController extends Controller
     public function countPerDivUserStatus($statusUser)
     {
         $grafik = DB::table('ireq_mst as imm')
-        ->select('dr.div_name',DB::raw("count(imm.ireq_id) as jumlah"),
-                  DB::raw("CASE WHEN imm.ireq_status = 'A' Then 'Approved' WHEN imm.ireq_status = 'T' Then 'Penugasan' WHEN imm.ireq_status = 'R' Then 'Reject' WHEN imm.ireq_status = 'D' Then 'Done' WHEN imm.ireq_status = 'C' Then 'Close' WHEN imm.ireq_status = 'P' Then 'Permohonan' end as name "))
+        ->select('dr.div_name',DB::raw("count(imm.ireq_id) as jumlah"),'lr.lookup_desc as name')
         ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','imm.ireq_status','lr.lookup_code')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('imm.ireq_status',$statusUser)
         ->orderBy('dr.div_name','ASC')
-        ->groupBy('dr.div_name',DB::raw("CASE WHEN imm.ireq_status = 'A' Then 'Approved' WHEN imm.ireq_status = 'T' Then 'Penugasan' WHEN imm.ireq_status = 'R' Then 'Reject' WHEN imm.ireq_status = 'D' Then 'Done' WHEN imm.ireq_status = 'C' Then 'Close' WHEN imm.ireq_status = 'P' Then 'Permohonan' end"))
+        ->groupBy('dr.div_name','lr.lookup_desc')
         ->get();
         return response()->json($grafik);
     }
@@ -247,9 +248,11 @@ class DashboardController extends Controller
     public function countPerStatusIct($ictPersonnel)
     {
         $grafik = DB::table('ireq_dtl as imm')
-        ->select(DB::raw("count(imm.ireq_id) as jumlah"),DB::raw("CASE WHEN imm.ireq_status = 'A' Then 'Approved' WHEN imm.ireq_status = 'T' Then 'Penugasan' WHEN imm.ireq_status = 'R' Then 'Reject' WHEN imm.ireq_status = 'D' Then 'Done' WHEN imm.ireq_status = 'C' Then 'Close' WHEN imm.ireq_status = 'P' Then 'Permohonan' end as status "))
+        ->leftjoin('lookup_refs as lr','imm.ireq_status','lr.lookup_code')
+        ->select(DB::raw("count(imm.ireq_id) as jumlah"),'lr.lookup_desc as status')
         ->where('imm.ireq_assigned_to',$ictPersonnel)
-        ->groupBy(DB::raw("CASE WHEN imm.ireq_status = 'A' Then 'Approved' WHEN imm.ireq_status = 'T' Then 'Penugasan' WHEN imm.ireq_status = 'R' Then 'Reject' WHEN imm.ireq_status = 'D' Then 'Done' WHEN imm.ireq_status = 'C' Then 'Close' WHEN imm.ireq_status = 'P' Then 'Permohonan' end "))
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->groupBy('lr.lookup_desc')
         ->get();
         return response()->json($grafik);
     }

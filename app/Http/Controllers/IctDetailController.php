@@ -24,7 +24,7 @@ class IctDetailController extends Controller
     Public function index($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc',
+        ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc', 'id.ireq_qty',
         DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
             id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
             WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
@@ -37,6 +37,7 @@ class IctDetailController extends Controller
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->orderBy('id.ireqd_id','ASC')
         ->get();
+
             return json_encode($dtl);
     }
     Public function detailPenugasan($code)

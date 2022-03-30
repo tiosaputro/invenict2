@@ -22,6 +22,8 @@ class IctDetail extends Model
         'last_update_date',
         'last_updated_by',
         'program_name',
+        'ireq_value',
+        'ireq_note'
     ];
     protected $table = 'ireq_dtl';
     protected $primaryKey = 'ireqd_id';

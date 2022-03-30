@@ -144,60 +144,66 @@ class IctController extends Controller
         $ict = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name', 
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),
-                DB::raw("CASE WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
+                'lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('im.ireq_status','P')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict1 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
-                DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status = 'A1' Then 'Sudah Diapprove Atasan' end as ireq_status "),
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status',
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('im.ireq_status','NA1')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orwhere('im.ireq_status','A1')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict2 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
-                DB::raw("CASE WHEN im.ireq_status = 'NA2' Then 'Belum Diapprove ICT Manager' WHEN im.ireq_status = 'A2' Then 'Sudah Diapprove ICT Manager' end as ireq_status "),
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status',
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('im.ireq_status','NA2')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orwhere('im.ireq_status','A2')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict3 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_reason',
-                DB::raw("CASE WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' end as ireq_status "),
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_reason','lr.lookup_desc as ireq_status',
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function ($query){
             return $query
             ->where('im.ireq_status','RR')
             ->OrWhere('im.ireq_status','RA1')
             ->OrWhere('im.ireq_status','RA2');
         })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status','im.ireq_reason')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_reason')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict4 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_assigned_to',
-                DB::raw("CASE WHEN im.ireq_status = 'T' Then 'Penugasan' end as ireq_status"))
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_assigned_to','lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('im.ireq_status','T')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status','im.ireq_assigned_to')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_assigned_to')
         ->orderBy('im.creation_date','ASC')
         ->get();
 
@@ -344,23 +350,25 @@ class IctController extends Controller
         $ict = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','dr.div_name',
-        'im.ireq_user','dr.div_name', DB::RAW("CASE WHEN im.ireq_status = 'P' THEN 'Permohonan' WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status = 'NA2' 
-         Then 'Belum Diapprove ICT Manager' END as ireq_status"))
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','dr.div_name',
+        'im.ireq_user','dr.div_name', 'lr.lookup_desc as ireq_status')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function($query){
             return $query
             ->Where('im.ireq_status','P')
             ->OrWhere('im.ireq_status','NA1')
             ->OrWhere('im.ireq_status','NA2');
             })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','dr.div_name')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','dr.div_name','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get();
 
         $ict1 = DB::table('ireq_mst as im')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','dr.div_name',
-        DB::RAW("CASE WHEN im.ireq_status = 'A1' THEN 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager' END as ireq_status"))
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','dr.div_name','lr.lookup_desc as ireq_status')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function($query){
             return $query
             ->where('im.ireq_status','A1')
@@ -369,39 +377,40 @@ class IctController extends Controller
         ->orderBy('im.creation_date','ASC')
         ->get();
 
-        $ict2 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user','ireq_reason')
+        $ict2 = DB::table('ireq_mst as im')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_reason','lr.lookup_desc as ireq_status')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function($query){
             return $query
-            ->where('ireq_status','RR')
-            ->Orwhere('ireq_status','RA1')
-            ->Orwhere('ireq_status','RA2');
+            ->where('im.ireq_status','RR')
+            ->Orwhere('im.ireq_status','RA1')
+            ->Orwhere('im.ireq_status','RA2');
         })
-        
-        ->orderBy('creation_date','ASC')
+        ->orderBy('im.creation_date','ASC')
         ->get();
 
-        $ict3 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user','ireq_assigned_to')
-        ->where('ireq_status','T')
-        ->orderBy('creation_date','ASC')
+        $ict3 = DB::table('ireq_mst as im')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_assigned_to','lr.lookup_desc as ireq_status')
+        ->where('im.ireq_status','T')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->orderBy('im.creation_date','ASC')
         ->get();
 
         $ict4 =  DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
-
         $ict5 = DB::Table('v_ireq_mst_selesai')->get();
-        
-        $ict6 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_user','ireq_date',
-            DB::raw("CASE WHEN ireq_status = 'P' Then 'Permohonan' WHEN ireq_status = 'NA1' Then 
-            'Menunggu Diapprove Atasan' When ireq_status = 'NA2' Then 'Menunggu Diapprove Manager' 
-            WHEN ireq_status = 'RR' Then 'Reject By Reviewer' WHEN ireq_status = 'RA1' Then 
-            'Reject By Atasan' WHEN ireq_status = 'RA2' Then 'Reject By Manager' WHEN 
-            ireq_status = 'A1' Then 'Sudah Diapprove Atasan' WHEN ireq_status = 'A2' 
-            Then 'Sudah Diapprove Manager' WHEN ireq_status = 'T' Then 'Penugasan' WHEN 
-            ireq_status = 'D' Then 'Done' WHEN ireq_status = 'C' Then 'Close' end as ireq_status "))
-        ->whereNotNull('ireq_status')
-        ->orderBy('ireq_status','ASC')
+        $ict6 = DB::table('ireq_mst as id')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->select('id.ireq_id','id.ireq_no','id.ireq_user','id.ireq_date','lr.lookup_desc as ireq_status')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->whereNotNull('id.ireq_status')
+        ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
+        2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
+         id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
+         WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
+         WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'T' Then 9 
+         WHEN id.ireq_status = 'D' Then 10 WHEN id.ireq_status = 'C' Then 11 end "))
         ->get();
 
         return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
@@ -409,56 +418,62 @@ class IctController extends Controller
     }
     Public function getIct($usr_name)
     {
-        $ict = DB::table('ireq_mst as im')
-        ->leftjoin('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','dr.div_name',
-                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'), DB::raw("CASE WHEN im.ireq_status = 'P' Then 'Permohonan' WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status ='NA2' Then 'Belum Diapprove ICT Manager' END as ireq_status "))
-        ->where('im.created_by',$usr_name)
+        $ict = DB::table('ireq_mst as id')
+        ->leftjoin('ireq_dtl as idm','id.ireq_id','idm.ireq_id')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
+        ->select('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','dr.div_name',
+                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'), DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
+                  id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
+                  WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
+                  WHEN id.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN id.ireq_status = 'D' Then 'Done' 
+                  WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
+                  end as ireq_status "))
+        ->where('id.created_by',$usr_name)
         ->where(function($query){
             return $query
-            ->whereNull('im.ireq_status')
-            ->orWhere('im.ireq_status','P');
+            ->whereNull('id.ireq_status')
+            ->orWhere('id.ireq_status','P');
             })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','dr.div_name')
+        ->groupBy('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.creation_date','dr.div_name','id.ireq_status')
+        ->orderBy('id.creation_date','ASC')
+        ->get();
+
+        $ict1 = DB::table('ireq_mst as im')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','lr.lookup_desc as ireq_status')
+        ->where('im.created_by',$usr_name)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->where(function($query){
+            return $query
+            ->where('im.ireq_status','A1')
+            ->orWhere('im.ireq_status','A2');
+        })
         ->orderBy('im.creation_date','ASC')
         ->get();
 
-        $ict1 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user',
-          DB::raw("CASE WHEN ireq_status = 'A1' Then 'Sudah Diapprove Atasan' 
-          WHEN ireq_status = 'A2' Then 'Sudah Diapprove ICT Manager' End as ireq_status"))
-        ->where('created_by',$usr_name)
+        $ict2 = DB::table('ireq_mst as im')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_reason','lr.lookup_desc as ireq_status')
+        ->where('im.created_by',$usr_name)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function($query){
             return $query
-            ->where('ireq_status','A1')
-            ->orWhere('ireq_status','A2');
+            ->where('im.ireq_status','RR')
+            ->orwhere('im.ireq_status','RA1')
+            ->orwhere('im.ireq_status','RA2');
         })
-        ->orderBy('creation_date','ASC')
-        ->get();
-
-        $ict2 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user','ireq_reason',
-          DB::raw("CASE WHEN ireq_status ='RR' Then 'Reject By Reviewer' WHEN 
-          ireq_status = 'RA1' Then 'Reject By Atasan' WHEN ireq_status = 'RA2' Then 'Reject By ICT Manager'
-           END as ireq_status"))
-        ->where('created_by',$usr_name)
-        ->where(function($query){
-            return $query
-            ->where('ireq_status','RR')
-            ->orwhere('ireq_status','RA1')
-            ->orwhere('ireq_status','RA2');
-        })
-        ->orderBy('creation_date','ASC')
+        ->orderBy('im.creation_date','ASC')
         ->get();
 
         $ict3 =  DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_assigned_to',
-                DB::raw("CASE WHEN im.ireq_status = 'T' Then 'Penugasan' end as ireq_status"))
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_assigned_to','lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('im.ireq_status','T')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('im.created_by',$usr_name)
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status','im.ireq_assigned_to')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_assigned_to')
         ->orderBy('im.creation_date','ASC')
         ->get();
 
@@ -478,51 +493,60 @@ class IctController extends Controller
 
         $ict4 = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
         ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
                  'im.ireq_user','idd.ireq_assigned_to','idd.ireqd_id',
-                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),DB::raw("CASE WHEN idd.ireq_status = 'D' Then 'Done' end as ireq_status "))
+                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
         ->where('idd.ireq_status','D')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('im.created_by',$usr_name)
         ->orderBy('idd.ireqd_id','ASC')
         ->get();
 
         $ict5 = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
         ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
                  'im.ireq_user','idd.ireq_assigned_to','idd.ireqd_id',
-                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),DB::raw("CASE WHEN idd.ireq_status = 'C' Then 'Closing' end as ireq_status "))
+                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('idd.ireq_status','C')
         ->where('im.created_by',$usr_name)
         ->orderBy('idd.ireqd_id','ASC')
         ->get();
         
-        $ict6 = DB::table('ireq_mst')
-        ->select('ireq_id','ireq_no','ireq_date','ireq_user',
-          DB::raw("CASE WHEN ireq_status ='NA1' Then 'Menunggu Diapprove Atasan' WHEN 
-          ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' END as ireq_status"))
-        ->where('created_by',$usr_name)
-        ->where('ireq_status','NA1')
-        ->orwhere('ireq_status','NA2')
-        ->orderBy('creation_date','ASC')
+        $ict6 = DB::table('ireq_mst as im')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','lr.lookup_desc as ireq_status')
+        ->where('im.created_by',$usr_name)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->where(function($query){
+            return $query
+            ->where('im.ireq_status','NA1')
+            ->orwhere('im.ireq_status','NA2');
+        })
+        ->orderBy('im.creation_date','ASC')
         ->get();
         
         $ict7 = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
+        ->leftjoin('lookup_refs as lr','idm.ireq_status','lr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','dr.div_name',
-                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'), DB::raw("CASE WHEN im.ireq_status = 'P' Then 'Permohonan' WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status ='NA2' Then 'Belum Diapprove ICT Manager' END as ireq_status "))
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','dr.div_name',
+                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'), 'lr.lookup_desc as ireq_status')
         ->where('im.created_by',$usr_name)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function($query){
             return $query
             ->where('im.ireq_status','NA1')
             ->orWhere('im.ireq_status','NA2')
             ->orWhere('im.ireq_status','P');
             })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','dr.div_name')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.creation_date','dr.div_name','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get();
 
@@ -532,24 +556,28 @@ class IctController extends Controller
     {
         $ict = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
-        'im.ireq_requestor',DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status ='NA2' Then 'Belum Diapprove ICT Manager' When im.ireq_status = 'P' Then 'Belum Diverifikasi Reviewer' END as ireq_status "))
+        'im.ireq_requestor','lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('dr.div_verificator',$usr_name)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function($query){
             return $query
             ->where('im.ireq_status','NA1')
             ->orwhere('im.ireq_status','NA2')
             ->orwhere('im.ireq_status','P');
         })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get();
         
         $ict1 = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user',
-        'im.ireq_requestor',DB::raw("CASE When im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager' END as ireq_status"))
+        'im.ireq_requestor','lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('dr.div_verificator',$usr_name)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function($query){
             return $query
             ->Where('im.ireq_status','A1')
@@ -560,9 +588,11 @@ class IctController extends Controller
 
         $ict2 = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user',
-        'im.ireq_requestor','im.ireq_reason',DB::raw("CASE WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status ='RA2' Then 'Reject By ICT Manager' WHEN im.ireq_status ='RR' Then 'Reject By Reviewer' END as ireq_status"))
+        'im.ireq_requestor','im.ireq_reason','lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('dr.div_verificator',$usr_name)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function($query){
             return $query
             ->where('im.ireq_status','RA1')
@@ -573,48 +603,50 @@ class IctController extends Controller
         ->get();
 
         $ict3 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.ireq_requestor','im.ireq_assigned_to')
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','im.ireq_assigned_to','lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('dr.div_verificator',$usr_name)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('im.ireq_status','T')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','im.ireq_assigned_to')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','lr.lookup_desc','im.ireq_user','im.creation_date','im.ireq_requestor','im.ireq_assigned_to')
         ->orderBy('im.creation_date','ASC')
         ->get();
 
         $ict4 = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
         ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
                  'im.ireq_user','idd.ireq_assigned_to','idd.ireqd_id',
-                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),DB::raw("CASE WHEN idd.ireq_status = 'D' Then 'Done' end as ireq_status "))
+                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
         ->where('idd.ireq_status','D')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('dr.div_verificator',$usr_name)
         ->orderBy('idd.ireqd_id','ASC')
         ->get();
 
         $ict5 = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
         ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
                  'im.ireq_user','idd.ireq_assigned_to','idd.ireqd_id',
-                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),DB::raw("CASE WHEN idd.ireq_status = 'C' Then 'Closing' end as ireq_status "))
+                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
         ->where('idd.ireq_status','C')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('dr.div_verificator',$usr_name)
         ->orderBy('idd.ireqd_id','ASC')
         ->get();
 
         $ict6 = DB::table('ireq_mst as id')
-            ->select('id.ireq_id','id.ireq_no','id.ireq_user','id.ireq_date','dr.div_name','id.ireq_requestor',
-                DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
-                id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
-                WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
-                WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' 
-                WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
-                end as ireq_status "))
+            ->select('id.ireq_id','id.ireq_no','id.ireq_user','id.ireq_date','dr.div_name','id.ireq_requestor','lr.lookup_desc as ireq_status')
             ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
             ->where('dr.div_verificator',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->whereNotNull('id.ireq_status')
             ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
              2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
@@ -631,61 +663,68 @@ class IctController extends Controller
         $ict1 = $ict = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name', 
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),
-                DB::raw("CASE WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
+                'lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('im.ireq_status','P')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict2 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
-                DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Belum Diapprove Atasan' WHEN im.ireq_status = 'A1' Then 'Sudah Diapprove Atasan' end as ireq_status "),
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status',
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('im.ireq_status','NA1')
         ->orwhere('im.ireq_status','A1')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict3 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',
-                DB::raw("CASE WHEN im.ireq_status = 'NA2' Then 'Belum Diapprove ICT Manager' WHEN im.ireq_status = 'A2' Then 'Sudah Diapprove ICT Manager' end as ireq_status "),
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status',
                 DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('im.ireq_status','NA2')
         ->orwhere('im.ireq_status','A2')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         $ict4 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','dr.div_name','im.ireq_reason',
-                DB::raw("CASE WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' end as ireq_status "),
-                DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
+        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','dr.div_name','im.ireq_reason','lr.lookup_desc as ireq_status',
+        DB::raw('count(idd.ireq_assigned_to) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function ($query){
             return $query
             ->where('im.ireq_status','RR')
             ->OrWhere('im.ireq_status','RA1')
             ->OrWhere('im.ireq_status','RA2');
         })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_reason','dr.div_name','im.creation_date','im.ireq_status')
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_reason','dr.div_name','im.creation_date','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
         
         $ict5 = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_assigned_to',
-                DB::raw("CASE WHEN im.ireq_status = 'T' Then 'Penugasan' end as ireq_status"))
+                'lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('im.ireq_status','T')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status','im.ireq_assigned_to')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_assigned_to')
         ->orderBy('im.creation_date','ASC')
         ->get();
 
@@ -693,16 +732,12 @@ class IctController extends Controller
 
         $ict7 = DB::Table('v_ireq_mst_selesai')->get();
         $ict8 = DB::table('ireq_mst as id')
-        ->select('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.ireq_requestor','dr.div_name','id.ireq_assigned_to',
-        DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
-        id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
-        WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
-        WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' 
-        WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
-        end as ireq_status "))
+        ->select('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.ireq_requestor','dr.div_name','id.ireq_assigned_to','lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->whereNotNull('id.ireq_status')
-        ->groupBy('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.ireq_requestor','dr.div_name','id.creation_date','id.ireq_status','id.ireq_assigned_to')
+        ->groupBy('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.ireq_requestor','dr.div_name','id.creation_date','lr.lookup_desc','id.ireq_assigned_to')
         ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
              2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
               id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
@@ -717,10 +752,12 @@ class IctController extends Controller
         $ict = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','dr.div_name','idm.ireqd_id','im.ireq_date',
           'im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',
-          DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"),DB::raw("CASE WHEN idm.ireq_status = 'T' Then 'Penugasan' END as ireq_status "))
+          DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"),'lr.lookup_desc as ireq_status')
         ->join('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->join('invent_mst as imm','idm.invent_code','imm.invent_code')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('idm.ireq_status','T')
         ->where('idm.ireq_assigned_to',$usr_fullname)
         ->orderBy('idm.ireqd_id','ASC')
@@ -728,10 +765,12 @@ class IctController extends Controller
 
         $ict1 = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','dr.div_name','idm.ireqd_id','im.ireq_date','im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',
-        DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"),DB::raw("CASE WHEN idm.ireq_status = 'D' Then 'Done' END as ireq_status "))
+        DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"),'lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->join('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
+        ->leftjoin('lookup_refs as lr','idm.ireq_status','lr.lookup_code')
         ->join('invent_mst as imm','idm.invent_code','imm.invent_code')
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('idm.ireq_status','D')
         ->where('idm.ireq_assigned_to',$usr_fullname)
         ->orderBy('idm.ireqd_id','ASC')
@@ -740,9 +779,10 @@ class IctController extends Controller
         $ict2 = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','dr.div_name','idm.ireqd_id','im.ireq_date',
          'im.ireq_requestor','im.ireq_user','im.ireq_status','idm.ireq_assigned_to',
-         DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"),DB::raw("CASE WHEN idm.ireq_status = 'C' Then 'Close' END as ireq_status "))
+         DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as name"),'lr.lookup_desc as ireq_status')
         ->join('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('lookup_refs as lr','idm.ireq_status','lr.lookup_code')
         ->join('invent_mst as imm','idm.invent_code','imm.invent_code')
         ->where('idm.ireq_status','C')
         ->where('idm.ireq_assigned_to',$usr_fullname)
@@ -820,13 +860,10 @@ class IctController extends Controller
     function totalRequest($usr_name)
     {
         $ict = DB::table('ireq_mst as id')
+            ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')   
             ->select('id.ireq_id','id.ireq_no','id.ireq_user','id.ireq_date',
-                DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
-                id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
-                WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
-                WHEN id.ireq_status = 'RA2' Then 'Reject By Manager' WHEN id.ireq_status = 'D' Then 'Done' 
-                WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
-                end as ireq_status "))
+                'lr.lookup_desc as ireq_status')
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->where('id.created_by',$usr_name)
             ->whereNotNull('id.ireq_status')
             ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then

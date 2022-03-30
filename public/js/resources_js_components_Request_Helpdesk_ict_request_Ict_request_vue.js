@@ -19,6 +19,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      cok: ['Sangat Kurang', 'kurang', 'baik', 'bagus', 'sangat bagus'],
+      dialogEdit: false,
+      rating: 0,
       active1: 0,
       loading: true,
       ict: [],
@@ -45,6 +48,9 @@ __webpack_require__.r(__webpack_exports__);
     this.cekUser();
   },
   methods: {
+    tes: function tes(ireqd_id) {
+      this.dialogEdit = true;
+    },
     cekUser: function cekUser() {
       var _this = this;
 
@@ -414,6 +420,15 @@ var _hoisted_59 = {
 var _hoisted_60 = {
   "class": "box"
 };
+var _hoisted_61 = {
+  "class": "fluid"
+};
+var _hoisted_62 = {
+  "class": "field grid"
+};
+var _hoisted_63 = {
+  "class": "col-fixed"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
@@ -432,6 +447,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TabPanel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TabPanel");
 
   var _component_TabView = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TabView");
+
+  var _component_star_rating = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("star-rating");
+
+  var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
 
   var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
 
@@ -1381,6 +1400,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "8rem"
                 }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                style: {
+                  "min-width": "12rem"
+                }
+              }, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                    "class": "p-button-rounded p-button-secondary mr-2",
+                    label: "Beri Nilai",
+                    onClick: function onClick($event) {
+                      return $options.tes(slotProps.data.ireqd_id);
+                    }
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"])];
+                }),
+                _: 1
+                /* STABLE */
+
               })];
             }),
             _: 1
@@ -1400,7 +1438,42 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["activeIndex"])])])]);
+  , ["activeIndex"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogEdit,
+    "onUpdate:visible": _cache[23] || (_cache[23] = function ($event) {
+      return $data.dialogEdit = $event;
+    }),
+    style: {
+      width: '500px'
+    },
+    header: "ICT Request",
+    modal: true,
+    "class": "fluid"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_star_rating, {
+        increment: 1,
+        "max-rating": 5,
+        animate: true,
+        "show-rating": true,
+        "star-size": 40
+      }, {
+        "screen-reader": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" This product has been rated " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.rating) + " out of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.stars), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"])])])]);
 }
 
 /***/ }),

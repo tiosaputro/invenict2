@@ -21,8 +21,8 @@ class MasterController extends Controller
         {
             $mas = DB::table('invent_mst as im')
             ->select('im.*','vf.name as invent_bu','lr.lookup_desc as invent_brand')
-            ->join('vcompany_refs as vf','im.invent_bu','vf.company_code')
-            ->join('lookup_refs as lr','im.invent_brand','lr.lookup_code')
+            ->leftjoin('vcompany_refs as vf','im.invent_bu','vf.company_code')
+            ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
             ->orderBy('im.invent_code','ASC')
             ->get();

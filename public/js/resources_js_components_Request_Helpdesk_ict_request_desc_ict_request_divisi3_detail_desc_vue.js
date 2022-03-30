@@ -333,6 +333,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_type",
+        header: "Tipe Request",
+        sortable: true,
+        style: {
+          "min-width": "12rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
         header: "Nama Peripheral",
         sortable: true,
@@ -347,11 +354,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_type",
-        header: "Tipe Request",
+        field: "ireq_qty",
+        header: "Qty",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "6rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_assigned_to",

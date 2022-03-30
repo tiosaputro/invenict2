@@ -55,7 +55,7 @@
                   </small>
                 </div>
               </div>
-              <!-- <div class="field grid">
+              <div class="field grid">
                 <label style="width:120px">Password</label>
                  <div class="col-5">
                    <Password
@@ -69,7 +69,7 @@
                       {{ errors.usr_passwd[0] }}
                   </small>
                 </div>
-              </div> -->
+              </div>
               
               <div class="field grid">
                 <label style="width:120px">Alamat</label>

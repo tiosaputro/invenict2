@@ -59,7 +59,7 @@
                   </small>
                 </div>
               </div>
-               <!-- <div class="field grid">
+               <div class="field grid">
                 <label style="width:120px">Password</label>
                  <div class="col-3 md-6">
                    <Password
@@ -69,7 +69,7 @@
                     :feedback="false"
                    />
                 </div>
-              </div> -->
+              </div>
               <div class="field grid">
                 <label style="width:120px">Alamat</label>
                  <div class="col-4">

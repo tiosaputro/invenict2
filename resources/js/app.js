@@ -103,10 +103,9 @@ import Treeselect from 'vue3-treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VueAxios from 'vue-axios';
-
 import CodeHighlight from './pages/AppCodeHighlight.js';
 import BlockViewer from './pages/BlockViewer.vue';
-
+import StarRating from 'vue-star-rating';
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
     next();
@@ -133,6 +132,7 @@ app.component('AccordionTab', AccordionTab);
 app.component('AutoComplete', AutoComplete);
 app.component('Avatar', Avatar);
 app.component('AvatarGroup', AvatarGroup);
+app.component('StarRating',StarRating);
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);
 app.component('Breadcrumb', Breadcrumb);

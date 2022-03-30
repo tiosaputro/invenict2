@@ -508,6 +508,15 @@
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+                  <Column style="min-width:12rem">
+                    <template #body="slotProps">
+                      <Button
+                        class="p-button-rounded p-button-secondary mr-2"
+                        label = "Beri Nilai"
+                        @click="tes(slotProps.data.ireqd_id)"
+                      />
+                    </template>
+                  </Column>
                   <template #footer>
                       <div class="grid dir-col">
                       <div class="col">
@@ -531,6 +540,33 @@
                 </DataTable>
                 </TabPanel>
             </TabView>
+            <Dialog
+            v-model:visible="dialogEdit"
+            :style="{ width: '500px' }"
+            header="ICT Request"
+            :modal="true"
+            class="fluid"
+          >
+            <div class="fluid">
+              <div class="field grid">
+                  <div class="col-fixed">
+         
+
+                  <star-rating v-bind:increment="1"
+                              v-bind:max-rating="5"
+                              v-bind:animate="true"
+                              v-bind:show-rating="true"
+                              v-bind:star-size="40">
+                              <template v-slot:screen-reader="slotProps">
+                This product has been rated {{slotProps.rating}} out of {{slotProps.stars}}
+            </template>
+                  </star-rating>
+
+
+                  </div>
+                </div>
+            </div>
+        </Dialog>  
       </div>
     </div>
   </div>
@@ -541,6 +577,9 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+      cok:['Sangat Kurang', 'kurang', 'baik', 'bagus','sangat bagus'],
+      dialogEdit:false,
+      rating: 0,
         active1:0,
         loading: true,
         ict: [],
@@ -562,6 +601,9 @@ export default {
     this.cekUser();
   },
   methods: {
+    tes(ireqd_id){
+      this.dialogEdit = true;
+    },
     cekUser(){
     if(this.id){
       this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
