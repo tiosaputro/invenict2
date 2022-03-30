@@ -6,18 +6,21 @@ use App\IctDetail;
 use App\Ict;
 use App\Exports\IctDetailExport;
 use App\Exports\IctDetailExportReject;
+use App\Exports\IctDetailTabReviewerExport;
+use App\Exports\IctDetailTabVerifikasiExport;
+use App\Exports\IctDetailTabSudahDikerjakanExport;
 use Illuminate\Support\Facades\DB;
 use Excel;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-// use Appstract\Opcache\OpcacheFacade as OPcache;
 
 class IctDetailController extends Controller
 {
      function __construct(){
         $date = Carbon::now();
+        $this->date= Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
@@ -71,7 +74,7 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_mst as im')
         ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
-        ->select('im.ireq_no as noreq','lr.lookup_desc','im.ireq_type',
+        ->select('im.ireq_no as noreq','lr.lookup_desc','im.ireq_type','im.ireq_status as cekStatus',
                 DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN im.ireq_status = 'NA2' Then 'Menunggu Diapprove Manager' WHEN im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager'
          WHEN im.ireq_status = 'T' Then 'Penugasan' WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
          ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
@@ -212,43 +215,111 @@ class IctDetailController extends Controller
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
-                'vr.name as ireq_bu',
-                DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                DB::raw("CASE WHEN id.ireq_status = 'A' Then 'Approved' WHEN id.ireq_status = 'T' Then 'Penugasan' WHEN id.ireq_status = 'R' Then 'Reject' WHEN id.ireq_status = 'D' Then 'Done' WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' end as ireq_status "),
-                DB::raw("CASE WHEN imm.ireq_status = 'A' Then 'Approved' WHEN imm.ireq_status = 'T' Then 'Penugasan' WHEN imm.ireq_status = 'R' Then 'Reject' WHEN imm.ireq_status = 'D' Then 'Done' WHEN imm.ireq_status = 'C' Then 'Close' WHEN imm.ireq_status = 'P' Then 'Permohonan' end as ireqq_status "))
-        ->join('invent_mst as im','id.invent_code','im.invent_code')
-        ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')
-        ->join('lookup_refs as llr','imm.ireq_type','llr.lookup_code')
-        ->join('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
+                'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->get();
         return view('pdf/Laporan_IctDetailRequest', compact('detail'));
     }
     public function cetak_excel($code)
     {
-        return Excel::download(new IctDetailExport($code),'Laporan_Ict.xlsx');
+        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        return Excel::download(new IctDetailExport($code),'Laporan Ict request (Detail Permohonan) '.$newCreation.'.xlsx');
+    }
+    public function cetak_pdf_tab_reviewer($code)
+    {
+        $detail = DB::table('ireq_dtl as id')
+        ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+                'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
+        ->where('id.ireq_id',$code)
+        ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->get();
+        return view('pdf/Laporan_IctDetailRequest_Tab_Reviewer', compact('detail'));
+    }
+    public function cetak_excel_tab_reviewer($code)
+    {
+        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        return Excel::download(new IctDetailTabReviewerExport($code),'Laporan Ict request (Detail Reviewer) '.$newCreation.'.xlsx');
+    }
+    public function cetak_pdf_tab_verifikasi($code)
+    {
+        $detail = DB::table('ireq_dtl as id')
+        ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+                'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
+        ->where('id.ireq_id',$code)
+        ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->get();
+        return view('pdf/Laporan_IctDetailRequest_Tab_Verifikasi', compact('detail'));
+    }
+    public function cetak_excel_tab_verifikasi($code)
+    {
+        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        return Excel::download(new IctDetailTabVerifikasiExport($code),'Laporan Ict request (Detail Terverifikasi) '.$newCreation.'.xlsx');
     }
     public function cetak_pdf_reject($code)
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
-                'vr.name as ireq_bu',
-                DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                DB::raw("CASE WHEN id.ireq_status = 'A' Then 'Approved' WHEN id.ireq_status = 'T' Then 'Penugasan' WHEN id.ireq_status = 'R' Then 'Reject' WHEN id.ireq_status = 'D' Then 'Done' WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' end as ireq_status "),
-                DB::raw("CASE WHEN imm.ireq_status = 'A' Then 'Approved' WHEN imm.ireq_status = 'T' Then 'Penugasan' WHEN imm.ireq_status = 'R' Then 'Reject' WHEN imm.ireq_status = 'D' Then 'Done' WHEN imm.ireq_status = 'C' Then 'Close' WHEN imm.ireq_status = 'P' Then 'Permohonan' end as ireqq_status "))
-        ->join('invent_mst as im','id.invent_code','im.invent_code')
-        ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')
-        ->join('lookup_refs as llr','imm.ireq_type','llr.lookup_code')
-        ->join('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
+                'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->get();
         return view('pdf/Laporan_IctDetailReject', compact('detail'));
     }
     public function cetak_excel_reject($code)
     {
-        return Excel::download(new IctDetailExportReject($code),'Laporan_Ict.xlsx');
+        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        return Excel::download(new IctDetailExportReject($code),'Laporan Ict Request (Detail Direject) '.$newCreation.'.xlsx');
+    }
+    public function cetak_pdf_sedang_dikerjakan($code)
+    {
+        $detail = DB::table('ireq_dtl as id')
+        ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+                'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
+        ->where('id.ireq_id',$code)
+        ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->get();
+        return view('pdf/Laporan_IctDetailSedangDikerjakan', compact('detail'));
+    }
+    public function cetak_excel_sedang_dikerjakan($code)
+    {
+        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        return Excel::download(new IctDetailTabSudahDikerjakanExport($code),'Laporan Ict Request (Detail Sedang Dikerjakan) '.$newCreation.'.xlsx');
     }
     public function getDetailVerif($code)
     {
@@ -300,5 +371,20 @@ class IctDetailController extends Controller
         $dtl->save();
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_CLOSING_IREQ_MST($ireq_id); end;");
         return json_encode('Updated Successfully');
+    }
+    function submitRating(Request $request){
+        if($request->rating <= '2'){
+            $dtl = IctDetail::where('ireqd_id',$request->id)->first();
+            $dtl->ireq_value = $request->rating;
+            $dtl->ireq_note = $request->ket;
+            $dtl->save();
+            return response()->json('JIka rating <= 2');
+        }
+        else{
+            $dtl = IctDetail::where('ireqd_id',$request->id)->first();
+            $dtl->ireq_value = $request->rating;
+            $dtl->save();
+            return response()->json('JIka rating > 2');
+        }
     }
 }

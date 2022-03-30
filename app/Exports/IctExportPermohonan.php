@@ -11,6 +11,9 @@ class IctExportPermohonan implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
+    function __construct($usr_name) {
+        $this->usr_name = $usr_name;
+    }
     public function view(): View
     {
         return view('excel/Laporan_Ict_Permohonan', [ 'Ict' => DB::table('ireq_mst as im')
@@ -20,6 +23,7 @@ class IctExportPermohonan implements FromView
         ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('im.ireq_status','P')
+        ->where('im.ireq_requestor',$this->usr_name)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->get()
         ]);

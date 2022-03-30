@@ -68,7 +68,7 @@
                         </small>
                 </div>
               </div> -->
-              <!-- <div class="field grid">
+              <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
                  <div class="field col-12 md:col-4">
                      <Dropdown 
@@ -82,7 +82,7 @@
                           {{error.usr_divisi}}
                         </small>
                 </div>
-              </div> -->
+              </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Bisnis Unit</label>
                  <div class="field col-12 md:col-4">

@@ -169,13 +169,13 @@
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
-                            @click="CetakPdfPermohonan()"
+                            @click="CetakPdfReviewer()"
                           />
                           <Button 
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
-                            @click="CetakExcelPermohonan()" 
+                            @click="CetakExcelReviewer()" 
                           />
                         </div>
                       </div>
@@ -314,13 +314,13 @@
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
-                            @click="CetakPdfReject()"
+                            @click="CetakPdfTabReject()"
                           />
                           <Button 
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
-                            @click="CetakExcelReject()" 
+                            @click="CetakExcelTabReject()" 
                           />
                         </div>
                       </div>
@@ -511,7 +511,8 @@
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
-                        class="p-button-rounded p-button-secondary mr-2"
+                        v-if="slotProps.data.ireq_value == null"
+                        class="p-button-rounded p-button-info mr-2"
                         label = "Beri Nilai"
                         @click="tes(slotProps.data.ireqd_id)"
                       />
@@ -540,32 +541,53 @@
                 </DataTable>
                 </TabPanel>
             </TabView>
-            <Dialog
-            v-model:visible="dialogEdit"
-            :style="{ width: '500px' }"
-            header="ICT Request"
-            :modal="true"
-            class="fluid"
-          >
+            <Dialog v-model:visible="dialogEdit"
+              :style="{ width: '400px' }"
+              header="ICT Request"
+              class="field grid"
+            >
             <div class="fluid">
               <div class="field grid">
-                  <div class="col-fixed">
-         
-
+                <div class="col-fixed">
                   <star-rating v-bind:increment="1"
-                              v-bind:max-rating="5"
-                              v-bind:animate="true"
-                              v-bind:show-rating="true"
-                              v-bind:star-size="40">
-                              <template v-slot:screen-reader="slotProps">
-                This product has been rated {{slotProps.rating}} out of {{slotProps.stars}}
-            </template>
-                  </star-rating>
-
-
+                    v-bind:max-rating="5"
+                    v-bind:rating="rating"
+                    v-bind:animate="true"
+                    v-bind:show-rating="true"
+                    v-bind:inline="true"
+                    v-bind:star-size="40"
+                    @hover:rating="check"
+                    @update:rating ="setRating">
+                  </star-rating> 
+                  <Message severity="error" icon="bi bi-emoji-frown" :closable="false" v-if="sangat_kurang">Sangat Kurang</Message>
+                  <Message severity="warn" icon="bi bi-emoji-frown" :closable="false" v-if="kurang"> Kurang</Message>
+                  <Message severity="info" icon="bi bi-emoji-neutral" :closable="false" v-if="baik">baik</Message>
+                  <Message severity="info" icon="bi bi-emoji-laughing" :closable="false" v-if="bagus">bagus</Message>
+                  <Message severity="success" icon="bi bi-emoji-heart-eyes" :closable="false" v-if="sangat_bagus">Sangat Bagus</Message>
                   </div>
                 </div>
             </div>
+            <div class="field" v-if="must">
+              <div class="field grid">
+                <div class="col-5">
+                  <Textarea
+                    :autoResize="true"
+                    v-if="must"
+                    type="text"
+                    v-model="reason.ket"
+                    placeholder="Berikan Ulasan "
+                    :class="{ 'p-invalid': submitted && !reason.ket }"
+                  />
+                  <small v-if="submitted && !reason.ket" class="p-error">
+                    Ulasan Belum Diisi
+                  </small>
+                </div>
+              </div>
+            </div>
+            <template #footer>
+              <Button label="Yes" @click="Update()" class="p-button" autofocus />
+              <Button label="No" @click="cancel()" class="p-button-text" />
+            </template>
         </Dialog>  
       </div>
     </div>
@@ -577,32 +599,141 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
-      cok:['Sangat Kurang', 'kurang', 'baik', 'bagus','sangat bagus'],
+      reason:{ id :null, ket:null},
+      must:false,
+      submitted:false,
+      sangat_kurang:false,
+      kurang:false,
+      baik:false,
+      bagus:false,
+      sangat_bagus:false,
       dialogEdit:false,
       rating: 0,
-        active1:0,
-        loading: true,
-        ict: [],
-        verif:[],
-        reject:[],
-        reviewer:[],
-        sedangDikerjakan:[],
-        sudahDikerjakan:[],
-        selesai:[],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        token: localStorage.getItem('token'),
-        usr_name: localStorage.getItem('usr_name'),
-        checkname : [],
-        checkto : [],
-        id : localStorage.getItem('id'),
+      active1:0,
+      loading: true,
+      ict: [],
+      verif:[],
+      reject:[],
+      reviewer:[],
+      sedangDikerjakan:[],
+      sudahDikerjakan:[],
+      selesai:[],
+      filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+      token: localStorage.getItem('token'),
+      usr_name: localStorage.getItem('usr_name'),
+      checkname : [],
+      checkto : [],
+      id : localStorage.getItem('id'),
     };
   },
   created() {
     this.cekUser();
   },
   methods: {
+    setRating(rating){
+      if(rating <= 2){
+        this.must = true;
+      }
+      else{
+        this.submitted = false;
+        this.must = false;
+      }
+      this.rating= rating;
+    },
+    Update(){
+      if(this.rating <= '2'){
+        this.submitted = true;
+        if(this.reason.ket != null){
+        const data = new FormData();
+        data.append("rating", this.rating);
+        data.append("id", this.reason.id);
+        data.append("ket", this.reason.ket);
+        this.axios.post('/api/submit-rating',data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.reason = {id:null, ket :null};
+          this.sangat_bagus = false;
+          this.bagus=false;
+          this.baik = false;
+          this.kurang = false;
+          this.sangat_kurang = false;
+          this.must = false;
+          this.rating = 0;
+          this.submitted = false;
+          this.dialogEdit = false;
+          this.$toast.add({
+            severity:'info', summary: 'Success Submit', detail:'Ulasan Berhasil Disubmit',life:2000
+          });
+          this.getIct();
+        });
+        }
+      }
+      else{
+        const data = new FormData();
+        data.append("rating", this.rating);
+        data.append("id", this.reason.id);
+        this.axios.post('/api/submit-rating',data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.rating = null;
+          this.sangat_bagus = false;
+          this.bagus=false;
+          this.baik = false;
+          this.kurang = false;
+          this.sangat_kurang = false;
+          this.must = false;
+          this.dialogEdit = false;
+          this.$toast.add({
+            severity:'info', summary: 'Success Submit', detail:'Ulasan Berhasil Disubmit',life:2000
+          });
+          this.getIct();
+        });
+      }
+    },
+    cancel(){
+      this.dialogEdit = false;
+      this.reason = {id : null, ket : null};
+    },
     tes(ireqd_id){
+      this.reason.id = ireqd_id;
       this.dialogEdit = true;
+    },
+    check(rating){
+      if(rating == 1){
+        this.sangat_bagus = false;
+        this.bagus=false;
+        this.baik = false;
+        this.kurang = false;
+        this.sangat_kurang = true;
+        // this.must = true;
+      }
+      if(rating == 2){
+        this.sangat_bagus = false;
+        this.bagus=false;
+        this.baik = false;
+        this.kurang = true;
+        this.sangat_kurang = false;
+        // this.must = true;
+      }
+      if(rating == 3){
+        this.sangat_bagus = false;
+        this.bagus=false;
+        this.baik = true;
+        this.kurang = false;
+        this.sangat_kurang = false;
+      }
+      if(rating == 4){
+        this.sangat_bagus = false;
+        this.bagus=true;
+        this.baik = false;
+        this.kurang = false;
+        this.sangat_kurang = false;
+        // this.must = false;
+      }
+      if(rating == 5){
+        this.sangat_bagus = true;
+        this.bagus=false;
+        this.baik = false;
+        this.kurang = false;
+        this.sangat_kurang = false;
+        // this.must = false;
+      }
     },
     cekUser(){
     if(this.id){
@@ -687,40 +818,46 @@ export default {
       });
     },
     CetakPdfPermohonan(){
-      window.open('api/report-ict-pdf-permohonan');
+      window.open('api/report-ict-pdf-permohonan/'+this.usr_name);
     },
     CetakExcelPermohonan(){
-      window.open('api/report-ict-excel-permohonan');
+      window.open('api/report-ict-excel-permohonan/'+this.usr_name);
+    },
+    CetakPdfReviewer(){
+      window.open('api/report-ict-pdf-tab-reviewer/'+this.usr_name);
+    },
+    CetakExcelReviewer(){
+      window.open('api/report-ict-excel-tab-reviewer/'+this.usr_name);
     },
     CetakPdfVerifikasi(){
-      window.open('api/report-ict-pdf-verifikasi');
+      window.open('api/report-ict-pdf-verifikasi/'+this.usr_name);
     },
     CetakExcelVerifikasi(){
-      window.open('api/report-ict-excel-verifikasi');
+      window.open('api/report-ict-excel-verifikasi/'+this.usr_name);
     },
-    CetakPdfReject(){
-      window.open('api/report-ict-pdf-reject');
+    CetakPdfTabReject(){
+      window.open('api/report-ict-pdf-reject/'+this.usr_name);
     },
-    CetakExcelReject(){
-      window.open('api/report-ict-excel-reject');
+    CetakExcelTabReject(){
+      window.open('api/report-ict-excel-reject/'+this.usr_name);
     },
     CetakPdfSedangDikerjakan(){
-      window.open('api/report-ict-pdf-sedang-dikerjakan');
+      window.open('api/report-ict-pdf-sedang-dikerjakan/'+this.usr_name);
     },
     CetakExcelSedangDikerjakan(){
-      window.open('api/report-ict-excel-sedang-dikerjakan');
+      window.open('api/report-ict-excel-sedang-dikerjakan/'+this.usr_name);
     },
     CetakPdfSudahDikerjakan(){
-      window.open('api/report-ict-pdf-sudah-dikerjakan');
+      window.open('api/report-ict-pdf-tab-sudah-dikerjakan/'+this.usr_name);
     },
     CetakExcelSudahgDikerjakan(){
-      window.open('api/report-ict-excel-sudah-dikerjakan');
+      window.open('api/report-ict-excel-tab-sudah-dikerjakan/'+this.usr_name);
     },
     CetakPdfSelesai(){
-      window.open('api/report-ict-pdf-selesai');
+      window.open('api/report-ict-pdf-selesai/'+this.usr_name);
     },
     CetakExcelSelesai(){
-      window.open('api/report-ict-excel-selesai');
+      window.open('api/report-ict-excel-selesai/'+this.usr_name);
     },
   },
 };

@@ -102,32 +102,74 @@
                     name: 'Ict Request'})"
                   />
                   <Button
-                    v-if="this.status == 'Reject'"
+                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'"
                     label="Pdf"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-file-pdf"
                     @click="CetakPdfReject()"
                   />
                   <Button
-                    v-if="this.status == 'Reject'" 
+                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'" 
                     label="Excel"
                     class="p-button-raised p-button-success mt-2"
                     icon="pi pi-print"
                     @click="CetakExcelReject()" 
                   />
                   <Button
-                    v-if="this.status != 'Reject'" 
+                    v-if="this.status == 'P'" 
                     label="Pdf"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-file-pdf"
                     @click="CetakPdf()"
                   />
                   <Button
-                    v-if="this.status != 'Reject'" 
+                    v-if="this.status == 'P'" 
                     label="Excel"
                     class="p-button-raised p-button-success mt-2"
                     icon="pi pi-print"
                     @click="CetakExcel()" 
+                  />
+                  <Button
+                    v-if="this.status == 'NA1' || this.status == 'NA2'" 
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdfTabReviewer()"
+                  />
+                  <Button
+                    v-if="this.status == 'NA1' || this.status == 'NA2'"
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcelTabReviewer()" 
+                  />
+                  <Button
+                    v-if="this.status == 'A1' || this.status == 'A2'" 
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdfTabVerifikasi()"
+                  />
+                  <Button
+                    v-if="this.status == 'A1' || this.status == 'A2'"
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcelTabVerifikasi()" 
+                  />
+                  <Button
+                    v-if="this.status =='T'" 
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdfTabSedangDikerjakan()"
+                  />
+                  <Button
+                    v-if="this.status == 'T'"
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcelTabSedangDikerjakan()" 
                   />
                 </div>
 			        </div>
@@ -201,7 +243,7 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data.noreq;
-        this.status = response.data.ireq_status;
+        this.status = response.data.cekstatus;
       });
     },
     DeleteIct(ireqd_id){
@@ -232,10 +274,28 @@ export default {
       window.open('/api/report-ict-detail-excel/' +this.code);
     },
     CetakPdfReject(){
-      window.open('/api/report-ict-detail-pdf-reject/' +this.code);
+      window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
     },
     CetakExcelReject(){
-      window.open('/api/report-ict-detail-excel-reject/' +this.code);
+      window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
+    },
+    CetakPdfTabReviewer(){
+      window.open('/api/report-ict-detail-pdf-tab-reviewer/' +this.code);
+    },
+    CetakExcelTabReviewer(){
+      window.open('/api/report-ict-detail-excel-tab-reviewer/' +this.code);
+    },
+    CetakPdfTabVerifikasi(){
+      window.open('/api/report-ict-detail-pdf-tab-verifikasi/' +this.code);
+    },
+    CetakExcelTabVerifikasi(){
+      window.open('/api/report-ict-detail-excel-tab-verifikasi/' +this.code);
+    },
+    CetakPdfTabSedangDikerjakan(){
+      window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' +this.code);
+    },
+    CetakExcelTabSedangDikerjakan(){
+      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' +this.code);
     },
   },
 };

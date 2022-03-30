@@ -8,7 +8,7 @@
  
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-	<title>E-App</title>
+	<title>ICT Request</title>
     <style>
       @media print{
         .bg-light {
@@ -27,7 +27,7 @@
 		<div>
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-6">
-					<h2 style="font-size:30pt; font-weight: bold;">Daftar ICT Request (Reject) </h2>
+					<h2 style="font-size:30pt; font-weight: bold;">Daftar ICT Request (Direject) </h2>
 					 <h4 style="font-size:20pt; font-weight: bold;">Pada tanggal : {{date('d M Y')}}</h4>
 				</div>
 			</div>
@@ -40,9 +40,13 @@
 						<thead>
 							<tr>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">No Request</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tgl Request</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tipe Request</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tgl Request</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pemohon</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pengguna</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Divisi Pengguna</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Bisnis Unit</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Status</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Alasan Ditolak</th>
 							</tr>
 						</thead>
@@ -50,9 +54,13 @@
 						@foreach($ict as $i)
 								<tr>
 									<td>{{$i->ireq_no}}</td>
-									<td>{{$i->ireq_date}}</td>
 									<td>{{$i->ireq_type}}</td>
+									<td>{{$i->ireq_date}}</td>
+									<td>{{$i->ireq_requestor}}</td>
+									<td>{{$i->ireq_user}}</td>
+									<td>{{$i->div_name}}</td>
 									<td>{{$i->ireq_bu}}</td>
+									<td>{{$i->ireq_status}}</td>
 									<td>{{$i->ireq_reason}}</td>
 								</tr>	
 							@endforeach							

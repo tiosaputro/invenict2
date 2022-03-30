@@ -8,7 +8,7 @@
  
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-	<title>E-App</title>
+	<title>ICT Request</title>
     <style>
       @media print{
         .bg-light {
@@ -50,12 +50,11 @@
 						  <thead>
 						<thead>
 							<tr>
-                                <th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tipe</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Kode</th>
+                                <th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tipe Request</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Nama Peripheral</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Deskripsi</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Qty</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Keterangan</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Status</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Alasan Ditolak</th>
 							</tr>
 						</thead>
@@ -63,11 +62,10 @@
 						@foreach($detail as $d)
 							<tr>
                                 <td>{{$d->ireq_type}}</td>
-								<td>{{$d->invent_code}}</td>
-								<td>{{$d->invent_desc}}</td>
+								<td>{{$d->name}}</td>
+								<td>{{$d->ireq_desc}}</td>
 								<td>{{$d->ireq_qty}}</td>
 								<td>{{$d->ireq_remark}}</td>
-								<td>{{$d->ireq_status}}</td>
 								<td>{{$d->ireq_reason}}</td>
 							</tr>	
 							@endforeach							

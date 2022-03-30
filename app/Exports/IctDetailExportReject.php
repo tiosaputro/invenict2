@@ -17,17 +17,17 @@ class IctDetailExportReject implements FromView
     public function view(): View
     {
         return view('excel/Laporan_Ict_Detail_Reject', [ 'detail' => DB::table('ireq_dtl as id')
-        ->select('id.*','im.invent_desc','imm.ireq_no','llr.lookup_desc as ireq_type','imm.ireq_requestor',
-                'vr.name as ireq_bu',
-                DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                DB::raw("CASE WHEN id.ireq_status = 'A' Then 'Approved' WHEN id.ireq_status = 'T' Then 'Penugasan' WHEN id.ireq_status = 'R' Then 'Reject' WHEN id.ireq_status = 'D' Then 'Done' WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' end as ireq_status "),
-                DB::raw("CASE WHEN imm.ireq_status = 'A' Then 'Approved' WHEN imm.ireq_status = 'T' Then 'Penugasan' WHEN imm.ireq_status = 'R' Then 'Reject' WHEN imm.ireq_status = 'D' Then 'Done' WHEN imm.ireq_status = 'C' Then 'Close' WHEN imm.ireq_status = 'P' Then 'Permohonan' end as ireqq_status "))
-        ->join('invent_mst as im','id.invent_code','im.invent_code')
-        ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')
-        ->join('lookup_refs as llr','imm.ireq_type','llr.lookup_code')
-        ->join('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
+        ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+        'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
+        'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
         ->where('id.ireq_id',$this->code)
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->get()
         ]);
     }

@@ -189,26 +189,26 @@ const routes = [
         component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_verifikasi_from_email.vue'),
     },
      //ict_request_divisi2
-     {
-        name: 'Ict Request Divisi 2',
-        path: '/ict-request-divisi2',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi2/Ict_request_divisi2.vue'),
-    },
-    {
-        name: 'Ict Request Divisi 2 Detail',
-        path: '/ict-request-divisi2-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi2/Ict_request_divisi2_detail.vue'),
-    },
-    {
-        name: 'Ict Request Divisi 2 Detaill',
-        path: '/ict-request-divisi2-detaill/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi2/Ict_request_divisi2_detail_penugasan.vue'),
-    },
-    {
-        name: 'Ict Request Divisi 2 Assign Per-Detail',
-        path: '/ict-request-divisi2-assign-per-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi2/Ict_request_divisi2_assign_per_detail.vue'),
-    },
+    //  {
+    //     name: 'Ict Request Divisi 2',
+    //     path: '/ict-request-divisi2',
+    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi2/Ict_request_divisi2.vue'),
+    // },
+    // {
+    //     name: 'Ict Request Divisi 2 Detail',
+    //     path: '/ict-request-divisi2-detail/:code',
+    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi2/Ict_request_divisi2_detail.vue'),
+    // },
+    // {
+    //     name: 'Ict Request Divisi 2 Detaill',
+    //     path: '/ict-request-divisi2-detaill/:code',
+    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi2/Ict_request_divisi2_detail_penugasan.vue'),
+    // },
+    // {
+    //     name: 'Ict Request Divisi 2 Assign Per-Detail',
+    //     path: '/ict-request-divisi2-assign-per-detail/:code',
+    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi2/Ict_request_divisi2_assign_per_detail.vue'),
+    // },
     //ict_request_divisi3
     {
         name: 'Ict Request Divisi 3',
@@ -441,26 +441,26 @@ const routes = [
         component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsPerStatusPerPersonnel.vue'),
     },
     //ict_request_divisi4
-     {
-        name: 'Ict Request Divisi 4',
-        path: '/ict-request-divisi4',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4.vue'),
-    },
-    {
-        name: 'Ict Request Divisi 4 Detail',
-        path: '/ict-request-divisi4-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4_detail.vue'),
-    },
-    {
-        name: 'Ict Request Divisi 4 Closing Per-Detail',
-        path: '/ict-request-divisi4-closing-per-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4_closing_per_detail.vue'),
-    },
-    {
-        name: 'Ict Request Divisi 4 Detaill',
-        path: '/ict-request-divisi4-detaill/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4_detail_penugasan.vue'),
-    },
+    //  {
+    //     name: 'Ict Request Divisi 4',
+    //     path: '/ict-request-divisi4',
+    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4.vue'),
+    // },
+    // {
+    //     name: 'Ict Request Divisi 4 Detail',
+    //     path: '/ict-request-divisi4-detail/:code',
+    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4_detail.vue'),
+    // },
+    // {
+    //     name: 'Ict Request Divisi 4 Closing Per-Detail',
+    //     path: '/ict-request-divisi4-closing-per-detail/:code',
+    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4_closing_per_detail.vue'),
+    // },
+    // {
+    //     name: 'Ict Request Divisi 4 Detaill',
+    //     path: '/ict-request-divisi4-detaill/:code',
+    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4_detail_penugasan.vue'),
+    // },
 
     //ict request reviewer
     {
@@ -504,14 +504,6 @@ const routes = [
         name: 'Ict Request Manager Detail Penugasan',
         path: '/ict-request-manager/detail-penugasan/:code',
         component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_manager_detail_penugasan.vue'),
-    },
-
-
-
-    {
-        path: '/login',
-        name: 'login',
-        component: () => import('./pages/Login.vue')
     },
     {
         path: '/error',

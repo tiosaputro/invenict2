@@ -8,7 +8,7 @@
  
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-	<title>E-App</title>
+	<title>ICT Request</title>
     <style>
       @media print{
         .bg-light {
@@ -40,22 +40,34 @@
 						<thead>
 							<tr>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">No Request</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tgl Request</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">No Detail</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Nama Peripheral</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tipe Request</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Bisnis Unit</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tgl Request</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Qty</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Deskripsi</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Keterangan</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pemohon</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pengguna</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Divisi Pengguna</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Bisnis Unit</th>
 							</tr>
 						</thead>
 						<tbody>
 						@foreach($ict as $i)
 								<tr>
 									<td>{{$i->ireq_no}}</td>
-									<td>{{$i->ireq_date}}</td>
+									<td>{{$i->ireqd_id}}</td>
+									<td>{{$i->name}}</td>
 									<td>{{$i->ireq_type}}</td>
+									<td>{{$i->ireq_date}}</td>
+									<td>{{$i->ireq_qty}}</td>
+									<td>{{$i->ireq_desc}}</td>
+									<td>{{$i->ireq_remark}}</td>
+									<td>{{$i->ireq_requestor}}</td>
+									<td>{{$i->ireq_user}}</td>
+									<td>{{$i->div_name}}</td>
 									<td>{{$i->ireq_bu}}</td>
-									<td>{{$i->ireq_requestor}}</td>
-									<td>{{$i->ireq_requestor}}</td>
 								</tr>	
 							@endforeach							
 						</tbody>

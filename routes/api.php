@@ -237,6 +237,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/update-status-done/{code}','IctDetailController@updateStatusDone');
     Route::put('/updateAssignPerDetail/{code}','IctDetailController@updateAssign');
     Route::get('/updateStatusClosingDetail/{ireqd_id}/{ireq_no}','IctDetailController@updateStatusClosingDetail');
+    Route::post('/submit-rating','IctDetailController@submitRating');
     //Route::get('/report-ict-detail-pdf/{code}','IctDetailController@cetak_pdf');
     //Route::get('/report-ict-detail-excel/{code}','IctDetailController@cetak_excel');
 
@@ -287,19 +288,31 @@ Route::get('/report-supplier-pdf','SupplierController@cetak_pdf');
 Route::get('/report-supplier-excel','SupplierController@cetak_excel');
 Route::get('/report-lookups-pdf','LookupsController@cetak_pdf');
 Route::get('/report-lookups-excel','LookupsController@cetak_excel');
+Route::get('/report-ict-excel-reject/{usr_name}','IctController@cetak_excel_reject');
+Route::get('/report-ict-pdf-reject/{usr_name}','IctController@cetak_pdf_reject');
+Route::get('/report-ict-excel-tab-sudah-dikerjakan/{usr_name}','IctController@cetak_excel_sudah_dikerjakan');
+Route::get('/report-ict-pdf-tab-sudah-dikerjakan/{usr_name}','IctController@cetak_pdf_sudah_dikerjakan');
+Route::get('/report-ict-excel-selesai/{usr_name}','IctController@cetak_excel_selesai');
+Route::get('/report-ict-pdf-selesai/{usr_name}','IctController@cetak_pdf_selesai');
+
+//report request (requestor)
+Route::get('/report-ict-excel-permohonan/{usr_name}','IctController@cetak_excel_permohonan');
+Route::get('/report-ict-pdf-permohonan/{usr_name}','IctController@cetak_pdf_permohonan');
+Route::get('/report-ict-pdf-tab-reviewer/{usr_name}','IctController@cetak_pdf_tab_reviewer');
+Route::get('/report-ict-excel-tab-reviewer/{usr_name}','IctController@cetak_excel_tab_reviewer');
+Route::get('/report-ict-excel-verifikasi/{usr_name}','IctController@cetak_excel_verifikasi');
+Route::get('/report-ict-pdf-verifikasi/{usr_name}','IctController@cetak_pdf_verifikasi');
+Route::get('/report-ict-excel-sedang-dikerjakan/{usr_name}','IctController@cetak_excel_sedang_dikerjakan');
+Route::get('/report-ict-pdf-sedang-dikerjakan/{usr_name}','IctController@cetak_pdf_sedang_dikerjakan');
+
+//report detail request (requestor)
 Route::get('/report-ict-detail-pdf/{code}','IctDetailController@cetak_pdf');
 Route::get('/report-ict-detail-excel/{code}','IctDetailController@cetak_excel');
-Route::get('/report-ict-detail-pdf-reject/{code}','IctDetailController@cetak_pdf_reject');
-Route::get('/report-ict-detail-excel-reject/{code}','IctDetailController@cetak_excel_reject');
-Route::get('/report-ict-excel-permohonan','IctController@cetak_excel_permohonan');
-Route::get('/report-ict-pdf-permohonan','IctController@cetak_pdf_permohonan');
-Route::get('/report-ict-excel-verifikasi','IctController@cetak_excel_verifikasi');
-Route::get('/report-ict-pdf-verifikasi','IctController@cetak_pdf_verifikasi');
-Route::get('/report-ict-excel-reject','IctController@cetak_excel_reject');
-Route::get('/report-ict-pdf-reject','IctController@cetak_pdf_reject');
-Route::get('/report-ict-excel-sedang-dikerjakan','IctController@cetak_excel_sedang_dikerjakan');
-Route::get('/report-ict-pdf-sedang-dikerjakan','IctController@cetak_pdf_sedang_dikerjakan');
-Route::get('/report-ict-excel-sudah-dikerjakan','IctController@cetak_excel_sudah_dikerjakan');
-Route::get('/report-ict-pdf-sudah-dikerjakan','IctController@cetak_pdf_sudah_dikerjakan');
-Route::get('/report-ict-excel-selesai','IctController@cetak_excel_selesai');
-Route::get('/report-ict-pdf-selesai','IctController@cetak_pdf_selesai');
+Route::get('/report-ict-detail-pdf-tab-reviewer/{code}','IctDetailController@cetak_pdf_tab_reviewer');
+Route::get('/report-ict-detail-excel-tab-reviewer/{code}','IctDetailController@cetak_excel_tab_reviewer');
+Route::get('/report-ict-detail-pdf-tab-verifikasi/{code}','IctDetailController@cetak_pdf_tab_verifikasi');
+Route::get('/report-ict-detail-excel-tab-verifikasi/{code}','IctDetailController@cetak_excel_tab_verifikasi');
+Route::get('/report-ict-detail-pdf-tab-reject/{code}','IctDetailController@cetak_pdf_reject');
+Route::get('/report-ict-detail-excel-tab-reject/{code}','IctDetailController@cetak_excel_reject');
+Route::get('/report-ict-detail-pdf-tab-sedang-dikerjakan/{code}','IctDetailController@cetak_pdf_sedang_dikerjakan');
+Route::get('/report-ict-detail-excel-tab-sedang-dikerjakan/{code}','IctDetailController@cetak_excel_sedang_dikerjakan');
