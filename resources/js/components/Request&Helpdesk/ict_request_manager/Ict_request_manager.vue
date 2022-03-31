@@ -9,7 +9,7 @@
                 <h4>ICT Request</h4>
               </template>
             </Toolbar>
-            <TabView ref="tabview1" v-model:activeIndex="active1">
+            <TabView ref="tabview1">
               <TabPanel header="Menunggu Diverifikasi">
                 <DataTable
                   :value="blmdiverifikasi"
@@ -69,6 +69,26 @@
                       />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfBlmDiverifikasi()"
+                          />
+                          <Button
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelBlmDiverifikasi()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>   
               </TabPanel>
                 <TabPanel header="Yang Telah Diverifikasi">
@@ -123,6 +143,26 @@
                       />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSudahDiverifikasi()"
+                          />
+                          <Button
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSudahDiverifikasi()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>   
                 </TabPanel>
                 <TabPanel header="Yang Di Reject">
@@ -178,6 +218,26 @@
                       />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfDireject()"
+                          />
+                          <Button
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelDireject()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>  
                 </TabPanel>
                 <TabPanel header="Sedang Dikerjakan">
@@ -233,6 +293,26 @@
                       />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSedangDikerjakan()"
+                          />
+                          <Button
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSedangDikerjakan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>
                 </TabPanel>
                 <TabPanel header="Sudah Dikerjakan">
@@ -278,6 +358,26 @@
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSudahDikerjakan()"
+                          />
+                          <Button
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSudahDikerjakan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>
                 </TabPanel>
                 <TabPanel header="Selesai">
@@ -323,6 +423,26 @@
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSelesai()"
+                          />
+                          <Button
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSelesai()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>
                 </TabPanel>
             </TabView>
@@ -494,7 +614,43 @@ export default {
                this.getPermohonan();
             });
           }
-      },
+    },
+    CetakPdfBlmDiverifikasi(){
+      window.open('api/report-ict-pdf-manager-permohonan');
+    },
+    CetakExcelBlmDiverifikasi(){
+      window.open('api/report-ict-excel-manager-permohonan');
+    },
+    CetakPdfSudahDiverifikasi(){
+      window.open('api/report-ict-pdf-manager-verifikasi');
+    },
+    CetakExcelSudahDiverifikasi(){
+      window.open('api/report-ict-excel-manager-verifikasi');
+    },
+    CetakPdfDireject(){
+      window.open('api/report-ict-pdf-manager-reject');
+    },
+    CetakExcelDireject(){
+      window.open('api/report-ict-excel-manager-reject');
+    },
+    CetakPdfSedangDikerjakan(){
+      window.open('api/report-ict-pdf-manager-sedang-dikerjakan');
+    },
+    CetakExcelSedangDikerjakan(){
+      window.open('api/report-ict-excel-manager-sedang-dikerjakan');
+    },
+    CetakPdfSudahDikerjakan(){
+      window.open('api/report-ict-pdf-manager-sudah-dikerjakan');
+    },
+    CetakExcelSudahDikerjakan(){
+      window.open('api/report-ict-excel-manager-sudah-dikerjakan');
+    },
+    CetakPdfSelesai(){
+      window.open('api/report-ict-pdf-manager-selesai');
+    },
+    CetakExcelSelesai(){
+      window.open('api/report-ict-excel-manager-selesai');
+    },
   },
 };
 </script>

@@ -51,6 +51,8 @@
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pengguna</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Divisi Pengguna</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Bisnis Unit</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Status</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Personnel ICT</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -68,6 +70,8 @@
 									<td>{{$i->ireq_user}}</td>
 									<td>{{$i->div_name}}</td>
 									<td>{{$i->ireq_bu}}</td>
+									<td>{{$i->ireq_status}}</td>
+									<td>{{$i->ireq_assigned_to}}</td>
 								</tr>	
 							@endforeach							
 						</tbody>

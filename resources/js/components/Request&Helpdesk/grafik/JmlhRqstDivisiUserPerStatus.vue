@@ -56,6 +56,7 @@ export default {
         getStatusDivisiUser(){
             if(this.statusUser != null){
                 this.axios.get('api/count-per-divuser-status/'+this.statusUser, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                  if(response.data.length){
                     this.nameStatusUser = response.data[0].name;
                     this.statusPerDivisiUser = {
                         labels : response.data.map((x)=>x.div_name),
@@ -67,6 +68,9 @@ export default {
                             },
                         ]
                     }
+                  }else{
+                      this.statusPerDivisiUser = {};
+                  }
                 });
             }
         },

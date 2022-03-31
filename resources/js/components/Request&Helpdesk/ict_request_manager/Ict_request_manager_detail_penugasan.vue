@@ -42,9 +42,11 @@
           <template #loading>
             Loading data. Please wait.
           </template>
-          <Column field="invent_code" header="Kode" :sortable="true" style="min-width:4rem"/>
-          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:4rem"/>
           <template #footer>
@@ -53,10 +55,24 @@
 				        <div class="box">
                    <Button
                     label="Kembali"
-                    class="p-button-raised p-button p-mr-2 p-mb-2"
+                    class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Ict Request Manager'})"
+                  />
+                  <Button
+                    v-if="this.status == 'T'"  
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdfSedangDikerjakan()"
+                  />
+                  <Button
+                    v-if="this.status == 'T'" 
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcelSedangDikerjakan()" 
                   />
                 </div>
 			        </div>
@@ -81,6 +97,7 @@ export default {
         checkname : [],
         checkto : [],
         id : localStorage.getItem('id'),
+        status:''
     };
   },
   mounted() {
@@ -122,8 +139,15 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
+        this.status = response.data.cekstatus;
       });
     },
+    CetakPdfSedangDikerjakan(){
+     window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/'+this.$route.params.code);
+    },
+    CetakExcelSedangDikerjakan(){
+      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.$route.params.code);
+    }
   },
 };
 </script>

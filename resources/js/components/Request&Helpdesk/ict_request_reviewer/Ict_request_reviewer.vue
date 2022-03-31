@@ -455,14 +455,14 @@
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
-                            @click="CetakPdfSudahDikerjakan()"
+                            @click="CetakPdfSedangDikerjakan()"
                           />
                           <Button 
                             v-if="this.sedangDikerjakan.length"
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
-                            @click="CetakExcelSudahgDikerjakan()" 
+                            @click="CetakExcelSedangDikerjakan()" 
                           />
                         </div>
                       </div>
@@ -528,18 +528,16 @@
                       <div class="col">
                         <div class="box">
                           <Button
-                            v-if="this.sudahDikerjakan.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
-                            @click="CetakPdfSelesai()"
+                            @click="CetakPdfSudahDikerjakan()"
                           />
                           <Button
-                            v-if="this.sudahDikerjakan.length" 
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
-                            @click="CetakExcelSelesai()" 
+                            @click="CetakExcelSudahDikerjakan()" 
                           />
                         </div>
                       </div>
@@ -595,14 +593,12 @@
                       <div class="col">
                         <div class="box">
                           <Button
-                            v-if="this.selesai.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
                             @click="CetakPdfSelesai()"
                           />
-                          <Button 
-                            v-if="this.selesai.length"
+                          <Button
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
@@ -925,6 +921,24 @@ export default {
     },
     CetakExcelReject(){
       window.open('api/report-ict-excel-reviewer-reject');
+    },
+    CetakPdfSedangDikerjakan(){
+      window.open('api/report-ict-pdf-reviewer-sedang-dikerjakan');
+    },
+    CetakExcelSedangDikerjakan(){
+      window.open('api/report-ict-excel-reviewer-sedang-dikerjakan');
+    },
+    CetakPdfSudahDikerjakan(){
+      window.open('api/report-ict-pdf-reviewer-sudah-dikerjakan');
+    },
+    CetakExcelSudahDikerjakan(){
+      window.open('api/report-ict-excel-reviewer-sudah-dikerjakan');
+    },
+    CetakPdfSelesai(){
+      window.open('api/report-ict-pdf-reviewer-selesai');
+    },
+    CetakExcelSelesai(){
+      window.open('api/report-ict-excel-reviewer-selesai');
     },
   },
 };

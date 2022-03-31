@@ -23,6 +23,8 @@
         <th style="text-align:left; font-weight: bold;">Pengguna</th>
         <th style="text-align:left; font-weight: bold;">Divisi Pengguna</th>
         <th style="text-align:left; font-weight: bold;">Bisnis Unit</th>
+        <th style="text-align:left; font-weight: bold;">Status</th>
+        <th style="text-align:left; font-weight: bold;">Personnel ICT</th>
     </tr>
     </thead>
     <tbody>
@@ -33,8 +35,8 @@
             <td style="text-align:left" width="15" height="15">{{ $i->ireq_no }}</td>
             <td style="text-align:left" width="15" height="15">{{ $i->ireqd_id }}</td>
             <td style="text-align:left" width="15" height="15">{{ $i->name }}</td>
-            <td style="text-align:left" width="15" height="15">{{ $i->ireq_date }}</td>
             <td style="text-align:left" width="20" height="15">{{ $i->ireq_type}}</td>
+            <td style="text-align:left" width="15" height="15">{{ $i->ireq_date }}</td>
             <td style="text-align:left" width="18" height="10">{{ $i->ireq_qty }}</td>
             <td style="text-align:left" width="18" height="10">{{ $i->ireq_desc }}</td>
             <td style="text-align:left" width="18" height="10">{{ $i->ireq_remark }}</td>
@@ -42,6 +44,8 @@
             <td style="text-align:left" width="20" height="15">{{ $i->ireq_user}}</td>
             <td style="text-align:left" width="20" height="15">{{ $i->div_name}}</td>
             <td style="text-align:left" width="30" height="15">{{ $i->ireq_bu}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->ireq_status}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->ireq_assigned_to}}</td>
         </tr>
     @endforeach
     </tbody>

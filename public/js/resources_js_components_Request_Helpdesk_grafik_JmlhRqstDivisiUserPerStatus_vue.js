@@ -71,19 +71,23 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (response) {
-          _this2.nameStatusUser = response.data[0].name;
-          _this2.statusPerDivisiUser = {
-            labels: response.data.map(function (x) {
-              return x.div_name;
-            }),
-            datasets: [{
-              label: response.data[0].name,
-              backgroundColor: '#' + _this2.color,
-              data: response.data.map(function (x) {
-                return x.jumlah;
-              })
-            }]
-          };
+          if (response.data.length) {
+            _this2.nameStatusUser = response.data[0].name;
+            _this2.statusPerDivisiUser = {
+              labels: response.data.map(function (x) {
+                return x.div_name;
+              }),
+              datasets: [{
+                label: response.data[0].name,
+                backgroundColor: '#' + _this2.color,
+                data: response.data.map(function (x) {
+                  return x.jumlah;
+                })
+              }]
+            };
+          } else {
+            _this2.statusPerDivisiUser = {};
+          }
         });
       }
     },

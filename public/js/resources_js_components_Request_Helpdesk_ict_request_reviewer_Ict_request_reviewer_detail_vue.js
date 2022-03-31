@@ -100,7 +100,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this3.kode = response.data.noreq;
-        _this3.status = response.data.ireq_status;
+        _this3.status = response.data.cekstatus;
       });
     },
     CetakPdf: function CetakPdf() {
@@ -114,12 +114,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     CetakExcelReject: function CetakExcelReject() {
       window.open('/api/report-ict-detail-excel-tab-reject/' + this.code);
-    },
-    CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
-      window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' + this.code);
-    },
-    CetakExcelSedangDikerjakan: function CetakExcelSedangDikerjakan() {
-      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' + this.code);
     }
   }
 });
@@ -286,22 +280,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         icon: "pi pi-print",
         onClick: _cache[5] || (_cache[5] = function ($event) {
           return $options.CetakExcelReject();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 4,
-        label: "Pdf",
-        "class": "p-button-raised p-button-danger mr-2",
-        icon: "pi pi-file-pdf",
-        onClick: _cache[6] || (_cache[6] = function ($event) {
-          return $options.CetakPdfSedangDikerjakan();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 5,
-        label: "Excel",
-        "class": "p-button-raised p-button-success mt-2",
-        icon: "pi pi-print",
-        onClick: _cache[7] || (_cache[7] = function ($event) {
-          return $options.CetakExcelSedangDikerjakan();
         })
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),

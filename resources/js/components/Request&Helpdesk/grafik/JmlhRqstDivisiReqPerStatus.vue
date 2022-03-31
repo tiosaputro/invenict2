@@ -70,6 +70,7 @@ export default {
         getStatusDivisiRequestor(){
             if(this.statusRequestor != null){
                 this.axios.get('api/count-per-divreq-status/'+this.statusRequestor, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                if(response.data.length){
                     this.nameStatusRequestor = response.data[0].name;
                     this.statusPerDivisiRequestor = {
                         labels : response.data.map((x)=>x.div_name),
@@ -81,6 +82,9 @@ export default {
                             },
                         ]
                     }
+                } else{
+                    this.statusPerDivisiRequestor={};
+                }
                 });
             }
         },

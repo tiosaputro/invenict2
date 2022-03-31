@@ -28,6 +28,7 @@ class IctDetailTabSudahDikerjakanExport implements FromView
         ->where('id.ireq_id',$this->code)
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->orderBy('id.ireqd_id','ASC')
         ->get()
         ]);
     }

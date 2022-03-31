@@ -89,20 +89,6 @@
                     icon="pi pi-print"
                     @click="CetakExcelReject()" 
                   />
-                  <Button
-                    v-if="this.status == 'T'"  
-                    label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
-                    icon="pi pi-file-pdf"
-                    @click="CetakPdfSedangDikerjakan()"
-                  />
-                  <Button
-                    v-if="this.status == 'T'" 
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcelSedangDikerjakan()" 
-                  />
                 </div>
 			        </div>
             </div>
@@ -168,7 +154,7 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data.noreq;
-        this.status = response.data.ireq_status;
+        this.status = response.data.cekstatus;
       });
     },
     CetakPdf(){
@@ -183,12 +169,6 @@ export default {
     CetakExcelReject(){
       window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
     },
-    CetakPdfSedangDikerjakan(){
-     window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/'+this.code);
-    },
-    CetakExcelSedangDikerjakan(){
-      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.code);
-    }
   },
 };
 </script>

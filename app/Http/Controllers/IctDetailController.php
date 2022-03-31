@@ -46,13 +46,16 @@ class IctDetailController extends Controller
     Public function detailPenugasan($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc',
-        DB::raw("CASE WHEN id.ireq_status = 'T' Then 'Penugasan' end as ireq_status "))
-        ->join('invent_mst as im','id.invent_code','im.invent_code')
-        ->join('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->select('id.ireq_qty','id.ireq_remark','id.ireq_assigned_to','id.ireqd_id',
+            'lr.lookup_desc as ireq_type','llr.lookup_desc as ireq_status','id.ireq_desc',
+            DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->leftjoin('lookup_refs as llr','id.ireq_status','llr.lookup_code')
         ->where('id.ireq_id',$code)
         ->where('id.ireq_status','T')
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('id.ireqd_id','ASC')
         ->get();
             return json_encode($dtl);
@@ -313,6 +316,7 @@ class IctDetailController extends Controller
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->orderBy('id.ireqd_id','ASC')
         ->get();
         return view('pdf/Laporan_IctDetailSedangDikerjakan', compact('detail'));
     }

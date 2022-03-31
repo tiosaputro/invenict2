@@ -42,6 +42,7 @@
                   </template>
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
@@ -73,6 +74,26 @@
                       />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="p-grid p-dir-col">
+                      <div class="p-col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSedangDikerjakan()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSedangDikerjakan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>   
               </TabPanel>
                 <TabPanel header="Sudah Dikerjakan">
@@ -117,6 +138,26 @@
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <template #footer>
+                    <div class="p-grid p-dir-col">
+                      <div class="p-col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSudahDikerjakan()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSudahDikerjakan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>   
                 </TabPanel>
                 <TabPanel header="Selesai">
@@ -161,7 +202,27 @@
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
-                </DataTable>  
+                <template #footer>
+                    <div class="p-grid p-dir-col">
+                      <div class="p-col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSelesai()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSelesai()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </DataTable> 
                 </TabPanel>
             </TabView>
             <Dialog
@@ -321,6 +382,24 @@ export default {
       this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.status = response.data;
       });
+    },
+    CetakPdfSedangDikerjakan(){
+      window.open('/api/report-ict-pdf-personnel-sedang-dikerjakan/'+this.user.usr_fullname);
+    },
+    CetakExcelSedangDikerjakan(){
+      window.open('/api/report-ict-excel-personnel-sedang-dikerjakan/'+this.user.usr_fullname);
+    },
+    CetakPdfSudahDikerjakan(){
+      window.open('/api/report-ict-pdf-personnel-sudah-dikerjakan/'+this.user.usr_fullname);
+    },
+    CetakExcelSudahDikerjakan(){
+      window.open('/api/report-ict-excel-personnel-sudah-dikerjakan/'+this.user.usr_fullname);
+    },
+    CetakPdfSelesai(){
+      window.open('/api/report-ict-pdf-personnel-selesai/'+this.user.usr_fullname);
+    },
+    CetakExcelSelesai(){
+      window.open('/api/report-ict-excel-personnel-selesai/'+this.user.usr_fullname);
     },
   },
 };

@@ -24,16 +24,15 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-        
-       <template #header>
-              <div class="text-header text-right">
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText
-                        v-model="filters['global'].value"
-                        placeholder="Search. . ."
-                        />
-                    </span>
+          <template #header>
+            <div class="text-header text-right">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                  <InputText
+                    v-model="filters['global'].value"
+                    placeholder="Search. . ."
+                  />
+              </span>
             </div>
           </template>
            <template #empty>
@@ -49,17 +48,45 @@
           <Column field="ireq_desc" header="Keterangan" :sortable="true" style="min-width:12rem"/>
           <template #footer>
             <div class="p-grid p-dir-col">
-			   <div class="p-col">
-				  <div class="box">
+              <div class="p-col">
+                <div class="box">
                    <Button
                     label="Kembali"
-                    class="p-button-raised p-button p-mr-2 p-mb-2"
+                    class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Ict Request Manager'})"
                   />
+                  <Button
+                    v-if="this.status != 'RR' && this.status != 'RA1' && this.status != 'RA2' &&  this.status != 'T' && this.status != 'D' && this.status != 'C'" 
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdf()"
+                  />
+                  <Button
+                    v-if="this.status != 'RR' && this.status != 'RA1' && this.status != 'RA2' &&  this.status != 'T' && this.status != 'D' && this.status != 'C'"
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcel()" 
+                  />
+                  <Button
+                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'"  
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdfReject()"
+                  />
+                  <Button
+                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'" 
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcelReject()" 
+                  />
                 </div>
-			  </div>
+			        </div>
             </div>
            </template>
         </DataTable>   
@@ -81,6 +108,7 @@ export default {
         checkname : [],
         checkto : [],
         id : localStorage.getItem('id'),
+        status:''
     };
   },
   mounted() {
@@ -122,6 +150,7 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
+        this.status = response.data.cekstatus;
       });
     },
     DeleteIct(ireqd_id){
@@ -144,6 +173,18 @@ export default {
         },
         reject: () => {},
       });
+    },
+    CetakPdf(){
+      window.open('/api/report-ict-detail-pdf/' +this.code);
+    },
+    CetakExcel(){
+      window.open('/api/report-ict-detail-excel/' +this.code);
+    },
+    CetakPdfReject(){
+     window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
+    },
+    CetakExcelReject(){
+      window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
     },
   },
 };

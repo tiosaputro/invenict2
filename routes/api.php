@@ -340,3 +340,31 @@ Route::get('/report-ict-excel-reviewer-ict-manager','IctController@cetak_excel_r
 Route::get('/report-ict-pdf-reviewer-ict-manager','IctController@cetak_pdf_reviewer_ict_manager');
 Route::get('/report-ict-excel-reviewer-reject','IctController@cetak_excel_reviewer_reject');
 Route::get('/report-ict-pdf-reviewer-reject','IctController@cetak_pdf_reviewer_reject');
+Route::get('/report-ict-excel-reviewer-sedang-dikerjakan','IctController@cetak_excel_reviewer_sedang_dikerjakan');
+Route::get('/report-ict-pdf-reviewer-sedang-dikerjakan','IctController@cetak_pdf_reviewer_sedang_dikerjakan');
+Route::get('/report-ict-excel-reviewer-sudah-dikerjakan','IctController@cetak_excel_reviewer_sudah_dikerjakan');
+Route::get('/report-ict-pdf-reviewer-sudah-dikerjakan','IctController@cetak_pdf_reviewer_sudah_dikerjakan');
+Route::get('/report-ict-excel-reviewer-selesai','IctController@cetak_excel_reviewer_selesai');
+Route::get('/report-ict-pdf-reviewer-selesai','IctController@cetak_pdf_reviewer_selesai');
+
+//report manager
+Route::get('/report-ict-excel-manager-permohonan','IctController@cetak_excel_manager_permohonan');
+Route::get('/report-ict-pdf-manager-permohonan','IctController@cetak_pdf_manager_permohonan');
+Route::get('/report-ict-excel-manager-verifikasi','IctController@cetak_excel_manager_verifikasi');
+Route::get('/report-ict-pdf-manager-verifikasi','IctController@cetak_pdf_manager_verifikasi');
+Route::get('/report-ict-excel-manager-reject','IctController@cetak_excel_manager_reject');
+Route::get('/report-ict-pdf-manager-reject','IctController@cetak_pdf_manager_reject');
+Route::get('/report-ict-excel-manager-sedang-dikerjakan','IctController@cetak_excel_manager_sedang_dikerjakan');
+Route::get('/report-ict-pdf-manager-sedang-dikerjakan','IctController@cetak_pdf_manager_sedang_dikerjakan');
+Route::get('/report-ict-excel-manager-sudah-dikerjakan','IctController@cetak_excel_manager_sudah_dikerjakan');
+Route::get('/report-ict-pdf-manager-sudah-dikerjakan','IctController@cetak_pdf_manager_sudah_dikerjakan');
+Route::get('/report-ict-excel-manager-selesai','IctController@cetak_excel_manager_selesai');
+Route::get('/report-ict-pdf-manager-selesai','IctController@cetak_pdf_manager_selesai');
+
+//report status change request
+Route::get('/report-ict-excel-personnel-sedang-dikerjakan/{usr_fullname}','IctController@cetak_excel_personnel_sedang_dikerjakan');
+Route::get('/report-ict-pdf-personnel-sedang-dikerjakan/{usr_fullname}','IctController@cetak_pdf_personnel_sedang_dikerjakan');
+Route::get('/report-ict-excel-personnel-sudah-dikerjakan/{usr_fullname}','IctController@cetak_excel_personnel_sudah_dikerjakan');
+Route::get('/report-ict-pdf-personnel-sudah-dikerjakan/{usr_fullname}','IctController@cetak_pdf_personnel_sudah_dikerjakan');
+Route::get('/report-ict-excel-personnel-selesai/{usr_fullname}','IctController@cetak_excel_personnel_selesai');
+Route::get('/report-ict-pdf-personnel-selesai/{usr_fullname}','IctController@cetak_pdf_personnel_selesai');
