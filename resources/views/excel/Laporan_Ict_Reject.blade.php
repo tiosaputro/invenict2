@@ -1,10 +1,10 @@
 <table style ="width:100%">
     <thead>
         <tr>
-            <th colspan="7" style="text-align:center; font-weight: bold; font-size: 14px;"> Daftar ICT Request (Reject)</th>
+            <th colspan="10" style="text-align:center; font-weight: bold; font-size: 14px;"> Daftar ICT Request</th>
         </tr>
         <tr>
-            <th colspan="7" style="text-align:center; font-weight: bold; font-size: 12px;"> {{date('d M Y')}}</th>
+            <th colspan="10" style="text-align:center; font-weight: bold; font-size: 12px;"> {{date('d M Y')}}</th>
         </tr>
         <tr>
             <br>

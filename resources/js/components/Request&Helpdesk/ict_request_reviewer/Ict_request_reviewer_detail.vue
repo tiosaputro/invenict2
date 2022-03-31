@@ -62,18 +62,46 @@
                     name: 'Ict Request Reviewer'})"
                   />
                   <Button
-                    v-if="this.status == 'Permohonan'"
+                    v-if="this.status != 'RR' && this.status != 'RA1' && this.status != 'RA2' &&  this.status != 'T' && this.status != 'D' && this.status != 'C'" 
                     label="Pdf"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-file-pdf"
                     @click="CetakPdf()"
                   />
                   <Button
-                    v-if="this.status == 'Permohonan'" 
+                    v-if="this.status != 'RR' && this.status != 'RA1' && this.status != 'RA2' &&  this.status != 'T' && this.status != 'D' && this.status != 'C'"
                     label="Excel"
                     class="p-button-raised p-button-success mt-2"
                     icon="pi pi-print"
                     @click="CetakExcel()" 
+                  />
+                  <Button
+                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'"  
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdfReject()"
+                  />
+                  <Button
+                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'" 
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcelReject()" 
+                  />
+                  <Button
+                    v-if="this.status == 'T'"  
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdfSedangDikerjakan()"
+                  />
+                  <Button
+                    v-if="this.status == 'T'" 
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcelSedangDikerjakan()" 
                   />
                 </div>
 			        </div>
@@ -149,6 +177,18 @@ export default {
     CetakExcel(){
       window.open('/api/report-ict-detail-excel/' +this.code);
     },
+    CetakPdfReject(){
+     window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
+    },
+    CetakExcelReject(){
+      window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
+    },
+    CetakPdfSedangDikerjakan(){
+     window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/'+this.code);
+    },
+    CetakExcelSedangDikerjakan(){
+      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.code);
+    }
   },
 };
 </script>

@@ -99,18 +99,16 @@
                     </template>
                   </Column>
                   <template #footer>
-                      <div class="grid p-dir-col">
+                    <div class="grid p-dir-col">
                       <div class="col">
                         <div class="box">
                           <Button
-                            v-if="this.permohonan.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
                             @click="CetakPdfPermohonan()"
                           />
-                          <Button 
-                            v-if="this.permohonan.length"
+                          <Button
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
@@ -201,22 +199,20 @@
                     </template>
                   </Column>
                   <template #footer>
-                      <div class="p-grid p-dir-col">
+                    <div class="p-grid p-dir-col">
                       <div class="p-col">
                         <div class="box">
                           <Button
-                            v-if="this.atasandivisi.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
-                            @click="CetakPdfVerifikasi()"
+                            @click="CetakPdfAtasanDivisi()"
                           />
-                          <Button
-                            v-if="this.atasandivisi.length" 
+                          <Button 
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
-                            @click="CetakExcelVerifikasi()" 
+                            @click="CetakExcelAtasanDivisi()" 
                           />
                         </div>
                       </div>
@@ -305,14 +301,14 @@
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
-                            @click="CetakPdfReject()"
+                            @click="CetakPdfIctManager()"
                           />
                           <Button 
                             v-if="this.manager.length"
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
-                            @click="CetakExcelReject()" 
+                            @click="CetakExcelIctManager()" 
                           />
                         </div>
                       </div>
@@ -382,14 +378,14 @@
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
-                            @click="CetakPdfSedangDikerjakan()"
+                            @click="CetakPdfReject()"
                           />
                           <Button 
                             v-if="this.reject.length"
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
-                            @click="CetakExcelSedangDikerjakan()" 
+                            @click="CetakExcelReject()" 
                           />
                         </div>
                       </div>
@@ -906,12 +902,29 @@ export default {
           reject: () => {},
         });
     },
-    CetakPdfPermohonan()
-    {
-       window.open('api/report-ict-pdf-permohonan');
+    CetakPdfPermohonan(){
+      window.open('api/report-ict-pdf-reviewer-permohonan');
     },
     CetakExcelPermohonan(){
-      window.open('api/report-ict-excel-permohonan');
+      window.open('api/report-ict-excel-reviewer-permohonan');
+    },
+    CetakPdfAtasanDivisi(){
+      window.open('api/report-ict-pdf-reviewer-atasan-divisi');
+    },
+    CetakExcelAtasanDivisi(){
+      window.open('api/report-ict-excel-reviewer-atasan-divisi');
+    },
+    CetakPdfIctManager(){
+      window.open('api/report-ict-pdf-reviewer-ict-manager');
+    },
+    CetakExcelIctManager(){
+      window.open('api/report-ict-excel-reviewer-ict-manager');
+    },
+    CetakPdfReject(){
+      window.open('api/report-ict-pdf-reviewer-reject');
+    },
+    CetakExcelReject(){
+      window.open('api/report-ict-excel-reviewer-reject');
     },
   },
 };

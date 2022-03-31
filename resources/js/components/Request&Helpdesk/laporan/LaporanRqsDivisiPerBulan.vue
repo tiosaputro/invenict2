@@ -20,6 +20,9 @@
          <template #loading>
             Loading data. Please wait.
          </template>
+        <template #empty>
+          Not Found
+        </template>
          <template #header>
             <div class="table-header p-text-left">
                 <Dropdown @change="getTahunRequestor()" :showClear="true" v-model="bulanRequestor" :options="bulan" optionValue="code" optionLabel="name" placeholder="Pilih Bulan" class="mr-2" />

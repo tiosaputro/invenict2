@@ -49,15 +49,57 @@
           <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
           <template #footer>
-               <div class="p-grid p-dir-col">
+            <div class="p-grid p-dir-col">
 			        <div class="p-col">
 				        <div class="box">
                    <Button
                     label="Kembali"
-                    class="p-button-raised p-button p-mr-2 p-mb-2"
+                    class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Ict Request Divisi 1'})"
+                  />
+                  <Button
+                    v-if="this.status != 'RR' && this.status != 'RA1' && this.status != 'RA2' &&  this.status != 'T' && this.status != 'D' && this.status != 'C'" 
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdf()"
+                  />
+                  <Button
+                    v-if="this.status != 'RR' && this.status != 'RA1' && this.status != 'RA2' &&  this.status != 'T' && this.status != 'D' && this.status != 'C'"
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcel()" 
+                  />
+                  <Button
+                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'"  
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdfReject()"
+                  />
+                  <Button
+                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'" 
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcelReject()" 
+                  />
+                  <Button
+                    v-if="this.status == 'T'"  
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdfSedangDikerjakan()"
+                  />
+                  <Button
+                    v-if="this.status == 'T'" 
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcelSedangDikerjakan()" 
                   />
                 </div>
 			        </div>
@@ -83,7 +125,8 @@ export default {
         checkto : [],
         id : localStorage.getItem('id'),
         tes:[],
-        ireq:[]
+        ireq:[],
+        status:''
     };
   },
   mounted() {
@@ -130,6 +173,7 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
+        this.status = response.data.cekstatus;
       });
     },
     DeleteIct(ireqd_id){
@@ -153,6 +197,24 @@ export default {
         reject: () => {},
       });
     },
+    CetakPdf(){
+      window.open('/api/report-ict-detail-pdf/' +this.code);
+    },
+    CetakExcel(){
+      window.open('/api/report-ict-detail-excel/' +this.code);
+    },
+    CetakPdfReject(){
+     window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
+    },
+    CetakExcelReject(){
+      window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
+    },
+    CetakPdfSedangDikerjakan(){
+     window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/'+this.code);
+    },
+    CetakExcelSedangDikerjakan(){
+      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.code);
+    }
   },
 };
 </script>

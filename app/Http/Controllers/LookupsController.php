@@ -144,8 +144,13 @@ class LookupsController extends Controller
     {
         $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
         ->where('lookup_status','T')
+        ->where(function($query){
+            return $query
+            ->where('lookup_code','D')
+            ->orwhere('lookup_code','T');
+        })
         ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->orderBy('lookup_desc','ASC')
+        ->orderBy('lookup_desc','DESC')
         ->get();
         return json_encode($ref);
     }

@@ -48,6 +48,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -59,6 +60,7 @@
                             params: { code: slotProps.data.ireq_id }, })"
                       />
                       <Button
+                        v-if="slotProps.data.ireq_statuss == 'NA1'"
                         class="p-button-rounded p-button-success mr-2"
                         icon="pi pi-check-square"
                         v-tooltip.right="'Verifikasi'"
@@ -66,6 +68,26 @@
                       />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfPermohonan()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelPermohonan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>   
               </TabPanel>
                 <TabPanel header="Yang Telah Diverifikasi">
@@ -106,6 +128,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -118,6 +141,26 @@
                       />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfVerifikasi()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelVerifikasi()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>   
                 </TabPanel>
                 <TabPanel header="Yang Di Reject">
@@ -172,6 +215,26 @@
                       />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfReject()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelReject()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>  
                 </TabPanel>
                 <TabPanel header="Sedang Dikerjakan">
@@ -225,6 +288,26 @@
                       />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSedangDikerjakan()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSedangDikerjakan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>
                 </TabPanel>
                 <TabPanel header="Sudah Dikerjakan">
@@ -270,6 +353,26 @@
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSudahDikerjakan()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSudahDikerjakan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>
                 </TabPanel>
                 <TabPanel header="Selesai">
@@ -315,6 +418,26 @@
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+                  <template #footer>
+                    <div class="grid dir-col">
+                      <div class="col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSelesai()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSelesai()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>
                 </TabPanel>
             </TabView>
@@ -478,7 +601,43 @@ export default {
                this.getPermohonan();
             });
           }
-      },
+    },
+    CetakPdfPermohonan(){
+      window.open('api/report-ict-pdf-atasan-permohonan/'+this.usr_name);
+    },
+    CetakExcelPermohonan(){
+      window.open('api/report-ict-excel-atasan-permohonan/'+this.usr_name);
+    },
+    CetakPdfVerifikasi(){
+      window.open('api/report-ict-pdf-atasan-verifikasi/'+this.usr_name);
+    },
+    CetakExcelVerifikasi(){
+      window.open('api/report-ict-excel-atasan-verifikasi/'+this.usr_name);
+    },
+    CetakPdfReject(){
+      window.open('api/report-ict-pdf-atasan-reject/'+this.usr_name);
+    },
+    CetakExcelReject(){
+      window.open('api/report-ict-excel-atasan-reject/'+this.usr_name);
+    },
+    CetakPdfSedangDikerjakan(){
+      window.open('api/report-ict-pdf-atasan-sedang-dikerjakan/'+this.usr_name);
+    },
+    CetakExcelSedangDikerjakan(){
+      window.open('api/report-ict-excel-atasan-sedang-dikerjakan/'+this.usr_name);
+    },
+    CetakPdfSudahDikerjakan(){
+      window.open('api/report-ict-pdf-atasan-sudah-dikerjakan/'+this.usr_name);
+    },
+    CetakExcelSudahDikerjakan(){
+      window.open('api/report-ict-excel-atasan-sudah-dikerjakan/'+this.usr_name);
+    },
+    CetakPdfSelesai(){
+      window.open('api/report-ict-atasan-pdf-selesai/'+this.usr_name);
+    },
+    CetakExcelSelesai(){
+      window.open('api/report-ict-atasan-excel-selesai/'+this.usr_name);
+    },
   },
 };
 </script>

@@ -20,6 +20,9 @@
          <template #loading>
             Loading data. Please wait.
          </template>
+        <template #empty>
+          Not Found
+        </template>
          <template #header>
             <div class="table-header p-text-left">
                <Dropdown @change="getPerDivisiRequestorTahun()" :showClear="true" v-model="tahunRequestor" :options="tahunn" optionValue="tahun" optionLabel="tahun" placeholder="Pilih Tahun" />

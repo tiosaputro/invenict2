@@ -316,3 +316,27 @@ Route::get('/report-ict-detail-pdf-tab-reject/{code}','IctDetailController@cetak
 Route::get('/report-ict-detail-excel-tab-reject/{code}','IctDetailController@cetak_excel_reject');
 Route::get('/report-ict-detail-pdf-tab-sedang-dikerjakan/{code}','IctDetailController@cetak_pdf_sedang_dikerjakan');
 Route::get('/report-ict-detail-excel-tab-sedang-dikerjakan/{code}','IctDetailController@cetak_excel_sedang_dikerjakan');
+
+//report atasan requestor
+Route::get('/report-ict-excel-atasan-permohonan/{usr_name}','IctController@cetak_excel_atasan_permohonan');
+Route::get('/report-ict-pdf-atasan-permohonan/{usr_name}','IctController@cetak_pdf_atasan_permohonan');
+Route::get('/report-ict-excel-atasan-verifikasi/{usr_name}','IctController@cetak_excel_atasan_verifikasi');
+Route::get('/report-ict-pdf-atasan-verifikasi/{usr_name}','IctController@cetak_pdf_atasan_verifikasi');
+Route::get('/report-ict-excel-atasan-reject/{usr_name}','IctController@cetak_excel_atasan_reject');
+Route::get('/report-ict-pdf-atasan-reject/{usr_name}','IctController@cetak_pdf_atasan_reject');
+Route::get('/report-ict-excel-atasan-sedang-dikerjakan/{usr_name}','IctController@cetak_excel_atasan_sedang_dikerjakan');
+Route::get('/report-ict-pdf-atasan-sedang-dikerjakan/{usr_name}','IctController@cetak_pdf_atasan_sedang_dikerjakan');
+Route::get('/report-ict-excel-atasan-sudah-dikerjakan/{usr_name}','IctController@cetak_excel_atasan_sudah_dikerjakan');
+Route::get('/report-ict-pdf-atasan-sudah-dikerjakan/{usr_name}','IctController@cetak_pdf_atasan_sudah_dikerjakan');
+Route::get('/report-ict-atasan-excel-selesai/{usr_name}','IctController@cetak_excel_atasan_selesai');
+Route::get('/report-ict-atasan-pdf-selesai/{usr_name}','IctController@cetak_pdf_atasan_selesai');
+
+//report reviewer
+Route::get('/report-ict-excel-reviewer-permohonan','IctController@cetak_excel_reviewer_permohonan');
+Route::get('/report-ict-pdf-reviewer-permohonan','IctController@cetak_pdf_reviewer_permohonan');
+Route::get('/report-ict-excel-reviewer-atasan-divisi','IctController@cetak_excel_reviewer_atasan_divisi');
+Route::get('/report-ict-pdf-reviewer-atasan-divisi','IctController@cetak_pdf_reviewer_atasan_divisi');
+Route::get('/report-ict-excel-reviewer-ict-manager','IctController@cetak_excel_reviewer_ict_manager');
+Route::get('/report-ict-pdf-reviewer-ict-manager','IctController@cetak_pdf_reviewer_ict_manager');
+Route::get('/report-ict-excel-reviewer-reject','IctController@cetak_excel_reviewer_reject');
+Route::get('/report-ict-pdf-reviewer-reject','IctController@cetak_pdf_reviewer_reject');

@@ -231,7 +231,7 @@ class IctDetailController extends Controller
     public function cetak_excel($code)
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctDetailExport($code),'Laporan Ict request (Detail Permohonan) '.$newCreation.'.xlsx');
+        return Excel::download(new IctDetailExport($code),'Laporan ICT request '.$newCreation.'.xlsx');
     }
     public function cetak_pdf_tab_reviewer($code)
     {
@@ -297,7 +297,7 @@ class IctDetailController extends Controller
     public function cetak_excel_reject($code)
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctDetailExportReject($code),'Laporan Ict Request (Detail Direject) '.$newCreation.'.xlsx');
+        return Excel::download(new IctDetailExportReject($code),'Laporan ICT Request '.$newCreation.'.xlsx');
     }
     public function cetak_pdf_sedang_dikerjakan($code)
     {
@@ -319,7 +319,7 @@ class IctDetailController extends Controller
     public function cetak_excel_sedang_dikerjakan($code)
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctDetailTabSudahDikerjakanExport($code),'Laporan Ict Request (Detail Sedang Dikerjakan) '.$newCreation.'.xlsx');
+        return Excel::download(new IctDetailTabSudahDikerjakanExport($code),'Laporan Ict Request '.$newCreation.'.xlsx');
     }
     public function getDetailVerif($code)
     {

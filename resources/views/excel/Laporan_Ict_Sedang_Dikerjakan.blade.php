@@ -1,10 +1,10 @@
 <table style ="width:100%">
     <thead>
         <tr>
-            <th colspan="8" style="text-align:center; font-weight: bold; font-size: 14px;"> Daftar ICT Request (Sedang Dikerjakan)</th>
+            <th colspan="10" style="text-align:center; font-weight: bold; font-size: 14px;"> Daftar ICT Request </th>
         </tr>
         <tr>
-            <th colspan="8" style="text-align:center; font-weight: bold; font-size: 12px;"> {{date('d M Y')}}</th>
+            <th colspan="10" style="text-align:center; font-weight: bold; font-size: 12px;"> {{date('d M Y')}}</th>
         </tr>
         <tr>
             <br>
@@ -18,6 +18,8 @@
         <th style="text-align:left; font-weight: bold;">Pengguna</th>
         <th style="text-align:left; font-weight: bold;">Divisi Pengguna</th>
         <th style="text-align:left; font-weight: bold;">Bisnis Unit</th>
+        <th style="text-align:left; font-weight: bold;">Status</th>
+        <th style="text-align:left; font-weight: bold;">Personnel ICT</th>
     </tr>
     </thead>
     <tbody>
@@ -32,6 +34,8 @@
             <td style="text-align:left" width="20" height="15">{{ $i->ireq_user}}</td>
             <td style="text-align:left" width="20" height="15">{{ $i->div_name}}</td>
             <td style="text-align:left" width="30" height="15">{{ $i->ireq_bu}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->ireq_status}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->ireq_assigned_to}}</td>
         </tr>
     @endforeach
     </tbody>

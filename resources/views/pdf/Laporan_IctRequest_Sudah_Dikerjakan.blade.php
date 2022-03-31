@@ -27,7 +27,7 @@
 		<div>
 			<div class="row justify-content-center">
 				<div class="col-md-7 text-center mb-7">
-					<h2 style="font-size:30pt; font-weight: bold;">Daftar ICT Request (Sudah Dikerjakan) </h2>
+					<h2 style="font-size:30pt; font-weight: bold;">Daftar ICT Request </h2>
 					 <h4 style="font-size:20pt; font-weight: bold;">Pada tanggal : {{date('d M Y')}}</h4>
 				</div>
 			</div>

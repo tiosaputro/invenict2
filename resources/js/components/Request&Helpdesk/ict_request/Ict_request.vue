@@ -513,7 +513,7 @@
                       <Button
                         v-if="slotProps.data.ireq_value == null"
                         class="p-button-rounded p-button-info mr-2"
-                        label = "Beri Nilai"
+                        label = "Penilaian"
                         @click="tes(slotProps.data.ireqd_id)"
                       />
                     </template>
@@ -561,7 +561,7 @@
                   </star-rating> 
                   <Message severity="error" icon="bi bi-emoji-frown" :closable="false" v-if="sangat_kurang">Sangat Kurang</Message>
                   <Message severity="warn" icon="bi bi-emoji-frown" :closable="false" v-if="kurang"> Kurang</Message>
-                  <Message severity="info" icon="bi bi-emoji-neutral" :closable="false" v-if="baik">baik</Message>
+                  <Message severity="info" icon="bi bi-emoji-neutral" :closable="false" v-if="baik">Biasa</Message>
                   <Message severity="info" icon="bi bi-emoji-laughing" :closable="false" v-if="bagus">bagus</Message>
                   <Message severity="success" icon="bi bi-emoji-heart-eyes" :closable="false" v-if="sangat_bagus">Sangat Bagus</Message>
                   </div>

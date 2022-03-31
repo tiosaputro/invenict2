@@ -20,6 +20,9 @@
          <template #loading>
             Loading data. Please wait.
          </template>
+        <template #empty>
+          Not Found
+        </template>
          <template #header>
             <div class="table-header p-text-left">
                 <Dropdown @change="getStatusDivisiUser()" :showClear="true" v-model="statusUser" :options="status" optionValue="code" optionLabel="name" placeholder="Pilih Status"/>

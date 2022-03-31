@@ -1,7 +1,7 @@
 <table style ="width:100%">
     <thead>
         <tr>
-            <th colspan="7" style="text-align:center; font-weight: bold; font-size: 14px;"> Daftar ICT Request (Permohonan)</th>
+            <th colspan="7" style="text-align:center; font-weight: bold; font-size: 14px;"> Daftar ICT Request</th>
         </tr>
         <tr>
             <th colspan="7" style="text-align:center; font-weight: bold; font-size: 12px;"> {{date('d M Y')}}</th>
@@ -18,6 +18,7 @@
         <th style="text-align:left; font-weight: bold;">Divisi Pengguna</th>
         <th style="text-align:left; font-weight: bold;">Pemohon</th>
         <th style="text-align:left; font-weight: bold;">Pengguna</th>
+        <th style="text-align:left; font-weight: bold;">Status</th>
     </tr>
     </thead>
     <tbody>
@@ -32,6 +33,7 @@
             <td style="text-align:left" width="30" height="15">{{ $i->div_name}}</td>
             <td style="text-align:left" width="20" height="15">{{ $i->ireq_requestor}}</td>
             <td style="text-align:left" width="20" height="15">{{ $i->ireq_user}}</td>
+            <td style="text-align:left" width="20" height="15">{{ $i->ireq_status}}</td>
         </tr>
     @endforeach
     </tbody>

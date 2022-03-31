@@ -31,11 +31,11 @@
         <tr>
             <td style="text-align:left" width="5"  height="5">{{$no++}}</td>
             <td style="text-align:left" width="15" height="15">{{ $i->ireq_no }}</td>
-            <td style="text-align:left" width="15" height="15">{{ $i->ireqd_id }}</td>
-            <td style="text-align:left" width="15" height="15">{{ $i->name }}</td>
+            <td style="text-align:left" width="10" height="15">{{ $i->ireqd_id }}</td>
+            <td style="text-align:left" width="17" height="15">{{ $i->name }}</td>
+            <td style="text-align:left" width="15" height="15">{{ $i->ireq_type}}</td>
             <td style="text-align:left" width="15" height="15">{{ $i->ireq_date }}</td>
-            <td style="text-align:left" width="20" height="15">{{ $i->ireq_type}}</td>
-            <td style="text-align:left" width="18" height="10">{{ $i->ireq_qty }}</td>
+            <td style="text-align:left" width="10" height="10">{{ $i->ireq_qty }}</td>
             <td style="text-align:left" width="18" height="10">{{ $i->ireq_desc }}</td>
             <td style="text-align:left" width="18" height="10">{{ $i->ireq_remark }}</td>
             <td style="text-align:left" width="20" height="15">{{ $i->ireq_requestor}}</td>
