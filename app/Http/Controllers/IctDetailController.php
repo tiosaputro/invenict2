@@ -65,8 +65,8 @@ class IctDetailController extends Controller
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc',
         DB::raw("CASE WHEN id.ireq_status = 'A' Then 'Approved' WHEN id.ireq_status = 'T' Then 'Penugasan' WHEN id.ireq_status = 'R' Then 'Reject' WHEN id.ireq_status = 'D' Then 'Done' WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
-        ->join('invent_mst as im','id.invent_code','im.invent_code')
-        ->join('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireq_id',$code)
         ->where('id.ireq_assigned_to',$usr_fullname)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
@@ -329,8 +329,8 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.*','lr.lookup_desc as ireq_type','im.invent_desc')
-        ->join('invent_mst as im','id.invent_code','im.invent_code')
-        ->join('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->get();
@@ -339,8 +339,8 @@ class IctDetailController extends Controller
     public function getDetail($ireqd_id){
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.ireq_assigned_to','im.ireq_no','id.ireqd_id','id.ireq_status as status', DB::raw("(iim.invent_code ||'-'|| iim.invent_desc) as name"))
-        ->join('ireq_mst as im','id.ireq_id','im.ireq_id')
-        ->join('invent_mst as iim','id.invent_code','iim.invent_code')
+        ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
+        ->leftjoin('invent_mst as iim','id.invent_code','iim.invent_code')
         ->where('id.ireqd_id',$ireqd_id)
         ->first();
             return json_encode($dtl);

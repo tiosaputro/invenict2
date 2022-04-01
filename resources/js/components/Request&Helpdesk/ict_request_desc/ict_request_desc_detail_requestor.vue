@@ -101,34 +101,6 @@
                     @click="$router.push({
                     name: 'Desc'})"
                   />
-                  <Button
-                    v-if="this.status == 'Reject'"
-                    label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
-                    icon="pi pi-file-pdf"
-                    @click="CetakPdfReject()"
-                  />
-                  <Button
-                    v-if="this.status == 'Reject'" 
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcelReject()" 
-                  />
-                  <Button
-                    v-if="this.status != 'Reject'" 
-                    label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
-                    icon="pi pi-file-pdf"
-                    @click="CetakPdf()"
-                  />
-                  <Button
-                    v-if="this.status != 'Reject'" 
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcel()" 
-                  />
                 </div>
 			        </div>
             </div>

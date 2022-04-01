@@ -97,6 +97,19 @@
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
+						<span class="block text-500 font-medium mb-3">Sedang Direview </span>
+						<div @click="sdgDireview()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.sedangdireview}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-journal-check text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
 						<span class="block text-500 font-medium mb-3">Belum Diverifikasi </span>
 						<div @click="blmDiverifikasi()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.belumdiverifikasi}}</div>
 					</div>
@@ -186,6 +199,19 @@
     </div>
 </div>
 <div class="grid" v-if="this.role_name.includes('Atasan Requestor Divisi')">
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Sedang Direview </span>
+						<div @click="sdgDireview1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.sedangdireview}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-journal-check text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -430,6 +456,19 @@
 			<div class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
+						<span class="block text-500 font-medium mb-3">Sedang Direview </span>
+						<div @click="sdgDireview4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sedangdireview}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-journal-check text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	<div class="col-12 lg:col-6 xl:col-3" >
+			<div class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
 						<span class="block text-500 font-medium mb-3">Belum Diverifikasi</span>
 						<div @click="blmDiverifikasi4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.blmdiverifikasi}}</div>
 					</div>
@@ -600,6 +639,10 @@ export default {
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',29);
         },
+		sdgDireview(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',40);
+		},
         blmDiverifikasi(){
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',1);
@@ -634,6 +677,10 @@ export default {
                 this.count1 = response.data;
             });
         },
+		sdgDireview1(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',41);
+		},
         blmDiverifikasi1(){
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',7);
@@ -727,6 +774,10 @@ export default {
                 this.count4 = response.data;
             });
         },
+		sdgDireview4(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',42);
+		},
 		blmDiverifikasi4(){
 		  this.$router.push('/ict-request-desc');
           localStorage.setItem('active',33)
