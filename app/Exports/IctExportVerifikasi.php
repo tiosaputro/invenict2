@@ -21,7 +21,10 @@ class IctExportVerifikasi implements FromView
                 DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"))
         ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('im.ireq_type','lr.lookup_code')
+                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+        })
         ->leftjoin('lookup_refs as llr','im.ireq_status','llr.lookup_code')
         ->where('im.ireq_requestor',$this->usr_name)
         ->where(function($query){
@@ -29,7 +32,6 @@ class IctExportVerifikasi implements FromView
             ->where('im.ireq_status','A1')
             ->orwhere('im.ireq_status','A2');
         })
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('im.creation_date','ASC')
         ->get()

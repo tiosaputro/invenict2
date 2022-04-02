@@ -20,7 +20,10 @@ class IctExportRejectAtasan implements FromView
         ->select('im.ireq_no','im.ireq_requestor','im.ireq_reason','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
                 DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'llr.lookup_desc as ireq_status')
         ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('im.ireq_type','lr.lookup_code')
+                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+        })
         ->leftjoin('lookup_refs as llr','im.ireq_status','llr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where(function($query){
@@ -30,7 +33,6 @@ class IctExportRejectAtasan implements FromView
             ->orwhere('im.ireq_status','RA2');
         })
         ->where('dr.div_verificator',$this->usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('im.creation_date','ASC')
         ->get()
