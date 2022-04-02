@@ -178,7 +178,7 @@ export default {
           this.errors = error.response.data.errors;
          });
         }else{
-            this.error.menu = 'Menu Wajib Diisi'
+            this.error.menu = 'Menu Belum Diisi'
         }
       },
   },

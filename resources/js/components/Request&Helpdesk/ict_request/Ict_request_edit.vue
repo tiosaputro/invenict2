@@ -46,9 +46,13 @@
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
                  <div class="field col-12 md:col-4">
-                     <InputText 
-                        v-model ="mutasi.lookup_desc"
-                        disabled
+                     <Dropdown 
+                        v-model ="mutasi.ireq_type"
+                        :options="type"
+                        optionLabel="name"
+                        optionValue="code"
+                        placeholder="Pilih Tipe Request"
+                        :showClear="true"
                      />
                 </div>
               </div>
@@ -66,7 +70,7 @@
                           {{ errors.ireq_user[0] }}
                         </small>
                 </div>
-              </div>
+              </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
                  <div class="field col-12 md:col-4">
@@ -84,7 +88,7 @@
                           {{error.ireq_divisi_user}}
                         </small>
                 </div>
-              </div> -->
+              </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Bisnis Unit</label>
                  <div class="field col-12 md:col-4">
@@ -216,10 +220,10 @@ export default {
       }
       else{
         if(this.mutasi.ireq_type == null){
-          this.error.ireq_type = "Tipe Request Wajib Diisi"
+          this.error.ireq_type = "Tipe Request Belum Diisi"
       }
          if(this.mutasi.ireq_divisi_user == null){
-          this.error.ireq_divisi_user = "Divisi User Wajib Diisi"
+          this.error.ireq_divisi_user = "Divisi User Belum Diisi"
         }
       }
       },

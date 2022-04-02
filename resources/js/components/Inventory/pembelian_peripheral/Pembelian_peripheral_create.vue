@@ -24,7 +24,7 @@
                     :class="{ 'p-invalid': submitted && !supp }"
                   />
                    <small class="p-error" v-if="submitted && !supp"
-                      >Suplier Wajib Diisi.
+                      >Suplier Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -47,7 +47,7 @@
                         </template>
                       </DatePicker>
                       <small class="p-error" v-if="submitted && !purch_date"
-                          >Tgl. Pembelian Wajib Diisi.
+                          >Tgl. Pembelian Belum Diisi.
                       </small>
                 </div>
               </div>
@@ -65,7 +65,7 @@
                   :class="{ 'p-invalid': submitted && !pay }"
                 />
                    <small class="p-error" v-if="submitted && !pay"
-                      >Cara Pembayaran Wajib Diisi.
+                      >Cara Pembayaran Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -79,7 +79,7 @@
                   :class="{ 'p-invalid': submitted && !petugas }"
                 />
                    <small class="p-error" v-if="submitted && !petugas"
-                      >Petugas Wajib Diisi.
+                      >Petugas Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                   :class="{ 'p-invalid': submitted && !money }"
                 />
                    <small class="p-error" v-if="submitted && !money"
-                      >Mata Uang Wajib Diisi.
+                      >Mata Uang Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -128,7 +128,7 @@
                         :class="{ 'p-invalid': submitted && !ket }"
                     />
                    <small class="p-error" v-if="submitted && !ket"
-                      >Keterangan Wajib Diisi.
+                      >Keterangan Belum Diisi.
                    </small>
                 </div>
               </div>

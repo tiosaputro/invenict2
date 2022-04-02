@@ -45,12 +45,12 @@ class MngMenuController extends Controller
     Public function save(Request $request)
     {
         $message = [
-            'mod_id.required'=>'Module Name Wajib Diisi',
-            'menu_name.required'=>'Menu Name Wajib Diisi',
-            'menu_desc.required'=>'Menu Description Wajib Diisi',
-            'menu_display.required'=>'Menu Display Wajib Diisi',
-            'menu_type.required'=>'Metu Type Wajib Diisi',
-            'menu_stat.required'=>'Menu Status Wajib Diisi',
+            'mod_id.required'=>'Module Name Belum Diisi',
+            'menu_name.required'=>'Menu Name Belum Diisi',
+            'menu_desc.required'=>'Menu Description Belum Diisi',
+            'menu_display.required'=>'Menu Display Belum Diisi',
+            'menu_type.required'=>'Metu Type Belum Diisi',
+            'menu_stat.required'=>'Menu Status Belum Diisi',
         ];
         $request->validate([
             'mod_id' => 'required',
@@ -89,12 +89,12 @@ class MngMenuController extends Controller
     Public function update(Request $request, $code)
     {
         $message = [
-            'mod_id.required'=>'Module Name Wajib Diisi',
-            'menu_name.required'=>'Menu Name Wajib Diisi',
-            'menu_desc.required'=>'Menu Description Wajib Diisi',
-            'menu_display.required'=>'Menu Display Wajib Diisi',
-            'menu_type.required'=>'Metu Type Wajib Diisi',
-            'menu_stat.required'=>'Menu Status Wajib Diisi',
+            'mod_id.required'=>'Module Name Belum Diisi',
+            'menu_name.required'=>'Menu Name Belum Diisi',
+            'menu_desc.required'=>'Menu Description Belum Diisi',
+            'menu_display.required'=>'Menu Display Belum Diisi',
+            'menu_type.required'=>'Metu Type Belum Diisi',
+            'menu_stat.required'=>'Menu Status Belum Diisi',
         ];
         $request->validate([
             'mod_id' => 'required',

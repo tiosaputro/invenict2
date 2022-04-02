@@ -24,7 +24,7 @@
                         :class="{ 'p-invalid': submitted && !kode }"
                       />
                       <small class="p-error" v-if="submitted && !kode"
-                        >Kode Peripheral Wajib Diisi.
+                        >Kode Peripheral Belum Diisi.
                       </small>
                       <small v-if="errors.invent_code" class="p-error">
                         {{ errors.invent_code[0] }}
@@ -41,7 +41,7 @@
                          :class="{ 'p-invalid': submitted && !qty }"
                          />
                       <small class="p-error" v-if="submitted && !qty"
-                        >Jumlah (Qty) Wajib Diisi.
+                        >Jumlah (Qty) Belum Diisi.
                       </small>
                   </div>
                 </div>
@@ -58,7 +58,7 @@
                         :class="{ 'p-invalid': submitted && !satuan }"
                      />
                       <small class="p-error" v-if="submitted && !satuan"
-                        >Satuan Wajib Diisi.
+                        >Satuan Belum Diisi.
                       </small>
                   </div>
               </div>
@@ -75,7 +75,7 @@
                       :class="{ 'p-invalid': submitted && !hrgsatuan }"
                     />
                       <small class="p-error" v-if="submitted && !hrgsatuan"
-                        >Harga Satuan Wajib Diisi.
+                        >Harga Satuan Belum Diisi.
                       </small>
                   </div>
               </div>
@@ -92,7 +92,7 @@
                         readonly
                     />
                       <small class="p-error" v-if="submitted && !pricetotal"
-                        >Total Harga Wajib Diisi.
+                        >Total Harga Belum Diisi.
                       </small>
                 </div>
               </div>
@@ -108,7 +108,7 @@
                     :class="{ 'p-invalid': submitted && !ket }"
                   />
                       <small class="p-error" v-if="submitted && !ket"
-                        >Keterangan Wajib Diisi.
+                        >Keterangan Belum Diisi.
                       </small>
                  </div>
               </div>

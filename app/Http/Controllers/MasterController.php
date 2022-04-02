@@ -32,21 +32,21 @@ class MasterController extends Controller
     {
         $message = [
             'code.unique' => 'Kode Sudah Ada',
-            'code.required'=> 'Kode Wajib Diisi',
-            'nama.required' => 'Nama Wajib Diisi',
-            'merk.required' => 'Merk Wajib Diisi',
-            'type.required' => 'Tipe Wajib Diisi',
-            'sn.required' => 'S/N Wajib Diisi',
-            'tgl.required' => 'Tanggal Wajib Diisi',
-            'kondisi.required'=>'Kondisi Wajib Diisi',
-            'garansi.required' => 'Garansi Wajib Diisi',
-            'garansi.numeric' => 'Garansi Wajib Diisi',
-            'barcode.required' => 'Barcode Wajib Diisi',
-            'lastloct.required' => 'Lokasi Terakhir Wajib Diisi',
-            'lastuser.required' => 'Pengguna Terakhir Wajib Diisi',
-            'prevloct.required' => 'Lokasi Sebelumnya Wajib Diisi',
-            'prevuser.required' => 'User Sebelumnya Wajib Diisi',
-            'bu.required' => 'Bisnis Unit Wajib Diisi'
+            'code.required'=> 'Kode Belum Diisi',
+            'nama.required' => 'Nama Belum Diisi',
+            'merk.required' => 'Merk Belum Diisi',
+            'type.required' => 'Tipe Belum Diisi',
+            'sn.required' => 'S/N Belum Diisi',
+            'tgl.required' => 'Tanggal Belum Diisi',
+            'kondisi.required'=>'Kondisi Belum Diisi',
+            'garansi.required' => 'Garansi Belum Diisi',
+            'garansi.numeric' => 'Garansi Belum Diisi',
+            'barcode.required' => 'Barcode Belum Diisi',
+            'lastloct.required' => 'Lokasi Terakhir Belum Diisi',
+            'lastuser.required' => 'Pengguna Terakhir Belum Diisi',
+            'prevloct.required' => 'Lokasi Sebelumnya Belum Diisi',
+            'prevuser.required' => 'User Sebelumnya Belum Diisi',
+            'bu.required' => 'Bisnis Unit Belum Diisi'
         ];
         $request->validate([
             'code' => 'required|unique:invent_mst,invent_code',

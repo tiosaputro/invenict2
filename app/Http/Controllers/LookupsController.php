@@ -27,11 +27,11 @@ class LookupsController extends Controller
     {
         $message = [
             'lookup_code.unique' => 'Kode Sudah Ada',
-            'lookup_code.required'=>'Kode Wajib Diisi',
+            'lookup_code.required'=>'Kode Belum Diisi',
             'lookup_type.unique' => 'Tipe Sudah Ada',
-            'lookup_type.required' => 'Tipe Wajib Diisi',
-            'lookup_desc.required' => 'Deskripsi Wajib Diisi',
-            'lookup_status.required' => 'Status Wajib Diisi'
+            'lookup_type.required' => 'Tipe Belum Diisi',
+            'lookup_desc.required' => 'Deskripsi Belum Diisi',
+            'lookup_status.required' => 'Status Belum Diisi'
         ];
         $request->validate([
             'lookup_code' => [
@@ -76,8 +76,8 @@ class LookupsController extends Controller
     public function update(Request $request,$code,$type)
     {
         $message = [
-            'lookup_desc.required' => 'Deskripsi Wajib Diisi',
-            'lookup_status.required' => 'Status Wajib Diisi'
+            'lookup_desc.required' => 'Deskripsi Belum Diisi',
+            'lookup_status.required' => 'Status Belum Diisi'
         ];
         $request->validate([
             'lookup_desc'=>'required',

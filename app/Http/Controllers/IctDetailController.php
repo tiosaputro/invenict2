@@ -76,23 +76,22 @@ class IctDetailController extends Controller
     Public function getNo_req($code)
     {
         $dtl = DB::table('ireq_mst as im')
-        ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
-        ->select('im.ireq_no as noreq','lr.lookup_desc','im.ireq_type','im.ireq_status as cekStatus',
+        ->select('im.ireq_no as noreq','im.ireq_type','im.ireq_status as cekStatus',
                 DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN im.ireq_status = 'NA2' Then 'Menunggu Diapprove Manager' WHEN im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager'
          WHEN im.ireq_status = 'T' Then 'Penugasan' WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
-         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
          ->where('im.ireq_id',$code)
-        ->first();
-            return json_encode($dtl);
+         ->first();
+         return response()->json($dtl);
+      
     }
     Public function save(Request $request,$code)
     {
         if($request->tipereq == 'P'){
             $message = [
-                'invent_code.required'=>'Nama Peripheral Wajib Diisi',
-                'qty.required'=>'Qty Wajib diisi',
-                'qty.numeric'=>'Qty Wajib diisi',
-                'ket.required'=>'Keterangan Wajib Diisi'
+                'invent_code.required'=>'Nama Peripheral Belum Diisi',
+                'qty.required'=>'Qty Belum diisi',
+                'qty.numeric'=>'Qty Belum diisi',
+                'ket.required'=>'Keterangan Belum Diisi'
             ];
                 $request->validate([
                     'invent_code'=>'required',
@@ -117,7 +116,7 @@ class IctDetailController extends Controller
             ]);
         } else{
             $message = [
-                'ket.required'=>'Keterangan Wajib Diisi'
+                'ket.required'=>'Keterangan Belum Diisi'
             ];
                 $request->validate([
                     'ket' => 'required'
@@ -154,10 +153,10 @@ class IctDetailController extends Controller
     {
         if($request->ireq_type == 'P'){
         $message = [
-            'ireq_type.required'=>'Tipe Request Wajib Diisi',
-            'invent_code.required'=>'Nama Peripheral Wajib Diisi',
-            'ireq_qty.required'=>'Qty Wajib diisi',
-            'ireq_remark.required'=>'Keterangan Wajib Diisi'
+            'ireq_type.required'=>'Tipe Request Belum Diisi',
+            'invent_code.required'=>'Nama Peripheral Belum Diisi',
+            'ireq_qty.required'=>'Qty Belum diisi',
+            'ireq_remark.required'=>'Keterangan Belum Diisi'
         ];
             $request->validate([
                 'ireq_type' => 'required',
@@ -185,8 +184,8 @@ class IctDetailController extends Controller
 
     }else{
         $message = [
-            'ireq_type.required'=>'Tipe Request Wajib Diisi',
-            'ireq_remark.required'=>'Keterangan Wajib Diisi'
+            'ireq_type.required'=>'Tipe Request Belum Diisi',
+            'ireq_remark.required'=>'Keterangan Belum Diisi'
         ];
             $request->validate([
                 'ireq_type' => 'required',

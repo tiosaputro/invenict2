@@ -31,9 +31,9 @@ class MngRolesController extends Controller
     function save(Request $request)
     {
         $message = [
-            'rol_name.required'=>'Role Name Wajib Diisi',
-            'rol_desc.required'=>'Role Description Wajib Diisi',
-            'rol_stat.required'=>'Role Status Wajib Diisi',
+            'rol_name.required'=>'Role Name Belum Diisi',
+            'rol_desc.required'=>'Role Description Belum Diisi',
+            'rol_stat.required'=>'Role Status Belum Diisi',
         ];
         $request->validate([
             'rol_name' => 'required',
@@ -60,9 +60,9 @@ class MngRolesController extends Controller
     function update(Request $request, $code)
     {
         $message = [
-            'rol_name.required'=>'Role Name Wajib Diisi',
-            'rol_desc.required'=>'Role Description Wajib Diisi',
-            'rol_stat.required'=>'Role Status Wajib Diisi',
+            'rol_name.required'=>'Role Name Belum Diisi',
+            'rol_desc.required'=>'Role Description Belum Diisi',
+            'rol_stat.required'=>'Role Status Belum Diisi',
         ];
         $request->validate([
             'rol_name' => 'required',

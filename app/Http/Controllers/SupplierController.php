@@ -22,13 +22,13 @@ class SupplierController extends Controller
     {
         $message = [
             'code.unique' => 'Kode Sudah Ada',
-            'code.required'=>'Kode Wajib Diisi',
-            'nama.required'=>'Nama Wajib Diisi',
-            'alamat1.required'=>'Alamat 1 Wajib diisi',
-            'kota.required'=>'Kota Wajib Diisi',
-            'provinsi.required'=>'Provinsi Wajib Diisi',
-            'email.required'=>'Email Wajib Diisi',
-            'contact.required'=>'Contact Wajib Diisi',
+            'code.required'=>'Kode Belum Diisi',
+            'nama.required'=>'Nama Belum Diisi',
+            'alamat1.required'=>'Alamat 1 Belum diisi',
+            'kota.required'=>'Kota Belum Diisi',
+            'provinsi.required'=>'Provinsi Belum Diisi',
+            'email.required'=>'Email Belum Diisi',
+            'contact.required'=>'Contact Belum Diisi',
             'notlp1.required' => 'No. Tlp-1 wajib diisi',
             'fax.required' => 'Fax wajib diisi',
             'contact.alpha' => 'Masukan Contact Dengan Benar',
@@ -120,14 +120,14 @@ class SupplierController extends Controller
     public function update(Request $request, $code)
     {
         $message = [
-            'suplier_name.required'=>'Nama Wajib Diisi',
-            'suplier_address1.required'=>'Alamat 1 Wajib diisi',
-            'suplier_city.required'=>'Kota Wajib Diisi',
-            'suplier_prov.required'=>'Provinsi Wajib Diisi',
-            'suplier_email.required'=>'Email Wajib Diisi',
+            'suplier_name.required'=>'Nama Belum Diisi',
+            'suplier_address1.required'=>'Alamat 1 Belum diisi',
+            'suplier_city.required'=>'Kota Belum Diisi',
+            'suplier_prov.required'=>'Provinsi Belum Diisi',
+            'suplier_email.required'=>'Email Belum Diisi',
             'suplier_tlp1.required' => 'No. Tlp-1 wajib diisi',
             'suplier_fax.required' => 'Fax wajib diisi',
-            'suplier_contact.required'=>'Contact Wajib Diisi',
+            'suplier_contact.required'=>'Contact Belum Diisi',
             'suplier_contact.alpha' => 'Masukan Contact Dengan Benar',
             'suplier_tlp2.numeric' => 'Masukan No. Tlp-2 dengan benar',
             'suplier_fax.numeric' => 'Masukan Fax dengan benar'

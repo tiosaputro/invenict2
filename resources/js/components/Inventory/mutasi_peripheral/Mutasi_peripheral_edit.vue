@@ -39,7 +39,7 @@
                         </template>
                       </DatePicker> 
                       <small class="p-error" v-if="submitted && !mutasi.imutasi_tgl_dari"
-                        >Dari Tgl Wajib Diisi.
+                        >Dari Tgl Belum Diisi.
                       </small>
                     </div>
                   </div>
@@ -73,7 +73,7 @@
                           :class="{ 'p-invalid': submitted && !mutasi.imutasi_lokasi }"
                         />
                         <small class="p-error" v-if="submitted && !mutasi.imutasi_lokasi"
-                          >Lokasi Wajib Diisi.
+                          >Lokasi Belum Diisi.
                         </small>
                       </div>
                   </div>
@@ -87,7 +87,7 @@
                           :class="{ 'p-invalid': submitted && !mutasi.imutasi_pengguna }"
                         />
                       <small class="p-error" v-if="submitted && !mutasi.imutasi_pengguna"
-                        >Pengguna Wajib Diisi.
+                        >Pengguna Belum Diisi.
                       </small>
                     </div>
                   </div>
@@ -103,7 +103,7 @@
                     :class="{ 'p-invalid': submitted && !mutasi.imutasi_keterangan }"
                   />
                       <small class="p-error" v-if="submitted && !mutasi.imutasi_keterangan"
-                        >Keterangan Wajib Diisi.
+                        >Keterangan Belum Diisi.
                       </small>
                </div>
               </div>

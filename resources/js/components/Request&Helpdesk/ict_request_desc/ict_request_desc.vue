@@ -3203,7 +3203,7 @@
                       :class="{ 'p-invalid': submitted && !editDetail.status }"
                     />
                     <small class="p-error" v-if="submitted && !editDetail.status"
-                      >Status Wajib Diisi.
+                      >Status Belum Diisi.
                     </small>
                   </div>
                 </div>
@@ -3345,13 +3345,13 @@ export default {
       },
       getIct(){
         this.axios.get('api/get-ict/'+this.usr_name,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-          this.ict = response.data.ict7;
+          this.ict = response.data.ict6;
           this.sdhDiverifikasi = response.data.ict1;
           this.diReject = response.data.ict2;
           this.sdgDikerjakan = response.data.ict3;
           this.sdhDikerjakan = response.data.ict4;
           this.sdhSelesai = response.data.ict5;
-          this.sedangDireview = response.data.ict;
+          this.sedangDireview = response.data.ict7;
           this.loading = false;
         });
       },

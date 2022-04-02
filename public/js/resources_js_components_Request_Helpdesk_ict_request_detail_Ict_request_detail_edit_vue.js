@@ -156,11 +156,11 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           if (this.ict.ireq_type == null) {
-            this.error.ireq_type = "Tipe Request Wajib Diisi";
+            this.error.ireq_type = "Tipe Request Belum Diisi";
           }
 
           if (this.ict.invent_code == null) {
-            this.error.invent_code = "Nama Peripheral Wajib Diisi";
+            this.error.invent_code = "Nama Peripheral Belum Diisi";
           }
         }
       } else {
@@ -184,7 +184,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           if (this.ict.ireq_type == null) {
-            this.error.ireq_type = "Tipe Request Wajib Diisi";
+            this.error.ireq_type = "Tipe Request Belum Diisi";
           }
         }
       }

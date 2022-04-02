@@ -124,7 +124,8 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = [];
       this.error = [];
 
-      if (this.tipereq != null && this.bisnis != null && this.usr_name != null && this.usr_divisi != null) {
+      if ( // this.tipereq != null &&
+      this.bisnis != null && this.usr_name != null && this.usr_divisi != null) {
         var data = new FormData();
         data.append("tgl", this.tgl);
         data.append("tipereq", this.tipereq);
@@ -156,19 +157,19 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         if (this.tipereq == null) {
-          this.error.tipereq = "Tipe Request Wajib Diisi";
+          this.error.tipereq = "Tipe Request Belum Diisi";
         }
 
         if (this.bisnis == null) {
-          this.error.bisnis = "Bisnis Unit Wajib Diisi";
+          this.error.bisnis = "Bisnis Unit Belum Diisi";
         }
 
         if (this.usr_name == null) {
-          this.error.usr_name = "Pengguna Wajib Diisi";
+          this.error.usr_name = "Pengguna Belum Diisi";
         }
 
         if (this.usr_divisi == null) {
-          this.error.usr_divisi = "Divisi Pengguna Wajib Diisi";
+          this.error.usr_divisi = "Divisi Pengguna Belum Diisi";
         }
       }
     }

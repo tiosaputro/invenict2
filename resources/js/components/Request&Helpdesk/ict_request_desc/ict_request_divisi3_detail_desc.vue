@@ -110,7 +110,7 @@
                   :class="{ 'p-invalid': submitted && !editDetail.status }"
                 />
                 <small class="p-error" v-if="submitted && !editDetail.status"
-                  >Status Wajib Diisi.
+                  >Status Belum Diisi.
                 </small>
             </div>
         </div>

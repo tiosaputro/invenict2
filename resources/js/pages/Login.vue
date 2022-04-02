@@ -25,7 +25,7 @@
                                 style="padding:1rem;"
                             />
                             <small class="p-error" v-if="submitted && !email"
-                                >Username Wajib Diisi.
+                                >Username Belum Diisi.
                             </small>
                             <small v-if="errors.email" class="p-error"
                                 > {{ errors.email }} 
@@ -42,7 +42,7 @@
                                 inputStyle="padding:1rem"
                             />
                             <small class="p-error" v-if="submitted && !password"
-                                >Password Wajib Diisi.
+                                >Password Belum Diisi.
                             </small>
                             <small v-if="errors.password" class="p-error"
                                 > {{errors.password}}  

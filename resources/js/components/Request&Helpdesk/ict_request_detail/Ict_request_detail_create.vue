@@ -22,7 +22,7 @@
               </div>
             <div class="field grid">
               <label class="col-fixed" style="width:120px">Tipe Request</label>
-                <div class="field col-12 md:col-4">
+                <div class="field col-10 md:col-5">
                   <Dropdown 
                     v-model="tipereq"
                     :options="type"
@@ -43,7 +43,7 @@
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
                 <label class="col-fixed" style="width:120px">Nama Peripheral</label>
-                 <div class="field col-12 md:col-4">
+                 <div class="field col-12 md:col-5">
                      <Dropdown 
                         v-model="kode"
                         :options="kodeperi"
@@ -162,7 +162,9 @@ export default {
   },
   methods: {
     getIreq(tipereq){
-      this.cekTipeReq = tipereq
+      this.cekTipeReq = tipereq;
+      this.errors = [];
+      this.error = [];
     },
     saveclick(){
       this.errors = [];
@@ -190,10 +192,10 @@ export default {
          });
       }else{
         if(this.kode == null){
-          this.error.kode = "Nama Peripheral Wajib Diisi"
+          this.error.kode = "Nama Peripheral Belum Diisi"
         }
         if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Wajib Diisi"
+          this.error.tipereq = "Tipe Request Belum Diisi"
         }
       }
      }else{
@@ -217,7 +219,7 @@ export default {
          });
       }else{
         if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Wajib Diisi"
+          this.error.tipereq = "Tipe Request Belum Diisi"
         }
       }
      }
@@ -248,6 +250,8 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
       this.detail = response.data;
+      this.tipereq = this.detail.ireq_type
+      this.cekTipeReq = this.detail.ireq_type
       this.getKode();
       this.getType();
       }).catch(error=>{
@@ -264,8 +268,6 @@ export default {
       getType(){
         this.axios.get('/api/getType', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.type = response.data;
-          this.tipereq = this.detail.ireq_type
-          this.cekTipeReq = this.detail.ireq_type
           });
       },
       getKode(){
@@ -277,7 +279,7 @@ export default {
       this.errors = [];
       this.error = [];
       if(this.tipereq=='P'){
-       if ( this.kode != null && this.tipereq != null ) 
+       if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
        {
         const data = new FormData();
         data.append("invent_code", this.kode);
@@ -298,14 +300,17 @@ export default {
          });
       }else{
         if(this.kode == null){
-          this.error.kode = "Nama Peripheral Wajib Diisi"
+          this.error.kode = "Nama Peripheral Belum Diisi"
         }
         if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Wajib Diisi"
+          this.error.tipereq = "Tipe Request Belum Diisi"
+        }
+        if(this.tipereq == 'null'){
+          this.error.tipereq = "Tipe Request Belum Diisi"
         }
       }
       }else{
-        if (this.tipereq != null ) 
+        if (this.tipereq != null && this.tipereq != 'null' ) 
        {
         const data = new FormData();
         data.append("desk", this.desk);
@@ -324,7 +329,10 @@ export default {
          });
       }else{
         if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Wajib Diisi"
+          this.error.tipereq = "Tipe Request Belum Diisi"
+        }
+        if(this.tipereq == 'null'){
+          this.error.tipereq = "Tipe Request Belum Diisi"
         }
       }
       }

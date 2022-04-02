@@ -26,15 +26,15 @@ class MngUserController extends Controller
     public function save(Request $request)
     {
         $message = [
-            'usr_name.required'=>'User Name Wajib Diisi',
-            'usr_fullname.required'=>'User Full Name Wajib Diisi',
-            'usr_email.required'=>'Email Wajib Diisi',
+            'usr_name.required'=>'User Name Belum Diisi',
+            'usr_fullname.required'=>'User Full Name Belum Diisi',
+            'usr_email.required'=>'Email Belum Diisi',
             'usr_email.unique'=>'Email Sudah Pernah Didaftarkan',
-            'usr_alamat.required'=>'Alamat Wajib Diisi',
-            'usr_status.required'=>'Status Wajib Diisi',
-            'usr_passwd.required'=>'Password Wajib Diisi',
-            'div.required'=>'Divisi Wajib Diisi',
-            'usr_bu.required'=>'Bisnis Unit Wajib Diisi',
+            'usr_alamat.required'=>'Alamat Belum Diisi',
+            'usr_status.required'=>'Status Belum Diisi',
+            'usr_passwd.required'=>'Password Belum Diisi',
+            'div.required'=>'Divisi Belum Diisi',
+            'usr_bu.required'=>'Bisnis Unit Belum Diisi',
         ];
         $request->validate([
             'usr_name' => 'required',
@@ -89,13 +89,13 @@ class MngUserController extends Controller
     {
         $user = Mng_user::find($code);
         $message = [
-            'usr_fullname.required'=>'User Full Name Wajib Diisi',
-            'usr_email.required'=>'Email Wajib Diisi',
+            'usr_fullname.required'=>'User Full Name Belum Diisi',
+            'usr_email.required'=>'Email Belum Diisi',
             'usr_email.unique'=>'Email Sudah Pernah Didaftarkan',
-            'usr_alamat.required'=>'Alamat Wajib Diisi',
-            'usr_stat.required'=>'Status Wajib Diisi',
-            'div_id.required'=>'Divisi Wajib Diisi',
-            'usr_bu.required'=>'Bisnis Unit Wajib Diisi',
+            'usr_alamat.required'=>'Alamat Belum Diisi',
+            'usr_stat.required'=>'Status Belum Diisi',
+            'div_id.required'=>'Divisi Belum Diisi',
+            'usr_bu.required'=>'Bisnis Unit Belum Diisi',
         ];
         $request->validate([
             'usr_email'=>[

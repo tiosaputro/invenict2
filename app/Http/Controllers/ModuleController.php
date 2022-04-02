@@ -26,9 +26,9 @@ class ModuleController extends Controller
     Public function save(Request $request)
     {
         $message = [
-            'mod_name.required'=>'Module Name Wajib Diisi',
-            'mod_desc.required'=>'Module Description Wajib Diisi',
-            'mod_stat.required'=>'Module Status Wajib Diisi',
+            'mod_name.required'=>'Module Name Belum Diisi',
+            'mod_desc.required'=>'Module Description Belum Diisi',
+            'mod_stat.required'=>'Module Status Belum Diisi',
         ];
         $request->validate([
             'mod_name' => 'required',
@@ -55,9 +55,9 @@ class ModuleController extends Controller
     public function update(Request $request,$code)
     {
         $message = [
-            'mod_name.required'=>'Module Name Wajib Diisi',
-            'mod_desc.required'=>'Module Description Wajib Diisi',
-            'mod_stat.required'=>'Module Status Wajib Diisi',
+            'mod_name.required'=>'Module Name Belum Diisi',
+            'mod_desc.required'=>'Module Description Belum Diisi',
+            'mod_stat.required'=>'Module Status Belum Diisi',
         ];
         $request->validate([
             'mod_name' => 'required',

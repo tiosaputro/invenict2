@@ -28,7 +28,7 @@
                           {{ errors.kode[0] }}
                       </small>  
                       <small class="p-error" v-if="submitted && !kode"
-                        > Nama Peripheral Wajib Diisi.
+                        > Nama Peripheral Belum Diisi.
                       </small>
                     </div>
                   </div>
@@ -51,7 +51,7 @@
                       </template>
                       </DatePicker>
                       <small class="p-error" v-if="submitted && !fromdate"
-                        > Dari Tgl Wajib Diisi.
+                        > Dari Tgl Belum Diisi.
                       </small>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
                       :class="{ 'p-invalid': submitted && !lokasi }"
                     />
                       <small class="p-error" v-if="submitted && !lokasi"
-                        >Lokasi Wajib Diisi.
+                        >Lokasi Belum Diisi.
                       </small>
                   </div>
               </div>
@@ -100,7 +100,7 @@
                         />
                         
                       <small class="p-error" v-if="submitted && !user"
-                        >Pengguna Wajib Diisi.
+                        >Pengguna Belum Diisi.
                       </small>
                       <small v-if="errors.garansi" class="p-error">
                           {{ errors.user[0] }}
@@ -119,7 +119,7 @@
                     :class="{ 'p-invalid': submitted && !ket }"
                   />
                       <small class="p-error" v-if="submitted && !ket"
-                        >Keterangan Wajib Diisi.
+                        >Keterangan Belum Diisi.
                       </small>
                       <small v-if="errors.ket" class="p-error">
                         {{ errors.ket[0] }}

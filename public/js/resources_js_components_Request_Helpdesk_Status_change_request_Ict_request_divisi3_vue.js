@@ -85,6 +85,20 @@ __webpack_require__.r(__webpack_exports__);
         _this2.getData();
       });
     },
+    edit: function edit(ireqd_id, ireq_id) {
+      var _this3 = this;
+
+      this.code = ireq_id;
+      this.dialogEdit = true;
+      this.axios.get('/api/detail/' + ireqd_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this3.editDetail = response.data;
+      });
+      this.getStatus();
+    },
     cancel: function cancel() {
       this.code = null;
       this.dialogEdit = false;
@@ -93,7 +107,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = false;
     },
     submit: function submit() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.submitted = true;
 
@@ -103,34 +117,34 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this3.$toast.add({
+          _this4.$toast.add({
             severity: 'success',
             summary: 'Success',
             detail: 'Status Berhasil Dirubah',
             life: 3000
           });
 
-          _this3.cancel();
+          _this4.cancel();
 
-          _this3.getData();
+          _this4.getData();
         });
       }
     },
     getData: function getData() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.axios.get('api/get-sedang-dikerjakan/' + this.user.usr_fullname, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.sedangDikerjakan = response.data.ict;
-        _this4.sudahDikerjakan = response.data.ict1;
-        _this4.selesai = response.data.ict2;
-        _this4.loading = false;
+        _this5.sedangDikerjakan = response.data.ict;
+        _this5.sudahDikerjakan = response.data.ict1;
+        _this5.selesai = response.data.ict2;
+        _this5.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this4.$toast.add({
+          _this5.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Sesi Login Expired'
@@ -139,27 +153,13 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this4.$router.push('/login');
+            return _this5.$router.push('/login');
           }, 2000);
         }
       });
     },
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
-    },
-    edit: function edit(ireqd_id, ireq_id) {
-      var _this5 = this;
-
-      this.code = ireq_id;
-      this.dialogEdit = true;
-      this.axios.get('/api/detail/' + ireqd_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this5.editDetail = response.data;
-      });
-      this.getStatus();
     },
     getStatus: function getStatus() {
       var _this6 = this;
@@ -894,7 +894,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options", "class"]), $data.submitted && !$data.editDetail.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_41, "Status Wajib Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.editDetail.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_41, "Status Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */

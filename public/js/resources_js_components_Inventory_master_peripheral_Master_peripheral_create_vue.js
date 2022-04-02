@@ -215,15 +215,15 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         if (this.bu == null) {
-          this.error.bu = "Bisnis Unit Wajib Diisi";
+          this.error.bu = "Bisnis Unit Belum Diisi";
         }
 
         if (this.merk == null) {
-          this.error.merk = "Merk Wajib Diisi";
+          this.error.merk = "Merk Belum Diisi";
         }
 
         if (this.foto == null) {
-          this.error.foto = "Foto Wajib Diisi";
+          this.error.foto = "Foto Belum Diisi";
         }
       }
     }

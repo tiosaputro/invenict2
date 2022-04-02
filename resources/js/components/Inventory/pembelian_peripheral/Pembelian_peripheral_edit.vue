@@ -24,7 +24,7 @@
                   :class="{ 'p-invalid': submitted && !purch.suplier_code }"
                 />
                    <small class="p-error" v-if="submitted && !purch.suplier_code">
-                     Suplier Wajib Diisi.
+                     Suplier Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -47,7 +47,7 @@
                         </template>
                       </DatePicker>
                    <small class="p-error" v-if="submitted && !purch.purchase_date"
-                      >Tgl. Pembelian Wajib Diisi.
+                      >Tgl. Pembelian Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -66,7 +66,7 @@
                   :class="{ 'p-invalid': submitted && !purch.purchase_pay_methode }"
                 />
                    <small class="p-error" v-if="submitted && !purch.purchase_pay_methode"
-                      >Cara Pembayaran Wajib Diisi.
+                      >Cara Pembayaran Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -80,7 +80,7 @@
                   :class="{ 'p-invalid': submitted && !purch.purchase_petugas }"
                 />
                    <small class="p-error" v-if="submitted && !purch.purchase_petugas"
-                      >Petugas Wajib Diisi.
+                      >Petugas Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -98,7 +98,7 @@
                   :class="{ 'p-invalid': submitted && !purch.valuta_code }"
                 />
                    <small class="p-error" v-if="submitted && !purch.valuta_code"
-                      >Mata Uang Wajib Diisi.
+                      >Mata Uang Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -115,7 +115,7 @@
                         :class="{ 'p-invalid': submitted && !purch.purchase_remark }"
                     />
                    <small class="p-error" v-if="submitted && !purch.purchase_remark"
-                      >Keterangan Wajib Diisi.
+                      >Keterangan Belum Diisi.
                    </small>
                 </div>
               </div>
@@ -133,7 +133,7 @@
                   :class="{ 'p-invalid': submitted && !purch.purchase_status }"
                 />
                    <small class="p-error" v-if="submitted && !purch.purchase_status"
-                      >Status Wajib Diisi.
+                      >Status Belum Diisi.
                    </small>
                   </div>
                 </div>

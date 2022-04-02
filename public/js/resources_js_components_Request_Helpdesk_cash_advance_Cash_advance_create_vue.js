@@ -170,7 +170,7 @@ __webpack_require__.r(__webpack_exports__);
           _this4.errors = error.response.data.errors;
         });
       } else {
-        this.error.noreq = "No Request Wajib Diisi";
+        this.error.noreq = "No Request Belum Diisi";
       }
     }
   }

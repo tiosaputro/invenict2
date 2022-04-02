@@ -21,15 +21,15 @@ class CashController extends Controller
     function save(Request $request)
     {
         $message = [
-            'noreq.required'=>'No Request Wajib Diisi',
+            'noreq.required'=>'No Request Belum Diisi',
             'noreq.unique'=>'No request ini sudah pernah dibuatkan cash advancenya',
-            'jum.numeric'=>'Jumlah Wajib Diisi',
-            'tglsub.required'=>'Tgl Submit Wajib diisi',
-            'tglrecvunit.required'=>'Tgl Terima Barang Wajib Diisi',
-            'tglbuy.required'=>'Tgl Pembelian Wajib Diisi',
-            'tglrecvcash.required'=>'Tgl. Terima cash Wajib Diisi',
-            'tgltouser.required'=>'Tgl Penyerahan Ke User Wajib Diisi',
-            'tglclosing.required'=>'Tgl Closing Wajib Diisi'
+            'jum.numeric'=>'Jumlah Belum Diisi',
+            'tglsub.required'=>'Tgl Submit Belum diisi',
+            'tglrecvunit.required'=>'Tgl Terima Barang Belum Diisi',
+            'tglbuy.required'=>'Tgl Pembelian Belum Diisi',
+            'tglrecvcash.required'=>'Tgl. Terima cash Belum Diisi',
+            'tgltouser.required'=>'Tgl Penyerahan Ke User Belum Diisi',
+            'tglclosing.required'=>'Tgl Closing Belum Diisi'
         ];
             $request->validate([
                 'noreq' => 'required|unique:ca_mst,ireq_id',
@@ -90,13 +90,13 @@ class CashController extends Controller
     function update(Request $request,$code)
     {
         $message = [
-            'ca_submit_date.required'=>'Tgl Submit Wajib diisi',
-            'ca_recv_item_date.required'=>'Tgl Terima Barang Wajib diisi',
-            'ca_purchase_date.required'=>'Tgl Pembelian Wajib Diisi',
-            'ca_recv_cash_date.required'=>'Tgl. Terima cash Wajib Diisi',
-            'ca_hand_over_date.required'=>'Tgl Penyerahan Ke User Wajib Diisi',
-            'ca_pic_name.required'=>'Jumlah Wajib Diisi',
-            'ca_settlement_date.required'=>'Tgl Closing Wajib Diisi'
+            'ca_submit_date.required'=>'Tgl Submit Belum diisi',
+            'ca_recv_item_date.required'=>'Tgl Terima Barang Belum diisi',
+            'ca_purchase_date.required'=>'Tgl Pembelian Belum Diisi',
+            'ca_recv_cash_date.required'=>'Tgl. Terima cash Belum Diisi',
+            'ca_hand_over_date.required'=>'Tgl Penyerahan Ke User Belum Diisi',
+            'ca_pic_name.required'=>'Jumlah Belum Diisi',
+            'ca_settlement_date.required'=>'Tgl Closing Belum Diisi'
         ];
             $request->validate([
                 'ca_submit_date' => 'required',

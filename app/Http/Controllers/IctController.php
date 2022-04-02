@@ -499,20 +499,6 @@ class IctController extends Controller
         ->orderBy('im.creation_date','ASC')
         ->get();
 
-        // $ict4 = DB::table('ireq_mst')
-        // ->select('ireq_id','ireq_no','ireq_date','ireq_user')
-        // ->where('created_by',$usr_name)
-        // ->where('ireq_status','D')
-        // ->orderBy('creation_date','ASC')
-        // ->get();
-
-        // $ict5 = DB::table('ireq_mst')
-        // ->select('ireq_id','ireq_no','ireq_date','ireq_user')
-        // ->where('created_by',$usr_name)
-        // ->where('ireq_status','C')
-        // ->orderBy('creation_date','ASC')
-        // ->get();
-
         $ict4 = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
         ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
@@ -564,8 +550,7 @@ class IctController extends Controller
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where(function($query){
             return $query
-            ->where('im.ireq_status','NA1')
-            ->orWhere('im.ireq_status','NA2');
+            ->where('im.ireq_status','P');
             })
         ->groupBy('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.creation_date','dr.div_name','lr.lookup_desc')
         ->orderBy('im.creation_date','ASC')
@@ -798,7 +783,7 @@ class IctController extends Controller
     Public function getSedangDikerjakan($usr_fullname)
     {
         $ict = DB::table('ireq_dtl as id')
-        ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+        ->select('imm.ireq_no','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user', 'id.ireq_assigned_to', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
             DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
@@ -950,7 +935,7 @@ class IctController extends Controller
     Public function save(Request $request)
     {
         $message = [
-            'tgl.required'=>'Tgl. Request Wajib Diisi',
+            'tgl.required'=>'Tgl. Request Belum Diisi',
         ];
             $request->validate([
                 'tgl' => 'required',
@@ -973,21 +958,20 @@ class IctController extends Controller
     Public function edit($code)
     {
         $ict = DB::table('ireq_mst as im')
-            ->select('im.ireq_id','im.ireq_no','lr.lookup_desc','im.ireq_date','im.ireq_bu','im.ireq_divisi_user','im.ireq_user')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_type','im.ireq_date','im.ireq_bu','im.ireq_divisi_user','im.ireq_user')
             ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
             ->where('im.ireq_id',$code)
-            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
             ->first();
             return response()->json($ict);
     }
     Public function update(Request $request, $code)
     {
         $message = [
-            'ireq_date.required'=>'Tgl. Request Wajib Diisi',
-            // 'ireq_type.required'=>'Tipe Request Wajib diisi',
-            'ireq_bu.required'=>'Bisnis Unit Wajib Diisi',
-            'ireq_user.required'=>'Pengguna Wajib diisi',
-            'ireq_divisi_user.required'=>'Divisi Pengguna Wajib Diisi'
+            'ireq_date.required'=>'Tgl. Request Belum Diisi',
+            // 'ireq_type.required'=>'Tipe Request Belum diisi',
+            'ireq_bu.required'=>'Bisnis Unit Belum Diisi',
+            'ireq_user.required'=>'Pengguna Belum diisi',
+            'ireq_divisi_user.required'=>'Divisi Pengguna Belum Diisi'
         ];
         $request->validate([
                 'ireq_date' => 'required',
@@ -1000,7 +984,7 @@ class IctController extends Controller
         $newDate = Carbon::parse($request->ireq_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_date = $newDate;
-        // $ict->ireq_type = $request->ireq_type;
+        $ict->ireq_type = $request->ireq_type;
         $ict->ireq_user = $request->ireq_user;
         $ict->ireq_divisi_user = $request->ireq_divisi_user;
         $ict->ireq_bu = $request->ireq_bu;
@@ -1591,7 +1575,7 @@ class IctController extends Controller
         ->select('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
                 DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'llr.lookup_desc as ireq_status')
         ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->leftjoin('lookup_refs as lr','im.ireq_type','lr.lookup_code')
+        ->join('lookup_refs as lr','im.ireq_type','lr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('lookup_refs as llr','im.ireq_status','llr.lookup_code')
         ->where('im.ireq_status','P')

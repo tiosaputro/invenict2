@@ -31,9 +31,9 @@ class DivisiRefsController extends Controller
     public function update(Request $request,$code)
     {
         $message = [
-            'div_code.required'=>'Divisi Code Wajib Diisi',
-            'div_name.required'=>'Divisi Name Wajib diisi',
-            'div_verificator.required'=>'Divisi Verificator Wajib Diisi'
+            'div_code.required'=>'Divisi Code Belum Diisi',
+            'div_name.required'=>'Divisi Name Belum diisi',
+            'div_verificator.required'=>'Divisi Verificator Belum Diisi'
         ];
             $request->validate([
                 'div_code' => 'required',

@@ -157,7 +157,7 @@
                     :class="{ 'p-invalid': errors.usr_roles }"
                   />
                   <small class="p-error" v-if="submitted && !user.image">
-                    Foto Wajib Disi 
+                    Foto Belum Disi 
                   </small>
                 </div>
               </div>
@@ -193,7 +193,7 @@
                 <div class="col-10 md-6">
                   <InputText type="file" name="foto" :class="{ 'p-invalid': submitted && !user.image }" ref="fileInput" class="form-control" @change="fileImage" />
                     <small class="p-error" v-if="submitted && !user.image">
-                      Foto Wajib Disi 
+                      Foto Belum Disi 
                     </small>
                 </div>
               </div>

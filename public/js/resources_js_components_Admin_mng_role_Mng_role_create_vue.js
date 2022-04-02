@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.errors = error.response.data.errors;
         });
       } else {
-        this.error.menu = 'Menu Wajib Diisi';
+        this.error.menu = 'Menu Belum Diisi';
       }
     }
   }

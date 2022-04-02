@@ -267,7 +267,7 @@
                       :class="{ 'p-invalid': submitted && !editDetail.status }"
                     />
                     <small class="p-error" v-if="submitted && !editDetail.status"
-                      >Status Wajib Diisi.
+                      >Status Belum Diisi.
                     </small>
                   </div>
                 </div>
@@ -331,6 +331,14 @@ export default {
         this.getData();
       })
     },
+    edit(ireqd_id,ireq_id){
+      this.code = ireq_id;
+      this.dialogEdit = true;
+      this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.editDetail = response.data;
+      });
+      this.getStatus();
+    },
     cancel(){
       this.code=null;
       this.dialogEdit = false;
@@ -369,14 +377,6 @@ export default {
     },
     formatDate(date) {
       return moment(date).format("DD MMM YYYY")
-    },
-    edit(ireqd_id,ireq_id){
-      this.code = ireq_id;
-      this.dialogEdit = true;
-      this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.editDetail = response.data;
-      });
-      this.getStatus();
     },
     getStatus(){
       this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

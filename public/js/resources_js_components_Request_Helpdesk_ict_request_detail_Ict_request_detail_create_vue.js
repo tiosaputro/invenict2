@@ -39,6 +39,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getIreq: function getIreq(tipereq) {
       this.cekTipeReq = tipereq;
+      this.errors = [];
+      this.error = [];
     },
     saveclick: function saveclick() {
       var _this = this;
@@ -74,11 +76,11 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           if (this.kode == null) {
-            this.error.kode = "Nama Peripheral Wajib Diisi";
+            this.error.kode = "Nama Peripheral Belum Diisi";
           }
 
           if (this.tipereq == null) {
-            this.error.tipereq = "Tipe Request Wajib Diisi";
+            this.error.tipereq = "Tipe Request Belum Diisi";
           }
         }
       } else {
@@ -111,7 +113,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           if (this.tipereq == null) {
-            this.error.tipereq = "Tipe Request Wajib Diisi";
+            this.error.tipereq = "Tipe Request Belum Diisi";
           }
         }
       }
@@ -164,6 +166,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this4.detail = response.data;
+        _this4.tipereq = _this4.detail.ireq_type;
+        _this4.cekTipeReq = _this4.detail.ireq_type;
 
         _this4.getKode();
 
@@ -193,8 +197,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this5.type = response.data;
-        _this5.tipereq = _this5.detail.ireq_type;
-        _this5.cekTipeReq = _this5.detail.ireq_type;
       });
     },
     getKode: function getKode() {
@@ -215,7 +217,7 @@ __webpack_require__.r(__webpack_exports__);
       this.error = [];
 
       if (this.tipereq == 'P') {
-        if (this.kode != null && this.tipereq != null) {
+        if (this.kode != null && this.tipereq != null && this.tipereq != 'null') {
           var data = new FormData();
           data.append("invent_code", this.kode);
           data.append("desk", this.desk);
@@ -241,15 +243,19 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           if (this.kode == null) {
-            this.error.kode = "Nama Peripheral Wajib Diisi";
+            this.error.kode = "Nama Peripheral Belum Diisi";
           }
 
           if (this.tipereq == null) {
-            this.error.tipereq = "Tipe Request Wajib Diisi";
+            this.error.tipereq = "Tipe Request Belum Diisi";
+          }
+
+          if (this.tipereq == 'null') {
+            this.error.tipereq = "Tipe Request Belum Diisi";
           }
         }
       } else {
-        if (this.tipereq != null) {
+        if (this.tipereq != null && this.tipereq != 'null') {
           var _data2 = new FormData();
 
           _data2.append("desk", this.desk);
@@ -277,7 +283,11 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           if (this.tipereq == null) {
-            this.error.tipereq = "Tipe Request Wajib Diisi";
+            this.error.tipereq = "Tipe Request Belum Diisi";
+          }
+
+          if (this.tipereq == 'null') {
+            this.error.tipereq = "Tipe Request Belum Diisi";
           }
         }
       }
@@ -346,7 +356,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_10 = {
-  "class": "field col-12 md:col-4"
+  "class": "field col-10 md:col-5"
 };
 var _hoisted_11 = {
   key: 0,
@@ -371,7 +381,7 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_15 = {
-  "class": "field col-12 md:col-4"
+  "class": "field col-12 md:col-5"
 };
 var _hoisted_16 = {
   key: 0,

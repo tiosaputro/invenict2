@@ -34,7 +34,7 @@
                         :class="{ 'p-invalid': submitted && !master.invent_brand }"
                       />
                       <small class="p-error" v-if="submitted && !master.invent_brand"
-                        >Merk Wajib Diisi.
+                        >Merk Belum Diisi.
                       </small>
                   </div>
                   </div>
@@ -48,7 +48,7 @@
                         :class="{ 'p-invalid': submitted && !master.invent_type }"
                       />
                       <small class="p-error" v-if="submitted && !master.invent_type"
-                        >Type Wajib Diisi.
+                        >Type Belum Diisi.
                       </small>
                  </div>
               </div>
@@ -62,7 +62,7 @@
                       :class="{ 'p-invalid': submitted && !master.invent_sn }"
                     />
                     <small class="p-error" v-if="submitted && !master.invent_sn"
-                        >S/N Wajib Diisi.
+                        >S/N Belum Diisi.
                       </small>
                   </div>
               </div>
@@ -85,7 +85,7 @@
                         </template>
                       </DatePicker>
                       <small class="p-error" v-if="submitted && !master.invent_tgl_perolehan"
-                        > Wajib Diisi.
+                        > Belum Diisi.
                       </small>
                   </div>
                 </div>
@@ -101,7 +101,7 @@
                         <span class="p-inputgroup-addon"> Tahun </span>
                     </div>
                       <small class="p-error" v-if="submitted && !master.invent_lama_garansi"
-                        >Garansi Wajib Diisi.
+                        >Garansi Belum Diisi.
                       </small>
                 </div>
               </div>
@@ -119,7 +119,7 @@
                     :class="{ 'p-invalid': submitted && !master.invent_kondisi }"
                   />                 
                     <small class="p-error" v-if="submitted && !master.invent_kondisi"
-                        >Bisnis Unit Wajib Diisi.
+                        >Bisnis Unit Belum Diisi.
                       </small>
                </div>
               </div>
@@ -133,7 +133,7 @@
                   <Button icon="bi bi-qr-code-scan" v-if="aktif" class="p-button p-button-info" @click="Scan()" v-tooltip="'Click to scan'" />
                 </div>
                       <small v-if="submitted && !master.invent_barcode" class="p-error">
-                          QR-Code Wajib Diisi.
+                          QR-Code Belum Diisi.
                       </small>
                 </div>
               </div> 
@@ -151,7 +151,7 @@
                     :class="{ 'p-invalid': submitted && !master.invent_bu }"
                     />
                     <small class="p-error" v-if="submitted && !master.invent_bu"
-                        >Bisnis Unit Wajib Diisi.
+                        >Bisnis Unit Belum Diisi.
                       </small>
                 </div>
               </div>
@@ -166,7 +166,7 @@
                         disabled
                       />
                       <small class="p-error" v-if="submitted && !master.invent_lokasi_update"
-                        >Lokasi Terakhir Wajib Diisi.
+                        >Lokasi Terakhir Belum Diisi.
                       </small>
                   </div>
                   </div>
@@ -181,7 +181,7 @@
                         disabled
                     />
                       <small class="p-error" v-if="submitted && !master.invent_pengguna_update"
-                        >Pengguna Terakhir Wajib Diisi.
+                        >Pengguna Terakhir Belum Diisi.
                       </small>
                   </div>
                   </div>
@@ -213,7 +213,7 @@
                             autofocus
                         />
                       <small class="p-error" v-if="submitted && !master.invent_desc"
-                        >Nama Wajib Diisi.
+                        >Nama Belum Diisi.
                       </small>
                     </div>
                  </div> 
@@ -243,7 +243,7 @@
                         disabled
                     />
                       <small class="p-error" v-if="submitted && !master.invent_lokasi_previous"
-                        >Lokasi Sebelumnya Wajib Diisi.
+                        >Lokasi Sebelumnya Belum Diisi.
                       </small>
                     </div>
                  </div>
@@ -258,7 +258,7 @@
                         disabled
                     />
                       <small class="p-error" v-if="submitted && !master.invent_pengguna_previous"
-                        >Pengguna Terakhir Wajib Diisi.
+                        >Pengguna Terakhir Belum Diisi.
                       </small>
                     </div>
                  </div>

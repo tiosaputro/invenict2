@@ -32,7 +32,7 @@
                          :class="{ 'p-invalid': submitted && !detail.dpurchase_qty }"
                          />
                       <small class="p-error" v-if="submitted && !detail.dpurchase_qty"
-                        >Jumlah (Qty) Wajib Diisi.
+                        >Jumlah (Qty) Belum Diisi.
                       </small>
                   </div>
                 </div>
@@ -49,7 +49,7 @@
                         :class="{ 'p-invalid': submitted && !detail.dpurchase_sat }"
                      />
                       <small class="p-error" v-if="submitted && !detail.dpurchase_sat"
-                        >Satuan Wajib Diisi.
+                        >Satuan Belum Diisi.
                       </small>
                   </div>
               </div>
@@ -66,7 +66,7 @@
                       :class="{ 'p-invalid': submitted && !detail.dpurchase_prc_sat }"
                     />
                       <small class="p-error" v-if="submitted && !detail.dpurchase_prc_sat"
-                        >Harga Satuan Wajib Diisi.
+                        >Harga Satuan Belum Diisi.
                       </small>
                   </div>
               </div>
@@ -83,7 +83,7 @@
                           readonly
                         />
                       <small class="p-error" v-if="submitted && !detail.dpurchase_prc"
-                        >Total Harga Wajib Diisi.
+                        >Total Harga Belum Diisi.
                       </small>
                 </div>
               </div>
@@ -99,7 +99,7 @@
                     :class="{ 'p-invalid': submitted && !detail.dpurchase_remark }"
                   />
                       <small class="p-error" v-if="submitted && !detail.dpurchase_remark"
-                        >Keterangan Wajib Diisi.
+                        >Keterangan Belum Diisi.
                       </small>
                </div>
               </div>

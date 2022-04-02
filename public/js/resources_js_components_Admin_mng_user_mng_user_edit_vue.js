@@ -193,7 +193,7 @@ __webpack_require__.r(__webpack_exports__);
           _this7.errors = error.response.data.errors;
         });
       } else {
-        this.error.role = "Roles Wajib Diisi";
+        this.error.role = "Roles Belum Diisi";
       }
     }
   }

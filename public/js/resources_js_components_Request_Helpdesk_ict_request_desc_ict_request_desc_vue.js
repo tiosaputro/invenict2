@@ -147,13 +147,13 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this.ict = response.data.ict7;
+        _this.ict = response.data.ict6;
         _this.sdhDiverifikasi = response.data.ict1;
         _this.diReject = response.data.ict2;
         _this.sdgDikerjakan = response.data.ict3;
         _this.sdhDikerjakan = response.data.ict4;
         _this.sdhSelesai = response.data.ict5;
-        _this.sedangDireview = response.data.ict;
+        _this.sedangDireview = response.data.ict7;
         _this.loading = false;
       });
     },
@@ -8021,7 +8021,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options", "class"]), $data.submitted && !$data.editDetail.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_409, "Status Wajib Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.editDetail.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_409, "Status Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
