@@ -443,21 +443,20 @@ class IctController extends Controller
         $ict = DB::table('ireq_mst as id')
         ->leftjoin('ireq_dtl as idm','id.ireq_id','idm.ireq_id')
         ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->leftJoin('lookup_refs as llr',function ($join) {
+            $join->on('id.ireq_status','llr.lookup_code')
+                  ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+        })
         ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
         ->select('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','dr.div_name','id.ireq_requestor',
-                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'), DB::raw("CASE WHEN id.ireq_status = 'A1' Then 'Approved By Atasan' WHEN  id.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN id.ireq_status = 'NA2' Then 'Menunggu Diapprove ICT Manager' WHEN
-                  id.ireq_status = 'A2' Then 'Approved By ICT Manager' WHEN id.ireq_status = 'T' Then 'Penugasan'
-                  WHEN id.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN id.ireq_status = 'RA1' Then 'Reject By Atasan'
-                  WHEN id.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN id.ireq_status = 'D' Then 'Done' 
-                  WHEN id.ireq_status = 'C' Then 'Close' WHEN id.ireq_status = 'P' Then 'Permohonan' 
-                  end as ireq_status "))
+                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'),'llr.lookup_desc as ireq_status')
         ->where('id.created_by',$usr_name)
         ->where(function($query){
             return $query
             ->whereNull('id.ireq_status')
             ->orWhere('id.ireq_status','P');
             })
-        ->groupBy('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.creation_date','dr.div_name','id.ireq_status','id.ireq_requestor')
+        ->groupBy('llr.lookup_desc','id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.creation_date','dr.div_name','id.ireq_status','id.ireq_requestor')
         ->orderBy('id.creation_date','ASC')
         ->get();
 
@@ -1060,7 +1059,7 @@ class IctController extends Controller
         ->leftJoin('lookup_refs as lr',function ($join) {
             $join->on('im.ireq_type','lr.lookup_code')
                   ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-    })
+        })
         ->leftjoin('lookup_refs as llr','im.ireq_status','llr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where(function($query){

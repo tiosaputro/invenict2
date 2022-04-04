@@ -5023,15 +5023,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_status",
-        header: "Status",
+        field: "ireq_user",
+        header: "Pengguna",
         sortable: true,
         style: {
           "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_user",
-        header: "Pengguna",
+        field: "ireq_status",
+        header: "Status",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -5934,15 +5934,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_status",
-        header: "Status",
+        field: "ireq_user",
+        header: "Pengguna",
         sortable: true,
         style: {
           "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_user",
-        header: "Pengguna",
+        field: "ireq_status",
+        header: "Status",
         sortable: true,
         style: {
           "min-width": "12rem"
