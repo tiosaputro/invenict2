@@ -39,6 +39,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getIreq: function getIreq(tipereq) {
       this.cekTipeReq = tipereq;
+
+      if (this.cekTipeReq == 'S') {
+        this.qty = null;
+        this.kode = '';
+      }
+
       this.errors = [];
       this.error = [];
     },
@@ -49,7 +55,7 @@ __webpack_require__.r(__webpack_exports__);
       this.error = [];
 
       if (this.tipereq == 'P') {
-        if (this.kode != null && this.tipereq != null) {
+        if (this.kode != null && this.tipereq != null && this.tipereq != 'null') {
           var data = new FormData();
           data.append("invent_code", this.kode);
           data.append("desk", this.desk);
@@ -82,9 +88,13 @@ __webpack_require__.r(__webpack_exports__);
           if (this.tipereq == null) {
             this.error.tipereq = "Tipe Request Belum Diisi";
           }
+
+          if (this.tipereq == 'null') {
+            this.error.tipereq = "Tipe Request Belum Diisi";
+          }
         }
       } else {
-        if (this.tipereq != null) {
+        if (this.tipereq != null && this.tipereq != 'null') {
           var _data = new FormData();
 
           _data.append("desk", this.desk);
@@ -113,6 +123,10 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           if (this.tipereq == null) {
+            this.error.tipereq = "Tipe Request Belum Diisi";
+          }
+
+          if (this.tipereq == 'null') {
             this.error.tipereq = "Tipe Request Belum Diisi";
           }
         }
@@ -169,8 +183,6 @@ __webpack_require__.r(__webpack_exports__);
         _this4.tipereq = _this4.detail.ireq_type;
         _this4.cekTipeReq = _this4.detail.ireq_type;
 
-        _this4.getKode();
-
         _this4.getType();
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -191,27 +203,17 @@ __webpack_require__.r(__webpack_exports__);
     getType: function getType() {
       var _this5 = this;
 
-      this.axios.get('/api/getType', {
+      this.axios.get('/api/getAddDetail', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this5.type = response.data;
-      });
-    },
-    getKode: function getKode() {
-      var _this6 = this;
-
-      this.axios.get('/api/get-kode', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this6.kodeperi = response.data;
+        _this5.type = response.data.ref;
+        _this5.kodeperi = response.data.kode;
       });
     },
     CreateIctDetail: function CreateIctDetail() {
-      var _this7 = this;
+      var _this6 = this;
 
       this.errors = [];
       this.error = [];
@@ -229,17 +231,17 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + this.token
             }
           }).then(function () {
-            _this7.$toast.add({
+            _this6.$toast.add({
               severity: "success",
               summary: "Success Message",
               detail: "Success Create"
             });
 
             setTimeout(function () {
-              return _this7.$router.push('/ict-request-detail/' + _this7.$route.params.code);
+              return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
             }, 1000);
           })["catch"](function (error) {
-            _this7.errors = error.response.data.errors;
+            _this6.errors = error.response.data.errors;
           });
         } else {
           if (this.kode == null) {
@@ -269,17 +271,17 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + this.token
             }
           }).then(function () {
-            _this7.$toast.add({
+            _this6.$toast.add({
               severity: "success",
               summary: "Success Message",
               detail: "Success Create"
             });
 
             setTimeout(function () {
-              return _this7.$router.push('/ict-request-detail/' + _this7.$route.params.code);
+              return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
             }, 1000);
           })["catch"](function (error) {
-            _this7.errors = error.response.data.errors;
+            _this6.errors = error.response.data.errors;
           });
         } else {
           if (this.tipereq == null) {

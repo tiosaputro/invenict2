@@ -50,7 +50,9 @@ class IctController extends Controller
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
-
+    function testing(){
+        
+    }
     function getDataManager()
     {
         $ict = DB::table('ireq_mst as im')
@@ -122,7 +124,7 @@ class IctController extends Controller
         
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'A2';
-        $ict->ireq_approver1 = Auth::user()->usr_name;
+        $ict->ireq_approver2 = Auth::user()->usr_name;
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->last_update_date = $this->newUpdate;
         $ict->program_name = "IctController_approveByManager";
@@ -144,7 +146,7 @@ class IctController extends Controller
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'RA2';
         $ict->ireq_reason = $request->ket;
-        $ict->ireq_approver1 = Auth::user()->usr_name;
+        $ict->ireq_approver2 = Auth::user()->usr_name;
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->last_update_date = $this->newUpdate;
         $ict->program_name = "IctController_rejectByManager";
@@ -240,6 +242,7 @@ class IctController extends Controller
         
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'RR';
+        $ict->ireq_verificator = Auth::user()->usr_name;
         $ict->ireq_reason = $request->ket;
         $ict->last_update_date = $this->newUpdate;
         $ict->last_updated_by = Auth::user()->usr_name;
@@ -263,6 +266,7 @@ class IctController extends Controller
         $ICT = Ict::where('ireq_id',$ireq_id)->first();
         $divisiPengguna = $ICT->ireq_divisi_user;
         $ICT->ireq_status = 'NA1';
+        $ICT->ireq_verificator = Auth::user()->usr_name;
         $ICT->last_update_date = $this->newUpdate;
         $ICT->last_updated_by = Auth::user()->usr_name;
         $ICT->program_name = "IctController_needApprovalAtasan";
@@ -308,9 +312,9 @@ class IctController extends Controller
     }
     function needApprovalManager($ireq_id)
     {
-        
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_status = 'NA2';
+        $ict->ireq_verificator = Auth::user()->usr_name;
         $ict->last_update_date = $this->newUpdate;
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->program_name = "IctController_needApprovalManager";
@@ -348,7 +352,6 @@ class IctController extends Controller
     }
     function submitAssignPerRequest($ireq_id)
     {
-        
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_status = 'T';
         $ict->ireq_verificator = Auth::user()->usr_name;
@@ -1370,7 +1373,7 @@ class IctController extends Controller
         ->leftJoin('lookup_refs as lr',function ($join) {
             $join->on('im.ireq_type','lr.lookup_code')
                   ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-    })
+        })
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftjoin('lookup_refs as llr','im.ireq_status','llr.lookup_code')
         ->where(function($query){
@@ -1712,7 +1715,7 @@ class IctController extends Controller
         ->leftJoin('lookup_refs as lr',function ($join) {
             $join->on('im.ireq_type','lr.lookup_code')
                   ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-    })
+        })
         ->leftjoin('lookup_refs as llr','im.ireq_status','llr.lookup_code')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->where('im.ireq_status','T')
@@ -1781,7 +1784,6 @@ class IctController extends Controller
     }
     public function updateAssign(Request $request)
     {
-        
         $ict = Ict::where('ireq_id',$request->id)->first();
         $ict->ireq_status = 'T';
         $ict->ireq_assigned_to = $request->name;

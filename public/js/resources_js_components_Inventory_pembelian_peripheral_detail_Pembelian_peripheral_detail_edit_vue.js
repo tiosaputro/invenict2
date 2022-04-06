@@ -48,8 +48,6 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
-          _this.getValutaCode();
-
           _this.getDetail();
         } else {
           _this.$router.push('/access');
@@ -67,11 +65,12 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.detail = response.data;
+        _this2.detail = response.data.dtl;
+        _this2.valuta = response.data.valuta;
+        _this2.sat = response.data.ref;
+        _this2.kodeperi = response.data.mas;
 
-        _this2.getKode();
-
-        _this2.getSatuan();
+        _this2.getValutaCode();
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this2.$toast.add({
@@ -88,56 +87,24 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getKode: function getKode() {
-      var _this3 = this;
-
-      this.axios.get('/api/get-kode', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.kodeperi = response.data;
-      });
-    },
-    getSatuan: function getSatuan() {
-      var _this4 = this;
-
-      this.axios.get('/api/getSatuan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.sat = response.data;
-      });
-    },
     getValutaCode: function getValutaCode() {
-      var _this5 = this;
+      if (this.valuta.valuta_code == '$') {
+        this.locale = 'en-US';
+        this.currency = 'USD';
+      }
 
-      this.axios.get('/api/getValuta/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this5.valuta = response.data;
+      if (this.valuta.valuta_code == 'Rp') {
+        this.locale = 'id-ID';
+        this.currency = 'IDR';
+      }
 
-        if (_this5.valuta.valuta_code == '$') {
-          _this5.locale = 'en-US';
-          _this5.currency = 'USD';
-        }
-
-        if (_this5.valuta.valuta_code == 'Rp') {
-          _this5.locale = 'id-ID';
-          _this5.currency = 'IDR';
-        }
-
-        if (_this5.valuta.valuta_code == '¥') {
-          _this5.locale = 'zh-CN';
-          _this5.currency = 'CNY';
-        }
-      });
+      if (this.valuta.valuta_code == '¥') {
+        this.locale = 'zh-CN';
+        this.currency = 'CNY';
+      }
     },
     UpdateDetail: function UpdateDetail() {
-      var _this6 = this;
+      var _this3 = this;
 
       this.submitted = true;
 
@@ -148,17 +115,17 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (response) {
           setTimeout(function () {
-            return _this6.$router.push('/pembelian-peripheral-detail/' + _this6.$route.params.code);
+            return _this3.$router.push('/pembelian-peripheral-detail/' + _this3.$route.params.code);
           }, 1000);
 
-          _this6.$toast.add({
+          _this3.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Update"
           });
         })["catch"](function (error) {
-          _this6.errors = error.response.data.errors;
-          _this6.submitted = false;
+          _this3.errors = error.response.data.errors;
+          _this3.submitted = false;
         });
       }
     }

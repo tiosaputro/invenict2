@@ -74,64 +74,14 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.purch = response.data;
-
-        _this2.getSupplier();
-
-        _this2.getCodeMoney();
-
-        _this2.getMethodePurchase();
-      })["catch"](function (error) {
-        if (error.response.status == 401) {
-          _this2.$toast.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Sesi Login Expired'
-          });
-
-          localStorage.clear();
-          localStorage.setItem('Expired', 'true');
-          setTimeout(function () {
-            return _this2.$router.push('/login');
-          }, 2000);
-        }
-      });
-    },
-    getCodeMoney: function getCodeMoney() {
-      var _this3 = this;
-
-      this.axios.get('/api/getMataUang', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.code_money = response.data;
-      });
-    },
-    getSupplier: function getSupplier() {
-      var _this4 = this;
-
-      this.axios.get('/api/get-supp', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.suplier = response.data;
-      });
-    },
-    getMethodePurchase: function getMethodePurchase() {
-      var _this5 = this;
-
-      this.axios.get('/api/getMethodePurch', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this5.methode_pay = response.data;
+        _this2.purch = response.data.pem;
+        _this2.suplier = response.data.supp;
+        _this2.methode_pay = response.data.metode;
+        _this2.code_money = response.data.uang;
       });
     },
     CreatePurch: function CreatePurch() {
-      var _this6 = this;
+      var _this3 = this;
 
       this.submitted = true;
 
@@ -143,17 +93,17 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (response) {
           setTimeout(function () {
-            return _this6.$router.push('/pembelian-peripheral');
+            return _this3.$router.push('/pembelian-peripheral');
           }, 1000);
 
-          _this6.$toast.add({
+          _this3.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Update"
           });
         })["catch"](function (error) {
-          _this6.errors = error.response.data.errors;
-          _this6.submitted = false;
+          _this3.errors = error.response.data.errors;
+          _this3.submitted = false;
         });
       }
     }

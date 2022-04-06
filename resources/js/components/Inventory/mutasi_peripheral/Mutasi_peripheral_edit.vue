@@ -65,7 +65,7 @@
                   </div>
                   <div class="field grid">
                     <label class="col-fixed w-9rem" style="width:155px">Lokasi</label>
-                      <div class="col">
+                      <div class="col-12 md:col-4">
                         <InputText
                           type ="text"
                           v-model="mutasi.imutasi_lokasi"
@@ -79,7 +79,7 @@
                   </div>
                   <div class="field grid">
                     <label class="col-fixed w-9rem" style="width:155px">Pengguna</label>
-                      <div class="col">
+                      <div class="col-12 md:col-6">
                         <InputText
                           type="text"
                           v-model="mutasi.imutasi_pengguna"
@@ -93,7 +93,7 @@
                   </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:155px">Keterangan</label>
-                 <div class="col">
+                 <div class="col-12 md:col-6">
                   <Textarea
                     v-model="mutasi.imutasi_keterangan"
                     :autoResize="true" 
@@ -123,9 +123,9 @@
               </div>
             </form>
           </div>
-              <div class="col-sm-6">
-                    <img :src="'/master_peripheral/' +mutasi.invent_photo" class="mutasi-image" />
-              </div>
+        <div class="col-sm-6">
+          <img :src="'/master_peripheral/' +mutasi.invent_photo" class="mutasi-image" />
+        </div>
       </div>
       </div>
     </div>
@@ -185,9 +185,9 @@ export default {
       this.errors = [];
       if (
         this.mutasi.imutasi_tgl_dari != '' &&
-        this.mutasi.imutasi_lokasi != null &&
-        this.mutasi.imutasi_pengguna != null &&
-        this.mutasi.imutasi_keterangan != null 
+        this.mutasi.imutasi_lokasi != '' &&
+        this.mutasi.imutasi_pengguna != '' &&
+        this.mutasi.imutasi_keterangan != '' 
       ) {
         this.axios.put('/api/update-mut/' + this.$route.params.code, this.mutasi, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           setTimeout( () => this.$router.push('/mutasi-peripheral'),1000);

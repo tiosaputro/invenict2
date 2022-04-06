@@ -86,7 +86,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = true;
       this.errors = [];
 
-      if (this.mutasi.imutasi_tgl_dari != '' && this.mutasi.imutasi_lokasi != null && this.mutasi.imutasi_pengguna != null && this.mutasi.imutasi_keterangan != null) {
+      if (this.mutasi.imutasi_tgl_dari != '' && this.mutasi.imutasi_lokasi != '' && this.mutasi.imutasi_pengguna != '' && this.mutasi.imutasi_keterangan != '') {
         this.axios.put('/api/update-mut/' + this.$route.params.code, this.mutasi, {
           headers: {
             'Authorization': 'Bearer ' + this.token
@@ -215,7 +215,7 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_21 = {
-  "class": "col"
+  "class": "col-12 md:col-4"
 };
 var _hoisted_22 = {
   key: 0,
@@ -235,7 +235,7 @@ var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_25 = {
-  "class": "col"
+  "class": "col-12 md:col-6"
 };
 var _hoisted_26 = {
   key: 0,
@@ -255,7 +255,7 @@ var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_29 = {
-  "class": "col"
+  "class": "col-12 md:col-6"
 };
 var _hoisted_30 = {
   key: 0,

@@ -197,8 +197,6 @@ export default {
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){ 
           this.getSupplier();
-          this.getCodeMoney();
-          this.getMethodePurchase();
         }
         else {
           this.$router.push('/access');
@@ -208,28 +206,11 @@ export default {
         this.$router.push('/login');
       }
     },
-    getCodeMoney(){
-        this.axios.get('api/getMataUang',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.code_money = response.data;
-        }).catch(error=>{
-         if (error.response.status == 401){
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-        });
-    },
     getSupplier(){
-        this.axios.get('api/get-supp',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.suplier = response.data;
-        });
-    },
-    getMethodePurchase(){
-        this.axios.get('api/getMethodePurch',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.methode_pay = response.data;
+        this.axios.get('api/rsrcsuppo',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+            this.suplier = response.data.supp;
+            this.methode_pay = response.data.metode;
+            this.code_money = response.data.uang;
         });
     },
     CreatePurch() {

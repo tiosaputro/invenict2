@@ -70,10 +70,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
             _this.getSupplier();
-
-            _this.getCodeMoney();
-
-            _this.getMethodePurchase();
           } else {
             _this.$router.push('/access');
           }
@@ -82,55 +78,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.$router.push('/login');
       }
     },
-    getCodeMoney: function getCodeMoney() {
+    getSupplier: function getSupplier() {
       var _this2 = this;
 
-      this.axios.get('api/getMataUang', {
+      this.axios.get('api/rsrcsuppo', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.code_money = response.data;
-      })["catch"](function (error) {
-        if (error.response.status == 401) {
-          _this2.$toast.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Sesi Login Expired'
-          });
-
-          localStorage.clear();
-          localStorage.setItem('Expired', 'true');
-          setTimeout(function () {
-            return _this2.$router.push('/login');
-          }, 2000);
-        }
-      });
-    },
-    getSupplier: function getSupplier() {
-      var _this3 = this;
-
-      this.axios.get('api/get-supp', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.suplier = response.data;
-      });
-    },
-    getMethodePurchase: function getMethodePurchase() {
-      var _this4 = this;
-
-      this.axios.get('api/getMethodePurch', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.methode_pay = response.data;
+        _this2.suplier = response.data.supp;
+        _this2.methode_pay = response.data.metode;
+        _this2.code_money = response.data.uang;
       });
     },
     CreatePurch: function CreatePurch() {
-      var _this5 = this;
+      var _this3 = this;
 
       this.submitted = true;
 
@@ -150,17 +112,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }).then(function (response) {
           setTimeout(function () {
-            return _this5.$router.push('/pembelian-peripheral');
+            return _this3.$router.push('/pembelian-peripheral');
           }, 1000);
 
-          _this5.$toast.add({
+          _this3.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
         })["catch"](function (error) {
-          _this5.submitted = false;
-          _this5.errors = error.response.data.errors;
+          _this3.submitted = false;
+          _this3.errors = error.response.data.errors;
         });
       }
     }

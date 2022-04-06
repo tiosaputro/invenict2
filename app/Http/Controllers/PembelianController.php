@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Pembelian;
+use App\Lookup_Refs;
+use App\Supplier;
 use App\Exports\PembelianExport;
 use Carbon\Carbon;
 use DB;
@@ -53,7 +55,24 @@ class PembelianController extends Controller
                 DB::raw("TO_CHAR(pm.purchase_date,' dd Mon YYYY') as purchase_date"))
         ->where('pm.purchase_id',$code)
         ->first();
-        return json_encode($pem);
+
+        $uang = Lookup_Refs::Select('lookup_code as code',DB::raw("(lookup_code ||'-'|| lookup_desc) as name"))
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('mata uang')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+        
+
+        $metode = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('pay methode')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+
+        $supp = Supplier::Select('suplier_code as code',DB::raw("(suplier_code ||'-'|| suplier_name) as name"))
+        ->orderBy('suplier_code','ASC')
+        ->get();
+        return json_encode(['pem'=>$pem,'uang'=>$uang,'metode'=>$metode,'supp'=>$supp],200);
     }
     Public function update(Request $request,$code)
     {

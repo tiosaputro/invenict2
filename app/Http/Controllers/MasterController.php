@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use DB;
+use App\Lookup_Refs;
 use Auth;
 use Excel;
 
@@ -101,6 +102,17 @@ class MasterController extends Controller
     }
     public function edit($code)
     {
+        $merk = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+        $kondisi = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('kondisi')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+        $bisnis = DB::table('v_company_refs')->get();
         $mas = DB::table('invent_mst as im')
         ->select('im.invent_code','im.invent_desc','im.invent_brand','im.invent_type','im.invent_sn','im.invent_kondisi',
                 'im.invent_lama_garansi','im.invent_barcode','im.invent_lokasi_update','im.invent_pengguna_update','im.invent_photo',
@@ -108,7 +120,7 @@ class MasterController extends Controller
                 DB::raw("TO_CHAR(im.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"))
         ->where('im.invent_code',$code)
         ->first();
-        return json_encode($mas);
+        return json_encode(['merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis,'mas'=>$mas],200);
     }
     public function update(Request $request, $code)
     {

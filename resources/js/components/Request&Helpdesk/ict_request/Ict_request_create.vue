@@ -152,8 +152,6 @@ export default {
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-          this.getBisnis();
-          this.getDivisi();
           this.getUser();
           this.getType();
         }
@@ -173,19 +171,11 @@ export default {
         this.usr_divisi = this.user.div_id
       });
     },
-    getDivisi(){
-      this.axios.get('api/get-divisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.divisi = response.data;
-      });
-    },
-    getBisnis(){
-      this.axios.get('api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.bu = response.data;
-      });
-    },
     getType(){
-      this.axios.get('api/getType', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.type = response.data;
+      this.axios.get('api/getAddReq', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.type = response.data.ref;
+        this.bu = response.data.bisnis;
+        this.divisi = response.data.divisi;
       });
     },
     CreateIct() {

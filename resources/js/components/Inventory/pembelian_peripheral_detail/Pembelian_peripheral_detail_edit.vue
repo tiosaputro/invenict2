@@ -150,7 +150,6 @@ export default {
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
          if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){
-          this.getValutaCode();
           this.getDetail();
         }
         else {
@@ -163,9 +162,11 @@ export default {
     },
     getDetail(){
         this.axios.get('/api/edit-detail-pem/'+this.$route.params.purchase,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.detail = response.data;
-            this.getKode();
-            this.getSatuan();
+            this.detail = response.data.dtl;
+            this.valuta = response.data.valuta;
+            this.sat = response.data.ref;
+            this.kodeperi = response.data.mas;
+            this.getValutaCode();
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -177,19 +178,7 @@ export default {
            }
         });
     },
-    getKode(){
-      this.axios.get('/api/get-kode',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kodeperi = response.data;
-      });
-    },
-    getSatuan(){
-        this.axios.get('/api/getSatuan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.sat = response.data
-        });
-    },
     getValutaCode(){
-      this.axios.get('/api/getValuta/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.valuta = response.data;
         if(this.valuta.valuta_code == '$'){
           this.locale = 'en-US';
           this.currency = 'USD';
@@ -202,7 +191,6 @@ export default {
           this.locale = 'zh-CN';
           this.currency = 'CNY';
         }
-      });
     },
     UpdateDetail() {
       this.submitted=true;

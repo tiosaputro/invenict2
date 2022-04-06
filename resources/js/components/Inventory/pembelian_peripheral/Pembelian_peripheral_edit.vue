@@ -204,36 +204,12 @@ export default {
     },
       getPurch(){
           this.axios.get('/api/edit-pem/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.purch = response.data;
-              this.getSupplier();
-              this.getCodeMoney();
-              this.getMethodePurchase();
-          }).catch(error=>{
-          if (error.response.status == 401){
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              this.purch = response.data.pem;
+              this.suplier = response.data.supp;
+              this.methode_pay = response.data.metode;
+              this.code_money = response.data.uang;
         });
       },
-    getCodeMoney(){
-        this.axios.get('/api/getMataUang',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.code_money = response.data;
-        });
-    },
-    getSupplier(){
-        this.axios.get('/api/get-supp',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.suplier = response.data;
-        });
-    },
-    getMethodePurchase(){
-        this.axios.get('/api/getMethodePurch',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.methode_pay = response.data;
-        });
-    },
     CreatePurch() {
       this.submitted=true;
       if (

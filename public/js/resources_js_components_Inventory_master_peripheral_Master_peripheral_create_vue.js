@@ -79,16 +79,14 @@ __webpack_require__.r(__webpack_exports__);
     getMerk: function getMerk() {
       var _this2 = this;
 
-      this.axios.get('api/getMerk', {
+      this.axios.get('api/rsrcsupp', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.merks = response.data;
-
-        _this2.getKondisi();
-
-        _this2.getBisnis();
+        _this2.merks = response.data.merk;
+        _this2.bisnis = response.data.bisnis;
+        _this2.kondi = response.data.kondisi;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this2.$toast.add({
@@ -105,19 +103,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getKondisi: function getKondisi() {
-      var _this3 = this;
-
-      this.axios.get('api/getKondisi', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.kondi = response.data;
-      });
-    },
     Scan: function Scan() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.aktif = false;
       var routeData = this.$router.resolve({
@@ -125,17 +112,17 @@ __webpack_require__.r(__webpack_exports__);
       });
       window.open(routeData.href, '_blank');
       setTimeout(function () {
-        return _this4.getBarcode();
+        return _this3.getBarcode();
       }, 2000);
     },
     getBarcode: function getBarcode() {
-      var _this5 = this;
+      var _this4 = this;
 
       this.barcode = localStorage.getItem('barcode');
 
       if (!this.barcode) {
         setTimeout(function () {
-          return _this5.getBarcode();
+          return _this4.getBarcode();
         }, 3000);
       }
     },
@@ -143,17 +130,6 @@ __webpack_require__.r(__webpack_exports__);
       localStorage.removeItem('barcode');
       this.barcode = null;
       this.aktif = true;
-    },
-    getBisnis: function getBisnis() {
-      var _this6 = this;
-
-      this.axios.get('api/get-bisnis', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this6.bisnis = response.data;
-      });
     },
     fileImage: function fileImage(event) {
       this.foto = event.target.files[0];
@@ -173,7 +149,7 @@ __webpack_require__.r(__webpack_exports__);
       reader.readAsDataURL(invent_photo);
     },
     CreateMaster: function CreateMaster() {
-      var _this7 = this;
+      var _this5 = this;
 
       this.errors = [];
       this.error = [];
@@ -202,16 +178,16 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function () {
           localStorage.removeItem("barcode");
           setTimeout(function () {
-            return _this7.$router.push('/master-peripheral');
+            return _this5.$router.push('/master-peripheral');
           }, 1000);
 
-          _this7.$toast.add({
+          _this5.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
         })["catch"](function (error) {
-          _this7.errors = error.response.data.errors;
+          _this5.errors = error.response.data.errors;
         });
       } else {
         if (this.bu == null) {

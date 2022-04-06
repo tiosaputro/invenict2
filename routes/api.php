@@ -228,9 +228,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/ict-detail-penugasan/{code}','IctDetailController@detailPenugasan');
     Route::get('/get-detail-done/{code}/{usr_fullname}','IctDetailController@getDetailDone');
     Route::post('/add-ict-detail/{code}','IctDetailController@save');
-    Route::get('/edit-ict-detail/{code}/{ireq}','IctDetailController@edit');
-    Route::put('/update-ict-detail/{code}/{ireq}','IctDetailController@update');
-    Route::delete('/delete-ict-detail/{ireq_id}','IctDetailController@delete');
+    Route::get('/edit-ict-detail/{ireq}','IctDetailController@edit');
+    Route::put('/update-ict-detail/{ireq}','IctDetailController@update');
+    Route::delete('/delete-ict-detail/{ireqd_id}','IctDetailController@delete');
     Route::get('/get-noreq/{code}','IctDetailController@getNo_req');
     Route::get('/get-verif/{code}','IctDetailController@getDetailVerif');
     Route::get('/detail/{ireqd_id}','IctDetailController@getDetail');
@@ -251,6 +251,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/getSatuan','LookupsController@getSatuan');
     Route::get('/get-kode','MasterController@getKode');
     Route::get('/get-kode-ict/{code}','MasterController@getKodeIct');
+    Route::get('/getAddReq','LookupsController@getAddReq');
+    Route::get('/getAddDetail','LookupsController@getAddDetail');
+    Route::get('/rsrcsupp','LookupsController@getAddMaster');
+    Route::get('/rsrcsuppo','LookupsController@getAddPemb');
 });
 //laporan
 Route::get('/req-per-status-excel','LaporanController@cetak_excel_per_status');

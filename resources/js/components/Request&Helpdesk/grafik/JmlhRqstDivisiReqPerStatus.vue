@@ -6,7 +6,7 @@
             <ColorPicker v-model="color" v-if="this.statusRequestor"/> 
         </div>
         <div class="text-center" id="statusPerDivisiRequestor">
-            <h5 style="font-size:20pt; font-weight: bold;">Statistik Request Divisi Requestor Per Status</h5>
+            <h5 style="font-size:20pt;">Statistik Request Divisi Requestor Per Status</h5>
             <Dropdown @change="getStatusDivisiRequestor()" :showClear="true" v-model="statusRequestor" :options="status" optionValue="code" optionLabel="name" placeholder="Pilih Status"/>
             <Chart type="bar" :data="statusPerDivisiRequestor" v-if="this.statusRequestor" />
         </div>

@@ -343,10 +343,10 @@ export default {
       },
       getMaster(){
           this.axios.get('/api/edit-mas/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.master = response.data;
-              this.getMerk();
-              this.getBisnis();
-              this.getKondisi();
+              this.master = response.data.mas;
+              this.merks = response.data.merk;
+              this.bisnis = response.data.bisnis;
+              this.kondi = response.data.kondisi;
           }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({

@@ -136,7 +136,7 @@ class IctDetailController extends Controller
             ]);
         }
     }
-    Public function edit($code,$ireq)
+    Public function edit($ireq)
     {
         $ict = DB::table('ireq_dtl as id')
         ->select('id.ireqd_id','id.ireq_type','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_photo as photo','imm.ireq_no')
@@ -148,7 +148,7 @@ class IctDetailController extends Controller
         ->first();
             return json_encode($ict);
     }
-    Public function update(Request $request,$code,$ireq)
+    Public function update(Request $request,$ireq)
     {
         if($request->ireq_type == 'P'){
         $message = [
@@ -206,9 +206,9 @@ class IctDetailController extends Controller
         ];
     }
     }
-    Public function delete($ireq_id)
+    Public function delete($ireqd_id)
     {
-        $ict = IctDetail::find($ireq_id);
+        $ict = IctDetail::find($ireqd_id);
          $ict->delete();
           return json_encode('Deleted Successfully');
     }

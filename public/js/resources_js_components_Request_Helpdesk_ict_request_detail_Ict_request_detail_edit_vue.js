@@ -35,6 +35,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getIreq: function getIreq() {
       this.cekTipeReq = this.ict.ireq_type;
+
+      if (this.cekTipeReq == 'S') {
+        this.ict.ireq_qty = null;
+        this.ict.invent_code = '';
+      }
     },
     cekUser: function cekUser() {
       var _this = this;
@@ -94,7 +99,7 @@ __webpack_require__.r(__webpack_exports__);
     getIct: function getIct() {
       var _this3 = this;
 
-      this.axios.get('/api/edit-ict-detail/' + this.$route.params.code + '/' + this.$route.params.ireq, {
+      this.axios.get('/api/edit-ict-detail/' + this.$route.params.ireq, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -137,7 +142,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.ict.ireq_type == 'P') {
         if (this.ict.ireq_type != null && this.ict.invent_code != null) {
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.code + '/' + this.$route.params.ireq, this.ict, {
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq, this.ict, {
             headers: {
               'Authorization': 'Bearer ' + this.token
             }
@@ -165,7 +170,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       } else {
         if (this.ict.ireq_type != null) {
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.code + '/' + this.$route.params.ireq, this.ict, {
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq, this.ict, {
             headers: {
               'Authorization': 'Bearer ' + this.token
             }
@@ -497,7 +502,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "ict-image"
   }, null, 8
   /* PROPS */
-  , _hoisted_31)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.kode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+  , _hoisted_31)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.kode && this.ict.photo.photo ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
     key: 1,
     src: '/master_peripheral/' + $data.ict.photo.photo,
     "class": "ict-image"

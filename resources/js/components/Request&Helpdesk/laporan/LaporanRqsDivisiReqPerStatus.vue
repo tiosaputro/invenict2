@@ -35,6 +35,7 @@
 			  <div class="p-col">
 			    <div class="box">
                   <SplitButton 
+                    v-if="this.req.length"
                     label="Print" 
                     :model="items"
                   />

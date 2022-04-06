@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Lookup_Refs;
+use App\Supplier;
+use App\Master;
 use DB;
 use Auth;
 use Carbon\Carbon;
@@ -115,12 +117,12 @@ class LookupsController extends Controller
     }
     public function getMerk()
     {
-        $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        $merk = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
         ->where('lookup_status','T')
         ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
         ->orderBy('lookup_desc','ASC')
         ->get();
-        return json_encode($ref,200);
+        return json_encode($merk);
     }
     public function getKondisi()
     {
@@ -162,6 +164,74 @@ class LookupsController extends Controller
         ->orderBy('lookup_desc','ASC')
         ->get();
         return json_encode($ref);
+    }
+    
+    Public function getAddReq()
+    {
+        $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+
+        $bisnis = DB::table('v_company_refs')->get();
+
+        $divisi = DB::table('divisi_refs')
+        ->select('div_id as code',DB::raw("(div_code ||'-'|| div_name) as name"))
+        ->orderBy('div_name','ASC')
+        ->get();
+
+        return json_encode(['ref'=>$ref,'bisnis'=>$bisnis,'divisi'=>$divisi],200);
+    }
+    Public function getAddDetail()
+    {
+        $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+
+        $kode = Master::Select('invent_code as code',DB::raw("(invent_code ||'-'|| invent_desc) as name"))->get();
+
+        return json_encode(['ref'=>$ref,'kode'=>$kode],200);
+    }
+    public function getAddMaster()
+    {
+        $merk = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+
+        $kondisi = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('kondisi')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+
+        $bisnis = DB::table('v_company_refs')->get();
+        
+        return json_encode(['merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis],200);
+    }
+    public function getAddPemb()
+    {
+        $uang = Lookup_Refs::Select('lookup_code as code',DB::raw("(lookup_code ||'-'|| lookup_desc) as name"))
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('mata uang')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+        
+
+        $metode = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('pay methode')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+
+        $supp = Supplier::Select('suplier_code as code',DB::raw("(suplier_code ||'-'|| suplier_name) as name"))
+        ->orderBy('suplier_code','ASC')
+        ->get();
+        return json_encode(['uang'=>$uang,'metode'=>$metode,'supp'=>$supp],200);
     }
     Public function getMataUang()
     {

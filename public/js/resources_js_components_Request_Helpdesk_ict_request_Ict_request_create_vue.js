@@ -56,10 +56,6 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           if (_this.checkname.includes("Request") || _this.checkto.includes("/ict-request")) {
-            _this.getBisnis();
-
-            _this.getDivisi();
-
             _this.getUser();
 
             _this.getType();
@@ -85,41 +81,21 @@ __webpack_require__.r(__webpack_exports__);
         _this2.usr_divisi = _this2.user.div_id;
       });
     },
-    getDivisi: function getDivisi() {
+    getType: function getType() {
       var _this3 = this;
 
-      this.axios.get('api/get-divisi', {
+      this.axios.get('api/getAddReq', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.divisi = response.data;
-      });
-    },
-    getBisnis: function getBisnis() {
-      var _this4 = this;
-
-      this.axios.get('api/get-bisnis', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.bu = response.data;
-      });
-    },
-    getType: function getType() {
-      var _this5 = this;
-
-      this.axios.get('api/getType', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this5.type = response.data;
+        _this3.type = response.data.ref;
+        _this3.bu = response.data.bisnis;
+        _this3.divisi = response.data.divisi;
       });
     },
     CreateIct: function CreateIct() {
-      var _this6 = this;
+      var _this4 = this;
 
       this.errors = [];
       this.error = [];
@@ -137,23 +113,23 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (response) {
-          _this6.$toast.add({
+          _this4.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
 
-          _this6.code = response.data.ireq_id;
+          _this4.code = response.data.ireq_id;
           setTimeout(function () {
-            return _this6.$router.push({
+            return _this4.$router.push({
               name: 'Add Ict Request Detail',
               params: {
-                code: _this6.code
+                code: _this4.code
               }
             });
           }, 1000);
         })["catch"](function (error) {
-          _this6.errors = error.response.data.errors;
+          _this4.errors = error.response.data.errors;
         });
       } else {
         if (this.tipereq == null) {

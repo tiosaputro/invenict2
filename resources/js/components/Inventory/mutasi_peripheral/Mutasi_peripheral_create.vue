@@ -12,7 +12,7 @@
             <form @submit.prevent="CreateMutasi">
                <div class="field grid">
                     <label class="col-fixed w-9rem" style="width:145px">Nama Peripheral</label>
-                    <div class="field col-12 md:col-4">
+                    <div class="field col-12 md:col-6">
                       <Dropdown 
                         v-model="kode"
                         :options="kodeperi"
@@ -77,7 +77,7 @@
               </div>
                 <div class="field grid">
                   <label class="col-fixed w-9rem" style="width:145px">Lokasi</label>
-                    <div class="col">
+                    <div class="col-10 md:col-4">
                     <InputText
                       type ="text"
                       v-model="lokasi"
@@ -91,7 +91,7 @@
               </div>
                 <div class="field grid">
                   <label class="col-fixed w-9rem" style="width:145px">Pengguna</label>
-                    <div class="col">
+                    <div class="col-12 md:col-6">
                       <InputText
                           type="text"
                           v-model="user"
@@ -109,7 +109,7 @@
               </div>
                <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:145px">Keterangan</label>
-                 <div class="col">
+                 <div class="col-12 md:col-6">
                   <Textarea
                     v-model="ket"
                     :autoResize="true" 
@@ -142,9 +142,9 @@
               </div>
             </form>
             </div>
-              <div class="col-sm-6">
-                    <img :src="'/master_peripheral/' + detail.photo" class="mutasi-image" v-if="this.kode" />
-              </div>
+          <div class="col-sm-6">
+            <img :src="'/master_peripheral/' + detail.photo" class="mutasi-image" v-if="this.kode" />
+          </div>
        </div>
       </div>
     </div>

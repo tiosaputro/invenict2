@@ -25,7 +25,7 @@
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
                  <div class="field col-12 md:col-4">
                        <Dropdown
-                       :options="type"
+                        :options="type"
                         type="text"
                         v-model="ict.ireq_type"
                         optionLabel="name"
@@ -123,7 +123,7 @@
           </div>
           <div class="col-6" v-if="this.cekTipeReq =='P'">
                     <img :src="'/master_peripheral/' + ict.photo" class="ict-image" v-if="this.ict.photo && !this.kode" />
-                    <img :src="'/master_peripheral/' + ict.photo.photo" class="ict-image" v-if="this.kode" />
+                    <img :src="'/master_peripheral/' + ict.photo.photo" class="ict-image" v-if="this.kode && this.ict.photo.photo" />
               </div>
           </div>
       </div>
@@ -153,7 +153,11 @@ export default {
   },
   methods: {
     getIreq(){
-      this.cekTipeReq = this.ict.ireq_type
+      this.cekTipeReq = this.ict.ireq_type;
+       if(this.cekTipeReq == 'S'){
+        this.ict.ireq_qty = null;
+        this.ict.invent_code = '';
+      }
     },
     cekUser(){
       if(this.id){
@@ -188,7 +192,7 @@ export default {
         });
       },
       getIct(){
-          this.axios.get('/api/edit-ict-detail/'+this.$route.params.code + '/' +this.$route.params.ireq,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
               this.ict = response.data;
               this.cekTipeReq = this.ict.ireq_type
           });
@@ -212,7 +216,7 @@ export default {
       if(this.ict.ireq_type == 'P'){
        if ( this.ict.ireq_type != null && this.ict.invent_code != null) 
        {
-        this.axios.put('/api/update-ict-detail/' + this.$route.params.code + '/' + this.$route.params.ireq, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -233,7 +237,7 @@ export default {
       }else{
         if ( this.ict.ireq_type != null) 
        {
-        this.axios.put('/api/update-ict-detail/' + this.$route.params.code + '/' + this.$route.params.ireq, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

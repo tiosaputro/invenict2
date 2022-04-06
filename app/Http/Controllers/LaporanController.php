@@ -105,14 +105,18 @@ class LaporanController extends Controller
     Public function cetak_pdf_div_req_per_status($statusRequestor)
     {
         $status = DB::table('ireq_mst as imm')
-            ->select('dr.div_name',DB::raw("count(imm.ireq_id) as jumlah"),
-                    DB::raw("CASE WHEN imm.ireq_status = 'A' Then 'Approved' WHEN imm.ireq_status = 'T' Then 'Penugasan' WHEN imm.ireq_status = 'R' Then 'Reject' WHEN imm.ireq_status = 'D' Then 'Done' WHEN imm.ireq_status = 'C' Then 'Close' WHEN imm.ireq_status = 'P' Then 'Permohonan' end as name "))
+            ->select('dr.div_name',DB::raw("count(imm.ireq_id) as jumlah"),'llr.lookup_desc as name')
             ->leftjoin('divisi_refs as dr','imm.ireq_divisi_requestor','dr.div_id')
+            ->leftJoin('lookup_refs as llr',function ($join) {
+                $join->on('imm.ireq_status','llr.lookup_code')
+                      ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+            })
             ->where('imm.ireq_status',$statusRequestor)
             ->orderBy('dr.div_name','ASC')
-            ->groupBy('dr.div_name',DB::raw("CASE WHEN imm.ireq_status = 'A' Then 'Approved' WHEN imm.ireq_status = 'T' Then 'Penugasan' WHEN imm.ireq_status = 'R' Then 'Reject' WHEN imm.ireq_status = 'D' Then 'Done' WHEN imm.ireq_status = 'C' Then 'Close' WHEN imm.ireq_status = 'P' Then 'Permohonan' end"))
+            ->groupBy('dr.div_name','llr.lookup_desc')
             ->get();
-        return view('pdf/Laporan_Req_Div_Req_Per_Status',compact('status'));
+        // return view('pdf/Laporan_Req_Div_Req_Per_Status',compact('status'));
+        return response()->json($status);
     }
     
     Public function cetak_excel_div_user_per_status($statusUser)

@@ -163,6 +163,10 @@ export default {
   methods: {
     getIreq(tipereq){
       this.cekTipeReq = tipereq;
+      if(this.cekTipeReq == 'S'){
+        this.qty = null;
+        this.kode = '';
+      }
       this.errors = [];
       this.error = [];
     },
@@ -170,7 +174,7 @@ export default {
       this.errors = [];
       this.error = [];
       if(this.tipereq == 'P'){
-       if ( this.kode != null && this.tipereq != null ) 
+       if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
        {
         const data = new FormData();
         data.append("invent_code", this.kode);
@@ -197,9 +201,12 @@ export default {
         if(this.tipereq == null){
           this.error.tipereq = "Tipe Request Belum Diisi"
         }
+        if(this.tipereq == 'null'){
+          this.error.tipereq = "Tipe Request Belum Diisi"
+        }
       }
      }else{
-       if (this.tipereq != null ) 
+       if (this.tipereq != null && this.tipereq != 'null' ) 
        {
         const data = new FormData();
         data.append("desk", this.desk);
@@ -219,6 +226,9 @@ export default {
          });
       }else{
         if(this.tipereq == null){
+          this.error.tipereq = "Tipe Request Belum Diisi"
+        }
+        if(this.tipereq == 'null'){
           this.error.tipereq = "Tipe Request Belum Diisi"
         }
       }
@@ -252,7 +262,6 @@ export default {
       this.detail = response.data;
       this.tipereq = this.detail.ireq_type
       this.cekTipeReq = this.detail.ireq_type
-      this.getKode();
       this.getType();
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -266,13 +275,9 @@ export default {
         });
       },
       getType(){
-        this.axios.get('/api/getType', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.type = response.data;
-          });
-      },
-      getKode(){
-        this.axios.get('/api/get-kode', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.kodeperi = response.data;
+        this.axios.get('/api/getAddDetail', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.type = response.data.ref;
+          this.kodeperi = response.data.kode;
           });
       },
     CreateIctDetail() {

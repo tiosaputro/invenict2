@@ -336,10 +336,10 @@ export default {
       }
     },
       getMerk(){
-        this.axios.get('api/getMerk',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.merks = response.data;
-            this.getKondisi();
-            this.getBisnis();
+        this.axios.get('api/rsrcsupp',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+            this.merks = response.data.merk;
+            this.bisnis = response.data.bisnis;
+            this.kondi = response.data.kondisi;
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -349,11 +349,6 @@ export default {
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
            }
-        });
-      },
-      getKondisi(){
-        this.axios.get('api/getKondisi',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.kondi = response.data;
         });
       },
     Scan(){
@@ -373,11 +368,6 @@ export default {
       this.barcode = null;
       this.aktif = true;
     },
-    getBisnis(){
-        this.axios.get('api/get-bisnis',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.bisnis = response.data;
-        });
-      },    
     fileImage(event) {
       this.foto = event.target.files[0];
       this.displayImage = true;

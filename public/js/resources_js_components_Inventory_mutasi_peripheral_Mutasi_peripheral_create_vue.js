@@ -183,7 +183,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_7 = {
-  "class": "field col-12 md:col-4"
+  "class": "field col-12 md:col-6"
 };
 var _hoisted_8 = {
   key: 0,
@@ -251,7 +251,7 @@ var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_23 = {
-  "class": "col"
+  "class": "col-10 md:col-4"
 };
 var _hoisted_24 = {
   key: 0,
@@ -271,7 +271,7 @@ var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_27 = {
-  "class": "col"
+  "class": "col-12 md:col-6"
 };
 var _hoisted_28 = {
   key: 0,
@@ -295,7 +295,7 @@ var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_32 = {
-  "class": "col"
+  "class": "col-12 md:col-6"
 };
 var _hoisted_33 = {
   key: 0,

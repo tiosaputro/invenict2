@@ -131,13 +131,10 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this7.master = response.data;
-
-        _this7.getMerk();
-
-        _this7.getBisnis();
-
-        _this7.getKondisi();
+        _this7.master = response.data.mas;
+        _this7.merks = response.data.merk;
+        _this7.bisnis = response.data.bisnis;
+        _this7.kondi = response.data.kondisi;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this7.$toast.add({

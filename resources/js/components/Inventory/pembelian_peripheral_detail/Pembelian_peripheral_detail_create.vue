@@ -167,7 +167,6 @@ export default {
         this.checkname = response.data.map((x)=> x.name)
          if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){
           this.getValutaCode();
-          this.getKode();
         }
         else {
           this.$router.push('/access');
@@ -177,29 +176,12 @@ export default {
         this.$router.push('/login');
       }
     },
-    getKode(){
-      this.axios.get('/api/get-kode', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kodeperi = response.data;
-        this.getSatuan();
-      }).catch(error=>{
-        if (error.response.status == 401) {
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-        });
-    },
-    getSatuan(){
-        this.axios.get('/api/getSatuan', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.sat = response.data
-        });
-    },
     getValutaCode(){
       this.axios.get('/api/getValuta/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.valuta = response.data;
+        this.valuta = response.data.dtl;
+        this.sat = response.data.ref;
+        this.kodeperi = response.data.mas;
+
         if(this.valuta.valuta_code == '$'){
           this.locale = 'en-US';
           this.currency = 'USD';

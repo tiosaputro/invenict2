@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Validation\Rule;
 use App\PembelianDetail;
 use App\Pembelian;
+use App\Master;
+Use App\Lookup_Refs;
 use App\Exports\PembelianDetailExport;
 use DB;
 use Excel;
@@ -74,13 +76,18 @@ class PembelianDetailController extends Controller
     }
     Public function edit($purchase)
     {
-        $dtl= DB::table('purchase_dtl as pd')
-        ->select('pd.invent_code','pd.dpurchase_qty','dpurchase_sat','dpurchase_stat','dpurchase_prc_sat',
-                'dpurchase_prc','dpurchase_remark')
-        ->join('invent_mst as im','pd.invent_code','im.invent_code')
-        ->where('pd.dpurchase_id',$purchase)
+        $dtl= PembelianDetail::select('invent_code','dpurchase_qty','dpurchase_sat','dpurchase_stat','dpurchase_prc_sat',
+                'dpurchase_prc','dpurchase_remark','purchase_id')
+        ->where('dpurchase_id',$purchase)
         ->first();
-        return json_encode($dtl);
+        $valuta = Pembelian::Select('valuta_code')->where('purchase_id',$dtl->purchase_id)->first();
+        $mas = Master::Select('invent_code as code',DB::raw("(invent_code ||'-'|| invent_desc) as name"))->get();
+        $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+        return json_encode(['dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref,'valuta'=>$valuta],200);
     }
     Public function update(Request $request,$code,$purchase)
     {
@@ -114,7 +121,13 @@ class PembelianDetailController extends Controller
     public function getValuta($code)
     {
         $dtl = Pembelian::Select('valuta_code')->where('purchase_id',$code)->first();
-        return json_encode($dtl);
+        $mas = Master::Select('invent_code as code',DB::raw("(invent_code ||'-'|| invent_desc) as name"))->get();
+        $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+        return json_encode(['dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref],200);
     }
     public function cetak_pdf($purchase_id)
     {
