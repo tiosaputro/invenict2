@@ -178,13 +178,13 @@ export default {
       this.displayBarcode = false;
     },
     previewBarcode(invent_code){
-      this.axios.get('api/getBarcode/'+invent_code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.barcode = 'Kode Peripheral ' + ': ' + response.data.invent_code +', '+ 'Nama Peripheral ' + ': ' + response.data.invent_desc + ', '+ 'Merk '+': '+ response.data.invent_brand+', '
-        + 'Tipe '+': '+ response.data.invent_type+', '+'S/N '+': '+response.data.invent_sn+', '+ 'Bisnis Unit '+': '+response.data.invent_bu +', '+'Lokasi Terakhir '+': '
-        +response.data.invent_lokasi_previous+', '+'Pengguna Terakhir '+': '+response.data.invent_pengguna_previous+', '+'Lama Garansi '+': '+response.data.invent_lama_garansi+' Tahun'+', '+'Tanggal Perolehan '+': '+response.data.invent_tgl_perolehan; 
-        // this.barcode = 'Link '+':'+'http://172.25.1.125:8000/detPeri/' +invent_code
+      // this.axios.get('api/getBarcode/'+invent_code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      //   this.barcode = 'Kode Peripheral ' + ': ' + response.data.invent_code +', '+ 'Nama Peripheral ' + ': ' + response.data.invent_desc + ', '+ 'Merk '+': '+ response.data.invent_brand+', '
+      //   + 'Tipe '+': '+ response.data.invent_type+', '+'S/N '+': '+response.data.invent_sn+', '+ 'Bisnis Unit '+': '+response.data.invent_bu +', '+'Lokasi Terakhir '+': '
+      //   +response.data.invent_lokasi_previous+', '+'Pengguna Terakhir '+': '+response.data.invent_pengguna_previous+', '+'Lama Garansi '+': '+response.data.invent_lama_garansi+' Tahun'+', '+'Tanggal Perolehan '+': '+response.data.invent_tgl_perolehan; 
+        this.barcode = 'Link '+':'+'http://172.25.1.125:8000/detPeri/' +invent_code
         this.displayBarcode = true;
-      });
+      // });
     },
     getMaster(){
       this.axios.get('api/mas',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {

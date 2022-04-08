@@ -45,7 +45,12 @@
            <template #loading>
             Loading Suplier data. Please wait.
             </template>
-          <Column field="suplier_code" header="Kode" :sortable="true" style="min-width:12rem"/>
+          <Column field="suplier_code" header="Kode" :sortable="true" style="min-width:12rem">
+            <template #body="slotProps">
+              <p @click="detailSupp(slotProps.data.suplier_code)"  style="cursor:pointer;"> {{slotProps.data.suplier_code}}
+              </p> 
+            </template>
+          </Column>
           <Column field="suplier_name" header="Nama" :sortable="true" style="min-width:12rem"/>
           <Column field="suplier_contact" header="Contact Person" :sortable="true" style="min-width:12rem"/>
           <Column field="suplier_fax" header="No. Fax" :sortable="true" style="min-width:12rem"/>
@@ -65,12 +70,6 @@
                 class="p-button-rounded p-button-danger mr-2"
                 @click="DeleteSupp(slotProps.data.suplier_code)"
                 v-tooltip.bottom="'Delete'"
-              />
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                @click="detailSupp(slotProps.data.suplier_code)"
-                v-tooltip.Right="'Detail'"
               />
             </template>
           </Column>
@@ -94,91 +93,97 @@
 			        </div>
             </div>
            </template>
-        </DataTable>   
+        </DataTable>
          <Dialog
-        v-model:visible="displaySupp"
-        :style="{ width: '1000px' }"
-        header="Detail Supplier"
-        :modal="true"
-        class="p-fluid"
-      >
+          v-model:visible="displaySupp"
+          :breakpoints="{'960px': '75vw'}"
+          :style="{ width: '450px' }"
+          :header="this.header"
+          :modal="true"
+          class="fluid"
+        >
         <div class="field grid">
-          <label>Kode </label>
+          <label class="col-fixed" style="width:100px">Kode </label>
           <InputText
             v-model="supps.suplier_code"
             disabled
           />
         </div>
         <div class="field grid">
-          <label>Nama </label>
+          <label class="col-fixed" style="width:100px">Nama </label>
           <InputText
             v-model="supps.suplier_name"
             disabled
           />
         </div>
         <div class="field grid">
-          <label> Contact  </label>
+          <label class="col-fixed" style="width:100px"> Contact  </label>
           <InputText
             v-model="supps.suplier_contact"
             disabled
           />
         </div>
         <div class="field grid">
-          <label> Alamat 1  </label>
-          <InputText
+          <label class="col-fixed" style="width:100px"> Alamat 1  </label>
+          <Textarea
+            :autoResize="true"
             v-model="supps.suplier_address1"
             disabled
           />  
         </div>
         <div class="field grid">
-          <label> Alamat 2 </label>
-          <InputText
+          <label class="col-fixed" style="width:100px"> Alamat 2 </label>
+          <Textarea
+            :autoResize="true"
             v-model="supps.suplier_address2"
             disabled
           />
         </div>
         <div class="field grid">
-          <label> Kota </label>
+          <label class="col-fixed" style="width:100px"> Kota </label>
           <InputText
             v-model="supps.suplier_city"
             disabled
           />
         </div>
         <div class="field grid">
-          <label> Provinsi</label>
+          <label class="col-fixed" style="width:100px"> Provinsi</label>
           <InputText
             v-model="supps.suplier_name"
             disabled
           />
         </div>
         <div class="field grid">
-          <label> Email </label>
+          <label class="col-fixed" style="width:100px"> Email </label>
           <InputText
             v-model="supps.suplier_email"
             disabled
           />
         </div>
         <div class="field grid">
-          <label> Fax </label>
+          <label class="col-fixed" style="width:100px"> Fax </label>
           <InputText
             v-model="supps.suplier_fax"
             disabled
           />
         </div>
         <div class="field grid">
-          <label> No.Tlp 1 </label>
+          <label class="col-fixed" style="width:100px"> No.Tlp 1 </label>
           <InputText
             v-model="supps.suplier_tlp1"
             disabled
           />
         </div>
         <div class="field grid">
-          <label> No.Tlp 2 </label>
+          <label class="col-fixed" style="width:100px"> No.Tlp 2 </label>
           <InputText
             v-model="supps.suplier_tlp2"
             disabled
           />
         </div>
+        <template #footer>
+          <Button label="Close" class="p-button-raised p-button-danger mr-2" icon="pi pi-times" @click="this.displaySupp = false" autofocus/>
+        </template>
       </Dialog>
       </div>
     </div>
@@ -189,6 +194,7 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+        header:null,
         loading:true,
         token: localStorage.getItem('token'),
         supp: [],
@@ -230,6 +236,7 @@ export default {
       this.displaySupp = true;
       this.axios.get('api/show-supp/' +suplier_code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.supps = response.data;
+        this.header = 'Detail Suplier '+this.supps.suplier_name;
       });
     },
     getSupp(){

@@ -101,9 +101,9 @@
                               </div>
                               </template>
                           </DatePicker>
-                          <small v-if="errors.tglsub" class="p-error">
+                          <!-- <small v-if="errors.tglsub" class="p-error">
                             {{ errors.tglsub[0] }}
-                          </small> 
+                          </small>  -->
                       </div>
                   </div>
                   <div class="field grid">
@@ -124,9 +124,9 @@
                             </div>
                             </template>
                           </DatePicker>
-                          <small v-if="errors.tglrecvcash" class="p-error">
+                          <!-- <small v-if="errors.tglrecvcash" class="p-error">
                               {{ errors.tglrecvcash[0] }}
-                          </small>
+                          </small> -->
                       </div>
                   </div>
                 <div class="field grid">
@@ -147,9 +147,9 @@
                           </div>
                           </template>
                         </DatePicker>
-                        <small v-if="errors.tglbuy" class="p-error">
+                        <!-- <small v-if="errors.tglbuy" class="p-error">
                             {{ errors.tglbuy[0] }}
-                        </small> 
+                        </small>  -->
                     </div>
                 </div>
               <div class="field grid">
@@ -170,9 +170,9 @@
                          </div>
                         </template>
                       </DatePicker>
-                      <small v-if="errors.tglrecvunit" class="p-error">
+                      <!-- <small v-if="errors.tglrecvunit" class="p-error">
                         {{ errors.tglrecvunit[0] }}
-                      </small>
+                      </small> -->
                 </div>
               </div>
               <div class="field grid">
@@ -193,9 +193,9 @@
                             </div>
                           </template>
                         </DatePicker>
-                        <small v-if="errors.tgltouser" class="p-error">
+                        <!-- <small v-if="errors.tgltouser" class="p-error">
                           {{ errors.tgltouser[0] }}
-                        </small>
+                        </small> -->
                     </div>
               </div>
               <div class="field grid">
@@ -216,9 +216,9 @@
                           </div>
                         </template>
                       </DatePicker>
-                      <small v-if="errors.tglclosing" class="p-error">
+                      <!-- <small v-if="errors.tglclosing" class="p-error">
                         {{ errors.tglclosing[0] }}
-                      </small>
+                      </small> -->
                   </div>
               </div> 
               <div class="form-group">

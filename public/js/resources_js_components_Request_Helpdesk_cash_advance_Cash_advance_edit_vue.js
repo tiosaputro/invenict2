@@ -368,6 +368,8 @@ var _hoisted_58 = {
   "class": "form-group"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
@@ -639,7 +641,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         icon: "pi pi-trash",
         "class": "p-button-danger",
         onClick: _cache[13] || (_cache[13] = function ($event) {
-          return $data.ca.ca_hand_over_date = '';
+          return _this.ca.ca_hand_over_date = '';
         })
       }))])];
     }),

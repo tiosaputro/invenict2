@@ -134,7 +134,7 @@
                       </small>
                </div>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label style="width:155px">QR-Code</label>
                 <div class="col-12 md:col-6">
                 <div class="p-inputgroup">
@@ -147,7 +147,7 @@
                           {{ errors.barcode[0] }}
                       </small>
                 </div>
-              </div> 
+              </div>  -->
               <div class="field grid">
                 <label for="notlp2" style="width:155px">Bisnis Unit</label>
                 <div class="col-4">
@@ -170,34 +170,35 @@
                 </div>
               </div>
                 <div class="field grid">
-                      <label style="width:155px">Lokasi Terakhir</label>
+                  <label style="width:155px">Lokasi Terakhir</label>
                     <div class="col-6">
                       <InputText
                         type="text"
                         v-model="lastloct"
                         :class="{ 'p-invalid': errors.lastloct }"
                         placeholder="Masukan Lokasi terakhir"
+                        disabled
                       />
-                      <small v-if="errors.lastloct" class="p-error">
+                      <!-- <small v-if="errors.lastloct" class="p-error">
                           {{ errors.lastloct[0] }}
-                      </small>
+                      </small> -->
+                    </div>
                   </div>
-                  </div>
-                   <div class="field grid">
-                      <label style="width:155px">Pengguna Terakhir</label>
-                    <div class="col-6">
-                      <InputText
-                        type="text"
-                        v-model="lastuser"
-                        :class="{ 'p-invalid': errors.lastuser }"
-                        placeholder="Masukan Pengguna Terakhir"
-                    />
-                      <small v-if="errors.lastuser" class="p-error">
-                          {{ errors.lastuser[0] }}
-                      </small>
-                  </div>
-                  </div> 
-
+                  <div class="field grid">
+                    <label style="width:155px">Pengguna Terakhir</label>
+                      <div class="col-6">
+                        <InputText
+                          type="text"
+                          v-model="lastuser"
+                          :class="{ 'p-invalid': errors.lastuser }"
+                          placeholder="Masukan Pengguna Terakhir"
+                          disabled
+                        />
+                        <!-- <small v-if="errors.lastuser" class="p-error">
+                            {{ errors.lastuser[0] }}
+                        </small> -->
+                      </div>
+                    </div> 
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -213,8 +214,8 @@
                 />
               </div>
             </form>
-          </div>
-          <div class="col-sm-6">
+           </div>
+           <div class="col-sm-6">
             <div class="field grid">
                     <label style="width:155px">Nama</label>
                     <div class="col-12 md:col-4">
@@ -232,7 +233,7 @@
                  <div class="field grid">
                       <label style="width:155px"></label>
                       <div class="col-10 md-6">
-                        <div class="card master-image" style="height: 22.5rem;">
+                        <div class="card master-image" style="height: 20 rem;">
                           <img :src="preview" class="master-image"/>
                     </div>
                  </div>
@@ -241,9 +242,9 @@
                       <label style="width:155px"></label>
                     <div class="col-10 md-6">
                       <input type="file" :class="{ 'p-invalid': error.foto }" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
-                      <small class="p-error" v-if="error.foto">
+                      <!-- <small class="p-error" v-if="error.foto">
                         {{ error.foto }}
-                      </small>
+                      </small> -->
                  </div>
                  </div>
                 <div class="field grid">
@@ -254,10 +255,11 @@
                         v-model="prevloct"
                         :class="{ 'p-invalid': errors.prevloct }"
                         placeholder="Masukan Lokasi sebelumnya"
+                        disabled
                     />
-                      <small class="p-error" v-if="errors.prevloct">
+                      <!-- <small class="p-error" v-if="errors.prevloct">
                         {{ errors.prevloct[0] }}
-                      </small>
+                      </small> -->
                     </div>
                  </div>
                  <div class="field grid">
@@ -268,10 +270,11 @@
                         v-model="prevuser"
                         :class="{ 'p-invalid': errors.prevuser  }"
                         placeholder="Masukan Pengguna sebelumnya"
+                        disabled
                     />
-                      <small class="p-error" v-if="errors.prevuser">
+                      <!-- <small class="p-error" v-if="errors.prevuser">
                         {{ errors.prevuser[0] }}
-                      </small>
+                      </small> -->
                     </div>
                  </div>
           </div>
@@ -388,25 +391,27 @@ export default {
       this.error = [];
       if (
         this.bu != null &&
-        this.merk != null &&
-        this.foto != null
+        this.merk != null 
+        // this.foto != null
       ) {
-        const data = new FormData();
-        data.append("nama", this.nama);
-        data.append("code", this.code);
-        data.append("tgl", this.tgl);
-        data.append("sn", this.sn);
-        data.append("bu", this.bu);
-        data.append("merk", this.merk);
-        data.append("type", this.type);
-        data.append("lastuser", this.lastuser);
-        data.append("prevuser", this.prevuser);
-        data.append("prevloct", this.prevloct);
-        data.append("lastloct", this.lastloct);
-        data.append("foto", this.image);
-        data.append("kondisi", this.kondisi);
-        data.append("barcode", this.barcode);
-        data.append("garansi", this.garansi);
+        if(this.image){
+          const data = new FormData();
+          data.append("nama", this.nama);
+          data.append("code", this.code);
+          data.append("tgl", this.tgl);
+          data.append("sn", this.sn);
+          data.append("bu", this.bu);
+          data.append("merk", this.merk);
+          data.append("type", this.type);
+          // data.append("lastuser", this.lastuser);
+          // data.append("prevuser", this.prevuser);
+          // data.append("prevloct", this.prevloct);
+          // data.append("lastloct", this.lastloct);
+          data.append("foto", this.image);
+          data.append("kondisi", this.kondisi);
+          // data.append("barcode", this.barcode);
+          dataappend("garansi", this.garansi);
+          
         this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           localStorage.removeItem("barcode");
           setTimeout( () => this.$router.push('/master-peripheral'),1000);
@@ -418,6 +423,37 @@ export default {
         }).catch(error=>{
             this.errors = error.response.data.errors;
         });
+        }
+        else{
+          const data = new FormData();
+          data.append("nama", this.nama);
+          data.append("code", this.code);
+          data.append("tgl", this.tgl);
+          data.append("sn", this.sn);
+          data.append("bu", this.bu);
+          data.append("merk", this.merk);
+          data.append("type", this.type);
+          // data.append("lastuser", this.lastuser);
+          // data.append("prevuser", this.prevuser);
+          // data.append("prevloct", this.prevloct);
+          // data.append("lastloct", this.lastloct);
+          // data.append("foto", this.image);
+          data.append("kondisi", this.kondisi);
+          // data.append("barcode", this.barcode);
+          data.append("garansi", this.garansi);
+          
+        this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          localStorage.removeItem("barcode");
+          setTimeout( () => this.$router.push('/master-peripheral'),1000);
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+          });
+        }).catch(error=>{
+            this.errors = error.response.data.errors;
+        });
+        }
       }else{
         if(this.bu == null){
           this.error.bu = "Bisnis Unit Belum Diisi"
@@ -425,9 +461,9 @@ export default {
         if(this.merk == null){
           this.error.merk = "Merk Belum Diisi"
         }
-        if(this.foto == null){
-          this.error.foto = "Foto Belum Diisi"
-        }
+        // if(this.foto == null){
+        //   this.error.foto = "Foto Belum Diisi"
+        // }
       }
     }
   },

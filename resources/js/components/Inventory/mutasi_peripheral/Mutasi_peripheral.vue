@@ -42,28 +42,17 @@
             Not Found
           </template>
           <template #loading>
-            Loading Mutasi Peripheral data. Please wait.
+            Loading data. Please wait.
           </template>
           <Column field="invent_code" header="Kode" :sortable="true">
             <template #body="slotProps">
-              {{ slotProps.data.invent_code }}
+              <p @click="detailKode(slotProps.data.invent_code)" style="cursor:pointer;"> {{slotProps.data.invent_code}}
+              </p> 
             </template>
           </Column>
-          <Column field="invent_desc" header="Nama" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_desc }}
-            </template>
-          </Column>
-          <Column field="imutasi_pengguna" header="Pengguna" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.imutasi_pengguna }}
-            </template>
-          </Column>
-          <Column field="imutasi_lokasi" header="Lokasi" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.imutasi_lokasi }}
-            </template>
-          </Column>
+          <Column field="invent_desc" header="Nama" :sortable="true"/>
+          <Column field="imutasi_pengguna" header="Pengguna" :sortable="true"/>
+          <Column field="imutasi_lokasi" header="Lokasi" :sortable="true"/>
           <Column headerStyle="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -104,7 +93,203 @@
 			        </div>
             </div>
            </template>
-        </DataTable>   
+        </DataTable>
+         <Dialog
+          v-model:visible="displayKode"
+          :style="{ width: '1200px' }"
+          :header="this.header"
+          :modal="true"
+          class="fluid"
+        >
+        <!-- <div class="field grid">
+          <label class="col-fixed" style="width:100px">Kode Peripheral </label>
+          <InputText
+            v-model="detail.invent_code"
+            disabled
+          />
+        </div>
+        <div class="field grid">
+          <label class="col-fixed" style="width:100px">Nama Peripheral </label>
+          <InputText
+            v-model="detail.invent_desc"
+            disabled
+          />
+        </div>
+        <div class="field grid">
+          <label class="col-fixed" style="width:100px"> Merk  </label>
+          <InputText
+            v-model="detail.invent_brand"
+            disabled
+          />
+        </div>
+        <div class="field grid">
+          <label class="col-fixed" style="width:100px"> Tipe  </label>
+          <Textarea
+            :autoResize="true"
+            v-model="detail.invent_type"
+            disabled
+          />  
+        </div>
+        <div class="field grid">
+          <label class="col-fixed" style="width:100px"> S/N </label>
+          <Textarea
+            :autoResize="true"
+            v-model="detail.invent_sn"
+            disabled
+          />
+        </div>
+        <div class="field grid">
+          <label class="col-fixed" style="width:100px"> Tanggal Perolehan</label>
+          <InputText
+            v-model="detail.invent_tgl_perolehan"
+            disabled
+          />
+        </div>
+        <div class="field grid">
+          <label class="col-fixed" style="width:100px"> Bisnis Unit </label>
+          <InputText
+            v-model="detail.invent_bu"
+            disabled
+          />
+        </div> -->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field grid">
+          <label style="width:155px">Kode</label>
+            <div class="col-4">
+              <InputText
+                type="text"
+                v-model="detail.invent_code"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="field grid">
+            <label style="width:155px">Merk</label>
+              <div class="col-4">
+                <InputText
+                  v-model="detail.invent_brand"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="field grid">
+              <label style="width:155px">Tipe</label>
+                <div class="col-4">
+                  <InputText
+                    disabled
+                    v-model= "detail.invent_type"
+                  />
+                </div>
+              </div>
+              <div class="field grid">
+                <label style="width:155px">S/N</label>
+                  <div class="col-4">
+                    <InputText
+                      v-model="detail.invent_sn"
+                      disabled
+                    />
+                 </div>
+              </div>
+              <div class="field grid">
+                <label style="width:155px">Tgl. Perolehan</label>
+                  <div class="col-4">
+                     <InputText
+                      v-model="detail.invent_tgl_perolehan"
+                      disabled
+                    />
+                  </div>
+              </div>
+              <!-- <div class="field grid">
+                <label style="width:155px">Lama Garansi</label>
+                  <div class="col-3">
+                    <div class="p-inputgroup">
+                      <InputText
+                        v-model="detail.invent_lama_garansi"
+                        disabled
+                      />
+                        <span class="p-inputgroup-addon"> Tahun </span> 
+                    </div>
+                </div>
+              </div> -->
+              <div class="field grid">
+                <label style="width:155px">Kondisi</label>
+                  <div class="col-4">
+                    <InputText
+                      v-model="detail.invent_kondisi"
+                      disabled
+                    />
+                  </div>
+              </div>
+              <div class="field grid">
+                <label for="notlp2" style="width:155px">Bisnis Unit</label>
+                  <div class="col-4">
+                    <InputText
+                      v-model="detail.invent_bu"
+                      disabled
+                    />
+                </div>
+              </div>
+              <div class="field grid">
+                <label style="width:155px">Lokasi Terakhir</label>
+                  <div class="col-6">
+                    <InputText
+                      type="text"
+                      v-model="detail.invent_lokasi_update"
+                      disabled
+                    />
+                  </div>
+              </div>
+              <div class="field grid">
+                <label style="width:155px">Pengguna Terakhir</label>
+                  <div class="col-6">
+                    <InputText
+                      type="text"
+                      v-model="detail.invent_pengguna_update"
+                      disabled
+                    />
+                  </div>
+              </div> 
+            </div>
+              <div class="col-sm-6">
+                <div class="field grid">
+                  <label style="width:155px">Nama</label>
+                    <div class="col-4">
+                      <InputText
+                        v-model="detail.invent_desc"
+                        disabled
+                      />
+                    </div>
+                </div> 
+                <div class="field grid">
+                  <label style="width:155px"></label>
+                    <div class="col-10 md-6">
+                      <div class="card master-image" style="height: 25 rem;">
+                        <img :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
+                      </div>
+                    </div>
+                 </div>
+                <div class="field grid">
+                  <label style="width:155px">Lokasi Sebelumnya</label>
+                    <div class="col-6">
+                      <InputText
+                        v-model="detail.invent_lokasi_previous"
+                        disabled
+                      />
+                    </div>
+                </div>
+                <div class="field grid">
+                  <label style="width:155px">Penguna Sebelumnya</label>
+                    <div class="col-6">
+                      <InputText
+                        v-model="detail.invent_pengguna_previous"
+                        disabled
+                      />
+                    </div>
+                </div>
+              </div>
+              </div>
+      </Dialog>   
       </div>
     </div>
   </div>
@@ -114,6 +299,7 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+        header:'',
         loading: true,
         token: localStorage.getItem('token'),
         mutasi: [],
@@ -121,6 +307,8 @@ export default {
         checkname : [],
         checkto : [],
         id : localStorage.getItem('id'),
+        detail:[],
+        displayKode : false
     };
   },
   created() {
@@ -185,6 +373,19 @@ export default {
     CetakExcel(){
       window.open('api/report-mutasi-excel',{headers: {'Authorization': 'Bearer '+this.token}});
     },
+    detailKode(invent_code){
+      this.displayKode = true;
+      this.axios.get('api/detail-peripheral/' +invent_code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.detail = response.data;
+        this.header = 'Detail Peripheral '+this.detail.name;
+      });
+    },
   },
 };
 </script>
+<style scoped lang="scss">
+.master-image {
+  height:220-pt;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+}
+</style>

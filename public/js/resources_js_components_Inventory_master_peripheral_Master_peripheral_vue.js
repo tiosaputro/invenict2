@@ -75,31 +75,26 @@ __webpack_require__.r(__webpack_exports__);
       this.displayBarcode = false;
     },
     previewBarcode: function previewBarcode(invent_code) {
-      var _this2 = this;
-
-      this.axios.get('api/getBarcode/' + invent_code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.barcode = 'Kode Peripheral ' + ': ' + response.data.invent_code + ', ' + 'Nama Peripheral ' + ': ' + response.data.invent_desc + ', ' + 'Merk ' + ': ' + response.data.invent_brand + ', ' + 'Tipe ' + ': ' + response.data.invent_type + ', ' + 'S/N ' + ': ' + response.data.invent_sn + ', ' + 'Bisnis Unit ' + ': ' + response.data.invent_bu + ', ' + 'Lokasi Terakhir ' + ': ' + response.data.invent_lokasi_previous + ', ' + 'Pengguna Terakhir ' + ': ' + response.data.invent_pengguna_previous + ', ' + 'Lama Garansi ' + ': ' + response.data.invent_lama_garansi + ' Tahun' + ', ' + 'Tanggal Perolehan ' + ': ' + response.data.invent_tgl_perolehan; // this.barcode = 'Link '+':'+'http://172.25.1.125:8000/detPeri/' +invent_code
-
-        _this2.displayBarcode = true;
-      });
+      // this.axios.get('api/getBarcode/'+invent_code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      //   this.barcode = 'Kode Peripheral ' + ': ' + response.data.invent_code +', '+ 'Nama Peripheral ' + ': ' + response.data.invent_desc + ', '+ 'Merk '+': '+ response.data.invent_brand+', '
+      //   + 'Tipe '+': '+ response.data.invent_type+', '+'S/N '+': '+response.data.invent_sn+', '+ 'Bisnis Unit '+': '+response.data.invent_bu +', '+'Lokasi Terakhir '+': '
+      //   +response.data.invent_lokasi_previous+', '+'Pengguna Terakhir '+': '+response.data.invent_pengguna_previous+', '+'Lama Garansi '+': '+response.data.invent_lama_garansi+' Tahun'+', '+'Tanggal Perolehan '+': '+response.data.invent_tgl_perolehan; 
+      this.barcode = 'Link ' + ':' + 'http://172.25.1.125:8000/detPeri/' + invent_code;
+      this.displayBarcode = true; // });
     },
     getMaster: function getMaster() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.axios.get('api/mas', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.master = response.data;
-        _this3.loading = false;
+        _this2.master = response.data;
+        _this2.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Sesi Login Expired'
@@ -108,13 +103,13 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this2.$router.push('/login');
           }, 2000);
         }
       });
     },
     DeleteMas: function DeleteMas(invent_code) {
-      var _this4 = this;
+      var _this3 = this;
 
       this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
@@ -124,20 +119,20 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Ya",
         rejectLabel: "Tidak",
         accept: function accept() {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
 
-          _this4.axios["delete"]('api/delete-mas/' + invent_code, {
+          _this3.axios["delete"]('api/delete-mas/' + invent_code, {
             headers: {
-              'Authorization': 'Bearer ' + _this4.token
+              'Authorization': 'Bearer ' + _this3.token
             }
           });
 
-          _this4.getMaster();
+          _this3.getMaster();
         },
         reject: function reject() {}
       });

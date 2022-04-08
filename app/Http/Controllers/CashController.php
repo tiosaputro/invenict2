@@ -25,31 +25,56 @@ class CashController extends Controller
             'noreq.unique'=>'No request ini sudah pernah dibuatkan cash advancenya',
             'jum.numeric'=>'Jumlah Belum Diisi',
             'tglsub.required'=>'Tgl Submit Belum diisi',
-            'tglrecvunit.required'=>'Tgl Terima Barang Belum Diisi',
-            'tglbuy.required'=>'Tgl Pembelian Belum Diisi',
-            'tglrecvcash.required'=>'Tgl. Terima cash Belum Diisi',
-            'tgltouser.required'=>'Tgl Penyerahan Ke User Belum Diisi',
-            'tglclosing.required'=>'Tgl Closing Belum Diisi'
+            // 'tglrecvunit.required'=>'Tgl Terima Barang Belum Diisi',
+            // 'tglbuy.required'=>'Tgl Pembelian Belum Diisi',
+            // 'tglrecvcash.required'=>'Tgl. Terima cash Belum Diisi',
+            // 'tgltouser.required'=>'Tgl Penyerahan Ke User Belum Diisi',
+            // 'tglclosing.required'=>'Tgl Closing Belum Diisi'
         ];
             $request->validate([
                 'noreq' => 'required|unique:ca_mst,ireq_id',
                 'jum'=>'numeric',
                 'tglsub'=>'required',
-                'tglrecvunit'=>'required',
-                'tglbuy'=>'required',
-                'tglrecvcash' => 'required',
-                'tgltouser' => 'required',
-                'tglclosing' => 'required'
+                // 'tglrecvunit'=>'required',
+                // 'tglbuy'=>'required',
+                // 'tglrecvcash' => 'required',
+                // 'tgltouser' => 'required',
+                // 'tglclosing' => 'required'
             ],$message);
 
         $date = Carbon::now();
+
         $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $newTglSub = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglsub)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglRecUnit = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglrecvunit)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglbuy = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglbuy)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglRecCash = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglrecvcash)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglToUser = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgltouser)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglClosing = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglclosing)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+
+        if($request->tglrecvunit){
+            $newTglRecUnit = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglrecvunit)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+        }
+        else{
+            $newTglRecUnit = '';
+        }
+        if($request->tglbuy){
+            $newTglbuy = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglbuy)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+        }
+        else{
+            $newTglbuy='';
+        }
+        if($request->tglrecvcash){
+            $newTglRecCash = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglrecvcash)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+        }else{
+            $newTglRecCash='';
+        }
+        if($request->tgltouser){
+            $newTglToUser = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgltouser)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+        }else{
+            $newTglToUser = '';
+        }
+        if ($request->tglclosing) {
+             $newTglClosing = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglclosing)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+            } 
+        else{
+            $newTglClosing = '';
+        }
 
         $cash = Cash::create([
             'ireq_id' =>$request->noreq,
@@ -91,30 +116,54 @@ class CashController extends Controller
     {
         $message = [
             'ca_submit_date.required'=>'Tgl Submit Belum diisi',
-            'ca_recv_item_date.required'=>'Tgl Terima Barang Belum diisi',
-            'ca_purchase_date.required'=>'Tgl Pembelian Belum Diisi',
-            'ca_recv_cash_date.required'=>'Tgl. Terima cash Belum Diisi',
-            'ca_hand_over_date.required'=>'Tgl Penyerahan Ke User Belum Diisi',
+            // 'ca_recv_item_date.required'=>'Tgl Terima Barang Belum diisi',
+            // 'ca_purchase_date.required'=>'Tgl Pembelian Belum Diisi',
+            // 'ca_recv_cash_date.required'=>'Tgl. Terima cash Belum Diisi',
+            // 'ca_hand_over_date.required'=>'Tgl Penyerahan Ke User Belum Diisi',
             'ca_pic_name.required'=>'Jumlah Belum Diisi',
-            'ca_settlement_date.required'=>'Tgl Closing Belum Diisi'
+            // 'ca_settlement_date.required'=>'Tgl Closing Belum Diisi'
         ];
             $request->validate([
                 'ca_submit_date' => 'required',
-                'ca_recv_item_date'=>'required',
-                'ca_purchase_date'=>'required',
-                'ca_recv_cash_date'=>'required',
-                'ca_hand_over_date'=>'required',
+                // 'ca_recv_item_date'=>'required',
+                // 'ca_purchase_date'=>'required',
+                // 'ca_recv_cash_date'=>'required',
+                // 'ca_hand_over_date'=>'required',
                 'ca_pic_name' => 'required',
-                'ca_settlement_date'=>'required'
+                // 'ca_settlement_date'=>'required'
             ],$message);
         $date = Carbon::now();
+        if($request->ca_recv_item_date){
+            $newTglRecUnit = Carbon::parse($request->ca_recv_item_date)->tz('Asia/Jakarta')->format('Y-m-d');
+        }
+        else{
+            $newTglRecUnit = '';
+        }
+        if($request->ca_purchase_date){
+            $newTglbuy = Carbon::parse($request->ca_purchase_date)->tz('Asia/Jakarta')->format('Y-m-d');
+        }
+        else{
+            $newTglbuy='';
+        }
+        if($request->ca_recv_cash_date){
+            $newTglRecCash = Carbon::parse($request->ca_recv_cash_date)->tz('Asia/Jakarta')->format('Y-m-d');
+        }else{
+            $newTglRecCash='';
+        }
+        if($request->ca_hand_over_date){
+            $newTglToUser = Carbon::parse($request->ca_hand_over_date)->tz('Asia/Jakarta')->format('Y-m-d');
+        }else{
+            $newTglToUser = '';
+        }
+        if ($request->ca_settlement_date) {
+             $newTglClosing = Carbon::parse($request->ca_settlement_date)->tz('Asia/Jakarta')->format('Y-m-d');
+            } 
+        else{
+            $newTglClosing = '';
+        }
+
         $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $newTglSub = Carbon::parse($request->ca_submit_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglRecUnit = Carbon::parse($request->ca_recv_item_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglbuy = Carbon::parse($request->ca_purchase_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglRecCash = Carbon::parse($request->ca_recv_cash_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglToUser = Carbon::parse($request->ca_hand_over_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $newTglClosing = Carbon::parse($request->ca_settlement_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
 
         $cash = Cash::find($code);
         $cash->ca_pic_name = $request->ca_pic_name;

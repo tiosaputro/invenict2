@@ -42,11 +42,11 @@ class MasterController extends Controller
             'kondisi.required'=>'Kondisi Belum Diisi',
             'garansi.required' => 'Garansi Belum Diisi',
             'garansi.numeric' => 'Garansi Belum Diisi',
-            'barcode.required' => 'Barcode Belum Diisi',
-            'lastloct.required' => 'Lokasi Terakhir Belum Diisi',
-            'lastuser.required' => 'Pengguna Terakhir Belum Diisi',
-            'prevloct.required' => 'Lokasi Sebelumnya Belum Diisi',
-            'prevuser.required' => 'User Sebelumnya Belum Diisi',
+            // 'barcode.required' => 'Barcode Belum Diisi',
+            // 'lastloct.required' => 'Lokasi Terakhir Belum Diisi',
+            // 'lastuser.required' => 'Pengguna Terakhir Belum Diisi',
+            // 'prevloct.required' => 'Lokasi Sebelumnya Belum Diisi',
+            // 'prevuser.required' => 'User Sebelumnya Belum Diisi',
             'bu.required' => 'Bisnis Unit Belum Diisi'
         ];
         $request->validate([
@@ -58,22 +58,27 @@ class MasterController extends Controller
             'tgl'=>'required',
             'kondisi'=>'required',
             'garansi'=>'required|numeric',
-            'barcode'=>'required',
-            'lastloct'=>'required',
-            'lastuser' => 'required',
-            'prevloct'=> 'required',
-            'prevuser'=> 'required',
+            // 'barcode'=>'required',
+            // 'lastloct'=>'required',
+            // 'lastuser' => 'required',
+            // 'prevloct'=> 'required',
+            // 'prevuser'=> 'required',
             'bu'=> 'required'
         ],$message);
 
         $newDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgl)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $image= $request->foto;
-        $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-        $replace = substr($image, 0, strpos($image, ',')+1); 
-        $fotoo = str_replace($replace, '', $image);
-        $foto= str_replace(' ', '+', $fotoo); 
-        $nama_file = time().".".$extension;
-        Storage::disk('master_peripheral')->put($nama_file, base64_decode($foto));
+        if($request->foto){
+            $image= $request->foto;
+            $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+            $replace = substr($image, 0, strpos($image, ',')+1); 
+            $fotoo = str_replace($replace, '', $image);
+            $foto= str_replace(' ', '+', $fotoo); 
+            $nama_file = time().".".$extension;
+            Storage::disk('master_peripheral')->put($nama_file, base64_decode($foto));
+        }
+        else{
+            $nama_file = '';
+        }
         $mas = Master::Create([
             'invent_code' => $request->code,
             'invent_desc' => $request->nama,
@@ -86,12 +91,12 @@ class MasterController extends Controller
             'creation_date' => $this->newCreation,
             'created_by' => Auth::user()->usr_name,
             'program_name' => "Master_Save",
-            'invent_barcode' => $request->barcode,
-            'invent_lokasi_update' => $request->lastloct,
-            'invent_pengguna_update' => $request->lastuser,
+            // 'invent_barcode' => $request->barcode,
+            // 'invent_lokasi_update' => $request->lastloct,
+            // 'invent_pengguna_update' => $request->lastuser,
             'invent_photo' => $nama_file,
-            'invent_lokasi_previous' => $request->prevloct,
-            'invent_pengguna_previous' => $request->prevuser,
+            // 'invent_lokasi_previous' => $request->prevloct,
+            // 'invent_pengguna_previous' => $request->prevuser,
             'invent_bu' => $request->bu,
         ]);
         $msg = [
@@ -122,13 +127,31 @@ class MasterController extends Controller
         ->first();
         return json_encode(['merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis,'mas'=>$mas],200);
     }
+    
+    public function detailPeripheral($invent_code)
+    {
+        $mas = DB::table('invent_mst as im')
+        ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
+        ->leftjoin('lookup_refs as llr','im.invent_kondisi','llr.lookup_code')
+        ->leftjoin('vcompany_refs as vr','im.invent_bu','vr.company_code')
+        ->select('im.invent_code','im.invent_desc','lr.lookup_desc as invent_brand','im.invent_type','im.invent_sn','llr.lookup_desc as invent_kondisi',
+                'im.invent_lama_garansi','im.invent_lokasi_update','im.invent_pengguna_update','im.invent_photo',
+                'im.invent_lokasi_previous', 'im.invent_pengguna_previous', 'vr.name as invent_bu', 
+                DB::raw("TO_CHAR(im.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"),DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+        ->where('im.invent_code',$invent_code)
+        ->where('lr.lookup_type','Merk')
+        ->where('llr.lookup_type','Kondisi')
+        ->first();
+        return json_encode($mas);
+    }
     public function update(Request $request, $code)
     {
         $newDate = Carbon::parse($request->invent_tgl_perolehan)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         $mas = Master::find($code);
-        //jika user update photo
         if($request->image) {
-            // unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
+            if($mas->invent_photo){
+                unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
+            }
             $image= $request->image;
             $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
             $replace = substr($image, 0, strpos($image, ',')+1); 
@@ -136,7 +159,9 @@ class MasterController extends Controller
             $foto= str_replace(' ', '+', $fotoo); 
             $nama_file = time().".".$extension;
             Storage::disk('master_peripheral')->put($nama_file, base64_decode($foto));
-
+        }else{
+            $nama_file = '';
+        }
             $mas->invent_desc = $request->invent_desc;
             $mas->invent_brand = $request->invent_brand;
             $mas->invent_type = $request->invent_type;
@@ -147,34 +172,15 @@ class MasterController extends Controller
             $mas->last_update_date = $this->newUpdate;
             $mas->last_updated_by = Auth::user()->usr_name;
             $mas->program_name = "Master_Update";
-            $mas->invent_barcode = $request->invent_barcode;
-            $mas->invent_lokasi_update =$request->invent_lokasi_update;
-            $mas->invent_pengguna_update=  $request->invent_pengguna_update;
-            $mas->invent_lokasi_previous = $request-> invent_lokasi_previous;
-            $mas->invent_pengguna_previous = $request-> invent_pengguna_previous;
+            // $mas->invent_barcode = $request->invent_barcode;
+            // $mas->invent_lokasi_update =$request->invent_lokasi_update;
+            // $mas->invent_pengguna_update=  $request->invent_pengguna_update;
+            // $mas->invent_lokasi_previous = $request-> invent_lokasi_previous;
+            // $mas->invent_pengguna_previous = $request-> invent_pengguna_previous;
             $mas->invent_bu = $request->invent_bu;
             $mas->invent_photo = $nama_file;
             $mas->save();
-        }
-        //jika tidak
-            $mas->invent_desc = $request->invent_desc;
-            $mas->invent_brand = $request->invent_brand;
-            $mas->invent_type = $request->invent_type;
-            $mas->invent_sn =$request->invent_sn;
-            $mas->invent_tgl_perolehan =$newDate;
-            $mas->invent_lama_garansi = $request->invent_lama_garansi;
-            $mas->invent_kondisi = $request->invent_kondisi;
-            $mas->last_update_date = $this->newUpdate;
-            $mas->last_updated_by = $request->name;
-            $mas->program_name = "Master_Update";
-            $mas->invent_barcode = $request->invent_barcode;
-            $mas->invent_lokasi_update =$request->invent_lokasi_update;
-            $mas->invent_pengguna_update=  $request->invent_pengguna_update;
-            $mas->invent_lokasi_previous = $request-> invent_lokasi_previous;
-            $mas->invent_pengguna_previous = $request-> invent_pengguna_previous;
-            $mas->invent_bu = $request->invent_bu;
-            $mas->save();
-        //end
+        
         $msg = [
             'success' => true,
             'message' => 'Updated Successfully'
@@ -185,7 +191,9 @@ class MasterController extends Controller
     public function delete($invent_code)
     {
         $mas = Master::find($invent_code);
-        unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
+        if($mas->invent_photo){
+            unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
+        }
         $mas->delete();
             return json_encode('Successfully deleted');
     }

@@ -176,7 +176,7 @@
                             placeholder="Pilih Tgl Penyerahan"
                           />
                           <Button icon="pi pi-calendar" v-if="!ca.ca_hand_over_date" @click="togglePopover"/>
-                          <Button icon="pi pi-trash" class="p-button-danger" v-else @click="ca.ca_hand_over_date = ''" />
+                          <Button icon="pi pi-trash" class="p-button-danger" v-else @click="this.ca.ca_hand_over_date = ''" />
                           </div>
                         </template>
                       </DatePicker>

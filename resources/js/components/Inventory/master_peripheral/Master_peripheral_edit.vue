@@ -123,7 +123,7 @@
                       </small>
                </div>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label style="width:155px">QR-Code</label>
                  <div class="col-12 md:col-6">
                 <div class="p-inputgroup">
@@ -136,7 +136,7 @@
                           QR-Code Belum Diisi.
                       </small>
                 </div>
-              </div> 
+              </div>  -->
               <div class="field grid">
                 <label style="width:155px">Bisnis Unit</label>
                 <div class="col-4">
@@ -161,13 +161,9 @@
                       <InputText
                         type="text"
                         v-model="master.invent_lokasi_update"
-                        :class="{ 'p-invalid': submitted && !master.invent_lokasi_update }"
                         placeholder="Masukan Lokasi terakhir"
                         disabled
                       />
-                      <small class="p-error" v-if="submitted && !master.invent_lokasi_update"
-                        >Lokasi Terakhir Belum Diisi.
-                      </small>
                   </div>
                   </div>
                  <div class="field grid">
@@ -176,13 +172,9 @@
                       <InputText
                         type="text"
                         v-model="master.invent_pengguna_update"
-                        :class="{ 'p-invalid': submitted && !master.invent_pengguna_update }"
                         placeholder="Masukan Pengguna Terakhir"
                         disabled
                     />
-                      <small class="p-error" v-if="submitted && !master.invent_pengguna_update"
-                        >Pengguna Terakhir Belum Diisi.
-                      </small>
                   </div>
                   </div>
               <div class="p-p-0 p-p-sm-1 p-p-md-2 p-p-lg-3">
@@ -220,7 +212,7 @@
                  <div class="field grid">
                       <label style="width:155px"></label>
                       <div class="col-10 md-6">
-                        <div class="card" style="height: 23.5rem;">
+                        <div class="card" style="height: 19.5rem;">
                           <img :src="preview" class="master-image" v-if="preview"/>
                           <img :src="'/master_peripheral/' +master.invent_photo" class="master-image" v-else />
                         </div>
@@ -238,13 +230,9 @@
                    <InputText
                         type="text"
                         v-model="master.invent_lokasi_previous"
-                        :class="{ 'p-invalid': submitted && !master.invent_lokasi_previous }"
                         placeholder="Masukan Lokasi sebelumnya"
                         disabled
                     />
-                      <small class="p-error" v-if="submitted && !master.invent_lokasi_previous"
-                        >Lokasi Sebelumnya Belum Diisi.
-                      </small>
                     </div>
                  </div>
                  <div class="field grid">
@@ -253,13 +241,9 @@
                        <InputText
                         type="text"
                         v-model="master.invent_pengguna_previous"
-                        :class="{ 'p-invalid': submitted && !master.invent_pengguna_previous }"
                         placeholder="Masukan Pengguna sebelumnya"
                         disabled
                     />
-                      <small class="p-error" v-if="submitted && !master.invent_pengguna_previous"
-                        >Pengguna Terakhir Belum Diisi.
-                      </small>
                     </div>
                  </div>
           </div>
@@ -383,12 +367,12 @@ export default {
         this.master.invent_tgl_perolehan != null &&
         this.master.invent_lama_garansi != null &&
         this.master.invent_kondisi != null &&
-        this.master.invent_barcode != null &&
-        this.master.invent_bu != null &&
-        this.master.invent_lokasi_update != null &&
-        this.master.invent_pengguna_update != null &&
-        this.master.invent_lokasi_previous != null &&
-        this.master.invent_pengguna_previous != null  
+        // this.master.invent_barcode != null &&
+        this.master.invent_bu != null 
+        // this.master.invent_lokasi_update != null &&
+        // this.master.invent_pengguna_update != null &&
+        // this.master.invent_lokasi_previous != null &&
+        // this.master.invent_pengguna_previous != null  
       ) {
         this.axios.put('/api/update-mas/' + this.$route.params.code ,this.master, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           localStorage.removeItem("barcode");
@@ -411,7 +395,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .master-image {
-  height:227pt;
+  height:200pt;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }
 </style>

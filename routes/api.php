@@ -60,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/delete-mas/{invent_code}','MasterController@delete');
     Route::get('/getImage/{kode}','MasterController@getImage');
     Route::get('/getBarcode/{invent_code}','MasterController@getBarcode');
+    Route::get('/detail-peripheral/{invent_code}','MasterController@detailPeripheral');
     //Route::get('/report-master-excel','MasterController@cetak_excel');
     //Route::get('/get-kode','MasterController@getKode');
 

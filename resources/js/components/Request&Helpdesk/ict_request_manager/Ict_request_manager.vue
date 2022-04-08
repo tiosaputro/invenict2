@@ -13,7 +13,7 @@
               <TabPanel header="Menunggu Diverifikasi">
                 <DataTable
                   :value="blmdiverifikasi"
-                  :paginator="true"
+                  :paginator="true" 
                   :rows="10"
                   :loading="loading"
                   :filters="filters"
