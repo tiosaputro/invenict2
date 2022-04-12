@@ -534,7 +534,7 @@ var _hoisted_58 = {
   "class": "col-10 md-6"
 };
 var _hoisted_59 = {
-  "class": "card master-image",
+  "class": "card",
   style: {
     "height": "20 rem"
   }
@@ -892,7 +892,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".master-image[data-v-dd716f14] {\n  height: 227pt;\n  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".master-image[data-v-dd716f14] {\n  height: 200pt;\n  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

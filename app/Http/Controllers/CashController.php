@@ -18,6 +18,26 @@ class CashController extends Controller
             $cash = DB::table('v_cash_advance')->get();
             return json_encode($cash);
     }
+    function detail($ca_idd){
+        $dtl = DB::table('ireq_dtl as id')
+        ->select('id.ireq_id','id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc', 'id.ireq_qty',
+        DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),'llr.lookup_desc as ireq_status')
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->leftJoin('lookup_refs as llr',function ($join) {
+            $join->on('id.ireq_status','llr.lookup_code')
+                  ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+        })
+        ->leftJoin('ireq_mst as imm',function ($join) {
+            $join->on('id.ireq_id','imm.ireq_id');
+        })
+        ->where('imm.ireq_no',$ca_idd)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->orderBy('id.ireqd_id','ASC')
+        ->get();
+
+            return json_encode($dtl);
+    }
     function save(Request $request)
     {
         $message = [
@@ -106,8 +126,8 @@ class CashController extends Controller
                 DB::raw("TO_CHAR(cm.ca_recv_item_date, 'dd Mon YYYY') as ca_recv_item_date"),
                 DB::raw("TO_CHAR(cm.ca_settlement_date, 'dd Mon YYYY') as ca_settlement_date"),
                 DB::raw("TO_CHAR(cm.ca_hand_over_date, 'dd Mon YYYY') as ca_hand_over_date"))
-        ->join('ireq_mst as im','cm.ireq_id','im.ireq_id')
-        ->join('vcompany_refs as vr','im.ireq_bu','vr.company_code')
+        ->leftjoin('ireq_mst as im','cm.ireq_id','im.ireq_id')
+        ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
         ->where('cm.ca_id',$code)
         ->first();
             return json_encode($cash);

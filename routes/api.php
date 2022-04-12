@@ -97,6 +97,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/cash','CashController@index');
     Route::post('/add-cash','CashController@save');
     Route::get('/edit-cash/{code}','CashController@edit');
+    Route::get('/detail-request/{code}','CashController@detail');
     Route::put('/update-cash/{code}','CashController@update');
     Route::delete('/delete-cash/{ca_id}','CashController@delete');
     //Route::get('/report-cash-pdf','CashController@cetak_pdf');

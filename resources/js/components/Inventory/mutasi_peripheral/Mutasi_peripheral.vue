@@ -94,64 +94,13 @@
             </div>
            </template>
         </DataTable>
-         <Dialog
-          v-model:visible="displayKode"
-          :style="{ width: '1200px' }"
-          :header="this.header"
-          :modal="true"
-          class="fluid"
-        >
-        <!-- <div class="field grid">
-          <label class="col-fixed" style="width:100px">Kode Peripheral </label>
-          <InputText
-            v-model="detail.invent_code"
-            disabled
-          />
-        </div>
-        <div class="field grid">
-          <label class="col-fixed" style="width:100px">Nama Peripheral </label>
-          <InputText
-            v-model="detail.invent_desc"
-            disabled
-          />
-        </div>
-        <div class="field grid">
-          <label class="col-fixed" style="width:100px"> Merk  </label>
-          <InputText
-            v-model="detail.invent_brand"
-            disabled
-          />
-        </div>
-        <div class="field grid">
-          <label class="col-fixed" style="width:100px"> Tipe  </label>
-          <Textarea
-            :autoResize="true"
-            v-model="detail.invent_type"
-            disabled
-          />  
-        </div>
-        <div class="field grid">
-          <label class="col-fixed" style="width:100px"> S/N </label>
-          <Textarea
-            :autoResize="true"
-            v-model="detail.invent_sn"
-            disabled
-          />
-        </div>
-        <div class="field grid">
-          <label class="col-fixed" style="width:100px"> Tanggal Perolehan</label>
-          <InputText
-            v-model="detail.invent_tgl_perolehan"
-            disabled
-          />
-        </div>
-        <div class="field grid">
-          <label class="col-fixed" style="width:100px"> Bisnis Unit </label>
-          <InputText
-            v-model="detail.invent_bu"
-            disabled
-          />
-        </div> -->
+    <Dialog
+      v-model:visible="displayKode"
+      :style="{ width: '1200px' }"
+      :header="this.header"
+      :modal="true"
+      class="fluid"
+    >
     <div class="row">
       <div class="col-sm-6">
         <div class="field grid">
@@ -264,7 +213,7 @@
                 <div class="field grid">
                   <label style="width:155px"></label>
                     <div class="col-10 md-6">
-                      <div class="card master-image" style="height: 25 rem;">
+                      <div class="card">
                         <img :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
                       </div>
                     </div>
@@ -385,7 +334,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .master-image {
-  height:220-pt;
+  height:200pt;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }
 </style>

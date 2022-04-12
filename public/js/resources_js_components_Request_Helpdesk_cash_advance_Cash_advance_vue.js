@@ -19,6 +19,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      displayRequest: false,
+      detail: [],
       loading: true,
       cash: [],
       filters: {
@@ -30,7 +32,10 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       id: localStorage.getItem('id'),
       checkname: [],
-      checkto: []
+      checkto: [],
+      tes: [],
+      ireq: [],
+      ireq_id: ''
     };
   },
   created: function created() {
@@ -134,6 +139,26 @@ __webpack_require__.r(__webpack_exports__);
     },
     CetakExcel: function CetakExcel() {
       window.open('api/report-cash-excel');
+    },
+    detailRequest: function detailRequest(ca_idd) {
+      var _this4 = this;
+
+      this.axios.get('api/detail-request/' + ca_idd, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this4.detail = response.data;
+        _this4.ireq_id = response.data[0].ireq_id;
+        _this4.tes = response.data.map(function (x) {
+          return x.ireq_assigned_to;
+        });
+
+        if (_this4.tes.length > 0 && _this4.tes[0] != null) {
+          _this4.ireq = _this4.tes;
+        } else {}
+      });
+      this.displayRequest = true;
     }
   }
 });
@@ -184,16 +209,37 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Loading Cash Advance data. Please wait. ");
 
-var _hoisted_10 = {
+var _hoisted_10 = ["onClick"];
+var _hoisted_11 = {
   "class": "p-grid p-dir-col"
 };
-var _hoisted_11 = {
+var _hoisted_12 = {
   "class": "p-col"
 };
-var _hoisted_12 = {
+var _hoisted_13 = {
   "class": "box"
 };
+var _hoisted_14 = {
+  style: {
+    "width": "130px"
+  }
+};
+var _hoisted_15 = {
+  "class": "table-header text-right"
+};
+var _hoisted_16 = {
+  "class": "p-input-icon-left"
+};
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "pi pi-search"
+}, null, -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
@@ -207,6 +253,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
 
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
+
+  var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
 
   var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
 
@@ -256,7 +304,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_9];
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Pdf",
         "class": "p-button-raised p-button-danger mr-2",
         icon: "pi pi-file-pdf",
@@ -282,29 +330,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ca_idd), 1
-          /* TEXT */
-          )];
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+            onClick: function onClick($event) {
+              return $options.detailRequest(slotProps.data.ca_idd);
+            },
+            style: {
+              "cursor": "pointer"
+            }
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ca_idd), 9
+          /* TEXT, PROPS */
+          , _hoisted_10)];
         }),
         _: 1
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_id",
-        header: "Requester",
+        header: "Requestor",
         sortable: true,
         style: {
           "min-width": "12rem"
         }
-      }, {
-        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_id), 1
-          /* TEXT */
-          )];
-        }),
-        _: 1
-        /* STABLE */
-
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ca_pic_name",
         header: "Jumlah",
@@ -378,7 +424,117 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["value", "loading", "filters"])])])]);
+  , ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.displayRequest,
+    "onUpdate:visible": _cache[5] || (_cache[5] = function ($event) {
+      return $data.displayRequest = $event;
+    }),
+    style: {
+      width: '1200px'
+    },
+    header: "Detail Request",
+    modal: true
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
+        "class": "mb-4"
+      }, {
+        end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_14, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.ireq_id), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+        value: $data.detail,
+        paginator: true,
+        rows: 10,
+        filters: $data.filters,
+        rowHover: true,
+        paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
+        rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+        currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request (Detail)",
+        responsiveLayout: "scroll"
+      }, {
+        header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+            modelValue: $data.filters['global'].value,
+            "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+              return $data.filters['global'].value = $event;
+            }),
+            placeholder: "Search. . ."
+          }, null, 8
+          /* PROPS */
+          , ["modelValue"])])])];
+        }),
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_type",
+            header: "Tipe Request",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "name",
+            header: "Nama Peripheral",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_desc",
+            header: "Deskripsi",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_qty",
+            header: "Qty",
+            sortable: true,
+            style: {
+              "min-width": "6rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_remark",
+            header: "Keterangan",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          }), _this.ireq.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+            key: 0,
+            field: "ireq_assigned_to",
+            header: "Petugas ICT",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_status",
+            header: "Status",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          })];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["value", "filters"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"])])])]);
 }
 
 /***/ }),

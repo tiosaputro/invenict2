@@ -1634,6 +1634,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:10rem">
             <template #body="slotProps">
               <Button

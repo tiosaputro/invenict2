@@ -21,7 +21,7 @@
                   </div>
               </div>
               <div class="field grid col">
-                <label class="col-fixed w-9rem" style="width:160px">Requester</label>
+                <label class="col-fixed w-9rem" style="width:160px">Requestor</label>
                   <div class="col">
                     <InputText
                       type ="text"
@@ -54,6 +54,7 @@
                   </div>
                 </div>
               </div>
+              <div class="card-body">
               <div class="field grid">
                   <label class="col-fixed w-9rem" style="width:180px">Jumlah</label>
                     <div class="col">
@@ -222,7 +223,7 @@
                   @click="$router.push('/cash-advance')"
                 />
               </div>
-              <!-- </div> -->
+              </div>
             </form>
       </div>
     </div>

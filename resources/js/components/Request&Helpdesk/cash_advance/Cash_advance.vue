@@ -46,14 +46,11 @@
           </template>
           <Column field="ca_idd" header="No.Request" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
-              {{ slotProps.data.ca_idd }}
+              <p @click="detailRequest(slotProps.data.ca_idd)" style="cursor:pointer;"> {{slotProps.data.ca_idd}}
+              </p> 
             </template>
           </Column>
-          <Column field="ireq_id" header="Requester" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-              {{ slotProps.data.ireq_id }}
-            </template>
-          </Column>
+          <Column field="ireq_id" header="Requestor" :sortable="true" style="min-width:12rem"/>
           <Column field="ca_pic_name" header="Jumlah" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.ca_pic_name) }}
@@ -105,7 +102,49 @@
 			        </div>
             </div>
            </template>
-        </DataTable>   
+        </DataTable>
+        <Dialog
+          v-model:visible="displayRequest"
+          :style="{ width: '1200px' }"
+          header="Detail Request"
+          :modal="true"
+        >
+        <Toolbar class="mb-4">
+          <template v-slot:end>
+              <label style="width:130px">No. Request: {{this.ireq_id}}</label>
+          </template>
+        </Toolbar>
+        <DataTable
+          :value="detail"
+          :paginator="true"
+          :rows="10"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
+          responsiveLayout="scroll"
+        >
+       <template #header>
+            <div class="table-header text-right">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                  <InputText
+                    v-model="filters['global'].value"
+                    placeholder="Search. . ."
+                  />
+              </span>
+            </div>
+          </template>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+        </DataTable>
+        </Dialog>   
       </div>
     </div>
   </div>
@@ -116,13 +155,18 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+         displayRequest:false,
+         detail:[],
          loading: true,
          cash: [],
          filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
          token: localStorage.getItem('token'),
          id : localStorage.getItem('id'),
          checkname : [],
-         checkto : []
+         checkto : [],
+         tes:[],
+         ireq:[],
+         ireq_id:''
     };
   },
   created() {
@@ -198,6 +242,18 @@ export default {
     CetakExcel(){
       window.open('api/report-cash-excel');
     },
+    detailRequest(ca_idd){
+      this.axios.get('api/detail-request/' + ca_idd, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data;
+        this.ireq_id = response.data[0].ireq_id
+        this.tes = response.data.map((x)=>x.ireq_assigned_to);
+        if(this.tes.length > 0 && this.tes[0] != null){
+          this.ireq = this.tes
+        }
+        else{}
+      });
+      this.displayRequest = true;
+    }
   },
 };
 </script>

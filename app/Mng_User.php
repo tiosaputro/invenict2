@@ -35,7 +35,8 @@ class Mng_User extends Authenticatable
         'waba_id',
         'usr_foto',
         'div_id',
-        'usr_bu'
+        'usr_bu',
+        'usr_phone'
     ];
     protected $hidden = [
         'user_passwd'

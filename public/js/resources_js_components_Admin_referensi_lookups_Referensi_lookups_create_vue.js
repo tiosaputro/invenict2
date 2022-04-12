@@ -94,6 +94,9 @@ __webpack_require__.r(__webpack_exports__);
           return _this2.$router.push('/referensi-lookups');
         }, 1000);
       })["catch"](function (error) {
+        _this2.$isLoading(false); // show loading screen
+
+
         _this2.errors = error.response.data.errors;
       });
     }

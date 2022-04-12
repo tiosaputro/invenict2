@@ -150,6 +150,7 @@ export default {
         });
         setTimeout( () => this.$router.push('/referensi-lookups'),1000);
         }).catch(error => {
+          this.$isLoading(false) // show loading screen
           this.errors = error.response.data.errors;
          });
       },

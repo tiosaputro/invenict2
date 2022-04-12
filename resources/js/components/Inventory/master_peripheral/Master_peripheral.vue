@@ -45,25 +45,14 @@
             Loading Master Peripheral data. Please wait.
           </template>
           <Column field="invent_code" header="Kode" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_code }}
+           <template #body="slotProps">
+              <p @click="detailKode(slotProps.data.invent_code)" style="cursor:pointer;"> {{slotProps.data.invent_code}}
+              </p> 
             </template>
           </Column>
-          <Column field="invent_desc" header="Nama" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_desc }}
-            </template>
-          </Column>
-          <Column field="invent_brand" header="Merk" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_brand }}
-            </template>
-          </Column>
-          <Column field="invent_bu" header="Bisnis Unit" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_bu }}
-            </template>
-          </Column>
+          <Column field="invent_desc" header="Nama" :sortable="true"/>
+          <Column field="invent_brand" header="Merk" :sortable="true"/>
+          <Column field="invent_bu" header="Bisnis Unit" :sortable="true"/>
           <Column headerStyle="min-width:14rem">
             <template #body="slotProps">
               <Button
@@ -112,23 +101,167 @@
             </div>
            </template>
         </DataTable>   
+        <Dialog
+          id="qrcode"
+          v-model:visible="displayBarcode"
+          :style="{ width: '400px' }"
+          header="Preview QR-Code"
+          :modal="true"
+          class="p-fluid"
+        >
+        <qrcode-vue :value="barcode" ref="qr" :size="300" level="L" /> 
+          <template #footer>
+            <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" class="p-button-danger" />
+          </template>
+        </Dialog>
+        <Dialog
+          v-model:visible="displayKode"
+          :style="{ width: '1200px' }"
+          :header="this.header"
+          :modal="true"
+          class="fluid"
+        >
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="field grid">
+              <label style="width:155px">Kode</label>
+                <div class="col-4">
+                  <InputText
+                    type="text"
+                    v-model="detail.invent_code"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="field grid">
+                <label style="width:155px">Merk</label>
+                  <div class="col-4">
+                    <InputText
+                      v-model="detail.invent_brand"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="field grid">
+                  <label style="width:155px">Tipe</label>
+                    <div class="col-4">
+                      <InputText
+                        disabled
+                        v-model= "detail.invent_type"
+                      />
+                    </div>
+                  </div>
+                  <div class="field grid">
+                    <label style="width:155px">S/N</label>
+                      <div class="col-4">
+                        <InputText
+                          v-model="detail.invent_sn"
+                          disabled
+                        />
+                    </div>
+                  </div>
+                  <div class="field grid">
+                    <label style="width:155px">Tgl. Perolehan</label>
+                      <div class="col-4">
+                        <InputText
+                          v-model="detail.invent_tgl_perolehan"
+                          disabled
+                        />
+                      </div>
+                  </div>
+                  <!-- <div class="field grid">
+                    <label style="width:155px">Lama Garansi</label>
+                      <div class="col-3">
+                        <div class="p-inputgroup">
+                          <InputText
+                            v-model="detail.invent_lama_garansi"
+                            disabled
+                          />
+                            <span class="p-inputgroup-addon"> Tahun </span> 
+                        </div>
+                    </div>
+                  </div> -->
+                  <div class="field grid">
+                    <label style="width:155px">Kondisi</label>
+                      <div class="col-4">
+                        <InputText
+                          v-model="detail.invent_kondisi"
+                          disabled
+                        />
+                      </div>
+                  </div>
+                  <div class="field grid">
+                    <label for="notlp2" style="width:155px">Bisnis Unit</label>
+                      <div class="col-4">
+                        <InputText
+                          v-model="detail.invent_bu"
+                          disabled
+                        />
+                    </div>
+                  </div>
+                  <div class="field grid">
+                    <label style="width:155px">Lokasi Terakhir</label>
+                      <div class="col-6">
+                        <InputText
+                          type="text"
+                          v-model="detail.invent_lokasi_update"
+                          disabled
+                        />
+                      </div>
+                  </div>
+                  <div class="field grid">
+                    <label style="width:155px">Pengguna Terakhir</label>
+                      <div class="col-6">
+                        <InputText
+                          type="text"
+                          v-model="detail.invent_pengguna_update"
+                          disabled
+                        />
+                      </div>
+                  </div> 
+                </div>
+                  <div class="col-sm-6">
+                    <div class="field grid">
+                      <label style="width:155px">Nama</label>
+                        <div class="col-4">
+                          <InputText
+                            v-model="detail.invent_desc"
+                            disabled
+                          />
+                        </div>
+                    </div> 
+                    <div class="field grid">
+                      <label style="width:155px"></label>
+                        <div class="col-10 md-6">
+                          <div class="card" style="height: 16 rem;">
+                            <img :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
+                          </div>
+                        </div>
+                    </div>
+                    <div class="field grid">
+                      <label style="width:155px">Lokasi Sebelumnya</label>
+                        <div class="col-6">
+                          <InputText
+                            v-model="detail.invent_lokasi_previous"
+                            disabled
+                          />
+                        </div>
+                    </div>
+                    <div class="field grid">
+                      <label style="width:155px">Penguna Sebelumnya</label>
+                        <div class="col-6">
+                          <InputText
+                            v-model="detail.invent_pengguna_previous"
+                            disabled
+                          />
+                        </div>
+                    </div>
+                  </div>
+                  </div>
+          </Dialog>  
       </div>
     </div>
-  </div>
-            <Dialog
-                id="qrcode"
-                v-model:visible="displayBarcode"
-                :style="{ width: '400px' }"
-                header="Preview QR-Code"
-                :modal="true"
-                class="p-fluid"
-            >
-              <qrcode-vue :value="barcode" ref="qr" :size="300" level="L" /> 
-              <template #footer>
-                <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" class="p-button-danger" />
-              </template>
-            </Dialog>
-            
+  </div>    
 </template>
 <script>
 import {FilterMatchMode} from 'primevue/api';
@@ -136,6 +269,9 @@ import Jspdf from 'jspdf';
 export default {
   data() {
     return {
+        displayKode: false,
+        header: '',
+        detail:[],
         loading: true,
         displayBarcode: false,
         token: localStorage.getItem('token'),
@@ -182,9 +318,18 @@ export default {
       //   this.barcode = 'Kode Peripheral ' + ': ' + response.data.invent_code +', '+ 'Nama Peripheral ' + ': ' + response.data.invent_desc + ', '+ 'Merk '+': '+ response.data.invent_brand+', '
       //   + 'Tipe '+': '+ response.data.invent_type+', '+'S/N '+': '+response.data.invent_sn+', '+ 'Bisnis Unit '+': '+response.data.invent_bu +', '+'Lokasi Terakhir '+': '
       //   +response.data.invent_lokasi_previous+', '+'Pengguna Terakhir '+': '+response.data.invent_pengguna_previous+', '+'Lama Garansi '+': '+response.data.invent_lama_garansi+' Tahun'+', '+'Tanggal Perolehan '+': '+response.data.invent_tgl_perolehan; 
-        this.barcode = 'Link '+':'+'http://172.25.1.125:8000/detPeri/' +invent_code
+        
+        
+        this.barcode = 'Check for detail '+':'+'http://172.25.1.125:8000/detPeri/' +invent_code
         this.displayBarcode = true;
       // });
+    },
+    detailKode(invent_code){
+      this.displayKode = true;
+      this.axios.get('api/detail-peripheral/' +invent_code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.detail = response.data;
+        this.header = 'Detail Peripheral '+this.detail.name;
+      });
     },
     getMaster(){
       this.axios.get('api/mas',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
@@ -234,3 +379,9 @@ export default {
   },
 };
 </script>
+<style scoped lang="scss">
+.master-image {
+  height:200pt;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+}
+</style>

@@ -20,7 +20,7 @@
                     </div>
                   </div>
                    <div class="field grid col" v-if="noreq">
-                    <label class="col-fixed w-9rem" style="width:160px">Requester</label>
+                    <label class="col-fixed w-9rem" style="width:160px">Requestor</label>
                     <div class="col">
                         <InputText
                             type ="text"
