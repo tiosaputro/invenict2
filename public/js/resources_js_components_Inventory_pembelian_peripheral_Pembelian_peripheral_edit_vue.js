@@ -37,51 +37,29 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getPurch();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      if (this.id) {
-        this.axios.get('/api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
-            _this.getPurch();
-          } else {
-            _this.$router.push('/access');
-          }
-        });
-      } else {
-        this.$router.push('/login');
-      }
-    },
     getPurch: function getPurch() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('/api/edit-pem/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.purch = response.data.pem;
-        _this2.suplier = response.data.supp;
-        _this2.methode_pay = response.data.metode;
-        _this2.code_money = response.data.uang;
+        _this.purch = response.data.pem;
+        _this.suplier = response.data.supp;
+        _this.methode_pay = response.data.metode;
+        _this.code_money = response.data.uang;
+      })["catch"](function (error) {
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
+        }
       });
     },
     CreatePurch: function CreatePurch() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.submitted = true;
 
@@ -93,17 +71,17 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (response) {
           setTimeout(function () {
-            return _this3.$router.push('/pembelian-peripheral');
+            return _this2.$router.push('/pembelian-peripheral');
           }, 1000);
 
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Update"
           });
         })["catch"](function (error) {
-          _this3.errors = error.response.data.errors;
-          _this3.submitted = false;
+          _this2.errors = error.response.data.errors;
+          _this2.submitted = false;
         });
       }
     }

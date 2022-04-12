@@ -39,35 +39,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getCash();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      if (this.id) {
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-
-          if (_this.checkname.includes("Cash Advance") || _this.checkto.includes("/cash-advance")) {
-            _this.getCash();
-          } else {
-            _this.$router.push('/access');
-          }
-        });
-      } else {
-        this.$router.push('/login');
-      }
-    },
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
     },
@@ -80,18 +54,18 @@ __webpack_require__.r(__webpack_exports__);
       return formatter.format(value);
     },
     getCash: function getCash() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('/api/cash', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.cash = response.data;
-        _this2.loading = false;
+        _this.cash = response.data;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Sesi Login Expired'
@@ -100,13 +74,15 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        } else if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     DeleteCash: function DeleteCash(ca_id) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
@@ -116,20 +92,20 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Ya",
         rejectLabel: "Tidak",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
 
-          _this3.axios["delete"]('api/delete-cash/' + ca_id, {
+          _this2.axios["delete"]('api/delete-cash/' + ca_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this3.token
+              'Authorization': 'Bearer ' + _this2.token
             }
           });
 
-          _this3.getCash();
+          _this2.getCash();
         },
         reject: function reject() {}
       });
@@ -141,21 +117,21 @@ __webpack_require__.r(__webpack_exports__);
       window.open('api/report-cash-excel');
     },
     detailRequest: function detailRequest(ca_idd) {
-      var _this4 = this;
+      var _this3 = this;
 
       this.axios.get('api/detail-request/' + ca_idd, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.detail = response.data;
-        _this4.ireq_id = response.data[0].ireq_id;
-        _this4.tes = response.data.map(function (x) {
+        _this3.detail = response.data;
+        _this3.ireq_id = response.data[0].ireq_id;
+        _this3.tes = response.data.map(function (x) {
           return x.ireq_assigned_to;
         });
 
-        if (_this4.tes.length > 0 && _this4.tes[0] != null) {
-          _this4.ireq = _this4.tes;
+        if (_this3.tes.length > 0 && _this3.tes[0] != null) {
+          _this3.ireq = _this3.tes;
         } else {}
       });
       this.displayRequest = true;

@@ -275,7 +275,7 @@ export default {
     };
   },
   created(){
-      this.cekUser();
+      this.getMaster();
   },
   methods: {
     cekUser(){
@@ -340,6 +340,9 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
+          if (error.response.status == 403) {
+            this.$router.push('/access');
+          }
         });
       },
       fileImage(event) {

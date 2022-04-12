@@ -31,40 +31,13 @@ __webpack_require__.r(__webpack_exports__);
       },
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id'),
       divisi: []
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getPurchase();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      if (this.id) {
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
-            _this.getPurchase();
-          } else {
-            _this.$router.push('/access');
-          }
-        });
-      } else {
-        this.$router.push('/login');
-      }
-    },
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
     },
@@ -73,18 +46,18 @@ __webpack_require__.r(__webpack_exports__);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     getPurchase: function getPurchase() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('api/pem', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.purch = response.data;
-        _this2.loading = false;
+        _this.purch = response.data;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Sesi Login Expired'
@@ -93,13 +66,17 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     DeleteMut: function DeleteMut(purchase_id) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
@@ -109,20 +86,20 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Ya",
         rejectLabel: "Tidak",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
 
-          _this3.axios["delete"]('api/delete-pem/' + purchase_id, {
+          _this2.axios["delete"]('api/delete-pem/' + purchase_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this3.token
+              'Authorization': 'Bearer ' + _this2.token
             }
           });
 
-          _this3.getPurchase();
+          _this2.getPurchase();
         },
         reject: function reject() {}
       });

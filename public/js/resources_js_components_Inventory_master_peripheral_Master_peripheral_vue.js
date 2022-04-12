@@ -39,7 +39,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getMaster();
   },
   methods: {
     cekUser: function cekUser() {
@@ -121,6 +121,8 @@ __webpack_require__.r(__webpack_exports__);
           setTimeout(function () {
             return _this3.$router.push('/login');
           }, 2000);
+        } else if (error.response.status == 403) {
+          _this3.$router.push('/access');
         }
       });
     },

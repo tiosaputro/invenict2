@@ -244,7 +244,7 @@ export default {
     };
   },
   mounted(){
-    this.cekUser();
+    this.getCash();
   },
   methods: {
     cekUser(){

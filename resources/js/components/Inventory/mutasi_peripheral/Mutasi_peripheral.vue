@@ -261,7 +261,7 @@ export default {
     };
   },
   created() {
-    this.cekUser();
+    this.getMutasi();
   },
   methods: {
   cekUser(){
@@ -292,6 +292,9 @@ export default {
           localStorage.clear();
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
+           }
+           if(error.response.status == 403){
+             this.$router.push('/access');
            }
         });
     },

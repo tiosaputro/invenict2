@@ -26,7 +26,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getCash();
   },
   methods: {
     cekUser: function cekUser() {

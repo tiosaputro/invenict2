@@ -129,30 +129,13 @@ export default {
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
         divisi: [],
     };
   },
   created() {
-    this.cekUser();
+    this.getPurchase();
   },
   methods: {
-    cekUser(){
-      if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){
-          this.getPurchase();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-      } else {
-        this.$router.push('/login');
-      }
-    },
     formatDate(date) {
       return moment(date).format("DD MMM YYYY")
     },
@@ -168,10 +151,13 @@ export default {
           if (error.response.status == 401) {
             this.$toast.add({
             severity:'error', summary: 'Error', detail:'Sesi Login Expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
+           if(error.response.status == 403){
+             this.$router.push('/access');
            }
         });
     },

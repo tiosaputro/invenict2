@@ -10,18 +10,31 @@ use DB;
 use Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Mng_usr_roles;
+use App\Mng_role_menu;
 
 class MutasiController extends Controller
 {
+    function __construct(){
+        $this->to = "/mutasi-peripheral";
+    }
     Public Function index()
     {
-        $mutasi = DB::table('invent_mutasi as im')
-        ->select('im.*','invent_mst.invent_code','invent_mst.invent_desc')
-        ->join('invent_mst','im.invent_code','invent_mst.invent_code')
-        ->orderBy('im.creation_date','ASC')
-        ->get();
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
 
-        return $mutasi->toJson();
+        if($aksesmenu->contains($this->to)){
+            $mutasi = DB::table('invent_mutasi as im')
+            ->select('im.*','invent_mst.invent_code','invent_mst.invent_desc')
+            ->join('invent_mst','im.invent_code','invent_mst.invent_code')
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+            return $mutasi->toJson();
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     Public function save(Request $request)
     {
@@ -61,15 +74,24 @@ class MutasiController extends Controller
     }
     Public function edit($code)
     {
-        $mut = DB::table('invent_mutasi as im')
-            ->Select('im.imutasi_lokasi','im.imutasi_pengguna','im.imutasi_keterangan','imm.invent_photo',
-                    DB::raw("TO_CHAR(im.imutasi_tgl_dari,' dd Mon YYYY') as imutasi_tgl_dari"),
-                    DB::raw("TO_CHAR(im.imutasi_tgl_sd,' dd Mon YYYY') as imutasi_tgl_sd"),
-                    DB::raw("(im.invent_code ||'-'|| imm.invent_desc) as invent_code"))
-            ->join('invent_mst as imm','im.invent_code','imm.invent_code')
-            ->Where('im.imutasi_id',$code)
-            ->first();
-            return json_encode($mut);
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+
+        if($aksesmenu->contains($this->to)){
+            $mut = DB::table('invent_mutasi as im')
+                ->Select('im.imutasi_lokasi','im.imutasi_pengguna','im.imutasi_keterangan','imm.invent_photo',
+                        DB::raw("TO_CHAR(im.imutasi_tgl_dari,' dd Mon YYYY') as imutasi_tgl_dari"),
+                        DB::raw("TO_CHAR(im.imutasi_tgl_sd,' dd Mon YYYY') as imutasi_tgl_sd"),
+                        DB::raw("(im.invent_code ||'-'|| imm.invent_desc) as invent_code"))
+                ->join('invent_mst as imm','im.invent_code','imm.invent_code')
+                ->Where('im.imutasi_id',$code)
+                ->first();
+                return json_encode($mut);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     Public function update(Request $request, $code)
     {

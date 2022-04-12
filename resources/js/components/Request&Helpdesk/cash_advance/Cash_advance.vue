@@ -170,25 +170,9 @@ export default {
     };
   },
   created() {
-    this.cekUser();
+    this.getCash();
   },
   methods: {
-    cekUser(){
-      if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkname = response.data.map((x)=> x.name)
-        this.checkto = response.data.map((x)=> x.to)
-        if(this.checkname.includes("Cash Advance") || this.checkto.includes("/cash-advance")){
-          this.getCash();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-      } else {
-        this.$router.push('/login');
-      }
-    },
     formatDate(date) {
       return moment(date).format("DD MMM YYYY")
     },
@@ -212,6 +196,9 @@ export default {
           localStorage.clear();
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
+           }
+           else if(error.response.status == 403){
+             this.$router.push('/access');
            }
         });
     },

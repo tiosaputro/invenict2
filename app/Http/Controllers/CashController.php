@@ -10,13 +10,26 @@ use DB;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
+use App\Mng_usr_roles;
+use App\Mng_role_menu;
 
 class CashController extends Controller
 {
+    function __construct(){
+        $this->to = "/cash-advance";
+    }
     function index()
     {
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->to)){
             $cash = DB::table('v_cash_advance')->get();
             return json_encode($cash);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     function detail($ca_idd){
         $dtl = DB::table('ireq_dtl as id')
@@ -117,20 +130,29 @@ class CashController extends Controller
     }
     function edit($code)
     {
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+        
+        if($aksesmenu->contains($this->to)){
         $cash = DB::table('ca_mst as cm')
-        ->select('im.ireq_no as ca_idd','im.ireq_requestor as req', 'vr.name as bu','cm.ca_pic_name',
-                DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
-                DB::raw("TO_CHAR(cm.ca_submit_date, 'dd Mon YYYY') as ca_submit_date"),
-                DB::raw("TO_CHAR(cm.ca_recv_cash_date, 'dd Mon YYYY') as ca_recv_cash_date"),
-                DB::raw("TO_CHAR(cm.ca_purchase_date, 'dd Mon YYYY') as ca_purchase_date"),
-                DB::raw("TO_CHAR(cm.ca_recv_item_date, 'dd Mon YYYY') as ca_recv_item_date"),
-                DB::raw("TO_CHAR(cm.ca_settlement_date, 'dd Mon YYYY') as ca_settlement_date"),
-                DB::raw("TO_CHAR(cm.ca_hand_over_date, 'dd Mon YYYY') as ca_hand_over_date"))
-        ->leftjoin('ireq_mst as im','cm.ireq_id','im.ireq_id')
-        ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->where('cm.ca_id',$code)
-        ->first();
+            ->select('im.ireq_no as ca_idd','im.ireq_requestor as req', 'vr.name as bu','cm.ca_pic_name',
+                    DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
+                    DB::raw("TO_CHAR(cm.ca_submit_date, 'dd Mon YYYY') as ca_submit_date"),
+                    DB::raw("TO_CHAR(cm.ca_recv_cash_date, 'dd Mon YYYY') as ca_recv_cash_date"),
+                    DB::raw("TO_CHAR(cm.ca_purchase_date, 'dd Mon YYYY') as ca_purchase_date"),
+                    DB::raw("TO_CHAR(cm.ca_recv_item_date, 'dd Mon YYYY') as ca_recv_item_date"),
+                    DB::raw("TO_CHAR(cm.ca_settlement_date, 'dd Mon YYYY') as ca_settlement_date"),
+                    DB::raw("TO_CHAR(cm.ca_hand_over_date, 'dd Mon YYYY') as ca_hand_over_date"))
+            ->leftjoin('ireq_mst as im','cm.ireq_id','im.ireq_id')
+            ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
+            ->where('cm.ca_id',$code)
+            ->first();
             return json_encode($cash);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     function update(Request $request,$code)
     {

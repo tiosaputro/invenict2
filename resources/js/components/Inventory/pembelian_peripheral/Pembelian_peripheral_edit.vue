@@ -183,31 +183,19 @@ export default {
     };
   },
   created(){
-    this.cekUser();
+    this.getPurch();
   },
   methods: {
-    cekUser(){
-      if(this.id){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){
-          this.getPurch();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-      } else {
-        this.$router.push('/login');
-      }
-    },
       getPurch(){
           this.axios.get('/api/edit-pem/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
               this.purch = response.data.pem;
               this.suplier = response.data.supp;
               this.methode_pay = response.data.metode;
               this.code_money = response.data.uang;
+        }).catch(error=>{
+          if(error.response.status == 403){
+             this.$router.push('/access');
+           }
         });
       },
     CreatePurch() {

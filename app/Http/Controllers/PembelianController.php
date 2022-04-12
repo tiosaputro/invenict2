@@ -11,18 +11,32 @@ use DB;
 use Excel;
 use Auth;
 use Illuminate\Http\Request;
+use App\Mng_usr_roles;
+use App\Mng_role_menu;
 
 class PembelianController extends Controller
 {
+    function __construct(){
+        $this->to = "/pembelian-peripheral";
+    }
     public function index()
     {
-        $pembelian = DB::table('purchase_mst as pm')
-        ->select('pm.*','sm.suplier_name as suplier_code','pm.purchase_date',
-                 DB::raw("CASE WHEN pm.purchase_status = 'T' Then 'Aktif' WHEN pm.purchase_status = 'F' Then 'Tidak Aktif' end as purchase_status "))
-        ->join('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
-        ->orderBy('pm.creation_date','ASC')
-        ->get();
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+
+        if($aksesmenu->contains($this->to)){
+            $pembelian = DB::table('purchase_mst as pm')
+            ->select('pm.*','sm.suplier_name as suplier_code','pm.purchase_date',
+                    DB::raw("CASE WHEN pm.purchase_status = 'T' Then 'Aktif' WHEN pm.purchase_status = 'F' Then 'Tidak Aktif' end as purchase_status "))
+            ->join('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
+            ->orderBy('pm.creation_date','ASC')
+            ->get();
             return $pembelian->toJson();
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     Public function save(Request $request)
     {
@@ -49,30 +63,39 @@ class PembelianController extends Controller
     }
     Public function edit($code)
     {
-        $pem = DB::table('purchase_mst as pm')
-        ->select('pm.purchase_petugas','pm.suplier_code',
-                'pm.purchase_pay_methode','pm.valuta_code','pm.purchase_total','pm.purchase_status','pm.purchase_remark',
-                DB::raw("TO_CHAR(pm.purchase_date,' dd Mon YYYY') as purchase_date"))
-        ->where('pm.purchase_id',$code)
-        ->first();
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
 
-        $uang = Lookup_Refs::Select('lookup_code as code',DB::raw("(lookup_code ||'-'|| lookup_desc) as name"))
-        ->where('lookup_status','T')
-        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('mata uang')).'%'])
-        ->orderBy('lookup_desc','ASC')
-        ->get();
-        
+        if($aksesmenu->contains($this->to)){
+            $pem = DB::table('purchase_mst as pm')
+            ->select('pm.purchase_petugas','pm.suplier_code',
+                    'pm.purchase_pay_methode','pm.valuta_code','pm.purchase_total','pm.purchase_status','pm.purchase_remark',
+                    DB::raw("TO_CHAR(pm.purchase_date,' dd Mon YYYY') as purchase_date"))
+            ->where('pm.purchase_id',$code)
+            ->first();
 
-        $metode = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-        ->where('lookup_status','T')
-        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('pay methode')).'%'])
-        ->orderBy('lookup_desc','ASC')
-        ->get();
+            $uang = Lookup_Refs::Select('lookup_code as code',DB::raw("(lookup_code ||'-'|| lookup_desc) as name"))
+            ->where('lookup_status','T')
+            ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('mata uang')).'%'])
+            ->orderBy('lookup_desc','ASC')
+            ->get();
+            
 
-        $supp = Supplier::Select('suplier_code as code',DB::raw("(suplier_code ||'-'|| suplier_name) as name"))
-        ->orderBy('suplier_code','ASC')
-        ->get();
-        return json_encode(['pem'=>$pem,'uang'=>$uang,'metode'=>$metode,'supp'=>$supp],200);
+            $metode = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+            ->where('lookup_status','T')
+            ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('pay methode')).'%'])
+            ->orderBy('lookup_desc','ASC')
+            ->get();
+
+            $supp = Supplier::Select('suplier_code as code',DB::raw("(suplier_code ||'-'|| suplier_name) as name"))
+            ->orderBy('suplier_code','ASC')
+            ->get();
+            return json_encode(['pem'=>$pem,'uang'=>$uang,'metode'=>$metode,'supp'=>$supp],200);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     Public function update(Request $request,$code)
     {

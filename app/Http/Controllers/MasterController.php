@@ -10,6 +10,8 @@ use DB;
 use App\Lookup_Refs;
 use Auth;
 use Excel;
+use App\Mng_usr_roles;
+use App\Mng_role_menu;
 
 class MasterController extends Controller
 {
@@ -17,9 +19,15 @@ class MasterController extends Controller
         $date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->to = "/master-peripheral";
     }
     public function index()
         {
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+
+        if($aksesmenu->contains($this->to)){
             $mas = DB::table('invent_mst as im')
             ->select('im.*','vf.name as invent_bu','lr.lookup_desc as invent_brand')
             ->leftjoin('vcompany_refs as vf','im.invent_bu','vf.company_code')
@@ -28,6 +36,10 @@ class MasterController extends Controller
             ->orderBy('im.invent_code','ASC')
             ->get();
             return json_encode($mas);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+          }
         }
     public function save(Request $request)
     {
@@ -107,25 +119,34 @@ class MasterController extends Controller
     }
     public function edit($code)
     {
-        $merk = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-        ->where('lookup_status','T')
-        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
-        ->orderBy('lookup_desc','ASC')
-        ->get();
-        $kondisi = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-        ->where('lookup_status','T')
-        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('kondisi')).'%'])
-        ->orderBy('lookup_desc','ASC')
-        ->get();
-        $bisnis = DB::table('v_company_refs')->get();
-        $mas = DB::table('invent_mst as im')
-        ->select('im.invent_code','im.invent_desc','im.invent_brand','im.invent_type','im.invent_sn','im.invent_kondisi',
-                'im.invent_lama_garansi','im.invent_barcode','im.invent_lokasi_update','im.invent_pengguna_update','im.invent_photo',
-                'im.invent_lokasi_previous', 'im.invent_pengguna_previous', 'im.invent_bu', 
-                DB::raw("TO_CHAR(im.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"))
-        ->where('im.invent_code',$code)
-        ->first();
-        return json_encode(['merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis,'mas'=>$mas],200);
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+
+        if($aksesmenu->contains($this->to)){
+            $merk = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+            ->where('lookup_status','T')
+            ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
+            ->orderBy('lookup_desc','ASC')
+            ->get();
+            $kondisi = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+            ->where('lookup_status','T')
+            ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('kondisi')).'%'])
+            ->orderBy('lookup_desc','ASC')
+            ->get();
+            $bisnis = DB::table('v_company_refs')->get();
+            $mas = DB::table('invent_mst as im')
+            ->select('im.invent_code','im.invent_desc','im.invent_brand','im.invent_type','im.invent_sn','im.invent_kondisi',
+                    'im.invent_lama_garansi','im.invent_barcode','im.invent_lokasi_update','im.invent_pengguna_update','im.invent_photo',
+                    'im.invent_lokasi_previous', 'im.invent_pengguna_previous', 'im.invent_bu', 
+                    DB::raw("TO_CHAR(im.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"))
+            ->where('im.invent_code',$code)
+            ->first();
+            return json_encode(['merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis,'mas'=>$mas],200);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     
     public function detailPeripheral($invent_code)
