@@ -5,7 +5,7 @@
         <div class="card">
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>Referensi - Lookups</h4>
+				        <h4>Lookups</h4>
           </template>
         </Toolbar>
             <div class="card-body">

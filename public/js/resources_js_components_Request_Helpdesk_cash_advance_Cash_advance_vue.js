@@ -125,7 +125,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this3.detail = response.data;
-        _this3.ireq_id = response.data[0].ireq_id;
+        _this3.ireq_id = response.data[0].ireq_no;
         _this3.tes = response.data.map(function (x) {
           return x.ireq_assigned_to;
         });

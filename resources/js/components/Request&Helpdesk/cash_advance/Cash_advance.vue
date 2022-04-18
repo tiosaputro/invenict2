@@ -232,7 +232,7 @@ export default {
     detailRequest(ca_idd){
       this.axios.get('api/detail-request/' + ca_idd, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
-        this.ireq_id = response.data[0].ireq_id
+        this.ireq_id = response.data[0].ireq_no
         this.tes = response.data.map((x)=>x.ireq_assigned_to);
         if(this.tes.length > 0 && this.tes[0] != null){
           this.ireq = this.tes

@@ -41,7 +41,6 @@ use App\Jobs\SendEmailJob;
 use Mail;
 use App\Mail\IctRequestApproval;
 use Illuminate\Support\Facades\Hash;
-use Twilio\Rest\Client;
 
 class IctController extends Controller
 {
@@ -370,14 +369,6 @@ class IctController extends Controller
             $d->program_name = "IctController_submitAssignPerRequest";
             $d->save();
         }
-        $sid    = getenv("TWILIO_AUTH_SID");
-        $token  = getenv("TWILIO_AUTH_TOKEN");
-        $wa_from= "+14155238886";
-        $twilio = new Client($sid, $token);
-        $user = DB::table('mng_users')->select('usr_phone','usr_fullname')->where('usr_fullname',$ict->ireq_assigned_to)->first();
-        $body = "Hai ".$user->usr_fullname." Ada Nomer Request ".$ireq_id." Yang Di Assign Ke Anda, Silahkan Cek Website Untuk Lebih Detail";
-        return $twilio->messages->create("whatsapp:$user->usr_phone",["from" => "whatsapp:$wa_from", "body" => $body]);
-        
         return response()->json('Success Update');
     }
     function getIctAdmin()

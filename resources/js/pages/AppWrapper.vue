@@ -3,6 +3,7 @@
     <Error v-else-if="$route.path === '/error'" />
     <NotFound v-else-if="$route.path === '/notfound'" />
     <Access v-else-if="$route.path === '/access'" />
+    <Detail v-else-if="$route.name === 'Detail Peripheral'" />
     <App v-else @change-theme="changeTheme" />
 </template>
 
@@ -13,6 +14,7 @@ import Login from './Login';
 import Error from './Error';
 import NotFound from './NotFound';
 import Access from './Access';
+import Detail from './Master_peripheral_detail';
 
 export default {
     methods: {
@@ -33,7 +35,8 @@ export default {
         Login,
         Error,
         NotFound,
-        Access
+        Access,
+        Detail
     }
 }
 </script>

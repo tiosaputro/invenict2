@@ -27,10 +27,10 @@ class MutasiController extends Controller
         if($aksesmenu->contains($this->to)){
             $mutasi = DB::table('invent_mutasi as im')
             ->select('im.*','invent_mst.invent_code','invent_mst.invent_desc')
-            ->join('invent_mst','im.invent_code','invent_mst.invent_code')
+            ->leftjoin('invent_mst','im.invent_code','invent_mst.invent_code')
             ->orderBy('im.creation_date','ASC')
             ->get();
-            return $mutasi->toJson();
+            return json_encode($mutasi);
         }
         else{
             return response(["message"=>"Cannot Access"],403);

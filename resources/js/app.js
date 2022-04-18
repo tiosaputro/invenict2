@@ -72,6 +72,9 @@ app.use(ConfirmationService);
 app.use(ToastService);
 app.use(VueAxios,axios);
 app.use(router);
+app.config.devtools = false;
+app.config.debug = false;
+app.config.silent = true;
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);

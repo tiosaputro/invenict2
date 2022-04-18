@@ -100,6 +100,12 @@ const routes = [
 
     },
     {
+        name: 'Detail Peripheral',
+        path: '/detPeri/:invent_code',
+        component: ()=> import('./pages/Master_peripheral_detail.vue'),
+
+    },
+    {
         name: 'Add Master Peripheral',
         path: '/Add-master-peripheral',
         component: ()=> import('./components/Inventory/master_peripheral/Master_peripheral_create.vue'),

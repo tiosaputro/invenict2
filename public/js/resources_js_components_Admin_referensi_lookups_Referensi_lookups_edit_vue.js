@@ -284,13 +284,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["modelValue", "options", "class"]), $data.errors.lookup_status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.lookup_status[0]), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-    "class": "p-button-rounded p-button-primary mr-2 slideup animation-duration-1000 animation-iteration-infinite",
+    "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
-    "class": "p-button-rounded p-button-secondary mr-2 slideup animation-duration-1000 animation-iteration-infinite",
+    "class": "p-button-rounded p-button-secondary mr-2",
     icon: "pi pi-times",
     onClick: _cache[4] || (_cache[4] = function ($event) {
       return _ctx.$router.push('/referensi-lookups');

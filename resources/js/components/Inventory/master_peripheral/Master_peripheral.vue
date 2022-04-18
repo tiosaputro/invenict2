@@ -320,7 +320,7 @@ export default {
       //   +response.data.invent_lokasi_previous+', '+'Pengguna Terakhir '+': '+response.data.invent_pengguna_previous+', '+'Lama Garansi '+': '+response.data.invent_lama_garansi+' Tahun'+', '+'Tanggal Perolehan '+': '+response.data.invent_tgl_perolehan; 
         
         
-        this.barcode = 'Check for detail '+':'+'http://172.25.1.125:8000/detPeri/' +invent_code
+        this.barcode = 'http://localhost:8000/detPeri/' +invent_code
         this.displayBarcode = true;
       // });
     },

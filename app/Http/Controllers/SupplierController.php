@@ -15,8 +15,10 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        $supp = Supplier::orderBy('creation_date','ASC')->get();
-        return $supp->toJson();
+        $supp = Supplier::select('suplier_code','suplier_name','suplier_contact','suplier_fax')
+        ->orderBy('creation_date','ASC')
+        ->get();
+        return json_encode($supp);
     }
     public function save(Request $request)
     {

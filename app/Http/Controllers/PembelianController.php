@@ -27,9 +27,8 @@ class PembelianController extends Controller
 
         if($aksesmenu->contains($this->to)){
             $pembelian = DB::table('purchase_mst as pm')
-            ->select('pm.*','sm.suplier_name as suplier_code','pm.purchase_date',
-                    DB::raw("CASE WHEN pm.purchase_status = 'T' Then 'Aktif' WHEN pm.purchase_status = 'F' Then 'Tidak Aktif' end as purchase_status "))
-            ->join('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
+            ->select('pm.purchase_id','pm.purchase_total','sm.suplier_name as suplier_code','pm.purchase_date')
+            ->leftjoin('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
             ->orderBy('pm.creation_date','ASC')
             ->get();
             return $pembelian->toJson();
@@ -135,10 +134,10 @@ class PembelianController extends Controller
         $pem = DB::table('purchase_mst as pm')
         ->Select('pm.*','lr.lookup_desc as valuta_code','sm.suplier_name',
                 'llr.lookup_desc as purchase_pay_methode', DB::raw("TO_CHAR(pm.purchase_date,' dd Mon YYYY') as purchase_date"),DB::raw("CASE WHEN pm.purchase_status = 'T' Then 'Aktif' WHEN pm.purchase_status = 'F' Then 'Tidak Aktif' end as purchase_status "))
-        ->join('lookup_refs as llr','pm.purchase_pay_methode','llr.lookup_code')
-        ->join('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
-        ->join('lookup_refs as lr','pm.valuta_code','lr.lookup_code')
-        ->orderBy('pm.creation_date','ASC')
+        ->leftjoin('lookup_refs as llr','pm.purchase_pay_methode','llr.lookup_code')
+        ->leftjoin('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
+        ->leftjoin('lookup_refs as lr','pm.valuta_code','lr.lookup_code')
+        ->orderBy('pm.creation_date','DESC')
         ->get();
         
         return view('pdf/Laporan_Pembelian',compact('pem'));

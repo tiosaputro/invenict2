@@ -166,7 +166,7 @@ var _hoisted_2 = {
   "class": "card"
 };
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Management Role", -1
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Role Menu", -1
 /* HOISTED */
 );
 

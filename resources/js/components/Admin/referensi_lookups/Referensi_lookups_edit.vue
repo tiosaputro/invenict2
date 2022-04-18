@@ -61,14 +61,14 @@
               </div>
               <div class="form-group">
                  <Button
-                  class="p-button-rounded p-button-primary mr-2 slideup animation-duration-1000 animation-iteration-infinite"
+                  class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
                   label="Simpan"
                   type="submit"
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2 slideup animation-duration-1000 animation-iteration-infinite"
+                  class="p-button-rounded p-button-secondary mr-2"
                   icon="pi pi-times"
                   @click="$router.push('/referensi-lookups')"
                 />

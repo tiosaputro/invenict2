@@ -4,7 +4,7 @@
         <div class="card">
           <Toolbar class="mb-4">
             <template v-slot:start>
-                  <h4>Referensi - Suplier</h4>
+                  <h4>Suplier</h4>
             </template>
           </Toolbar>
           <div class="card-body">

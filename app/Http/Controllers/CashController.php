@@ -33,7 +33,7 @@ class CashController extends Controller
     }
     function detail($ca_idd){
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_id','id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc', 'id.ireq_qty',
+        ->select('imm.ireq_no','id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc', 'id.ireq_qty',
         DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),'llr.lookup_desc as ireq_status')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
