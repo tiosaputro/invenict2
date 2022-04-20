@@ -145,7 +145,7 @@ var _hoisted_1 = {
   "class": "grid"
 };
 var _hoisted_2 = {
-  "class": "col-18"
+  "class": "col-12"
 };
 var _hoisted_3 = {
   "class": "card"

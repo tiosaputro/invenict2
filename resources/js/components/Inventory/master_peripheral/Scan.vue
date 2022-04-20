@@ -1,23 +1,34 @@
 <template>
 <div>
-        <Dialog
-                v-model:visible="displayDialog"
-                :style="{ width: '500px' }"
-                header="Scan QR-Code"
-                :modal="true"
-                class="p-fluid"
-              >
-                 <StreamBarcodeReader
-                    @decode="onDecode"
-                 />
-        </Dialog>
+  <Button
+    v-if="this.displayDialog == false"
+    label="Scan Qr-Code"
+    class="p-button-raised"
+    icon="pi pi-qrcode"
+    @click="this.displayDialog = true"
+  />
+  <Dialog
+    v-model:visible="displayDialog"
+    :style="{ width: '500px' }"
+    header="Scan QR-Code"
+    :modal="true"
+    class="p-fluid"
+  >
+    <qr-stream @decode="onDecode">
+      <div style="color: red;"></div>
+    </qr-stream>
+  </Dialog>
 </div>
 </template>
 <script>
+import { QrStream } from 'vue3-qr-reader';
 export default {
+  components: {
+    QrStream,
+  },
     data(){
       return{
-        displayDialog:false,
+        displayDialog:true,
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
@@ -33,7 +44,7 @@ export default {
         this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.checkto = response.data.map((x)=> x.to)
           this.checkname = response.data.map((x)=> x.name)
-          if(this.checkname.includes("Master Peripheral") || this.checkto.includes("/master-peripheral")){
+          if(this.checkto.includes("/scan")){
             this.displayDialog = true;
           }
           else {
@@ -49,9 +60,8 @@ export default {
       },
       onDecode(data){
             this.displayDialog = false;
-            localStorage.setItem('barcode',data);
-            window.close();
-        },
+            window.location = data;
+          }
+      },
     }
-}
 </script>

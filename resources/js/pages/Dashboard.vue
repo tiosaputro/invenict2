@@ -1,11 +1,11 @@
 <template>
 <div class="grid" v-if="this.role_name.includes('Admin')">
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="blmDiverifikasiAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Belum Diverifikasi </span>
-						<div @click="blmDiverifikasiAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count5.belumdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count5.belumdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -14,11 +14,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhDiverifikasiAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
-						<div @click="sdhDiverifikasiAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count5.sudahdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count5.sudahdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -27,11 +27,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="diRejectAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Di Reject</span>
-						<div @click="diRejectAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count5.direject}}</div>
+						<div class="text-900 font-medium text-xl">{{count5.direject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -40,11 +40,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdgDikerjakanAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
-						<div @click="sdgDikerjakanAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count5.sedangdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count5.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
@@ -53,11 +53,11 @@
 			</div>
 		</div>	
     <div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhDikerjakanAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
-						<div @click="sdhDikerjakanAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count5.sudahdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count5.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color: red;"></i>
@@ -66,11 +66,11 @@
 			</div>
 		</div>	
     <div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhSelesaiAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
-						<div @click="sdhSelesaiAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count5.sudahselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count5.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
@@ -79,11 +79,11 @@
 			</div>
     </div>
 	<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="totalKeseluruhanAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Total Request</span>
-						<div @click="totalKeseluruhanAdmin()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count5.countrequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count5.countrequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl" style="fontSize: 4rem; color : green;"></i>
@@ -94,11 +94,11 @@
 </div>
 <div class="grid" v-if="this.role_name.includes('Requestor Divisi')">
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="sdgDireview()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Direview </span>
-						<div @click="sdgDireview()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.sedangdireview}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sedangdireview}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-check text-xl" style="color: green;"></i>
@@ -107,11 +107,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="blmDiverifikasi()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Belum Diverifikasi </span>
-						<div @click="blmDiverifikasi()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.belumdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.belumdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -120,11 +120,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhDiverifikasi()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
-						<div @click="sdhDiverifikasi()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.sudahdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -133,11 +133,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="diReject()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Di Reject</span>
-						<div @click="diReject()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.direject}}</div>
+						<div class="text-900 font-medium text-xl">{{count.direject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="fontSize: 4rem; color: red;"></i>
@@ -146,11 +146,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdgDikerjakan()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
-						<div @click="sdgDikerjakan()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.sedangdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
@@ -159,11 +159,11 @@
 			</div>
 		</div>	
     <div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhDikerjakan()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
-						<div @click="sdhDikerjakan()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.sudahdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color: red;"></i>
@@ -172,11 +172,11 @@
 			</div>
 		</div>	
     <div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhSelesai()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
-						<div @click="sdhSelesai()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.sudahselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
@@ -185,11 +185,11 @@
 			</div>
     </div>	
     <div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="totalKeseluruhan()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Total Request</span>
-						<div @click="totalKeseluruhan()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count.countrequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.countrequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-bookmark-fill text-xl" style="fontSize: 4rem; color : green;"></i>
@@ -200,11 +200,11 @@
 </div>
 <div class="grid" v-if="this.role_name.includes('Atasan Requestor Divisi')">
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="sdgDireview1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Direview </span>
-						<div @click="sdgDireview1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.sedangdireview}}</div>
+						<div class="text-900 font-medium text-xl">{{count1.sedangdireview}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-check text-xl" style="color: green;"></i>
@@ -213,11 +213,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="blmDiverifikasi1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Belum Diverifikasi </span>
-						<div @click="blmDiverifikasi1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.belumdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count1.belumdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -226,11 +226,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhDiverifikasi1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
-						<div @click="sdhDiverifikasi1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.sudahdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count1.sudahdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -239,11 +239,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="diReject1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Di Reject</span>
-						<div @click="diReject1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.direject}}</div>
+						<div class="text-900 font-medium text-xl">{{count1.direject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="fontSize: 4rem; color: red;"></i>
@@ -252,11 +252,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdgDikerjakan1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
-						<div @click="sdgDikerjakan1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.sedangdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count1.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
@@ -265,11 +265,11 @@
 			</div>
 		</div>	
     <div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhDikerjakan1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
-						<div @click="sdhDikerjakan1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.sudahdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count1.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color: red;"></i>
@@ -278,11 +278,11 @@
 			</div>
 		</div>	
     <div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhSelesai1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
-						<div @click="sdhSelesai1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{ count1.sudahselesai }}</div>
+						<div class="text-900 font-medium text-xl">{{ count1.sudahselesai }}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
@@ -291,11 +291,11 @@
 			</div>
     </div>
 	<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="totalRequest1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Total Request</span>
-						<div @click="totalRequest1()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count1.total}}</div>
+						<div class="text-900 font-medium text-xl">{{count1.total}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl" style="fontSize: 4rem; color : green;"></i>
@@ -306,11 +306,11 @@
 </div>
 <div class="grid" v-if="this.role_name.includes('Supervisor')">
 	<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Belum Diverifikasi</span>
-						<div @click="blmDiassign2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.blmDiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count2.blmDiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -319,11 +319,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="atasanDivisi2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Atasan Divisi</span>
-						<div @click="atasanDivisi2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.atasandivisi}}</div>
+						<div class="text-900 font-medium text-xl">{{count2.atasandivisi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-clipboard-check text-xl" style="color: green;"></i>
@@ -332,11 +332,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="IctManager2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">ICT Manager</span>
-						<div @click="IctManager2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.manager}}</div>
+						<div class="text-900 font-medium text-xl">{{count2.manager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-bookmark-fill text-xl" style="color: green;"></i>
@@ -345,11 +345,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Direject</span>
-						<div @click="direject2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.reject}}</div>
+						<div class="text-900 font-medium text-xl">{{count2.reject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -358,11 +358,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
-						<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.sdgdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count2.sdgdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -371,11 +371,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
-						<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.sdhdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count2.sdhdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
@@ -384,11 +384,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
-						<div @click="sdhSelesai2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.sdhselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count2.sdhselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -397,11 +397,11 @@
 			</div>
 		</div>	
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Total Request</span>
-						<div @click="totalRequest2()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count2.totalRequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count2.totalRequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -412,11 +412,11 @@
 </div>
 <div class="grid" v-if="this.role_name.includes('Personel ICT')">
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="blmSelesai3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
-						<div @click="blmSelesai3()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count3.belumselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count3.belumselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-split text-xl" style="color: red;"></i>
@@ -425,11 +425,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdHDikerjakan3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
-						<div @click="sdHDikerjakan3()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count3.sudahdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count3.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -438,11 +438,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhSelesai3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
-						<div @click="sdhSelesai3()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count3.sudahselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count3.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="color: green;"></i>
@@ -453,11 +453,11 @@
 </div>
 <div class="grid" v-if="this.role_name.includes('Manager')">
 	<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="sdgDireview4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Direview </span>
-						<div @click="sdgDireview4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sedangdireview}}</div>
+						<div class="text-900 font-medium text-xl">{{count4.sedangdireview}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-check text-xl" style="color: green;"></i>
@@ -466,11 +466,11 @@
 			</div>
 		</div>
 	<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="blmDiverifikasi4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Belum Diverifikasi</span>
-						<div @click="blmDiverifikasi4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.blmdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count4.blmdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl text-xl" style="color: red;"></i>
@@ -479,11 +479,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="sdhDiverifikasi4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
-						<div @click="sdhDiverifikasi4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count4.sudahdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl text-xl" style="color: green;"></i>
@@ -492,11 +492,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="direject4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Direject</span>
-						<div @click="direject4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.direject}}</div>
+						<div class="text-900 font-medium text-xl">{{count4.direject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -505,11 +505,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="sdgdikerjakan4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
-						<div @click="sdgdikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sedangdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count4.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
@@ -518,11 +518,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
-			<div class="card mb-0">
+			<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
-						<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count4.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="color: red;"></i>
@@ -531,11 +531,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="sdhSelesai4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
-						<div @click="sdhSelesai4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.sudahselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count4.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="color: green;"></i>
@@ -544,11 +544,11 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
-			<div class="card mb-0">
+			<div @click="totalRequest4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Total Request</span>
-						<div @click="totalRequest4()" style="cursor:pointer;" class="text-900 font-medium text-xl">{{count4.totalrequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count4.totalrequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl" style="fontSize: 3.5rem; color: green;"></i>

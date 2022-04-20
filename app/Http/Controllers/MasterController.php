@@ -44,7 +44,7 @@ class MasterController extends Controller
     public function save(Request $request)
     {
         $message = [
-            'code.unique' => 'Kode Sudah Ada',
+            // 'code.unique' => 'Kode Sudah Ada',
             'code.required'=> 'Kode Belum Diisi',
             'nama.required' => 'Nama Belum Diisi',
             'merk.required' => 'Merk Belum Diisi',
@@ -62,7 +62,7 @@ class MasterController extends Controller
             'bu.required' => 'Bisnis Unit Belum Diisi'
         ];
         $request->validate([
-            'code' => 'required|unique:invent_mst,invent_code',
+            // 'code' => 'required|unique:invent_mst,invent_code',
             'nama' => 'required',
             'merk' => 'required',
             'type' => 'required',
@@ -92,7 +92,7 @@ class MasterController extends Controller
             $nama_file = '';
         }
         $mas = Master::Create([
-            'invent_code' => $request->code,
+            // 'invent_code' => $request->code,
             'invent_desc' => $request->nama,
             'invent_brand' => $request->merk,
             'invent_type' => $request->type,
@@ -124,11 +124,6 @@ class MasterController extends Controller
         $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
 
         if($aksesmenu->contains($this->to)){
-            $merk = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-            ->where('lookup_status','T')
-            ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
-            ->orderBy('lookup_desc','ASC')
-            ->get();
             $kondisi = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
             ->where('lookup_status','T')
             ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('kondisi')).'%'])
@@ -136,13 +131,15 @@ class MasterController extends Controller
             ->get();
             $bisnis = DB::table('v_company_refs')->get();
             $mas = DB::table('invent_mst as im')
-            ->select('im.invent_code','im.invent_desc','im.invent_brand','im.invent_type','im.invent_sn','im.invent_kondisi',
+            ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
+            ->select('im.invent_code','im.invent_desc','lr.lookup_desc','im.invent_type','im.invent_sn','im.invent_kondisi',
                     'im.invent_lama_garansi','im.invent_barcode','im.invent_lokasi_update','im.invent_pengguna_update','im.invent_photo',
                     'im.invent_lokasi_previous', 'im.invent_pengguna_previous', 'im.invent_bu', 
                     DB::raw("TO_CHAR(im.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"))
             ->where('im.invent_code',$code)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
             ->first();
-            return json_encode(['merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis,'mas'=>$mas],200);
+            return json_encode(['kondisi'=>$kondisi,'bisnis'=>$bisnis,'mas'=>$mas],200);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -181,10 +178,10 @@ class MasterController extends Controller
             $nama_file = time().".".$extension;
             Storage::disk('master_peripheral')->put($nama_file, base64_decode($foto));
         }else{
-            $nama_file = '';
+            $nama_file = $mas->invent_photo;
         }
-            $mas->invent_desc = $request->invent_desc;
-            $mas->invent_brand = $request->invent_brand;
+            // $mas->invent_desc = $request->invent_desc;
+            // $mas->invent_brand = $request->invent_brand;
             $mas->invent_type = $request->invent_type;
             $mas->invent_sn =$request->invent_sn;
             $mas->invent_tgl_perolehan =$newDate;

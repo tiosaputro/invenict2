@@ -58,6 +58,7 @@ import VueAxios from 'vue-axios';
 import CodeHighlight from './pages/AppCodeHighlight.js';
 import BlockViewer from './pages/BlockViewer.vue';
 import StarRating from 'vue-star-rating';
+
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
     next();
@@ -81,8 +82,6 @@ app.directive('ripple', Ripple);
 app.directive('code', CodeHighlight);
 app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
-
-app.component('StarRating',StarRating);
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);
 app.component('Button', Button);
@@ -108,6 +107,7 @@ app.component('RadioButton', RadioButton);
 app.component('Rating', Rating);
 app.component('Sidebar', Sidebar);
 app.component('Skeleton', Skeleton);
+app.component('StarRating',StarRating);
 app.component('SplitButton', SplitButton);
 app.component('StreamBarcodeReader', StreamBarcodeReader);
 app.component('TabView', TabView);

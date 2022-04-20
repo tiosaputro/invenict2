@@ -1,9 +1,23 @@
 <template>
-	<div :class="containerClass" @click="onWrapperClick">
+	<div :class="containerClass" @click="onWrapperClick" v-if="loggedIn">
         <AppTopBar @menu-toggle="onMenuToggle" />
         <div class="layout-sidebar" @click="onSidebarClick">
             <AppMenu :model="menuUser" @menuitem-click="onMenuItemClick" />
         </div>
+
+        <div class="layout-main-container">
+            <div class="layout-main">
+                <router-view />
+            </div>
+            <AppFooter />
+        </div>
+
+		<transition name="layout-mask">
+            <div class="layout-mask p-component-overlay" v-if="mobileMenuActive"></div>
+        </transition>
+	</div>
+    <div :class="containerClass" @click="onWrapperClick" v-else>
+        <AppTopBar @menu-toggle="onMenuToggle" />
 
         <div class="layout-main-container">
             <div class="layout-main">

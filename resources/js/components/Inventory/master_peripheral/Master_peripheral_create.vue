@@ -15,14 +15,8 @@
                     <div class="col-3 md-6">
                       <InputText
                         type="text"
-                        v-model="code"
-                        placeholder="Masukan Kode"
-                        :class="{ 'p-invalid': errors.code }"
-                        autofocus
+                        disabled
                       />
-                      <small v-if="errors.code" class="p-error">
-                          {{ errors.code[0] }}
-                      </small>  
                   </div>
                   </div>
                     <div class="field grid">
@@ -36,6 +30,7 @@
                         :showClear="true"
                         :filter="true"
                         placeholder="Pilih Merk"
+                        autofocus
                         :class="{ 'p-invalid': errors.merk }"
                       />
                       <small v-if="errors.merk" class="p-error">
@@ -294,7 +289,6 @@ export default {
       merks: [],
       kondi:[],
       bisnis:[],
-      code:'',
       nama:'',
       tgl:'',
       sn:'',
@@ -397,7 +391,6 @@ export default {
         if(this.image){
           const data = new FormData();
           data.append("nama", this.nama);
-          data.append("code", this.code);
           data.append("tgl", this.tgl);
           data.append("sn", this.sn);
           data.append("bu", this.bu);
@@ -410,7 +403,7 @@ export default {
           data.append("foto", this.image);
           data.append("kondisi", this.kondisi);
           // data.append("barcode", this.barcode);
-          dataappend("garansi", this.garansi);
+          data.append("garansi", this.garansi);
           
         this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           localStorage.removeItem("barcode");

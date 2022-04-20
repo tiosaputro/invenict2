@@ -22,20 +22,12 @@
                   </div>
                  <div class="field grid">
                       <label style="width:155px">Merk</label>
-                    <div class="col-4">
-                      <Dropdown
-                        v-model="master.invent_brand"
-                        :options="merks"
-                        optionLabel="name"
-                        optionValue="code"
-                        :showClear="true"
-                        :filter="true"
-                        placeholder="Pilih Merk"
-                        :class="{ 'p-invalid': submitted && !master.invent_brand }"
+                    <div class="col-3 md-6">
+                      <InputText
+                        type="text"
+                        v-model="master.lookup_desc"
+                        disabled
                       />
-                      <small class="p-error" v-if="submitted && !master.invent_brand"
-                        >Merk Belum Diisi.
-                      </small>
                   </div>
                   </div>
                <div class="field grid">
@@ -201,12 +193,8 @@
                             type ="text"
                             v-model="master.invent_desc"
                             placeholder="Masukan Nama"
-                            :class="{ 'p-invalid': submitted && !master.invent_desc }"
-                            autofocus
+                            disabled
                         />
-                      <small class="p-error" v-if="submitted && !master.invent_desc"
-                        >Nama Belum Diisi.
-                      </small>
                     </div>
                  </div> 
                  <div class="field grid">
@@ -259,7 +247,6 @@ export default {
       displayImage:false,
       submitted: false,
       errors: [],
-      merks: [],
       kondi:[],
       bisnis:[],
       master:[],
@@ -328,7 +315,6 @@ export default {
       getMaster(){
           this.axios.get('/api/edit-mas/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
               this.master = response.data.mas;
-              this.merks = response.data.merk;
               this.bisnis = response.data.bisnis;
               this.kondi = response.data.kondisi;
           }).catch(error=>{
@@ -364,7 +350,7 @@ export default {
       this.submitted=true;
       if (
         this.master.invent_desc != null &&
-        this.master.invent_brand != null &&
+        // this.master.invent_brand != null &&
         this.master.invent_type != null &&
         this.master.invent_sn != null &&
         this.master.invent_tgl_perolehan != null &&

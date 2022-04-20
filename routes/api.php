@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  Route::get('/get-rolee/{id}','MngUsrRoleController@getRole');
 Route::get('/cek-verif-id/{code}','IctController@cekVerif');
 Route::post('/login', 'LoginController@index');
+Route::get('/detail-peripherall/{invent_code}','MasterController@detailPeripheral');
 Route::post('/login-approval', 'LoginController@loginFromEmail');
 Route::get('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 //referensi_lookups
@@ -313,6 +314,8 @@ Route::get('/report-ict-pdf-sedang-dikerjakan/{usr_name}','IctController@cetak_p
 
 //report detail request (requestor)
 Route::get('/report-ict-detail-pdf/{code}','IctDetailController@cetak_pdf');
+Route::get('/report-ict-detaill-pdf/{code}','IctDetailController@cetak_pdff');
+
 Route::get('/report-ict-detail-excel/{code}','IctDetailController@cetak_excel');
 Route::get('/report-ict-detail-pdf-tab-reviewer/{code}','IctDetailController@cetak_pdf_tab_reviewer');
 Route::get('/report-ict-detail-excel-tab-reviewer/{code}','IctDetailController@cetak_excel_tab_reviewer');

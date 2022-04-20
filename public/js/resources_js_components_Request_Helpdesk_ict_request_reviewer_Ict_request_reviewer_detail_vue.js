@@ -104,7 +104,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     CetakPdf: function CetakPdf() {
-      window.open('/api/report-ict-detail-pdf/' + this.code);
+      window.open('/api/report-ict-detaill-pdf/' + this.code);
     },
     CetakExcel: function CetakExcel() {
       window.open('/api/report-ict-detail-excel/' + this.code);

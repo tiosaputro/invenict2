@@ -15,7 +15,7 @@
 		<ul class="layout-topbar-menu hidden lg:flex origin-top" v-if="this.user.usr_name">
 			<li> 
 				<button class="p-link layout-profile-link" @click="onClick">
-					<img :src="'/profile/' + user.usr_foto" width="30" height="30" v-if="this.user.usr_foto"/>
+				  <img :src="'/profile/' + user.usr_foto" class="mr-2" width="30" height="30" v-if="this.user.usr_foto"/>
 					<span style="color: white;">Hi, {{user.usr_name}}</span>
 				</button>
 				<transition name="layout-submenu-wrapper layout-topbar-button">
