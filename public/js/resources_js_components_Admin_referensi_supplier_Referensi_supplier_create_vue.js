@@ -133,15 +133,13 @@ var _hoisted_5 = {
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "115px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Kode", -1
 /* HOISTED */
 );
 
 var _hoisted_7 = {
-  "class": "col-4"
+  "class": "col-fixed"
 };
 var _hoisted_8 = {
   key: 0,
@@ -152,15 +150,13 @@ var _hoisted_9 = {
 };
 
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Nama", -1
 /* HOISTED */
 );
 
 var _hoisted_11 = {
-  "class": "col-4"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_12 = {
   key: 0,
@@ -171,15 +167,13 @@ var _hoisted_13 = {
 };
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Contact Person", -1
 /* HOISTED */
 );
 
 var _hoisted_15 = {
-  "class": "col-3"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_16 = {
   key: 0,
@@ -190,15 +184,13 @@ var _hoisted_17 = {
 };
 
 var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Alamat 1", -1
 /* HOISTED */
 );
 
 var _hoisted_19 = {
-  "class": "col-3"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_20 = {
   key: 0,
@@ -209,15 +201,13 @@ var _hoisted_21 = {
 };
 
 var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Alamat 2", -1
 /* HOISTED */
 );
 
 var _hoisted_23 = {
-  "class": "col-4"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_24 = {
   "class": "formgroup-inline"
@@ -227,15 +217,13 @@ var _hoisted_25 = {
 };
 
 var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "112px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Kota", -1
 /* HOISTED */
 );
 
 var _hoisted_27 = {
-  "class": "col-5"
+  "class": "col-fixed"
 };
 var _hoisted_28 = {
   key: 0,
@@ -246,15 +234,13 @@ var _hoisted_29 = {
 };
 
 var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "112px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Provinsi", -1
 /* HOISTED */
 );
 
 var _hoisted_31 = {
-  "class": "col-5"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_32 = {
   key: 0,
@@ -265,15 +251,13 @@ var _hoisted_33 = {
 };
 
 var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Email", -1
 /* HOISTED */
 );
 
 var _hoisted_35 = {
-  "class": "col-3"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_36 = {
   key: 0,
@@ -284,15 +268,13 @@ var _hoisted_37 = {
 };
 
 var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Fax", -1
 /* HOISTED */
 );
 
 var _hoisted_39 = {
-  "class": "col-3"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_40 = {
   key: 0,
@@ -303,15 +285,13 @@ var _hoisted_41 = {
 };
 
 var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "No.Tlp-1", -1
 /* HOISTED */
 );
 
 var _hoisted_43 = {
-  "class": "col-3"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_44 = {
   key: 0,
@@ -322,15 +302,13 @@ var _hoisted_45 = {
 };
 
 var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "No.Tlp-2", -1
 /* HOISTED */
 );
 
 var _hoisted_47 = {
-  "class": "col-6 md-4"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_48 = {
   key: 0,
@@ -370,9 +348,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.code = $event;
     }),
     placeholder: "Masukan Kode. . .",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
       'p-invalid': $data.errors.code
-    }),
+    }, "inputfield"]),
     autofocus: ""
   }, null, 8
   /* PROPS */
@@ -399,9 +377,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.contact = $event;
     }),
     placeholder: "Masukan Contact Person. . .",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["inputfield", {
       'p-invalid': $data.errors.contact
-    })
+    }])
   }, null, 8
   /* PROPS */
   , ["modelValue", "class"]), $data.errors.contact ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.contact[0]), 1
@@ -438,9 +416,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.kota = $event;
     }),
     placeholder: "Masukan Kota. . .",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
       'p-invalid': $data.errors.kota
-    })
+    }, "inputfield"])
   }, null, 8
   /* PROPS */
   , ["modelValue", "class"]), $data.errors.kota ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.kota[0]), 1
@@ -522,7 +500,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
-    "class": "p-button-rounded p-button-secondary mr-2",
+    "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
     onClick: _cache[11] || (_cache[11] = function ($event) {
       return _ctx.$router.push('/referensi-supplier');

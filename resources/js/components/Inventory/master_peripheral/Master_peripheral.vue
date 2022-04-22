@@ -3,6 +3,7 @@
     <div class="col-12">
       <div class="card">
         <Toast />
+        <Dialog></Dialog>
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
@@ -116,58 +117,68 @@
         </Dialog>
         <Dialog
           v-model:visible="displayKode"
-          :style="{ width: '1200px' }"
+          :breakpoints="{'960px': '75vw'}"
+          :style="{ width: '450px' }"
           :header="this.header"
           :modal="true"
           class="fluid"
         >
-        <div class="row">
-          <div class="col-sm-6">
+        <!-- <div class="hidden lg:inline-flex row"> -->
+          <!-- <div class="col-sm-6"> -->
             <div class="field grid">
-              <label style="width:155px">Kode</label>
-                <div class="col-4">
+              <label class="col-fixed" style="width:100px">Kode</label>
+                <!-- <div class="col-2">/ -->
                   <InputText
                     type="text"
                     v-model="detail.invent_code"
                     disabled
                   />
-                </div>
+                <!-- </div> -->
               </div>
               <div class="field grid">
-                <label style="width:155px">Merk</label>
-                  <div class="col-4">
+                      <label class="col-fixed" style="width:100px">Nama</label>
+                        <!-- <div class="col-4"> -->
+                          <InputText
+                            v-model="detail.invent_desc"
+                            disabled
+                          />
+                        <!-- </div> -->
+                    </div> 
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Merk</label>
+                  <!-- <div class="col-4"> -->
                     <InputText
                       v-model="detail.invent_brand"
                       disabled
                     />
-                  </div>
+                  <!-- </div> -->
                 </div>
                 <div class="field grid">
-                  <label style="width:155px">Tipe</label>
-                    <div class="col-4">
+                  <label class="col-fixed" style="width:100px">Tipe</label>
+                    <!-- <div class="col-4"> -->
                       <InputText
                         disabled
                         v-model= "detail.invent_type"
                       />
-                    </div>
+                    <!-- </div> -->
                   </div>
                   <div class="field grid">
-                    <label style="width:155px">S/N</label>
-                      <div class="col-4">
+                    <label class="col-fixed" style="width:100px">S/N</label>
+                      <!-- <div class="col-4"> -->
                         <InputText
                           v-model="detail.invent_sn"
                           disabled
                         />
-                    </div>
+                    <!-- </div> -->
                   </div>
                   <div class="field grid">
-                    <label style="width:155px">Tgl. Perolehan</label>
-                      <div class="col-4">
+                    <label class="col-fixed" style="width:100px">Tgl. Perolehan</label>
+                      <!-- <div class="col-4"> -->
                         <InputText
                           v-model="detail.invent_tgl_perolehan"
                           disabled
                         />
-                      </div>
+                      <!-- </div> -->
                   </div>
                   <!-- <div class="field grid">
                     <label style="width:155px">Lama Garansi</label>
@@ -182,82 +193,103 @@
                     </div>
                   </div> -->
                   <div class="field grid">
-                    <label style="width:155px">Kondisi</label>
-                      <div class="col-4">
+                    <label class="col-fixed" style="width:100px">Kondisi</label>
+                      <!-- <div class="col-4"> -->
                         <InputText
                           v-model="detail.invent_kondisi"
                           disabled
                         />
-                      </div>
+                      <!-- </div> -->
                   </div>
                   <div class="field grid">
-                    <label for="notlp2" style="width:155px">Bisnis Unit</label>
-                      <div class="col-4">
+                    <label class="col-fixed" style="width:100px">Bisnis Unit</label>
+                      <!-- <div class="col-4"> -->
                         <InputText
                           v-model="detail.invent_bu"
                           disabled
                         />
-                    </div>
+                    <!-- </div>/ -->
                   </div>
                   <div class="field grid">
-                    <label style="width:155px">Lokasi Terakhir</label>
-                      <div class="col-6">
+                    <label class="col-fixed" style="width:100px">Lokasi Terakhir</label>
+                      <!-- <div class="col-6"> -->
                         <InputText
                           type="text"
                           v-model="detail.invent_lokasi_update"
                           disabled
                         />
-                      </div>
+                      <!-- </div> -->
                   </div>
                   <div class="field grid">
-                    <label style="width:155px">Pengguna Terakhir</label>
-                      <div class="col-6">
+                    <label class="col-fixed" style="width:100px">Pengguna Terakhir</label>
+                      <!-- <div class="col-6"> -->
                         <InputText
                           type="text"
                           v-model="detail.invent_pengguna_update"
                           disabled
                         />
-                      </div>
+                      <!-- </div> -->
                   </div> 
-                </div>
-                  <div class="col-sm-6">
-                    <div class="field grid">
-                      <label style="width:155px">Nama</label>
-                        <div class="col-4">
-                          <InputText
-                            v-model="detail.invent_desc"
-                            disabled
-                          />
-                        </div>
-                    </div> 
-                    <div class="field grid">
-                      <label style="width:155px"></label>
-                        <div class="col-10 md-6">
-                          <div class="card" style="height: 16 rem;">
-                            <img :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
-                          </div>
-                        </div>
-                    </div>
-                    <div class="field grid">
-                      <label style="width:155px">Lokasi Sebelumnya</label>
-                        <div class="col-6">
+                  <div class="field grid">
+                      <label class="col-fixed" style="width:100px">Lokasi Sebelumnya</label>
+                        <!-- <div class="col-6"> -->
                           <InputText
                             v-model="detail.invent_lokasi_previous"
                             disabled
                           />
-                        </div>
+                        <!-- </div> -->
                     </div>
                     <div class="field grid">
-                      <label style="width:155px">Penguna Sebelumnya</label>
-                        <div class="col-6">
+                      <label class="col-fixed" style="width:100px">Penguna Sebelumnya</label>
+                        <!-- <div class="col-6"> -->
                           <InputText
                             v-model="detail.invent_pengguna_previous"
                             disabled
                           />
-                        </div>
+                        <!-- </div> -->
                     </div>
-                  </div>
-                  </div>
+                <!-- </div> -->
+                  <!-- <div class="col-sm-6"> -->
+                    <!-- <div class="field grid">
+                      <label class="col-fixed" style="width:100px">Nama</label> -->
+                        <!-- <div class="col-4"> -->
+                          <!-- <InputText
+                            v-model="detail.invent_desc"
+                            disabled
+                          /> -->
+                        <!-- </div> -->
+                    <!-- </div>  -->
+                    <div class="field grid">
+                      <label class="col-fixed" style="width:100px"></label>
+                        <!-- <div class="col-10 md-6"> -->
+                          <div class="card" style="height: 16 rem;">
+                            <img :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
+                          </div>
+                        <!-- </div> -->
+                    </div>
+                    <!-- <div class="field grid">
+                      <label class="col-fixed" style="width:100px">Lokasi Sebelumnya</label> -->
+                        <!-- <div class="col-6"> -->
+                          <!-- <InputText
+                            v-model="detail.invent_lokasi_previous"
+                            disabled
+                          /> -->
+                        <!-- </div> -->
+                    <!-- </div>
+                    <div class="field grid">
+                      <label class="col-fixed" style="width:100px">Penguna Sebelumnya</label> -->
+                        <!-- <div class="col-6"> -->
+                          <!-- <InputText
+                            v-model="detail.invent_pengguna_previous"
+                            disabled
+                          /> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+                  <!-- </div> -->
+                  <!-- </div> -->
+                   <template #footer>
+                      <Button label="Close" class="p-button-raised p-button-danger mr-2" icon="pi pi-times" @click="this.displayKode = false" autofocus/>
+                    </template>
           </Dialog>  
       </div>
     </div>
@@ -384,7 +416,8 @@ export default {
 </script>
 <style scoped lang="scss">
 .master-image {
-  height:200pt;
+  width: 100%;
+  height: auto;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }
 </style>

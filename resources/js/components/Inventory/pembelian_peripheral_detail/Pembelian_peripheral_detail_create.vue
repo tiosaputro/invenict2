@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div class="col-12">
       <Toast />
         <div class="card">
           <Toolbar class="mb-4">
@@ -11,8 +10,8 @@
           <div class="card-body">
             <form @submit.prevent="CreateDetail">
                <div class="field grid">
-                  <label style="width:155px">Kode Peripheral</label>
-                    <div class="col-12 md:col-2">
+                  <label class="col-fixed w-9rem" style="width:145px">Kode Peripheral</label>
+                    <div class="col-fixed w-9rem">
                       <Dropdown 
                         v-model="kode"
                         :options="kodeperi"
@@ -32,8 +31,8 @@
                     </div>
                    </div>
                   <div class="field grid">
-                    <label style="width:155px">Jumlah (Qty)</label>
-                      <div class="col-3">
+                    <label class="col-fixed w-9rem" style="width:145px">Jumlah (Qty)</label>
+                      <div class="col-fixed w-9rem">
                         <InputNumber
                          v-model="qty"
                          placeholder="Masukan Jumlah (Qty)"
@@ -46,8 +45,8 @@
                   </div>
                 </div>
                 <div class="field grid">
-                  <label style="width:155px">Satuan</label>
-                    <div class="col-2">
+                  <label class="col-fixed w-9rem" style="width:145px">Satuan</label>
+                    <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model="satuan"
                         :options="sat"
@@ -63,8 +62,8 @@
                   </div>
               </div>
                 <div class="field grid">
-                  <label style="width:155px">Harga Satuan</label>
-                    <div class="col-3">
+                  <label class="col-fixed w-9rem" style="width:145px">Harga Satuan</label>
+                    <div class="col-fixed w-9rem">
                     <InputNumber
                        mode="currency"
                       :change="getTotal()"
@@ -80,8 +79,8 @@
                   </div>
               </div>
                 <div class="field grid">
-                  <label style="width:155px">Total Harga</label>
-                    <div class="col-3">
+                  <label class="col-fixed w-9rem" style="width:145px">Total Harga</label>
+                    <div class="col-fixed w-9rem">
                      <InputNumber
                          mode="currency"
                         :currency="currency"
@@ -97,13 +96,13 @@
                 </div>
               </div>
                <div class="field grid">
-                <label style="width:155px">Keterangan</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:145px">Keterangan</label>
+                 <div class="col-fixed w-9rem">
                   <Textarea
                     v-model="ket"
                     :autoResize="true" 
                     rows="5" 
-                    cols="30"
+                    cols="20"
                     placeholder="Masukan Keterangan"
                     :class="{ 'p-invalid': submitted && !ket }"
                   />
@@ -121,7 +120,7 @@
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.go(-1)"
                 />
@@ -130,7 +129,6 @@
           </div>
       </div>
      </div>
-    </div>
 </template>
 <script>
 export default {

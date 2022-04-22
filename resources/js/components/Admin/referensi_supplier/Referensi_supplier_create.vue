@@ -11,13 +11,14 @@
             <form @submit.prevent="CreateSupplier">
               <div class="formgroup-inline">
                <div class="field grid">
-                  <label style="width:115px">Kode</label>
-                    <div class="col-4">
+                  <label class="col-fixed w-9rem">Kode</label>
+                    <div class="col-fixed">
                       <InputText
                         type="text"
                         v-model="code"
                         placeholder="Masukan Kode. . ."
-                        :class="{ 'p-invalid': errors.code}"
+                        :class="{ 'p-invalid': errors.code }"
+                        class="inputfield"
                         autofocus
                       />
                       <small v-if="errors.code" class="p-error">
@@ -26,8 +27,8 @@
                       </div>
                   </div>
                    <div class="field grid">
-                    <label style="width:120px">Nama</label>
-                    <div class="col-4">
+                    <label class="col-fixed w-9rem">Nama</label>
+                    <div class="col-fixed w-9rem">
                       <InputText
                       type="text"
                       v-model="nama"
@@ -41,12 +42,13 @@
                    </div>
                   </div>
                   <div class="field grid">
-                    <label style="width:120px">Contact Person</label>
-                      <div class="col-3">
+                    <label class="col-fixed w-9rem">Contact Person</label>
+                      <div class="col-fixed w-9rem">
                         <InputText
                         type="text"
                         v-model="contact"
                         placeholder="Masukan Contact Person. . ."
+                        class="inputfield"
                         :class="{ 'p-invalid': errors.contact }"
                         />
                       <small v-if="errors.contact" class="p-error">
@@ -55,8 +57,8 @@
                   </div>
                   </div>
              <div class="field grid">
-                <label style="width:120px">Alamat 1</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem">Alamat 1</label>
+                 <div class="col-fixed w-9rem">
                 <Textarea
                   type="text"
                   v-model="alamat1"
@@ -70,8 +72,8 @@
                   </div>
               </div>
                <div class="field grid">
-                <label style="width:120px">Alamat 2</label>
-                <div class="col-4">
+                <label class="col-fixed w-9rem">Alamat 2</label>
+                <div class="col-fixed w-9rem">
                <Textarea
                   type="text"
                   v-model="alamat2"
@@ -82,13 +84,14 @@
               </div>
                <div class="formgroup-inline">
                 <div class="field grid">
-                  <label style="width:112px">Kota</label>
-                    <div class="col-5">
+                  <label class="col-fixed w-9rem">Kota</label>
+                    <div class="col-fixed">
                       <InputText
                       type="text"
                       v-model="kota"
                       placeholder="Masukan Kota. . ." 
                       :class="{ 'p-invalid': errors.kota }"
+                      class="inputfield"
                       />
                       <small v-if="errors.kota" class="p-error">
                         {{ errors.kota[0] }}
@@ -96,8 +99,8 @@
                     </div>
                   </div>
                  <div class="field grid">
-                  <label style="width:112px">Provinsi</label>
-                    <div class="col-5">
+                  <label class="col-fixed w-9rem">Provinsi</label>
+                    <div class="col-fixed w-9rem">
                       <InputText
                       v-model="provinsi"
                       placeholder="Masukan Provinsi. . ."
@@ -111,8 +114,8 @@
                  </div>
                 </div>
                <div class="field grid">
-                  <label style="width:120px">Email</label>
-                    <div class="col-3">
+                  <label class="col-fixed w-9rem">Email</label>
+                    <div class="col-fixed w-9rem">
                       <InputText
                           type="Email"
                           v-model="email"
@@ -125,8 +128,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Fax</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem">Fax</label>
+                 <div class="col-fixed w-9rem">
                   <InputText
                       type="text"
                       v-model="fax"
@@ -139,8 +142,8 @@
                </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">No.Tlp-1</label>
-                <div class="col-3">
+                <label class="col-fixed w-9rem">No.Tlp-1</label>
+                <div class="col-fixed w-9rem">
                <InputText
                   type="text"
                   v-model="notlp1"
@@ -153,17 +156,17 @@
                 </div>
               </div> 
               <div class="field grid">
-                <label style="width:120px">No.Tlp-2</label>
-                <div class="col-6 md-4">
+                <label class="col-fixed w-9rem">No.Tlp-2</label>
+                <div class="col-fixed w-9rem">
                <InputText
                   type="text"
                   v-model="notlp2"
                   placeholder="(Optional)"
                   :class="{ 'p-invalid': errors.notlp2 }"
                 />
-                      <small v-if="errors.notlp2" class="p-error">
-                          {{ errors.notlp2[0] }}
-                      </small>
+                  <small v-if="errors.notlp2" class="p-error">
+                    {{ errors.notlp2[0] }}
+                  </small>
                 </div>
               </div>
               <div class="form-group">
@@ -175,7 +178,7 @@
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push('/referensi-supplier')"
                 />

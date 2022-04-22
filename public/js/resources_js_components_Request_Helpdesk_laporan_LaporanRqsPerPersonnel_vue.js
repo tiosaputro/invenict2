@@ -181,7 +181,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_assigned_to",
+        field: "ireq_assigned_to1",
         header: "Personnel ICT",
         style: {
           "min-width": "10rem"

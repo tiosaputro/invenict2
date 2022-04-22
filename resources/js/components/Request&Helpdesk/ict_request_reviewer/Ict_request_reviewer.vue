@@ -431,7 +431,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:4rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:3rem"/>
                   <Column headerStyle="min-width:6rem">
@@ -510,7 +510,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
                   <Column>
@@ -586,7 +586,7 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
                   <template #footer>
                       <div class="grid dir-col">

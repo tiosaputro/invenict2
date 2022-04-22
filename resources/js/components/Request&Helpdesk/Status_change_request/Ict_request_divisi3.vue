@@ -10,6 +10,178 @@
               </template>
             </Toolbar>
             <TabView ref="tabview1" v-model:activeIndex="active1">
+              <TabPanel header="Penugasan Request">
+                <DataTable
+                  :value="penugasan"
+                  :paginator="true"
+                  :rows="10"
+                  :loading="loading"
+                  :filters="filters"
+                  :rowHover="true"
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                  :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                  responsiveLayout="scroll"
+                >
+                <template #header>
+                    <div class="table-header text-right">
+                      <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                      </span>
+                    </div>
+                  </template>
+                  <template #empty>
+                    Not Found
+                  </template>
+                  <template #loading>
+                    Loading ICT Request data. Please wait.
+                  </template>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                    <template #body="slotProps">
+                      {{ formatDate(slotProps.data.ireq_date) }}
+                    </template>
+                  </Column>
+                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column style="min-width:15rem">
+                  <template #body="slotProps">
+                    <Button
+                      v-if="slotProps.data.ireq_status == 'Penugasan'"
+                      class="p-button-rounded p-button-info mr-2"
+                      icon="pi pi-pencil"
+                      @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
+                    />
+                      <Button
+                        class="p-button-raised p-button-info p-button-text mr-2"
+                        label="CA"
+                        @click="$router.push({
+                            name: 'add Cash Advance',
+                            params: { code: slotProps.data.ireq_id }, })"
+                      />
+                      <Button
+                        class="p-button-raised p-button-text mt-2"
+                        label="PR"
+                      />
+                    </template>
+                  </Column>
+                  <template #footer>
+                    <div class="p-grid p-dir-col">
+                      <div class="p-col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSedangDikerjakan()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSedangDikerjakan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </DataTable>   
+              </TabPanel>
+              <TabPanel header="Yang Direject">
+                <DataTable
+                  :value="sedangDikerjakan"
+                  :paginator="true"
+                  :rows="10"
+                  :loading="loading"
+                  :filters="filters"
+                  :rowHover="true"
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                  :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                  responsiveLayout="scroll"
+                >
+                <template #header>
+                    <div class="table-header text-right">
+                      <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                      </span>
+                    </div>
+                  </template>
+                  <template #empty>
+                    Not Found
+                  </template>
+                  <template #loading>
+                    Loading ICT Request data. Please wait.
+                  </template>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                    <template #body="slotProps">
+                      {{ formatDate(slotProps.data.ireq_date) }}
+                    </template>
+                  </Column>
+                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column style="min-width:15rem">
+                  <template #body="slotProps">
+                    <Button
+                      v-if="slotProps.data.ireq_status == 'Penugasan'"
+                      class="p-button-rounded p-button-info mr-2"
+                      icon="pi pi-pencil"
+                      @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
+                    />
+                      <Button
+                        class="p-button-raised p-button-info p-button-text mr-2"
+                        label="CA"
+                        @click="$router.push({
+                            name: 'add Cash Advance',
+                            params: { code: slotProps.data.ireq_id }, })"
+                      />
+                      <Button
+                        class="p-button-raised p-button-text mt-2"
+                        label="PR"
+                      />
+                    </template>
+                  </Column>
+                  <template #footer>
+                    <div class="p-grid p-dir-col">
+                      <div class="p-col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfSedangDikerjakan()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelSedangDikerjakan()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </DataTable>   
+              </TabPanel>
               <TabPanel header="Sedang Dikerjakan">
                 <DataTable
                   :value="sedangDikerjakan"
@@ -52,7 +224,7 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
                   <Column style="min-width:15rem">
                   <template #body="slotProps">
                     <Button
@@ -137,7 +309,7 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
                   <template #footer>
                     <div class="p-grid p-dir-col">
                       <div class="p-col">
@@ -201,7 +373,7 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
                 <template #footer>
                     <div class="p-grid p-dir-col">
                       <div class="p-col">
@@ -292,6 +464,7 @@ export default {
         loading: true,
         submitted:false,
         selesai: [],
+        penugasan:[],
         sedangDikerjakan:[],
         sudahDikerjakan:[],
         user:[],

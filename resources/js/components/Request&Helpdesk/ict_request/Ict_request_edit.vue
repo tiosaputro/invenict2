@@ -56,6 +56,23 @@
                      />
                 </div>
               </div>
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:120px">Priority Level</label>
+                 <div class="col-fixed w-9rem">
+                     <Dropdown 
+                        v-model="mutasi.ireq_prio_level"
+                        :options="level"
+                        optionLabel="name"
+                        optionValue="code"
+                        placeholder="Pilih Level"
+                        :showClear="true"
+                        :class="{ 'p-invalid': error.ireq_prio_level }"
+                     />
+                        <small v-if="error.ireq_prio_level" class="p-error">
+                          {{error.ireq_prio_level}}
+                        </small>
+                </div>
+              </div>
               <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Pengguna</label>
                  <div class="col">
@@ -73,7 +90,7 @@
               </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
-                 <div class="field col-12 md:col-4">
+                 <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="mutasi.ireq_divisi_user"
                         :options="divisi"
@@ -84,9 +101,9 @@
                         :filter="true"
                         :class="{ 'p-invalid': error.ireq_divisi_user }"
                      />
-                        <small v-if="error.ireq_divisi_user" class="p-error">
+                        <!-- <small v-if="error.ireq_divisi_user" class="p-error">
                           {{error.ireq_divisi_user}}
-                        </small>
+                        </small> -->
                 </div>
               </div>
               <div class="field grid">
@@ -110,6 +127,22 @@
                         </small>
                 </div>
               </div>
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:120px">Keterangan</label>
+                 <div class="field col-12 md:col-4">
+                  <Textarea 
+                    v-model="mutasi.ireq_remark"
+                    :autoResize="true" 
+                    rows="5" 
+                    cols="20"
+                    placeholder="Masukan Keterangan . . ."
+                    :class="{ 'p-invalid': error.ireq_remark }"
+                  />
+                      <small class="p-error" v-if="error.ireq_remark"
+                        >{{error.ireq_remark}}
+                      </small>
+                </div>
+              </div>
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -119,7 +152,7 @@
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push('/ict-request')"
                 />
@@ -133,6 +166,7 @@
 export default {
   data() {
     return {
+      level:[],
       errors: [],
       error:[],
       mutasi:[],
@@ -159,7 +193,6 @@ export default {
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
           this.getIct();
-          this.getDivisi();
         }
         else {
           this.$router.push('/access');
@@ -171,9 +204,11 @@ export default {
     },
       getIct(){
           this.axios.get('/api/edit-ict/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.mutasi = response.data;
-            this.getBisnis();
-            this.getReq();
+            this.mutasi = response.data.ict;
+            this.divisi = response.data.divisi;
+            this.type = response.data.ref;
+            this.bu = response.data.bisnis;
+            this.level = response.data.prio;
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -185,27 +220,12 @@ export default {
            }
         });
       },
-      getDivisi(){
-        this.axios.get('/api/get-divisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.divisi = response.data;
-      });
-      },
-      getReq(){
-          this.axios.get('/api/getType', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.type = response.data;
-          });
-      },
-      getBisnis(){
-          this.axios.get('/api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.bu = response.data;
-          });
-      },
     UpdateIct() {
       this.errors = [] ;
       this.error = [];
       if(
-        this.mutasi.ireq_bu != null &&
-        this.mutasi.ireq_divisi_user != null 
+        this.mutasi.ireq_prio_level != null &&
+        this.mutasi.ireq_remark != null 
       ){
         this.axios.put('/api/update-ict/'+ this.$route.params.code, this.mutasi, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
@@ -219,11 +239,11 @@ export default {
          });
       }
       else{
-        if(this.mutasi.ireq_type == null){
-          this.error.ireq_type = "Tipe Request Belum Diisi"
+        if(this.mutasi.ireq_prio_level == null){
+          this.error.ireq_prio_level = "Prioritas Level Belum Diisi"
       }
-         if(this.mutasi.ireq_divisi_user == null){
-          this.error.ireq_divisi_user = "Divisi User Belum Diisi"
+         if(this.mutasi.ireq_remark == null){
+          this.error.ireq_remark = "Keterangan Belum Diisi"
         }
       }
       },

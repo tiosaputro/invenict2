@@ -25,11 +25,11 @@
             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
               <Button
               label="Add"
-              class="p-button-raised"
+              class="p-button-raised mr-2"
               icon="bi bi-file-earmark-plus"
               @click="$router.push('/Add-pembelian-peripheral')"
             />
-              <span class="p-input-icon-left">
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText
                   v-model="filters['global'].value"
@@ -191,3 +191,23 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media screen and (max-width: 960px) {
+        align-items: start;
+	}
+}
+@media screen and (max-width: 960px) {
+	::v-deep(.p-toolbar) {
+		flex-wrap: wrap;
+        
+		.p-button {
+            margin-bottom: 0.25rem;
+        }
+	}
+}
+</style>

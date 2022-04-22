@@ -1,6 +1,5 @@
 <template>
-  <div class="container py-4">
-    <div class="col-md-10">
+    <div>
         <Toast />
         <div class="card">
         <Toolbar class="mb-4">
@@ -55,7 +54,7 @@
               </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Status</label>
-                 <div class="field col-12 md:col-4">
+                 <div class="col-fixed w-9rem">
                <Dropdown
                   v-model="lookup_status"
                   :options="stat"
@@ -79,7 +78,7 @@
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push('/referensi-lookups')"
                 />
@@ -88,7 +87,6 @@
           </div>
       </div>
       </div>
-    </div>
 </template>
 <script>
 export default {
@@ -150,7 +148,6 @@ export default {
         });
         setTimeout( () => this.$router.push('/referensi-lookups'),1000);
         }).catch(error => {
-          this.$isLoading(false) // show loading screen
           this.errors = error.response.data.errors;
          });
       },

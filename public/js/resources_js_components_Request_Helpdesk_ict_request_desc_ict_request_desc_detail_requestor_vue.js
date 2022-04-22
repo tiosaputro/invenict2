@@ -77,7 +77,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this2.detail = response.data;
         _this2.tes = response.data.map(function (x) {
-          return x.ireq_assigned_to;
+          return x.ireq_assigned_to1;
         });
 
         if (_this2.tes.length > 0 && _this2.tes[0] != null) {
@@ -365,7 +365,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), _this.ireq.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
         key: 0,
-        field: "ireq_assigned_to",
+        field: "ireq_assigned_to1",
         header: "Petugas ICT",
         sortable: true,
         style: {

@@ -46,7 +46,7 @@
           <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
                 <Button
@@ -107,14 +107,14 @@
                     <label class="col-fixed w-9rem" style="width:100px">Petugas (ICT)</label>
                     <div class="col-fixed">
                         <Dropdown
-                            v-model="assign.ireq_assigned_to"
+                            v-model="assign.ireq_assigned_to1"
                             :options="petugas"
                             optionValue="name"
                             optionLabel="name"
                             placeholder="Pilih Petugas (ICT)"
-                            :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to }"
+                            :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to1 }"
                         />
-                        <small v-if="submitted && !assign.ireq_assigned_to" class="p-error">
+                        <small v-if="submitted && !assign.ireq_assigned_to1" class="p-error">
                             Petugas(ICT) Harus Diisi
                         </small>
                     </div>
@@ -191,7 +191,7 @@ export default {
     },
      updateAssign(){
         this.submitted = true;
-        if(this.assign.ireq_assigned_to != null){
+        if(this.assign.ireq_assigned_to1 != null){
           this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.assign = [];
             this.dialogAssign = false;

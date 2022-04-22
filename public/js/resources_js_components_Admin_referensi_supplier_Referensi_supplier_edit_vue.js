@@ -505,7 +505,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
-    "class": "p-button-rounded p-button-secondary mr-2",
+    "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
     onClick: _cache[11] || (_cache[11] = function ($event) {
       return _ctx.$router.push('/referensi-supplier');

@@ -23,7 +23,7 @@
           <template #loading>
             Loading. Please wait.
           </template>
-          <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:10rem"/>
+          <Column field="ireq_assigned_to1" header="Personnel ICT" style="min-width:10rem"/>
           <Column field="jumlah" header="Jumlah Request" style="min-width:10rem"/>
           <template #footer>
                 <div class="p-grid p-dir-col">

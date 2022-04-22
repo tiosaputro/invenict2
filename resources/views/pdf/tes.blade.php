@@ -440,21 +440,25 @@ tr:nth-child(even) {
                 <div class="row contacts">
                     <div class="col invoice-to">
                         <div class="address" style="font-weight:bold">I. Description Of Request/Problem Experienced</div>
-                            <textarea rows="8" cols="100" style="resize: none; border:solid 1px;" disabled> tes </textarea>
+                            <textarea rows="8" cols="100" style="resize: none; border:solid 1px;" disabled> 
+                            @foreach($detail as $d)
+                               {{ $d->ireq_remark }}
+                            @endforeach
+                            </textarea>
                         </div>
                         <div class="col invoice-to">
                           <div class="address" style="font-weight:bold">Priority Level</div>
-                            <textarea rows="8" cols="25" style="resize: none; border:solid 1px;" disabled>  tes </textarea>
+                            <textarea rows="8" cols="25" style="resize: none; border:solid 1px;" disabled>  </textarea>
                         </div>
                 </div>
                 <div class="row">
                     <div class="column">
                         <table> <p> II. Requester / Reported By : </p>
                         <tr>
-                            <th style="border:solid 1px;"> tes</th>
-                            <th style="border:solid 1px;"> tes</th>
-                            <th style="border:solid 1px;">tes</th>
-                            <th style="border:solid 1px;">tes</th>
+                            <th style="border:solid 1px;"> {{$detail[0]->div_name}}</th>
+                            <th style="border:solid 1px;"> {{$detail[0]->ireq_requestor}}</th>
+                            <th style="border:solid 1px;">{{$detail[0]->datee}}</th>
+                            <th style="border:solid 1px;">{{$detail[0]->timee}}</th>
                         </tr>
                         <tr>
                             <td style="border:solid 1px;">Divison</td>
@@ -468,7 +472,7 @@ tr:nth-child(even) {
                         <table> <p> Approved By : (For new installation/software loan) </p>
                             <tr>
                                 <th style="border:solid 1px;">tes</th>
-                                <th style="border:solid 1px;">tes</th>
+                                <th style="border:solid 1px;">Manager {{$detail[0]->div_name}}</th>
                                 <th style="border:solid 1px;">tes</th>
                                 <th style="border:solid 1px;">tes</th>
                             </tr>

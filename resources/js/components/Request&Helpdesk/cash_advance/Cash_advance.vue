@@ -244,3 +244,23 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media screen and (max-width: 960px) {
+        align-items: start;
+	}
+}
+@media screen and (max-width: 960px) {
+	::v-deep(.p-toolbar) {
+		flex-wrap: wrap;
+        
+		.p-button {
+            margin-bottom: 0.25rem;
+        }
+	}
+}
+</style>

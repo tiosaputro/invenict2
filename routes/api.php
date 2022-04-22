@@ -218,9 +218,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-ict-admin','IctController@getIctAdmin');
 
     Route::post('/updateAssign','IctController@updateAssign');
-    Route::get('/updateStatusPermohonan/{code}','IctController@updateStatusPermohonan');
+    Route::get('/updateStatusPermohonan/{code}','IctController@approveByAtasan');
     Route::get('/updateStatusPenugasan/{ireq_id}','IctController@updateStatusPenugasan');
-    Route::put('/updateStatusReject/{code}','IctController@updateStatusReject');
+    Route::put('/updateStatusReject/{code}','IctController@rejectByAtasan');
     Route::get('/updateStatusSubmit/{ireq_id}','IctController@updateStatusSubmit');
     Route::get('/updateStatusClosing/{ireq_id}','IctController@updateStatusClosing');
     //Route::get('/report-ict-excel','IctController@cetak_excel');

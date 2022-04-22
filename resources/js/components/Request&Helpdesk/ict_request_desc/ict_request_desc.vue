@@ -277,7 +277,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -351,7 +351,7 @@
         </Column>
         <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
         <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
         <template #footer>
             <div class="grid dir-col">
@@ -414,7 +414,7 @@
           </Column>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
           <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>    
           <template #footer>
             <div class="grid dir-col">
@@ -699,7 +699,7 @@
           </Column>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -773,7 +773,7 @@
         </Column>
         <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
         <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
           <template #footer>
@@ -837,7 +837,7 @@
         </Column>
         <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
         <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
           <template #footer>
@@ -1008,7 +1008,7 @@
           </Column>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:4rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
           <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:3rem"/>
           <Column style="min-width:12rem">
@@ -1084,7 +1084,7 @@
           </Column>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
           <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
           <Column>
@@ -1159,7 +1159,7 @@
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
           <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
           <template #footer>
             <div class="grid dir-col">
@@ -1223,7 +1223,7 @@
         <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
         <Column style="min-width:15rem">
           <template #body="slotProps">
             <Button
@@ -1307,7 +1307,7 @@
         <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -1370,7 +1370,7 @@
         <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -1432,7 +1432,7 @@
           </Column>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
           <Column>
             <template #body="slotProps">
               <Button
@@ -1504,7 +1504,7 @@
           </Column>
           <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -1865,7 +1865,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -1939,7 +1939,7 @@
         </Column>
         <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
         <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
           <template #footer>
@@ -2003,7 +2003,7 @@
         </Column>
         <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
         <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
           <template #footer>
@@ -2613,7 +2613,7 @@
           </Column>
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
           <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button

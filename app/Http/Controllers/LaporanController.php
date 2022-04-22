@@ -144,9 +144,9 @@ class LaporanController extends Controller
     public function cetak_pdf_per_personnel()
     {
         $status = DB::table('ireq_dtl')
-        ->select('ireq_assigned_to',DB::raw("count(ireqd_id) as jumlah"))
-        ->whereNotNull('ireq_assigned_to')
-        ->groupBy('ireq_assigned_to')
+        ->select('ireq_assigned_to1',DB::raw("count(ireqd_id) as jumlah"))
+        ->whereNotNull('ireq_assigned_to1')
+        ->groupBy('ireq_assigned_to1')
         ->get();
         return view('pdf/Laporan_Req_Per_Personnel',compact('status'));
     }
@@ -158,10 +158,10 @@ class LaporanController extends Controller
     {
         $status = DB::table('ireq_dtl as id')
         ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
-        ->select(DB::raw("count(id.ireq_id) as jumlah"),'lr.lookup_desc as status','id.ireq_assigned_to as name')
-        ->where('id.ireq_assigned_to',$ictPersonnel)
+        ->select(DB::raw("count(id.ireq_id) as jumlah"),'lr.lookup_desc as status','id.ireq_assigned_to1 as name')
+        ->where('id.ireq_assigned_to1',$ictPersonnel)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->groupBy('lr.lookup_desc','id.ireq_assigned_to',DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
+        ->groupBy('lr.lookup_desc','id.ireq_assigned_to1',DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
         2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
          id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
          WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7

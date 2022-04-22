@@ -1,6 +1,5 @@
 <template>
-  <div class="container py-4">
-    <div class="col-md-10">
+    <div>
         <Toast />
         <div class="card">
         <Toolbar class="p-mb-4">
@@ -68,7 +67,7 @@
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push('/referensi-lookups')"
                 />
@@ -77,7 +76,6 @@
           </div>
       </div>
       </div>
-    </div>
 </template>
 <script>
 export default {

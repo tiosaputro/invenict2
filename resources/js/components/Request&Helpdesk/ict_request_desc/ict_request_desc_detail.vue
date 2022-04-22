@@ -48,7 +48,7 @@
           <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
+          <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
@@ -115,7 +115,7 @@ export default {
     getIctDetail(){
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
-        this.tes = response.data.map((x)=>x.ireq_assigned_to);
+        this.tes = response.data.map((x)=>x.ireq_assigned_to1);
         if(this.tes.length > 0 && this.tes[0] != null){
           this.ireq = this.tes
         }

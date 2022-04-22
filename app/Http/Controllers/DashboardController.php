@@ -94,9 +94,9 @@ class DashboardController extends Controller
     public function countDivisi3($fullname)
     {
         $grafik = DB::table('ireq_dtl as im')
-        ->select(DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'T' AND ireq_dtl.ireq_assigned_to = '$fullname') as belumselesai"),
-                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'D' AND ireq_dtl.ireq_assigned_to = '$fullname') as sudahdikerjakan"),
-                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'C' AND ireq_dtl.ireq_assigned_to = '$fullname') as sudahselesai"))
+        ->select(DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'T' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as belumselesai"),
+                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'D' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as sudahdikerjakan"),
+                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'C' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as sudahselesai"))
         ->first();
         return response()->json($grafik);
     }
@@ -134,14 +134,14 @@ class DashboardController extends Controller
         $grafik2 = DB::table('VREQ_MST_BULAN')->get();
         $grafik3 = DB::table('VREQ_PER_STATUS')->get();
         $personnel = DB::table('ireq_dtl')
-        ->select('ireq_assigned_to',DB::raw("count(ireqd_id) as jumlah"))
-        ->whereNotNull('ireq_assigned_to')
-        ->groupBy('ireq_assigned_to')
+        ->select('ireq_assigned_to1',DB::raw("count(ireqd_id) as jumlah"))
+        ->whereNotNull('ireq_assigned_to1')
+        ->groupBy('ireq_assigned_to1')
         ->get();
         $personnell = DB::table('ireq_dtl')
-        ->select('ireq_assigned_to as name')
-        ->whereNotNull('ireq_assigned_to')
-        ->groupBy('ireq_assigned_to')
+        ->select('ireq_assigned_to1 as name')
+        ->whereNotNull('ireq_assigned_to1')
+        ->groupBy('ireq_assigned_to1')
         ->get();
 
         return response()->json(['grafik'=>$grafik,'grafik1'=>$grafik1,'grafik2'=>$grafik2,'grafik3'=>$grafik3,'personnel'=>$personnel,'personnell'=>$personnell],200);
@@ -254,7 +254,7 @@ class DashboardController extends Controller
         $grafik = DB::table('ireq_dtl as id')
         ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
         ->select(DB::raw("count(id.ireq_id) as jumlah"),'lr.lookup_desc as status')
-        ->where('id.ireq_assigned_to',$ictPersonnel)
+        ->where('id.ireq_assigned_to1',$ictPersonnel)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->groupBy('lr.lookup_desc',DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
         2 WHEN id.ireq_status = 'NA2' Then 3 WHEN

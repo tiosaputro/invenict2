@@ -63,7 +63,7 @@
                 </div>
               </div>
 
-              <div class="field grid">
+              <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S' ">
                 <label class="col-fixed" style="width:120px">Deskripsi</label>
                  <div class="col-fixed">
                      <InputText
@@ -75,7 +75,7 @@
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
                 <label class="col-fixed" style="width:120px">Qty</label>
-                 <div class="col-6">
+                 <div class="col-fixed">
                      <InputNumber
                         v-model="qty"
                         placeholder="Masukan Qty"
@@ -86,9 +86,9 @@
                     </small>
                 </div>
               </div>
-              <div class="field grid">
+              <div class="field grid"  v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S'">
                 <label class="col-fixed" style="width:120px">Keterangan</label>
-                 <div class="col-6">
+                 <div class="col-fixed">
                      <Textarea
                         :autoResize="true"
                         type="text"
@@ -111,7 +111,7 @@
                   type="submit"
                 />
                 <Button
-                  class="p-button-rounded p-button-success mr-2"
+                  class="p-button-rounded p-button-success mr-2 mt-2"
                   icon="pi pi-check"
                   label="Simpan & Add"
                   @click="saveclick"

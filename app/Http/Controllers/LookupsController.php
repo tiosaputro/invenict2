@@ -181,7 +181,13 @@ class LookupsController extends Controller
         ->orderBy('div_name','ASC')
         ->get();
 
-        return json_encode(['ref'=>$ref,'bisnis'=>$bisnis,'divisi'=>$divisi],200);
+        $priority = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        ->where('lookup_status','T')
+        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
+        ->orderBy('lookup_desc','ASC')
+        ->get();
+
+        return json_encode(['ref'=>$ref,'bisnis'=>$bisnis,'divisi'=>$divisi,'prio'=>$priority],200);
     }
     Public function getAddDetail()
     {

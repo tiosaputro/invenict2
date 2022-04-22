@@ -1,6 +1,6 @@
 <template>
-  <div class="p-grid crud-demo">
-    <div class="p-col-12">
+  <div class="grid">
+    <div class="col-12">
       <div class="card">
         <Toast />
         <ConfirmDialog> </ConfirmDialog>
@@ -42,7 +42,7 @@
                     params: { code: code },
                   })"
               />
-              <span class="p-input-icon-left">
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText
                   v-model="filters['global'].value"
@@ -55,29 +55,13 @@
            Not Found
           </template>
           <template #loading>
-            Loading Pembelian Peripheral (Detail) data. Please wait.
+            Loading data. Please wait.
           </template>
-          <Column field="invent_code" header="Kode" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_code }}
-            </template>
-          </Column>
-          <Column field="invent_desc" header="Nama Peripheral" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.invent_desc }}
-            </template>
-          </Column>
-          <Column field="dpurchase_qty" header="Jumlah(Qty)" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.dpurchase_qty }} {{slotProps.data.dpurchase_sat}}
-            </template>
-          </Column>
-          <Column field="dpurchase_prc" header="Total Harga" :sortable="true">
-            <template #body="slotProps">
-              {{slotProps.data.valuta_code}}{{ formatPrice(slotProps.data.dpurchase_prc) }}
-            </template>
-          </Column>
-          <Column header="">
+          <Column field="invent_code" header="Kode" :sortable="true"/>
+          <Column field="invent_desc" header="Nama Peripheral" :sortable="true"/>
+          <Column field="dpurchase_qty" header="Jumlah(Qty)" :sortable="true"/>
+          <Column field="dpurchase_prc" header="Total Harga" :sortable="true"/>
+          <Column headerStyle="min-width:12rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-info mr-2"
@@ -89,7 +73,7 @@
               />
               <Button
                 icon="pi pi-trash"
-                class="p-button-rounded p-button-danger mr-2"
+                class="p-button-rounded p-button-danger mt-2"
                 @click="DeleteDetail(slotProps.data.dpurchase_id)"
               />
             </template>
@@ -107,13 +91,13 @@
                   />
                  <Button
                     label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
+                    class="p-button-raised p-button-danger mr-2 mt-2"
                     icon="pi pi-file-pdf"
                     @click="CetakPdf()"
                   />
                   <Button 
                     label="Excel"
-                    class="p-button-raised p-button-success mr-2"
+                    class="p-button-raised p-button-success mt-2"
                     icon="pi pi-print"
                     @click="CetakExcel()" 
                   />

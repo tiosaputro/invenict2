@@ -361,7 +361,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "6rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_assigned_to",
+        field: "ireq_assigned_to1",
         header: "Petugas (ICT)",
         sortable: true,
         style: {

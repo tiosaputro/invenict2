@@ -1,6 +1,5 @@
 <template>
-  <div class="container py-4">
-    <div class="col-md-10">
+    <div>
         <Toast />
         <div class="card">
         <Toolbar class="mb-4">
@@ -11,8 +10,8 @@
             <div class="card-body">
              <form @submit.prevent="CreatePurch">
                <div class="field grid">
-                <label style="width:150px">Suplier</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:145px">Suplier</label>
+                 <div class="col-fixed w-9rem">
                   <Dropdown
                     :options="suplier"
                     optionLabel="name"
@@ -29,8 +28,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:150px">Tgl. Pembelian</label>
-                 <div class="col-12 md:col-4">
+                <label class="col-fixed w-9rem" style="width:145px">Tgl. Pembelian</label>
+                 <div class="col-fixed w-11rem">
                       <DatePicker v-model="purch_date" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                           <div class="flex items-center">
@@ -52,8 +51,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:150px">Cara Pembayaran</label>
-                 <div class="col-4">
+                <label class="col-fixed w-9rem" style="width:145px">Cara Pembayaran</label>
+                 <div class="col-fixed w-9rem">
                 <Dropdown
                   v-model="pay"
                   :options="methode_pay"
@@ -70,8 +69,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:150px">Petugas</label>
-                 <div class="col-4">
+                <label class="col-fixed w-9rem" style="width:145px">Petugas</label>
+                 <div class="col-fixed w-9rem">
                 <InputText
                   type="text"
                   v-model="petugas"
@@ -84,8 +83,8 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:150px">Mata Uang</label>
-                 <div class="col-3">
+                <label class="col-fixed w-9rem" style="width:145px">Mata Uang</label>
+                 <div class="col-fixed w-9rem">
                <Dropdown
                   v-model="money"
                   :options="code_money"
@@ -116,14 +115,14 @@
                 </div>
               </div> -->
               <div class="field grid">
-                <label style="width:150px">Keterangan</label>
-                 <div class="col-4">
+                <label class="col-fixed w-9rem" style="width:145px">Keterangan</label>
+                 <div class="col-fixed w-9rem">
                    <Textarea
                         type="text"
                         v-model="ket"
                         :autoResize="true"
                         rows="5" 
-                        cols="30"
+                        cols="20"
                         placeholder="Masukan Keterangan"
                         :class="{ 'p-invalid': submitted && !ket }"
                     />
@@ -141,16 +140,15 @@
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push('/pembelian-peripheral')"
                 />
               </div>
             </form>
           </div>
+        </div>
       </div>
-      </div>
-    </div>
 </template>
 <script>
 export default {

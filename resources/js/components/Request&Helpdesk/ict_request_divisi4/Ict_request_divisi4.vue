@@ -50,7 +50,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
                   <Column>
                     <template #body="slotProps">
                       <Button
@@ -103,7 +103,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to1" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
                   <Column>
                     <template #body="slotProps">
                       <Button

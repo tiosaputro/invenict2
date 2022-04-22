@@ -42,7 +42,7 @@
           </template>
           <Column field="invent_code" header="Kode" :sortable="true" style="min-width:4rem"/>
           <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:4rem"/>
-          <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas(ICT)" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:4rem"/>
           <template #footer>
                <div class="p-grid p-dir-col">

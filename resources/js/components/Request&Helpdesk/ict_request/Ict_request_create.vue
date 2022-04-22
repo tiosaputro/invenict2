@@ -38,7 +38,7 @@
               
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
-                 <div class="field col-12 md:col-4">
+                 <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="tipereq"
                         :options="type"
@@ -50,6 +50,23 @@
                      />
                         <small v-if="error.tipereq" class="p-error">
                           {{error.tipereq}}
+                        </small>
+                </div>
+              </div>
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:120px">Priority Level</label>
+                 <div class="col-fixed w-9rem">
+                     <Dropdown 
+                        v-model="priolev"
+                        :options="level"
+                        optionLabel="name"
+                        optionValue="code"
+                        placeholder="Pilih Level"
+                        :showClear="true"
+                        :class="{ 'p-invalid': error.priolev }"
+                     />
+                        <small v-if="error.priolev" class="p-error">
+                          {{error.priolev}}
                         </small>
                 </div>
               </div>
@@ -70,7 +87,7 @@
               </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
-                 <div class="field col-12 md:col-4">
+                 <div class="col-fixed">
                      <Dropdown 
                         v-model ="usr_divisi"
                         :options="divisi"
@@ -98,6 +115,22 @@
                         </small> -->
                 </div>
               </div>
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:120px">Keterangan</label>
+                 <div class="field col-12 md:col-4">
+                  <Textarea 
+                    v-model="ket"
+                    :autoResize="true" 
+                    rows="5" 
+                    cols="20"
+                    placeholder="Masukan Keterangan . . ."
+                    :class="{ 'p-invalid': error.ket }"
+                  />
+                      <small class="p-error" v-if="error.ket"
+                        >{{error.ket}}
+                      </small>
+                </div>
+              </div>
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -107,7 +140,7 @@
                 />
                 <Button
                   label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
+                  class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push('/ict-request')"
                 />
@@ -122,11 +155,14 @@ export default {
   data() {
     return {
       errors: [],
+      level:[],
       error:[],
       tgl: new Date(),
       tipereq: null,
+      priolev:null,
       usr_name:null,
       usr_divisi : null,
+      ket:null,
       divisi:[],
       bisnis: null,
       type: [],
@@ -176,6 +212,7 @@ export default {
         this.type = response.data.ref;
         this.bu = response.data.bisnis;
         this.divisi = response.data.divisi;
+        this.level = response.data.prio;
       });
     },
     CreateIct() {
@@ -183,9 +220,8 @@ export default {
       this.error = [];
       if (
         // this.tipereq != null &&
-        this.bisnis != null &&
-        this.usr_name != null &&
-        this.usr_divisi != null
+        this.priolev != null &&
+        this.ket != null
       ){
         const data = new FormData();
         data.append("tgl", this.tgl);
@@ -193,6 +229,8 @@ export default {
         data.append("bisnis", this.bisnis);
         data.append("user_name", this.usr_name);
         data.append("user_divisi", this.usr_divisi);
+        data.append("ket", this.ket);
+        data.append("priolev", this.priolev);
 
         this.axios.post('api/add-ict', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.$toast.add({
@@ -206,17 +244,11 @@ export default {
           this.errors = error.response.data.errors;
          });
       }else{
-        if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Belum Diisi"
+        if(this.priolev == null){
+          this.error.priolev = "Priority Level Belum Diisi"
         }
-        if(this.bisnis == null){
-          this.error.bisnis = "Bisnis Unit Belum Diisi"
-        }
-        if(this.usr_name == null){
-          this.error.usr_name = "Pengguna Belum Diisi"
-        }
-        if(this.usr_divisi == null){
-          this.error.usr_divisi = "Divisi Pengguna Belum Diisi"
+        if(this.ket == null){
+          this.error.ket = "Keterangan Belum Diisi"
         }
         
       }
