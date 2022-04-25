@@ -44,7 +44,7 @@
           <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">

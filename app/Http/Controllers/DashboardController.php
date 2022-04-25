@@ -134,7 +134,7 @@ class DashboardController extends Controller
         $grafik2 = DB::table('VREQ_MST_BULAN')->get();
         $grafik3 = DB::table('VREQ_PER_STATUS')->get();
         $personnel = DB::table('ireq_dtl')
-        ->select('ireq_assigned_to1',DB::raw("count(ireqd_id) as jumlah"))
+        ->select(DB::raw("COALESCE(ireq_assigned_to2,ireq_assigned_to1) AS ireq_assigned_to"),DB::raw("count(ireqd_id) as jumlah"))
         ->whereNotNull('ireq_assigned_to1')
         ->groupBy('ireq_assigned_to1')
         ->get();

@@ -221,11 +221,11 @@ const routes = [
         path: '/ict-request-divisi3',
         component: ()=> import('./components/Request&Helpdesk/Status_change_request/Ict_request_divisi3.vue'),
     },
-    // {
-    //     name: 'Ict Request Divisi 3 Detail',
-    //     path: '/ict-request-divisi3-detail/:code',
-    //     component: ()=> import('./components/Request&Helpdesk/Status_change_request/Ict_request_divisi3_detail.vue'),
-    // },
+    {
+        name: 'Ict Request Divisi 3 Detail',
+        path: '/ict-request-divisi3-detail/:code',
+        component: ()=> import('./components/Request&Helpdesk/Status_change_request/Ict_request_divisi3_detail.vue'),
+    },
     //ict request (detail)
     {
         name: 'Ict Request Detail',

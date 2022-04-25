@@ -9,7 +9,7 @@
                 <h4>ICT Request</h4>
             </template>
         </Toolbar>
-            <TabView ref="tabView2">
+            <TabView scrollable ref="tabView2">
               <TabPanel header="Permohonan Divisi">
                 <DataTable
                   :value="permohonan"
@@ -360,7 +360,83 @@
                   <Column headerStyle="min-width:8rem">
                     <template #body="slotProps">
                       <Button
-                        class="p-button-rounded p-button-secondary mr02"
+                        class="p-button-rounded p-button-secondary mr-2"
+                        icon="pi pi-info-circle"
+                        v-tooltip.right="'Detail'"
+                        @click="$router.push({
+                            name: 'Ict Request Reviewer Detail',
+                            params: { code: slotProps.data.ireq_id }, })"
+                      />
+                    </template>
+                  </Column>
+                  <template #footer>
+                      <div class="p-grid p-dir-col">
+                      <div class="p-col">
+                        <div class="box">
+                          <Button
+                            v-if="this.reject.length"
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfReject()"
+                          />
+                          <Button 
+                            v-if="this.reject.length"
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelReject()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </DataTable>
+                </TabPanel>
+                <TabPanel header="Penugasan Request">
+                  <DataTable
+                    :value="penugasan"
+                    :paginator="true"
+                    :rows="10"
+                    :loading="loading"
+                    :filters="filters"
+                    :rowHover="true"
+                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                    :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Penugasan Request"
+                    responsiveLayout="scroll"
+                  >
+                  <template #header>
+                    <div class="table-header text-right">
+                      <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                      </span>
+                    </div>
+                  </template>
+                  <template #empty>
+                    Not Found
+                  </template>
+                  <template #loading>
+                    Loading ICT Request data. Please wait.
+                  </template>
+                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                    <template #body="slotProps">
+                      {{ formatDate(slotProps.data.ireq_date) }}
+                    </template>
+                  </Column>
+                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column headerStyle="min-width:8rem">
+                    <template #body="slotProps">
+                      <Button
+                        class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.right="'Detail'"
                         @click="$router.push({
@@ -431,7 +507,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:4rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:3rem"/>
                   <Column headerStyle="min-width:6rem">
@@ -510,7 +586,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
                   <Column>
@@ -586,7 +662,7 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
                   <template #footer>
                       <div class="grid dir-col">
@@ -683,6 +759,7 @@ export default {
   data() {
     return {
         dialogAssign:false,
+        submitted:false,
         assign:{
           id:null,
           name: null
@@ -699,6 +776,7 @@ export default {
         atasandivisi:[],
         manager:[],
         reject:[],
+        penugasan:[],
         sedangDikerjakan:[],
         sudahDikerjakan:[],
         selesai:[],
@@ -711,36 +789,20 @@ export default {
     };
   },
   created() {
-    this.cekUser();
+    this.getIct();
   },
   methods: {
-    cekUser(){
-    if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
-          this.getIct();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-        } 
-        else {
-            this.$router.push('/login');
-        }
-    },
     getIct(){
       this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.permohonan = response.data.ict;
           this.loading = false;
           this.atasandivisi = response.data.ict1;
-          this.manager = response.data.ict2
-          this.reject = response.data.ict3
+          this.manager = response.data.ict2;
+          this.reject = response.data.ict3;
+          this.penugasan = response.data.ict7;
           this.sedangDikerjakan = response.data.ict4
           this.sudahDikerjakan = response.data.ict5
-          this.selesai = response.data.ict6
+          this.selesai = response.data.ict6;
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -750,6 +812,9 @@ export default {
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
            }
+          if(error.response.status == 403){
+            this.$route.push('/access');
+          }
         });
     },  
     formatDate(date) {

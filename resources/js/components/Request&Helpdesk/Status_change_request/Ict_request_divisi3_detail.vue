@@ -43,24 +43,14 @@
           <template #loading>
             Loading data. Please wait.
           </template>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
           <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
-          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_desc" header="Keterangan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
-          <Column style="min-width:12rem">
-            <template #body="slotProps">
-              <Button
-                v-if="slotProps.data.ireq_status == 'Penugasan'"
-                class="p-button-rounded p-button-info p-mr-2 p-mb-2"
-                icon="pi pi-pencil"
-                @click="edit(slotProps.data.ireqd_id)"
-              />
-            </template>
-          </Column>
           <template #footer>
-               <div class="p-grid p-dir-col">
+            <div class="p-grid p-dir-col">
 			        <div class="p-col">
 				        <div class="box">
                    <Button
@@ -75,58 +65,6 @@
             </div>
            </template>
         </DataTable>
-        <Dialog
-        v-model:visible="dialogEdit"
-        :style="{ width: '500px' }"
-        header="ICT Request"
-        :modal="true"
-        class="fluid"
-      >
-        <div class="fluid">
-          <div class="field grid">
-            <label class="col-fixed w-9rem" style="width:100px">No. Request</label>
-              <div class="col-fixed">
-                <InputText
-                  v-model="editDetail.ireq_no"
-                  disabled
-                />
-              </div>
-            </div>
-        </div>
-        <div class="fluid">
-          <div class="field grid">
-            <label class="col-fixed w-9rem" style="width:100px">Nama Peripheral</label>
-              <div class="col-fixed">
-                <InputText
-                  v-model="editDetail.name"
-                  disabled
-                />
-              </div>
-            </div>
-        </div>
-        <div class="fluid">
-          <div class="field grid">
-            <label class="col-fixed w-9rem" style="width:100px">Status</label>
-              <div class="col-fixed">
-                <Dropdown
-                  v-model="editDetail.status"
-                  :options="status"
-                  optionLabel="name"
-                  optionValue="code"
-                  :showClear="true"
-                  :class="{ 'p-invalid': submitted && !editDetail.status }"
-                />
-                <small class="p-error" v-if="submitted && !editDetail.status"
-                  >Status Belum Diisi.
-                </small>
-              </div>
-            </div>
-        </div>
-        <template #footer>
-            <Button label="Yes" @click="submit()" class="p-button" autofocus />
-            <Button label="No" @click="cancel()" class="p-button-text" />
-        </template>
-      </Dialog>   
       </div>
     </div>
   </div>
@@ -178,23 +116,10 @@ export default {
         this.getNoreq();
         });
       },
-    edit(ireqd_id){
-      this.dialogEdit = true;
-      this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.editDetail = response.data;
-      });
-      this.getStatus();
-    },
     getStatus(){
       this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.status = response.data;
       });
-    },
-    cancel(){
-      this.dialogEdit = false;
-      this.status = [];
-      this.editDetail = [];
-      this.submitted = false;
     },
     submit(){
       this.submitted = true;

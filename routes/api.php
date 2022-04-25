@@ -229,6 +229,8 @@ Route::middleware('auth:sanctum')->group(function(){
     //ict request (detail)
     Route::get('/ict-detail/{code}','IctDetailController@index');
     Route::get('/ict-detail-penugasan/{code}','IctDetailController@detailPenugasan');
+    Route::put('/rejectPersonnel/{ireq_id}/{usr_fullname}','IctDetailController@rbp');
+    Route::get('/acceptPersonnel/{ireq_id}/{usr_fullname}','IctDetailController@abp');
     Route::get('/get-detail-done/{code}/{usr_fullname}','IctDetailController@getDetailDone');
     Route::post('/add-ict-detail/{code}','IctDetailController@save');
     Route::get('/edit-ict-detail/{ireq}','IctDetailController@edit');
@@ -239,6 +241,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/detail/{ireqd_id}','IctDetailController@getDetail');
     Route::put('/update-status-done/{code}','IctDetailController@updateStatusDone');
     Route::put('/updateAssignPerDetail/{code}','IctDetailController@updateAssign');
+    Route::get('/appd/{ireqd_id}/{code}','IctDetailController@appd');
+    Route::put('/updateAssignPerDetailFromReject/{code}','IctDetailController@updateAssignFromReject');
     Route::get('/updateStatusClosingDetail/{ireqd_id}/{ireq_no}','IctDetailController@updateStatusClosingDetail');
     Route::post('/submit-rating','IctDetailController@submitRating');
     //Route::get('/report-ict-detail-pdf/{code}','IctDetailController@cetak_pdf');

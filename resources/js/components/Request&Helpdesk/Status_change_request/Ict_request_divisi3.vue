@@ -9,7 +9,7 @@
                 <h4>ICT Request</h4>
               </template>
             </Toolbar>
-            <TabView ref="tabview1" v-model:activeIndex="active1">
+            <TabView ref="tabview1">
               <TabPanel header="Penugasan Request">
                 <DataTable
                   :value="penugasan"
@@ -40,10 +40,7 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -51,26 +48,25 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
-                  <Column style="min-width:15rem">
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column style="min-width:20rem">
                   <template #body="slotProps">
                     <Button
-                      v-if="slotProps.data.ireq_status == 'Penugasan'"
                       class="p-button-rounded p-button-info mr-2"
-                      icon="pi pi-pencil"
-                      @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
+                      icon="pi pi-info-circle"
+                      @click="$router.push({
+                            name: 'Ict Request Divisi 3 Detail',
+                            params: { code: slotProps.data.ireq_id }, })"
                     />
                       <Button
                         class="p-button-raised p-button-info p-button-text mr-2"
-                        label="CA"
-                        @click="$router.push({
-                            name: 'add Cash Advance',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        label="Accept"
+                        @click="acceptRequest(slotProps.data.ireq_id)"
                       />
                       <Button
-                        class="p-button-raised p-button-text mt-2"
-                        label="PR"
+                        class="p-button-raised p-button-danger p-button-text mt-2"
+                        label="Reject"
+                        @click="rejectRequest(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -98,7 +94,7 @@
               </TabPanel>
               <TabPanel header="Yang Direject">
                 <DataTable
-                  :value="sedangDikerjakan"
+                  :value="reject"
                   :paginator="true"
                   :rows="10"
                   :loading="loading"
@@ -126,10 +122,7 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -137,27 +130,16 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
                   <Column style="min-width:15rem">
                   <template #body="slotProps">
-                    <Button
-                      v-if="slotProps.data.ireq_status == 'Penugasan'"
+                   <Button
                       class="p-button-rounded p-button-info mr-2"
-                      icon="pi pi-pencil"
-                      @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
-                    />
-                      <Button
-                        class="p-button-raised p-button-info p-button-text mr-2"
-                        label="CA"
-                        @click="$router.push({
-                            name: 'add Cash Advance',
+                      icon="pi pi-info-circle"
+                      @click="$router.push({
+                            name: 'Ict Request Divisi 3 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
-                      />
-                      <Button
-                        class="p-button-raised p-button-text mt-2"
-                        label="PR"
-                      />
+                    />
                     </template>
                   </Column>
                   <template #footer>
@@ -397,58 +379,36 @@
                 </DataTable> 
                 </TabPanel>
             </TabView>
-            <Dialog
+          <Dialog
             v-model:visible="dialogEdit"
             :style="{ width: '500px' }"
-            header="ICT Request"
+            header="Dialog Reject Request"
             :modal="true"
             class="fluid"
           >
             <div class="fluid">
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">No. Request</label>
+                <label class="col-fixed w-9rem" style="width:100px">Alasan</label>
                   <div class="col-fixed">
-                    <InputText
-                      v-model="editDetail.ireq_no"
-                      disabled
+                    <Textarea
+                      v-model="editDetail.ireq_reason"
+                      :autoResize="true" 
+                        rows="5" 
+                        cols="20"
+                        placeholder="Masukan Alasan"
+                        :class="{ 'p-invalid': submitted && !editDetail.ireq_reason }"
                     />
-                  </div>
-                </div>
-            </div>
-            <div class="fluid">
-              <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">Nama Peripheral</label>
-                  <div class="col-fixed">
-                    <InputText
-                      v-model="editDetail.name"
-                      disabled
-                    />
-                  </div>
-                </div>
-            </div>
-            <div class="fluid">
-              <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">Status</label>
-                  <div class="col-fixed">
-                    <Dropdown
-                      v-model="editDetail.status"
-                      :options="status"
-                      optionLabel="name"
-                      optionValue="code"
-                      :showClear="true"
-                      :class="{ 'p-invalid': submitted && !editDetail.status }"
-                    />
-                    <small class="p-error" v-if="submitted && !editDetail.status"
-                      >Status Belum Diisi.
+                    <small v-if="submitted && !editDetail.ireq_reason" class="p-error">
+                      Alasan Belum Diisi
                     </small>
                   </div>
                 </div>
             </div>
             <template #footer>
-                <Button label="Yes" @click="submit()" class="p-button" autofocus />
+                <Button label="Yes" @click="submitReject()" class="p-button" autofocus />
                 <Button label="No" @click="cancel()" class="p-button-text" />
             </template>
-        </Dialog>  
+          </Dialog>   
       </div>
     </div>
   </div>
@@ -460,11 +420,11 @@ export default {
   data() {
     return {
         dialogEdit:false,
-        active1:0,
         loading: true,
         submitted:false,
         selesai: [],
         penugasan:[],
+        reject:[],
         sedangDikerjakan:[],
         sudahDikerjakan:[],
         user:[],
@@ -473,70 +433,18 @@ export default {
         checkname : [],
         checkto : [],
         id : localStorage.getItem('id'),
-        editDetail:[],
-        status:[],
+        editDetail:{ ireq_reason :''},
         code:null
     };
   },
   mounted() {
-    this.cekUser();
+    this.getUser();
   },
   methods: {
-    cekUser(){
-      if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Status Change Request") || this.checkto.includes("/ict-request-divisi3")){ 
-          this.getUser();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-      } else {
-        this.$router.push('/login');
-      }
-    },
     getUser(){
       this.axios.get('api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.user = response.data;
         this.getData();
-      })
-    },
-    edit(ireqd_id,ireq_id){
-      this.code = ireq_id;
-      this.dialogEdit = true;
-      this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.editDetail = response.data;
-      });
-      this.getStatus();
-    },
-    cancel(){
-      this.code=null;
-      this.dialogEdit = false;
-      this.status = [];
-      this.editDetail = [];
-      this.submitted = false;
-    },
-    submit(){
-      this.submitted = true;
-      if(this.editDetail.status != null){
-        this.axios.put('/api/update-status-done/'+this.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-          this.$toast.add({
-            severity:'success', summary: 'Success', detail:'Status Berhasil Dirubah', life: 3000
-          });
-          this.cancel();
-          this.getData();
-        });
-      }
-    },
-    getData(){
-      this.axios.get('api/get-sedang-dikerjakan/'+this.user.usr_fullname,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.sedangDikerjakan = response.data.ict;
-        this.sudahDikerjakan = response.data.ict1;
-        this.selesai = response.data.ict2;
-        this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -546,6 +454,63 @@ export default {
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
            }
+      });
+    },
+    acceptRequest(ireq_id){
+      this.$confirm.require({
+        message: "Apakah anda yakin?",
+        header: "ICT Request    ",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button",
+        acceptLabel: "Ya",
+        rejectLabel: "Tidak",
+          accept: () => {
+            this.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Accept Request Success",
+              life : 1000
+            });
+            this.axios.get('/api/acceptPersonnel/' +ireq_id + '/' + this.user.usr_fullname, {headers: {'Authorization': 'Bearer '+this.token}});
+            
+            this.getData();
+        },
+        reject: () => {},
+      });
+      },
+    rejectRequest(ireq_id){
+      this.code = ireq_id;
+      this.dialogEdit = true;
+    },
+    cancel(){
+      this.dialogEdit = false;
+      this.editDetail = [];
+      this.submitted = false;
+    },
+    submitReject(){
+      this.submitted = true;
+      if(this.editDetail.ireq_reason != null){
+        this.axios.put('/api/rejectPersonnel/'+this.code + '/' + this.user.usr_fullname, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.$toast.add({
+            severity:'success', summary: 'Success', detail:'Success Update', life: 3000
+          });
+          this.cancel();
+          this.getData();
+        });
+      }
+    },
+    getData(){
+      this.axios.get('api/get-sedang-dikerjakan/'+this.user.usr_fullname,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.penugasan = response.data.ict3;
+        this.reject = response.data.ict4;
+        this.sedangDikerjakan = response.data.ict;
+        this.sudahDikerjakan = response.data.ict1;
+        this.selesai = response.data.ict2;
+        this.loading = false;
+      }).catch(error=>{
+          if(error.response.status == 403){
+             this.$router.push('/access');
+          }
         });
     },
     formatDate(date) {

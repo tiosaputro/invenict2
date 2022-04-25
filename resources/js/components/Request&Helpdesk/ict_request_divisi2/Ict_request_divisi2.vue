@@ -48,7 +48,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
                   <Column style="min-width:30rem">
                     <template #body="slotProps">
                       <Button
@@ -173,7 +173,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
                 </DataTable>  
                 </TabPanel>
                 <TabPanel header="Selesai">
@@ -216,7 +216,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button

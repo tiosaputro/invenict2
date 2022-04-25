@@ -43,7 +43,7 @@
           <Column field="invent_code" header="Kode" :sortable="true" style="min-width:12rem"/>
           <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
                 <Button
@@ -104,14 +104,14 @@
                     <label class="p-col-12 p-mb-2 p-md-2 p-mb-md-0" style="width:100px">Petugas (ICT)</label>
                     <div class="p-col-3 p-md-6">
                         <Dropdown
-                            v-model="assign.ireq_assigned_to1"
+                            v-model="assign.ireq_assigned_to"
                             :options="petugas"
                             optionValue="name"
                             optionLabel="name"
                             placeholder="Pilih Petugas (ICT)"
-                            :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to1 }"
+                            :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to }"
                         />
-                        <small v-if="submitted && !assign.ireq_assigned_to1" class="p-error">
+                        <small v-if="submitted && !assign.ireq_assigned_to" class="p-error">
                             Petugas(ICT) Harus Diisi
                         </small>
                     </div>
