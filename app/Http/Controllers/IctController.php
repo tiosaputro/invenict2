@@ -50,6 +50,7 @@ class IctController extends Controller
     function __construct(){
         $this->reviewer = "/ict-request-reviewer";
         $this->personnel = "/ict-request-divisi3";
+        $this->manager = "/ict-request-manager";
         $date = Carbon::now();
         $this->date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
@@ -103,6 +104,10 @@ class IctController extends Controller
     }
     function getDataManager()
     {
+    $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+    $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+    $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+    if($aksesmenu->contains($this->manager)){
         $ict = DB::table('ireq_mst as im')
         ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','im.ireq_status','dr.div_name','lr.lookup_desc as ireq_statuss')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
@@ -153,8 +158,24 @@ class IctController extends Controller
 
         $ict4 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
         $ict5 = DB::Table('v_ireq_mst_selesai')->get();
+        $ict6 = DB::table('ireq_mst as im')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->select('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','NT')
+                ->Orwhere('im.ireq_status','RT');
+            })
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->orderBy('im.creation_date','ASC')
+            ->get();
 
-        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5],200);
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
+        }else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     function getDataManagerVerifikasi($code)
     {
@@ -292,14 +313,14 @@ class IctController extends Controller
             $ict7 = DB::table('ireq_mst as im')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->select('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
             ->where(function($query){
                 return $query
                 ->where('im.ireq_status','NT')
                 ->Orwhere('im.ireq_status','RT');
             })
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->groupBy('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
             ->orderBy('im.creation_date','ASC')
             ->get();
 
@@ -404,7 +425,24 @@ class IctController extends Controller
     function asignPerRequestReviewer(Request $request)
     {
         $ict = Ict::where('ireq_id',$request->id)->first();
-            
+        if($ict->ireq_status == 'RT'){
+            $ict->ireq_assigned_to2 = $request->name;
+            $ict->last_updated_by = Auth::user()->usr_name;
+            $ict->last_update_date = $this->newUpdate;
+            $ict->program_name = "IctController_asignPerRequestReviewer";
+            $ict->save();
+
+            $dtl = IctDetail::where('ireq_id',$request->id)->get();
+            foreach ($dtl as $d){
+                $d->ireq_assigned_to2 = $request->name;
+                $d->last_update_date = $this->newUpdate;
+                $d->last_updated_by = Auth::user()->usr_name;
+                $d->program_name = "IctController_asignPerRequestReviewer";
+                $d->save();
+            }
+        return response()->json('Success Update');
+        }
+        else{
             $ict->ireq_assigned_to1 = $request->name;
             $ict->last_updated_by = Auth::user()->usr_name;
             $ict->last_update_date = $this->newUpdate;
@@ -421,6 +459,7 @@ class IctController extends Controller
             }
         
         return response()->json('Success Update');
+        }
     }
     function submitAssignPerRequest($ireq_id)
     {

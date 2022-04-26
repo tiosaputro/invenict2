@@ -87,23 +87,50 @@ class IctDetailController extends Controller
     }
     function rbp(Request $request,$ireq_id, $usr_fullname){
         $dtl = IctDetail::where('ireq_id',$ireq_id)->where('ireq_assigned_to1',$usr_fullname)->get();
-        foreach ($dtl as $d) {
-            $d->ireq_status = 'RT';
-            $d->ireq_assigned_to1_reason = $request->ireq_reason;
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctDetailController_rbp";
-            $d->save();
+        $countAssign = IctDetail::select('ireqd_id')->where('ireq_id',$ireq_id)->where('ireq_assigned_to1',$usr_fullname)->count();
+        $countDetail = IctDetail::select('ireqd_id')->where('ireq_id',$ireq_id)->count();
+        if($countAssign == $countDetail){
+            $ict = Ict::find($ireq_id);
+            $ict->ireq_status = 'RT';
+            $ict->ireq_assigned_to1_reason = $request->ireq_reason;
+            $ict->last_update_date = $this->newUpdate;
+            $ict->last_updated_by = Auth::user()->usr_name;
+            $ict->program_name = "IctDetailController_rbp";
+            $ict->save();
+            foreach ($dtl as $d) {
+                $d->ireq_status = 'RT';
+                $d->ireq_assigned_to1_reason = $request->ireq_reason;
+                $d->last_update_date = $this->newUpdate;
+                $d->last_updated_by = Auth::user()->usr_name;
+                $d->program_name = "IctDetailController_rbp";
+                $d->save();
+            }
+            // $result = DB::connection('oracle')->getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST($ireq_id); end;");
+            return json_encode('Updated Successfully');
         }
-        $result = DB::connection('oracle')->getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST($ireq_id); end;");
-        return json_encode('Updated Successfully');
+        else{
+            foreach ($dtl as $d) {
+                $d->ireq_status = 'RT';
+                $d->ireq_assigned_to1_reason = $request->ireq_reason;
+                $d->last_update_date = $this->newUpdate;
+                $d->last_updated_by = Auth::user()->usr_name;
+                $d->program_name = "IctDetailController_rbp";
+                $d->save();
+            }
+            // $result = DB::connection('oracle')->getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST($ireq_id); end;");
+            return json_encode('Updated Successfully');
+        }
+        
     }
     Public function getNo_req($code)
     {
         $dtl = DB::table('ireq_mst as im')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('im.ireq_status','lr.lookup_code')
+                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+        })
         ->select('im.ireq_no as noreq','im.ireq_type','im.ireq_status as cekStatus',
-                DB::raw("CASE WHEN im.ireq_status = 'NA1' Then 'Menunggu Diapprove Atasan' WHEN im.ireq_status = 'NA2' Then 'Menunggu Diapprove Manager' WHEN im.ireq_status = 'A1' Then 'Approved By Atasan' WHEN im.ireq_status = 'A2' Then 'Approved By ICT Manager'
-         WHEN im.ireq_status = 'T' Then 'Penugasan' WHEN im.ireq_status = 'RR' Then 'Reject By Reviewer' WHEN im.ireq_status = 'RA1' Then 'Reject By Atasan' WHEN im.ireq_status = 'RA2' Then 'Reject By ICT Manager' WHEN im.ireq_status = 'D' Then 'Done' WHEN im.ireq_status = 'C' Then 'Close' WHEN im.ireq_status = 'P' Then 'Permohonan' end as ireq_status "))
+                'lr.lookup_desc as ireq_status')
          ->where('im.ireq_id',$code)
          ->first();
          return response()->json($dtl);
@@ -427,9 +454,6 @@ class IctDetailController extends Controller
         return json_encode('Updated Successfully');
     }
     public function appd($ireqd_id,$code){
-        $ict = Ict::find($code);
-        $ict->ireq_assigned_to1 = '';
-        $ict->save();
         $dtl = IctDetail::find($ireqd_id);
         $dtl->ireq_status = 'T';
         $dtl->last_update_date = $this->newUpdate;

@@ -154,9 +154,9 @@
                     optionLabel="name" 
                     display="chip"
                     placeholder="Select Roles" 
-                    :class="{ 'p-invalid': errors.usr_roles }"
+                    :class="{ 'p-invalid': submitted.usr_roles }"
                   />
-                  <small class="p-error" v-if="submitted && !user.image">
+                  <small class="p-error" v-if="submitted && !user.usr_roles">
                     Foto Belum Disi 
                   </small>
                 </div>

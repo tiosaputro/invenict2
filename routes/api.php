@@ -180,8 +180,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-personnel','DashboardController@getPersonnel');
     Route::get('/count-per-status-ict/{ictPersonnel}','DashboardController@countPerStatusIct');
 
-});
-Route::middleware('auth:sanctum')->group(function(){
     //ict request reviewer
     Route::get('/get-data-reviewer','IctController@getDataReviewer');
     Route::put('/reject-by-reviewer/{code}','IctController@rejectReviewer');

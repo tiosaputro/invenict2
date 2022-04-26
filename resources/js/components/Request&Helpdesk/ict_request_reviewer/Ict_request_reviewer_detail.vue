@@ -56,13 +56,13 @@
           <Column style="min-width:14rem">
             <template #body="slotProps">
               <Button
-                v-if="slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+                v-if="slotProps.data.ireq_status == 'Reject By ICT Personnel' && this.status != 'RT'"
                 class="p-button-raised p-button-text mr-2"
                 label="Assign"
                 @click="Assignrequest(slotProps.data.ireqd_id)"
               />
               <Button
-                v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+                v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.ireq_status == 'Reject By ICT Personnel' && this.status != 'RT'"
                 class="p-button-raised p-button-text mr-2 mt-2"
                 label="Submit"
                 @click="Submit(slotProps.data.ireqd_id)"

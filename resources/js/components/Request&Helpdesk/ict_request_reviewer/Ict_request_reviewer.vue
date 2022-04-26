@@ -432,8 +432,9 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
-                  <Column headerStyle="min-width:8rem">
+                  <Column style="min-width:20rem">
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -442,6 +443,18 @@
                         @click="$router.push({
                             name: 'Ict Request Reviewer Detail',
                             params: { code: slotProps.data.ireq_id }, })"
+                      />
+                       <Button
+                        v-if="slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+                        class="p-button-raised p-button-text p-button-sm mt-2"
+                        @click="AssignPerRequest(slotProps.data.ireq_id)"
+                        label="Assign Per-Request"
+                      />
+                      <Button
+                        v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+                        class="p-button-raised p-button-text p-button-sm p-button-success mr-2"
+                        @click="Submit(slotProps.data.ireq_id)"
+                        label="Submit"
                       />
                     </template>
                   </Column>
@@ -725,10 +738,10 @@
                 :closable="false"
                 class="fluid"
             >
-                <div class="p-fluid">
+                <div class="fluid">
                 <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:100px">Petugas (ICT)</label>
-                    <div class="col">
+                    <label class="col-fixed w-9rem">Petugas (ICT)</label>
+                    <div class="col-fixed w-9rem">
                         <Dropdown
                             v-model="assign.name"
                             :options="petugas"

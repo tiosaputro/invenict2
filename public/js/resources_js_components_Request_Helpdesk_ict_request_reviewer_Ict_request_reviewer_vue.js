@@ -604,23 +604,20 @@ var _hoisted_73 = {
   "class": "p-error"
 };
 var _hoisted_74 = {
-  "class": "p-fluid"
+  "class": "fluid"
 };
 var _hoisted_75 = {
   "class": "field grid"
 };
 
 var _hoisted_76 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "100px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Petugas (ICT)", -1
 /* HOISTED */
 );
 
 var _hoisted_77 = {
-  "class": "col"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_78 = {
   key: 0,
@@ -1460,6 +1457,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_assigned_to",
+                header: "Personnel ICT",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
                 header: "Status",
                 sortable: true,
@@ -1467,7 +1471,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                headerStyle: "min-width:8rem"
+                style: {
+                  "min-width": "20rem"
+                }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
@@ -1485,7 +1491,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   /* PROPS */
                   , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
                     right: true
-                  }]])];
+                  }]]), slotProps.data.ireq_status == 'Reject By ICT Personnel' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                    key: 0,
+                    "class": "p-button-raised p-button-text p-button-sm mt-2",
+                    onClick: function onClick($event) {
+                      return $options.AssignPerRequest(slotProps.data.ireq_id);
+                    },
+                    label: "Assign Per-Request"
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_assigned_to2 && slotProps.data.ireq_status == 'Reject By ICT Personnel' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                    key: 1,
+                    "class": "p-button-raised p-button-text p-button-sm p-button-success mr-2",
+                    onClick: function onClick($event) {
+                      return $options.Submit(slotProps.data.ireq_id);
+                    },
+                    label: "Submit"
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
                 }),
                 _: 1
                 /* STABLE */
