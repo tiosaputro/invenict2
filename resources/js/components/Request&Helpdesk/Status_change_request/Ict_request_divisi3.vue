@@ -131,6 +131,7 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to1_reason" header="Alasan" :sortable="true" style="min-width:10rem"/>
                   <Column style="min-width:15rem">
                   <template #body="slotProps">
                    <Button
@@ -142,26 +143,6 @@
                     />
                     </template>
                   </Column>
-                  <template #footer>
-                    <div class="p-grid p-dir-col">
-                      <div class="p-col">
-                        <div class="box">
-                          <Button
-                            label="Pdf"
-                            class="p-button-raised p-button-danger mr-2"
-                            icon="pi pi-file-pdf"
-                            @click="CetakPdfSedangDikerjakan()"
-                          />
-                          <Button 
-                            label="Excel"
-                            class="p-button-raised p-button-success mr-2"
-                            icon="pi pi-print"
-                            @click="CetakExcelSedangDikerjakan()" 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </template>
                 </DataTable>   
               </TabPanel>
               <TabPanel header="Sedang Dikerjakan">

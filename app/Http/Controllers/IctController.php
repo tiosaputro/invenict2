@@ -51,6 +51,8 @@ class IctController extends Controller
         $this->reviewer = "/ict-request-reviewer";
         $this->personnel = "/ict-request-divisi3";
         $this->manager = "/ict-request-manager";
+        $this->approvalrequestor = "/ict-request-divisi1";
+        $this->requestor = "/ict-request";
         $date = Carbon::now();
         $this->date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
@@ -104,75 +106,75 @@ class IctController extends Controller
     }
     function getDataManager()
     {
-    $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-    $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
-    $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
-    if($aksesmenu->contains($this->manager)){
-        $ict = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','im.ireq_status','dr.div_name','lr.lookup_desc as ireq_statuss')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where(function($query){
-            return $query
-            ->where('im.ireq_status','NA2')
-            ->Orwhere('im.ireq_status','NA1')
-            ->Orwhere('im.ireq_status','P');
-        })
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status','im.ireq_requestor','dr.div_name','im.creation_date')
-        ->orderBy('im.creation_date','ASC')
-        ->get(); 
-
-        $ict1 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor', 'dr.div_name','lr.lookup_desc as ireq_status')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('im.ireq_status','A2')
-        ->orwhere('im.ireq_status','A1')
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status','im.ireq_requestor','dr.div_name','im.creation_date')
-        ->orderBy('im.creation_date','ASC')
-        ->get(); 
-
-        $ict2 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_reason','lr.lookup_desc as ireq_status')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('im.ireq_status','RR')
-        ->orwhere('im.ireq_status','RA1')
-        ->orwhere('im.ireq_status','RA2')
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_reason')
-        ->orderBy('im.creation_date','ASC')
-        ->get(); 
-
-        $ict3 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('im.ireq_status','T')
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-
-        $ict4 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
-        $ict5 = DB::Table('v_ireq_mst_selesai')->get();
-        $ict6 = DB::table('ireq_mst as im')
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->manager)){
+            $ict = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','im.ireq_status','dr.div_name','lr.lookup_desc as ireq_statuss')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-            ->select('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
             ->where(function($query){
                 return $query
-                ->where('im.ireq_status','NT')
-                ->Orwhere('im.ireq_status','RT');
+                ->where('im.ireq_status','NA2')
+                ->Orwhere('im.ireq_status','NA1')
+                ->Orwhere('im.ireq_status','P');
             })
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->groupBy('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status','im.ireq_requestor','dr.div_name','im.creation_date')
+            ->orderBy('im.creation_date','ASC')
+            ->get(); 
+
+            $ict1 = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor', 'dr.div_name','lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('im.ireq_status','A2')
+            ->orwhere('im.ireq_status','A1')
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status','im.ireq_requestor','dr.div_name','im.creation_date')
+            ->orderBy('im.creation_date','ASC')
+            ->get(); 
+
+            $ict2 = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_reason','lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('im.ireq_status','RR')
+            ->orwhere('im.ireq_status','RA1')
+            ->orwhere('im.ireq_status','RA2')
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_reason')
+            ->orderBy('im.creation_date','ASC')
+            ->get(); 
+
+            $ict3 = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('im.ireq_status','T')
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
             ->orderBy('im.creation_date','ASC')
             ->get();
 
-        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
+            $ict4 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
+            $ict5 = DB::Table('v_ireq_mst_selesai')->get();
+            $ict6 = DB::table('ireq_mst as im')
+                ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+                ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+                ->select('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+                ->where(function($query){
+                    return $query
+                    ->where('im.ireq_status','NT')
+                    ->Orwhere('im.ireq_status','RT');
+                })
+                ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+                ->groupBy('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+                ->orderBy('im.creation_date','ASC')
+                ->get();
+
+            return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
         }else{
             return response(["message"=>"Cannot Access"],403);
         }
@@ -328,7 +330,7 @@ class IctController extends Controller
         }else{
             return response(["message"=>"Cannot Access"],403);
          }
-        }
+    }
     function rejectReviewer(Request $request, $code)
     {
         
@@ -578,256 +580,301 @@ class IctController extends Controller
     }
     Public function getIct($usr_name)
     {
-        $ict = DB::table('ireq_mst as id')
-        ->leftjoin('ireq_dtl as idm','id.ireq_id','idm.ireq_id')
-        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
-        ->leftJoin('lookup_refs as llr',function ($join) {
-            $join->on('id.ireq_status','llr.lookup_code')
-                  ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-        })
-        ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
-        ->select('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','dr.div_name','id.ireq_requestor',
-                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'),'llr.lookup_desc as ireq_status')
-        ->where('id.created_by',$usr_name)
-        ->where(function($query){
-            return $query
-            ->whereNull('id.ireq_status')
-            ->orWhere('id.ireq_status','P');
-            })
-        ->groupBy('llr.lookup_desc','id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.creation_date','dr.div_name','id.ireq_status','id.ireq_requestor')
-        ->orderBy('id.creation_date','ASC')
-        ->get();
-
-        $ict1 = DB::table('ireq_mst as im')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor','im.ireq_user','lr.lookup_desc as ireq_status')
-        ->where('im.created_by',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where(function($query){
-            return $query
-            ->where('im.ireq_status','A1')
-            ->orWhere('im.ireq_status','A2');
-        })
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-
-        $ict2 = DB::table('ireq_mst as im')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->select('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_reason','lr.lookup_desc as ireq_status')
-        ->where('im.created_by',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where(function($query){
-            return $query
-            ->where('im.ireq_status','RR')
-            ->orwhere('im.ireq_status','RA1')
-            ->orwhere('im.ireq_status','RA2');
-        })
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-
-        $ict3 =  DB::table('ireq_mst as im')
-        ->select('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('im.ireq_status','T')
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where('im.created_by',$usr_name)
-        ->groupBy('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-
-        $ict4 = DB::table('ireq_mst as im')
-        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
-        ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
-        ->select('im.ireq_requestor','dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
-                 'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id',
-                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
-        ->where('idd.ireq_status','D')
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where('im.created_by',$usr_name)
-        ->orderBy('idd.ireqd_id','ASC')
-        ->get();
-
-        $ict5 = DB::table('ireq_mst as im')
-        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
-        ->select('im.ireq_requestor','dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
-                 'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id','idd.ireq_value',
-                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where('idd.ireq_status','C')
-        ->where('im.created_by',$usr_name)
-        ->orderBy('idd.ireqd_id','ASC')
-        ->get();
-        
-        $ict6 = DB::table('ireq_mst as im')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->select('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','lr.lookup_desc as ireq_status')
-        ->where('im.created_by',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where(function($query){
-            return $query
-            ->where('im.ireq_status','NA1')
-            ->orwhere('im.ireq_status','NA2');
-        })
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-        
-        $ict7 = DB::table('ireq_mst as im')
-        ->leftjoin('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
-        ->leftjoin('lookup_refs as lr','idm.ireq_status','lr.lookup_code')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','dr.div_name',
-                  DB::raw('count(DISTINCT(idm.ireq_id)) as count'), 'lr.lookup_desc as ireq_status')
-        ->where('im.created_by',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where(function($query){
-            return $query
-            ->where('im.ireq_status','P');
-            })
-        ->groupBy('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.creation_date','dr.div_name','lr.lookup_desc')
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-
-        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7],200);
-    }
-    Public function getPermohonan($usr_name)
-    {
-        $ict = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
-        'im.ireq_requestor','lr.lookup_desc as ireq_status')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('dr.div_verificator',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where(function($query){
-            return $query
-            ->where('im.ireq_status','NA1')
-            ->orwhere('im.ireq_status','NA2')
-            ->orwhere('im.ireq_status','P');
-        })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','lr.lookup_desc')
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-        
-        $ict1 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user',
-        'im.ireq_requestor','lr.lookup_desc as ireq_status')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('dr.div_verificator',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where(function($query){
-            return $query
-            ->Where('im.ireq_status','A1')
-            ->orwhere('im.ireq_status','A2');
-            })
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-
-        $ict2 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user',
-        'im.ireq_requestor','im.ireq_reason','lr.lookup_desc as ireq_status')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('dr.div_verificator',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where(function($query){
-            return $query
-            ->where('im.ireq_status','RA1')
-            ->orwhere('im.ireq_status','RA2')
-            ->orwhere('im.ireq_status','RR');
-            })
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-
-        $ict3 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('dr.div_verificator',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where('im.ireq_status','T')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','lr.lookup_desc','im.ireq_user','im.creation_date','im.ireq_requestor',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
-        ->orderBy('im.creation_date','ASC')
-        ->get();
-
-        $ict4 = DB::table('ireq_mst as im')
-        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
-        ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
-        ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
-                 'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id',
-                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
-        ->where('idd.ireq_status','D')
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where('dr.div_verificator',$usr_name)
-        ->orderBy('idd.ireqd_id','ASC')
-        ->get();
-
-        $ict5 = DB::table('ireq_mst as im')
-        ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
-        ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
-        ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
-                 'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id',
-                 DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
-        ->where('idd.ireq_status','C')
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where('dr.div_verificator',$usr_name)
-        ->orderBy('idd.ireqd_id','ASC')
-        ->get();
-
-        $ict6 = DB::table('ireq_mst as id')
-            ->select('id.ireq_id','id.ireq_no','id.ireq_user','id.ireq_date','dr.div_name','id.ireq_requestor','lr.lookup_desc as ireq_status')
-            ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->requestor)){
+            $ict = DB::table('ireq_mst as id')
+            ->leftjoin('ireq_dtl as idm','id.ireq_id','idm.ireq_id')
             ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
-            ->where('dr.div_verificator',$usr_name)
-            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->whereNotNull('id.ireq_status')
-            ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
-             2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
-              id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
-              WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
-              WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'T' Then 9 
-              WHEN id.ireq_status = 'D' Then 10 WHEN id.ireq_status = 'C' Then 11 end "))
+            ->leftJoin('lookup_refs as llr',function ($join) {
+                $join->on('id.ireq_status','llr.lookup_code')
+                    ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+            })
+            ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
+            ->select('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','dr.div_name','id.ireq_requestor',
+                    DB::raw('count(DISTINCT(idm.ireq_id)) as count'),'llr.lookup_desc as ireq_status')
+            ->where('id.created_by',$usr_name)
+            ->where(function($query){
+                return $query
+                ->whereNull('id.ireq_status')
+                ->orWhere('id.ireq_status','P');
+                })
+            ->groupBy('llr.lookup_desc','id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.creation_date','dr.div_name','id.ireq_status','id.ireq_requestor')
+            ->orderBy('id.creation_date','ASC')
             ->get();
 
-        $ict7 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
-        'im.ireq_requestor','lr.lookup_desc as ireq_status')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('dr.div_verificator',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where(function($query){
-            return $query
-            ->where('im.ireq_status','NA1')
-            ->orwhere('im.ireq_status','NA2');
-        })
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','lr.lookup_desc')
-        ->orderBy('im.creation_date','ASC')
-        ->get();
+            $ict1 = DB::table('ireq_mst as im')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor','im.ireq_user','lr.lookup_desc as ireq_status')
+            ->where('im.created_by',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','A1')
+                ->orWhere('im.ireq_status','A2');
+            })
+            ->orderBy('im.creation_date','ASC')
+            ->get();
 
-        $ict8 = DB::table('ireq_mst as im')
-        ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
-        'im.ireq_requestor','lr.lookup_desc as ireq_status')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-        ->where('dr.div_verificator',$usr_name)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->where('im.ireq_status','P')
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','lr.lookup_desc')
-        ->orderBy('im.creation_date','ASC')
-        ->get();
+            $ict2 = DB::table('ireq_mst as im')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->select('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_reason','lr.lookup_desc as ireq_status')
+            ->where('im.created_by',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','RR')
+                ->orwhere('im.ireq_status','RA1')
+                ->orwhere('im.ireq_status','RA2');
+            })
+            ->orderBy('im.creation_date','ASC')
+            ->get();
 
-        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8]);
+            $ict3 =  DB::table('ireq_mst as im')
+            ->select('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('im.ireq_status','T')
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where('im.created_by',$usr_name)
+            ->groupBy('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+            $ict4 = DB::table('ireq_mst as im')
+            ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+            ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+            ->select('im.ireq_requestor','dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
+                    'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id',
+                    DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
+            ->where('idd.ireq_status','D')
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where('im.created_by',$usr_name)
+            ->orderBy('idd.ireqd_id','ASC')
+            ->get();
+
+            $ict5 = DB::table('ireq_mst as im')
+            ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+            ->select('im.ireq_requestor','dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
+                    'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id','idd.ireq_value',
+                    DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where('idd.ireq_status','C')
+            ->where('im.created_by',$usr_name)
+            ->orderBy('idd.ireqd_id','ASC')
+            ->get();
+            
+            $ict6 = DB::table('ireq_mst as im')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->select('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','lr.lookup_desc as ireq_status')
+            ->where('im.created_by',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','NA1')
+                ->orwhere('im.ireq_status','NA2');
+            })
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+            
+            $ict7 = DB::table('ireq_mst as im')
+            ->leftjoin('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
+            ->leftjoin('lookup_refs as lr','idm.ireq_status','lr.lookup_code')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->select('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','dr.div_name',
+                    DB::raw('count(DISTINCT(idm.ireq_id)) as count'), 'lr.lookup_desc as ireq_status')
+            ->where('im.created_by',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','P');
+                })
+            ->groupBy('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.creation_date','dr.div_name','lr.lookup_desc')
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+            
+            $ict8 = DB::table('ireq_mst as im')
+            ->select('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','NT')
+                ->orWhere('im.ireq_status','RT');
+                })
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where('im.created_by',$usr_name)
+            ->groupBy('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+
+            return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8],200);
+            }else{
+                return response(["message"=>"Cannot Access"],403);
+            }
+        }
+    Public function getPermohonan($usr_name)
+    {
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->approvalrequestor)){
+            $ict = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
+            'im.ireq_requestor','lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('dr.div_verificator',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','NA1')
+                ->orwhere('im.ireq_status','NA2')
+                ->orwhere('im.ireq_status','P');
+            })
+            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','lr.lookup_desc')
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+            
+            $ict1 = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user',
+            'im.ireq_requestor','lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('dr.div_verificator',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where(function($query){
+                return $query
+                ->Where('im.ireq_status','A1')
+                ->orwhere('im.ireq_status','A2');
+                })
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+            $ict2 = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user',
+            'im.ireq_requestor','im.ireq_reason','lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('dr.div_verificator',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','RA1')
+                ->orwhere('im.ireq_status','RA2')
+                ->orwhere('im.ireq_status','RR');
+                })
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+            $ict3 = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('dr.div_verificator',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where('im.ireq_status','T')
+            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','lr.lookup_desc','im.ireq_user','im.creation_date','im.ireq_requestor',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+            $ict4 = DB::table('ireq_mst as im')
+            ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+            ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+            ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
+                    'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id',
+                    DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
+            ->where('idd.ireq_status','D')
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where('dr.div_verificator',$usr_name)
+            ->orderBy('idd.ireqd_id','ASC')
+            ->get();
+
+            $ict5 = DB::table('ireq_mst as im')
+            ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+            ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+            ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
+                    'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id',
+                    DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
+            ->where('idd.ireq_status','C')
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where('dr.div_verificator',$usr_name)
+            ->orderBy('idd.ireqd_id','ASC')
+            ->get();
+
+            $ict6 = DB::table('ireq_mst as id')
+                ->select('id.ireq_id','id.ireq_no','id.ireq_user','id.ireq_date','dr.div_name','id.ireq_requestor','lr.lookup_desc as ireq_status')
+                ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
+                ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+                ->where('dr.div_verificator',$usr_name)
+                ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+                ->whereNotNull('id.ireq_status')
+                ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then
+                2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
+                id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
+                WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
+                WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'NT' Then 9 WHEN id.ireq_status = 'RT' Then 10 WHEN id.ireq_status = 'T' Then 11 
+                WHEN id.ireq_status = 'D' Then 12 WHEN id.ireq_status = 'C' Then 13 end "))
+                ->get();
+
+            $ict7 = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
+            'im.ireq_requestor','lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('dr.div_verificator',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','NA1')
+                ->orwhere('im.ireq_status','NA2');
+            })
+            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','lr.lookup_desc')
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+            $ict8 = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
+            'im.ireq_requestor','lr.lookup_desc as ireq_status')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('dr.div_verificator',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where('im.ireq_status','P')
+            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','lr.lookup_desc')
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+            $ict9 = DB::table('ireq_mst as im')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->where('dr.div_verificator',$usr_name)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','NT')
+                ->orwhere('im.ireq_status','RT');
+            })
+            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','lr.lookup_desc','im.ireq_user','im.creation_date','im.ireq_requestor',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+            return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8,'ict9'=>$ict9]);
+        }else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     Public function getPermohonanDivisi()
     {
@@ -989,10 +1036,10 @@ class IctController extends Controller
             $ict4 = DB::table('ireq_mst as im')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->leftjoin('ireq_dtl as id','im.ireq_id','id.ireq_id')
-            ->select('im.ireq_date','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_id')
+            ->select('im.ireq_date','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_id','id.ireq_assigned_to1_reason')
             ->where('id.ireq_status','RT')
             ->where('id.ireq_assigned_to1',$usr_fullname)
-            ->groupBy('im.ireq_date','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_id')
+            ->groupBy('im.ireq_date','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_id','id.ireq_assigned_to1_reason')
             ->get();
             
             return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4]);

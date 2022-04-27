@@ -328,6 +328,60 @@
                   </template>
                 </DataTable>  
                 </TabPanel>
+                <TabPanel header="Penugasan Request">
+                  <DataTable
+                    :value="penugasan"
+                    :paginator="true"
+                    :rows="10"
+                    :loading="loading"
+                    :filters="filters"
+                    :rowHover="true"
+                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                    :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Penugasan Request"
+                    responsiveLayout="scroll"
+                  >
+                  <template #header>
+                    <div class="table-header text-right">
+                      <span class="p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                      </span>
+                    </div>
+                  </template>
+                  <template #empty>
+                    Not Found
+                  </template>
+                  <template #loading>
+                    Loading ICT Request data. Please wait.
+                  </template>
+                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                    <template #body="slotProps">
+                      {{ formatDate(slotProps.data.ireq_date) }}
+                    </template>
+                  </Column>
+                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column style="min-width:8rem">
+                    <template #body="slotProps">
+                      <Button
+                        class="p-button-rounded p-button-secondary mr-2"
+                        icon="pi pi-info-circle"
+                        v-tooltip.right="'Detail'"
+                        @click="$router.push({
+                            name: 'Ict Request Detail',
+                            params: { code: slotProps.data.ireq_id }, })"
+                      />
+                    </template>
+                  </Column>
+                </DataTable>
+                </TabPanel>
                 <TabPanel header="Sedang Dikerjakan">
                    <DataTable
                     :value="sedangDikerjakan"
@@ -614,6 +668,7 @@ export default {
       ict: [],
       verif:[],
       reject:[],
+      penugasan:[],
       reviewer:[],
       sedangDikerjakan:[],
       sudahDikerjakan:[],
@@ -627,7 +682,7 @@ export default {
     };
   },
   created() {
-    this.cekUser();
+    this.getIct();
   },
   methods: {
     setRating(rating){
@@ -735,28 +790,13 @@ export default {
         // this.must = false;
       }
     },
-    cekUser(){
-    if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-          this.getIct();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    } else {
-      this.$router.push('/login');
-    }
-    },
     getIct(){
       this.axios.get('api/get-ict/'+this.usr_name,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.ict = response.data.ict;
           this.loading = false;
           this.verif = response.data.ict1;
           this.reject = response.data.ict2
+          this.penugasan = response.data.ict8;
           this.sedangDikerjakan = response.data.ict3
           this.sudahDikerjakan = response.data.ict4
           this.selesai = response.data.ict5
@@ -770,6 +810,9 @@ export default {
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
            }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
     },  
     formatDate(date) {
