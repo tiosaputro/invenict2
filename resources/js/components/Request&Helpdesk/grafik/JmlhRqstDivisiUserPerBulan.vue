@@ -5,11 +5,11 @@
             <Button class="p-button-lg p-button-rounded p-button-danger" v-if="this.tahunnUser && this.bulanUser" @click="printperDivisiUserBulan()" icon="pi pi-file-pdf" label="PDF"/>
             <ColorPicker v-model="color" v-if="this.tahunnUser && this.bulanUser" /> 
         </div>
-        <div class="text-center" id="perStatus">
+        <div class="text-center" >
             <h5 style="font-size:20pt; font-weight: bold;">Statistik Request Divisi User Per Bulan</h5>
             <Dropdown @change="getTahunUser()" :showClear="true" v-model="bulanUser" :options="bulan" optionValue="code" optionLabel="name" placeholder="Pilih Bulan" class="mr-2" />
             <Dropdown @change="getPerDivisiUserBulan()" :showClear="true" v-model="tahunnUser" :options="tahunn" optionValue="tahun" optionLabel="tahun" placeholder="Pilih Tahun" class="mr-2" v-if="this.bulanUser" />
-            <Chart type="bar" :data="perDivisiUserBulan" v-if="this.tahunnUser && this.bulanUser" />
+            <Chart type="bar" :data="perDivisiUserBulan" v-if="this.tahunnUser && this.bulanUser" id="perStatus" />
         </div>
     </div>
 </template>

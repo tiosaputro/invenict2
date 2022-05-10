@@ -5,11 +5,11 @@
             <Button class="p-button-lg p-button-rounded p-button-danger mr-2" v-if="this.tahunnRequestor && this.bulanRequestor" @click="printperDivisiRequestorBulan()" icon="pi pi-file-pdf" label="PDF"/>
             <ColorPicker v-model="color" v-if="this.tahunnRequestor && this.bulanRequestor" /> 
         </div>
-        <div class="text-center" id="perDivisiRequestorBulan">
+        <div class="text-center">
             <h5 style="font-size:20pt; font-weight: bold;">Statistik Request Divisi Requestor Per Bulan</h5>
             <Dropdown @change="getTahunRequestor()" :showClear="true" v-model="bulanRequestor" :options="bulan" optionValue="code" optionLabel="name" placeholder="Pilih Bulan" class="mr-2" />
             <Dropdown @change="getPerDivisiRequestorBulan()" :showClear="true" v-model="tahunnRequestor" :options="tahunnnn" optionValue="tahun" optionLabel="tahun" placeholder="Pilih Tahun" class="mr-2" v-if="this.bulanRequestor" />
-            <Chart type="bar" :data="perDivisiRequestorBulan" v-if="this.tahunnRequestor && this.bulanRequestor" />
+            <Chart :options="options" type="bar" :data="perDivisiRequestorBulan" v-if="this.tahunnRequestor && this.bulanRequestor" id="chart" />
         </div>
     </div>
 </template>
@@ -18,6 +18,13 @@ import Exporter from "vue-chartjs-exporter";
 export default {
     data() {
         return {
+            options : {
+                title: {
+                    position : top,
+                    display : true,
+                    text: "tes"
+                }
+            },
             color: '1976D2',
             token: localStorage.getItem('token'),
             perDivisiRequestorBulan:{},
@@ -99,7 +106,7 @@ export default {
             }
         },
         printperDivisiRequestorBulan(){
-            let bar = document.getElementById("perDivisiRequestorBulan");
+            let bar = document.getElementById("chart");
             const exp = new Exporter([bar]);
             exp.export_pdf().then((pdf) => {
                 pdf.save('Statistik Request Divisi Requestor Bulan '+this.nameBulanRequestor);

@@ -5,10 +5,10 @@
             <Button class="p-button-lg p-button-rounded p-button-danger" v-if="this.tahunRequestor" @click="printperDivisiRequestorTahun()" icon="pi pi-file-pdf" label="PDF"/>
             <ColorPicker v-model="color" v-if="this.tahunRequestor"/> 
         </div>
-        <div class="text-center" id="perDivisiRequestorTahun">
+        <div class="text-center" >
             <h5 style="font-size:20pt; font-weight: bold;">Statistik Request Divisi Requestor Per Tahun</h5>
             <Dropdown @change="getPerDivisiRequestorTahun()" :showClear="true" v-model="tahunRequestor" :options="tahunn" optionValue="tahun" optionLabel="tahun" placeholder="Pilih Tahun" />
-            <Chart type="bar" :data="perDivisiRequestorTahun" v-if="this.tahunRequestor" />
+            <Chart type="bar" :data="perDivisiRequestorTahun" v-if="this.tahunRequestor" id="perDivisiRequestorTahun" />
         </div>
     </div>
 </template>

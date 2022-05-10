@@ -144,8 +144,7 @@ var _hoisted_2 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_3 = {
-  "class": "text-center",
-  id: "perDivisiRequestorTahun"
+  "class": "text-center"
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
@@ -202,7 +201,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["modelValue", "options"]), this.tahunRequestor ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Chart, {
     key: 0,
     type: "bar",
-    data: $data.perDivisiRequestorTahun
+    data: $data.perDivisiRequestorTahun,
+    id: "perDivisiRequestorTahun"
   }, null, 8
   /* PROPS */
   , ["data"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])], 64

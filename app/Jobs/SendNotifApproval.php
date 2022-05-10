@@ -7,10 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Mail\IctRequestApproval;
+use App\Mail\NotificationApproval;
 use Mail;
 
-class SendEmailJob implements ShouldQueue
+class SendNotifApproval implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $send_mail;
@@ -35,6 +35,6 @@ class SendEmailJob implements ShouldQueue
      */
     public function handle()
     {     
-        Mail::to($this->send_mail)->send(new IctRequestApproval($this->ict,$this->LINK));
+        Mail::to($this->send_mail)->send(new NotificationApproval($this->ict,$this->LINK));
     }
 }

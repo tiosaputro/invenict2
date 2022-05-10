@@ -40,9 +40,9 @@ use Excel;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
-use App\Jobs\SendEmailJob;
+use App\Jobs\SendNotifApproval;
+use App\Jobs\SendNotifPersonnel;
 use Mail;
-use App\Mail\IctRequestApproval;
 use Illuminate\Support\Facades\Hash;
 
 class IctController extends Controller
@@ -390,17 +390,16 @@ class IctController extends Controller
         ->get();
 
         $Date = $this->date->addDays(1);
-        $expiredDate = Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $link = Link::create([
             'link_id'=> md5($this->date),
             'link_action'=> 'http://localhost:8000/ict-request-verifikasi/'.''.$ireq_id,
-            'expired_at'=>$expiredDate,
+            'expired_at'=>Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'usr_id'=>$emailVerifikator->usr_id,
             'ireq_id'=>$ireq_id
         ]);
         $LINK = Link::where('ireq_id',$ireq_id)->first();
         $send_mail = $emailVerifikator->usr_email;
-        $emailJob = (new SendEmailJob($send_mail,$ict,$LINK));
+        $emailJob = (new SendNotifApproval($send_mail,$ict,$LINK));
         dispatch($emailJob);
         return response()->json('Success Update Status');
     }
@@ -466,6 +465,8 @@ class IctController extends Controller
     function submitAssignPerRequest($ireq_id)
     {
         $ict = Ict::where('ireq_id',$ireq_id)->first();
+        $name = [];
+        $email = [];
         if($ict->ireq_status == 'RT'){
 
             $ict->ireq_status = 'T';
@@ -476,8 +477,10 @@ class IctController extends Controller
             $ict->program_name = "IctController_submitAssignPerRequest";
             $ict->save();
             
+
             $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
             foreach ($dtl as $d) {
+                array_push($name, $d->ireq_assigned_to2);
                 $d->ireq_status = 'T';
                 $d->ireq_assigned_date = $this->newUpdate;
                 $d->last_update_date = $this->newUpdate;
@@ -485,7 +488,13 @@ class IctController extends Controller
                 $d->program_name = "IctController_submitAssignPerRequest";
                 $d->save();
             }
-            return response()->json('Success Update');
+            $usr_email = DB::table('mng_users')->select('usr_email')->whereIn('usr_fullname',$name)->pluck('usr_email');
+            foreach($usr_email as $s){
+                $emailpush = $s .= '@emp.id';
+                array_push($email,$emailpush);
+            }
+            $emailJob = (new SendNotifPersonnel($email,$ict));
+            dispatch($emailJob);
         }else{
             $ict->ireq_status = 'NT';
             $ict->ireq_assigned_date = $this->newUpdate;
@@ -497,6 +506,7 @@ class IctController extends Controller
             
             $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
             foreach ($dtl as $d) {
+                array_push($name, $d->ireq_assigned_to1);
                 $d->ireq_status = 'NT';
                 $d->ireq_assigned_date = $this->newUpdate;
                 $d->last_update_date = $this->newUpdate;
@@ -504,8 +514,16 @@ class IctController extends Controller
                 $d->program_name = "IctController_submitAssignPerRequest";
                 $d->save();
             }
-            return response()->json('Success Update');
+            $usr_email = DB::table('mng_users')->select('usr_email')->whereIn('usr_fullname',$name)->pluck('usr_email');
+            foreach($usr_email as $s){
+                $emailpush = $s .= '@emp.id';
+                array_push($email,$emailpush);
+            }
+            $emailJob = (new SendNotifPersonnel($email,$ict));
+            dispatch($emailJob);
         }
+        return response()->json('success');
+
     }
     function getIctAdmin()
     {

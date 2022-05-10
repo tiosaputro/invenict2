@@ -16,6 +16,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      options: {
+        title: {
+          position: top,
+          display: true,
+          text: "tes"
+        }
+      },
       color: '1976D2',
       token: localStorage.getItem('token'),
       perDivisiRequestorBulan: {},
@@ -136,7 +143,7 @@ __webpack_require__.r(__webpack_exports__);
     printperDivisiRequestorBulan: function printperDivisiRequestorBulan() {
       var _this5 = this;
 
-      var bar = document.getElementById("perDivisiRequestorBulan");
+      var bar = document.getElementById("chart");
       var exp = new vue_chartjs_exporter__WEBPACK_IMPORTED_MODULE_0__["default"]([bar]);
       exp.export_pdf().then(function (pdf) {
         pdf.save('Statistik Request Divisi Requestor Bulan ' + _this5.nameBulanRequestor);
@@ -167,8 +174,7 @@ var _hoisted_2 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_3 = {
-  "class": "text-center",
-  id: "perDivisiRequestorBulan"
+  "class": "text-center"
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
@@ -242,11 +248,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "options"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.tahunnRequestor && this.bulanRequestor ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Chart, {
     key: 1,
+    options: $data.options,
     type: "bar",
-    data: $data.perDivisiRequestorBulan
+    data: $data.perDivisiRequestorBulan,
+    id: "chart"
   }, null, 8
   /* PROPS */
-  , ["data"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])], 64
+  , ["options", "data"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])], 64
   /* STABLE_FRAGMENT */
   );
 }

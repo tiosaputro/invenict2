@@ -127,8 +127,7 @@ var _hoisted_2 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_3 = {
-  "class": "text-center",
-  id: "perStatus"
+  "class": "text-center"
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
@@ -165,7 +164,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart, {
     type: "bar",
-    data: $data.perStatus
+    data: $data.perStatus,
+    id: "perStatus"
   }, null, 8
   /* PROPS */
   , ["data"])])])], 64
