@@ -21,7 +21,6 @@
         "@shapla/vue-star-rating": "^1.0.0",
         "@vue/compiler-sfc": "^3.2.12",
         "@zxing/library": "^0.18.6",
-        "awesome-vue-star-rating": "^1.0.9",
         "bootstrap": "^5.1.1",
         "chart.js": "^3.6.0",
         "jquery": "^3.6.0",

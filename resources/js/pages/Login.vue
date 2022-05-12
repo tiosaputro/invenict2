@@ -19,10 +19,10 @@
                             <InputText 
                                 type="text"
                                 v-model="email"
+                                style="text-transform:lowercase; padding:1rem;"
                                 class="w-full mb-3"
                                 :class="{ 'p-invalid': submitted && !email }" 
                                 placeholder="Masukan Username" 
-                                style="padding:1rem;"
                             />
                             <small class="p-error" v-if="submitted && !email"
                                 >Username Belum Diisi.

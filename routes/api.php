@@ -16,14 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
  });
- Route::get('/get-rolee/{id}','MngUsrRoleController@getRole');
+Route::get('/get-rolee/{id}','MngUsrRoleController@getRole');
 Route::get('/cek-verif-id/{code}','IctController@cekVerif');
 Route::post('/login', 'LoginController@index');
 Route::get('/detail-peripherall/{invent_code}','MasterController@detailPeripheral');
 Route::post('/login-approval', 'LoginController@loginFromEmail');
 Route::get('/logout', 'LoginController@logout')->middleware('auth:sanctum');
-//referensi_lookups
 Route::middleware('auth:sanctum')->group(function(){
+//referensi_lookups
     Route::get('/ref', 'LookupsController@index');
     Route::post('/add-ref','LookupsController@save');
     Route::get('/edit-ref/{code}/{type}','LookupsController@edit');

@@ -1,0 +1,1 @@
+<h5> Terdapat Nomer Request {{$ict->ireq_no}} Yang Baru Disubmit, Silahkan Klik <a href="http://172.25.1.125:8000/ict-request-verifikasi-reviewer/{{$link->link_id}}">Disini</a> Untuk Lebih Detail </h5>

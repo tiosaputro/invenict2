@@ -54,8 +54,6 @@ export default {
                 localStorage.setItem("usr_name", res.data.usr_name);
                 this.$router.push({ name: 'error', params: { stat: 'expired' } }) 
                 this.loading = false;
-
-
               });
              });
             }

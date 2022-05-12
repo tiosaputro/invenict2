@@ -489,6 +489,11 @@ const routes = [
         path: '/ict-request-reviewer/detail-penugasan/:code',
         component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_detail_penugasan.vue'),
     },
+    {
+        name: 'Ict Request Verifikasi Reviewer',
+        path: '/ict-request-verifikasi-reviewer/:code',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_verifikasi_mail.vue'),
+    },
 
     //ict request manager
     {

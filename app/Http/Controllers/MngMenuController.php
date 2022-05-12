@@ -20,10 +20,11 @@ class MngMenuController extends Controller
     {
         $menu = DB::table('mng_menus as mm')
             ->select('mm.menu_id','mmm.mod_name','mm.menu_name','mm.menu_desc','mm.menu_desc','mm.menu_display')
-            ->join('mng_modules as mmm','mm.mod_id','mmm.mod_id')
+            ->leftjoin('mng_modules as mmm','mm.mod_id','mmm.mod_id')
             ->where('mm.menu_stat','T')
             ->orderBy('mm.menu_id','ASC')
             ->get();
+        // $menu = Mng_menu::All();
          return json_encode($menu);
     }
     Public function getParent()

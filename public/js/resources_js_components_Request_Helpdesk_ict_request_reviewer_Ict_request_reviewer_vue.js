@@ -84,14 +84,14 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           localStorage.clear();
-          localStorage.setItem("Expired", "true");
+          localStorage.setItem('Expired', 'true');
           setTimeout(function () {
             return _this.$router.push('/login');
           }, 2000);
         }
 
         if (error.response.status == 403) {
-          _this.$route.push('/access');
+          _this.$router.push('/access');
         }
       });
     },

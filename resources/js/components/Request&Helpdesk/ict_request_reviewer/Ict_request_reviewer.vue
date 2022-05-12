@@ -817,18 +817,19 @@ export default {
           this.sudahDikerjakan = response.data.ict5
           this.selesai = response.data.ict6;
         }).catch(error=>{
-          if (error.response.status == 401){
+         if (error.response.status == 401) {
             this.$toast.add({
             severity:'error', summary: 'Error', detail:'Sesi Login Expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
            }
           if(error.response.status == 403){
-            this.$route.push('/access');
+            this.$router.push('/access');
           }
         });
+        
     },  
     formatDate(date) {
       return moment(date).format("DD MMM YYYY")

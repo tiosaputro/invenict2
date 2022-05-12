@@ -42,6 +42,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Jobs\SendNotifApproval;
 use App\Jobs\SendNotifPersonnel;
+use App\Jobs\SendNotifRequest;
 use Mail;
 use Illuminate\Support\Facades\Hash;
 
@@ -383,7 +384,7 @@ class IctController extends Controller
         ->leftjoin('ireq_dtl as id','im.ireq_id','id.ireq_id')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
-        ->join('invent_mst as imm','id.invent_code','imm.invent_code')
+        ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
         ->select('im.ireq_no','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
                  'im.ireq_user',DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'id.ireq_qty')
         ->where('im.ireq_id',$ireq_id)
@@ -398,7 +399,7 @@ class IctController extends Controller
             'ireq_id'=>$ireq_id
         ]);
         $LINK = Link::where('ireq_id',$ireq_id)->first();
-        $send_mail = $emailVerifikator->usr_email;
+        $send_mail = $emailVerifikator->usr_email .= '@emp.id';
         $emailJob = (new SendNotifApproval($send_mail,$ict,$LINK));
         dispatch($emailJob);
         return response()->json('Success Update Status');
@@ -960,7 +961,7 @@ class IctController extends Controller
         ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->where('im.ireq_status','T')
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+        ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
         ->orderBy('im.creation_date','ASC')
         ->get();
 
@@ -2064,7 +2065,6 @@ class IctController extends Controller
     {
         
         $ICT = Ict::where('ireq_id',$ireq_id)->first();
-        $divisiPengguna = $ICT->ireq_divisi_user;
             $ICT->ireq_status = 'P';
             $ICT->last_update_date = $this->newUpdate;
             $ICT->last_updated_by = Auth::user()->usr_name;
@@ -2079,6 +2079,15 @@ class IctController extends Controller
             $d->program_name = "IctController_updateStatusSubmit";
             $d->save();
         }
+        $link = Link::create([
+            'link_id'=> md5($this->date),
+            'link_action'=> 'http://localhost:8000/ict-request-verifikasi-reviewer/'.''.$ireq_id,
+            'ireq_id'=>$ireq_id
+        ]);
+        $LINK = Link::where('ireq_id',$ireq_id)->first();
+        $send_mail = 'icthelpdesk.admin@emp.id';
+        $emailJob = (new SendNotifRequest($send_mail,$ICT,$LINK));
+        dispatch($emailJob);
         return response()->json('Success Update Status');
     }
     public function cekVerif($code)
