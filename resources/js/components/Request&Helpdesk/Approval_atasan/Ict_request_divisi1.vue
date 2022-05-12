@@ -9,7 +9,7 @@
                 <h4>ICT Request</h4>
               </template>
             </Toolbar>
-            <TabView ref="tabview1" v-model:activeIndex="active1">
+            <TabView ref="tabview1" scrollable v-model:activeIndex="active1">
               <TabPanel header="Permohonan">
                 <DataTable
                   :value="permohonan"

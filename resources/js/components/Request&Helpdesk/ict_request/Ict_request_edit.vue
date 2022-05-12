@@ -21,7 +21,7 @@
               </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tgl. Request</label>
-                 <div class="col-12 md:col-3">
+                 <div class="col-fixed w-11rem">
                       <DatePicker v-model="mutasi.ireq_date" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                           <div class="flex items-center">
@@ -37,13 +37,12 @@
                         </div>
                         </template>
                       </DatePicker>
-                      <small v-if="errors.ireq_date" class="p-error">
-                        {{ errors.ireq_date[0] }}
+                      <small v-if="error.ireq_date" class="p-error">
+                        {{ error.ireq_date }}
                       </small>
                 </div>
-              </div>
-              
-              <div class="field grid">
+              </div>   
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
                  <div class="field col-12 md:col-4">
                      <Dropdown 
@@ -55,7 +54,7 @@
                         :showClear="true"
                      />
                 </div>
-              </div>
+              </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Priority Level</label>
                  <div class="col-fixed w-9rem">
@@ -66,6 +65,7 @@
                         optionValue="code"
                         placeholder="Pilih Level"
                         :showClear="true"
+                        :filter="true"
                         :class="{ 'p-invalid': error.ireq_prio_level }"
                      />
                         <small v-if="error.ireq_prio_level" class="p-error">
@@ -73,21 +73,20 @@
                         </small>
                 </div>
               </div>
-              <!-- <div class="field grid">
+              <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Pengguna</label>
-                 <div class="col">
+                 <div class="col-fixed w-9rem">
                      <InputText
                         type="text"
                         v-model="mutasi.ireq_user"
                         placeholder="Masukan Pengguna"
                         :class="{ 'p-invalid': errors.ireq_user }"
-                        disabled
                      />
-                        <small v-if="errors.ireq_user" class="p-error">
-                          {{ errors.ireq_user[0] }}
+                        <small v-if="error.ireq_user" class="p-error">
+                          {{ error.ireq_user }}
                         </small>
                 </div>
-              </div> -->
+              </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
                  <div class="col-fixed w-9rem">
@@ -97,25 +96,25 @@
                         optionLabel="name"
                         optionValue="code"
                         placeholder="Pilih Divisi Pengguna"
-                        disabled
                         :filter="true"
-                        :class="{ 'p-invalid': error.ireq_divisi_user }"
+                        :showClear="true"
+                        :class="{ 'p-invalid': errors.ireq_divisi_user }"
                      />
-                        <!-- <small v-if="error.ireq_divisi_user" class="p-error">
+                        <small v-if="error.ireq_divisi_user" class="p-error">
                           {{error.ireq_divisi_user}}
-                        </small> -->
+                        </small>
                 </div>
               </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Bisnis Unit</label>
-                 <div class="field col-12 md:col-4">
+                 <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="mutasi.ireq_bu"
                         :options="bu"
                         optionLabel="name"
                         optionValue="code"
                         placeholder="Pilih Bisnis Unit"
-                        disabled
+                        :showClear="true"
                         :filter="true"
                         :class="{ 'p-invalid': errors.ireq_bu }"
                      />
@@ -127,7 +126,7 @@
                         </small>
                 </div>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Keterangan</label>
                  <div class="field col-12 md:col-4">
                   <Textarea 
@@ -142,7 +141,7 @@
                         >{{error.ireq_remark}}
                       </small>
                 </div>
-              </div>
+              </div> -->
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -224,8 +223,12 @@ export default {
       this.errors = [] ;
       this.error = [];
       if(
+        this.mutasi.ireq_date != '' &&
         this.mutasi.ireq_prio_level != null &&
-        this.mutasi.ireq_remark != null 
+        // this.mutasi.ireq_remark != null  && 
+        this.mutasi.ireq_divisi_user !=null &&
+        this.mutasi.ireq_bu != null &&
+        this.mutasi.ireq_user != null
       ){
         this.axios.put('/api/update-ict/'+ this.$route.params.code, this.mutasi, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
@@ -244,6 +247,18 @@ export default {
       }
          if(this.mutasi.ireq_remark == null){
           this.error.ireq_remark = "Keterangan Belum Diisi"
+        }
+        if(this.mutasi.ireq_divisi_user == null){
+          this.error.ireq_divisi_user = "Divisi Pengguna Belum Diisi"
+        }
+        if(this.mutasi.ireq_bu == null){
+          this.error.ireq_bu = "Bisnis Unit Belum Diisi"
+        }
+        if(this.mutasi.ireq_user == null){
+          this.error.ireq_user = "Pengguna Belum Diisi"
+        }
+        if(this.mutasi.ireq_date == ''){
+          this.error.ireq_date = "Tgl. Request Belum Diisi"
         }
       }
       },

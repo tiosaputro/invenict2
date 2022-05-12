@@ -111,7 +111,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     formatDate: function formatDate(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
     Verifikasi: function Verifikasi(ireq_id) {
       this.code = ireq_id;
@@ -505,6 +505,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabView, {
+    scrollable: "",
     ref: "tabview1"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

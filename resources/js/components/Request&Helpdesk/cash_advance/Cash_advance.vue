@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY")
+      return moment(date).format("DD MMM YYYY HH24")
     },
     formatPrice(value) {
         var formatter = new Intl.NumberFormat('id', {

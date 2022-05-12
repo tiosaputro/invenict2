@@ -389,6 +389,55 @@
                 <Button label="Yes" @click="submitReject()" class="p-button" autofocus />
                 <Button label="No" @click="cancel()" class="p-button-text" />
             </template>
+          </Dialog>  
+          <Dialog
+            v-model:visible="dialogChangeStatus"
+            :style="{ width: '500px' }"
+            header="Dialog Ubah Status"
+            :modal="true"
+            class="fluid"
+          >
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Request </label>
+                <InputText 
+                v-model="editStatus.ireq_no"
+                disabled
+                />
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Detail </label>
+                <InputText 
+                v-model="editStatus.ireqd_id"
+                disabled
+                />
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:100px">Status</label>
+                  <div class="col-fixed">
+                    <Dropdown 
+                    v-model="editStatus.status"
+                    :filter="true"
+                    optionLabel="name"
+                    optionValue="code"
+                    :options="status"
+                    placeholder="Pilih Status"
+                    :class="{ 'p-invalid': submitted && !editStatus.status }"
+                    />
+                    <small v-if="submitted && !editStatus.status" class="p-error">
+                      Status Belum Diisi
+                    </small>
+                  </div>
+                </div>
+            </div>
+            <template #footer>
+                <Button label="Yes" @click="submitStatus()" class="p-button" autofocus />
+                <Button label="No" @click="cancelStatus()" class="p-button-text" />
+            </template>
           </Dialog>   
       </div>
     </div>
@@ -401,6 +450,7 @@ export default {
   data() {
     return {
         dialogEdit:false,
+        dialogChangeStatus:false,
         loading: true,
         submitted:false,
         selesai: [],
@@ -415,7 +465,9 @@ export default {
         checkto : [],
         id : localStorage.getItem('id'),
         editDetail:{ ireq_reason :''},
-        code:null
+        editStatus:[],
+        code:null,
+        status:[],
     };
   },
   mounted() {
@@ -466,6 +518,7 @@ export default {
     cancel(){
       this.dialogEdit = false;
       this.editDetail = [];
+      this.code = null;
       this.submitted = false;
     },
     submitReject(){
@@ -479,6 +532,34 @@ export default {
           this.getData();
         });
       }
+    },
+    edit(ireqd_id,ireq_id){
+      this.axios.get('api/detail/'+ireqd_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.editStatus = response.data;
+        this.code = ireq_id;
+        this.getStatus();
+      });
+      this.dialogChangeStatus = true;
+    },
+    submitStatus(){
+      this.submitted = true;
+        this.axios.put('/api/update-status-done/'+this.code,this.editStatus,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.editStatus = [];
+          this.code = null;
+          this.status=[];
+          this.dialogChangeStatus = false;
+          this.submitted = false;
+        });
+         this.$toast.add({
+            severity:'success', summary: 'Success', detail:'Success Update', life: 2000
+          });
+        this.getData();
+    },
+    cancelStatus(){
+      this.editStatus = [];
+      this.code = null;
+      this.status=[];
+      this.dialogChangeStatus = false;
     },
     getData(){
       this.axios.get('api/get-sedang-dikerjakan/'+this.user.usr_fullname,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
@@ -495,7 +576,7 @@ export default {
         });
     },
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY")
+      return moment(date).format("DD MMM YYYY HH:mm")
     },
     getStatus(){
       this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

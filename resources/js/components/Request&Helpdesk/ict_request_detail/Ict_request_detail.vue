@@ -62,7 +62,7 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:10rem"/>
           <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>

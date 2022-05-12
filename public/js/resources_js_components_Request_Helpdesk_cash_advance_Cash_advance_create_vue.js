@@ -60,6 +60,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     tgltouser: function tgltouser() {
       this.tglclosing = '';
+    },
+    noreq: function noreq() {
+      this.error.noreq = '';
+      this.errors.noreq = '';
+    },
+    jum: function jum() {
+      this.error.jum = '';
+      this.errors.jum = '';
     }
   },
   mounted: function mounted() {
@@ -107,7 +115,6 @@ __webpack_require__.r(__webpack_exports__);
         if (this.errors.noreq || this.error.noreq) {
           this.errors.noreq == '';
           this.error == [];
-          console.log(this.errors);
         }
       }
     },
@@ -302,7 +309,7 @@ var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_23 = {
-  "class": "col"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_24 = {
   key: 0,

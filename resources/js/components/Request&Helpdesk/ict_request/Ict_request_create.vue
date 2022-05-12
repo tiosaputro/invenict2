@@ -13,8 +13,8 @@
                 <label class="col-fixed w-9rem" style="width:120px">No. Request</label>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Tgl. Request</label>
-                 <div class="col-10 md:col-3">
+                <label class="col-fixed w-9rem">Tgl. Request</label>
+                 <div class="col-fixed w-11rem">
                       <DatePicker v-model="tgl" :masks="mask" >
                         <template v-slot="{ inputValue, togglePopover }">
                          <div class="flex items-center">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
               
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
@@ -52,7 +52,7 @@
                           {{error.tipereq}}
                         </small>
                 </div>
-              </div>
+              </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Priority Level</label>
                  <div class="col-fixed w-9rem">
@@ -61,8 +61,9 @@
                         :options="level"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Level"
+                        placeholder="Pilih Priority Level"
                         :showClear="true"
+                        :filter="true"
                         :class="{ 'p-invalid': error.priolev }"
                      />
                         <small v-if="error.priolev" class="p-error">
@@ -70,30 +71,32 @@
                         </small>
                 </div>
               </div>
-              <!-- <div class="field grid">
+              <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Pengguna</label>
-                 <div class="col">
+                 <div class="col-fixed w-9rem">
                      <InputText
                         type="text"
                         v-model="usr_name"
                         placeholder="Masukan Pengguna"
                         :class="{ 'p-invalid': error.usr_name }"
-                        disabled
                      />
                         <small v-if="error.usr_name" class="p-error">
-                          {{error.bisnis}}
+                          {{error.usr_name}}
                         </small>
                 </div>
-              </div> -->
+              </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
-                 <div class="col-fixed">
+                 <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="usr_divisi"
                         :options="divisi"
                         optionLabel="name"
                         optionValue="code"
-                        disabled
+                        :class="{ 'p-invalid': error.usr_divisi }"
+                        placeholder="Pilih Divisi Pengguna"
+                        :filter="true"
+                        :showClear="true"
                      />
                         <small v-if="error.usr_divisi" class="p-error">
                           {{error.usr_divisi}}
@@ -102,20 +105,23 @@
               </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Bisnis Unit</label>
-                 <div class="field col-12 md:col-4">
+                 <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="bisnis"
                         :options="bu"
                         optionLabel="name"
                         optionValue="code"
-                        disabled
+                        :class="{ 'p-invalid': error.bisnis }"
+                        placeholder="Pilih Bisnis Unit"
+                        :filter="true"
+                        :showClear="true"
                      />
-                        <!-- <small v-if="error.bisnis" class="p-error">
+                        <small v-if="error.bisnis" class="p-error">
                           {{error.bisnis}}
-                        </small> -->
+                        </small>
                 </div>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Keterangan</label>
                  <div class="field col-12 md:col-4">
                   <Textarea 
@@ -130,7 +136,7 @@
                         >{{error.ket}}
                       </small>
                 </div>
-              </div>
+              </div> -->
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -175,8 +181,11 @@ export default {
       checkto : [],
       id : localStorage.getItem('id'),
       code: null,
-      user:[],
+      // user:[],
     };
+  },
+  watch:{
+    
   },
   mounted(){
       this.cekUser();
@@ -188,7 +197,7 @@ export default {
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-          this.getUser();
+          // this.getUser();
           this.getType();
         }
         else {
@@ -199,14 +208,14 @@ export default {
         this.$router.push('/login');
       }
     },
-    getUser(){
-      this.axios.get('api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.user = response.data;
-        this.usr_name = this.user.usr_name;
-        this.bisnis = this.user.usr_bu;
-        this.usr_divisi = this.user.div_id
-      });
-    },
+    // getUser(){
+    //   this.axios.get('api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    //     this.user = response.data;
+    //     this.usr_name = this.user.usr_name;
+      //   this.bisnis = this.user.usr_bu;
+      //   this.usr_divisi = this.user.div_id
+      // });
+    // },
     getType(){
       this.axios.get('api/getAddReq', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.type = response.data.ref;
@@ -221,15 +230,18 @@ export default {
       if (
         // this.tipereq != null &&
         this.priolev != null &&
-        this.ket != null
-      ){
+        this.usr_name != null &&
+        this.usr_divisi != null &&
+        this.bisnis != null
+      )
+      {
         const data = new FormData();
         data.append("tgl", this.tgl);
         data.append("tipereq", this.tipereq);
         data.append("bisnis", this.bisnis);
         data.append("user_name", this.usr_name);
         data.append("user_divisi", this.usr_divisi);
-        data.append("ket", this.ket);
+        // data.append("ket", this.ket);
         data.append("priolev", this.priolev);
 
         this.axios.post('api/add-ict', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -247,8 +259,14 @@ export default {
         if(this.priolev == null){
           this.error.priolev = "Priority Level Belum Diisi"
         }
-        if(this.ket == null){
-          this.error.ket = "Keterangan Belum Diisi"
+        if(this.bisnis == null){
+          this.error.bisnis = "Bisnis Unit Belum Diisi"
+        }
+        if(this.usr_name == null){
+          this.error.usr_name = "Pengguna Belum Diisi"
+        }
+        if(this.usr_divisi == null){
+          this.error.usr_divisi = "Divisi Pengguna Unit Belum Diisi"
         }
         
       }

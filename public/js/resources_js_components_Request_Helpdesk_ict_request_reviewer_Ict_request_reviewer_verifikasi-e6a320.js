@@ -48,6 +48,8 @@ __webpack_require__.r(__webpack_exports__);
               name: 'Ict Request Reviewer'
             });
           } else {
+            localStorage.clear();
+
             _this.$router.push('/login');
           }
         }

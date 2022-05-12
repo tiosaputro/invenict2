@@ -1050,6 +1050,7 @@ class IctController extends Controller
             ->where('id.ireq_status','NT')
             ->where('id.ireq_assigned_to1',$usr_fullname)
             ->groupBy('im.ireq_date','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_id')
+            ->orderBy('im.ireq_no','ASC')
             ->get();
 
             $ict4 = DB::table('ireq_mst as im')
@@ -1059,6 +1060,7 @@ class IctController extends Controller
             ->where('id.ireq_status','RT')
             ->where('id.ireq_assigned_to1',$usr_fullname)
             ->groupBy('im.ireq_date','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_id','id.ireq_assigned_to1_reason')
+            ->orderBy('im.ireq_no','ASC')
             ->get();
             
             return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4]);
@@ -1162,15 +1164,7 @@ class IctController extends Controller
     }
     Public function save(Request $request)
     {
-        $message = [
-            'tgl.required'=>'Tgl. Request Belum Diisi',
-            'ket.required'=>'Keterangan Belum Diisi'
-        ];
-            $request->validate([
-                'tgl' => 'required',
-                'ket' => 'required'
-            ],$message);
-        $newDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgl)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+        $newDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgl)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $ict = Ict::Create([
             'ireq_date' => $newDate,
             'ireq_type' => $request->tipereq,
@@ -1179,7 +1173,7 @@ class IctController extends Controller
             'ireq_user' => $request->user_name,
             'ireq_divisi_user'=>$request->user_divisi,
             'ireq_bu' => $request->bisnis,
-            'ireq_remark'=> $request->ket,
+            // 'ireq_remark'=> $request->ket,
             'ireq_prio_level'=>$request->priolev,
             'creation_date' => $this->newCreation,
             'created_by' => Auth::user()->usr_name,
@@ -1220,26 +1214,8 @@ class IctController extends Controller
     }
     Public function update(Request $request, $code)
     {
-        $message = [
-            'ireq_date.required'=>'Tgl. Request Belum Diisi',
-            'ireq_prio_level.required'=> 'Prioritas Level Belum Diisi',
-            'ireq_remark.required'=>'Keterangan Belum Diisi'
-            // 'ireq_type.required'=>'Tipe Request Belum diisi',
-            // 'ireq_bu.required'=>'Bisnis Unit Belum Diisi',
-            // 'ireq_user.required'=>'Pengguna Belum diisi',
-            // 'ireq_divisi_user.required'=>'Divisi Pengguna Belum Diisi'
-        ];
-        $request->validate([
-                'ireq_date' => 'required',
-                'ireq_prio_level'=>'required',
-                'ireq_remark'=>'required'
-                // // 'ireq_type'=>'required',
-                // 'ireq_bu'=>'required',
-                // 'ireq_user' =>'required',
-                // 'ireq_divisi_user'=>'required'
-        ],$message);
 
-        $newDate = Carbon::parse($request->ireq_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+        $newDate = Carbon::parse($request->ireq_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_date = $newDate;
         $ict->ireq_prio_level = $request->ireq_prio_level;

@@ -5,7 +5,7 @@
             <div class="col-12 mt-5 xl:mt-0 text-center">
                 <img :src="'assets/layout/images/logo_emp_new.png'" alt="logo" class="mb-5" style="width:250px; ">
             </div>
-            <div class="col-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color), rgba(33, 150, 243, 0) 30%);">
+            <div class="co l-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color), rgba(33, 150, 243, 0) 30%);">
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                   <form @submit.prevent="Login">
                     <div class="text-center mb-5">
@@ -97,7 +97,7 @@ export default {
         if ( this.email != '' && this.password != '') {
             this.loading = true;
             const data = new FormData();
-            data.append("email", this.email);
+            data.append("email", this.email.toLowerCase());
             data.append("password", this.password);
 
             this.axios.get('/sanctum/csrf-cookie').then(() => {

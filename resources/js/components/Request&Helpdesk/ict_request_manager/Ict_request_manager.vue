@@ -9,7 +9,7 @@
                 <h4>ICT Request</h4>
               </template>
             </Toolbar>
-            <TabView ref="tabview1">
+            <TabView scrollable ref="tabview1">
               <TabPanel header="Menunggu Diverifikasi">
                 <DataTable
                   :value="blmdiverifikasi"
@@ -639,7 +639,7 @@ export default {
         });
     },
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY")
+      return moment(date).format("DD MMM YYYY HH:mm")
     },
     Verifikasi(ireq_id){
       this.code = ireq_id;

@@ -20,6 +20,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dialogEdit: false,
+      dialogChangeStatus: false,
       loading: true,
       submitted: false,
       selesai: [],
@@ -41,7 +42,9 @@ __webpack_require__.r(__webpack_exports__);
       editDetail: {
         ireq_reason: ''
       },
-      code: null
+      editStatus: [],
+      code: null,
+      status: []
     };
   },
   mounted: function mounted() {
@@ -111,6 +114,7 @@ __webpack_require__.r(__webpack_exports__);
     cancel: function cancel() {
       this.dialogEdit = false;
       this.editDetail = [];
+      this.code = null;
       this.submitted = false;
     },
     submitReject: function submitReject() {
@@ -137,38 +141,82 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    getData: function getData() {
+    edit: function edit(ireqd_id, ireq_id) {
       var _this4 = this;
+
+      this.axios.get('api/detail/' + ireqd_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this4.editStatus = response.data;
+        _this4.code = ireq_id;
+
+        _this4.getStatus();
+      });
+      this.dialogChangeStatus = true;
+    },
+    submitStatus: function submitStatus() {
+      var _this5 = this;
+
+      this.submitted = true;
+      this.axios.put('/api/update-status-done/' + this.code, this.editStatus, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function () {
+        _this5.editStatus = [];
+        _this5.code = null;
+        _this5.status = [];
+        _this5.dialogChangeStatus = false;
+        _this5.submitted = false;
+      });
+      this.$toast.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Success Update',
+        life: 2000
+      });
+      this.getData();
+    },
+    cancelStatus: function cancelStatus() {
+      this.editStatus = [];
+      this.code = null;
+      this.status = [];
+      this.dialogChangeStatus = false;
+    },
+    getData: function getData() {
+      var _this6 = this;
 
       this.axios.get('api/get-sedang-dikerjakan/' + this.user.usr_fullname, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.penugasan = response.data.ict3;
-        _this4.reject = response.data.ict4;
-        _this4.sedangDikerjakan = response.data.ict;
-        _this4.sudahDikerjakan = response.data.ict1;
-        _this4.selesai = response.data.ict2;
-        _this4.loading = false;
+        _this6.penugasan = response.data.ict3;
+        _this6.reject = response.data.ict4;
+        _this6.sedangDikerjakan = response.data.ict;
+        _this6.sudahDikerjakan = response.data.ict1;
+        _this6.selesai = response.data.ict2;
+        _this6.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 403) {
-          _this4.$router.push('/access');
+          _this6.$router.push('/access');
         }
       });
     },
     formatDate: function formatDate(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
     getStatus: function getStatus() {
-      var _this5 = this;
+      var _this7 = this;
 
       this.axios.get('/api/getStatusIct', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this5.status = response.data;
+        _this7.status = response.data;
       });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
@@ -365,6 +413,55 @@ var _hoisted_46 = {
   key: 0,
   "class": "p-error"
 };
+var _hoisted_47 = {
+  "class": "fluid"
+};
+var _hoisted_48 = {
+  "class": "field grid"
+};
+
+var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Request ", -1
+/* HOISTED */
+);
+
+var _hoisted_50 = {
+  "class": "fluid"
+};
+var _hoisted_51 = {
+  "class": "field grid"
+};
+
+var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Detail ", -1
+/* HOISTED */
+);
+
+var _hoisted_53 = {
+  "class": "fluid"
+};
+var _hoisted_54 = {
+  "class": "field grid"
+};
+
+var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Status", -1
+/* HOISTED */
+);
+
+var _hoisted_56 = {
+  "class": "col-fixed"
+};
+var _hoisted_57 = {
+  key: 0,
+  "class": "p-error"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
@@ -387,6 +484,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
 
   var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
+
+  var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
@@ -803,7 +902,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-info mr-2",
                     icon: "pi pi-pencil",
                     onClick: function onClick($event) {
-                      return _ctx.edit(slotProps.data.ireqd_id, slotProps.data.ireq_id);
+                      return $options.edit(slotProps.data.ireqd_id, slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1147,6 +1246,73 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["modelValue", "class"]), $data.submitted && !$data.editDetail.ireq_reason ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_46, " Alasan Belum Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogChangeStatus,
+    "onUpdate:visible": _cache[22] || (_cache[22] = function ($event) {
+      return $data.dialogChangeStatus = $event;
+    }),
+    style: {
+      width: '500px'
+    },
+    header: "Dialog Ubah Status",
+    modal: true,
+    "class": "fluid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[20] || (_cache[20] = function ($event) {
+          return $options.submitStatus();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[21] || (_cache[21] = function ($event) {
+          return $options.cancelStatus();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [_hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.editStatus.ireq_no,
+        "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
+          return $data.editStatus.ireq_no = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [_hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.editStatus.ireqd_id,
+        "onUpdate:modelValue": _cache[18] || (_cache[18] = function ($event) {
+          return $data.editStatus.ireqd_id = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [_hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+        modelValue: $data.editStatus.status,
+        "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
+          return $data.editStatus.status = $event;
+        }),
+        filter: true,
+        optionLabel: "name",
+        optionValue: "code",
+        options: $data.status,
+        placeholder: "Pilih Status",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+          'p-invalid': $data.submitted && !$data.editStatus.status
+        })
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.editStatus.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_57, " Status Belum Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */

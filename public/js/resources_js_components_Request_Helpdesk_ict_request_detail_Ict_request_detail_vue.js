@@ -431,7 +431,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Tipe Request",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "10rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",

@@ -8,8 +8,8 @@
               <template v-slot:start>
                 <h4>ICT Request</h4>
               </template>
-            </Toolbar>
-            <TabView ref="tabView2" v-model:activeIndex="active1">
+            </Toolbar> 
+            <TabView ref="tabView2" scrollable v-model:activeIndex="active1">
               <TabPanel header="Permohonan">
                 <DataTable
                   :value="ict"
@@ -46,15 +46,23 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10 rem"/>
                   <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-                  <Column headerStyle="min-width:14rem">
+                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column headerStyle="min-width:13rem">
                     <template #body="slotProps">
+                      <Button
+                        class="p-button-rounded p-button-secondary mr-2"
+                        icon="pi pi-info-circle"
+                        v-tooltip.bottom="'Detail'"
+                        @click="$router.push({
+                            name: 'Ict Request Detail',
+                            params: { code: slotProps.data.ireq_id }, })"
+                      />
                       <Button
                         v-if="slotProps.data.ireq_status == null"
                         class="p-button-rounded p-button-info mr-2"
@@ -71,14 +79,6 @@
                         class="p-button-rounded p-button-danger mr-2"
                         @click="DeleteIct(slotProps.data.ireq_id)"
                         v-tooltip.top="'Delete'"
-                      />
-                      <Button
-                        class="p-button-rounded p-button-secondary mr-2"
-                        icon="pi pi-info-circle"
-                        v-tooltip.bottom="'Detail'"
-                        @click="$router.push({
-                            name: 'Ict Request Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
                       />
                       <Button
                         v-if="slotProps.data.count > 0 && slotProps.data.ireq_status == null"
@@ -816,7 +816,7 @@ export default {
         });
     },  
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY")
+      return moment(date).format("DD MMM YYYY HH:mm")
     },
     SubmitIct(ireq_id){
       this.$confirm.require({

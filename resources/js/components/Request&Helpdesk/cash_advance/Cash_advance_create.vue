@@ -69,7 +69,7 @@
                  <div class="card-body"><!-- card body -->
                   <div class="field grid">
                     <label class="col-fixed w-9rem" style="width:180px">Jumlah</label>
-                      <div class="col">
+                      <div class="col-fixed w-9rem">
                         <InputNumber
                             mode="currency" 
                             currency="IDR" 
@@ -291,6 +291,14 @@ export default {
     tgltouser:function(){
       this.tglclosing='';
     },
+    noreq:function(){
+      this.error.noreq='';
+      this.errors.noreq='';
+    },
+    jum:function(){
+      this.error.jum='';
+      this.errors.jum='';
+    }
   },
   mounted(){
     this.cekUser();
@@ -320,7 +328,6 @@ export default {
       if(this.errors.noreq || this.error.noreq){
         this.errors.noreq == '';
         this.error == [];
-        console.log(this.errors)
       }
       }
     }, 

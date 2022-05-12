@@ -43,7 +43,8 @@ export default {
                 this.$router.push({name:'Ict Request Reviewer'})
             } 
             else {
-                this.$router.push('/login')
+              localStorage.clear();
+              this.$router.push('/login')
             }
            }
         });
