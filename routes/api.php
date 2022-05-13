@@ -187,6 +187,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/nam/{ireq_id}','IctController@needApprovalManager');
     Route::post('/aprr','IctController@asignPerRequestReviewer');
     Route::get('/sapr/{ireq_id}','IctController@submitAssignPerRequest');
+    Route::get('/dataIct','IctController@getDataIct');
+    Route::get('/getdataIctByStatus/{statuss}','IctController@getdataIctByStatus');
 
     //ict request manager
     Route::get('/get-data-manager','IctController@getDataManager');
@@ -280,7 +282,8 @@ Route::get('/req-per-personnel-excel','LaporanController@cetak_excel_per_personn
 Route::get('/req-per-personnel-pdf','LaporanController@cetak_pdf_per_personnel');
 Route::get('/req-per-status-per-personnel-pdf/{ictPersonnel}','LaporanController@cetak_pdf_per_status_per_personnel');
 Route::get('/req-per-status-per-personnel-excel/{ictPersonnel}','LaporanController@cetak_excel_per_status_per_personnel');
-
+Route::post('/filterByDate','LaporanController@filterByDate');
+Route::get('/cetak-pdf-filter-ict/{start}/{end}/{status}','LaporanController@cetakPdf');
 //bisnis
 Route::get('/get-bisnis','BisnisController@getBisnis');
 Route::get('/report-master-pdf','MasterController@cetak_pdf');

@@ -407,6 +407,11 @@ const routes = [
         component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsPerStatus.vue'),
     },
     {
+        name: 'Laporan ICT Request',
+        path: '/report-ict-report',
+        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsBtwnDate.vue'),
+    },
+    {
         name: 'Laporan Permintaan Divisi Requestor Per Bulan',
         path: '/report-div-req-per-bulan',
         component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsDivisiPerBulan.vue'),

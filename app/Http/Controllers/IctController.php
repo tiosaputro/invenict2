@@ -2113,4 +2113,43 @@ class IctController extends Controller
         }
         return response()->json('Success Update');
     }
+    function getDataIct(){
+        $ict = DB::table('ireq_mst as im')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('im.ireq_status','lr.lookup_code')
+                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+        })
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->select('im.ireq_no','dr.div_name','im.ireq_date','im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
+        ->whereNotNull('im.ireq_status')
+        ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
+        2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
+        im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
+         WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
+         WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
+         im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
+         Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+        ->get();
+        
+        return json_encode($ict);
+    }
+    function getDataIctByStatus($statuss){
+        $ict = DB::table('ireq_mst as im')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('im.ireq_status','lr.lookup_code')
+                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+        })
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->select('im.ireq_no','dr.div_name','im.ireq_date','im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
+        ->where('im.ireq_status',$statuss)
+        ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
+        2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
+        im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
+         WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
+         WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
+         im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
+         Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+        ->get();
+        return json_encode($ict);
+    }
 }

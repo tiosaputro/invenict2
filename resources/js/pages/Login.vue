@@ -10,19 +10,19 @@
                   <form @submit.prevent="Login">
                     <div class="text-center mb-5">
                         <div class="text-900 text-3xl font-medium mb-3">Selamat Datang di</div>
-                        <span class="text-600 font-medium">System ICT Request & Helpdesk 👋</span>
+                        <span class="text-600 font-medium">System ICT Helpdesk 👋</span>
                         <Message severity="warn" v-if="this.error">Periksa kembali koneksi sophos atau wifi anda</Message>
                         <Message severity="warn" v-if="this.errorr">Periksa kembali domain account anda</Message>
                     </div>
                         <div class="w-full md:w-10 mx-auto">
-                          <label for="email1" class="block text-900 text-xl font-medium mb-2">Username</label>
+                          <label for="email1" class="block text-900 text-xl font-medium mb-2">Username/Email</label>
                             <InputText 
                                 type="text"
                                 v-model="email"
                                 style="text-transform:lowercase; padding:1rem;"
                                 class="w-full mb-3"
                                 :class="{ 'p-invalid': submitted && !email }" 
-                                placeholder="Masukan Username" 
+                                placeholder="my.name" 
                             />
                             <small class="p-error" v-if="submitted && !email"
                                 >Username Belum Diisi.
