@@ -58,6 +58,9 @@ __webpack_require__.r(__webpack_exports__);
     this.cekUser();
   },
   methods: {
+    formatDate: function formatDate(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+    },
     cekUser: function cekUser() {
       var _this2 = this;
 
@@ -110,34 +113,34 @@ __webpack_require__.r(__webpack_exports__);
         _this4.status = res.data;
       });
     },
-    GetIctByStatus: function GetIctByStatus() {
+    submitFilter: function submitFilter() {
       var _this5 = this;
 
-      if (this.statuss) {
-        this.loading = true;
-        this.axios.get('api/getdataIctByStatus/' + this.statuss, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (res) {
-          _this5.ict = res.data;
-          _this5.loading = false;
-        });
-      } else {
-        this.getIct();
+      if (this.filterDate.start == null) {
+        this.filterDate.start == '';
       }
-    },
-    submitFilter: function submitFilter() {
-      var _this6 = this;
 
+      ;
+
+      if (this.filterDate.start == null) {
+        this.filterDate.start == '';
+      }
+
+      ;
+
+      if (this.filterDate.status == null) {
+        this.filterDate.status == '';
+      }
+
+      ;
       this.axios.post('api/filterByDate', this.filterDate, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (res) {
-        _this6.ict = res.data;
-        _this6.filter = true;
-        _this6.dialogFilterDate = false;
+        _this5.ict = res.data;
+        _this5.filter = true;
+        _this5.dialogFilterDate = false;
       });
     },
     resetFilter: function resetFilter() {
@@ -149,9 +152,14 @@ __webpack_require__.r(__webpack_exports__);
       this.getIct();
       this.filter = false;
     },
-    CetakPdf: function CetakPdf() {// var start = moment(this.filterDate.start).format("DD MMM YYYY");
-      // var end = moment(this.filterDate.start).format("DD MMM YYYY");
-      // window.open('api/cetak-pdf-filter-ict/'+start + '/' +end + '/' + this.filterDate.status)
+    CetakPdf: function CetakPdf() {
+      if (this.filterDate.start && this.filterDate.end) {
+        var start = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.filterDate.start).format("DD MMM YYYY");
+        var end = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.filterDate.end).format("DD MMM YYYY");
+        window.open('api/cetak-pdf-filter-ict/' + start + '/' + end + '/' + this.filterDate.status);
+      } else {
+        window.open('api/cetak-pdf-filter-ict/' + this.filterDate.start + '/' + this.filterDate.end + '/' + this.filterDate.status);
+      }
     }
   }
 });
@@ -252,14 +260,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_4];
     }),
     end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+      return [_this.filterDate.start || _this.filterDate.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+        key: 0,
         label: "Pdf",
         "class": "p-button-raised p-button-danger mr-2",
         icon: "pi pi-file-pdf",
         onClick: _cache[0] || (_cache[0] = function ($event) {
           return $options.CetakPdf();
         })
-      })];
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1
     /* STABLE */
@@ -285,7 +294,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_this.filter == true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 0,
-        label: "Reset",
+        label: "Clear",
         icon: "pi pi-filter-slash",
         "class": "p-button-raised p-button-danger mr-2",
         onClick: $options.resetFilter,
@@ -293,7 +302,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        icon: "pi pi-filter-fill",
+        icon: "pi pi-filter",
         onClick: _cache[1] || (_cache[1] = function ($event) {
           return _this.dialogFilterDate = true;
         })
@@ -302,7 +311,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_no",
-        header: "Nomer Request",
+        header: "No. Request",
         style: {
           "min-width": "10rem"
         }
@@ -354,14 +363,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     style: {
       width: '500px'
     },
-    header: "Filter From Date To Date",
+    header: "Filter Data ICT Request",
     modal: true,
     "class": "fluid"
   }, {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Filter",
-        icon: "pi pi-fiter",
+        icon: "pi pi-filter",
         "class": "p-button-raised p-button mr-2",
         onClick: $options.submitFilter,
         autofocus: ""
@@ -395,7 +404,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         options: $data.status,
         optionValue: "code",
         optionLabel: "name",
-        placeholder: "Pilih Status (Optional)",
+        placeholder: "Pilih Status",
         "class": "mr-2"
       }, null, 8
       /* PROPS */

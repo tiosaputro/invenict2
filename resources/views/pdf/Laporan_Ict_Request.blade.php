@@ -8,7 +8,7 @@
  
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-	<title>E-App</title>
+	<title>Report ICT Request</title>
     <style>
 		@media print{
         .bg-light {
@@ -27,7 +27,7 @@
 			<div class="row justify-content-center">
 				<div class="col-md-5 text-center mb-5">
 					<h2 style="font-size:30pt; font-weight: bold;">Report Ict Request</h2>
-					 <h4 style="font-size:20pt; font-weight: bold;">Pada tanggal : {{date('d M Y')}}</h4>
+					 <h4 style="font-size:15pt; font-weight: bold;">Pada tanggal : {{date('d M Y')}}</h4>
 				</div>
 			</div>
 			<div class="row">

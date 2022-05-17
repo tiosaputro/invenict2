@@ -2120,7 +2120,7 @@ class IctController extends Controller
                   ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         })
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_no','dr.div_name','im.ireq_date','im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
+        ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
         ->whereNotNull('im.ireq_status')
         ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
         2 WHEN im.ireq_status = 'NA2' Then 3 WHEN

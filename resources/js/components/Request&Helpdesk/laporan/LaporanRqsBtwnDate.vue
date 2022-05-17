@@ -14,6 +14,7 @@
               class="p-button-raised p-button-danger mr-2"
               icon="pi pi-file-pdf"
               @click="CetakPdf()"
+              v-if="this.filterDate.start || this.filterDate.status"
             />
           </template>
         </Toolbar>
@@ -37,11 +38,11 @@
         </template>
          <template #header>
             <div class="table-header text-left">
-              <Button label="Reset" icon="pi pi-filter-slash" class="p-button-raised p-button-danger mr-2" @click="resetFilter" v-if="this.filter == true" autofocus/>
-              <Button icon="pi pi-filter-fill" @click="this.dialogFilterDate = true"/>
+              <Button label="Clear" icon="pi pi-filter-slash" class="p-button-raised p-button-danger mr-2" @click="resetFilter" v-if="this.filter == true" autofocus/>
+              <Button icon="pi pi-filter" @click="this.dialogFilterDate = true"/>
             </div>
           </template>
-          <Column field="ireq_no" header="Nomer Request" style="min-width:10rem"/>
+          <Column field="ireq_no" header="No. Request" style="min-width:10rem"/>
           <Column field="ireq_date" header="Tanggal Request" style="min-width:10rem"/>
           <Column field="ireq_requestor" header="Pemohon" style="min-width:10rem"/>
           <Column field="ireq_user" header="Pengguna" style="min-width:10rem"/>
@@ -52,7 +53,7 @@
           v-model:visible="dialogFilterDate"
           :breakpoints="{'960px': '75vw'}"
           :style="{ width: '500px' }"
-          header="Filter From Date To Date"
+          header="Filter Data ICT Request"
           :modal="true"
           class="fluid"
         >
@@ -65,11 +66,11 @@
         <div class="field grid">
            <label class="col-fixed w-9rem" style="width:180px">Pilih Status</label>
            <div class="col-fixed w-9rem">
-          <Dropdown :filter="true" :showClear="true" v-model="filterDate.status" :options="status" optionValue="code" optionLabel="name" placeholder="Pilih Status (Optional)" class="mr-2" />
+            <Dropdown :filter="true" :showClear="true" v-model="filterDate.status" :options="status" optionValue="code" optionLabel="name" placeholder="Pilih Status" class="mr-2" />
            </div>
         </div>
         <template #footer>
-          <Button label="Filter" icon="pi pi-fiter" class="p-button-raised p-button mr-2" @click="submitFilter" autofocus/>
+          <Button label="Filter" icon="pi pi-filter" class="p-button-raised p-button mr-2" @click="submitFilter" autofocus/>
           <Button label="Close" class="p-button-raised p-button-danger mr-2" icon="pi pi-times" @click="this.dialogFilterDate = false"/>
         </template>
       </Dialog>
@@ -82,13 +83,13 @@ import moment from 'moment';
 export default {
   data() {
     return {
-        filter:false,
+         filter:false,
          mask:{
           input: 'DD MMM YYYY'
          },
          filterDate:{
            start:null,
-           end:null ,
+           end:null,
            status:null,
          },
          dialogFilterDate :false,
@@ -124,6 +125,9 @@ export default {
     this.cekUser();
   },
   methods: {
+    formatDate(date) {
+      return moment(date).format("DD MMM YYYY")
+    },
     cekUser(){
       if(this.id){
       this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -153,19 +157,11 @@ export default {
         this.status = res.data;
       });
     },
-    GetIctByStatus(){
-      if(this.statuss){
-      this.loading = true;
-        this.axios.get('api/getdataIctByStatus/' +this.statuss, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
-          this.ict = res.data;
-          this.loading = false;
-        });
-      }
-      else{
-        this.getIct();
-      }
-    },
     submitFilter(){
+      if (this.filterDate.start == null){ this.filterDate.start == ''};
+      if (this.filterDate.start == null){ this.filterDate.start == ''};
+      if (this.filterDate.status == null){ this.filterDate.status == ''};
+    
       this.axios.post('api/filterByDate',this.filterDate,{headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
         this.ict = res.data;
         this.filter = true;
@@ -183,9 +179,14 @@ export default {
       this.filter = false;
     },
     CetakPdf(){
-      // var start = moment(this.filterDate.start).format("DD MMM YYYY");
-      // var end = moment(this.filterDate.start).format("DD MMM YYYY");
-      // window.open('api/cetak-pdf-filter-ict/'+start + '/' +end + '/' + this.filterDate.status)
+      if(this.filterDate.start && this.filterDate.end){
+        var start = moment(this.filterDate.start).format("DD MMM YYYY");
+        var end = moment(this.filterDate.end).format("DD MMM YYYY");
+        window.open('api/cetak-pdf-filter-ict/'+start + '/' +end + '/' + this.filterDate.status)
+      }
+      else{
+        window.open('api/cetak-pdf-filter-ict/'+this.filterDate.start + '/' +this.filterDate.end + '/' + this.filterDate.status)
+      }
     }
   },
 };

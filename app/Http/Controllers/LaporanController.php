@@ -180,91 +180,137 @@ class LaporanController extends Controller
         return view('pdf/Laporan_Req_Per_Status_Per_ICT_Personnel',compact('status'));
     }
     function filterByDate(Request $request){
-        $start = Carbon::parse($request->start)->tz('Asia/Jakarta')->format('Y-m-d');
-        $end = Carbon::parse($request->end)->tz('Asia/Jakarta')->format('Y-m-d');
-        if($request->status){
-        $ict = DB::table('ireq_mst as im')
-        ->leftJoin('lookup_refs as lr',function ($join) {
-            $join->on('im.ireq_status','lr.lookup_code')
-                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-        })
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_no','dr.div_name','im.ireq_date','im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
-        ->where('im.ireq_status',$request->status)
-        ->whereBetween('im.ireq_date',[$start,$end])
-        ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-        2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-        im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-         WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-         WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-         im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-         Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
-        ->get();
-        return json_encode($ict);
+        $Newstart = Carbon::parse($request->start)->tz('Asia/Jakarta')->format('Y-m-d');
+        $Newend = Carbon::parse($request->end)->tz('Asia/Jakarta')->format('Y-m-d');
+        $status = $request->status;
+        if($request->start && $request->end){
+            if($status){
+            $ict = DB::table('ireq_mst as im')
+            ->leftJoin('lookup_refs as lr',function ($join) {
+                $join->on('im.ireq_status','lr.lookup_code')
+                    ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+            })
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
+            ->where('im.ireq_status',$status)
+            ->whereBetween('im.ireq_date',[$Newstart,$Newend])
+            ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
+            2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
+            im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
+            WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
+            WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
+            im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
+            Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+            ->get();
+            return json_encode($ict);
+            }
+            else {
+                $ict = DB::table('ireq_mst as im')
+                ->leftJoin('lookup_refs as lr',function ($join) {
+                    $join->on('im.ireq_status','lr.lookup_code')
+                        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+                })
+                ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+                ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
+                ->whereNotNull('im.ireq_status')
+                ->whereBetween('im.ireq_date',[$Newstart,$Newend])
+                ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
+                2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
+                im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
+                WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
+                WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
+                im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
+                Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+                ->get();
+                return json_encode($ict);
+            }
         }
         else{
             $ict = DB::table('ireq_mst as im')
             ->leftJoin('lookup_refs as lr',function ($join) {
                 $join->on('im.ireq_status','lr.lookup_code')
-                      ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+                    ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
             })
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->select('im.ireq_no','dr.div_name','im.ireq_date','im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
-            ->whereNotNull('im.ireq_status')
-            ->whereBetween('im.ireq_date',[$start,$end])
+            ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
+            ->where('im.ireq_status',$status)
             ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
             2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
             im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-             WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-             WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-             im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-             Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+            WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
+            WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
+            im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
+            Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
             ->get();
             return json_encode($ict);
         }
     }
     function cetakPdf($start,$end,$status){
-        $Newstart = Carbon::parse($start)->tz('Asia/Jakarta')->format('Y-m-d');
-        $Newend = Carbon::parse($end)->tz('Asia/Jakarta')->format('Y-m-d');
-        if($status){
-        $ict = DB::table('ireq_mst as im')
-        ->leftJoin('lookup_refs as lr',function ($join) {
-            $join->on('im.ireq_status','lr.lookup_code')
-                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-        })
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY HH24:MI') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
-        ->where('im.ireq_status',$status)
-        ->whereBetween('im.ireq_date',[$Newstart,$Newend])
-        ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-        2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-        im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-         WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-         WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-         im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-         Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
-        ->get();
-        return view('pdf/Laporan_Ict_Request',compact('ict'));
+        if($status == 'undefined'){
+            $status = 'null';
         }
-        else{
-            $ict = DB::table('ireq_mst as im')
-            ->leftJoin('lookup_refs as lr',function ($join) {
-                $join->on('im.ireq_status','lr.lookup_code')
-                      ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-            })
-            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY HH24:MI') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
-            ->whereNotNull('im.ireq_status')
-            ->whereBetween('im.ireq_date',[$Newstart,$Newend])
-            ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-            2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-            im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-             WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-             WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-             im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-             Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
-            ->get();
-            return view('pdf/Laporan_Ict_Request',compact('ict'));
+        if($start != 'null'){
+            $Newstart = Carbon::parse($start)->tz('Asia/Jakarta')->format('Y-m-d');
+            $Newend = Carbon::parse($end)->tz('Asia/Jakarta')->format('Y-m-d');
+             if($status != 'null'){
+                $ict = DB::table('ireq_mst as im')
+                ->leftJoin('lookup_refs as lr',function ($join) {
+                    $join->on('im.ireq_status','lr.lookup_code')
+                        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+                })
+                ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+                ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
+                ->where('im.ireq_status',$status)
+                ->whereBetween('im.ireq_date',[$Newstart,$Newend])
+                ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
+                2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
+                im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
+                WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
+                WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
+                im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
+                Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+                ->get();
+                return view('pdf/Laporan_Ict_Request',compact('ict'));
+                }
+                else {
+                    $ict = DB::table('ireq_mst as im')
+                    ->leftJoin('lookup_refs as lr',function ($join) {
+                        $join->on('im.ireq_status','lr.lookup_code')
+                            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+                    })
+                    ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+                    ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
+                    ->whereNotNull('im.ireq_status')
+                    ->whereBetween('im.ireq_date',[$Newstart,$Newend])
+                    ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
+                    2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
+                    im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
+                    WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
+                    WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
+                    im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
+                    Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+                    ->get();
+                    return view('pdf/Laporan_Ict_Request',compact('ict'));
+                }
+            }
+            else{
+                $ict = DB::table('ireq_mst as im')
+                ->leftJoin('lookup_refs as lr',function ($join) {
+                    $join->on('im.ireq_status','lr.lookup_code')
+                        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+                })
+                ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+                ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
+                ->where('im.ireq_status',$status)
+                ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
+                2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
+                im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
+                WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
+                WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
+                im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
+                Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+                ->get();
+                return view('pdf/Laporan_Ict_Request',compact('ict'));
+            }
         }
-    }
 }
