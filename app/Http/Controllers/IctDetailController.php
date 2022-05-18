@@ -45,7 +45,7 @@ class IctDetailController extends Controller
     Public function detailPenugasan($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_qty','id.ireq_remark','id.ireqd_id',
+        ->select('id.ireq_qty','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
             'lr.lookup_desc as ireq_type','llr.lookup_desc as ireq_status','id.ireq_desc',
             DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -407,7 +407,7 @@ class IctDetailController extends Controller
     }
     public function getDetail($ireqd_id){
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_assigned_to1','im.ireq_no','id.ireqd_id','id.ireq_status as status', DB::raw("(iim.invent_code ||'-'|| iim.invent_desc) as name"))
+        ->select('id.ireq_assigned_to1','im.ireq_no','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', DB::raw("(iim.invent_code ||'-'|| iim.invent_desc) as name"))
         ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
         ->leftjoin('invent_mst as iim','id.invent_code','iim.invent_code')
         ->where('id.ireqd_id',$ireqd_id)
@@ -441,6 +441,15 @@ class IctDetailController extends Controller
         $dtl->save();
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
         return json_encode('Updated Successfully');
+    }
+    public function updateNote(Request $request,$code){
+        
+        $dtl = IctDetail::find($code);
+        $dtl->ireq_note_personnel = $request->ireq_reason;
+        $dtl->last_update_date = $this->newUpdate;
+        $dtl->last_updated_by = Auth::user()->usr_name;
+        $dtl->save();
+        return json_encode(['message'=>'Updated Successfully'],200);
     }
     public function updateStatusClosingDetail($ireqd_id,$ireq_id){
         

@@ -240,6 +240,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-verif/{code}','IctDetailController@getDetailVerif');
     Route::get('/detail/{ireqd_id}','IctDetailController@getDetail');
     Route::put('/update-status-done/{code}','IctDetailController@updateStatusDone');
+    Route::put('/update-note/{code}','IctDetailController@updateNote');
     Route::put('/updateAssignPerDetail/{code}','IctDetailController@updateAssign');
     Route::get('/appd/{ireqd_id}/{code}','IctDetailController@appd');
     Route::put('/updateAssignPerDetailFromReject/{code}','IctDetailController@updateAssignFromReject');

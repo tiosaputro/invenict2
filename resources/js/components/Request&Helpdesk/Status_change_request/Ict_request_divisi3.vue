@@ -187,14 +187,22 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
                   <Column style="min-width:15rem">
                   <template #body="slotProps">
                     <Button
                       v-if="slotProps.data.ireq_status == 'Penugasan'"
                       class="p-button-rounded p-button-info mr-2"
+                      v-tooltip.left="'Ubah Status'"
                       icon="pi pi-pencil"
                       @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
+                    />
+                    <Button
+                      v-if="slotProps.data.ireq_status == 'Penugasan'"
+                      class="p-button-rounded p-button-help mr-2"
+                      icon="bi bi-journal-text"
+                      v-tooltip.bottom="'Note'"
+                      @click="createNote(slotProps.data.ireqd_id)"
                     />
                       <Button
                         class="p-button-raised p-button-info p-button-text mr-2"
@@ -204,7 +212,7 @@
                             params: { code: slotProps.data.ireq_id }, })"
                       />
                       <Button
-                        class="p-button-raised p-button-text mt-2"
+                        class="p-button-raised p-button-success p-button-text mt-2"
                         label="PR"
                       />
                     </template>
@@ -272,7 +280,7 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
                   <template #footer>
                     <div class="p-grid p-dir-col">
                       <div class="p-col">
@@ -336,7 +344,7 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
                 <template #footer>
                     <div class="p-grid p-dir-col">
                       <div class="p-col">
@@ -400,19 +408,23 @@
             <div class="fluid">
               <div class="field grid">
                 <label class="col-fixed w-9rem"> No Request </label>
-                <InputText 
-                v-model="editStatus.ireq_no"
-                disabled
-                />
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="editStatus.ireq_no"
+                    disabled
+                    />
+                  </div>
               </div>
             </div>
             <div class="fluid">
               <div class="field grid">
                 <label class="col-fixed w-9rem"> No Detail </label>
-                <InputText 
-                v-model="editStatus.ireqd_id"
-                disabled
-                />
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="editStatus.ireqd_id"
+                    disabled
+                    />
+                  </div> 
               </div>
             </div>
             <div class="fluid">
@@ -439,6 +451,58 @@
                 <Button label="No" @click="cancelStatus()" class="p-button-text" />
             </template>
           </Dialog>   
+          <Dialog
+            v-model:visible="dialogNote"
+            :style="{ width: '500px' }"
+            header="Dialog Keterangan"
+            :modal="true"
+            class="fluid"
+          >
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Request </label>
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="note.ireq_no"
+                    disabled
+                    />
+                  </div>
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Detail </label>
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="note.ireqd_id"
+                    disabled
+                    />
+                  </div> 
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:100px">Keterangan</label>
+                  <div class="col-fixed">
+                   <Textarea 
+                    v-model="note.ireq_reason" 
+                    placeholder="Masukan Keterangan"
+                    :class="{ 'p-invalid': submitted && !note.ireq_reason }"
+                    :autoResize="true" 
+                    rows="5" 
+                    cols="20"
+                  />
+                    <small v-if="submitted && !note.ireq_reason" class="p-error">
+                      Keterangan Belum Diisi
+                    </small>
+                  </div>
+                </div>
+            </div>
+            <template #footer>
+                <Button label="Yes" @click="submitNote()" class="p-button" autofocus />
+                <Button label="No" @click="cancelNote()" class="p-button-text" />
+            </template>
+          </Dialog>   
       </div>
     </div>
   </div>
@@ -450,6 +514,7 @@ export default {
   data() {
     return {
         dialogEdit:false,
+        dialogNote:false,
         dialogChangeStatus:false,
         loading: true,
         submitted:false,
@@ -466,6 +531,7 @@ export default {
         id : localStorage.getItem('id'),
         editDetail:{ ireq_reason :''},
         editStatus:[],
+        note:[],
         code:null,
         status:[],
     };
@@ -533,6 +599,29 @@ export default {
         });
       }
     },
+    createNote(ireqd_id){
+      this.axios.get('api/detail/'+ireqd_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.note = response.data;
+        this.code = ireqd_id;
+      });
+      this.dialogNote = true;
+    },
+    submitNote(){
+      this.submitted = true;
+        this.axios.put('/api/update-note/'+this.code,this.note,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
+         this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
+          this.note = [];
+          this.code = null;
+          this.dialogNote = false;
+          this.submitted = false;
+        });
+        this.getData();
+    },
+    cancelNote(){
+      this.note = [];
+      this.code = null;
+      this.dialogNote = false;
+    },
     edit(ireqd_id,ireq_id){
       this.axios.get('api/detail/'+ireqd_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.editStatus = response.data;
@@ -549,10 +638,8 @@ export default {
           this.status=[];
           this.dialogChangeStatus = false;
           this.submitted = false;
+          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
         });
-         this.$toast.add({
-            severity:'success', summary: 'Success', detail:'Success Update', life: 2000
-          });
         this.getData();
     },
     cancelStatus(){

@@ -20,6 +20,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dialogEdit: false,
+      dialogNote: false,
       dialogChangeStatus: false,
       loading: true,
       submitted: false,
@@ -43,6 +44,7 @@ __webpack_require__.r(__webpack_exports__);
         ireq_reason: ''
       },
       editStatus: [],
+      note: [],
       code: null,
       status: []
     };
@@ -141,7 +143,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    edit: function edit(ireqd_id, ireq_id) {
+    createNote: function createNote(ireqd_id) {
       var _this4 = this;
 
       this.axios.get('api/detail/' + ireqd_id, {
@@ -149,15 +151,56 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.editStatus = response.data;
-        _this4.code = ireq_id;
+        _this4.note = response.data;
+        _this4.code = ireqd_id;
+      });
+      this.dialogNote = true;
+    },
+    submitNote: function submitNote() {
+      var _this5 = this;
 
-        _this4.getStatus();
+      this.submitted = true;
+      this.axios.put('/api/update-note/' + this.code, this.note, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function () {
+        _this5.$toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Success Update',
+          life: 2000
+        });
+
+        _this5.note = [];
+        _this5.code = null;
+        _this5.dialogNote = false;
+        _this5.submitted = false;
+      });
+      this.getData();
+    },
+    cancelNote: function cancelNote() {
+      this.note = [];
+      this.code = null;
+      this.dialogNote = false;
+    },
+    edit: function edit(ireqd_id, ireq_id) {
+      var _this6 = this;
+
+      this.axios.get('api/detail/' + ireqd_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this6.editStatus = response.data;
+        _this6.code = ireq_id;
+
+        _this6.getStatus();
       });
       this.dialogChangeStatus = true;
     },
     submitStatus: function submitStatus() {
-      var _this5 = this;
+      var _this7 = this;
 
       this.submitted = true;
       this.axios.put('/api/update-status-done/' + this.code, this.editStatus, {
@@ -165,17 +208,18 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this5.editStatus = [];
-        _this5.code = null;
-        _this5.status = [];
-        _this5.dialogChangeStatus = false;
-        _this5.submitted = false;
-      });
-      this.$toast.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Success Update',
-        life: 2000
+        _this7.editStatus = [];
+        _this7.code = null;
+        _this7.status = [];
+        _this7.dialogChangeStatus = false;
+        _this7.submitted = false;
+
+        _this7.$toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Success Update',
+          life: 2000
+        });
       });
       this.getData();
     },
@@ -186,22 +230,22 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogChangeStatus = false;
     },
     getData: function getData() {
-      var _this6 = this;
+      var _this8 = this;
 
       this.axios.get('api/get-sedang-dikerjakan/' + this.user.usr_fullname, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this6.penugasan = response.data.ict3;
-        _this6.reject = response.data.ict4;
-        _this6.sedangDikerjakan = response.data.ict;
-        _this6.sudahDikerjakan = response.data.ict1;
-        _this6.selesai = response.data.ict2;
-        _this6.loading = false;
+        _this8.penugasan = response.data.ict3;
+        _this8.reject = response.data.ict4;
+        _this8.sedangDikerjakan = response.data.ict;
+        _this8.sudahDikerjakan = response.data.ict1;
+        _this8.selesai = response.data.ict2;
+        _this8.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 403) {
-          _this6.$router.push('/access');
+          _this8.$router.push('/access');
         }
       });
     },
@@ -209,14 +253,14 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
     getStatus: function getStatus() {
-      var _this7 = this;
+      var _this9 = this;
 
       this.axios.get('/api/getStatusIct', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this7.status = response.data;
+        _this9.status = response.data;
       });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
@@ -427,26 +471,32 @@ var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_50 = {
-  "class": "fluid"
+  "class": "col-fixed"
 };
 var _hoisted_51 = {
+  "class": "fluid"
+};
+var _hoisted_52 = {
   "class": "field grid"
 };
 
-var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
 }, " No Detail ", -1
 /* HOISTED */
 );
 
-var _hoisted_53 = {
+var _hoisted_54 = {
+  "class": "col-fixed"
+};
+var _hoisted_55 = {
   "class": "fluid"
 };
-var _hoisted_54 = {
+var _hoisted_56 = {
   "class": "field grid"
 };
 
-var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "100px"
@@ -455,10 +505,65 @@ var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_56 = {
+var _hoisted_58 = {
   "class": "col-fixed"
 };
-var _hoisted_57 = {
+var _hoisted_59 = {
+  key: 0,
+  "class": "p-error"
+};
+var _hoisted_60 = {
+  "class": "fluid"
+};
+var _hoisted_61 = {
+  "class": "field grid"
+};
+
+var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Request ", -1
+/* HOISTED */
+);
+
+var _hoisted_63 = {
+  "class": "col-fixed"
+};
+var _hoisted_64 = {
+  "class": "fluid"
+};
+var _hoisted_65 = {
+  "class": "field grid"
+};
+
+var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Detail ", -1
+/* HOISTED */
+);
+
+var _hoisted_67 = {
+  "class": "col-fixed"
+};
+var _hoisted_68 = {
+  "class": "fluid"
+};
+var _hoisted_69 = {
+  "class": "field grid"
+};
+
+var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Keterangan", -1
+/* HOISTED */
+);
+
+var _hoisted_71 = {
+  "class": "col-fixed"
+};
+var _hoisted_72 = {
   key: 0,
   "class": "p-error"
 };
@@ -486,6 +591,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
 
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
+
+  var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
@@ -885,7 +992,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "ireq_assigned_to1",
+                field: "ireq_assigned_to",
                 header: "Petugas (ICT)",
                 sortable: true,
                 style: {
@@ -897,7 +1004,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-                  return [slotProps.data.ireq_status == 'Penugasan' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                  return [slotProps.data.ireq_status == 'Penugasan' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
                     "class": "p-button-rounded p-button-info mr-2",
                     icon: "pi pi-pencil",
@@ -906,7 +1013,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                  , ["onClick"])), [[_directive_tooltip, 'Ubah Status', void 0, {
+                    left: true
+                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_status == 'Penugasan' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                    key: 1,
+                    "class": "p-button-rounded p-button-help mr-2",
+                    icon: "bi bi-journal-text",
+                    onClick: function onClick($event) {
+                      return $options.createNote(slotProps.data.ireqd_id);
+                    }
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"])), [[_directive_tooltip, 'Note', void 0, {
+                    bottom: true
+                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                     "class": "p-button-raised p-button-info p-button-text mr-2",
                     label: "CA",
                     onClick: function onClick($event) {
@@ -920,7 +1040,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }, null, 8
                   /* PROPS */
                   , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                    "class": "p-button-raised p-button-text mt-2",
+                    "class": "p-button-raised p-button-success p-button-text mt-2",
                     label: "PR"
                   })];
                 }),
@@ -1049,7 +1169,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "ireq_assigned_to1",
+                field: "ireq_assigned_to",
                 header: "Petugas (ICT)",
                 sortable: true,
                 style: {
@@ -1177,7 +1297,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "ireq_assigned_to1",
+                field: "ireq_assigned_to",
                 header: "Petugas (ICT)",
                 sortable: true,
                 style: {
@@ -1281,7 +1401,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [_hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [_hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.editStatus.ireq_no,
         "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
           return $data.editStatus.ireq_no = $event;
@@ -1289,7 +1409,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         disabled: ""
       }, null, 8
       /* PROPS */
-      , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [_hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [_hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.editStatus.ireqd_id,
         "onUpdate:modelValue": _cache[18] || (_cache[18] = function ($event) {
           return $data.editStatus.ireqd_id = $event;
@@ -1297,7 +1417,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         disabled: ""
       }, null, 8
       /* PROPS */
-      , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [_hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [_hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
         modelValue: $data.editStatus.status,
         "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
           return $data.editStatus.status = $event;
@@ -1312,7 +1432,73 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options", "class"]), $data.submitted && !$data.editStatus.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_57, " Status Belum Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.editStatus.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_59, " Status Belum Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogNote,
+    "onUpdate:visible": _cache[28] || (_cache[28] = function ($event) {
+      return $data.dialogNote = $event;
+    }),
+    style: {
+      width: '500px'
+    },
+    header: "Dialog Keterangan",
+    modal: true,
+    "class": "fluid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[26] || (_cache[26] = function ($event) {
+          return $options.submitNote();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[27] || (_cache[27] = function ($event) {
+          return $options.cancelNote();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.note.ireq_no,
+        "onUpdate:modelValue": _cache[23] || (_cache[23] = function ($event) {
+          return $data.note.ireq_no = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [_hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.note.ireqd_id,
+        "onUpdate:modelValue": _cache[24] || (_cache[24] = function ($event) {
+          return $data.note.ireqd_id = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [_hoisted_70, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        modelValue: $data.note.ireq_reason,
+        "onUpdate:modelValue": _cache[25] || (_cache[25] = function ($event) {
+          return $data.note.ireq_reason = $event;
+        }),
+        placeholder: "Masukan Keterangan",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+          'p-invalid': $data.submitted && !$data.note.ireq_reason
+        }),
+        autoResize: true,
+        rows: "5",
+        cols: "20"
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "class"]), $data.submitted && !$data.note.ireq_reason ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_72, " Keterangan Belum Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
