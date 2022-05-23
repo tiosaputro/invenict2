@@ -100,7 +100,7 @@ __webpack_require__.r(__webpack_exports__);
               return x.status;
             }),
             datasets: [{
-              label: _this3.ictPersonnel,
+              label: 'Statistik Status Request Per Personnel (' + _this3.ictPersonnel + ')',
               backgroundColor: '#' + _this3.color,
               data: response.data.map(function (x) {
                 return x.jumlah;

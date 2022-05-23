@@ -3099,36 +3099,42 @@
           <Button label="Cancel" @click="cancelAssign()" class="p-button-text" />
         </template>
         </Dialog>
-        <Dialog v-model:visible="dialogReject"
-                :style="{ width: '400px' }"
-                header="Form Dialog Reject"
-                :modal="true"
-                class="fluid grid"
-            >
-                <div class="p-fluid">
-                  <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:100px">Alasan</label>
-                     <div class="col">
-                          <Textarea
-                            :autoResize="true"
-                            type="text"
-                            v-model="rbr.ket"
-                            rows="5" 
-                            placeholder="Masukan Alasan"
-                            :class="{ 'p-invalid': submitted && !rbr.ket }"
-                          />
-                            <small v-if="submitted && !rbr.ket" class="p-error">
-                            Alasan Harus Diisi
-                            </small>
-                     </div>
-                   </div>
+        <Dialog 
+          v-model:visible="dialogReject"
+          :style="{ width: '400px' }"
+          header="Form Dialog Reject"
+          :modal="true"
+          class="fluid grid"
+        >
+          <div class="p-fluid">
+            <div class="field grid">
+              <label class="col-fixed w-9rem" style="width:100px">Alasan</label>
+                <div class="col">
+                  <Textarea
+                    :autoResize="true"
+                    type="text"
+                    v-model="rbr.ket"
+                    rows="5" 
+                    placeholder="Masukan Alasan"
+                    :class="{ 'p-invalid': submitted && !rbr.ket }"
+                  />
+                  <small v-if="submitted && !rbr.ket" class="p-error">
+                    Alasan Harus Diisi
+                  </small>
                 </div>
-                <template #footer>
-                    <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
-                    <Button label="No" @click="cancelReject()" class="p-button-text" />
-                </template>
+              </div>
+            </div>
+            <template #footer>
+              <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
+              <Button label="No" @click="cancelReject()" class="p-button-text" />
+            </template>
         </Dialog>
-        <Dialog header="Confirmation" v-model:visible="confirmationVerifikasi" :style="{width: '350px'}" :modal="true">
+        <Dialog 
+          header="Confirmation" 
+          v-model:visible="confirmationVerifikasi" 
+          :style="{width: '350px'}" 
+          :modal="true"
+        >
           <div class="confirmation-content">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
               <span>Verifikasi Request</span>
@@ -3138,7 +3144,14 @@
             <Button label="Approve" icon="pi pi-check" @click="approveAtasan" class="p-button-raised p-button-text" autofocus />
           </template>
         </Dialog>
-        <Dialog v-model:visible="dialogRejectAtasan" :breakpoints="{'960px': '75vw'}" :style="{ width: '400px' }" header="Form Dialog Reject" :modal="true" class="field grid">
+        <Dialog 
+          v-model:visible="dialogRejectAtasan" 
+          :breakpoints="{'960px': '75vw'}" 
+          :style="{ width: '400px' }" 
+          header="Form Dialog Reject" 
+          :modal="true" 
+          class="field grid"
+        >
          <div class="field"> 
           <div class="field grid">
             <label class="col-fixed w-9rem">Alasan</label>
@@ -3275,7 +3288,7 @@ export default {
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         usr_name: localStorage.getItem('usr_name'),
         user:[],
-        rbr:{ ket:null, id:null },
+        rbr:{ ket:'', id:'' },
         confirmationVerifikasi:false,
         dialogRejectAtasan:false,
         code:null,
@@ -3555,15 +3568,17 @@ export default {
       cancelReject(){
         this.dialogReject = false;
         this.rbr.id = null;
-        this.rbr.ket = null;
+        this.rbr.ket = null; 
+        this.submitted = false;
       },
       updateReject(){
-        this.submmited = true;
-        this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.submitted = true;
+        if(this.rbr.ket){
+          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
             this.dialogReject = false;    
-            this.rbr.id = null;
-            this.rbr.ket = null;
-            this.submmited = false;
+            this.rbr.id = '' ;
+            this.rbr.ket = '' ;
+            this.submitted = false;
               this.$toast.add({
                 severity: "info",
                 summary: "Confirmed",
@@ -3572,6 +3587,7 @@ export default {
               });
               this.getActive();
         });
+        }
       },
       VerifikasiRequestAtasan(ireq_id){
       this.code = ireq_id;

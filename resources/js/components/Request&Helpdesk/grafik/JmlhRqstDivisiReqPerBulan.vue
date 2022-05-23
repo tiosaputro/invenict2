@@ -96,7 +96,7 @@ export default {
                         labels : response.data.map((x)=>x.div_name),
                         datasets : [
                             {
-                                label: response.data[0].bulan + this.tahunnRequestor,
+                                label: 'Jumlah Request Divisi Requestor Pada Bulan '+response.data[0].bulan+this.tahunnRequestor,
                                 backgroundColor: '#'+this.color,
                                 data: response.data.map((x)=>x.jumlah)
                             },

@@ -79,8 +79,8 @@ __webpack_require__.r(__webpack_exports__);
       usr_name: localStorage.getItem('usr_name'),
       user: [],
       rbr: {
-        ket: null,
-        id: null
+        ket: '',
+        id: ''
       },
       confirmationVerifikasi: false,
       dialogRejectAtasan: false,
@@ -446,30 +446,34 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogReject = false;
       this.rbr.id = null;
       this.rbr.ket = null;
+      this.submitted = false;
     },
     updateReject: function updateReject() {
       var _this15 = this;
 
-      this.submmited = true;
-      this.axios.put('/api/reject-by-reviewer/' + this.rbr.id, this.rbr, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (res) {
-        _this15.dialogReject = false;
-        _this15.rbr.id = null;
-        _this15.rbr.ket = null;
-        _this15.submmited = false;
+      this.submitted = true;
 
-        _this15.$toast.add({
-          severity: "info",
-          summary: "Confirmed",
-          detail: "Berhasil Direject",
-          life: 2000
+      if (this.rbr.ket) {
+        this.axios.put('/api/reject-by-reviewer/' + this.rbr.id, this.rbr, {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function (res) {
+          _this15.dialogReject = false;
+          _this15.rbr.id = '';
+          _this15.rbr.ket = '';
+          _this15.submitted = false;
+
+          _this15.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Berhasil Direject",
+            life: 2000
+          });
+
+          _this15.getActive();
         });
-
-        _this15.getActive();
-      });
+      }
     },
     VerifikasiRequestAtasan: function VerifikasiRequestAtasan(ireq_id) {
       this.code = ireq_id;

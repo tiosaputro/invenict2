@@ -60,7 +60,11 @@
           <Column field="invent_code" header="Kode" :sortable="true"/>
           <Column field="invent_desc" header="Nama Peripheral" :sortable="true"/>
           <Column field="dpurchase_qty" header="Jumlah(Qty)" :sortable="true"/>
-          <Column field="dpurchase_prc" header="Total Harga" :sortable="true"/>
+          <Column field="dpurchase_prc" header="Total Harga" :sortable="true">
+           <template #body="slotProps">
+             {{slotProps.data.valuta_code}}{{formatPrice(slotProps.data.dpurchase_prc)}}
+           </template>
+          </Column>
           <Column headerStyle="min-width:12rem">
             <template #body="slotProps">
               <Button

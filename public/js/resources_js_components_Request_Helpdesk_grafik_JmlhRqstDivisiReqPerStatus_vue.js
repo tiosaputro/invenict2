@@ -103,7 +103,7 @@ __webpack_require__.r(__webpack_exports__);
                 return x.div_name;
               }),
               datasets: [{
-                label: response.data[0].name,
+                label: 'Jumlah Request Divisi Requestor Per Status' + response.data[0].name,
                 backgroundColor: '#' + _this3.color,
                 data: response.data.map(function (x) {
                   return x.jumlah;

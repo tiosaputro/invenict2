@@ -1111,7 +1111,7 @@ class IctController extends Controller
         ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->where('im.ireq_status','T')
-        ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+        ->groupBy('lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','im.ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
         ->orderBy('im.creation_date','ASC')
         ->get();
 
@@ -1232,7 +1232,7 @@ class IctController extends Controller
             'success' => true,
             'message' => 'Updated Successfully'
         ];
-        return response()->json($msg);
+        return response()->json($ict);
     }
     Public function delete($ireq_id)
     {

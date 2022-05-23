@@ -72,7 +72,7 @@ __webpack_require__.r(__webpack_exports__);
             return x.ireq_status;
           }),
           datasets: [{
-            label: 'Data Request Per Status',
+            label: 'Jumlah Request Per Status',
             backgroundColor: '#' + _this2.color,
             data: response.data.grafik3.map(function (x) {
               return x.jumlah;
@@ -135,7 +135,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
     "font-size": "20pt",
     "font-weight": "bold"
   }
-}, "Statistik Request User", -1
+}, "Statistik Request", -1
 /* HOISTED */
 );
 

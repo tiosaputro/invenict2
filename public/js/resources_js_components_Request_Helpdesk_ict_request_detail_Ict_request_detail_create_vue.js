@@ -333,32 +333,26 @@ var _hoisted_5 = {
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed",
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "No. Request", -1
 /* HOISTED */
 );
 
 var _hoisted_7 = {
-  "class": "col"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_8 = {
   "class": "field grid"
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed",
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Tipe Request", -1
 /* HOISTED */
 );
 
 var _hoisted_10 = {
-  "class": "field col-10 md:col-5"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_11 = {
   key: 0,
@@ -374,16 +368,13 @@ var _hoisted_13 = {
 };
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed",
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Nama Peripheral", -1
 /* HOISTED */
 );
 
 var _hoisted_15 = {
-  "class": "field col-12 md:col-5"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_16 = {
   key: 0,
@@ -399,16 +390,13 @@ var _hoisted_18 = {
 };
 
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed",
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Deskripsi", -1
 /* HOISTED */
 );
 
 var _hoisted_20 = {
-  "class": "col-fixed"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_21 = {
   key: 2,
@@ -416,16 +404,13 @@ var _hoisted_21 = {
 };
 
 var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed",
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Qty", -1
 /* HOISTED */
 );
 
 var _hoisted_23 = {
-  "class": "col-fixed"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_24 = {
   key: 0,
@@ -437,16 +422,13 @@ var _hoisted_25 = {
 };
 
 var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed",
-  style: {
-    "width": "120px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Keterangan", -1
 /* HOISTED */
 );
 
 var _hoisted_27 = {
-  "class": "col-fixed"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_28 = {
   key: 0,

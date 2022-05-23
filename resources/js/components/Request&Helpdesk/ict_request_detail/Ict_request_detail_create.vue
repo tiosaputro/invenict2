@@ -11,8 +11,8 @@
           <div class="col-sm-6">
              <form @submit.prevent="CreateIctDetail">
                <div class="field grid">
-                <label class="col-fixed" style="width:120px">No. Request</label>
-                 <div class="col">
+                <label class="col-fixed w-9rem">No. Request</label>
+                 <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
                     v-model="detail.noreq"
@@ -21,8 +21,8 @@
                 </div>
               </div>
             <div class="field grid">
-              <label class="col-fixed" style="width:120px">Tipe Request</label>
-                <div class="field col-10 md:col-5">
+              <label class="col-fixed w-9rem">Tipe Request</label>
+                <div class="col-fixed w-9rem">
                   <Dropdown 
                     v-model="tipereq"
                     :options="type"
@@ -42,8 +42,8 @@
                 </div>
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
-                <label class="col-fixed" style="width:120px">Nama Peripheral</label>
-                 <div class="field col-12 md:col-5">
+                <label class="col-fixed w-9rem">Nama Peripheral</label>
+                 <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model="kode"
                         :options="kodeperi"
@@ -64,8 +64,8 @@
               </div>
 
               <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S' ">
-                <label class="col-fixed" style="width:120px">Deskripsi</label>
-                 <div class="col-fixed">
+                <label class="col-fixed w-9rem">Deskripsi</label>
+                 <div class="col-fixed w-9rem">
                      <InputText
                         type="text"
                         v-model="desk"
@@ -74,8 +74,8 @@
                 </div>
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
-                <label class="col-fixed" style="width:120px">Qty</label>
-                 <div class="col-fixed">
+                <label class="col-fixed w-9rem">Qty</label>
+                 <div class="col-fixed w-9rem">
                      <InputNumber
                         v-model="qty"
                         placeholder="Masukan Qty"
@@ -87,8 +87,8 @@
                 </div>
               </div>
               <div class="field grid"  v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S'">
-                <label class="col-fixed" style="width:120px">Keterangan</label>
-                 <div class="col-fixed">
+                <label class="col-fixed w-9rem">Keterangan</label>
+                 <div class="col-fixed w-9rem">
                      <Textarea
                         :autoResize="true"
                         type="text"

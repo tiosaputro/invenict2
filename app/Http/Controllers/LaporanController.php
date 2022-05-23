@@ -116,8 +116,7 @@ class LaporanController extends Controller
             ->orderBy('dr.div_name','ASC')
             ->groupBy('dr.div_name','llr.lookup_desc')
             ->get();
-        // return view('pdf/Laporan_Req_Div_Req_Per_Status',compact('status'));
-        return response()->json($status);
+        return view('pdf/Laporan_Req_Div_Req_Per_Status',compact('status'));
     }
     
     Public function cetak_excel_div_user_per_status($statusUser)

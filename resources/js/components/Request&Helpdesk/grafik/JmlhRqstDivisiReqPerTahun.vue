@@ -73,7 +73,7 @@ export default {
                         labels : response.data.map((x)=>x.div_name),
                         datasets : [
                             {
-                                label:this.tahunRequestor ,
+                                label:'Jumlah Request Divisi Requestor Pada Tahun '+this.tahunRequestor ,
                                 backgroundColor: '#'+this.color,
                                 data: response.data.map((x)=>x.jumlah)
                             },

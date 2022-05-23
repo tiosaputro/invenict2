@@ -76,7 +76,7 @@ export default {
                         labels : response.data.map((x)=>x.div_name),
                         datasets : [
                             {
-                                label: response.data[0].name,
+                                label: 'Jumlah Request Divisi Requestor Per Status'+response.data[0].name,
                                 backgroundColor: '#'+this.color,
                                 data: response.data.map((x)=>x.jumlah)
                             },

@@ -6,7 +6,7 @@
             <ColorPicker v-model="color"/> 
         </div>
         <div class="text-center" >
-            <h5 style="font-size:20pt; font-weight: bold;">Statistik Request User</h5>
+            <h5 style="font-size:20pt; font-weight: bold;">Statistik Request</h5>
             <Chart type="bar" :data="perStatus"  id="perStatus"/>
         </div>
     </div>
@@ -55,7 +55,7 @@ export default {
                         labels : response.data.grafik3.map((x)=>x.ireq_status),
                         datasets : [
                             {
-                                label: 'Data Request Per Status',
+                                label: 'Jumlah Request Per Status',
                                 backgroundColor: '#'+this.color,
                                 data: response.data.grafik3.map((x)=>x.jumlah)
                             },

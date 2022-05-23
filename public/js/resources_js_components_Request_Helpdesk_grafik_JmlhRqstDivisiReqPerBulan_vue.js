@@ -128,7 +128,7 @@ __webpack_require__.r(__webpack_exports__);
               return x.div_name;
             }),
             datasets: [{
-              label: response.data[0].bulan + _this4.tahunnRequestor,
+              label: 'Jumlah Request Divisi Requestor Pada Bulan ' + response.data[0].bulan + _this4.tahunnRequestor,
               backgroundColor: '#' + _this4.color,
               data: response.data.map(function (x) {
                 return x.jumlah;

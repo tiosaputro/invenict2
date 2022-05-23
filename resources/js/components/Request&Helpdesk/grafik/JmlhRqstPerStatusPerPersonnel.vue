@@ -73,7 +73,7 @@ export default {
                         labels : response.data.map((x)=>x.status),
                         datasets : [
                             {
-                                label: this.ictPersonnel,
+                                label: 'Statistik Status Request Per Personnel ('+this.ictPersonnel+')',
                                 backgroundColor: '#'+this.color,
                                 data: response.data.map((x)=>x.jumlah)
                             },

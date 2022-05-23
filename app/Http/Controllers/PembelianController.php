@@ -27,11 +27,11 @@ class PembelianController extends Controller
 
         if($aksesmenu->contains($this->to)){
             $pembelian = DB::table('purchase_mst as pm')
-            ->select('pm.purchase_id','pm.purchase_total','sm.suplier_name as suplier_code','pm.purchase_date')
+            ->select('pm.purchase_id','pm.purchase_total','sm.suplier_name as suplier_code','pm.purchase_date','pm.valuta_code')
             ->leftjoin('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
             ->orderBy('pm.creation_date','ASC')
             ->get();
-            return $pembelian->toJson();
+            return json_encode($pembelian);
         }
         else{
             return response(["message"=>"Cannot Access"],403);

@@ -83,12 +83,12 @@ export default {
             if(this.tahunnUser != null &&
                 this.bulanUser != null){
                 this.axios.get('api/count-per-divuser-bulan/'+this.tahunnUser +'/'+this.bulanUser, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{ 
-                    this.nameBulanUser = response.data[0].bulan + this.tahunnUser;
+                    this.nameBulanUser = response.data[0].bulan+this.tahunnUser;
                     this.perDivisiUserBulan = {
                         labels : response.data.map((x)=>x.div_name),
                         datasets : [
                             {
-                                label: this.nameBulanUser,
+                                label: 'Jumlah Request Divisi User Pada Bulan '+this.nameBulanUser,
                                 backgroundColor: '#'+this.color,
                                 data: response.data.map((x)=>x.jumlah)
                             },
