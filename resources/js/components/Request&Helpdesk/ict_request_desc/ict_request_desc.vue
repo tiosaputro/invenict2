@@ -2409,6 +2409,13 @@
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
               />
+              <Button
+                v-if="slotProps.data.ireq_status == 'NA2'"
+                class="p-button-rounded p-button-success mr-2"
+                icon="pi pi-check-square"
+                v-tooltip.right="'Verifikasi'"
+                @click="Verifikasi(slotProps.data.ireq_id)"
+              />
             </template>
           </Column>
           <template #footer>
@@ -2542,8 +2549,8 @@
           <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
           <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem"/>
-          <Column style="min-width:12rem">
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column>
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
@@ -3072,7 +3079,7 @@
         </template>
         </DataTable>
         <Dialog v-model:visible="dialogAssign"
-          :style="{ width: '400px' }"
+          :style="{ width: '450px' }"
           header="Assign Per-Request"
           :modal="true"
           :closable="false"
@@ -3144,6 +3151,16 @@
             <Button label="Approve" icon="pi pi-check" @click="approveAtasan" class="p-button-raised p-button-text" autofocus />
           </template>
         </Dialog>
+        <Dialog header="Confirmation" v-model:visible="ConfirmationVerifikasiManager" :style="{width: '350px'}" :modal="true">
+            <div class="confirmation-content">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span>Verifikasi Request</span>
+            </div>
+            <template #footer>
+                <Button label="Reject" icon="pi pi-times" @click="rejectManager" class="p-button-raised p-button-danger p-button-text"/>
+                <Button label="Approve" icon="pi pi-check" @click="approveManager" class="p-button-raised p-button-text" autofocus />
+            </template>
+        </Dialog>
         <Dialog 
           v-model:visible="dialogRejectAtasan" 
           :breakpoints="{'960px': '75vw'}" 
@@ -3175,6 +3192,36 @@
             <Button label="No" @click="cancelRejectAtasan()" class="p-button-text" />
           </template>
         </Dialog>
+        <Dialog
+              v-model:visible="dialogRejectManager"
+              :style="{ width: '400px' }"
+              header="ICT Request"
+              :modal="true"
+              class="field"
+            >
+            <div class="field">
+              <div class="field grid">
+                <label class="col-fixed w-9rem">Alasan</label>
+                  <div class="co-fixed w-9rem">
+                    <Textarea
+                    :autoResize="true"
+                    type="text"
+                    v-model="reason.ket"
+                    rows="5"
+                    placeholder="Masukan Alasan"
+                    :class="{ 'p-invalid': submitted && !reason.ket }"
+                  />
+                    <small v-if="submitted && !reason.ket" class="p-error">
+                    Alasan Harus Diisi
+                    </small>
+                </div>
+              </div>
+            </div>
+        <template #footer>
+            <Button label="Yes" @click="updateRejectManager()" class="p-button" autofocus />
+            <Button label="No" @click="cancelRejectManager()" class="p-button-text" />
+        </template>
+      </Dialog>
         <Dialog
             v-model:visible="dialogEdit"
             :style="{ width: '500px' }"
@@ -3290,7 +3337,9 @@ export default {
         user:[],
         rbr:{ ket:'', id:'' },
         confirmationVerifikasi:false,
+        ConfirmationVerifikasiManager:false,
         dialogRejectAtasan:false,
+        dialogRejectManager:false,
         code:null,
         reason:{ ket:null },
         totalRequest2:[],
@@ -3589,6 +3638,10 @@ export default {
         });
         }
       },
+      Verifikasi(ireq_id){
+      this.code = ireq_id;
+      this.ConfirmationVerifikasiManager = true;
+      },
       VerifikasiRequestAtasan(ireq_id){
       this.code = ireq_id;
       this.confirmationVerifikasi = true;
@@ -3664,7 +3717,7 @@ export default {
     edit(ireqd_id,ireq_id){
       this.code = ireq_id;
       this.dialogEdit = true;
-      this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.editDetail = response.data;
       });
       this.getStatus();
@@ -3673,6 +3726,54 @@ export default {
       this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.status = response.data;
       });
+    },
+    approveManager(){
+      this.ConfirmationVerifikasiManager = false;
+      this.$confirm.require({
+            message: "Approval Permohonan Dilanjutkan?",
+            header: "ICT Request    ",
+            icon: "pi pi-info-circle",
+            acceptClass: "p-button",
+            acceptLabel: "Ya",
+            rejectLabel: "Tidak",
+            accept: () => {
+              this.$toast.add({
+                severity: "info",
+                summary: "Confirmed",
+                detail: "Permohonan Dilanjutkan",
+                life : 1000
+              });
+              this.axios.get('/api/abm/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
+              this.code = null;
+              this.getActive();
+        },
+        reject: () => {},
+      });
+    },
+    rejectManager(){
+      this.ConfirmationVerifikasiManager = false;
+      this.dialogRejectManager = true;
+    },
+    cancelRejectManager(){
+      this.dialogRejectManager = false;
+      this.code = null;
+      this.reason.ket = null;
+      this.submitted = false;
+    },
+    updateRejectManager(){
+          this.submitted = true;
+           if(this.reason.ket != null){
+            this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+              this.$toast.add({
+                severity: "info",
+                summary: "Confirmed",
+                detail: "Berhasil Direject",
+                life: 1000
+              });
+               this.cancelRejectManager();
+               this.getActive();
+            });
+          }
     },
   },
 };

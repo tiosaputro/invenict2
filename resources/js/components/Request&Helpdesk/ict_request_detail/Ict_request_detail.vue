@@ -79,14 +79,14 @@
                 @click="
                   $router.push({
                     name: 'Edit Ict Request Detail',
-                    params: { ireq: slotProps.data.ireqd_id },
+                    params: {code: this.code,ireq: slotProps.data.ireqd_id},
                   })"/>
               <Button
                 v-if=" slotProps.data.ireq_status == null"
                 icon="pi pi-trash"
                 v-tooltip.right="'Delete'"
                 class="p-button-rounded p-button-danger mr-2"
-                @click="DeleteIct(slotProps.data.ireqd_id)"
+                @click="DeleteIct(slotProps.data.ireqd_id,this.code)"
               />
             </template>
           </Column>
@@ -246,7 +246,7 @@ export default {
         this.status = response.data.cekstatus;
       });
     },
-    DeleteIct(ireqd_id){
+    DeleteIct(ireqd_id,code){
        this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
         header: "Delete Confirmation",
@@ -261,7 +261,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code, {headers: {'Authorization': 'Bearer '+this.token}});
         this.getIctDetail();
         },
         reject: () => {},

@@ -113,7 +113,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.status = response.data.cekstatus;
       });
     },
-    DeleteIct: function DeleteIct(ireqd_id) {
+    DeleteIct: function DeleteIct(ireqd_id, code) {
       var _this4 = this;
 
       this.$confirm.require({
@@ -131,7 +131,7 @@ __webpack_require__.r(__webpack_exports__);
             life: 3000
           });
 
-          _this4.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
+          _this4.axios["delete"]('/api/delete-ict-detail/' + ireqd_id + '/' + code, {
             headers: {
               'Authorization': 'Bearer ' + _this4.token
             }
@@ -490,6 +490,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               return _ctx.$router.push({
                 name: 'Edit Ict Request Detail',
                 params: {
+                  code: _this.code,
                   ireq: slotProps.data.ireqd_id
                 }
               });
@@ -503,7 +504,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             icon: "pi pi-trash",
             "class": "p-button-rounded p-button-danger mr-2",
             onClick: function onClick($event) {
-              return $options.DeleteIct(slotProps.data.ireqd_id);
+              return $options.DeleteIct(slotProps.data.ireqd_id, _this.code);
             }
           }, null, 8
           /* PROPS */

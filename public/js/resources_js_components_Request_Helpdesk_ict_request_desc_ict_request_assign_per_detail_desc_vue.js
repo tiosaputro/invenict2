@@ -47,10 +47,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.petugas = [];
       this.dialogAssign = false;
     },
-    AssignPerDetail: function AssignPerDetail(ireqd_id) {
+    AssignPerDetail: function AssignPerDetail(ireqd_id, ireq_id) {
       var _this = this;
 
-      this.axios.get('/api/detail/' + ireqd_id, {
+      this.axios.get('/api/detail/' + ireqd_id + '/' + ireq_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -217,7 +217,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "100px"
   }
-}, "Kode", -1
+}, "Nama Peripheral", -1
 /* HOISTED */
 );
 
@@ -370,7 +370,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "class": "p-button-raised p-button-text mr-2",
             label: "Assign",
             onClick: function onClick($event) {
-              return $options.AssignPerDetail(slotProps.data.ireqd_id);
+              return $options.AssignPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_id);
             }
           }, null, 8
           /* PROPS */
@@ -392,7 +392,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.dialogAssign = $event;
     }),
     style: {
-      width: '400px'
+      width: '500px'
     },
     header: "Assign Per-Detail Request",
     modal: true,

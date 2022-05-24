@@ -71,14 +71,15 @@ class IctController extends Controller
         $ict->program_name = "IctController_approveByAtasan";
         $ict->save();
 
-        $dtl = IctDetail::where('ireq_id',$code)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'A1';
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_approveByAtasan";
-            $d->save();
-        }
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'A1',
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_approveByAtasan",
+        ]);
+        
         return response()->json('Success Update');
     }
     public function rejectByAtasan(Request $request, $code)
@@ -94,15 +95,16 @@ class IctController extends Controller
         $ict->program_name = "IctController_rejectByAtasan";
         $ict->save();
 
-        $dtl = IctDetail::where('ireq_id',$code)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'RA1';
-            $d->ireq_reason = $request->ket;
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_rejectByAtasan";
-            $d->save();
-        }
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'RA1',
+            'ireq_reason' => $request->ket,
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_rejectByAtasan",
+        ]);
+        
         return response()->json('Success Update');
     }
     function getDataManager()
@@ -203,14 +205,15 @@ class IctController extends Controller
         $ict->program_name = "IctController_approveByManager";
         $ict->save();
 
-        $dtl = IctDetail::where('ireq_id',$code)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'A2';
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_approveByManager";
-            $d->save();
-        }
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'A2',
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_approveByManager",
+        ]);
+
         return response()->json('Success Update');
     }
     function rejectByManager(Request $request,$code)
@@ -226,15 +229,16 @@ class IctController extends Controller
         $ict->program_name = "IctController_rejectByManager";
         $ict->save();
 
-        $dtl = IctDetail::where('ireq_id',$code)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'RA2';
-            $d->ireq_reason = $request->ket;
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_rejectByManager";
-            $d->save();
-        }
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'RA2',
+            'ireq_reason' => $request->ket,
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_rejectByManager",
+        ]);
+        
         return response()->json('Success Update');
     }
     function getDataReviewer()
@@ -344,16 +348,16 @@ class IctController extends Controller
         $ict->program_name = "IctController_rejectReviewer";
         $ict->save();
 
-        $dtl = IctDetail::where('ireq_id',$code)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'RR';
-            $d->ireq_reason = $request->ket;
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_rejectReviewer";
-            $d->save();
-        }
-        return response()->json('Success Update Status');
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'RR',
+            'ireq_reason' => $request->ket,
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_rejectReviewer",
+        ]);
+        return json_encode('Success Update Status');
     }
     function needApprovalAtasan($ireq_id)
     {
@@ -367,14 +371,14 @@ class IctController extends Controller
         $ICT->program_name = "IctController_needApprovalAtasan";
         $ICT->save();
 
-        $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'NA1';
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_needApprovalAtasan";
-            $d->save();
-        }
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->update([
+            'ireq_status' => 'NA1',
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_needApprovalAtasan",
+        ]);
         $emailVerifikator = DB::table('divisi_refs as dr')
                     ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
                     ->select('mu.usr_email','mu.usr_id')
@@ -414,15 +418,15 @@ class IctController extends Controller
         $ict->program_name = "IctController_needApprovalManager";
         $ict->save();
 
-        $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'NA2';
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_needApprovalManager";
-            $d->save();
-        }
-        return response()->json('Success Update Status');
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->update([
+            'ireq_status' => 'NA2',
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_needApprovalManager",
+        ]);
+        return json_encode('Success Update Status');
     }
     function asignPerRequestReviewer(Request $request)
     {
@@ -434,15 +438,15 @@ class IctController extends Controller
             $ict->program_name = "IctController_asignPerRequestReviewer";
             $ict->save();
 
-            $dtl = IctDetail::where('ireq_id',$request->id)->get();
-            foreach ($dtl as $d){
-                $d->ireq_assigned_to2 = $request->name;
-                $d->last_update_date = $this->newUpdate;
-                $d->last_updated_by = Auth::user()->usr_name;
-                $d->program_name = "IctController_asignPerRequestReviewer";
-                $d->save();
-            }
-        return response()->json('Success Update');
+            $dtl = DB::table('ireq_dtl')
+            ->where('ireq_id',$request->id)
+            ->update([
+                'ireq_assigned_to2' =>$request->name,
+                'last_updated_by' => Auth::user()->usr_name,
+                'last_update_date' => $this->newUpdate,
+                'program_name' => "IctController_asignPerRequestReviewer"
+            ]);
+        return json_encode('Success Update');
         }
         else{
             $ict->ireq_assigned_to1 = $request->name;
@@ -451,16 +455,16 @@ class IctController extends Controller
             $ict->program_name = "IctController_asignPerRequestReviewer";
             $ict->save();
 
-            $dtl = IctDetail::where('ireq_id',$request->id)->get();
-            foreach ($dtl as $d){
-                $d->ireq_assigned_to1 = $request->name;
-                $d->last_update_date = $this->newUpdate;
-                $d->last_updated_by = Auth::user()->usr_name;
-                $d->program_name = "IctController_asignPerRequestReviewer";
-                $d->save();
-            }
-        
-        return response()->json('Success Update');
+            $detail = DB::table('ireq_dtl')
+            ->where('ireq_id',$request->id)
+            ->update([
+                'ireq_assigned_to1'=>$request->name,
+                'last_update_date'=>$this->newUpdate,
+                'last_updated_by'=>Auth::user()->usr_name,
+                'program_name'=>"IctController_asignPerRequestReviewer"
+            ]);
+            
+        return json_encode('Success Update');
         }
     }
     function submitAssignPerRequest($ireq_id)
@@ -478,16 +482,18 @@ class IctController extends Controller
             $ict->program_name = "IctController_submitAssignPerRequest";
             $ict->save();
             
-
-            $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
-            foreach ($dtl as $d) {
+            $dtl = DB::table('ireq_dtl')
+            ->where('ireq_id',$ireq_id)
+            ->update([
+                'ireq_status' => 'T',
+                'ireq_assigned_date' => $this->newUpdate,
+                'last_update_date' => $this->newUpdate,
+                'last_updated_by' => Auth::user()->usr_name,
+                'program_name' => "IctController_submitAssignPerRequest"
+            ]);
+            $dtll = IctDetail::where('ireq_id',$ireq_id)->get();
+            foreach ($dtll as $d) {
                 array_push($name, $d->ireq_assigned_to2);
-                $d->ireq_status = 'T';
-                $d->ireq_assigned_date = $this->newUpdate;
-                $d->last_update_date = $this->newUpdate;
-                $d->last_updated_by = Auth::user()->usr_name;
-                $d->program_name = "IctController_submitAssignPerRequest";
-                $d->save();
             }
             $usr_email = DB::table('mng_users')->select('usr_email')->whereIn('usr_fullname',$name)->pluck('usr_email');
             foreach($usr_email as $s){
@@ -505,15 +511,18 @@ class IctController extends Controller
             $ict->program_name = "IctController_submitAssignPerRequest";
             $ict->save();
             
-            $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
-            foreach ($dtl as $d) {
+            $dtl = DB::table('ireq_dtl')
+            ->where('ireq_id',$ireq_id)
+            ->update([
+                'ireq_status' => 'NT',
+                'ireq_assigned_date' => $this->newUpdate,
+                'last_update_date' => $this->newUpdate,
+                'last_updated_by' => Auth::user()->usr_name,
+                'program_name' => "IctController_submitAssignPerRequest"
+            ]);
+            $dtll = IctDetail::where('ireq_id',$ireq_id)->get();
+            foreach ($dtll as $d) {
                 array_push($name, $d->ireq_assigned_to1);
-                $d->ireq_status = 'NT';
-                $d->ireq_assigned_date = $this->newUpdate;
-                $d->last_update_date = $this->newUpdate;
-                $d->last_updated_by = Auth::user()->usr_name;
-                $d->program_name = "IctController_submitAssignPerRequest";
-                $d->save();
             }
             $usr_email = DB::table('mng_users')->select('usr_email')->whereIn('usr_fullname',$name)->pluck('usr_email');
             foreach($usr_email as $s){
@@ -2073,7 +2082,6 @@ class IctController extends Controller
     }
     public function updateStatusPenugasan($ireq_id)
     {
-        
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_status = 'T';
         $ict->ireq_verificator = Auth::user()->usr_name;
@@ -2082,14 +2090,15 @@ class IctController extends Controller
         $ict->program_name = "IctController_updateStatusPenugasan";
         $ict->save();
         
-        $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'T';
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_updateStatusPenugasan";
-            $d->save();
-        }
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->update([
+            'ireq_status' => 'T',
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_updateStatusPenugasan",
+        ]);
+
         return response()->json('Success Update');
     }
     public function updateStatusClosing($ireq_id)
@@ -2103,14 +2112,15 @@ class IctController extends Controller
         $ict->program_name = "IctController_updateStatusClosing";
         $ict->save();
 
-        $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'C';
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_updateStatusClosing";
-            $d->save();
-        }
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->update([
+            'ireq_status' => 'C',
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_updateStatusClosing",
+        ]);
+        
         return response()->json('Success Update');
     }
     function getDataIct(){

@@ -250,7 +250,12 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                 <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+                 <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem">
+                 <template #body="slotProps">
+                     <p style="color:orangered:" v-if="slotProps.data.ireq_status == 'Belum Diapprove ICT Manager'">{{slotProps.data.ireq_no}}</p>
+                     <p style="color:limegreen" v-else>{{slotProps.data.ireq_no}}</p>
+                 </template>
+                 </Column>
                   <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -732,7 +737,7 @@
             </Dialog>
             <Dialog
                 v-model:visible="dialogAssign"
-                :style="{ width: '400px' }"
+                :style="{ width: '500px' }"
                 header="Assign Per-Request"
                 :modal="true"
                 :closable="false"

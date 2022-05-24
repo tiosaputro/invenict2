@@ -1522,7 +1522,7 @@ var _hoisted_186 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-check text-xl text-xl",
+  "class": "pi pi-check text-xl",
   style: {
     "color": "red"
   }

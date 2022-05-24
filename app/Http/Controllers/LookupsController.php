@@ -17,13 +17,13 @@ class LookupsController extends Controller
 {
     function __construct(){
         $date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
     public function index()
     {
         $ref = DB::Table('v_lookup_refs')->get();
-        return $ref->toJson();
+        return json_encode($ref);
     }
     public function save(Request $request) 
     {

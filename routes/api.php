@@ -233,12 +233,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/acceptPersonnel/{ireq_id}/{usr_fullname}','IctDetailController@abp');
     Route::get('/get-detail-done/{code}/{usr_fullname}','IctDetailController@getDetailDone');
     Route::post('/add-ict-detail/{code}','IctDetailController@save');
-    Route::get('/edit-ict-detail/{ireq}','IctDetailController@edit');
-    Route::put('/update-ict-detail/{ireq}','IctDetailController@update');
-    Route::delete('/delete-ict-detail/{ireqd_id}','IctDetailController@delete');
+    Route::get('/edit-ict-detail/{ireq}/{code}','IctDetailController@edit');
+    Route::put('/update-ict-detail/{ireq}/{code}','IctDetailController@update');
+    Route::delete('/delete-ict-detail/{ireqd_id}/{code}','IctDetailController@delete');
     Route::get('/get-noreq/{code}','IctDetailController@getNo_req');
     Route::get('/get-verif/{code}','IctDetailController@getDetailVerif');
-    Route::get('/detail/{ireqd_id}','IctDetailController@getDetail');
+    Route::get('/detail/{ireqd_id}/{ireq_id}','IctDetailController@getDetail');
     Route::put('/update-status-done/{code}','IctDetailController@updateStatusDone');
     Route::put('/update-note/{code}','IctDetailController@updateNote');
     Route::put('/updateAssignPerDetail/{code}','IctDetailController@updateAssign');

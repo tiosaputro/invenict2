@@ -21,7 +21,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       reason: {
         id: null,
-        ket: null
+        ket: null,
+        ireq_id: null
       },
       must: false,
       submitted: false,
@@ -78,6 +79,7 @@ __webpack_require__.r(__webpack_exports__);
         if (this.reason.ket != null) {
           var data = new FormData();
           data.append("rating", this.rating);
+          data.append("ireq_id", this.reason.ireq_id);
           data.append("id", this.reason.id);
           data.append("ket", this.reason.ket);
           this.axios.post('/api/submit-rating', data, {
@@ -87,7 +89,8 @@ __webpack_require__.r(__webpack_exports__);
           }).then(function () {
             _this.reason = {
               id: null,
-              ket: null
+              ket: null,
+              ireq_id: null
             };
             _this.sangat_bagus = false;
             _this.bagus = false;
@@ -115,6 +118,8 @@ __webpack_require__.r(__webpack_exports__);
         _data.append("rating", this.rating);
 
         _data.append("id", this.reason.id);
+
+        _data.append("ireq_id", this.reason.ireq_id);
 
         this.axios.post('/api/submit-rating', _data, {
           headers: {
@@ -148,8 +153,9 @@ __webpack_require__.r(__webpack_exports__);
         ket: null
       };
     },
-    tes: function tes(ireqd_id) {
+    tes: function tes(ireqd_id, ireq_id) {
       this.reason.id = ireqd_id;
+      this.reason.ireq_id = ireq_id;
       this.dialogEdit = true;
     },
     check: function check(rating) {
@@ -1708,7 +1714,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-info mr-2",
                     label: "Penilaian",
                     onClick: function onClick($event) {
-                      return $options.tes(slotProps.data.ireqd_id);
+                      return $options.tes(slotProps.data.ireqd_id, slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */

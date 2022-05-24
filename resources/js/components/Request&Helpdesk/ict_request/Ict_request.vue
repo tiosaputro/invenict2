@@ -568,7 +568,7 @@
                         v-if="slotProps.data.ireq_value == null"
                         class="p-button-rounded p-button-info mr-2"
                         label = "Penilaian"
-                        @click="tes(slotProps.data.ireqd_id)"
+                        @click="tes(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -653,7 +653,7 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
-      reason:{ id :null, ket:null},
+      reason:{ id :null, ket:null,ireq_id:null},
       must:false,
       submitted:false,
       sangat_kurang:false,
@@ -701,10 +701,11 @@ export default {
         if(this.reason.ket != null){
         const data = new FormData();
         data.append("rating", this.rating);
+        data.append("ireq_id", this.reason.ireq_id);
         data.append("id", this.reason.id);
         data.append("ket", this.reason.ket);
         this.axios.post('/api/submit-rating',data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-          this.reason = {id:null, ket :null};
+          this.reason = {id:null, ket :null, ireq_id:null};
           this.sangat_bagus = false;
           this.bagus=false;
           this.baik = false;
@@ -725,6 +726,7 @@ export default {
         const data = new FormData();
         data.append("rating", this.rating);
         data.append("id", this.reason.id);
+        data.append("ireq_id", this.reason.ireq_id);
         this.axios.post('/api/submit-rating',data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.rating = null;
           this.sangat_bagus = false;
@@ -745,8 +747,9 @@ export default {
       this.dialogEdit = false;
       this.reason = {id : null, ket : null};
     },
-    tes(ireqd_id){
+    tes(ireqd_id,ireq_id){
       this.reason.id = ireqd_id;
+      this.reason.ireq_id = ireq_id;
       this.dialogEdit = true;
     },
     check(rating){

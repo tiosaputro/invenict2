@@ -143,10 +143,10 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    createNote: function createNote(ireqd_id) {
+    createNote: function createNote(ireqd_id, ireq_id) {
       var _this4 = this;
 
-      this.axios.get('api/detail/' + ireqd_id, {
+      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -160,24 +160,27 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       this.submitted = true;
-      this.axios.put('/api/update-note/' + this.code, this.note, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
-        _this5.$toast.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Success Update',
-          life: 2000
-        });
 
-        _this5.note = [];
-        _this5.code = null;
-        _this5.dialogNote = false;
-        _this5.submitted = false;
-      });
-      this.getData();
+      if (this.note.ireq_reason != null) {
+        this.axios.put('/api/update-note/' + this.code, this.note, {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function () {
+          _this5.$toast.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Success Update',
+            life: 2000
+          });
+
+          _this5.note = [];
+          _this5.code = null;
+          _this5.dialogNote = false;
+          _this5.submitted = false;
+        });
+        this.getData();
+      }
     },
     cancelNote: function cancelNote() {
       this.note = [];
@@ -187,7 +190,7 @@ __webpack_require__.r(__webpack_exports__);
     edit: function edit(ireqd_id, ireq_id) {
       var _this6 = this;
 
-      this.axios.get('api/detail/' + ireqd_id, {
+      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -561,7 +564,7 @@ var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_71 = {
-  "class": "col-fixed"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_72 = {
   key: 0,
@@ -1020,7 +1023,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-help mr-2",
                     icon: "bi bi-journal-text",
                     onClick: function onClick($event) {
-                      return $options.createNote(slotProps.data.ireqd_id);
+                      return $options.createNote(slotProps.data.ireqd_id, slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */

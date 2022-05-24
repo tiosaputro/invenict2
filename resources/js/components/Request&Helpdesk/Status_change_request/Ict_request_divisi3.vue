@@ -202,7 +202,7 @@
                       class="p-button-rounded p-button-help mr-2"
                       icon="bi bi-journal-text"
                       v-tooltip.bottom="'Note'"
-                      @click="createNote(slotProps.data.ireqd_id)"
+                      @click="createNote(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                     />
                       <Button
                         class="p-button-raised p-button-info p-button-text mr-2"
@@ -483,7 +483,7 @@
             <div class="fluid">
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:100px">Keterangan</label>
-                  <div class="col-fixed">
+                  <div class="col-fixed w-9rem">
                    <Textarea 
                     v-model="note.ireq_reason" 
                     placeholder="Masukan Keterangan"
@@ -599,8 +599,8 @@ export default {
         });
       }
     },
-    createNote(ireqd_id){
-      this.axios.get('api/detail/'+ireqd_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    createNote(ireqd_id,ireq_id){
+      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.note = response.data;
         this.code = ireqd_id;
       });
@@ -608,6 +608,7 @@ export default {
     },
     submitNote(){
       this.submitted = true;
+      if(this.note.ireq_reason != null){
         this.axios.put('/api/update-note/'+this.code,this.note,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
           this.note = [];
@@ -616,6 +617,7 @@ export default {
           this.submitted = false;
         });
         this.getData();
+      }
     },
     cancelNote(){
       this.note = [];
@@ -623,7 +625,7 @@ export default {
       this.dialogNote = false;
     },
     edit(ireqd_id,ireq_id){
-      this.axios.get('api/detail/'+ireqd_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.editStatus = response.data;
         this.code = ireq_id;
         this.getStatus();

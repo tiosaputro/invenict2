@@ -52,7 +52,7 @@
                 <Button
                     class="p-button-raised p-button-text p-mr-2 p-mb-2"
                     label="Assign"
-                    @click="AssignPerDetail(slotProps.data.ireqd_id)"
+                    @click="AssignPerDetail(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                 />
             </template>  
           </Column>
@@ -176,7 +176,7 @@ export default {
           this.dialogAssign = false;
       },
     AssignPerDetail(ireqd_id){
-          this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/detail/'+ ireqd_id+'/'+this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.assign = response.data;
           });
           this.axios.get('/api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

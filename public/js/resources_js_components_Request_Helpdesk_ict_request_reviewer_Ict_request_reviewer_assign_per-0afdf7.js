@@ -80,7 +80,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     AssignPerDetail: function AssignPerDetail(ireqd_id) {
       var _this2 = this;
 
-      this.axios.get('/api/detail/' + ireqd_id, {
+      this.axios.get('/api/detail/' + ireqd_id + '/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -410,7 +410,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "class": "p-button-raised p-button-text p-mr-2 p-mb-2",
             label: "Assign",
             onClick: function onClick($event) {
-              return $options.AssignPerDetail(slotProps.data.ireqd_id);
+              return $options.AssignPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_id);
             }
           }, null, 8
           /* PROPS */

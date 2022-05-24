@@ -473,7 +473,7 @@
 						<div class="text-900 font-medium text-xl">{{count4.blmdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-check text-xl text-xl" style="color: red;"></i>
+						<i class="pi pi-check text-xl" style="color: red;"></i>
 					</div>
 				</div>
 			</div>

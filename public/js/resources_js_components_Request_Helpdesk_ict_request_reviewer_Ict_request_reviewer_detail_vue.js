@@ -74,7 +74,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Assignrequest: function Assignrequest(ireqd_id) {
       var _this2 = this;
 
-      this.axios.get('/api/detail/' + ireqd_id, {
+      this.axios.get('/api/detail/' + ireqd_id + '/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }

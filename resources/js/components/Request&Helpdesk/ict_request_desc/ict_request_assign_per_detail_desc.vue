@@ -53,7 +53,7 @@
                 <Button
                     class="p-button-raised p-button-text mr-2"
                     label="Assign"
-                    @click="AssignPerDetail(slotProps.data.ireqd_id)"
+                    @click="AssignPerDetail(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                 />
             </template>  
           </Column>
@@ -75,7 +75,7 @@
           </DataTable>   
           <Dialog
             v-model:visible="dialogAssign"
-            :style="{ width: '400px' }"
+            :style="{ width: '500px' }"
             header="Assign Per-Detail Request"
             :modal="true"
             :closable="false"
@@ -91,7 +91,7 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:100px">Kode</label>
+                <label style="width:100px">Nama Peripheral</label>
                  <div class="col-3 md-6">
                      <InputText
                         v-model="assign.name"
@@ -151,8 +151,8 @@ export default {
           this.petugas = [];
           this.dialogAssign = false;
       },
-    AssignPerDetail(ireqd_id){
-          this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    AssignPerDetail(ireqd_id,ireq_id){
+          this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.assign = response.data;
           });
           this.axios.get('/api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

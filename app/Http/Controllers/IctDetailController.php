@@ -27,7 +27,7 @@ class IctDetailController extends Controller
     Public function index($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc', 'id.ireq_qty',
+        ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc', 'id.ireq_qty',
         DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),'llr.lookup_desc as ireq_status')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
@@ -189,7 +189,7 @@ class IctDetailController extends Controller
             ]);
         }
     }
-    Public function edit($ireq)
+    Public function edit($ireq,$code)
     {
         $ict = DB::table('ireq_dtl as id')
         ->select('id.ireqd_id','id.ireq_type','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_photo as photo','imm.ireq_no')
@@ -197,11 +197,12 @@ class IctDetailController extends Controller
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireqd_id',$ireq)
+        ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->first();
             return json_encode($ict);
     }
-    Public function update(Request $request,$ireq)
+    Public function update(Request $request,$ireq,$code)
     {
         if($request->ireq_type == 'P'){
         $message = [
@@ -217,24 +218,27 @@ class IctDetailController extends Controller
                 'ireq_remark' => 'required'
             ],$message);
         
-        $dtl = IctDetail::find($ireq);
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$ireq)
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_type'=> $request->ireq_type,
+            'invent_code'=>$request->invent_code,
+            'ireq_desc'=> $request->ireq_desc,
+            'ireq_qty'=>$request->ireq_qty,
+            'ireq_remark'=> $request->ireq_remark,
+            'last_update_date'=> $this->newUpdate,
+            'last_updated_by'=>Auth::user()->usr_name,
+            'program_name'=>"IctDetail_Update"
+        ]);
 
-        $dtl->ireq_type = $request->ireq_type;
-        $dtl->invent_code = $request->invent_code;
-        $dtl->ireq_desc = $request->ireq_desc;
-        $dtl->ireq_qty = $request->ireq_qty;
-        $dtl->ireq_remark = $request->ireq_remark;
-        $dtl->last_update_date = $this->newUpdate;
-        $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->program_name = "IctDetail_Update";
-        $dtl->save();
         $msg = [
             'success' => true,
             'message' => 'Updated Successfully'
         ];
         return json_encode($msg);
-
-    }else{
+    }
+    else{
         $message = [
             'ireq_type.required'=>'Tipe Request Belum Diisi',
             'ireq_remark.required'=>'Keterangan Belum Diisi'
@@ -244,25 +248,33 @@ class IctDetailController extends Controller
                 'ireq_remark' => 'required'
             ],$message);
         
-        $dtl = IctDetail::find($ireq);
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$ireq)
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_type'=> $request->ireq_type,
+            'invent_code'=>'',
+            'ireq_desc'=> $request->ireq_desc,
+            'ireq_qty'=>'',
+            'ireq_remark'=> $request->ireq_remark,
+            'last_update_date'=> $this->newUpdate,
+            'last_updated_by'=>Auth::user()->usr_name,
+            'program_name'=>"IctDetail_Update"
+        ]);
 
-        $dtl->ireq_type = $request->ireq_type;
-        $dtl->ireq_desc = $request->ireq_desc;
-        $dtl->ireq_remark = $request->ireq_remark;
-        $dtl->last_update_date = $this->newUpdate;
-        $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->program_name = "IctDetail_Update";
-        $dtl->save();
         $msg = [
             'success' => true,
-            'message' => 'Updated Successfully'
+            'message' => $dtl
         ];
+        return json_encode($msg);
+      }
     }
-    }
-    Public function delete($ireqd_id)
+    Public function delete($ireqd_id,$code)
     {
-        $ict = IctDetail::find($ireqd_id);
-         $ict->delete();
+        $ict = DB::table('ireq_dtl as id')
+        ->where('id.ireqd_id',$ireqd_id)
+        ->where('id.ireq_id',$code)
+        ->delete();
           return json_encode('Deleted Successfully');
     }
     public function cetak_pdf($code)
@@ -405,86 +417,117 @@ class IctDetailController extends Controller
         ->get();
             return json_encode($dtl);
     }
-    public function getDetail($ireqd_id){
+    public function getDetail($ireqd_id,$ireq_id){
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_assigned_to1','im.ireq_no','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', DB::raw("(iim.invent_code ||'-'|| iim.invent_desc) as name"))
+        ->select('id.ireq_assigned_to1','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', DB::raw("(iim.invent_code ||'-'|| iim.invent_desc) as name"))
         ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
         ->leftjoin('invent_mst as iim','id.invent_code','iim.invent_code')
         ->where('id.ireqd_id',$ireqd_id)
+        ->where('id.ireq_id',$ireq_id)
         ->first();
             return json_encode($dtl);
     }
     public function updateAssign(Request $request,$code)
     {
-        $dtl = IctDetail::find($request->ireqd_id);
-        $dtl->ireq_assigned_to1 = $request->ireq_assigned_to1;
-        $dtl->last_update_date = $this->newUpdate;
-        $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->save();
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$request->ireqd_id)
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_assigned_to1'=>$request->ireq_assigned_to1,
+            'last_update_date' =>$this->newUpdate,
+            'last_updated_by'=>Auth::user()->usr_name
+        ]);
         return json_encode('Updated Successfully');
     }
     public function updateAssignFromReject(Request $request,$code)
     {
-        $dtl = IctDetail::find($request->ireqd_id);
-        $dtl->ireq_assigned_to2 = $request->ireq_assigned_to1;
-        $dtl->last_update_date = $this->newUpdate;
-        $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->save();
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$code)
+        ->where('ireq_id',$request->ireq_id)
+        ->update([
+            'ireq_assigned_to2' => $request->ireq_assigned_to1,
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name
+        ]);
+        
         return json_encode('Updated Successfully');
     }
     public function updateStatusDone(Request $request,$code){
         
-        $dtl = IctDetail::find($request->ireqd_id);
-        $dtl->ireq_status = $request->status;
-        $dtl->last_update_date = $this->newUpdate;
-        $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->save();
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$request->ireqd_id)
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_status' => $request->status,
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name
+        ]);
+        
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
         return json_encode('Updated Successfully');
     }
     public function updateNote(Request $request,$code){
         
-        $dtl = IctDetail::find($code);
-        $dtl->ireq_note_personnel = $request->ireq_reason;
-        $dtl->last_update_date = $this->newUpdate;
-        $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->save();
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$code)
+        ->where('ireq_id',$request->ireq_id)
+        ->update([
+            'ireq_note_personnel' => $request->ireq_reason,
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name
+        ]);
+
         return json_encode(['message'=>'Updated Successfully'],200);
     }
     public function updateStatusClosingDetail($ireqd_id,$ireq_id){
         
-        $dtl = IctDetail::find($ireqd_id);
-        $dtl->ireq_status = 'C';
-        $dtl->last_update_date = $this->newUpdate;
-        $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->program_name = "IctDetail_updateStatusClosingDetail";
-        $dtl->save();
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$ireqd_id)
+        ->where('ireq_id',$ireq_id)
+        ->update([
+            'ireq_status' => 'C',
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctDetail_updateStatusClosingDetail"
+        ]);
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_CLOSING_IREQ_MST($ireq_id); end;");
         return json_encode('Updated Successfully');
     }
     public function appd($ireqd_id,$code){
-        $dtl = IctDetail::find($ireqd_id);
-        $dtl->ireq_status = 'T';
-        $dtl->last_update_date = $this->newUpdate;
-        $dtl->ireq_assigned_date = $this->newUpdate;
-        $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->program_name = "IctDetail_appd";
-        $dtl->save();
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$ireqd_id)
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'T',
+            'last_update_date' => $this->newUpdate,
+            'ireq_assigned_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctDetail_appd"
+        ]);
+        
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($code); end;");
         return json_encode('Updated Successfully');
     }
     function submitRating(Request $request){
         if($request->rating <= '2'){
-            $dtl = IctDetail::where('ireqd_id',$request->id)->first();
-            $dtl->ireq_value = $request->rating;
-            $dtl->ireq_note = $request->ket;
-            $dtl->save();
+            $dtl = DB::table('ireq_dtl')
+            ->where('ireqd_id',$request->id)
+            ->where('ireq_id',$request->ireq_id)
+            ->update([
+                'ireq_value' => $request->rating,
+                'ireq_note' => $request->ket
+            ]);
+            
             return response()->json('Updated Successfully');
         }
         else{
-            $dtl = IctDetail::where('ireqd_id',$request->id)->first();
-            $dtl->ireq_value = $request->rating;
-            $dtl->save();
+            $dtl = DB::table('ireq_dtl')
+            ->where('ireqd_id',$request->id)
+            ->where('ireq_id',$request->ireq_id)
+            ->update([
+                'ireq_value' => $request->rating
+            ]);
+            
             return response()->json('Updated Successfully');
         }
     }

@@ -99,7 +99,7 @@ __webpack_require__.r(__webpack_exports__);
     getIct: function getIct() {
       var _this3 = this;
 
-      this.axios.get('/api/edit-ict-detail/' + this.$route.params.ireq, {
+      this.axios.get('/api/edit-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -142,7 +142,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.ict.ireq_type == 'P') {
         if (this.ict.ireq_type != null && this.ict.invent_code != null) {
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq, this.ict, {
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
             headers: {
               'Authorization': 'Bearer ' + this.token
             }
@@ -170,7 +170,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       } else {
         if (this.ict.ireq_type != null) {
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq, this.ict, {
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
             headers: {
               'Authorization': 'Bearer ' + this.token
             }
