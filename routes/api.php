@@ -25,6 +25,7 @@ Route::get('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function(){
 //referensi_lookups
     Route::get('/ref', 'LookupsController@index');
+    Route::get('/ref-lookup-helpdesk', 'LookupsController@lookupHelpdesk');
     Route::post('/add-ref','LookupsController@save');
     Route::get('/edit-ref/{code}/{type}','LookupsController@edit');
     Route::put('/update-ref/{code}/{type}','LookupsController@update');

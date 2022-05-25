@@ -169,8 +169,8 @@ __webpack_require__.r(__webpack_exports__);
 
           data.append("foto", this.image);
           data.append("kondisi", this.kondisi); // data.append("barcode", this.barcode);
+          // data.append("garansi", this.garansi);
 
-          data.append("garansi", this.garansi);
           this.axios.post('api/add-mas', data, {
             headers: {
               'Authorization': 'Bearer ' + this.token
@@ -212,9 +212,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
           _data.append("kondisi", this.kondisi); // data.append("barcode", this.barcode);
+          // data.append("garansi", this.garansi);
 
-
-          _data.append("garansi", this.garansi);
 
           this.axios.post('api/add-mas', _data, {
             headers: {
@@ -411,14 +410,10 @@ var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_33 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_34 = {
   "class": "field grid"
 };
 
-var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -426,18 +421,18 @@ var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_36 = {
+var _hoisted_35 = {
   "class": "col-4"
 };
-var _hoisted_37 = {
+var _hoisted_36 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_38 = {
+var _hoisted_37 = {
   "class": "field grid"
 };
 
-var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "notlp2",
   style: {
     "width": "155px"
@@ -446,22 +441,22 @@ var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_40 = {
+var _hoisted_39 = {
   "class": "col-4"
 };
-var _hoisted_41 = {
+var _hoisted_40 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_42 = {
+var _hoisted_41 = {
   key: 1,
   "class": "p-error"
 };
-var _hoisted_43 = {
+var _hoisted_42 = {
   "class": "field grid"
 };
 
-var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -469,14 +464,14 @@ var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_45 = {
+var _hoisted_44 = {
   "class": "col-6"
 };
-var _hoisted_46 = {
+var _hoisted_45 = {
   "class": "field grid"
 };
 
-var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -484,20 +479,20 @@ var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_48 = {
+var _hoisted_47 = {
   "class": "col-6"
 };
-var _hoisted_49 = {
+var _hoisted_48 = {
   "class": "form-group"
 };
-var _hoisted_50 = {
+var _hoisted_49 = {
   "class": "col-sm-6"
 };
-var _hoisted_51 = {
+var _hoisted_50 = {
   "class": "field grid"
 };
 
-var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -505,18 +500,18 @@ var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_53 = {
+var _hoisted_52 = {
   "class": "col-12 md:col-4"
 };
-var _hoisted_54 = {
+var _hoisted_53 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_55 = {
+var _hoisted_54 = {
   "class": "field grid"
 };
 
-var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -524,21 +519,21 @@ var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_57 = {
+var _hoisted_56 = {
   "class": "col-10 md-6"
 };
-var _hoisted_58 = {
+var _hoisted_57 = {
   "class": "card",
   style: {
     "height": "20 rem"
   }
 };
-var _hoisted_59 = ["src"];
-var _hoisted_60 = {
+var _hoisted_58 = ["src"];
+var _hoisted_59 = {
   "class": "field grid"
 };
 
-var _hoisted_61 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -546,14 +541,14 @@ var _hoisted_61 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_62 = {
+var _hoisted_61 = {
   "class": "col-10 md-6"
 };
-var _hoisted_63 = {
+var _hoisted_62 = {
   "class": "field grid"
 };
 
-var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_63 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -561,14 +556,14 @@ var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_65 = {
+var _hoisted_64 = {
   "class": "col-6"
 };
-var _hoisted_66 = {
+var _hoisted_65 = {
   "class": "field grid"
 };
 
-var _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -576,7 +571,7 @@ var _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_68 = {
+var _hoisted_67 = {
   "class": "col-6"
 };
 
@@ -711,15 +706,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.garansi = $event;
     }),
-    placeholder: "Masukan Garansi",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.garansi
-    })
+    placeholder: "Masukan Garansi"
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), _hoisted_32]), $data.errors.garansi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.garansi[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  , ["modelValue"]), _hoisted_32])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.kondisi,
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.kondisi = $event;
@@ -735,9 +725,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.kondisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.kondisi[0]), 1
+  , ["modelValue", "options", "class"]), $data.errors.kondisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.kondisi[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label style=\"width:155px\">QR-Code</label>\n                <div class=\"col-12 md:col-6\">\n                <div class=\"p-inputgroup\">\n                  <InputText v-model=\"barcode\" readonly  v-if=\"barcode\"/>\n                  <img :src=\"'assets/loading2.gif'\" height=\"50\" v-if=\"!aktif && !barcode\">\n                  <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"barcode\" @click=\"hapus()\" @v-tooltip=\"'Click to delete'\"/>\n                  <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\n                  </div>\n                      <small v-if=\"errors.barcode\" class=\"p-error\">\n                          {{ errors.barcode[0] }}\n                      </small>\n                </div>\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label style=\"width:155px\">QR-Code</label>\n                <div class=\"col-12 md:col-6\">\n                <div class=\"p-inputgroup\">\n                  <InputText v-model=\"barcode\" readonly  v-if=\"barcode\"/>\n                  <img :src=\"'assets/loading2.gif'\" height=\"50\" v-if=\"!aktif && !barcode\">\n                  <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"barcode\" @click=\"hapus()\" @v-tooltip=\"'Click to delete'\"/>\n                  <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\n                  </div>\n                      <small v-if=\"errors.barcode\" class=\"p-error\">\n                          {{ errors.barcode[0] }}\n                      </small>\n                </div>\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.bu,
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.bu = $event;
@@ -753,11 +743,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.bu[0]), 1
+  , ["modelValue", "options", "class"]), $data.errors.bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.bu[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.bu), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.bu), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [_hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.lastloct,
     "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
@@ -770,7 +760,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastloct\" class=\"p-error\">\n                          {{ errors.lastloct[0] }}\n                      </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastloct\" class=\"p-error\">\n                          {{ errors.lastloct[0] }}\n                      </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [_hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.lastuser,
     "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
@@ -783,7 +773,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\n                            {{ errors.lastuser[0] }}\n                        </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\n                            {{ errors.lastuser[0] }}\n                        </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -797,7 +787,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   })])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [_hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.nama,
     "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
@@ -809,14 +799,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.errors.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.nama[0]), 1
+  , ["modelValue", "class"]), $data.errors.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.nama[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [_hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [_hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $data.preview,
     "class": "master-image"
   }, null, 8
   /* PROPS */
-  , _hoisted_59)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [_hoisted_61, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_58)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [_hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "file",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
       'p-invalid': $data.error.foto
@@ -828,7 +818,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 34
   /* CLASS, HYDRATE_EVENTS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"error.foto\">\n                        {{ error.foto }}\n                      </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"error.foto\">\n                        {{ error.foto }}\n                      </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [_hoisted_63, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.prevloct,
     "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
@@ -841,7 +831,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevloct\">\n                        {{ errors.prevloct[0] }}\n                      </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [_hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevloct\">\n                        {{ errors.prevloct[0] }}\n                      </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [_hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.prevuser,
     "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
@@ -875,7 +865,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".master-image[data-v-dd716f14] {\n  height: 200pt;\n  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".master-image[data-v-dd716f14] {\n  height: 200pt;\n  -o-object-fit: contain;\n     object-fit: contain;\n  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

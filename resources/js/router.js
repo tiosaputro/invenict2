@@ -54,7 +54,7 @@ const routes = [
 
     },
 
-    //lookup
+    //lookup_admin
     {
         name: 'Referensi Lookups',
         path: '/referensi-lookups',
@@ -69,6 +69,22 @@ const routes = [
         name: 'Edit Referensi Lookups',
         path: '/Edit-referensi-lookups/:code/:type',
         component: ()=> import('./components/Admin/referensi_lookups/Referensi_lookups_edit.vue'),
+    },
+    //lookup_helpdesk
+    {
+        name: 'Referensi Lookupss',
+        path: '/referensi-lookupss',
+        component: () => import('./components/Admin/referensi_lookups_helpdesk/Referensi_lookups_helpdesk.vue'),
+    },
+    {
+        name: 'Create Referensi Lookupss',
+        path: '/Add-referensi-lookupss',
+        component: () => import('./components/Admin/referensi_lookups_helpdesk/Referensi_lookups_helpdesk_create.vue'),
+    },
+    {
+        name: 'Edit Referensi Lookupss',
+        path: '/Edit-referensi-lookupss/:code/:type',
+        component: ()=> import('./components/Admin/referensi_lookups_helpdesk/Referensi_lookups_helpdesk_edit.vue'),
     },
     //supplier
     {

@@ -92,7 +92,7 @@
 			</div>
     </div>
 </div>
-<div class="grid" v-if="this.role_name.includes('Requestor Divisi')">
+<div class="grid" v-else-if="this.role_name.includes('Requestor Divisi')">
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="sdgDireview()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -198,7 +198,7 @@
 			</div>
     </div>
 </div>
-<div class="grid" v-if="this.role_name.includes('Atasan Requestor Divisi')">
+<div class="grid" v-else-if="this.role_name.includes('Atasan Requestor Divisi')">
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="sdgDireview1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -304,7 +304,7 @@
 			</div>
     </div>
 </div>
-<div class="grid" v-if="this.role_name.includes('Supervisor')">
+<div class="grid" v-else-if="this.role_name.includes('Supervisor')">
 	<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -423,7 +423,7 @@
 			</div>
 		</div>	
 </div>
-<div class="grid" v-if="this.role_name.includes('Personel ICT')">
+<div class="grid" v-else-if="this.role_name.includes('Personel ICT')">
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="blmSelesai3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -464,7 +464,7 @@
 			</div>
 		</div>
 </div>
-<div class="grid" v-if="this.role_name.includes('Manager')">
+<div class="grid" v-else-if="this.role_name.includes('Manager')">
 	<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="sdgDireview4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -612,20 +612,20 @@ export default {
           if(this.role_name.includes('Requestor Divisi')){
             this.getData();
           }
-          if(this.role_name.includes('Atasan Requestor Divisi')){
+          else if(this.role_name.includes('Admin')){
+            this.getData5();
+          }
+          else if(this.role_name.includes('Atasan Requestor Divisi')){
             this.getData1();
           }
-          if(this.role_name.includes('Supervisor')){
+          else if(this.role_name.includes('Supervisor')){
             this.getData2();
           }
-          if(this.role_name.includes('Personel ICT')){
+          else if(this.role_name.includes('Personel ICT')){
             this.getUser();
           }
-          if(this.role_name.includes('Manager')){
+          else if(this.role_name.includes('Manager')){
             this.getData4();
-          }
-          if(this.role_name.includes('Admin')){
-            this.getData5();
           }
         });
         } else {

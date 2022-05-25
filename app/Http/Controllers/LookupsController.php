@@ -25,6 +25,13 @@ class LookupsController extends Controller
         $ref = DB::Table('v_lookup_refs')->get();
         return json_encode($ref);
     }
+    function lookupHelpdesk(){
+        $ref = DB::table('lookup_refs')
+        ->select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
+        ->where('lookup_type','Merk')
+        ->get();
+        return json_encode($ref);
+    }
     public function save(Request $request) 
     {
         $message = [

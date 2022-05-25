@@ -1,25 +1,25 @@
 <template>
   <div>
-        <Toast />
+      <Toast />
         <div class="card">
           <Toolbar class="mb-4">
             <template v-slot:start>
-                  <h4>Master Peripheral</h4>
+              <h4>Master Peripheral</h4>
             </template>
           </Toolbar>
            <div class="row">
             <div class="col-sm-6">
             <form @submit.prevent="UpdateMaster">
               <div class="field grid">
-                    <label style="width:155px">Kode</label>
-                    <div class="col-3 md-6">
-                      <InputText
-                        type="text"
-                        v-model="master.invent_code"
-                        disabled
-                      /> 
+                <label style="width:155px">Kode</label>
+                  <div class="col-3 md-6">
+                    <InputText
+                      type="text"
+                      v-model="master.invent_code"
+                      disabled
+                    /> 
                   </div>
-                  </div>
+              </div>
                  <div class="field grid">
                       <label style="width:155px">Merk</label>
                     <div class="col-3 md-6">
@@ -88,13 +88,9 @@
                       <InputNumber
                           v-model="master.invent_lama_garansi"
                           placeholder="Masukan Garansi"
-                          :class="{ 'p-invalid': submitted && !master.invent_lama_garansi }"
                         />
                         <span class="p-inputgroup-addon"> Tahun </span>
                     </div>
-                      <small class="p-error" v-if="submitted && !master.invent_lama_garansi"
-                        >Garansi Belum Diisi.
-                      </small>
                 </div>
               </div>
               <div class="field grid">
@@ -111,8 +107,8 @@
                     :class="{ 'p-invalid': submitted && !master.invent_kondisi }"
                   />                 
                     <small class="p-error" v-if="submitted && !master.invent_kondisi"
-                        >Bisnis Unit Belum Diisi.
-                      </small>
+                      >Bisnis Unit Belum Diisi.
+                    </small>
                </div>
               </div>
               <!-- <div class="field grid">
@@ -131,7 +127,7 @@
               </div>  -->
               <div class="field grid">
                 <label style="width:155px">Bisnis Unit</label>
-                <div class="col-4">
+                  <div class="col-4">
                     <Dropdown 
                     v-model="master.invent_bu"
                     :options="bisnis"
@@ -147,8 +143,8 @@
                       </small>
                 </div>
               </div>
-               <div class="field grid">
-                      <label style="width:155px">Lokasi Terakhir</label>
+              <div class="field grid">
+                <label style="width:155px">Lokasi Terakhir</label>
                     <div class="col-3 md-6">
                       <InputText
                         type="text"
@@ -157,73 +153,73 @@
                         disabled
                       />
                   </div>
-                  </div>
-                 <div class="field grid">
-                      <label style="width:155px">Pengguna Terakhir</label>
+                </div>
+                <div class="field grid">
+                  <label style="width:155px">Pengguna Terakhir</label>
                     <div class="col-3 md-6">
                       <InputText
                         type="text"
                         v-model="master.invent_pengguna_update"
                         placeholder="Masukan Pengguna Terakhir"
                         disabled
-                    />
-                  </div>
-                  </div>
-              <div class="p-p-0 p-p-sm-1 p-p-md-2 p-p-lg-3">
-                 <Button
-                  class="p-button-rounded p-button-primary mr-2"
-                  icon="pi pi-check"
-                  label="Simpan"
-                  type="submit"
-                />
-                <Button
-                  label="Cancel"
-                  class="p-button-rounded p-button-secondary mr-2"
-                  icon="pi pi-times"
-                  @click="$router.push('/master-peripheral')"
-                />
-              </div>
+                      />
+                    </div>
+                </div>
+                <div class="p-p-0 p-p-sm-1 p-p-md-2 p-p-lg-3">
+                  <Button
+                    class="p-button-rounded p-button-primary mr-2"
+                    icon="pi pi-check"
+                    label="Simpan"
+                    type="submit"
+                  />
+                  <Button
+                    label="Cancel"
+                    class="p-button-rounded p-button-secondary mr-2"
+                    icon="pi pi-times"
+                    @click="$router.push('/master-peripheral')"
+                  />
+                </div>
             </form>
            </div>
           <div class="col-sm-6">
             <div class="field grid">
-                    <label style="width:155px">Nama</label>
-                    <div class="col-12 md:col-4">
-                       <InputText
-                            type ="text"
-                            v-model="master.invent_desc"
-                            placeholder="Masukan Nama"
-                            disabled
-                        />
+              <label style="width:155px">Nama</label>
+                <div class="col-12 md:col-4">
+                  <InputText
+                    type ="text"
+                    v-model="master.invent_desc"
+                    placeholder="Masukan Nama"
+                    disabled
+                  />
+                </div>
+                </div> 
+                <div class="field grid">
+                  <label style="width:155px"></label>
+                    <div class="col-10 md-6">
+                      <div class="card" style="height: 19.5rem;">
+                        <img :src="preview" class="master-image" v-if="preview"/>
+                        <img :src="'/master_peripheral/' +master.invent_photo" class="master-image" v-else />
+                      </div>
                     </div>
-                 </div> 
-                 <div class="field grid">
-                      <label style="width:155px"></label>
-                      <div class="col-10 md-6">
-                        <div class="card" style="height: 19.5rem;">
-                          <img :src="preview" class="master-image" v-if="preview"/>
-                          <img :src="'/master_peripheral/' +master.invent_photo" class="master-image" v-else />
-                        </div>
-                    </div>
-                 </div>
-                 <div class="field grid">
-                      <label style="width:155px"></label>
+                </div>
+                <div class="field grid">
+                  <label style="width:155px"></label>
                     <div class="p-col-10 p-md-6">
                       <input type="file" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
                     </div>
-                 </div>
-                    <div class="field grid">
+                </div>
+                <div class="field grid">
                   <label style="width:155px">Lokasi Sebelumnya</label>
                     <div class="col-12 md:col-4">
-                   <InputText
-                        type="text"
-                        v-model="master.invent_lokasi_previous"
-                        placeholder="Masukan Lokasi sebelumnya"
-                        disabled
-                    />
+                      <InputText
+                          type="text"
+                          v-model="master.invent_lokasi_previous"
+                          placeholder="Masukan Lokasi sebelumnya"
+                          disabled
+                      />
                     </div>
-                 </div>
-                 <div class="field grid">
+                </div>
+                <div class="field grid">
                   <label style="width:155px">Penguna Sebelumnya</label>
                     <div class="col-12 md:col-4">
                        <InputText
@@ -233,8 +229,8 @@
                         disabled
                     />
                     </div>
-                 </div>
-          </div>
+                </div>
+            </div>
           </div>
       </div>
     </div>
@@ -354,7 +350,7 @@ export default {
         this.master.invent_type != null &&
         this.master.invent_sn != null &&
         this.master.invent_tgl_perolehan != null &&
-        this.master.invent_lama_garansi != null &&
+        // this.master.invent_lama_garansi != null &&
         this.master.invent_kondisi != null &&
         // this.master.invent_barcode != null &&
         this.master.invent_bu != null 
@@ -385,6 +381,7 @@ export default {
 <style scoped lang="scss">
 .master-image {
   height:200pt;
+  object-fit:contain;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }
 </style>

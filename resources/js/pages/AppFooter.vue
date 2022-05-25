@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-footer">
 		<img alt="Logo" :src="footerImage()" height="30" class="mr-2" />
-		<span class="font-medium ml-2">System ICT Helpdesk 2022</span>
+		<span class="font-medium ml-2">© 2022 ICT </span>
 	</div>
 </template>
 

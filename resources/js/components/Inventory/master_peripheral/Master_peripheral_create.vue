@@ -102,13 +102,9 @@
                       <InputNumber
                           v-model="garansi"
                           placeholder="Masukan Garansi"
-                          :class="{ 'p-invalid': errors.garansi }"
                         />
                         <span class="p-inputgroup-addon"> Tahun </span> 
                     </div>
-                      <small v-if="errors.garansi" class="p-error">
-                          {{ errors.garansi[0] }}
-                      </small>
                 </div>
               </div>
               <div class="field grid">
@@ -403,7 +399,7 @@ export default {
           data.append("foto", this.image);
           data.append("kondisi", this.kondisi);
           // data.append("barcode", this.barcode);
-          data.append("garansi", this.garansi);
+          // data.append("garansi", this.garansi);
           
         this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           localStorage.removeItem("barcode");
@@ -433,7 +429,7 @@ export default {
           // data.append("foto", this.image);
           data.append("kondisi", this.kondisi);
           // data.append("barcode", this.barcode);
-          data.append("garansi", this.garansi);
+          // data.append("garansi", this.garansi);
           
         this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           localStorage.removeItem("barcode");
@@ -465,6 +461,7 @@ export default {
 <style scoped lang="scss">
 .master-image {
   height:200pt;
+  object-fit:contain;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }
 </style>
