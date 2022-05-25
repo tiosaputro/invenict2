@@ -52,17 +52,17 @@
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:4rem"/>
           <template #footer>
             <div class="p-grid p-dir-col">
-                <div class="p-col">
-				    <div class="box">
-                        <Button
-                            label="Kembali"
-                            class="p-button-raised p-button p-mr-2 p-mb-2"
-                            icon="pi pi-chevron-left"
-                            @click="$router.push({
-                            name: 'Desc'})"
-                        />
-                    </div>
-			    </div>
+              <div class="p-col">
+				        <div class="box">
+                  <Button
+                    label="Kembali"
+                    class="p-button-raised p-button p-mr-2 p-mb-2"
+                    icon="pi pi-chevron-left"
+                    @click="$router.push({
+                      name: 'Desc'})"
+                    />
+                </div>
+			        </div>
             </div>
         </template>
         </DataTable>   

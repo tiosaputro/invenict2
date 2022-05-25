@@ -977,6 +977,7 @@ class IctController extends Controller
         $ict6 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
 
         $ict7 = DB::Table('v_ireq_mst_selesai')->get();
+
         $ict8 = DB::table('ireq_mst as id')
         ->select('id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.ireq_requestor','dr.div_name','id.ireq_assigned_to1','lr.lookup_desc as ireq_status')
         ->leftjoin('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
@@ -990,7 +991,22 @@ class IctController extends Controller
               WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'T' Then 9 
               WHEN id.ireq_status = 'D' Then 10 WHEN id.ireq_status = 'C' Then 11 end "))
         ->get();
-        return response()->json(['ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8]);
+
+        $ict9 = DB::table('ireq_mst as im')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->select('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','NT')
+                ->Orwhere('im.ireq_status','RT');
+            })
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+        return response()->json(['ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8,'ict9'=>$ict9]);
     }
     Public function getSedangDikerjakan($usr_fullname)
     {
@@ -1006,7 +1022,7 @@ class IctController extends Controller
             ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
             ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
             ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
-            ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
+            ->leftjoin('lookup_refs as llr','id.ireq_status','llr.lookup_code')
             ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
             ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
             ->where('id.ireq_status','T')
@@ -1151,7 +1167,21 @@ class IctController extends Controller
         ->orderBy('im.creation_date','ASC')
         ->get(); 
 
-        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7],200);
+        $ict8 = DB::table('ireq_mst as im')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->select('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->where(function($query){
+                return $query
+                ->where('im.ireq_status','NT')
+                ->Orwhere('im.ireq_status','RT');
+            })
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->orderBy('im.creation_date','ASC')
+            ->get();
+
+        return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8],200);
     }
     function totalRequest($usr_name)
     {
@@ -2048,7 +2078,6 @@ class IctController extends Controller
     }
     public function updateStatusSubmit($ireq_id)
     {
-        
         $ICT = Ict::where('ireq_id',$ireq_id)->first();
             $ICT->ireq_status = 'P';
             $ICT->last_update_date = $this->newUpdate;
@@ -2056,14 +2085,14 @@ class IctController extends Controller
             $ICT->program_name = "IctController_updateStatusSubmit";
             $ICT->save();
 
-        $dtl = IctDetail::where('ireq_id',$ireq_id)->get();
-        foreach ($dtl as $d){
-            $d->ireq_status = 'P';
-            $d->last_update_date = $this->newUpdate;
-            $d->last_updated_by = Auth::user()->usr_name;
-            $d->program_name = "IctController_updateStatusSubmit";
-            $d->save();
-        }
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->update([
+            'ireq_status' => 'P',
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_updateStatusSubmit",
+        ]);
         $link = Link::create([
             'link_id'=> md5($this->date),
             'link_action'=> 'http://localhost:8000/ict-request-verifikasi-reviewer/'.''.$ireq_id,

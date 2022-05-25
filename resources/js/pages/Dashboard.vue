@@ -358,6 +358,19 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Penugasan Request</span>
+						<div class="text-900 font-medium text-xl">{{count2.penugasanRequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
 			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -504,6 +517,19 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="penugasanRequest4()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Penugasan Request</span>
+						<div class="text-900 font-medium text-xl">{{count4.penugasanrequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="sdgdikerjakan4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -606,7 +632,7 @@ export default {
           this.$router.push('/login');
         }
       },
-        getData(){
+      getData(){
             this.axios.get('api/getCountUser/'+this.usr_name,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.count = response.data;
             });
@@ -730,6 +756,10 @@ export default {
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',13)
         },
+		penugasanRequest2(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',43)
+		},
         sdgDikerjakan2(){
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',14)
@@ -789,6 +819,10 @@ export default {
 		direject4(){
 		  this.$router.push('/ict-request-desc');
           localStorage.setItem('active',35);
+		},
+		penugasanRequest4(){
+		  this.$router.push('/ict-request-desc');
+          localStorage.setItem('active',44)
 		},
 		sdgdikerjakan4(){
  		  this.$router.push('/ict-request-desc');

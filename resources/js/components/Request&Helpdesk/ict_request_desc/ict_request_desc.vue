@@ -3078,6 +3078,166 @@
           </div>
         </template>
         </DataTable>
+        <Toolbar class="mb-4" v-if="this.active == 43">
+          <template v-slot:start>
+                <h4>ICT Request (Penugasan Request)</h4>
+          </template>
+        </Toolbar>
+        <DataTable
+          v-if="this.active == 43"
+          :value="penugasanRequest2"
+          :paginator="true"
+          :rows="10"
+          :loading="loading"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          responsiveLayout="scroll"
+        >
+        <template #header>
+            <div class="table-header text-right">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                </span>
+             </div>
+        </template>
+        <template #empty>
+            Not Found
+        </template>
+        <template #loading>
+            Loading ICT Request data. Please wait.
+        </template>
+        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+        <Column style="min-width:20rem">
+          <template #body="slotProps">
+            <Button
+              class="p-button-rounded p-button-secondary mr-2"
+              icon="pi pi-info-circle"
+              v-tooltip.right="'Detail'"
+              @click="$router.push({
+                name: 'Ict Request Reviewer Detail',
+                params: { code: slotProps.data.ireq_id }, })"
+            />
+            <Button
+              v-if="slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+              class="p-button-raised p-button-text p-button-sm mt-2"
+              @click="AssignPerRequest(slotProps.data.ireq_id)"
+              label="Assign Per-Request"
+            />
+            <Button
+              v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+              class="p-button-raised p-button-text p-button-sm p-button-success mr-2"
+              @click="Submit(slotProps.data.ireq_id)"
+              label="Submit"
+            />
+          </template>
+        </Column>
+          <template #footer>
+            <div class="grid dir-col">
+              <div class="col">
+                <div class="box">
+                  <Button
+                    label="Kembali"
+                    class="p-button-raised p-button mr-2"
+                    icon="bi bi-skip-backward-fill"
+                    @click="$router.push({
+                    name: 'Dashboard'})"
+                  />
+                </div>
+			      </div>
+          </div>
+        </template>
+        </DataTable>
+        <Toolbar class="mb-4" v-if="this.active == 44">
+          <template v-slot:start>
+            <h4>ICT Request (Penugasan Request)</h4>
+          </template>
+        </Toolbar>
+        <DataTable
+          v-if="this.active == 44"
+          :value="penugasanRequest4"
+          :paginator="true"
+          :rows="10"
+          :loading="loading"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          responsiveLayout="scroll"
+        >
+        <template #header>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
+        </template>
+        <template #empty>
+            Not Found
+        </template>
+        <template #loading>
+            Loading ICT Request data. Please wait.
+        </template>
+        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+        <Column style="min-width:20rem">
+          <template #body="slotProps">
+            <Button
+              class="p-button-rounded p-button-secondary mr-2"
+              icon="pi pi-info-circle"
+              v-tooltip.right="'Detail'"
+              @click="$router.push({
+                name: 'Ict Request Detail Desc',
+                params: { code: slotProps.data.ireq_id }, })"
+            />
+          </template>
+        </Column>
+          <template #footer>
+            <div class="grid dir-col">
+              <div class="col">
+                <div class="box">
+                  <Button
+                    label="Kembali"
+                    class="p-button-raised p-button mr-2"
+                    icon="bi bi-skip-backward-fill"
+                    @click="$router.push({
+                    name: 'Dashboard'})"
+                  />
+                </div>
+			      </div>
+          </div>
+        </template>
+        </DataTable>
         <Dialog v-model:visible="dialogAssign"
           :style="{ width: '450px' }"
           header="Assign Per-Request"
@@ -3106,8 +3266,7 @@
           <Button label="Cancel" @click="cancelAssign()" class="p-button-text" />
         </template>
         </Dialog>
-        <Dialog 
-          v-model:visible="dialogReject"
+        <Dialog v-model:visible="dialogReject"
           :style="{ width: '400px' }"
           header="Form Dialog Reject"
           :modal="true"
@@ -3136,9 +3295,8 @@
               <Button label="No" @click="cancelReject()" class="p-button-text" />
             </template>
         </Dialog>
-        <Dialog 
-          header="Confirmation" 
-          v-model:visible="confirmationVerifikasi" 
+        <Dialog v-model:visible="confirmationVerifikasi" 
+          header="Confirmation"
           :style="{width: '350px'}" 
           :modal="true"
         >
@@ -3151,7 +3309,11 @@
             <Button label="Approve" icon="pi pi-check" @click="approveAtasan" class="p-button-raised p-button-text" autofocus />
           </template>
         </Dialog>
-        <Dialog header="Confirmation" v-model:visible="ConfirmationVerifikasiManager" :style="{width: '350px'}" :modal="true">
+        <Dialog  v-model:visible="ConfirmationVerifikasiManager"
+          header="Confirmation" 
+          :style="{width: '350px'}" 
+          :modal="true"
+        >
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                 <span>Verifikasi Request</span>
@@ -3161,8 +3323,7 @@
                 <Button label="Approve" icon="pi pi-check" @click="approveManager" class="p-button-raised p-button-text" autofocus />
             </template>
         </Dialog>
-        <Dialog 
-          v-model:visible="dialogRejectAtasan" 
+        <Dialog v-model:visible="dialogRejectAtasan" 
           :breakpoints="{'960px': '75vw'}" 
           :style="{ width: '400px' }" 
           header="Form Dialog Reject" 
@@ -3192,13 +3353,12 @@
             <Button label="No" @click="cancelRejectAtasan()" class="p-button-text" />
           </template>
         </Dialog>
-        <Dialog
-              v-model:visible="dialogRejectManager"
-              :style="{ width: '400px' }"
-              header="ICT Request"
-              :modal="true"
-              class="field"
-            >
+        <Dialog v-model:visible="dialogRejectManager"
+          :style="{ width: '400px' }"
+          header="ICT Request"
+          :modal="true"
+          class="field"
+          >
             <div class="field">
               <div class="field grid">
                 <label class="col-fixed w-9rem">Alasan</label>
@@ -3221,9 +3381,8 @@
             <Button label="Yes" @click="updateRejectManager()" class="p-button" autofocus />
             <Button label="No" @click="cancelRejectManager()" class="p-button-text" />
         </template>
-      </Dialog>
-        <Dialog
-            v-model:visible="dialogEdit"
+        </Dialog>
+        <Dialog v-model:visible="dialogEdit"
             :style="{ width: '500px' }"
             header="ICT Request"
             :modal="true"
@@ -3290,6 +3449,7 @@ export default {
         dialogEdit:false,
         atasanDivisi:[],
         ictManager:[],
+        penugasanRequest2:[],
         direject2:[],
         dialogReject: false,
         active : 1,
@@ -3324,6 +3484,7 @@ export default {
         blmDiverifikasi4:[],
         sdhDiverifikasi4:[],
         direject4:[],
+        penugasanRequest4:[],
         sdgDikerjakan4:[],
         sdHDikerjakan4:[],
         selesai4:[],
@@ -3353,44 +3514,26 @@ export default {
     this.getActive();
   },
   methods: {
-    formatDate(date) {
-      return moment(date).format("DD MMM YYYY HH:mm")
-    },
+      formatDate(date) {
+        return moment(date).format("DD MMM YYYY HH:mm")
+      },
       getActive(){
         if(localStorage.getItem('active')){
           this.active = localStorage.getItem('active');
-          if (this.active <= 6){
+          if (this.active <= 6 || this.active == 40){
               this.getIct();
           }
-          else if (this.active >= 7 && this.active <= 12){
+          else if (this.active >= 7 && this.active <= 12 || this.active == 38 || this.active == 41){
             this.getIct2();
           } 
-          else if (this.active == 38){
-            this.getIct2();
-          } 
-          else if (this.active == 41){
-            this.getIct2();
-          } 
-          else if (this.active > 12 && this.active <=16){
-            this.getIct3();
-          }
-          else if (this.active == 37){
+          else if (this.active > 12 && this.active <=16 || this.active == 37|| this.active == 43){
             this.getIct3();
           }
           else if (this.active > 16 && this.active <=19){
             this.getUser();
           }
-          else if (this.active > 19 && this.active <=21){
+          else if (this.active > 19 && this.active <=21 || this.active == 39 || this.active == 42){
             this.getIct5();
-          }
-          else if (this.active == 39){
-            this.getIct5();
-          }
-          else if (this.active == 42){
-            this.getIct5();
-          }
-          else if (this.active == 40){
-            this.getIct();
           }
           else if (this.active == 22){
             this.getIct6();
@@ -3401,7 +3544,7 @@ export default {
           else if (this.active > 29 && this.active <= 32){
             this.getIct3();
           }
-          else if (this.active > 32 && this.active <= 36){
+          else if (this.active > 32 && this.active <= 36 || this.active == 44){
             this.getIct5();
           }
         }
@@ -3441,6 +3584,7 @@ export default {
           this.sudahDikerjakann = response.data.ict6;
           this.sudahslsi = response.data.ict7
           this.totalRequest2 = response.data.ict8;
+          this.penugasanRequest2 = response.data.ict9;
           this.loading = false;
         });
       },
@@ -3468,6 +3612,7 @@ export default {
         this.selesai4 = response.data.ict5;
         this.totalRequest4 = response.data.ict6;
         this.sedangDireview2 = response.data.ict7;
+        this.penugasanRequest4 = response.data.ict8;
         this.loading = false;
         });
       },
@@ -3701,80 +3846,80 @@ export default {
       this.status = [];
       this.editDetail = [];
       this.submitted = false;
-    },
-    submitt(){
-      this.submitted = true;
-      if(this.editDetail.status != null){
-        this.axios.put('/api/update-status-done/'+this.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-          this.$toast.add({
-            severity:'success', summary: 'Success', detail:'Status Berhasil Dirubah', life: 3000
-          });
-          this.cancel();
-          this.getIct4();
-        });
-      }
-    },
-    edit(ireqd_id,ireq_id){
-      this.code = ireq_id;
-      this.dialogEdit = true;
-      this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.editDetail = response.data;
-      });
-      this.getStatus();
-    },
-    getStatus(){
-      this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.status = response.data;
-      });
-    },
-    approveManager(){
-      this.ConfirmationVerifikasiManager = false;
-      this.$confirm.require({
-            message: "Approval Permohonan Dilanjutkan?",
-            header: "ICT Request    ",
-            icon: "pi pi-info-circle",
-            acceptClass: "p-button",
-            acceptLabel: "Ya",
-            rejectLabel: "Tidak",
-            accept: () => {
-              this.$toast.add({
-                severity: "info",
-                summary: "Confirmed",
-                detail: "Permohonan Dilanjutkan",
-                life : 1000
-              });
-              this.axios.get('/api/abm/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
-              this.code = null;
-              this.getActive();
-        },
-        reject: () => {},
-      });
-    },
-    rejectManager(){
-      this.ConfirmationVerifikasiManager = false;
-      this.dialogRejectManager = true;
-    },
-    cancelRejectManager(){
-      this.dialogRejectManager = false;
-      this.code = null;
-      this.reason.ket = null;
-      this.submitted = false;
-    },
-    updateRejectManager(){
-          this.submitted = true;
-           if(this.reason.ket != null){
-            this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-              this.$toast.add({
-                severity: "info",
-                summary: "Confirmed",
-                detail: "Berhasil Direject",
-                life: 1000
-              });
-               this.cancelRejectManager();
-               this.getActive();
+      },
+      submitt(){
+        this.submitted = true;
+        if(this.editDetail.status != null){
+          this.axios.put('/api/update-status-done/'+this.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.$toast.add({
+              severity:'success', summary: 'Success', detail:'Status Berhasil Dirubah', life: 3000
             });
-          }
-    },
+            this.cancel();
+            this.getIct4();
+          });
+        }
+      },
+      edit(ireqd_id,ireq_id){
+        this.code = ireq_id;
+        this.dialogEdit = true;
+        this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.editDetail = response.data;
+        });
+        this.getStatus();
+      },
+      getStatus(){
+        this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.status = response.data;
+        });
+      },
+      approveManager(){
+        this.ConfirmationVerifikasiManager = false;
+        this.$confirm.require({
+              message: "Approval Permohonan Dilanjutkan?",
+              header: "ICT Request    ",
+              icon: "pi pi-info-circle",
+              acceptClass: "p-button",
+              acceptLabel: "Ya",
+              rejectLabel: "Tidak",
+              accept: () => {
+                this.$toast.add({
+                  severity: "info",
+                  summary: "Confirmed",
+                  detail: "Permohonan Dilanjutkan",
+                  life : 1000
+                });
+                this.axios.get('/api/abm/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
+                this.code = null;
+                this.getActive();
+          },
+          reject: () => {},
+        });
+      },
+      rejectManager(){
+        this.ConfirmationVerifikasiManager = false;
+        this.dialogRejectManager = true;
+      },
+      cancelRejectManager(){
+        this.dialogRejectManager = false;
+        this.code = null;
+        this.reason.ket = null;
+        this.submitted = false;
+      },
+      updateRejectManager(){
+            this.submitted = true;
+            if(this.reason.ket != null){
+              this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+                this.$toast.add({
+                  severity: "info",
+                  summary: "Confirmed",
+                  detail: "Berhasil Direject",
+                  life: 1000
+                });
+                this.cancelRejectManager();
+                this.getActive();
+              });
+            }
+      },
   },
 };
 </script>

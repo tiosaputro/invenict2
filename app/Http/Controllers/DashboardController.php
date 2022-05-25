@@ -84,12 +84,18 @@ class DashboardController extends Controller
             ->where('ireq_status','C')
             ->pluck('sdhselesai')
             ->first();
+        $penugasanRequest = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as tes'))
+            ->where('ireq_status','NT')
+            ->orWhere('ireq_status','RT')
+            ->pluck('tes')
+            ->first();
         $total = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as total'))
             ->whereNotNull('ireq_status')
             ->pluck('total')
             ->first();
-        return response()->json(['blmDiverifikasi'=>$blmdiverifikasi,'atasandivisi'=>$atasandivisi,'manager'=>$manager,'reject'=>$reject,'blmdiassign'=>$blmdiassign,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai,'totalRequest'=>$total]);
+        return response()->json(['blmDiverifikasi'=>$blmdiverifikasi,'atasandivisi'=>$atasandivisi,'manager'=>$manager,'reject'=>$reject,'blmdiassign'=>$blmdiassign,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai,'totalRequest'=>$total,'penugasanRequest'=>$penugasanRequest]);
     }
     public function countDivisi3($fullname)
     {
@@ -107,12 +113,13 @@ class DashboardController extends Controller
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IN ( 'A2','A1' )) as sudahdiverifikasi"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'P') as sedangdireview"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IN ('RA2','RR','RA1')) as direject"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IN ('NT','RT')) as penugasanRequest"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'T') as sedangdikerjakan"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'D') as sudahdikerjakan"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'C') as sudahselesai"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IS NOT NULL) as totalrequest"))
         ->first();
-        return response()->json($grafik);
+        return json_encode($grafik);
     }
     function countAdmin()
     {
