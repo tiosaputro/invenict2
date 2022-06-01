@@ -19,7 +19,7 @@
                   />
                 </div>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tgl. Request</label>
                  <div class="col-fixed w-11rem">
                       <DatePicker v-model="mutasi.ireq_date" :masks="mask" >
@@ -41,7 +41,7 @@
                         {{ error.ireq_date }}
                       </small>
                 </div>
-              </div>   
+              </div>    -->
               <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
                  <div class="field col-12 md:col-4">
@@ -67,6 +67,7 @@
                         :showClear="true"
                         :filter="true"
                         :class="{ 'p-invalid': error.ireq_prio_level }"
+                        autofocus
                      />
                         <small v-if="error.ireq_prio_level" class="p-error">
                           {{error.ireq_prio_level}}

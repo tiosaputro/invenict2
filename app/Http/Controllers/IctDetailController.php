@@ -28,7 +28,7 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_dtl as id')
         ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc', 'id.ireq_qty',
-        DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),'llr.lookup_desc as ireq_status')
+        DB::raw("(im.invent_desc) as name"),'llr.lookup_desc as ireq_status')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->leftJoin('lookup_refs as llr',function ($join) {
@@ -47,7 +47,7 @@ class IctDetailController extends Controller
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.ireq_qty','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
             'lr.lookup_desc as ireq_type','llr.lookup_desc as ireq_status','id.ireq_desc',
-            DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
+            DB::raw("(im.invent_desc) as name"),DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->leftjoin('lookup_refs as llr','id.ireq_status','llr.lookup_code')
@@ -63,7 +63,7 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.invent_code','id.ireq_assigned_to1','id.ireqd_id','lr.lookup_desc as ireq_type', 
-                  DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),'id.ireq_remark','id.ireq_qty','id.ireq_desc')
+                  DB::raw("(im.invent_desc) as name"),'id.ireq_remark','id.ireq_qty','id.ireq_desc')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
@@ -262,7 +262,7 @@ class IctDetailController extends Controller
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
@@ -279,7 +279,7 @@ class IctDetailController extends Controller
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu','dr.div_name',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as datee"), DB::raw("TO_CHAR(imm.ireq_date,'HH24:MI') as timee"),
-                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
@@ -302,7 +302,7 @@ class IctDetailController extends Controller
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
@@ -324,7 +324,7 @@ class IctDetailController extends Controller
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
@@ -346,7 +346,7 @@ class IctDetailController extends Controller
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
@@ -368,7 +368,7 @@ class IctDetailController extends Controller
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
@@ -399,7 +399,7 @@ class IctDetailController extends Controller
     }
     public function getDetail($ireqd_id,$ireq_id){
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_assigned_to1','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', DB::raw("(iim.invent_code ||'-'|| iim.invent_desc) as name"))
+        ->select('id.ireq_assigned_to1','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', DB::raw("(iim.invent_desc) as name"))
         ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
         ->leftjoin('invent_mst as iim','id.invent_code','iim.invent_code')
         ->where('id.ireqd_id',$ireqd_id)

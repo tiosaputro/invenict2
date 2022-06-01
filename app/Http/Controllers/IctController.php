@@ -257,7 +257,7 @@ class IctController extends Controller
             ->where('im.ireq_status','P')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get(); 
 
             $ict1 = DB::table('ireq_mst as im')
@@ -270,7 +270,7 @@ class IctController extends Controller
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->orwhere('im.ireq_status','A1')
             ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get(); 
 
             $ict2 = DB::table('ireq_mst as im')
@@ -283,7 +283,7 @@ class IctController extends Controller
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->orwhere('im.ireq_status','A2')
             ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get(); 
 
             $ict3 = DB::table('ireq_mst as im')
@@ -300,7 +300,7 @@ class IctController extends Controller
                 ->OrWhere('im.ireq_status','RA2');
             })
             ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_reason')
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get(); 
 
             $ict4 = DB::table('ireq_mst as im')
@@ -310,7 +310,7 @@ class IctController extends Controller
             ->where('im.ireq_status','T')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get();
 
             $ict5 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
@@ -328,7 +328,7 @@ class IctController extends Controller
             })
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->groupBy('im.ireq_id','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get();
 
             return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7],200);
@@ -2080,6 +2080,7 @@ class IctController extends Controller
     {
         $ICT = Ict::where('ireq_id',$ireq_id)->first();
             $ICT->ireq_status = 'P';
+            $ICT->ireq_date = $this->newUpdate;
             $ICT->last_update_date = $this->newUpdate;
             $ICT->last_updated_by = Auth::user()->usr_name;
             $ICT->program_name = "IctController_updateStatusSubmit";

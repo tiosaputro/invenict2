@@ -12,7 +12,7 @@
                <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">No. Request</label>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem">Tgl. Request</label>
                  <div class="col-fixed w-11rem">
                       <DatePicker v-model="tgl" :masks="mask" >
@@ -34,7 +34,7 @@
                         {{ errors.tgl[0] }}
                       </small>
                     </div>
-                </div>
+                </div> -->
               
               <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>

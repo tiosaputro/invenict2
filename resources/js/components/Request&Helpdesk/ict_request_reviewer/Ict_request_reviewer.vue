@@ -870,12 +870,13 @@ export default {
         this.rbr.ket = null;
     },
     updateReject(){
-        this.submmited = true;
-        this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.submitted = true;
+        if(this.rbr.ket != null){
+          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
             this.dialogReject = false;    
             this.rbr.id = null;
             this.rbr.ket = null;
-            this.submmited = false;
+            this.submitted = false;
               this.$toast.add({
                 severity: "info",
                 summary: "Confirmed",
@@ -884,6 +885,7 @@ export default {
               });
               this.getIct();
         });
+        }
     },
     ApproveAtasan(ireq_id){
     this.$confirm.require({

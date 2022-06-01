@@ -204,7 +204,7 @@ class LookupsController extends Controller
         ->orderBy('lookup_desc','ASC')
         ->get();
 
-        $kode = Master::Select('invent_code as code',DB::raw("(invent_code ||'-'|| invent_desc) as name"))->get();
+        $kode = Master::Select('invent_code as code',DB::raw("(invent_desc) as name"))->groupBy('invent_desc','invent_code')->get();
 
         return json_encode(['ref'=>$ref,'kode'=>$kode],200);
     }

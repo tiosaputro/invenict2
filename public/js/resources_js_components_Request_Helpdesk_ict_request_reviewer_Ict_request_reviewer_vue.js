@@ -139,26 +139,29 @@ __webpack_require__.r(__webpack_exports__);
     updateReject: function updateReject() {
       var _this3 = this;
 
-      this.submmited = true;
-      this.axios.put('/api/reject-by-reviewer/' + this.rbr.id, this.rbr, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (res) {
-        _this3.dialogReject = false;
-        _this3.rbr.id = null;
-        _this3.rbr.ket = null;
-        _this3.submmited = false;
+      this.submitted = true;
 
-        _this3.$toast.add({
-          severity: "info",
-          summary: "Confirmed",
-          detail: "Berhasil Direject",
-          life: 2000
+      if (this.rbr.ket != null) {
+        this.axios.put('/api/reject-by-reviewer/' + this.rbr.id, this.rbr, {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function (res) {
+          _this3.dialogReject = false;
+          _this3.rbr.id = null;
+          _this3.rbr.ket = null;
+          _this3.submitted = false;
+
+          _this3.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Berhasil Direject",
+            life: 2000
+          });
+
+          _this3.getIct();
         });
-
-        _this3.getIct();
-      });
+      }
     },
     ApproveAtasan: function ApproveAtasan(ireq_id) {
       var _this4 = this;
