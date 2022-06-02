@@ -1616,7 +1616,7 @@ class IctController extends Controller
     {
         $ict =  DB::table('ireq_dtl as id')
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-        'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
+        'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
         'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
         DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -1746,7 +1746,7 @@ class IctController extends Controller
     {
         $ict =  DB::table('ireq_dtl as id')
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-            'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
+            'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
             DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -1771,7 +1771,7 @@ class IctController extends Controller
     {
         $ict =  DB::table('ireq_dtl as id')
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-        'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
+        'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
         'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
         DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -1795,8 +1795,8 @@ class IctController extends Controller
     Public function cetak_pdf_personnel_sedang_dikerjakan($usr_fullname)
     {
         $ict =  DB::table('ireq_dtl as id')
-        ->select('imm.ireq_no','id.ireq_assigned_to1','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-            'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
+        ->select('imm.ireq_no',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+            'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
             DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -1806,7 +1806,7 @@ class IctController extends Controller
         ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
         ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
         ->where('id.ireq_status','T')
-        ->where('id.ireq_assigned_to1',$usr_fullname)
+        ->where(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),$usr_fullname)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('id.creation_date','ASC')
@@ -1821,8 +1821,8 @@ class IctController extends Controller
     Public function cetak_pdf_personnel_sudah_dikerjakan($usr_fullname)
     {
         $ict =  DB::table('ireq_dtl as id')
-        ->select('imm.ireq_no','id.ireq_assigned_to1','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-            'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
+        ->select('imm.ireq_no',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+            'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
             DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -1832,7 +1832,7 @@ class IctController extends Controller
         ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
         ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
         ->where('id.ireq_status','D')
-        ->where('id.ireq_assigned_to1',$usr_fullname)
+        ->where(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),$usr_fullname)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('id.creation_date','ASC')
@@ -1847,8 +1847,8 @@ class IctController extends Controller
     Public function cetak_pdf_personnel_selesai($usr_fullname)
     {
         $ict =  DB::table('ireq_dtl as id')
-        ->select('imm.ireq_no','id.ireq_assigned_to1','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-            'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
+        ->select('imm.ireq_no',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+            'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
             DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -1858,7 +1858,7 @@ class IctController extends Controller
         ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
         ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
         ->where('id.ireq_status','C')
-        ->where('id.ireq_assigned_to1',$usr_fullname)
+        ->where(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),$usr_fullname)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('id.creation_date','ASC')
@@ -2007,7 +2007,7 @@ class IctController extends Controller
     {
         $ict =  DB::table('ireq_dtl as id')
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-        'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
+        'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
         'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
         DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -2033,7 +2033,7 @@ class IctController extends Controller
     {
         $ict =  DB::table('ireq_dtl as id')
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-        'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
+        'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
         'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
         DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')

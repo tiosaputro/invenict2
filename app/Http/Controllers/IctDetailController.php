@@ -322,7 +322,7 @@ class IctDetailController extends Controller
     public function cetak_pdf_tab_verifikasi($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+        ->select('id.ireq_type','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
                 'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -366,20 +366,25 @@ class IctDetailController extends Controller
     public function cetak_pdf_sedang_dikerjakan($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
-                'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_desc) as name"))
+        ->select('id.ireq_type','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname','id.ireq_remark','lllr.lookup_desc as prio_level','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+                'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned"),DB::raw("TO_CHAR(imm.ireq_date,'HH24:MI') as time_request"),DB::raw("TO_CHAR(imm.ireq_approver1_date,' dd Mon YYYY') as date_approver1"),
+                DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(im.invent_desc) as name"))
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
+        // ->leftjoin('divisi_refs as dvr','imm.ireq_divisi_user','dvr.div_id')
+        ->leftjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
+        ->leftjoin('lookup_refs as lllr','imm.ireq_prio_level','lllr.lookup_code')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
         ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
         ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
         ->where('id.ireq_id',$code)
+        ->whereRaw('LOWER(lllr.lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('id.ireqd_id','ASC')
         ->get();
-        return view('pdf/Laporan_IctDetailSedangDikerjakan', compact('detail'));
+        return view('pdf/Report_ICT', compact('detail'));
     }
     public function cetak_excel_sedang_dikerjakan($code)
     {
