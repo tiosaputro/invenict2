@@ -150,7 +150,12 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                 <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+                 <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem">
+                  <template #body="slotProps">
+                      <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.ireq_status == 'Belum Diapprove Atasan'">{{slotProps.data.ireq_no}}</p>
+                      <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
+                  </template>
+                 </Column>
                   <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -161,7 +166,7 @@
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
                   <Column headerStyle="min-width:35rem">
-                  <template #body="slotProps">
+                    <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
@@ -251,10 +256,10 @@
                     Loading ICT Request data. Please wait.
                   </template>
                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem">
-                 <template #body="slotProps">
-                     <p style="color:orangered:" v-if="slotProps.data.ireq_status == 'Belum Diapprove ICT Manager'">{{slotProps.data.ireq_no}}</p>
-                     <p style="color:limegreen" v-else>{{slotProps.data.ireq_no}}</p>
-                 </template>
+                  <template #body="slotProps">
+                      <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.ireq_status == 'Belum Diapprove ICT Manager'">{{slotProps.data.ireq_no}}</p>
+                      <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
+                  </template>
                  </Column>
                   <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
@@ -1029,3 +1034,10 @@ export default {
   },
 };
 </script>
+<style>
+    .cheap {
+        background-color: #54a90a !important;
+        background-image: none !important;
+        color: #ffffff !important;
+    }
+</style>

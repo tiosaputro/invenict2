@@ -141,7 +141,7 @@
               </div>  -->
               <div class="field grid">
                 <label for="notlp2" style="width:155px">Bisnis Unit</label>
-                <div class="col-4">
+                  <div class="col-4">
                     <Dropdown 
                     v-model="bu"
                     :options="bisnis"
@@ -151,7 +151,7 @@
                     :filter="true"
                     placeholder="Pilih Bisnis Unit"
                     :class="{ 'p-invalid': errors.bu }"
-                    />
+                  />
                       <small v-if="errors.bu" class="p-error">
                           {{ errors.bu[0] }}
                       </small>
@@ -208,36 +208,38 @@
            </div>
            <div class="col-sm-6">
             <div class="field grid">
-                    <label style="width:155px">Nama</label>
-                    <div class="col-12 md:col-4">
-                        <InputText
-                            type ="text"
-                            v-model="nama"
-                            placeholder="Masukan Nama"
-                            :class="{ 'p-invalid': errors.nama }"
-                        />
-                      <small v-if="errors.nama" class="p-error">
-                          {{ errors.nama[0] }}
-                      </small>
-                    </div>
-                 </div> 
-                 <div class="field grid">
-                      <label style="width:155px"></label>
-                      <div class="col-10 md-6">
-                        <div class="card" style="height: 20 rem;">
-                          <img :src="preview" class="master-image"/>
-                    </div>
-                 </div>
-                 </div>
-                 <div class="field grid">
-                      <label style="width:155px"></label>
-                    <div class="col-10 md-6">
-                      <input type="file" :class="{ 'p-invalid': error.foto }" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
-                      <!-- <small class="p-error" v-if="error.foto">
-                        {{ error.foto }}
-                      </small> -->
-                 </div>
-                 </div>
+              <label style="width:155px">Nama</label>
+                <div class="col-12 md:col-4">
+                  <InputText
+                    type ="text"
+                    v-model="nama"
+                    style="text-transform:capitalize;"
+                    placeholder="Masukan Nama"
+                    :class="{ 'p-invalid': errors.nama }"
+                    autofocus
+                  />
+                  <small v-if="errors.nama" class="p-error">
+                    {{ errors.nama[0] }}
+                  </small>
+                </div>
+            </div> 
+            <div class="field grid">
+              <label style="width:155px"></label>
+                <div class="col-10 md-6">
+                  <div class="card" style="height: 20 rem;">
+                    <img :src="preview" class="master-image"/>
+                  </div>
+                </div>
+            </div>
+            <div class="field grid">
+              <label style="width:155px"></label>
+                <div class="col-10 md-6">
+                  <input type="file" :class="{ 'p-invalid': error.foto }" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
+                    <!-- <small class="p-error" v-if="error.foto">
+                      {{ error.foto }}
+                    </small> -->
+                </div>
+            </div>
                 <div class="field grid">
                   <label style="width:155px">Lokasi Sebelumnya</label>
                     <div class="col-6">

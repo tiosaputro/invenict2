@@ -93,7 +93,7 @@ class MasterController extends Controller
         }
         $mas = Master::Create([
             // 'invent_code' => $request->code,
-            'invent_desc' => $request->nama,
+            'invent_desc' => ucfirst($request->nama),
             'invent_brand' => $request->merk,
             'invent_type' => $request->type,
             'invent_sn' => $request->sn,

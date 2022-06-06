@@ -1,12 +1,12 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title> TES</title>
+<!DOCTYPE html>
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title> Testing</title>
 <style>
 #invoice{
     padding: 30px;
 }
-
 p {
     font-weight: bold;
 }
@@ -413,8 +413,8 @@ tr:nth-child(even) {
 }
 }
 </style>
-<div id="invoice">
 
+<div id="invoice">
     <div class="toolbar hidden-print">
         <div class="text-right">
             <button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> Print</button>
@@ -433,7 +433,7 @@ tr:nth-child(even) {
                     <div class="col company-details">
                         <h2 class="name">
                             <a>
-                            ICT SERVICE REQUEST 
+                                ICT SERVICE REQUEST 
                             </a>
                         </h2>
                     </div>
