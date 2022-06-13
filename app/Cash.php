@@ -9,6 +9,7 @@ class Cash extends Model
     protected $fillable = [
         'ca_id',
         'ireq_id',
+        'ireqd_id',
         'ca_pic_name',
         'ca_submit_date',
         'ca_recv_cash_date',
@@ -26,4 +27,5 @@ class Cash extends Model
     protected $primaryKey ='ca_id';
     public $incrementing = false;
     public $timestamps = false;
+    
 }

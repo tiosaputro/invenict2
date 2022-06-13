@@ -209,7 +209,7 @@
                         label="CA"
                         @click="$router.push({
                             name: 'add Cash Advance',
-                            params: { code: slotProps.data.ireq_id }, })"
+                            params: { code: slotProps.data.ireq_id, dtl:slotProps.data.ireqd_id } })"
                       />
                       <Button
                         class="p-button-raised p-button-success p-button-text mt-2"

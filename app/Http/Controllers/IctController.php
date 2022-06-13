@@ -404,8 +404,7 @@ class IctController extends Controller
         ]);
         $LINK = Link::where('ireq_id',$ireq_id)->first();
         $send_mail = $emailVerifikator->usr_email .= '@emp.id';
-        $emailJob = (new SendNotifApproval($send_mail,$ict,$LINK));
-        dispatch($emailJob);
+        SendNotifApproval::dispatchAfterResponse($send_mail,$ict,$LINK);
         return response()->json('Success Update Status');
     }
     function needApprovalManager($ireq_id)
@@ -500,8 +499,7 @@ class IctController extends Controller
                 $emailpush = $s .= '@emp.id';
                 array_push($email,$emailpush);
             }
-            $emailJob = (new SendNotifPersonnel($email,$ict));
-            dispatch($emailJob);
+            SendNotifPersonnel::dispatchAfterResponse($email,$ict);
         }else{
             $ict->ireq_status = 'NT';
             $ict->ireq_assigned_date = $this->newUpdate;
@@ -529,8 +527,7 @@ class IctController extends Controller
                 $emailpush = $s .= '@emp.id';
                 array_push($email,$emailpush);
             }
-            $emailJob = (new SendNotifPersonnel($email,$ict));
-            dispatch($emailJob);
+            SendNotifPersonnel::dispatchAfterResponse($email,$ict);
         }
         return response()->json('success');
 
@@ -1015,7 +1012,8 @@ class IctController extends Controller
         $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
         if($aksesmenu->contains($this->personnel)){
             $ict = DB::table('ireq_dtl as id')
-            ->select('imm.ireq_no','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
+            ->select('imm.ireq_no','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+                DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
                 'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
                 'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
                 DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
@@ -1287,13 +1285,15 @@ class IctController extends Controller
                 ->get();
             return response()->json($ict);
     }
-    Public function getNameBu($noreq)
+    Public function getNameBu($noreq,$dtl)
     {
         $ict = DB::table('ireq_mst as im')
-        ->select('im.ireq_requestor as req','im.ireq_no','im.ireq_id','vr.name as bu',
+        ->select('im.ireq_requestor as req','im.ireq_no','im.ireq_id','vr.name as bu','id.ireqd_id','im.ireq_user',
                 DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"))
-        ->join('vcompany_refs as vr','im.ireq_bu','vr.company_code')
+        ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
+        ->leftjoin('ireq_dtl as id','im.ireq_id','id.ireq_id')
         ->where('im.ireq_id',$noreq)
+        ->where('id.ireqd_id',$dtl)
         ->first();
             return response()->json($ict);
     }
@@ -2101,8 +2101,7 @@ class IctController extends Controller
         ]);
         $LINK = Link::where('ireq_id',$ireq_id)->first();
         $send_mail = 'icthelpdesk.admin@emp.id';
-        $emailJob = (new SendNotifRequest($send_mail,$ICT,$LINK));
-        dispatch($emailJob);
+        SendNotifRequest::dispatchAfterResponse($send_mail,$ICT,$LINK);
         return response()->json('Success Update Status');
     }
     public function cekVerif($code)

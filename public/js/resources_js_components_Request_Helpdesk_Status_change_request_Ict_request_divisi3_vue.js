@@ -1035,7 +1035,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                       return _ctx.$router.push({
                         name: 'add Cash Advance',
                         params: {
-                          code: slotProps.data.ireq_id
+                          code: slotProps.data.ireq_id,
+                          dtl: slotProps.data.ireqd_id
                         }
                       });
                     }

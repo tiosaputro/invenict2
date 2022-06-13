@@ -589,7 +589,7 @@ export default {
     data() {
         return {
             user:[],
-            role_name:[],
+			role_name :[],
             count:[],
             count1:[],
             count2:[],
@@ -601,36 +601,60 @@ export default {
             id : localStorage.getItem('id'),
         }
     },
-    created(){
+    mounted(){
         this.CekUser();
     },
     methods:{
       CekUser(){
-      if(this.id){
-        this.axios.get('api/cek-role/'+this.id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.role_name = response.data.map((x)=>x.rol_name)
-          if(this.role_name.includes('Requestor Divisi')){
+		this.role_name = localStorage.getItem('rolename');
+		if(this.role_name != null){
+			if(this.role_name.includes('Requestor Divisi')){
             this.getData();
-          }
-          else if(this.role_name.includes('Admin')){
-            this.getData5();
-          }
-          else if(this.role_name.includes('Atasan Requestor Divisi')){
-            this.getData1();
-          }
-          else if(this.role_name.includes('Supervisor')){
-            this.getData2();
-          }
-          else if(this.role_name.includes('Personel ICT')){
-            this.getUser();
-          }
-          else if(this.role_name.includes('Manager')){
-            this.getData4();
-          }
-        });
-        } else {
-          this.$router.push('/login');
-        }
+          	}
+			else if(this.role_name.includes('Admin')){
+				this.getData5();
+			}
+			else if(this.role_name.includes('Atasan Requestor Divisi')){
+				this.getData1();
+			}
+			else if(this.role_name.includes('Supervisor')){
+				this.getData2();
+			}
+			else if(this.role_name.includes('Personel ICT')){
+				this.getUser();
+			}
+			else if(this.role_name.includes('Manager')){
+				this.getData4();
+			}
+	  	}else {
+		  if(this.id){
+			this.axios.get('api/cek-role/'+this.id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+			  this.role_name = response.data.map((x)=>x.rol_name);
+				const role =  response.data.map((x)=>x.rol_name);
+				localStorage.setItem("rolename",role);
+					if(this.role_name.includes('Requestor Divisi')){
+						this.getData();
+					}
+					else if(this.role_name.includes('Admin')){
+						this.getData5();
+					}
+					else if(this.role_name.includes('Atasan Requestor Divisi')){
+						this.getData1();
+					}
+					else if(this.role_name.includes('Supervisor')){
+						this.getData2();
+					}
+					else if(this.role_name.includes('Personel ICT')){
+						this.getUser();
+					}
+					else if(this.role_name.includes('Manager')){
+						this.getData4();
+					}
+			  });
+		  } else {
+			this.$router.push('/login');
+		  }
+		}
       },
       getData(){
             this.axios.get('api/getCountUser/'+this.usr_name,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

@@ -204,7 +204,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/update-ict/{code}','IctController@update');
     Route::delete('/delete-ict/{ireq_id}','IctController@delete');
     Route::get('/getNoreq','IctController@getNoreq');
-    Route::get('/getNameBu/{noreq}','IctController@getNameBu');
+    Route::get('/getNameBu/{noreq}/{dtl}','IctController@getNameBu');
     //divisi 1
     Route::get('/get-permohonan/{usr_name}','IctController@getPermohonan');
     Route::get('/total-request/{usr_name}','IctController@totalRequest');

@@ -58,6 +58,8 @@ import VueAxios from 'vue-axios';
 import CodeHighlight from './pages/AppCodeHighlight.js';
 import BlockViewer from './pages/BlockViewer.vue';
 import StarRating from 'vue-star-rating';
+import VueCookies from 'vue3-cookies'
+
 
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
@@ -67,7 +69,7 @@ router.beforeEach(function(to, from, next) {
 const app = createApp(AppWrapper);
 
 app.config.globalProperties.$appState = reactive({ theme: 'vela-blue'});
-
+app.use(VueCookies);
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
 app.use(ConfirmationService);
 app.use(ToastService);

@@ -12,28 +12,52 @@
               <div class="p-fluid formgrid grid">
                <div class="field grid col">
                     <label class="col-fixed w-9rem" style="width:160px">No. Request</label>
-                    <div class="col">
+                    <div class="col-fixed">
                       <InputText
                         v-model="ca.ireq_no"
                         disabled
                       />
                     </div>
+                    <small v-if="errors.ireq_id" class="p-error">
+                      {{ errors.ireq_id[0] }}
+                    </small>
                   </div>
-                   <div class="field grid col" v-if="noreq">
-                    <label class="col-fixed w-9rem" style="width:160px">Requestor</label>
-                    <div class="col">
+                   <div class="field grid col" v-if="ca.ireqd_id">
+                    <label class="col-fixed w-9rem" style="width:160px">No. Detail</label>
+                    <div class="col-fixed">
                         <InputText
                             type ="text"
-                            v-model="ca.req"
+                            v-model="ca.ireqd_id"
                             disabled
                         />
                      </div>
                     </div>
                  </div>
-                 <div class="fluid formgrid grid" v-if="noreq">
+                 <div class="p-fluid formgrid grid">
+               <div class="field grid col" v-if="ca.req">
+                    <label class="col-fixed w-9rem" style="width:160px">Requestor</label>
+                    <div class="col-fixed">
+                      <InputText
+                        v-model="ca.req"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                   <div class="field grid col" v-if="ca.ireq_user">
+                    <label class="col-fixed w-9rem" style="width:160px">Pengguna</label>
+                    <div class="col-fixed">
+                        <InputText
+                            type ="text"
+                            v-model="ca.ireq_user"
+                            disabled
+                        />
+                     </div>
+                    </div>
+                 </div>
+                 <div class="fluid formgrid grid" v-if="ca.ireq_date">
                   <div class="field grid col">
                       <label class="col-fixed w-9rem" style="width:160px">Tgl. Request</label>
-                    <div class="col">
+                    <div class="col-fixed">
                        <InputText
                             type ="text"
                             v-model="ca.ireq_date"
@@ -41,9 +65,9 @@
                         />
                   </div>
                   </div>
-                  <div class="field grid col" v-if="noreq">
+                  <div class="field grid col" v-if="ca.bu">
                   <label for="file" class="col-fixed w-9rem" style="width:160px">Bisnis Unit</label>
-                    <div class="col">
+                    <div class="col-fixed">
                         <InputText
                             type ="text"
                             v-model="ca.bu"
@@ -56,7 +80,7 @@
                  <div class="card-body"><!-- card body -->
                   <div class="field grid">
                     <label class="col-fixed w-9rem" style="width:180px">Jumlah</label>
-                      <div class="col">
+                      <div class="col-fixed">
                         <InputNumber
                           mode="currency" 
                           currency="IDR" 
@@ -220,7 +244,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
-      noreq : null,
       token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
@@ -248,8 +271,8 @@ export default {
       }
     },
     get(){
-      this.noreq = this.$route.params.code
-      this.axios.get('/api/getNameBu/'+this.noreq,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      
+      this.axios.get('/api/getNameBu/'+this.$route.params.code+'/'+this.$route.params.dtl,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.ca = response.data;
       }).catch(error=>{
           if (error.response.status == 401){
@@ -280,7 +303,8 @@ export default {
       this.errors=[];
       
         const data = new FormData();
-        data.append("noreq", this.ca.ireq_id);
+        data.append("ireq_id", this.ca.ireq_id);
+        data.append("nodtl",this.ca.ireqd_id)
         data.append("jum", this.jum);
         data.append("tglrecvunit", this.tglrecvunit);
         data.append("tglbuy", this.tglbuy);

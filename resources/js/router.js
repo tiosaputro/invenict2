@@ -159,7 +159,7 @@ const routes = [
     },
     {
         name: 'add Cash Advance',
-        path: '/add-cash-advance/:code',
+        path: '/add-cash-advance/:code/:dtl',
         component: ()=> import('./components/Request&Helpdesk/cash_advance/Cash_advance_create_from_ict.vue'),
     },
     {

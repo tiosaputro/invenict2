@@ -12,6 +12,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Mng_usr_roles;
 use App\Mng_role_menu;
+use Illuminate\Validation\Rule;
 
 class CashController extends Controller
 {
@@ -54,8 +55,8 @@ class CashController extends Controller
     function save(Request $request)
     {
         $message = [
-            'noreq.required'=>'No Request Belum Diisi',
-            'noreq.unique'=>'No request ini sudah pernah dibuatkan cash advancenya',
+            'ireq_id.required'=>'No Request Belum Diisi',
+            'ireq_id.unique'=>'No request ini sudah pernah dibuatkan cash advancenya',
             'jum.numeric'=>'Jumlah Belum Diisi',
             'tglsub.required'=>'Tgl Submit Belum diisi',
             // 'tglrecvunit.required'=>'Tgl Terima Barang Belum Diisi',
@@ -65,7 +66,15 @@ class CashController extends Controller
             // 'tglclosing.required'=>'Tgl Closing Belum Diisi'
         ];
             $request->validate([
-                'noreq' => 'required|unique:ca_mst,ireq_id',
+                // 'noreq' => 'required|unique:ca_mst,ireq_id',
+                'ireq_id' => [
+                    'required',
+                    Rule::unique('ca_mst')->where(function ($query) use($request)
+                {
+                    return $query->where('ireq_id',$request->ireq_id)
+                                 ->where('ireqd_id',$request->nodtl);
+                }),
+                ],
                 'jum'=>'numeric',
                 'tglsub'=>'required',
                 // 'tglrecvunit'=>'required',
@@ -110,7 +119,8 @@ class CashController extends Controller
         }
 
         $cash = Cash::create([
-            'ireq_id' =>$request->noreq,
+            'ireq_id' =>$request->ireq_id,
+            'ireqd_id'=>$request->nodtl,
             'ca_pic_name'=>$request->jum,
             'ca_submit_date'=>$newTglSub,
             'ca_recv_cash_date'=>$newTglRecCash,

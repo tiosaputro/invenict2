@@ -49,7 +49,7 @@ class LoginController extends Controller
     //                             return response(["success" => false, "password" => "Login gagal, silahkan cek kembali domain account anda."],404);
     //                         }
     //                     }
-    // }
+    // 
 
         $user= Mng_User::where('usr_email', $request->email)->first();
         
@@ -64,7 +64,7 @@ class LoginController extends Controller
                         'id'        => $id,
                         'usr_name'  => $user->usr_name
                     ];
-                    return json_encode($response, 201);
+                    return json_encode($response, 200);
                 }else{
                     return response(["password" => "Login gagal, silahkan cek kembali password anda"],422);
                     }
@@ -86,11 +86,10 @@ class LoginController extends Controller
                 'id'        => $id,
                 'usr_name'  => $user->usr_name
             ];
-        return json_encode($response, 201);
+        return json_encode($response, 200);
     }
     public function logout(Request $request)
     {
-        OPcache::clear();
         $user = Auth::user();
         $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
         return json_encode([

@@ -27,39 +27,61 @@ __webpack_require__.r(__webpack_exports__);
       id: localStorage.getItem('id')
     };
   },
-  created: function created() {
+  mounted: function mounted() {
     this.CekUser();
   },
   methods: {
     CekUser: function CekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('api/cek-role/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.role_name = response.data.map(function (x) {
-            return x.rol_name;
-          });
+      this.role_name = localStorage.getItem('rolename');
 
-          if (_this.role_name.includes('Requestor Divisi')) {
-            _this.getData();
-          } else if (_this.role_name.includes('Admin')) {
-            _this.getData5();
-          } else if (_this.role_name.includes('Atasan Requestor Divisi')) {
-            _this.getData1();
-          } else if (_this.role_name.includes('Supervisor')) {
-            _this.getData2();
-          } else if (_this.role_name.includes('Personel ICT')) {
-            _this.getUser();
-          } else if (_this.role_name.includes('Manager')) {
-            _this.getData4();
-          }
-        });
+      if (this.role_name != null) {
+        if (this.role_name.includes('Requestor Divisi')) {
+          this.getData();
+        } else if (this.role_name.includes('Admin')) {
+          this.getData5();
+        } else if (this.role_name.includes('Atasan Requestor Divisi')) {
+          this.getData1();
+        } else if (this.role_name.includes('Supervisor')) {
+          this.getData2();
+        } else if (this.role_name.includes('Personel ICT')) {
+          this.getUser();
+        } else if (this.role_name.includes('Manager')) {
+          this.getData4();
+        }
       } else {
-        this.$router.push('/login');
+        if (this.id) {
+          this.axios.get('api/cek-role/' + this.id, {
+            headers: {
+              'Authorization': 'Bearer ' + this.token
+            }
+          }).then(function (response) {
+            _this.role_name = response.data.map(function (x) {
+              return x.rol_name;
+            });
+            var role = response.data.map(function (x) {
+              return x.rol_name;
+            });
+            localStorage.setItem("rolename", role);
+
+            if (_this.role_name.includes('Requestor Divisi')) {
+              _this.getData();
+            } else if (_this.role_name.includes('Admin')) {
+              _this.getData5();
+            } else if (_this.role_name.includes('Atasan Requestor Divisi')) {
+              _this.getData1();
+            } else if (_this.role_name.includes('Supervisor')) {
+              _this.getData2();
+            } else if (_this.role_name.includes('Personel ICT')) {
+              _this.getUser();
+            } else if (_this.role_name.includes('Manager')) {
+              _this.getData4();
+            }
+          });
+        } else {
+          this.$router.push('/login');
+        }
       }
     },
     getData: function getData() {

@@ -244,7 +244,7 @@ class MasterController extends Controller
     }
     public function getKode()
     {
-        $mas = Master::Select('invent_code as code',DB::raw("(invent_code ||'-'|| invent_desc) as name"))->get();
+        $mas = Master::Select('invent_code as code',DB::raw("(invent_code ||'-'|| invent_desc) as name"))->orderBy('invent_desc','ASC')->get();
         return json_encode($mas);
     }
     public function getKodeIct($code)
