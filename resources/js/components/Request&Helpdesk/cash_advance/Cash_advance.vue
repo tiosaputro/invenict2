@@ -44,13 +44,14 @@
           <template #loading>
             Loading Cash Advance data. Please wait.
           </template>
-          <Column field="ca_idd" header="No.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_id" header="No.Request" :sortable="true" style="min-width:8rem">
             <template #body="slotProps">
-              <p @click="detailRequest(slotProps.data.ca_idd)" style="cursor:pointer;"> {{slotProps.data.ca_idd}}
+              <p @click="detailRequest(slotProps.data.ireq_id)" style="cursor:pointer;"> {{slotProps.data.ireq_no}}
               </p> 
             </template>
           </Column>
-          <Column field="ireq_id" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
           <Column field="ca_pic_name" header="Jumlah" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.ca_pic_name) }}
@@ -136,6 +137,7 @@
               </span>
             </div>
           </template>
+          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
           <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
@@ -174,7 +176,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY HH24")
+      return moment(date).format("DD MMM YYYY HH:24")
     },
     formatPrice(value) {
         var formatter = new Intl.NumberFormat('id', {
@@ -229,8 +231,8 @@ export default {
     CetakExcel(){
       window.open('api/report-cash-excel');
     },
-    detailRequest(ca_idd){
-      this.axios.get('api/detail-request/' + ca_idd, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+    detailRequest(ireq_id){
+      this.axios.get('api/detail-request/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
         this.ireq_id = response.data[0].ireq_no
         this.tes = response.data.map((x)=>x.ireq_assigned_to);

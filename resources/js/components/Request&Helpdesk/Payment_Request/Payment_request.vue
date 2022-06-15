@@ -1,0 +1,263 @@
+<template>
+  <div class="grid">
+    <div class="col-12">
+      <div class="card">
+        <Toast />
+        <ConfirmDialog/>
+        <Toolbar class="mb-4">
+          <template v-slot:start>
+			<h4>Payment Request</h4>
+          </template>
+        </Toolbar>
+        <DataTable
+          :value="payment"
+          :paginator="true"
+          :rows="10"
+          :loading="loading"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Payment Request"
+          responsiveLayout="scroll"
+        >
+       <template #header>
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+              <Button
+              label="Add"
+              class="p-button-raised"
+              icon="bi bi-file-earmark-plus"
+              @click="$router.push('/Add-payment-request')"
+              />
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
+                <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+              </span>
+          </div>
+          </template>
+           <template #empty>
+            Not Found
+          </template>
+          <template #loading>
+            Loading Payment Request data. Please wait.
+          </template>
+          <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="pr_pic_name" header="Jumlah" :sortable="true" style="min-width:12rem">
+            <template #body="slotProps">
+              {{ formatPrice(slotProps.data.pr_pic_name) }}
+            </template>
+          </Column>
+          <Column field="ca_submit_date" header="Tgl. Submit" :sortable="true" style="min-width:12rem">
+            <template #body="slotProps">
+              {{ formatDate(slotProps.data.pr_submit_date) }}
+            </template>
+          </Column>
+          <Column headerStyle="min-width:10rem;">
+            <template #body="slotProps">
+              <Button
+                class="p-button-rounded p-button-info mr-2"
+                icon="pi pi-pencil"
+                v-tooltip.left="'Edit'"
+                @click="
+                  $router.push({
+                    name: 'Edit Payment Request',
+                    params: { code: slotProps.data.pr_id },
+                  })
+                "
+              />
+              <Button
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger mt-2"
+                @click="DeletePayment(slotProps.data.pr_id)"
+                v-tooltip.Right="'Delete'"
+              />
+            </template>
+          </Column>
+          <!-- <template #footer>
+               <div class="p-grid p-dir-col">
+			        <div class="p-col">
+				        <div class="box">
+                  <Button
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdf()"
+                  />
+                  <Button 
+                    label="Excel"
+                    class="p-button-raised p-button-success mt-2"
+                    icon="pi pi-print"
+                    @click="CetakExcel()" 
+                  />
+                </div>
+			        </div>
+            </div>
+           </template> -->
+        </DataTable>
+        <Dialog
+          v-model:visible="displayRequest"
+          :style="{ width: '1200px' }"
+          header="Detail Request"
+          :modal="true"
+        >
+        <Toolbar class="mb-4">
+          <template v-slot:end>
+              <label style="width:130px">No. Request: {{this.ireq_id}}</label>
+          </template>
+        </Toolbar>
+        <DataTable
+          :value="detail"
+          :paginator="true"
+          :rows="10"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
+          responsiveLayout="scroll"
+        >
+       <template #header>
+            <div class="table-header text-right">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                  <InputText
+                    v-model="filters['global'].value"
+                    placeholder="Search. . ."
+                  />
+              </span>
+            </div>
+          </template>
+          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+        </DataTable>
+        </Dialog>   
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import moment from 'moment';
+import {FilterMatchMode} from 'primevue/api';
+export default {
+  data() {
+    return {
+         displayRequest:false,
+         detail:[],
+         loading: true,
+         payment: [],
+         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+         token: localStorage.getItem('token'),
+         id : localStorage.getItem('id'),
+         checkname : [],
+         checkto : [],
+         tes:[],
+         ireq:[],
+         ireq_id:''
+    };
+  },
+  created() {
+    this.getPayment();
+  },
+  methods: {
+    formatDate(date) {
+      return moment(date).format("DD MMM YYYY HH:24")
+    },
+    formatPrice(value) {
+        var formatter = new Intl.NumberFormat('id', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 2
+        });
+        return formatter.format(value);
+    },
+    getPayment(){
+        this.axios.get('api/payment-request', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+          this.payment = response.data;
+          this.loading = false;
+        }).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired","true")
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
+           else if(error.response.status == 403){
+             this.$router.push('/access');
+           }
+        });
+    },
+    DeletePayment(pr_id){
+       this.$confirm.require({
+        message: "Data ini benar-benar akan dihapus?",
+        header: "Delete Confirmation",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button-danger",
+        acceptLabel: "Ya",
+        rejectLabel: "Tidak",
+        accept: () => {
+          this.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Record deleted",
+            life: 3000,
+          });
+          this.axios.delete('api/delete-payment-request/'+pr_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.getPayment();
+        },
+        reject: () => {},
+      });
+    },
+    CetakPdf(){
+      window.open('api/report-cash-pdf');
+    },
+    CetakExcel(){
+      window.open('api/report-cash-excel');
+    },
+    detailRequest(ireq_id){
+      this.axios.get('api/detail-request/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data;
+        this.ireq_id = response.data[0].ireq_no
+        this.tes = response.data.map((x)=>x.ireq_assigned_to);
+        if(this.tes.length > 0 && this.tes[0] != null){
+          this.ireq = this.tes
+        }
+        else{}
+      });
+      this.displayRequest = true;
+    }
+  },
+};
+</script>
+<style lang="scss" scoped>
+.table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media screen and (max-width: 960px) {
+        align-items: start;
+	}
+}
+@media screen and (max-width: 960px) {
+	::v-deep(.p-toolbar) {
+		flex-wrap: wrap;
+        
+		.p-button {
+            margin-bottom: 0.25rem;
+        }
+	}
+}
+</style>

@@ -34,7 +34,7 @@ class CashController extends Controller
     }
     function detail($ca_idd){
         $dtl = DB::table('ireq_dtl as id')
-        ->select('imm.ireq_no','id.invent_code','id.ireq_assigned_to','id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc', 'id.ireq_qty',
+        ->select('imm.ireq_no','id.ireqd_id','id.invent_code',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id','lr.lookup_desc as ireq_type','im.invent_desc','id.ireq_remark','id.ireq_desc', 'id.ireq_qty',
         DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"),'llr.lookup_desc as ireq_status')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
@@ -45,18 +45,20 @@ class CashController extends Controller
         ->leftJoin('ireq_mst as imm',function ($join) {
             $join->on('id.ireq_id','imm.ireq_id');
         })
-        ->where('imm.ireq_no',$ca_idd)
+        ->where('imm.ireq_id',$ca_idd)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->orderBy('id.ireqd_id','ASC')
         ->get();
 
-            return json_encode($dtl);
+            return response()->json($dtl);
     }
     function save(Request $request)
     {
         $message = [
             'ireq_id.required'=>'No Request Belum Diisi',
             'ireq_id.unique'=>'No request ini sudah pernah dibuatkan cash advancenya',
+            'ireqd_id.required'=>'No Detail Belum Diisi',
+            'ireqd_id.unique'=>'No Detail ini sudah pernah dibuatkan cash advancenya',
             'jum.numeric'=>'Jumlah Belum Diisi',
             'tglsub.required'=>'Tgl Submit Belum diisi',
             // 'tglrecvunit.required'=>'Tgl Terima Barang Belum Diisi',
@@ -72,7 +74,15 @@ class CashController extends Controller
                     Rule::unique('ca_mst')->where(function ($query) use($request)
                 {
                     return $query->where('ireq_id',$request->ireq_id)
-                                 ->where('ireqd_id',$request->nodtl);
+                                 ->where('ireqd_id',$request->ireqd_id);
+                }),
+                ],
+                'ireqd_id' => [
+                    'required',
+                    Rule::unique('ca_mst')->where(function ($query) use($request)
+                {
+                    return $query->where('ireq_id',$request->ireq_id)
+                                 ->where('ireqd_id',$request->ireqd_id);
                 }),
                 ],
                 'jum'=>'numeric',
@@ -120,7 +130,7 @@ class CashController extends Controller
 
         $cash = Cash::create([
             'ireq_id' =>$request->ireq_id,
-            'ireqd_id'=>$request->nodtl,
+            'ireqd_id'=>$request->ireqd_id,
             'ca_pic_name'=>$request->jum,
             'ca_submit_date'=>$newTglSub,
             'ca_recv_cash_date'=>$newTglRecCash,
@@ -146,7 +156,7 @@ class CashController extends Controller
         
         if($aksesmenu->contains($this->to)){
         $cash = DB::table('ca_mst as cm')
-            ->select('im.ireq_no as ca_idd','im.ireq_requestor as req', 'vr.name as bu','cm.ca_pic_name',
+            ->select('im.ireq_no as ca_idd','im.ireq_requestor as req', 'vr.name as bu','cm.ca_pic_name','cm.ireqd_id','im.ireq_user',
                     DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
                     DB::raw("TO_CHAR(cm.ca_submit_date, 'dd Mon YYYY') as ca_submit_date"),
                     DB::raw("TO_CHAR(cm.ca_recv_cash_date, 'dd Mon YYYY') as ca_recv_cash_date"),

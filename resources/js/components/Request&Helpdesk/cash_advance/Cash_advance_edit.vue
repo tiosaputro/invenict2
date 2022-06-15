@@ -21,11 +21,33 @@
                   </div>
               </div>
               <div class="field grid col">
-                <label class="col-fixed w-9rem" style="width:160px">Requestor</label>
+                <label class="col-fixed w-9rem" style="width:160px">No. Detail</label>
                   <div class="col">
                     <InputText
                       type ="text"
+                      v-model="ca.ireqd_id"
+                      disabled
+                    />
+                  </div>
+              </div>
+              </div>
+              <div class="p-fluid formgrid grid">
+               <div class="field grid col">
+                <label class="col-fixed w-9rem" style="width:160px">Requestor</label>
+                  <div class="col">
+                    <InputText
+                      type="text"
                       v-model="ca.req"
+                      disabled
+                    />
+                  </div>
+              </div>
+              <div class="field grid col">
+                <label class="col-fixed w-9rem" style="width:160px">Pengguna</label>
+                  <div class="col">
+                    <InputText
+                      type ="text"
+                      v-model="ca.ireq_user"
                       disabled
                     />
                   </div>

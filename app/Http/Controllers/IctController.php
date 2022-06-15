@@ -1282,6 +1282,7 @@ class IctController extends Controller
     {
         $ict = Ict::select('ireq_no as name','ireq_id as code')
                 ->orderBy('ireq_no','ASC')
+                ->whereNotNull('ireq_status')
                 ->get();
             return response()->json($ict);
     }
@@ -1295,6 +1296,11 @@ class IctController extends Controller
         ->where('im.ireq_id',$noreq)
         ->where('id.ireqd_id',$dtl)
         ->first();
+            return response()->json($ict);
+    }
+    Public function getDetail($noreq)
+    {
+        $ict = IctDetail::select('ireqd_id as code')->where('ireq_id',$noreq)->get();
             return response()->json($ict);
     }
     Public function cetak_pdf_atasan_permohonan($usr_name)

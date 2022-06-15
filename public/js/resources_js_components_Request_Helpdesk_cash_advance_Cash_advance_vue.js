@@ -43,7 +43,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     formatDate: function formatDate(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH24");
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:24");
     },
     formatPrice: function formatPrice(value) {
       var formatter = new Intl.NumberFormat('id', {
@@ -116,10 +116,10 @@ __webpack_require__.r(__webpack_exports__);
     CetakExcel: function CetakExcel() {
       window.open('api/report-cash-excel');
     },
-    detailRequest: function detailRequest(ca_idd) {
+    detailRequest: function detailRequest(ireq_id) {
       var _this3 = this;
 
-      this.axios.get('api/detail-request/' + ca_idd, {
+      this.axios.get('api/detail-request/' + ireq_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -303,22 +303,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ca_idd",
+        field: "ireq_id",
         header: "No.Request",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
             onClick: function onClick($event) {
-              return $options.detailRequest(slotProps.data.ca_idd);
+              return $options.detailRequest(slotProps.data.ireq_id);
             },
             style: {
               "cursor": "pointer"
             }
-          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ca_idd), 9
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_no), 9
           /* TEXT, PROPS */
           , _hoisted_10)];
         }),
@@ -326,7 +326,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_id",
+        field: "ireqd_id",
+        header: "No.Detail",
+        sortable: true,
+        style: {
+          "min-width": "8rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_requestor",
         header: "Requestor",
         sortable: true,
         style: {
@@ -452,6 +459,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireqd_id",
+            header: "No. Detail",
+            sortable: true,
+            style: {
+              "min-width": "6rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "ireq_type",
             header: "Tipe Request",
             sortable: true,

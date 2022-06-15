@@ -19,13 +19,13 @@
                         optionLabel="name"
                         optionValue="code"
                         :showClear="true"
-                        @change="get(noreq)"
+                        @change="getDetail(noreq)"
                         placeholder="Pilih No. Request"
                         :class="{ 'p-invalid': errors.noreq }"
                         autofocus
                       />
-                      <small v-if="errors.noreq" class="p-error">
-                          {{ errors.noreq[0] }}
+                      <small v-if="errors.ireq_id" class="p-error">
+                          {{ errors.ireq_id[0] }}
                       </small>
                       <small v-if="error.noreq" class="p-error">
                           {{ error.noreq }}
@@ -33,17 +33,51 @@
                     </div>
                   </div>
                    <div class="field grid col" v-if="noreq">
-                    <label class="col-fixed w-9rem" style="width:160px">Requestor</label>
+                    <label class="col-fixed w-9rem" style="width:160px">No Detail</label>
                     <div class="col-fixed">
-                        <InputText
+                       <Dropdown
+                        v-model="ireqd_id"
+                        :options="detail"
+                        optionLabel="code"
+                        optionValue="code"
+                        :showClear="true"
+                        @change="get(noreq,ireqd_id)"
+                        placeholder="Pilih No. Detail"
+                        :class="{ 'p-invalid': errors.ireqd_id }"
+                        autofocus
+                      />
+                      <small v-if="errors.ireqd_id" class="p-error">
+                          {{ errors.ireqd_id[0] }}
+                      </small>
+                      <small v-if="error.ireqd_id" class="p-error">
+                          {{ error.ireqd_id }}
+                      </small> 
+                     </div>
+                    </div>
+                 </div>
+                 <div class="p-fluid formgrid grid" v-if="noreq && ireqd_id">
+                  <div class="field grid col">
+                   <label class="col-fixed w-9rem" style="width:160px">Requestor</label>
+                    <div class="col-fixed">
+                       <InputText
                             type ="text"
                             v-model="ca.req"
                             disabled
                         />
-                     </div>
+                  </div>
+                  </div>
+                  <div class="field grid col" v-if="noreq && ireqd_id">
+                  <label class="col-fixed w-9rem" style="width:160px">Pengguna</label>
+                    <div class="col-fixed">
+                        <InputText
+                            type ="text"
+                            v-model="ca.ireq_user"
+                            disabled
+                        />
+                      </div>
                     </div>
                  </div>
-                 <div class="p-fluid formgrid grid" v-if="noreq">
+                 <div class="p-fluid formgrid grid" v-if="noreq && ireqd_id">
                   <div class="field grid col">
                    <label class="col-fixed w-9rem" style="width:160px">Tgl. Request</label>
                     <div class="col-fixed">
@@ -54,7 +88,7 @@
                         />
                   </div>
                   </div>
-                  <div class="field grid col" v-if="noreq">
+                  <div class="field grid col" v-if="noreq && ireqd_id">
                   <label class="col-fixed w-9rem" style="width:160px">Bisnis Unit</label>
                     <div class="col-fixed">
                         <InputText
@@ -248,7 +282,9 @@ export default {
       error:[],
       req:[],
       ca:[],
+      detail:[],
       noreq:'',
+      ireqd_id:'',
       jum:null,
       tglsub: new Date(),
       tglclosing:'',
@@ -293,7 +329,11 @@ export default {
     },
     noreq:function(){
       this.error.noreq='';
-      this.errors.noreq='';
+      this.errors.ireq_id='';
+    },
+    ireqd_id:function(){
+      this.error.ireqd_id='';
+      this.errors.ireqd_id='';
     },
     jum:function(){
       this.error.jum='';
@@ -320,9 +360,21 @@ export default {
         this.$router.push('/login');
       }
     },
-    get(noreq){
-      if(this.noreq){
-      this.axios.get('api/getNameBu/'+noreq,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+    getDetail(noreq){
+    if(this.noreq){
+      this.axios.get('api/getDetail/'+noreq,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data;
+        this.ireqd_id = '';
+      });
+      if(this.errors.noreq || this.error.noreq){
+        this.errors.noreq == '';
+        this.error == [];
+      }
+     }
+    },
+    get(noreq,ireqd_id){
+      if(this.noreq &&this.ireqd_id){
+      this.axios.get('api/getNameBu/'+noreq+'/'+ireqd_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.ca = response.data;
       });
       if(this.errors.noreq || this.error.noreq){
@@ -348,17 +400,18 @@ export default {
     CreateCash() {
       this.errors=[];
       this.error = [];
-      if( this.noreq != null){
+      if( this.noreq != null ||
+      this.ireqd_id != null){
       
         const data = new FormData();
-        data.append("noreq", this.noreq);
+        data.append("ireq_id", this.noreq);
+        data.append("ireqd_id",this.ireqd_id)
         data.append("jum", this.jum);
         data.append("tglrecvunit", this.tglrecvunit);
         data.append("tglbuy", this.tglbuy);
         data.append("tglrecvcash", this.tglrecvcash);
         data.append("tglsub", this.tglsub);
         data.append("tgltouser", this.tgltouser);
-        data.append("tglclosing", this.tglclosing);
 
         this.axios.post('api/add-cash', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           setTimeout( () => this.$router.push('/cash-advance'),1000);
@@ -372,6 +425,7 @@ export default {
         });
       }else{
         this.error.noreq = "No Request Belum Diisi"
+        this.error.ireqd_id = "No Detail Belum Diisi"
       }
     }
   },

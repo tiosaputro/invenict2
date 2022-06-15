@@ -167,6 +167,28 @@ const routes = [
         path: '/Edit-cash-advance/:code',
         component: ()=> import('./components/Request&Helpdesk/cash_advance/Cash_advance_edit.vue'),
     },
+    //payment request
+    {
+        name: 'Payment Request',
+        path: '/payment-request',
+        component: ()=> import('./components/Request&Helpdesk/payment_request/Payment_request.vue'),
+    },
+    {
+        name: 'Add Payment Request',
+        path: '/Add-payment-request',
+        component: ()=> import('./components/Request&Helpdesk/payment_request/Payment_request_create.vue'),
+    },
+    {
+        name: 'add Payment Request',
+        path: '/add-payment-request/:code/:dtl',
+        component: ()=> import('./components/Request&Helpdesk/payment_request/Payment_request_create_from_request.vue'),
+    },
+    {
+        name: 'Edit Payment Request',
+        path: '/Edit-payment-request/:code',
+        component: ()=> import('./components/Request&Helpdesk/payment_request/Payment_request_edit.vue'),
+    },
+
     //ict request
     {
         name: 'Ict Request',

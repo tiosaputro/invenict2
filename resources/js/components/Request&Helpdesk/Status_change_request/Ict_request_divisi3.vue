@@ -214,6 +214,9 @@
                       <Button
                         class="p-button-raised p-button-success p-button-text mt-2"
                         label="PR"
+                        @click="$router.push({
+                            name: 'add Payment Request',
+                            params: { code: slotProps.data.ireq_id, dtl:slotProps.data.ireqd_id } })"
                       />
                     </template>
                   </Column>

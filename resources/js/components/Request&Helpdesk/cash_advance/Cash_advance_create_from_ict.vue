@@ -271,7 +271,6 @@ export default {
       }
     },
     get(){
-      
       this.axios.get('/api/getNameBu/'+this.$route.params.code+'/'+this.$route.params.dtl,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.ca = response.data;
       }).catch(error=>{
@@ -304,7 +303,7 @@ export default {
       
         const data = new FormData();
         data.append("ireq_id", this.ca.ireq_id);
-        data.append("nodtl",this.ca.ireqd_id)
+        data.append("ireqd_id",this.ca.ireqd_id)
         data.append("jum", this.jum);
         data.append("tglrecvunit", this.tglrecvunit);
         data.append("tglbuy", this.tglbuy);
@@ -326,9 +325,3 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
-.pegawai-image {
-  width: 100px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
-</style>

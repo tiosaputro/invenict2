@@ -105,6 +105,13 @@ Route::middleware('auth:sanctum')->group(function(){
     //Route::get('/report-cash-pdf','CashController@cetak_pdf');
     //Route::get('/report-cash-excel','CashController@cetak_excel');
 
+    //payment request
+    Route::get('/payment-request','PaymentController@index');
+    Route::post('/add-payment-request','PaymentController@save');
+    Route::get('/edit-payment-request/{code}','PaymentController@edit');
+    Route::put('/update-payment-request/{code}','PaymentController@update');
+    Route::delete('/delete-payment-request/{pr_id}','PaymentController@delete');
+
     //mng_user
     Route::get('/get-user','MngUserController@index');
     Route::post('/add-user','MngUserController@save');
@@ -204,6 +211,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/update-ict/{code}','IctController@update');
     Route::delete('/delete-ict/{ireq_id}','IctController@delete');
     Route::get('/getNoreq','IctController@getNoreq');
+    Route::get('/getDetail/{noreq}','IctController@getDetail');
     Route::get('/getNameBu/{noreq}/{dtl}','IctController@getNameBu');
     //divisi 1
     Route::get('/get-permohonan/{usr_name}','IctController@getPermohonan');
