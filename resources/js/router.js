@@ -70,21 +70,37 @@ const routes = [
         path: '/Edit-referensi-lookups/:code/:type',
         component: ()=> import('./components/Admin/referensi_lookups/Referensi_lookups_edit.vue'),
     },
-    //lookup_helpdesk
+    //lookup_brand
     {
-        name: 'Referensi Lookupss',
-        path: '/referensi-lookupss',
-        component: () => import('./components/Admin/referensi_lookups_helpdesk/Referensi_lookups_helpdesk.vue'),
+        name: 'Referensi Brand',
+        path: '/referensi-brand',
+        component: () => import('./components/Admin/referensi_lookups_brand/Referensi_lookups_brand.vue'),
     },
     {
-        name: 'Create Referensi Lookupss',
-        path: '/Add-referensi-lookupss',
-        component: () => import('./components/Admin/referensi_lookups_helpdesk/Referensi_lookups_helpdesk_create.vue'),
+        name: 'Create Referensi Brand',
+        path: '/Add-referensi-brand',
+        component: () => import('./components/Admin/referensi_lookups_brand/Referensi_lookups_brand_create.vue'),
     },
     {
-        name: 'Edit Referensi Lookupss',
-        path: '/Edit-referensi-lookupss/:code/:type',
-        component: ()=> import('./components/Admin/referensi_lookups_helpdesk/Referensi_lookups_helpdesk_edit.vue'),
+        name: 'Edit Referensi Brand',
+        path: '/Edit-referensi-brand/:code/:type',
+        component: ()=> import('./components/Admin/referensi_lookups_brand/Referensi_lookups_brand_edit.vue'),
+    },
+    //lookup_kategori
+    {
+        name: 'Referensi Kategori',
+        path: '/referensi-kategori',
+        component: () => import('./components/Admin/referensi_lookups_kategori/Referensi_lookups_kategori.vue'),
+    },
+    {
+        name: 'Create Referensi Kategori',
+        path: '/Add-referensi-kategori',
+        component: () => import('./components/Admin/referensi_lookups_kategori/Referensi_lookups_kategori_create.vue'),
+    },
+    {
+        name: 'Edit Referensi Kategori',
+        path: '/Edit-referensi-kategori/:code/:type',
+        component: ()=> import('./components/Admin/referensi_lookups_kategori/Referensi_lookups_kategori_edit.vue'),
     },
     //supplier
     {

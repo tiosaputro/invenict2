@@ -201,7 +201,7 @@ class LaporanController extends Controller
             im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
             Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
             ->get();
-            return json_encode($ict);
+            return response()->json($ict);
             }
             else {
                 $ict = DB::table('ireq_mst as im')
@@ -221,7 +221,7 @@ class LaporanController extends Controller
                 im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
                 Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
                 ->get();
-                return json_encode($ict);
+                return response()->json($ict);
             }
         }
         else{
@@ -241,7 +241,7 @@ class LaporanController extends Controller
             im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
             Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
             ->get();
-            return json_encode($ict);
+            return response()->json($ict);
         }
     }
     function cetakPdf($start,$end,$status){

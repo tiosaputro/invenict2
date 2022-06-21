@@ -32,12 +32,12 @@ class MngRoleMenuController extends Controller
                 'program_name'=>'MngRoleMenuController_SAVE'
             ]);
       }
-      return json_encode('SUCCESS');
+      return response()->json('SUCCESS');
     }
     function edit($code)
     {
         $role = Mng_role_menu::select('menu_id as code')->where('rol_id',$code)->pluck('code');
-        return json_encode($role);
+        return response()->json($role);
     }
     function update(Request $request,$code)
     {
@@ -58,13 +58,13 @@ class MngRoleMenuController extends Controller
                 'program_name'=>'MngRoleMenuController_UPDATE'
             ]);
         }
-        return json_encode($menu);
+        return response()->json($menu);
     }
     function cekUser($id)
     {
         $role = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
         $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
         $aksesmenu = DB::table('mng_menus')->select('menu_display as name','controller as to')->whereIn('menu_id',$menu)->get();
-        return json_encode($aksesmenu);
+        return response()->json($aksesmenu);
     }
 }

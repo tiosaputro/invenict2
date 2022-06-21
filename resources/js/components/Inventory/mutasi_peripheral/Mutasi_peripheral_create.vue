@@ -1,5 +1,6 @@
 <template>
   <div>
+        <ConfirmDialog> </ConfirmDialog>
         <Toast />
         <div class="card">
           <Toolbar class="mb-4">
@@ -215,14 +216,22 @@ export default {
         });
     },
     CreateMutasi() {
-      this.submitted=true;
-      if (
+      this.$confirm.require({
+        message: "Apakah anda sudah yakin?",
+        header: "Confirmation",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button-danger",
+        acceptLabel: "Ya",
+        rejectLabel: "Tidak",
+        accept: () => {
+        this.submitted=true;
+          if (
         this.kode != null &&
         this.fromdate != null &&
         this.ket != null &&
         this.user != null &&
         this.lokasi != null 
-      ) {
+        ) {
         const data = new FormData();
         data.append("kode", this.kode);
         data.append("fromdate", this.fromdate);
@@ -242,6 +251,9 @@ export default {
             this.submitted = false;
       });
       }
+        },
+        reject: () => {},
+      });
     }
   },
 };

@@ -87,29 +87,40 @@ __webpack_require__.r(__webpack_exports__);
     UpdateMutasi: function UpdateMutasi() {
       var _this3 = this;
 
-      this.submitted = true;
-      this.errors = [];
+      this.$confirm.require({
+        message: "Apakah anda sudah yakin?",
+        header: "Update Confirmation",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button-danger",
+        acceptLabel: "Ya",
+        rejectLabel: "Tidak",
+        accept: function accept() {
+          _this3.submitted = true;
+          _this3.errors = [];
 
-      if (this.mutasi.imutasi_tgl_dari != '' && this.mutasi.imutasi_lokasi != '' && this.mutasi.imutasi_pengguna != '' && this.mutasi.imutasi_keterangan != '') {
-        this.axios.put('/api/update-mut/' + this.$route.params.code, this.mutasi, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
+          if (_this3.mutasi.imutasi_tgl_dari != '' && _this3.mutasi.imutasi_lokasi != '' && _this3.mutasi.imutasi_pengguna != '' && _this3.mutasi.imutasi_keterangan != '') {
+            _this3.axios.put('/api/update-mut/' + _this3.$route.params.code, _this3.mutasi, {
+              headers: {
+                'Authorization': 'Bearer ' + _this3.token
+              }
+            }).then(function () {
+              setTimeout(function () {
+                return _this3.$router.push('/mutasi-peripheral');
+              }, 1000);
+
+              _this3.$toast.add({
+                severity: "success",
+                summary: "Success Message",
+                detail: "Success Update"
+              });
+            })["catch"](function (error) {
+              _this3.errors = error.response.data.errors;
+              _this3.submitted = false;
+            });
           }
-        }).then(function () {
-          setTimeout(function () {
-            return _this3.$router.push('/mutasi-peripheral');
-          }, 1000);
-
-          _this3.$toast.add({
-            severity: "success",
-            summary: "Success Message",
-            detail: "Success Update"
-          });
-        })["catch"](function (error) {
-          _this3.errors = error.response.data.errors;
-          _this3.submitted = false;
-        });
-      }
+        },
+        reject: function reject() {}
+      });
     }
   }
 });
@@ -276,6 +287,8 @@ var _hoisted_33 = ["src"];
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
+
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
@@ -288,7 +301,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

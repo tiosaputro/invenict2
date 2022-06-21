@@ -25,14 +25,14 @@ class MngMenuController extends Controller
             ->orderBy('mm.menu_id','ASC')
             ->get();
         // $menu = Mng_menu::All();
-         return json_encode($menu);
+         return response()->json($menu);
     }
     Public function getParent()
     {
         $module = Mng_menu::select('menu_id as code','menu_name as name')
         ->where('menu_type','N')
         ->get();
-        return json_encode($module);
+        return response()->json($module);
     }
     Public function getMenu()
     {
@@ -41,7 +41,7 @@ class MngMenuController extends Controller
         ->Select('m.menu_id as code', DB::raw("(mm.menu_name ||'-'|| m.menu_name) as name"))
         ->orderBy('mm.menu_name')
         ->get();
-        return json_encode($menu);
+        return response()->json($menu);
     }
     Public function save(Request $request)
     {
@@ -80,12 +80,12 @@ class MngMenuController extends Controller
             'success' => true,
             'message' => 'Created Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     Public function edit($code)
     {
         $module = Mng_menu::find($code);
-        return json_encode($module);
+        return response()->json($module);
     }
     Public function update(Request $request, $code)
     {
@@ -124,7 +124,7 @@ class MngMenuController extends Controller
             'success' => true,
             'message' => 'Updated Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     Public function delete($menu_id)
     {
@@ -134,7 +134,7 @@ class MngMenuController extends Controller
             'success' => true,
             'message' => 'Deleted Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
 
     }
 }

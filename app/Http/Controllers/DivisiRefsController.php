@@ -17,16 +17,16 @@ class DivisiRefsController extends Controller
     public function index()
     {
         $divisi = Divisi_refs::select('div_id','div_code','div_name','div_verificator')->orderBy('div_name','ASC')->get();
-        return json_encode($divisi);
+        return response()->json($divisi);
     }
     public function getDivisi(){
         $divisi = DB::table('divisi_refs')->select('div_id as code',DB::raw("(div_code ||'-'|| div_name) as name"))->orderBy('div_name','ASC')->get();
-        return json_encode($divisi);
+        return response()->json($divisi);
     }
     public function edit($code)
     {
         $divisi = Divisi_refs::select('div_id','div_code','div_name','div_verificator')->where('div_id',$code)->first();
-        return json_encode($divisi);
+        return response()->json($divisi);
     }
     public function update(Request $request,$code)
     {
@@ -51,12 +51,12 @@ class DivisiRefsController extends Controller
         $div->last_update_date = $newUpdate;
         $div->program_name = "DivisiRefs_Update";
         $div->save();
-        return json_encode('Updated Successfully');
+        return response()->json('Updated Successfully');
     }
     public function delete($div_id)
     {
         $divisi = Divisi_refs::find($div_id);
         $divisi->delete();
-        return json_encode('Deleted Successfully');
+        return response()->json('Deleted Successfully');
     }
 }

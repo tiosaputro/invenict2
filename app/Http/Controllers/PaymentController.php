@@ -125,7 +125,8 @@ class PaymentController extends Controller
             'success' => true,
             'message' => 'Created Successfully',
         ];
-        return json_encode([$msg],200);
+        $result = DB::connection('oracle')->getPdo()->exec("begin SP_PR_IREQ_MST($request->ireq_id); end;");
+        return response()->json($msg);
     }
 
     function edit($code)
@@ -148,7 +149,7 @@ class PaymentController extends Controller
             ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
             ->where('cm.pr_id',$code)
             ->first();
-            return json_encode($pr);
+            return response()->json($pr);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -223,12 +224,12 @@ class PaymentController extends Controller
             'success' => true,
             'message' => 'Updated Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     function delete($pr_id)
     {
         $pr = Payment_request::find($pr_id);
         $pr->delete();
-            return json_encode('Successfully deleted');
+            return response()->json('Successfully deleted');
     }
 }

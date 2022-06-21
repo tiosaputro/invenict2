@@ -44,20 +44,20 @@
           <template #loading>
             Loading Payment Request data. Please wait.
           </template>
-          <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
-          <Column field="pr_pic_name" header="Jumlah" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:6rem"/>
+          <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:6rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:10rem"/>
+          <Column field="pr_pic_name" header="Jumlah" :sortable="true" style="min-width:10rem">
             <template #body="slotProps">
               {{ formatPrice(slotProps.data.pr_pic_name) }}
             </template>
           </Column>
-          <Column field="ca_submit_date" header="Tgl. Submit" :sortable="true" style="min-width:12rem">
+          <Column field="ca_submit_date" header="Tgl. Submit" :sortable="true" style="min-width:10rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.pr_submit_date) }}
             </template>
           </Column>
-          <Column headerStyle="min-width:10rem;">
+          <Column headerStyle="min-width:8rem;">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-info mr-2"

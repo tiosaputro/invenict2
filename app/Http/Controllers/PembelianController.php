@@ -31,7 +31,7 @@ class PembelianController extends Controller
             ->leftjoin('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
             ->orderBy('pm.creation_date','ASC')
             ->get();
-            return json_encode($pembelian);
+            return response()->json($pembelian);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -58,7 +58,7 @@ class PembelianController extends Controller
             'success' => true,
             'message' => 'Created Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     Public function edit($code)
     {
@@ -90,7 +90,7 @@ class PembelianController extends Controller
             $supp = Supplier::Select('suplier_code as code',DB::raw("(suplier_code ||'-'|| suplier_name) as name"))
             ->orderBy('suplier_code','ASC')
             ->get();
-            return json_encode(['pem'=>$pem,'uang'=>$uang,'metode'=>$metode,'supp'=>$supp],200);
+            return response()->json(['pem'=>$pem,'uang'=>$uang,'metode'=>$metode,'supp'=>$supp],200);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -120,14 +120,14 @@ class PembelianController extends Controller
             'message' => 'Updated Successfully'
         ];
  
-        return json_encode($msg);
+        return response()->json($msg);
     }
 
     Public function delete($purchase_id)
     {
         $pem = Pembelian::find($purchase_id);
         $pem->delete();
-            return json_encode('Successfully deleted');
+            return response()->json('Successfully deleted');
     }
     public function cetak_pdf()
     {

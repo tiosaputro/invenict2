@@ -21,7 +21,7 @@ class ModuleController extends Controller
         ->where('mod_stat','T')
         ->orderBy('mod_name', 'ASC')
         ->get();
-        return json_encode($module);
+        return response()->json($module);
     }
     Public function save(Request $request)
     {
@@ -50,7 +50,7 @@ class ModuleController extends Controller
     public function edit($code)
     {
         $module = Mng_modules::select('mod_id','mod_name','mod_desc','mod_stat')->where('mod_id',$code)->first();
-        return json_encode($module);
+        return response()->json($module);
     }
     public function update(Request $request,$code)
     {
@@ -74,12 +74,12 @@ class ModuleController extends Controller
         $mod->last_updated_by = Auth::user()->usr_name;
         $mod->last_update_date = $newUpdate;
         $mod->save();
-        return json_encode('Successfully Updated');
+        return response()->json('Successfully Updated');
     }
     Public function delete($mod_id)
     {
         $module = Mng_modules::find($mod_id);
         $module->delete();
-        return json_encode('Successfully deleted');
+        return response()->json('Successfully deleted');
     }
 }

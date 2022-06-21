@@ -197,6 +197,9 @@ tr:nth-child(even) {
 }
 
 @media print {
+    #printInvoice {
+        display: none;
+    }
     .invoice {
         font-size: 12px!important;
         overflow: hidden!important
@@ -240,6 +243,7 @@ tr:nth-child(even) {
 
 .invoice .company-details {
     text-align: right
+    
 }
 
 .invoice .company-details .name {
@@ -249,13 +253,17 @@ tr:nth-child(even) {
 
 .invoice .contacts {
     margin-bottom: 20px
+    border: solid #000 !important;
+
 }
 
 .invoice .invoice-to {
+    border: solid #000 !important;
     text-align: left
 }
 
 .invoice .invoice-to .to {
+    border: solid #000 !important;
     margin-top: 0;
     margin-bottom: 0
 }
@@ -288,7 +296,7 @@ tr:nth-child(even) {
     font-size: 1.2em
 }
 
-/* .invoice table {
+.invoice table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
@@ -360,57 +368,15 @@ tr:nth-child(even) {
 
 .invoice table tfoot tr td:first-child {
     border: none
-} */
-
-.invoice footer {
-    width: 100%;
-    text-align: center;
-    color: #777;
-    border-top: 1px solid #aaa;
-    padding: 8px 0
 }
-* {
-  box-sizing: border-box;
-}
-
-.row {
-  margin-left:-5px;
-  margin-right:-5px;
-}
-  
 .column {
   float: left;
   width: 50%;
   padding: 5px;
-}
-
-/* Clearfix (clear floats) */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-  border: 1px solid #ddd;
-  border:solid 1px;
-
-}
-th, td {
-  text-align: left;
-  padding: 16px;
-  border: 1px solid #ddd;
-  text-align: center;
   border:solid 1px;
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-  border:solid 1px;
-}
+
 }
 </style>
 
@@ -427,7 +393,7 @@ tr:nth-child(even) {
                 <div class="row">
                     <div class="col">
                         <a>
-                            <img src="{{asset('assets/layout/images/logo_emp_new.png')}}" width="200" data-holder-rendered="true" />
+                          <img src="{{asset('assets/layout/images/logo_emp_new.png')}}" width="200" data-holder-rendered="true" />
                         </a>
                     </div>
                     <div class="col company-details">
@@ -449,9 +415,9 @@ tr:nth-child(even) {
                     <div class="col invoice-to">
                         <div class="address" style="font-weight:bold">I. Description Of Request/Problem Experienced</div>
                             <textarea rows="8" cols="100" style="resize: none; border:solid 1px;" disabled> 
-                            @foreach($detail as $d)
-                               {{ $d->ireq_remark }}
-                            @endforeach
+                            @php $no = 1 @endphp 
+                            @foreach($detail as $d) 
+                           {{ $no++ }}. {{ $d->ireq_remark }}@endforeach
                             </textarea>
                         </div>
                         <div class="col invoice-to">
@@ -500,11 +466,11 @@ tr:nth-child(even) {
                   <br> 
                     <table> <p> Approved By :   (Note : Sr. Manager approval needed for new equipment/software/tools)</p>
                       <tr> 
-                        <th style="border:solid 1px;">tes</th>
-                        <th style="border:solid 1px;">tes</th>
-                        <th style="border:solid 1px;">tes</th>
-                        <th style="border:solid 1px;">tes</th>
-                        <th style="border:solid 1px;">tes</th>
+                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;"></th>
                       </tr>
                       <tr>
                         <td style="border:solid 1px;">Name</td>
@@ -520,14 +486,14 @@ tr:nth-child(even) {
                   <br> 
                     <table>
                       <tr> 
-                        <th style="border:solid 1px;">tes</th>
-                        <th style="border:solid 1px;">tes</th>
+                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;"></th>
                         <th style="border:solid 1px;">{{$detail[0]->date_assigned}}</th>
-                        <th style="border:solid 1px;">tes</th>
-                        <th style="border:solid 1px;">tes</th>
-                        <th style="border:solid 1px;">tes</th>
-                        <th style="border:solid 1px;">tes</th>
-                        <th style="border:solid 1px;">tes</th>
+                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;"></th>
                       </tr>
                       <tr>
                         <td style="border:solid 1px;">Received By</td>

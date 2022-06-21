@@ -40,7 +40,7 @@ class IctDetailController extends Controller
         ->orderBy('id.ireqd_id','ASC')
         ->get();
 
-            return json_encode($dtl);
+            return response()->json($dtl);
     }
     Public function detailPenugasan($code)
     {
@@ -57,7 +57,7 @@ class IctDetailController extends Controller
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('id.ireqd_id','ASC')
         ->get();
-            return json_encode($dtl);
+            return response()->json($dtl);
     }
     Public function getDetailDone($code,$usr_fullname)
     {
@@ -71,7 +71,7 @@ class IctDetailController extends Controller
         ->where('id.ireq_assigned_to1',$usr_fullname)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->get();
-            return json_encode($dtl);
+            return response()->json($dtl);
     }
     function abp($ireq_id, $usr_fullname){
         $dtl = DB::table('ireq_dtl')
@@ -85,7 +85,7 @@ class IctDetailController extends Controller
         ]);
 
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
-        return json_encode('Updated Successfully');
+        return response()->json('Updated Successfully');
     }
     function rbp(Request $request,$ireq_id, $usr_fullname){
         $dtl = DB::table('ireq_dtl')
@@ -99,7 +99,7 @@ class IctDetailController extends Controller
             'program_name' => "IctDetailController_rbp"
         ]);
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST($ireq_id); end;");
-        return json_encode('Updated Successfully');
+        return response()->json('Updated Successfully');
         
     }
     Public function getNo_req($code)
@@ -142,7 +142,7 @@ class IctDetailController extends Controller
                 'created_by' => Auth::user()->usr_name,
                 'program_name'=>"IctDetail_Save"
             ]);
-            return json_encode([
+            return response()->json([
                 'success' => true,
                 'message' => 'Created Successfully '
             ]);
@@ -163,7 +163,7 @@ class IctDetailController extends Controller
                 'created_by' => Auth::user()->usr_name,
                 'program_name'=>"IctDetail_Save"
             ]);
-            return json_encode([
+            return response()->json([
                 'success' => true,
                 'message' => 'Created Successfully '
             ]);
@@ -180,7 +180,7 @@ class IctDetailController extends Controller
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->first();
-            return json_encode($ict);
+            return response()->json($ict);
     }
     Public function update(Request $request,$ireq,$code)
     {
@@ -216,7 +216,7 @@ class IctDetailController extends Controller
             'success' => true,
             'message' => 'Updated Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     else{
         $message = [
@@ -246,7 +246,7 @@ class IctDetailController extends Controller
             'success' => true,
             'message' => $dtl
         ];
-        return json_encode($msg);
+        return response()->json($msg);
       }
     }
     Public function delete($ireqd_id,$code)
@@ -255,7 +255,7 @@ class IctDetailController extends Controller
         ->where('id.ireqd_id',$ireqd_id)
         ->where('id.ireq_id',$code)
         ->delete();
-          return json_encode('Deleted Successfully');
+          return response()->json('Deleted Successfully');
     }
     public function cetak_pdf($code)
     {
@@ -400,7 +400,7 @@ class IctDetailController extends Controller
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->get();
-            return json_encode($dtl);
+            return response()->json($dtl);
     }
     public function getDetail($ireqd_id,$ireq_id){
         $dtl = DB::table('ireq_dtl as id')
@@ -410,7 +410,7 @@ class IctDetailController extends Controller
         ->where('id.ireqd_id',$ireqd_id)
         ->where('id.ireq_id',$ireq_id)
         ->first();
-            return json_encode($dtl);
+            return response()->json($dtl);
     }
     public function updateAssign(Request $request,$code)
     {
@@ -422,7 +422,7 @@ class IctDetailController extends Controller
             'last_update_date' =>$this->newUpdate,
             'last_updated_by'=>Auth::user()->usr_name
         ]);
-        return json_encode('Updated Successfully');
+        return response()->json('Updated Successfully');
     }
     public function updateAssignFromReject(Request $request,$code)
     {
@@ -435,7 +435,7 @@ class IctDetailController extends Controller
             'last_updated_by' => Auth::user()->usr_name
         ]);
         
-        return json_encode('Updated Successfully');
+        return response()->json('Updated Successfully');
     }
     public function updateStatusDone(Request $request,$code){
         
@@ -449,7 +449,7 @@ class IctDetailController extends Controller
         ]);
         
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
-        return json_encode('Updated Successfully');
+        return response()->json('Updated Successfully');
     }
     public function updateNote(Request $request,$code){
         
@@ -462,7 +462,7 @@ class IctDetailController extends Controller
             'last_updated_by' => Auth::user()->usr_name
         ]);
 
-        return json_encode(['message'=>'Updated Successfully'],200);
+        return response()->json(['message'=>'Updated Successfully'],200);
     }
     public function updateStatusClosingDetail($ireqd_id,$ireq_id){
         
@@ -476,7 +476,7 @@ class IctDetailController extends Controller
             'program_name' => "IctDetail_updateStatusClosingDetail"
         ]);
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_CLOSING_IREQ_MST($ireq_id); end;");
-        return json_encode('Updated Successfully');
+        return response()->json('Updated Successfully');
     }
     public function appd($ireqd_id,$code){
         $dtl = DB::table('ireq_dtl')
@@ -491,7 +491,7 @@ class IctDetailController extends Controller
         ]);
         
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($code); end;");
-        return json_encode('Updated Successfully');
+        return response()->json('Updated Successfully');
     }
     function submitRating(Request $request){
         if($request->rating <= '2'){

@@ -357,7 +357,7 @@ class IctController extends Controller
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctController_rejectReviewer",
         ]);
-        return json_encode('Success Update Status');
+        return response()->json('Success Update Status');
     }
     function needApprovalAtasan($ireq_id)
     {
@@ -425,7 +425,7 @@ class IctController extends Controller
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctController_needApprovalManager",
         ]);
-        return json_encode('Success Update Status');
+        return response()->json('Success Update Status');
     }
     function asignPerRequestReviewer(Request $request)
     {
@@ -445,7 +445,7 @@ class IctController extends Controller
                 'last_update_date' => $this->newUpdate,
                 'program_name' => "IctController_asignPerRequestReviewer"
             ]);
-        return json_encode('Success Update');
+        return response()->json('Success Update');
         }
         else{
             $ict->ireq_assigned_to1 = $request->name;
@@ -463,7 +463,7 @@ class IctController extends Controller
                 'program_name'=>"IctController_asignPerRequestReviewer"
             ]);
             
-        return json_encode('Success Update');
+        return response()->json('Success Update');
         }
     }
     function submitAssignPerRequest($ireq_id)
@@ -1247,7 +1247,7 @@ class IctController extends Controller
             ->orderBy('lookup_desc','ASC')
             ->get();
     
-            return json_encode(['ref'=>$ref,'bisnis'=>$bisnis,'divisi'=>$divisi,'prio'=>$priority,'ict'=>$ict],200);
+            return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'divisi'=>$divisi,'prio'=>$priority,'ict'=>$ict],200);
     }
     Public function update(Request $request, $code)
     {
@@ -2176,7 +2176,7 @@ class IctController extends Controller
          Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
         ->get();
         
-        return json_encode($ict);
+        return response()->json($ict);
     }
     function getDataIctByStatus($statuss){
         $ict = DB::table('ireq_mst as im')
@@ -2195,6 +2195,6 @@ class IctController extends Controller
          im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
          Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
         ->get();
-        return json_encode($ict);
+        return response()->json($ict);
     }
 }

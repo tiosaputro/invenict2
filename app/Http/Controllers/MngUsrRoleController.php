@@ -65,7 +65,7 @@ class MngUsrRoleController extends Controller
     public function edit($code)
     {
         $role = Mng_usr_roles::select('rol_id')->where('usr_id',$code)->pluck('rol_id');
-        return json_encode($role);
+        return response()->json($role);
     }
     public function update(Request $request, $code)
     {
@@ -91,6 +91,6 @@ class MngUsrRoleController extends Controller
     {
         $getRole = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
         $cek = Mng_roles::select('rol_id','rol_name')->whereIn('rol_id',$getRole)->get();
-        return json_encode($cek);
+        return response()->json($cek);
     }
 }

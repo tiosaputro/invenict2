@@ -35,7 +35,7 @@ class MasterController extends Controller
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
             ->orderBy('im.invent_code','ASC')
             ->get();
-            return json_encode($mas);
+            return response()->json($mas);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -46,7 +46,7 @@ class MasterController extends Controller
         $message = [
             // 'code.unique' => 'Kode Sudah Ada',
             'code.required'=> 'Kode Belum Diisi',
-            'nama.required' => 'Nama Belum Diisi',
+            'nama.required' => 'Nama Peripheral Belum Diisi',
             'merk.required' => 'Merk Belum Diisi',
             'type.required' => 'Tipe Belum Diisi',
             'sn.required' => 'S/N Belum Diisi',
@@ -115,7 +115,7 @@ class MasterController extends Controller
             'success' => true,
             'message' => 'Created Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     public function edit($code)
     {
@@ -139,7 +139,7 @@ class MasterController extends Controller
             ->where('im.invent_code',$code)
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
             ->first();
-            return json_encode(['kondisi'=>$kondisi,'bisnis'=>$bisnis,'mas'=>$mas],200);
+            return response()->json(['kondisi'=>$kondisi,'bisnis'=>$bisnis,'mas'=>$mas],200);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -160,7 +160,7 @@ class MasterController extends Controller
         ->where('lr.lookup_type','Merk')
         ->where('llr.lookup_type','Kondisi')
         ->first();
-        return json_encode($mas);
+        return response()->json($mas);
     }
     public function update(Request $request, $code)
     {
@@ -204,7 +204,7 @@ class MasterController extends Controller
             'message' => 'Updated Successfully'
         ];
  
-        return json_encode($msg);
+        return response()->json($msg);
     }
     public function delete($invent_code)
     {
@@ -213,7 +213,7 @@ class MasterController extends Controller
             unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
         }
         $mas->delete();
-            return json_encode('Successfully deleted');
+            return response()->json('Successfully deleted');
     }
     public function cetak_pdf()
     {
@@ -245,7 +245,7 @@ class MasterController extends Controller
     public function getKode()
     {
         $mas = Master::Select('invent_code as code',DB::raw("(invent_code ||'-'|| invent_desc) as name"))->orderBy('invent_desc','ASC')->get();
-        return json_encode($mas);
+        return response()->json($mas);
     }
     public function getKodeIct($code)
     {
@@ -257,12 +257,12 @@ class MasterController extends Controller
             ->join('ireq.dtl.invent_code','=','im.invent_code')
             ->whereRaw('ireq_dtl.ireq_id',$code);
         })->get();
-        return json_encode($mas);
+        return response()->json($mas);
     }
     public function getImage($kode)
     {
         $mas = Master::select('invent_photo as photo')->where('invent_code',$kode)->first();
-        return json_encode($mas);
+        return response()->json($mas);
     }
     public function getBarcode($invent_code)
     {
@@ -275,6 +275,6 @@ class MasterController extends Controller
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])     
             ->where('im.invent_code',$invent_code)    
             ->first();
-            return json_encode($mas);
+            return response()->json($mas);
     }
 }

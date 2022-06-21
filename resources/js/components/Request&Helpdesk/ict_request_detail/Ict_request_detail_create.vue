@@ -52,6 +52,7 @@
                         placeholder="Pilih Nama Peripheral "
                         @change="getImage()"
                         :showClear="true"
+                        :filter="true"
                         :class="{ 'p-invalid': error.kode }"
                      />
                      <small v-if="errors.invent_code" class="p-error">

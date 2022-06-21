@@ -26,7 +26,7 @@ class CashController extends Controller
         $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
         if($aksesmenu->contains($this->to)){
             $cash = DB::table('v_cash_advance')->get();
-            return json_encode($cash);
+            return response()->json($cash);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -146,7 +146,8 @@ class CashController extends Controller
             'success' => true,
             'message' => 'Created Successfully'
         ];
-        return json_encode($msg);
+        $result = DB::connection('oracle')->getPdo()->exec("begin SP_CA_IREQ_MST($request->ireq_id); end;");
+        return response()->json($msg);
     }
     function edit($code)
     {
@@ -168,7 +169,7 @@ class CashController extends Controller
             ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
             ->where('cm.ca_id',$code)
             ->first();
-            return json_encode($cash);
+            return response()->json($cash);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -243,13 +244,13 @@ class CashController extends Controller
             'success' => true,
             'message' => 'Updated Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     function delete($ca_id)
     {
         $cash = Cash::find($ca_id);
         $cash->delete();
-            return json_encode('Successfully deleted');
+            return response()->json('Successfully deleted');
     }
     function cetak_pdf()
     {

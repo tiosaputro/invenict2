@@ -30,7 +30,7 @@ class MutasiController extends Controller
             ->leftjoin('invent_mst','im.invent_code','invent_mst.invent_code')
             ->orderBy('im.creation_date','ASC')
             ->get();
-            return json_encode($mutasi);
+            return response()->json($mutasi);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -70,7 +70,7 @@ class MutasiController extends Controller
             'success' => true,
             'message' => 'Created Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     Public function edit($code)
     {
@@ -87,7 +87,7 @@ class MutasiController extends Controller
                 ->join('invent_mst as imm','im.invent_code','imm.invent_code')
                 ->Where('im.imutasi_id',$code)
                 ->first();
-                return json_encode($mut);
+                return response()->json($mut);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -127,13 +127,13 @@ class MutasiController extends Controller
                 'success' => true,
                 'message' => 'Updated Successfully'
             ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     Public function delete($imutasi_id)
     {
         $mut = Mutasi::find($imutasi_id);
         $mut->delete();
-        return json_encode('Successfully deleted');
+        return response()->json('Successfully deleted');
     }
     public function cetak_excel()
     {

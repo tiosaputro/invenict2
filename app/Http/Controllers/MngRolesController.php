@@ -21,12 +21,12 @@ class MngRolesController extends Controller
          DB::raw("CASE WHEN mr.rol_stat = 'T' Then 'Aktif' WHEN mr.rol_stat = 'F' Then 'Tidak Aktif' end as rol_stat"))
        ->orderBy('mr.rol_name','ASC')
        ->get();
-       return json_encode($roles);
+       return response()->json($roles);
     }
     function getRole()
     {
         $roles =  Mng_roles::select('rol_id as code','rol_name as name')->where('rol_stat','T')->orderBy('rol_id','ASC')->get();
-        return json_encode($roles);
+        return response()->json($roles);
     }
     function save(Request $request)
     {
@@ -55,7 +55,7 @@ class MngRolesController extends Controller
             $role = Mng_roles::select('rol_id','rol_name','rol_desc','rol_stat')
                 ->where('rol_id',$code)
                 ->first();
-            return json_encode($role);
+            return response()->json($role);
         }
     function update(Request $request, $code)
     {
@@ -84,7 +84,7 @@ class MngRolesController extends Controller
             'message' => 'Updated Successfully'
         ];
  
-        return json_encode($msg);
+        return response()->json($msg);
     }
     function delete($rol_id)
     {
@@ -94,6 +94,6 @@ class MngRolesController extends Controller
             'success' => true,
             'message' => 'Successfully deleted'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
 }

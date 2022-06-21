@@ -20,19 +20,19 @@
                   </div>
                   </div>
                     <div class="field grid">
-                      <label style="width:155px">Merk</label>
-                    <div class="col-4">
-                      <Dropdown
-                        v-model="merk"
-                        :options="merks"
-                        optionLabel="name"
-                        optionValue="code"
-                        :showClear="true"
-                        :filter="true"
-                        placeholder="Pilih Merk"
-                        autofocus
-                        :class="{ 'p-invalid': errors.merk }"
-                      />
+                     <label style="width:155px">Merk</label>
+                      <div class="col-4">
+                        <Dropdown
+                          v-model="merk"
+                          :options="merks"
+                          optionLabel="name"
+                          optionValue="code"
+                          :showClear="true"
+                          :filter="true"
+                          placeholder="Pilih Merk"
+                          autofocus
+                          :class="{ 'p-invalid': errors.merk }"
+                        />
                       <small v-if="errors.merk" class="p-error">
                           {{ errors.merk[0] }}
                       </small>
@@ -208,19 +208,25 @@
            </div>
            <div class="col-sm-6">
             <div class="field grid">
-              <label style="width:155px">Nama</label>
-                <div class="col-12 md:col-4">
-                  <InputText
-                    type ="text"
+              <label style="width:155px">Nama Peripheral</label>
+                <div class="col-4">
+                  <Dropdown
                     v-model="nama"
-                    style="text-transform:capitalize;"
-                    placeholder="Masukan Nama"
-                    :class="{ 'p-invalid': errors.nama }"
+                    :options="kategori"
+                    optionLabel="name"
+                    optionValue="code"
+                    :showClear="true"
+                    :filter="true"
+                    placeholder="Pilih Peripheral"
                     autofocus
+                    :class="{ 'p-invalid': errors.nama }"
                   />
                   <small v-if="errors.nama" class="p-error">
                     {{ errors.nama[0] }}
                   </small>
+                    <small v-if="error.nama" class="p-error">
+                      {{ error.nama }}
+                    </small>
                 </div>
             </div> 
             <div class="field grid">
@@ -287,6 +293,7 @@ export default {
       merks: [],
       kondi:[],
       bisnis:[],
+      kategori:[],
       nama:'',
       tgl:'',
       sn:'',
@@ -335,6 +342,7 @@ export default {
             this.merks = response.data.merk;
             this.bisnis = response.data.bisnis;
             this.kondi = response.data.kondisi;
+            this.kategori = response.data.nama;
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -383,7 +391,8 @@ export default {
       this.error = [];
       if (
         this.bu != null &&
-        this.merk != null 
+        this.merk != null &&
+        this.nama != null
         // this.foto != null
       ) {
         if(this.image){
@@ -451,6 +460,9 @@ export default {
         }
         if(this.merk == null){
           this.error.merk = "Merk Belum Diisi"
+        }
+        if(this.nama == null){
+          this.error.nama = "Nama Peripheral Belum Diisi"
         }
         // if(this.foto == null){
         //   this.error.foto = "Foto Belum Diisi"

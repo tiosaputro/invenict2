@@ -307,7 +307,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "No.Request",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "6rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -330,21 +330,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "No.Detail",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "6rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_requestor",
         header: "Requestor",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "10rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ca_pic_name",
         header: "Jumlah",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "10rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -360,7 +360,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Tgl. Submit",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "10rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -372,7 +372,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        headerStyle: "min-width:10rem;"
+        headerStyle: "min-width:8rem;"
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {

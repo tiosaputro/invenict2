@@ -18,7 +18,7 @@ class SupplierController extends Controller
         $supp = Supplier::select('suplier_code','suplier_name','suplier_contact','suplier_fax')
         ->orderBy('creation_date','ASC')
         ->get();
-        return json_encode($supp);
+        return response()->json($supp);
     }
     public function save(Request $request)
     {
@@ -81,7 +81,7 @@ class SupplierController extends Controller
             'created_by' => Auth::user()->usr_name,
             'program_name' => "Supplier_Save",
         ]);
-        return json_encode([
+        return response()->json([
             'success' => true,
             'message' => $supp
         ]);
@@ -100,7 +100,7 @@ class SupplierController extends Controller
             }
             return $data;
         })->first();
-        return json_encode($supp);
+        return response()->json($supp);
     }
     public function show($suplier_code)
     {
@@ -116,7 +116,7 @@ class SupplierController extends Controller
             }
             return $data;
         })->first();
-        return json_encode($supp);
+        return response()->json($supp);
     }
 
     public function update(Request $request, $code)
@@ -180,13 +180,13 @@ class SupplierController extends Controller
             'success' => true,
             'message' => 'Updated Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     public function delete($suplier_code)
     {
         $supp = Supplier::find($suplier_code);
         $supp->delete();
-        return json_encode('Successfully deleted');
+        return response()->json('Successfully deleted');
     }
     public function cetak_pdf()
     {
@@ -212,6 +212,6 @@ class SupplierController extends Controller
         $supp = Supplier::Select('suplier_code as code',DB::raw("(suplier_code ||'-'|| suplier_name) as name"))
                 ->orderBy('suplier_code','ASC')
                 ->get();    
-        return json_encode($supp);
+        return response()->json($supp);
     }
 }

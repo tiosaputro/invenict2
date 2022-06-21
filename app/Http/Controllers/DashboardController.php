@@ -119,7 +119,7 @@ class DashboardController extends Controller
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'C') as sudahselesai"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IS NOT NULL) as totalrequest"))
         ->first();
-        return json_encode($grafik);
+        return response()->json($grafik);
     }
     function countAdmin()
     {
@@ -280,6 +280,6 @@ class DashboardController extends Controller
     }
     function getStatus(){
         $status = DB::table('VREQ_MST_STATUS')->get();
-        return json_encode($status);
+        return response()->json($status);
     }
 }

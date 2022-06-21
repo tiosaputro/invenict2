@@ -1,5 +1,6 @@
 <template>
   <div>
+        <ConfirmDialog> </ConfirmDialog>
         <Toast />
         <div class="card">
           <Toolbar class="mb-4">
@@ -184,14 +185,22 @@ export default {
         });
     },
     UpdateMutasi() {
-      this.submitted=true;
-      this.errors = [];
-      if (
-        this.mutasi.imutasi_tgl_dari != '' &&
-        this.mutasi.imutasi_lokasi != '' &&
-        this.mutasi.imutasi_pengguna != '' &&
-        this.mutasi.imutasi_keterangan != '' 
-      ) {
+      this.$confirm.require({
+        message: "Apakah anda sudah yakin?",
+        header: "Update Confirmation",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button-danger",
+        acceptLabel: "Ya",
+        rejectLabel: "Tidak",
+        accept: () => {
+        this.submitted=true;
+          this.errors = [];
+        if (
+          this.mutasi.imutasi_tgl_dari != '' &&
+          this.mutasi.imutasi_lokasi != '' &&
+          this.mutasi.imutasi_pengguna != '' &&
+          this.mutasi.imutasi_keterangan != '' 
+        ) {
         this.axios.put('/api/update-mut/' + this.$route.params.code, this.mutasi, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           setTimeout( () => this.$router.push('/mutasi-peripheral'),1000);
           this.$toast.add({
@@ -204,6 +213,9 @@ export default {
             this.submitted = false;
         });
       }
+        },
+        reject: () => {},
+      });
     }
   },
 };

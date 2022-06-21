@@ -28,7 +28,7 @@ class PembelianDetailController extends Controller
         ->where('pd.purchase_id',$code)
         ->orderBy('pd.creation_date','ASC')
         ->get();
-            return json_encode($dtl);
+            return response()->json($dtl);
     }
     Public function getSuppDate($code)
     {
@@ -37,7 +37,7 @@ class PembelianDetailController extends Controller
             ->leftjoin('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
             ->where('pm.purchase_id',$code)
             ->first();
-        return json_encode($dtl);
+        return response()->json($dtl);
     }
     Public function save(Request $request,$code)
     {
@@ -69,7 +69,7 @@ class PembelianDetailController extends Controller
             'program_name'=> "PembelianDetail_Save"
         ]);
 
-        return json_encode([
+        return response()->json([
             'success' => true,
             'message' => 'Created Successfully'
         ]);
@@ -87,7 +87,7 @@ class PembelianDetailController extends Controller
         ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%'])
         ->orderBy('lookup_desc','ASC')
         ->get();
-        return json_encode(['dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref,'valuta'=>$valuta],200);
+        return response()->json(['dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref,'valuta'=>$valuta],200);
     }
     Public function update(Request $request,$code,$purchase)
     {
@@ -110,13 +110,13 @@ class PembelianDetailController extends Controller
             'success' => true,
             'message' => 'Updated Successfully'
         ];
-        return json_encode($msg);
+        return response()->json($msg);
     }
     Public function delete($code,$dpurchase_id)
     {
         $dtl = PembelianDetail::Where('dpurchase_id',$dpurchase_id)->first();
           $dtl->delete();
-           return json_encode('Deleted Successfully');
+           return response()->json('Deleted Successfully');
     }
     public function getValuta($code)
     {
@@ -127,7 +127,7 @@ class PembelianDetailController extends Controller
         ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%'])
         ->orderBy('lookup_desc','ASC')
         ->get();
-        return json_encode(['dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref],200);
+        return response()->json(['dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref],200);
     }
     public function cetak_pdf($purchase_id)
     {

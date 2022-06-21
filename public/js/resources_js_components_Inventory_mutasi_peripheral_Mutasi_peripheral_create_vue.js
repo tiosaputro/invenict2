@@ -105,35 +105,47 @@ __webpack_require__.r(__webpack_exports__);
     CreateMutasi: function CreateMutasi() {
       var _this4 = this;
 
-      this.submitted = true;
+      this.$confirm.require({
+        message: "Apakah anda sudah yakin?",
+        header: "Confirmation",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button-danger",
+        acceptLabel: "Ya",
+        rejectLabel: "Tidak",
+        accept: function accept() {
+          _this4.submitted = true;
 
-      if (this.kode != null && this.fromdate != null && this.ket != null && this.user != null && this.lokasi != null) {
-        var data = new FormData();
-        data.append("kode", this.kode);
-        data.append("fromdate", this.fromdate);
-        data.append("ket", this.ket);
-        data.append("todate", this.todate);
-        data.append("user", this.user);
-        data.append("lokasi", this.lokasi);
-        this.axios.post('api/add-mut', data, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
+          if (_this4.kode != null && _this4.fromdate != null && _this4.ket != null && _this4.user != null && _this4.lokasi != null) {
+            var data = new FormData();
+            data.append("kode", _this4.kode);
+            data.append("fromdate", _this4.fromdate);
+            data.append("ket", _this4.ket);
+            data.append("todate", _this4.todate);
+            data.append("user", _this4.user);
+            data.append("lokasi", _this4.lokasi);
+
+            _this4.axios.post('api/add-mut', data, {
+              headers: {
+                'Authorization': 'Bearer ' + _this4.token
+              }
+            }).then(function () {
+              setTimeout(function () {
+                return _this4.$router.push('/mutasi-peripheral');
+              }, 1000);
+
+              _this4.$toast.add({
+                severity: "success",
+                summary: "Success Message",
+                detail: "Success Create"
+              });
+            })["catch"](function (error) {
+              _this4.errors = error.response.data.errors;
+              _this4.submitted = false;
+            });
           }
-        }).then(function () {
-          setTimeout(function () {
-            return _this4.$router.push('/mutasi-peripheral');
-          }, 1000);
-
-          _this4.$toast.add({
-            severity: "success",
-            summary: "Success Message",
-            detail: "Success Create"
-          });
-        })["catch"](function (error) {
-          _this4.errors = error.response.data.errors;
-          _this4.submitted = false;
-        });
-      }
+        },
+        reject: function reject() {}
+      });
     }
   }
 });
@@ -316,6 +328,8 @@ var _hoisted_37 = ["src"];
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
+
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
@@ -330,7 +344,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
