@@ -5,7 +5,7 @@
         <div class="card">
           <Toolbar class="mb-4">
             <template v-slot:start>
-                  <h4>Mutasi Peripheral ICT</h4>
+                  <h4>Mutasi Peripheral</h4>
             </template>
           </Toolbar>
         <div class="row">

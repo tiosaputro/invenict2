@@ -51,7 +51,11 @@
                 <img :src="'/profile/' +slotProps.data.usr_foto" class="profile-image" />
             </template>
           </Column>
-          <Column field="usr_stat" header="User Status" :sortable="true" style="min-width:8rem"/>
+          <Column field="usr_stat" header="User Status" :sortable="true" style="min-width:8rem">
+            <template #body= "slotProps">
+              <span :class="'user-status status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.usr_stat}}</span>
+            </template>
+          </Column>
           <Column style="min-width:8rem">
             <template #body="slotProps">
               <Button

@@ -381,7 +381,7 @@
             <div class="fluid">
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:100px">Alasan</label>
-                  <div class="col-fixed">
+                  <div class="col-fixed w-9rem">
                     <Textarea
                       v-model="editDetail.ireq_reason"
                       :autoResize="true" 
@@ -432,8 +432,8 @@
             </div>
             <div class="fluid">
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">Status</label>
-                  <div class="col-fixed">
+                <label class="col-fixed w-9rem">Status</label>
+                  <div class="col-fixed w-9rem">
                     <Dropdown 
                     v-model="editStatus.status"
                     :filter="true"
@@ -592,7 +592,7 @@ export default {
     },
     submitReject(){
       this.submitted = true;
-      if(this.editDetail.ireq_reason != null){
+      if(this.editDetail.ireq_reason != ''){
         this.axios.put('/api/rejectPersonnel/'+this.code + '/' + this.user.usr_fullname, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.$toast.add({
             severity:'success', summary: 'Success', detail:'Success Update', life: 3000

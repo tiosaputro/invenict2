@@ -23,6 +23,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       assign: [],
       petugas: [],
       kode: '',
+      show: false,
       status: '',
       loading: true,
       detail: [],
@@ -71,7 +72,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.$router.push('/login');
       }
     },
-    Assignrequest: function Assignrequest(ireqd_id) {
+    AssignPerDetail: function AssignPerDetail(ireqd_id) {
       var _this2 = this;
 
       this.axios.get('/api/detail/' + ireqd_id + '/' + this.$route.params.code, {
@@ -187,6 +188,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (response) {
         _this6.kode = response.data.noreq;
         _this6.status = response.data.cekstatus;
+
+        if (_this6.status == 'NT' || _this6.status == 'RT') {
+          _this6.show = true;
+        }
       });
     },
     CetakPdf: function CetakPdf() {
@@ -240,7 +245,7 @@ var _hoisted_5 = {
   }
 };
 var _hoisted_6 = {
-  "class": "table-header text-right"
+  "class": "table-header text-left"
 };
 var _hoisted_7 = {
   "class": "p-input-icon-left"
@@ -422,21 +427,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Tipe Request",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
         header: "Nama Peripheral",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_desc",
         header: "Deskripsi",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_qty",
@@ -450,35 +455,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Keterangan",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_assigned_to1",
         header: "Personnel ICT",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+      }), _this.show == true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+        key: 0,
         field: "ireq_assigned_to1_reason",
         header: "Alasan",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.show == true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+        key: 1,
         field: "ireq_assigned_to2",
         header: "Personnel ICT (2)",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_status",
         header: "Status",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
@@ -491,7 +498,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "class": "p-button-raised p-button-text mr-2",
             label: "Assign",
             onClick: function onClick($event) {
-              return $options.Assignrequest(slotProps.data.ireqd_id);
+              return $options.AssignPerDetail(slotProps.data.ireqd_id);
             }
           }, null, 8
           /* PROPS */

@@ -4,14 +4,14 @@
         <div class="card">
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>ICT Request</h4>
+				    <h4>ICT Request</h4>
           </template>
         </Toolbar>
             <div class="card-body">
              <form @submit.prevent="CreateIct">
                <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">No. Request</label>
-              </div>
+                <label class="col-fixed w-9rem">No. Request</label>
+               </div>
               <!-- <div class="field grid">
                 <label class="col-fixed w-9rem">Tgl. Request</label>
                  <div class="col-fixed w-11rem">
@@ -54,7 +54,7 @@
                 </div>
               </div> -->
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Priority Level</label>
+                <label class="col-fixed w-9rem">Priority Level</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model="priolev"
@@ -72,21 +72,21 @@
                 </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Pengguna</label>
+                <label class="col-fixed w-9rem">Pengguna</label>
                  <div class="col-fixed w-9rem">
-                     <InputText
-                        type="text"
-                        v-model="usr_name"
-                        placeholder="Masukan Pengguna"
-                        :class="{ 'p-invalid': error.usr_name }"
-                     />
-                        <small v-if="error.usr_name" class="p-error">
-                          {{error.usr_name}}
-                        </small>
-                </div>
+                  <InputText
+                    type="text"
+                    v-model="usr_name"
+                    placeholder="Masukan Pengguna"
+                    :class="{ 'p-invalid': error.usr_name }"
+                  />
+                  <small v-if="error.usr_name" class="p-error">
+                    {{error.usr_name}}
+                  </small>
+                 </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
+                <label class="col-fixed w-9rem">Divisi Pengguna</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="usr_divisi"
@@ -104,7 +104,7 @@
                 </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Bisnis Unit</label>
+                <label class="col-fixed w-9rem">Bisnis Unit</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="bisnis"

@@ -40,17 +40,21 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:10rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem"/>
-                  <Column style="min-width:12rem">
+                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
+                  <template #body= "slotProps">
+                    <span :class="'manager-belum-verifikasi status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                  </template>
+                  </Column>
+                  <Column style="min-width:8rem">
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -61,7 +65,7 @@
                             params: { code: slotProps.data.ireq_id }, })"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_status == 'NA2'"
+                        v-if="slotProps.data.status == 'NA2'"
                         class="p-button-rounded p-button-success mr-2"
                         icon="pi pi-check-square"
                         v-tooltip.right="'Verifikasi'"
@@ -121,17 +125,21 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
-                  <Column style="min-width:12rem">
+                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
+                  <template #body= "slotProps">
+                    <span :class="'manager-sudah-verifikasi status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                  </template>
+                  </Column>
+                  <Column>
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -533,7 +541,7 @@
             <div class="field">
               <div class="field grid">
                 <label class="col-fixed w-9rem">Alasan</label>
-                  <div class="co-fixed">
+                  <div class="co-fixed w-9rem">
                     <Textarea
                     :autoResize="true"
                     type="text"

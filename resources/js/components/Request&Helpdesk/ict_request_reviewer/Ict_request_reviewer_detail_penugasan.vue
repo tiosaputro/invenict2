@@ -42,16 +42,16 @@
           <template #loading>
             Loading data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:8rem"/>
           <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:4rem"/>
-          <Column field="ireq_note_personnel" header="Reason" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_note_personnel" header="Reason" :sortable="true" style="min-width:4rem" v-if="this.status == 'T'"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:4rem"/>
           <template #footer>
-               <div class="p-grid p-dir-col">
+            <div class="p-grid p-dir-col">
 			        <div class="p-col">
 				        <div class="box">
                    <Button

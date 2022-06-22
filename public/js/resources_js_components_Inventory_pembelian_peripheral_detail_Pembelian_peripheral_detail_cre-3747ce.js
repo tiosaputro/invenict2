@@ -164,10 +164,7 @@ var _hoisted_4 = {
 };
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "145px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Kode Peripheral", -1
 /* HOISTED */
 );
@@ -188,10 +185,7 @@ var _hoisted_9 = {
 };
 
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "145px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Jumlah (Qty)", -1
 /* HOISTED */
 );
@@ -208,10 +202,7 @@ var _hoisted_13 = {
 };
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "145px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Satuan", -1
 /* HOISTED */
 );
@@ -228,10 +219,7 @@ var _hoisted_17 = {
 };
 
 var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "145px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Harga Satuan", -1
 /* HOISTED */
 );
@@ -248,10 +236,7 @@ var _hoisted_21 = {
 };
 
 var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "145px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Total Harga", -1
 /* HOISTED */
 );
@@ -268,10 +253,7 @@ var _hoisted_25 = {
 };
 
 var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "145px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Keterangan", -1
 /* HOISTED */
 );

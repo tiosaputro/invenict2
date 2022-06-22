@@ -49,12 +49,26 @@
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+                  <Column columnKey="ireq_count_status" header="Personnel ICT" :sortable="true" style="min-width:8rem">
+                  <template #body="slotProps">
+                    {{slotProps.data.ireq_assigned_to}}
+                  </template>
+                  </Column>
                   <Column headerStyle="min-width:55rem">
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
+                        v-if="slotProps.data.ireq_count_status <= 0"
+                        v-tooltip.left="'Detail'"
+                        @click="$router.push({
+                            name: 'Ict Request Reviewer Detail Permohonan',
+                            params: { code: slotProps.data.ireq_id }, })"
+                      />
+                      <Button
+                        class="p-button-rounded p-button-secondary mr-2"
+                        icon="pi pi-info-circle"
+                        v-if="slotProps.data.ireq_count_status > 0"
                         v-tooltip.left="'Detail'"
                         @click="$router.push({
                             name: 'Ict Request Reviewer Detail',
@@ -163,13 +177,27 @@
                   </Column>
                   <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:16rem">
+                  <template #body= "slotProps">
+                    <span :class="'reviewer-atasan status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                  </template>
+                  </Column>
                   <Column headerStyle="min-width:35rem">
                     <template #body="slotProps">
+                       <Button
+                        class="p-button-rounded p-button-secondary mr-2"
+                        icon="pi pi-info-circle"
+                        v-if="slotProps.data.ireq_count_status <= 0"
+                        v-tooltip.left="'Detail'"
+                        @click="$router.push({
+                            name: 'Ict Request Reviewer Detail Permohonan',
+                            params: { code: slotProps.data.ireq_id }, })"
+                      />
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
+                        v-if="slotProps.data.ireq_count_status > 0"
                         v-tooltip.left="'Detail'"
                         @click="$router.push({
                             name: 'Ict Request Reviewer Detail',
@@ -255,26 +283,40 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                 <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem">
+                 <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:7rem">
                   <template #body="slotProps">
                       <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.ireq_status == 'Belum Diapprove ICT Manager'">{{slotProps.data.ireq_no}}</p>
                       <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
                   </template>
                  </Column>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:7rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:7rem"/>
+                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:7rem"/>
+                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:7rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
+                    <template #body= "slotProps">
+                      <span :class="'reviewer-manager status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <Column headerStyle="min-width:30rem">
                     <template #body="slotProps">
+                       <Button
+                        class="p-button-rounded p-button-secondary mr-2"
+                        icon="pi pi-info-circle"
+                        v-if="slotProps.data.ireq_count_status <= 0"
+                        v-tooltip.left="'Detail'"
+                        @click="$router.push({
+                            name: 'Ict Request Reviewer Detail Permohonan',
+                            params: { code: slotProps.data.ireq_id }, })"
+                      />
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
+                        v-if="slotProps.data.ireq_count_status > 0"
                         v-tooltip.left="'Detail'"
                         @click="$router.push({
                             name: 'Ict Request Reviewer Detail',
@@ -809,6 +851,7 @@ export default {
         checkname : [],
         checkto : [],
         id : localStorage.getItem('id'),
+        show:false,
     };
   },
   created() {
@@ -1034,10 +1077,10 @@ export default {
   },
 };
 </script>
-<style>
-    .cheap {
-        background-color: #54a90a !important;
-        background-image: none !important;
-        color: #ffffff !important;
-    }
+<style scoped lang="scss">
+    // .cheap {
+    //     background-color: #54a90a !important;
+    //     background-image: none !important;
+    //     color: #ffffff !important;
+    // }
 </style>

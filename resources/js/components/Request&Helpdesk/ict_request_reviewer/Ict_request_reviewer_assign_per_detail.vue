@@ -41,13 +41,13 @@
           <template #loading>
             Loading data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:9rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:9rem"/>
+          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:9rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:12rem"/>
-          <Column style="min-width:12rem">
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:9rem"/>
+          <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:9rem"/>
+          <Column style="min-width:9rem">
             <template #body="slotProps">
                 <Button
                     class="p-button-raised p-button-text p-mr-2 p-mb-2"

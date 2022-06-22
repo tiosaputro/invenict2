@@ -133,7 +133,9 @@ var _hoisted_5 = {
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem"
+  style: {
+    "width": "120px"
+  }
 }, "Kode", -1
 /* HOISTED */
 );
@@ -217,7 +219,9 @@ var _hoisted_25 = {
 };
 
 var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem"
+  style: {
+    "width": "120px"
+  }
 }, "Kota", -1
 /* HOISTED */
 );

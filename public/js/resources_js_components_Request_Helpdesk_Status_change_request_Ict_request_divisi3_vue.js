@@ -124,7 +124,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.submitted = true;
 
-      if (this.editDetail.ireq_reason != null) {
+      if (this.editDetail.ireq_reason != '') {
         this.axios.put('/api/rejectPersonnel/' + this.code + '/' + this.user.usr_fullname, this.editDetail, {
           headers: {
             'Authorization': 'Bearer ' + this.token
@@ -454,7 +454,7 @@ var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_45 = {
-  "class": "col-fixed"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_46 = {
   key: 0,
@@ -500,16 +500,13 @@ var _hoisted_56 = {
 };
 
 var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "100px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Status", -1
 /* HOISTED */
 );
 
 var _hoisted_58 = {
-  "class": "col-fixed"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_59 = {
   key: 0,

@@ -1,0 +1,132 @@
+.reviewer-atasan,
+.reviewer-manager,
+.manager-belum-verifikasi,
+.manager-sudah-verifikasi,
+.user-status,
+.requestor-verifikasi,
+.requestor-reviewer,
+.reviewer-atasan {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+
+    &.status-na1  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+
+    &.status-a1 {
+        background: #9bface;
+        color: #256029;
+    }
+}
+.reviewer-manager {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+
+    &.status-na2  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+
+    &.status-a2 {
+        background: #9bface;
+        color: #256029;
+    }
+}
+.manager-sudah-verifikasi {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+
+    &.status-a2 {
+        background: #9bface;
+        color: #256029;
+    }
+
+    &.status-a1 {
+        background: #9bface;
+        color: #256029;
+    }
+}
+.manager-belum-verifikasi {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+
+    &.status-na1  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+    &.status-na2  {
+        background: #f1a598;
+        color:  orangered;
+    }
+}
+.user-status {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+
+    &.status-f  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+
+    &.status-t {
+        background: #9bface;
+        color: #256029;
+    }
+}
+.requestor-reviewer {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+
+    &.status-na2  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+
+    &.status-na1 {
+        background: #f1a598;
+        color: #C63737;
+    }
+}
+.requestor-verifikasi {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+
+    &.status-a1  {
+        background: #9bface;
+        color: #256029;
+    }
+
+    &.status-a2 {
+        background: #9bface;
+        color: #256029;
+    }
+}

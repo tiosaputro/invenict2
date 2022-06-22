@@ -1,14 +1,13 @@
 <template>
   <div>
-        <Toast />
-        <div class="card">
-        <Toolbar class="mb-4">
-          <template v-slot:start>
-				        <h4>ICT Request (Detail)</h4>
-          </template>
-        </Toolbar>
-        <div class="row">
-          <div class="col-sm-6">
+    <Toast />
+      <div class="card">
+      <Toolbar class="mb-4">
+        <template v-slot:start>
+				  <h4>ICT Request (Detail)</h4>
+        </template>
+      </Toolbar>
+          <div class="card-body">
              <form @submit.prevent="CreateIctDetail">
                <div class="field grid">
                 <label class="col-fixed w-9rem">No. Request</label>
@@ -20,8 +19,8 @@
                   />
                 </div>
               </div>
-            <div class="field grid">
-              <label class="col-fixed w-9rem">Tipe Request</label>
+              <div class="field grid">
+               <label class="col-fixed w-9rem">Tipe Request</label>
                 <div class="col-fixed w-9rem">
                   <Dropdown 
                     v-model="tipereq"
@@ -50,7 +49,6 @@
                         optionLabel="name"
                         optionValue="code"
                         placeholder="Pilih Nama Peripheral "
-                        @change="getImage()"
                         :showClear="true"
                         :filter="true"
                         :class="{ 'p-invalid': error.kode }"
@@ -128,10 +126,6 @@
               </div>
             </form>
           </div>
-              <div class="col-6">
-                    <img :src="'/master_peripheral/' + photo.photo" class="ict-image" v-if="this.kode" />
-              </div>
-          </div>
       </div>
     </div>
 </template>
@@ -142,7 +136,6 @@ export default {
       errors: [],
       error:[],
       detail: [],
-      photo:[],
       kode:'',
       desk:'',
       qty:null,
@@ -251,13 +244,6 @@ export default {
         this.$router.push('/login');
       }
     },
-    getImage(){
-      if(this.kode){
-      this.axios.get('/api/getImage/'+this.kode, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.photo = response.data;
-      });
-      }
-    },   
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
       this.detail = response.data;

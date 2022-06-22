@@ -265,7 +265,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Tipe Request",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
@@ -293,7 +293,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Keterangan",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_assigned_to",
@@ -302,14 +302,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "4rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+      }), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+        key: 0,
         field: "ireq_note_personnel",
         header: "Reason",
         sortable: true,
         style: {
           "min-width": "4rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_status",
         header: "Status",
         sortable: true,

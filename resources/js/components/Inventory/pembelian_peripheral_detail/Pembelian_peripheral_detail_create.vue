@@ -10,7 +10,7 @@
           <div class="card-body">
             <form @submit.prevent="CreateDetail">
                <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">Kode Peripheral</label>
+                  <label class="col-fixed w-9rem">Kode Peripheral</label>
                     <div class="col-fixed w-9rem">
                       <Dropdown 
                         v-model="kode"
@@ -31,7 +31,7 @@
                     </div>
                    </div>
                   <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:145px">Jumlah (Qty)</label>
+                    <label class="col-fixed w-9rem">Jumlah (Qty)</label>
                       <div class="col-fixed w-9rem">
                         <InputNumber
                          v-model="qty"
@@ -45,7 +45,7 @@
                   </div>
                 </div>
                 <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">Satuan</label>
+                  <label class="col-fixed w-9rem">Satuan</label>
                     <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model="satuan"
@@ -62,7 +62,7 @@
                   </div>
               </div>
                 <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">Harga Satuan</label>
+                  <label class="col-fixed w-9rem">Harga Satuan</label>
                     <div class="col-fixed w-9rem">
                     <InputNumber
                        mode="currency"
@@ -79,7 +79,7 @@
                   </div>
               </div>
                 <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">Total Harga</label>
+                  <label class="col-fixed w-9rem">Total Harga</label>
                     <div class="col-fixed w-9rem">
                      <InputNumber
                          mode="currency"
@@ -96,7 +96,7 @@
                 </div>
               </div>
                <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:145px">Keterangan</label>
+                <label class="col-fixed w-9rem">Keterangan</label>
                  <div class="col-fixed w-9rem">
                   <Textarea
                     v-model="ket"

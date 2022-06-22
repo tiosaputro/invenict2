@@ -11,7 +11,7 @@
             <form @submit.prevent="CreateSupplier">
               <div class="formgroup-inline">
                <div class="field grid">
-                  <label class="col-fixed w-9rem">Kode</label>
+                  <label style="width:120px">Kode</label>
                     <div class="col-fixed">
                       <InputText
                         type="text"
@@ -84,7 +84,7 @@
               </div>
                <div class="formgroup-inline">
                 <div class="field grid">
-                  <label class="col-fixed w-9rem">Kota</label>
+                  <label style="width:120px">Kota</label>
                     <div class="col-fixed">
                       <InputText
                       type="text"

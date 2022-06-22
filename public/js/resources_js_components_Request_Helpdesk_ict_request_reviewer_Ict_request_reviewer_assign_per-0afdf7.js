@@ -363,21 +363,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Tipe Request",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "9rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
         header: "Nama Peripheral",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "9rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_desc",
         header: "Deskripsi",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "9rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_qty",
@@ -391,18 +391,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Keterangan",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "9rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_assigned_to1",
         header: "Petugas (ICT)",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "9rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
-          "min-width": "12rem"
+          "min-width": "9rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {

@@ -533,6 +533,11 @@ const routes = [
         component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer.vue'),
     },
     {
+        name: 'Ict Request Reviewer Detail Permohonan',
+        path: '/ict-request-reviewer/detail-permohonan/:code',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_detail_permohonan.vue'),
+    },
+    {
         name: 'Ict Request Reviewer Detail',
         path: '/ict-request-reviewer/detail/:code',
         component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_detail.vue'),

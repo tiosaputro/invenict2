@@ -114,7 +114,8 @@ class IctController extends Controller
         $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
         if($aksesmenu->contains($this->manager)){
             $ict = DB::table('ireq_mst as im')
-            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','im.ireq_status','dr.div_name','lr.lookup_desc as ireq_statuss')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor',
+            'im.ireq_status as status','dr.div_name','lr.lookup_desc as ireq_status')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
             ->where(function($query){
@@ -129,7 +130,8 @@ class IctController extends Controller
             ->get(); 
 
             $ict1 = DB::table('ireq_mst as im')
-            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor', 'dr.div_name','lr.lookup_desc as ireq_status')
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor', 
+            'dr.div_name','lr.lookup_desc as ireq_status','im.ireq_status as status')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
             ->where('im.ireq_status','A2')
@@ -185,9 +187,13 @@ class IctController extends Controller
     function getDataManagerVerifikasi($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select('lr.lookup_desc as ireq_type','im.invent_desc','id.invent_code')
+        ->select('lr.lookup_desc as ireq_type','lrs.lookup_desc','id.invent_code')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->get();
@@ -250,18 +256,18 @@ class IctController extends Controller
             $ict = DB::table('ireq_mst as im')
             ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name', 
                     DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),
-                    'lr.lookup_desc as ireq_status')
+                    'lr.lookup_desc as ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
             ->where('im.ireq_status','P')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
+            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
             ->orderBy('im.ireq_date','DESC')
             ->get(); 
 
             $ict1 = DB::table('ireq_mst as im')
-            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status',
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status','im.ireq_status as status',
                     DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
@@ -269,12 +275,12 @@ class IctController extends Controller
             ->where('im.ireq_status','NA1')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->orwhere('im.ireq_status','A1')
-            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
+            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_status')
             ->orderBy('im.ireq_date','DESC')
             ->get(); 
 
             $ict2 = DB::table('ireq_mst as im')
-            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status',
+            ->select('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status','im.ireq_status as status',
                     DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
@@ -282,7 +288,7 @@ class IctController extends Controller
             ->where('im.ireq_status','NA2')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->orwhere('im.ireq_status','A2')
-            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc')
+            ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_status')
             ->orderBy('im.ireq_date','DESC')
             ->get(); 
 
@@ -386,11 +392,14 @@ class IctController extends Controller
                     ->first();
         $ict = DB::table('ireq_mst as im')
         ->leftjoin('ireq_dtl as id','im.ireq_id','id.ireq_id')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
-        ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
         ->select('im.ireq_no','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
-                 'im.ireq_user',DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'id.ireq_qty')
+                 'im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty')
         ->where('im.ireq_id',$ireq_id)
         ->get();
 
@@ -626,7 +635,7 @@ class IctController extends Controller
                 ->orWhere('id.ireq_status','P');
                 })
             ->groupBy('llr.lookup_desc','id.ireq_id','id.ireq_no','id.ireq_date','id.ireq_user','id.creation_date','dr.div_name','id.ireq_status','id.ireq_requestor')
-            ->orderBy('id.creation_date','ASC')
+            ->orderBy('id.creation_date','DESC')
             ->get();
 
             $ict1 = DB::table('ireq_mst as im')
@@ -671,10 +680,13 @@ class IctController extends Controller
             ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('idd.invent_code','lrs.lookup_code')
+                      ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
             ->select('im.ireq_requestor','dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
                     'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id',
-                    DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
+                    'lrs.lookup_desc as invent_code','lr.lookup_desc as ireq_status')
             ->where('idd.ireq_status','D')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->where('im.created_by',$usr_name)
@@ -685,10 +697,13 @@ class IctController extends Controller
             ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->leftjoin('lookup_refs as lr','im.ireq_status','lr.lookup_code')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('idd.invent_code','lrs.lookup_code')
+                      ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
             ->select('im.ireq_requestor','dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
                     'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id','idd.ireq_value',
-                    DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
+                    'lrs.lookup_desc as invent_code','lr.lookup_desc as ireq_status')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->where('idd.ireq_status','C')
             ->where('im.created_by',$usr_name)
@@ -814,10 +829,13 @@ class IctController extends Controller
             ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('idd.invent_code','lrs.lookup_code')
+                      ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
             ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
                     'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id',
-                    DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
+                    'lrs.lookup_desc as invent_code','lr.lookup_desc as ireq_status')
             ->where('idd.ireq_status','D')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->where('dr.div_verificator',$usr_name)
@@ -828,10 +846,13 @@ class IctController extends Controller
             ->leftjoin('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->leftjoin('lookup_refs as lr','idd.ireq_status','lr.lookup_code')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->leftjoin('invent_mst as imm','idd.invent_code','imm.invent_code')
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('idd.invent_code','lrs.lookup_code')
+                      ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
             ->select('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_requestor',
                     'im.ireq_user','idd.ireq_assigned_to1','idd.ireqd_id',
-                    DB::raw("(imm.invent_code ||'-'|| imm.invent_desc) as invent_code"),'lr.lookup_desc as ireq_status')
+                    'lrs.lookup_desc as invent_code','lr.lookup_desc as ireq_status')
             ->where('idd.ireq_status','C')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->where('dr.div_verificator',$usr_name)
@@ -1016,8 +1037,11 @@ class IctController extends Controller
                 DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
                 'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
                 'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
-                DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-            ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+                'lrs.lookup_desc as name')
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('id.invent_code','lrs.lookup_code')
+                ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
             ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
             ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
             ->leftjoin('lookup_refs as llr','id.ireq_status','llr.lookup_code')
@@ -1034,8 +1058,11 @@ class IctController extends Controller
             ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
                 'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
                 'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
-                DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-            ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+                'lrs.lookup_desc as name')
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('id.invent_code','lrs.lookup_code')
+                ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
             ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
             ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
             ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1051,9 +1078,11 @@ class IctController extends Controller
             $ict2 = DB::table('ireq_dtl as id')
             ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
                 'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
-                'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
-                DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-            ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+                'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date', 'lrs.lookup_desc as name')
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('id.invent_code','lrs.lookup_code')
+                ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
             ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
             ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
             ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1419,8 +1448,11 @@ class IctController extends Controller
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+            'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+            ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1445,8 +1477,11 @@ class IctController extends Controller
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
         'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
         'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-        DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1599,8 +1634,11 @@ class IctController extends Controller
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user', 'id.ireq_assigned_to1', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+            'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1624,8 +1662,11 @@ class IctController extends Controller
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
         'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
         'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-        DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1754,8 +1795,11 @@ class IctController extends Controller
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+            'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1779,8 +1823,11 @@ class IctController extends Controller
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
         'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
         'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-        DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1804,8 +1851,11 @@ class IctController extends Controller
         ->select('imm.ireq_no',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+            'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1830,8 +1880,11 @@ class IctController extends Controller
         ->select('imm.ireq_no',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+            'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -1856,8 +1909,11 @@ class IctController extends Controller
         ->select('imm.ireq_no',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+            'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -2015,8 +2071,11 @@ class IctController extends Controller
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
         'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
         'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-        DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
@@ -2041,8 +2100,11 @@ class IctController extends Controller
         ->select('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
         'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
         'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-        DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        'lrs.lookup_desc as name')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->leftjoin('lookup_refs as llr','imm.ireq_status','llr.lookup_code')

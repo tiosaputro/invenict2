@@ -28,7 +28,7 @@
         >
         
        <template #header>
-            <div class="table-header text-right">
+            <div class="table-header text-left">
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
                   <InputText
@@ -44,22 +44,22 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to1_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_type" header="Tipe Request" :sortable="true"  style="min-width:8rem"/>
+          <Column field="name" header="Nama Peripheral" :sortable="true"  style="min-width:8rem"/>
+          <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:8rem"/>
+          <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
+          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_assigned_to1_reason" header="Alasan" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
+          <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
+          <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:8rem"/>
           <Column style="min-width:14rem">
             <template #body="slotProps">
               <Button
                 v-if="slotProps.data.ireq_status == 'Reject By ICT Personnel' && this.status != 'RT'"
                 class="p-button-raised p-button-text mr-2"
                 label="Assign"
-                @click="Assignrequest(slotProps.data.ireqd_id)"
+                @click="AssignPerDetail(slotProps.data.ireqd_id)"
               />
               <Button
                 v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.ireq_status == 'Reject By ICT Personnel' && this.status != 'RT'"
@@ -70,7 +70,7 @@
             </template>
           </Column>
           <template #footer>
-               <div class="grid dir-col">
+            <div class="grid dir-col">
 			        <div class="col">
 				        <div class="box">
                    <Button
@@ -174,6 +174,7 @@ export default {
         assign:[],
         petugas:[],
         kode:'',
+        show:false,
         status:'',
         loading: true,
         detail: [],
@@ -207,7 +208,7 @@ export default {
         this.$router.push('/login');
       }
     },
-    Assignrequest(ireqd_id){
+    AssignPerDetail(ireqd_id){
       this.axios.get('/api/detail/'+ ireqd_id+'/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.assign = response.data;
           });
@@ -280,6 +281,7 @@ export default {
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data.noreq;
         this.status = response.data.cekstatus;
+        if(this.status =='NT' || this.status == 'RT'){ this.show = true}
       });
     },
     CetakPdf(){
