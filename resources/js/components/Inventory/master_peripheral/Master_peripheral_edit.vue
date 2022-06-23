@@ -11,8 +11,8 @@
             <div class="col-sm-6">
             <form @submit.prevent="UpdateMaster">
               <div class="field grid">
-                <label style="width:155px">Kode</label>
-                  <div class="col-3 md-6">
+                <label class="col-fixed w-9rem">Kode</label>
+                  <div class="col-fixed w-9rem">
                     <InputText
                       type="text"
                       v-model="master.invent_code"
@@ -20,31 +20,42 @@
                     /> 
                   </div>
               </div>
-                 <div class="field grid">
-                      <label style="width:155px">Merk</label>
-                    <div class="col-3 md-6">
-                      <InputText
-                        type="text"
-                        v-model="master.lookup_desc"
-                        disabled
-                      />
+              <div class="field grid">
+                <label class="col-fixed w-9rem">Nama Peripheral</label>
+                  <div class="col-fixed w-9rem">
+                    <InputText
+                      type ="text"
+                      v-model="master.invent_desc"
+                      placeholder="Masukan Nama"
+                      disabled
+                    />
                   </div>
+              </div> 
+              <div class="field grid">
+                <label class="col-fixed w-9rem">Merk</label>
+                  <div class="col-fixed w-9rem">
+                    <InputText
+                      type="text"
+                      v-model="master.lookup_desc"
+                      disabled
+                    />
                   </div>
-               <div class="field grid">
-                <label style="width:155px">Tipe</label>
-                 <div class="col-3 md-6">
-                     <InputText
-                        type="text"
-                        v-model="master.invent_type"
-                        placeholder= "Masukan Tipe"
-                        :class="{ 'p-invalid': submitted && !master.invent_type }"
-                      />
-                      <small class="p-error" v-if="submitted && !master.invent_type"
-                        >Type Belum Diisi.
-                      </small>
-                 </div>
               </div>
-               <div class="field grid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem">Tipe</label>
+                  <div class="col-fixed w-9rem">
+                    <InputText
+                      type="text"
+                      v-model="master.invent_type"
+                      placeholder= "Masukan Tipe"
+                      :class="{ 'p-invalid': submitted && !master.invent_type }"
+                    />
+                    <small class="p-error" v-if="submitted && !master.invent_type"
+                      >Type Belum Diisi.
+                    </small>
+                  </div>
+              </div>
+               <!-- <div class="field grid">
                   <label style="width:155px">S/N</label>
                     <div class="col-3 md-6">
                     <InputText
@@ -110,7 +121,7 @@
                       >Bisnis Unit Belum Diisi.
                     </small>
                </div>
-              </div>
+              </div> -->
               <!-- <div class="field grid">
                 <label style="width:155px">QR-Code</label>
                  <div class="col-12 md:col-6">
@@ -125,7 +136,7 @@
                       </small>
                 </div>
               </div>  -->
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label style="width:155px">Bisnis Unit</label>
                   <div class="col-4">
                     <Dropdown 
@@ -164,7 +175,7 @@
                         disabled
                       />
                     </div>
-                </div>
+                </div> -->
                 <div class="p-p-0 p-p-sm-1 p-p-md-2 p-p-lg-3">
                   <Button
                     class="p-button-rounded p-button-primary mr-2"
@@ -181,7 +192,7 @@
                 </div>
             </form>
            </div>
-          <div class="col-sm-6">
+          <!-- <div class="col-sm-6">
             <div class="field grid">
               <label style="width:155px">Nama</label>
                 <div class="col-12 md:col-4">
@@ -230,7 +241,7 @@
                     />
                     </div>
                 </div>
-            </div>
+            </div> -->
           </div>
       </div>
     </div>
@@ -277,37 +288,37 @@ export default {
         this.$router.push('/login');
       }
     },
-    Scan(){
-      this.aktif = false;
-      let routeData = this.$router.resolve({name: 'Scan'});
-      window.open(routeData.href, '_blank');
-      setTimeout( () => this.getBarcode(),2000);
-    },
-    hapus(){
-      this.master.invent_barcode = null;
-      this.aktif = true;
-    },
-    getBarcode(){
-      this.master.invent_barcode = localStorage.getItem("barcode");
-      if(!this.master.invent_barcode){
-        setTimeout( () => this.getBarcode(),3000);
-      }
-    }, 
-      getBisnis(){
-        this.axios.get('/api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.bisnis = response.data;
-        });
-      },
-      getMerk(){
-        this.axios.get('/api/getMerk', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.merks = response.data;
-        });
-      },
-      getKondisi(){
-        this.axios.get('/api/getKondisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.kondi = response.data;
-        });
-      },
+    // Scan(){
+    //   this.aktif = false;
+    //   let routeData = this.$router.resolve({name: 'Scan'});
+    //   window.open(routeData.href, '_blank');
+    //   setTimeout( () => this.getBarcode(),2000);
+    // },
+    // hapus(){
+    //   this.master.invent_barcode = null;
+    //   this.aktif = true;
+    // },
+    // getBarcode(){
+    //   this.master.invent_barcode = localStorage.getItem("barcode");
+    //   if(!this.master.invent_barcode){
+    //     setTimeout( () => this.getBarcode(),3000);
+    //   }
+    // }, 
+    //   getBisnis(){
+    //     this.axios.get('/api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    //       this.bisnis = response.data;
+    //     });
+    //   },
+      // getMerk(){
+      //   this.axios.get('/api/getMerk', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      //       this.merks = response.data;
+      //   });
+      // },
+      // getKondisi(){
+      //   this.axios.get('/api/getKondisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      //       this.kondi = response.data;
+      //   });
+      // },
       getMaster(){
           this.axios.get('/api/edit-mas/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
               this.master = response.data.mas;
@@ -327,33 +338,33 @@ export default {
           }
         });
       },
-      fileImage(event) {
-      this.invent_photo = event.target.files[0];
-      this.displayImage = true;
-      this.preview = URL.createObjectURL(event.target.files[0]);
-      this.createImage(this.invent_photo);
-      },
-      createImage(invent_photo) {
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this.master;
-      reader.onload = function (e) {
-        vm.image = e.target.result;
-      };
-      reader.readAsDataURL(invent_photo);
-    },
+    //   fileImage(event) {
+    //   this.invent_photo = event.target.files[0];
+    //   this.displayImage = true;
+    //   this.preview = URL.createObjectURL(event.target.files[0]);
+    //   this.createImage(this.invent_photo);
+    //   },
+    //   createImage(invent_photo) {
+    //   var image = new Image();
+    //   var reader = new FileReader();
+    //   var vm = this.master;
+    //   reader.onload = function (e) {
+    //     vm.image = e.target.result;
+    //   };
+    //   reader.readAsDataURL(invent_photo);
+    // },
     UpdateMaster() {
       this.submitted=true;
       if (
-        this.master.invent_desc != null &&
+        // this.master.invent_desc != null &&
         // this.master.invent_brand != null &&
-        this.master.invent_type != null &&
-        this.master.invent_sn != null &&
-        this.master.invent_tgl_perolehan != null &&
+        this.master.invent_type != null 
+        // this.master.invent_sn != null &&
+        // this.master.invent_tgl_perolehan != null &&
         // this.master.invent_lama_garansi != null &&
-        this.master.invent_kondisi != null &&
+        // this.master.invent_kondisi != null &&
         // this.master.invent_barcode != null &&
-        this.master.invent_bu != null 
+        // this.master.invent_bu != null 
         // this.master.invent_lokasi_update != null &&
         // this.master.invent_pengguna_update != null &&
         // this.master.invent_lokasi_previous != null &&

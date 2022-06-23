@@ -19,7 +19,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Master Peripheral ICT"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Master Peripheral"
           responsiveLayout="scroll"
         >
        <template #header>
@@ -53,13 +53,21 @@
           </Column>
           <Column field="invent_desc" header="Nama" :sortable="true"/>
           <Column field="invent_brand" header="Merk" :sortable="true"/>
-          <Column field="invent_bu" header="Bisnis Unit" :sortable="true"/>
-          <Column headerStyle="min-width:14rem">
+          <Column field="invent_type" header="Type" :sortable="true"/>
+          <Column headerStyle="min-width:6rem">
             <template #body="slotProps">
+              <Button
+                class="p-button-rounded p-button-secondary mr-2"
+                icon="pi pi-info-circle"
+                v-tooltip.left="'Detail'"
+                @click="$router.push({
+                  name: 'Master Peripheral Detail',
+                  params: { code: slotProps.data.invent_code }, })"
+                />
               <Button
                 class="p-button-rounded p-button-info mr-2"
                 icon="pi pi-pencil"
-                v-tooltip.left="'Edit'"
+                v-tooltip.bottom="'Edit'"
                 @click="
                   $router.push({
                     name: 'Edit Master Peripheral',
@@ -73,16 +81,16 @@
                 @click="DeleteMas(slotProps.data.invent_code)"
                 v-tooltip.top="'Delete'"
               />
-              <Button
+              <!-- <Button
                 icon="pi pi-qrcode"
                 class="p-button-rounded p-button-success mt-2"
                 @click="previewBarcode(slotProps.data.invent_code)"
                 v-tooltip.right="'Print QR-Code'"
-              />
+              /> -->
             </template>
           </Column>
           <template #footer>
-               <div class="p-grid p-dir-col">
+            <div class="p-grid p-dir-col">
 			        <div class="p-col">
 				        <div class="box">
                   <Button
@@ -102,7 +110,7 @@
             </div>
            </template>
         </DataTable>   
-        <Dialog
+        <!-- <Dialog
           id="qrcode"
           v-model:visible="displayBarcode"
           :style="{ width: '400px' }"
@@ -114,7 +122,7 @@
           <template #footer>
             <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" class="p-button-danger" />
           </template>
-        </Dialog>
+        </Dialog> -->
         <Dialog
           v-model:visible="displayKode"
           :breakpoints="{'960px': '75vw'}"

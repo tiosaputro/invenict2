@@ -146,6 +146,23 @@ const routes = [
         path: '/Edit-master-peripheral/:code',
         component: ()=> import('./components/Inventory/master_peripheral/Master_peripheral_edit.vue'),
     },
+
+    //master peripheral detail
+    {
+        name: 'Master Peripheral Detail',
+        path: '/master-peripheral-detail/:code',
+        component: ()=> import('./components/Inventory/master_peripheral_detail/Master_peripheral_detail.vue'),
+    },
+    {
+        name: 'Add Master Peripheral Detail',
+        path: '/Add-master-peripheral-detail/:code',
+        component: ()=> import('./components/Inventory/master_peripheral_detail/Master_peripheral_detail_create.vue'),
+    },
+    {
+        name: 'Edit Master Peripheral',
+        path: '/Edit-master-peripheral/:code',
+        component: ()=> import('./components/Inventory/master_peripheral/Master_peripheral_edit.vue'),
+    },
     //mutasi peripheral
     {
         name: 'Mutasi Peripheral',

@@ -67,6 +67,10 @@ Route::middleware('auth:sanctum')->group(function(){
     //Route::get('/report-master-excel','MasterController@cetak_excel');
     //Route::get('/get-kode','MasterController@getKode');
 
+    //master peripheral detail
+    Route::get('/master-detail/{code}','MasterDetailController@index');
+    Route::get('/add-master-detail/{code}','MasterDetailController@addDetail');
+
     //mutasi peripheral
     Route::get('/mut','MutasiController@index');
     Route::post('/add-mut','MutasiController@save');

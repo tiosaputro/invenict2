@@ -104,143 +104,112 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    Scan: function Scan() {
-      var _this3 = this;
-
-      this.aktif = false;
-      var routeData = this.$router.resolve({
-        name: 'Scan'
-      });
-      window.open(routeData.href, '_blank');
-      setTimeout(function () {
-        return _this3.getBarcode();
-      }, 2000);
-    },
-    getBarcode: function getBarcode() {
-      var _this4 = this;
-
-      this.barcode = localStorage.getItem('barcode');
-
-      if (!this.barcode) {
-        setTimeout(function () {
-          return _this4.getBarcode();
-        }, 3000);
-      }
-    },
-    hapus: function hapus() {
-      localStorage.removeItem('barcode');
-      this.barcode = null;
-      this.aktif = true;
-    },
-    fileImage: function fileImage(event) {
-      this.foto = event.target.files[0];
-      this.displayImage = true;
-      this.preview = URL.createObjectURL(event.target.files[0]);
-      this.createImage(this.foto);
-    },
-    createImage: function createImage(invent_photo) {
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = function (e) {
-        vm.image = e.target.result;
-      };
-
-      reader.readAsDataURL(invent_photo);
-    },
+    // Scan(){
+    //   this.aktif = false;
+    //   let routeData = this.$router.resolve({name: 'Scan'});
+    //   window.open(routeData.href, '_blank');
+    //   setTimeout( () => this.getBarcode(),2000);
+    // },
+    // getBarcode(){
+    //   this.barcode = localStorage.getItem('barcode');
+    //   if(!this.barcode){
+    //     setTimeout( () => this.getBarcode(),3000);
+    //   }
+    // },
+    // hapus(){
+    //   localStorage.removeItem('barcode');
+    //   this.barcode = null;
+    //   this.aktif = true;
+    // },
+    // fileImage(event) {
+    //   this.foto = event.target.files[0];
+    //   this.displayImage = true;
+    //   this.preview = URL.createObjectURL(event.target.files[0]);
+    //   this.createImage(this.foto);
+    //   },
+    // createImage(invent_photo) {
+    //   var image = new Image();
+    //   var reader = new FileReader();
+    //   var vm = this;
+    //   reader.onload = function (e) {
+    //     vm.image = e.target.result;
+    //   };
+    //   reader.readAsDataURL(invent_photo);
+    // },
     CreateMaster: function CreateMaster() {
-      var _this5 = this;
+      var _this3 = this;
 
       this.errors = [];
       this.error = [];
 
-      if (this.bu != null && this.merk != null && this.nama != null // this.foto != null
+      if ( // this.bu != null &&
+      this.merk != null && this.nama != null // this.foto != null
       ) {
-        if (this.image) {
-          var data = new FormData();
-          data.append("nama", this.nama);
-          data.append("tgl", this.tgl);
-          data.append("sn", this.sn);
-          data.append("bu", this.bu);
-          data.append("merk", this.merk);
-          data.append("type", this.type); // data.append("lastuser", this.lastuser);
-          // data.append("prevuser", this.prevuser);
-          // data.append("prevloct", this.prevloct);
-          // data.append("lastloct", this.lastloct);
+        // if(this.image){
+        // const data = new FormData();
+        // data.append("nama", this.nama);
+        // data.append("tgl", this.tgl);
+        // data.append("sn", this.sn);
+        // data.append("bu", this.bu);
+        // data.append("merk", this.merk);
+        // data.append("type", this.type);
+        // data.append("lastuser", this.lastuser);
+        // data.append("prevuser", this.prevuser);
+        // data.append("prevloct", this.prevloct);
+        // data.append("lastloct", this.lastloct);
+        // data.append("foto", this.image);
+        // data.append("kondisi", this.kondisi);
+        // data.append("barcode", this.barcode);
+        // data.append("garansi", this.garansi);
+        // this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        //   setTimeout( () => this.$router.push('/master-peripheral'),1000);
+        //   this.$toast.add({
+        //     severity: "success",
+        //     summary: "Success Message",
+        //     detail: "Success Create",
+        //   });
+        // }).catch(error=>{
+        //     this.errors = error.response.data.errors;
+        // });
+        // }
+        // else{
+        var data = new FormData();
+        data.append("nama", this.nama); // data.append("code", this.code);
+        // data.append("tgl", this.tgl);
+        // data.append("sn", this.sn);
+        // data.append("bu", this.bu);
 
-          data.append("foto", this.image);
-          data.append("kondisi", this.kondisi); // data.append("barcode", this.barcode);
-          // data.append("garansi", this.garansi);
+        data.append("merk", this.merk);
+        data.append("type", this.type); // data.append("lastuser", this.lastuser);
+        // data.append("prevuser", this.prevuser);
+        // data.append("prevloct", this.prevloct);
+        // data.append("lastloct", this.lastloct);
+        // data.append("foto", this.image);
+        // data.append("kondisi", this.kondisi);
+        // data.append("barcode", this.barcode);
+        // data.append("garansi", this.garansi);
 
-          this.axios.post('api/add-mas', data, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
-            localStorage.removeItem("barcode");
-            setTimeout(function () {
-              return _this5.$router.push('/master-peripheral');
-            }, 1000);
+        this.axios.post('api/add-mas', data, {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function () {
+          setTimeout(function () {
+            return _this3.$router.push('/master-peripheral');
+          }, 1000);
 
-            _this5.$toast.add({
-              severity: "success",
-              summary: "Success Message",
-              detail: "Success Create"
-            });
-          })["catch"](function (error) {
-            _this5.errors = error.response.data.errors;
+          _this3.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create"
           });
-        } else {
-          var _data = new FormData();
-
-          _data.append("nama", this.nama);
-
-          _data.append("code", this.code);
-
-          _data.append("tgl", this.tgl);
-
-          _data.append("sn", this.sn);
-
-          _data.append("bu", this.bu);
-
-          _data.append("merk", this.merk);
-
-          _data.append("type", this.type); // data.append("lastuser", this.lastuser);
-          // data.append("prevuser", this.prevuser);
-          // data.append("prevloct", this.prevloct);
-          // data.append("lastloct", this.lastloct);
-          // data.append("foto", this.image);
-
-
-          _data.append("kondisi", this.kondisi); // data.append("barcode", this.barcode);
-          // data.append("garansi", this.garansi);
-
-
-          this.axios.post('api/add-mas', _data, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
-            localStorage.removeItem("barcode");
-            setTimeout(function () {
-              return _this5.$router.push('/master-peripheral');
-            }, 1000);
-
-            _this5.$toast.add({
-              severity: "success",
-              summary: "Success Message",
-              detail: "Success Create"
-            });
-          })["catch"](function (error) {
-            _this5.errors = error.response.data.errors;
-          });
-        }
+        })["catch"](function (error) {
+          _this3.errors = error.response.data.errors;
+        }); // }
       } else {
-        if (this.bu == null) {
-          this.error.bu = "Bisnis Unit Belum Diisi";
-        }
-
+        // if(this.bu == null){
+        //   this.error.bu = "Bisnis Unit Belum Diisi"
+        // }
         if (this.merk == null) {
           this.error.merk = "Merk Belum Diisi";
         }
@@ -292,30 +261,26 @@ var _hoisted_5 = {
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Kode", -1
 /* HOISTED */
 );
 
 var _hoisted_7 = {
-  "class": "col-3 md-6"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_8 = {
   "class": "field grid"
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Merk", -1
+  "class": "col-fixed w-9rem"
+}, "Nama Peripheral", -1
 /* HOISTED */
 );
 
 var _hoisted_10 = {
-  "class": "col-4"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_11 = {
   key: 0,
@@ -330,15 +295,13 @@ var _hoisted_13 = {
 };
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Tipe", -1
+  "class": "col-fixed w-9rem"
+}, "Merk", -1
 /* HOISTED */
 );
 
 var _hoisted_15 = {
-  "class": "col-4"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_16 = {
   key: 0,
@@ -353,236 +316,24 @@ var _hoisted_18 = {
 };
 
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "S/N", -1
+  "class": "col-fixed w-9rem"
+}, "Tipe", -1
 /* HOISTED */
 );
 
 var _hoisted_20 = {
-  "class": "col-3 md-6"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_21 = {
   key: 0,
   "class": "p-error"
 };
 var _hoisted_22 = {
-  "class": "field grid"
-};
-
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Tgl. Perolehan", -1
-/* HOISTED */
-);
-
-var _hoisted_24 = {
-  "class": "col-12 md:col-6"
-};
-var _hoisted_25 = {
-  "class": "flex items-center"
-};
-var _hoisted_26 = ["value", "onClick"];
-var _hoisted_27 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_28 = {
-  "class": "field grid"
-};
-
-var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Lama Garansi", -1
-/* HOISTED */
-);
-
-var _hoisted_30 = {
-  "class": "col-12 md:col-6"
-};
-var _hoisted_31 = {
-  "class": "p-inputgroup"
-};
-
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "p-inputgroup-addon"
-}, " Tahun ", -1
-/* HOISTED */
-);
-
-var _hoisted_33 = {
-  "class": "field grid"
-};
-
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Kondisi", -1
-/* HOISTED */
-);
-
-var _hoisted_35 = {
-  "class": "col-4"
-};
-var _hoisted_36 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_37 = {
-  "class": "field grid"
-};
-
-var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "notlp2",
-  style: {
-    "width": "155px"
-  }
-}, "Bisnis Unit", -1
-/* HOISTED */
-);
-
-var _hoisted_39 = {
-  "class": "col-4"
-};
-var _hoisted_40 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_41 = {
   key: 1,
   "class": "p-error"
 };
-var _hoisted_42 = {
-  "class": "field grid"
-};
-
-var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Lokasi Terakhir", -1
-/* HOISTED */
-);
-
-var _hoisted_44 = {
-  "class": "col-6"
-};
-var _hoisted_45 = {
-  "class": "field grid"
-};
-
-var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Pengguna Terakhir", -1
-/* HOISTED */
-);
-
-var _hoisted_47 = {
-  "class": "col-6"
-};
-var _hoisted_48 = {
+var _hoisted_23 = {
   "class": "form-group"
-};
-var _hoisted_49 = {
-  "class": "col-sm-6"
-};
-var _hoisted_50 = {
-  "class": "field grid"
-};
-
-var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Nama Peripheral", -1
-/* HOISTED */
-);
-
-var _hoisted_52 = {
-  "class": "col-4"
-};
-var _hoisted_53 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_54 = {
-  key: 1,
-  "class": "p-error"
-};
-var _hoisted_55 = {
-  "class": "field grid"
-};
-
-var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_57 = {
-  "class": "col-10 md-6"
-};
-var _hoisted_58 = {
-  "class": "card",
-  style: {
-    "height": "20 rem"
-  }
-};
-var _hoisted_59 = ["src"];
-var _hoisted_60 = {
-  "class": "field grid"
-};
-
-var _hoisted_61 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_62 = {
-  "class": "col-10 md-6"
-};
-var _hoisted_63 = {
-  "class": "field grid"
-};
-
-var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Lokasi Sebelumnya", -1
-/* HOISTED */
-);
-
-var _hoisted_65 = {
-  "class": "col-6"
-};
-var _hoisted_66 = {
-  "class": "field grid"
-};
-
-var _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Penguna Sebelumnya", -1
-/* HOISTED */
-);
-
-var _hoisted_68 = {
-  "class": "col-6"
 };
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
@@ -598,10 +349,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
-  var _component_DatePicker = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DatePicker");
-
-  var _component_InputNumber = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputNumber");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
@@ -612,15 +359,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[11] || (_cache[11] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.CreateMaster && $options.CreateMaster.apply($options, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     disabled: ""
   })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
-    modelValue: $data.merk,
+    modelValue: $data.nama,
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.nama = $event;
+    }),
+    options: $data.kategori,
+    optionLabel: "name",
+    optionValue: "name",
+    showClear: true,
+    filter: true,
+    placeholder: "Pilih Peripheral",
+    autofocus: "",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+      'p-invalid': $data.errors.nama
+    })
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "options", "class"]), $data.errors.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.nama[0]), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.nama), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+    modelValue: $data.merk,
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.merk = $event;
     }),
     options: $data.merks,
@@ -635,14 +403,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.merk ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.merk[0]), 1
+  , ["modelValue", "options", "class"]), $data.errors.merk ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.merk[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.merk ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.merk), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.merk ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.merk), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.type,
-    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.type = $event;
     }),
     placeholder: "Masukan Tipe",
@@ -651,139 +419,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.errors.type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.type[0]), 1
+  , ["modelValue", "class"]), $data.errors.type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.type[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.type), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.type), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.sn,
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.sn = $event;
-    }),
-    placeholder: "Masukan S/N",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.sn
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), $data.errors.sn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.sn[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
-    modelValue: $data.tgl,
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-      return $data.tgl = $event;
-    }),
-    masks: $data.mask
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref) {
-      var inputValue = _ref.inputValue,
-          togglePopover = _ref.togglePopover;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "class": "bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none",
-        value: inputValue,
-        onClick: togglePopover,
-        placeholder: "Pilih Tanggal",
-        readonly: ""
-      }, null, 8
-      /* PROPS */
-      , _hoisted_26), !$data.tgl ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 0,
-        icon: "pi pi-calendar",
-        onClick: function onClick($event) {
-          return togglePopover();
-        }
-      }, null, 8
-      /* PROPS */
-      , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.tgl ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 1,
-        icon: "pi pi-trash",
-        "class": "p-button-danger",
-        onClick: _cache[3] || (_cache[3] = function ($event) {
-          return $data.tgl = null;
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["modelValue", "masks"]), $data.errors.tgl ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.tgl[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
-    modelValue: $data.garansi,
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-      return $data.garansi = $event;
-    }),
-    placeholder: "Masukan Garansi"
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"]), _hoisted_32])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
-    modelValue: $data.kondisi,
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-      return $data.kondisi = $event;
-    }),
-    options: $data.kondi,
-    showClear: true,
-    filter: true,
-    optionLabel: "name",
-    optionValue: "code",
-    placeholder: "Pilih Kondisi",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.kondisi
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.kondisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.kondisi[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label style=\"width:155px\">QR-Code</label>\n                <div class=\"col-12 md:col-6\">\n                <div class=\"p-inputgroup\">\n                  <InputText v-model=\"barcode\" readonly  v-if=\"barcode\"/>\n                  <img :src=\"'assets/loading2.gif'\" height=\"50\" v-if=\"!aktif && !barcode\">\n                  <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"barcode\" @click=\"hapus()\" @v-tooltip=\"'Click to delete'\"/>\n                  <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\n                  </div>\n                      <small v-if=\"errors.barcode\" class=\"p-error\">\n                          {{ errors.barcode[0] }}\n                      </small>\n                </div>\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
-    modelValue: $data.bu,
-    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
-      return $data.bu = $event;
-    }),
-    options: $data.bisnis,
-    optionLabel: "name",
-    optionValue: "code",
-    showClear: true,
-    filter: true,
-    placeholder: "Pilih Bisnis Unit",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.bu
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.bu[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.bu), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.lastloct,
-    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
-      return $data.lastloct = $event;
-    }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.lastloct
-    }),
-    placeholder: "Masukan Lokasi terakhir",
-    disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastloct\" class=\"p-error\">\n                          {{ errors.lastloct[0] }}\n                      </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [_hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.lastuser,
-    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
-      return $data.lastuser = $event;
-    }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.lastuser
-    }),
-    placeholder: "Masukan Pengguna Terakhir",
-    disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\n                            {{ errors.lastuser[0] }}\n                        </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                  <label style=\"width:155px\">S/N</label>\n                    <div class=\"col-3 md-6\">\n                    <InputText\n                      type =\"text\"\n                      v-model=\"sn\"\n                      placeholder=\"Masukan S/N\"\n                      :class=\"{ 'p-invalid': errors.sn }\"\n                    />\n                      <small v-if=\"errors.sn\" class=\"p-error\">\n                          {{ errors.sn[0] }}\n                      </small>\n                 </div>\n              </div>\n              <div class=\"field grid\">\n                <label style=\"width:155px\">Tgl. Perolehan</label>\n                  <div class=\"col-12 md:col-6\">\n                    <DatePicker v-model=\"tgl\" :masks=\"mask\" >\n                      <template v-slot=\"{ inputValue, togglePopover }\">\n                        <div class=\"flex items-center\">\n                          <input\n                            class=\"bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none\"\n                            :value=\"inputValue\"\n                            @click=\"togglePopover\"\n                            placeholder=\"Pilih Tanggal\"\n                            readonly\n                          />\n                          <Button icon=\"pi pi-calendar\" v-if=\"!tgl\" @click=\"togglePopover()\"/>\n                          <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"tgl\" @click=\"tgl = null\" />\n                        </div>\n                       </template>\n                      </DatePicker>\n                      <small v-if=\"errors.tgl\" class=\"p-error\">\n                          {{ errors.tgl[0] }}\n                      </small>\n                  </div>\n              </div>\n               <div class=\"field grid\">\n                  <label style=\"width:155px\">Lama Garansi</label>\n                    <div class=\"col-12 md:col-6\">\n                      <div class=\"p-inputgroup\">\n                      <InputNumber\n                          v-model=\"garansi\"\n                          placeholder=\"Masukan Garansi\"\n                        />\n                        <span class=\"p-inputgroup-addon\"> Tahun </span> \n                    </div>\n                </div>\n              </div>\n              <div class=\"field grid\">\n                <label style=\"width:155px\">Kondisi</label>\n                 <div class=\"col-4\">\n                  <Dropdown \n                    v-model=\"kondisi\"\n                    :options=\"kondi\"\n                    :showClear=\"true\"\n                    :filter=\"true\" \n                    optionLabel=\"name\"\n                    optionValue=\"code\"\n                    placeholder=\"Pilih Kondisi\"\n                    :class=\"{ 'p-invalid': errors.kondisi }\"\n                  />\n                      <small v-if=\"errors.kondisi\" class=\"p-error\">\n                          {{ errors.kondisi[0] }}\n                      </small>\n               </div>\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label style=\"width:155px\">QR-Code</label>\n                <div class=\"col-12 md:col-6\">\n                <div class=\"p-inputgroup\">\n                  <InputText v-model=\"barcode\" readonly  v-if=\"barcode\"/>\n                  <img :src=\"'assets/loading2.gif'\" height=\"50\" v-if=\"!aktif && !barcode\">\n                  <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"barcode\" @click=\"hapus()\" @v-tooltip=\"'Click to delete'\"/>\n                  <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\n                  </div>\n                      <small v-if=\"errors.barcode\" class=\"p-error\">\n                          {{ errors.barcode[0] }}\n                      </small>\n                </div>\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label for=\"notlp2\" style=\"width:155px\">Bisnis Unit</label>\n                  <div class=\"col-4\">\n                    <Dropdown \n                    v-model=\"bu\"\n                    :options=\"bisnis\"\n                    optionLabel=\"name\"\n                    optionValue=\"code\"\n                    :showClear=\"true\"\n                    :filter=\"true\"\n                    placeholder=\"Pilih Bisnis Unit\"\n                    :class=\"{ 'p-invalid': errors.bu }\"\n                  />\n                      <small v-if=\"errors.bu\" class=\"p-error\">\n                          {{ errors.bu[0] }}\n                      </small>\n                      <small v-if=\"error.bu\" class=\"p-error\">\n                          {{ error.bu }}\n                      </small>\n                </div>\n              </div>\n                <div class=\"field grid\">\n                  <label style=\"width:155px\">Lokasi Terakhir</label>\n                    <div class=\"col-6\">\n                      <InputText\n                        type=\"text\"\n                        v-model=\"lastloct\"\n                        :class=\"{ 'p-invalid': errors.lastloct }\"\n                        placeholder=\"Masukan Lokasi terakhir\"\n                        disabled\n                      /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastloct\" class=\"p-error\">\n                          {{ errors.lastloct[0] }}\n                      </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\n                  </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                    <label style=\"width:155px\">Pengguna Terakhir</label>\n                      <div class=\"col-6\">\n                        <InputText\n                          type=\"text\"\n                          v-model=\"lastuser\"\n                          :class=\"{ 'p-invalid': errors.lastuser }\"\n                          placeholder=\"Masukan Pengguna Terakhir\"\n                          disabled\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\n                            {{ errors.lastuser[0] }}\n                        </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\n                    </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -792,76 +432,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mr-2",
     icon: "pi pi-times",
-    onClick: _cache[10] || (_cache[10] = function ($event) {
+    onClick: _cache[3] || (_cache[3] = function ($event) {
       return _ctx.$router.push('/master-peripheral');
     })
   })])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
-    modelValue: $data.nama,
-    "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
-      return $data.nama = $event;
-    }),
-    options: $data.kategori,
-    optionLabel: "name",
-    optionValue: "code",
-    showClear: true,
-    filter: true,
-    placeholder: "Pilih Peripheral",
-    autofocus: "",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.nama
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.nama[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.nama), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [_hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-    src: $data.preview,
-    "class": "master-image"
-  }, null, 8
-  /* PROPS */
-  , _hoisted_59)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [_hoisted_61, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "file",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
-      'p-invalid': $data.error.foto
-    }, "form-control"]),
-    name: "foto",
-    ref: "fileInput",
-    onChange: _cache[13] || (_cache[13] = function () {
-      return $options.fileImage && $options.fileImage.apply($options, arguments);
-    })
-  }, null, 34
-  /* CLASS, HYDRATE_EVENTS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"error.foto\">\n                      {{ error.foto }}\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.prevloct,
-    "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
-      return $data.prevloct = $event;
-    }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.prevloct
-    }),
-    placeholder: "Masukan Lokasi sebelumnya",
-    disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevloct\">\n                        {{ errors.prevloct[0] }}\n                      </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [_hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.prevuser,
-    "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
-      return $data.prevuser = $event;
-    }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.prevuser
-    }),
-    placeholder: "Masukan Pengguna sebelumnya",
-    disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\n                        {{ errors.prevuser[0] }}\n                      </small> ")])])])])])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\">\n            <div class=\"field grid\">\n              <label style=\"width:155px\">Nama Peripheral</label>\n                <div class=\"col-4\">\n                  <Dropdown\n                    v-model=\"nama\"\n                    :options=\"kategori\"\n                    optionLabel=\"name\"\n                    optionValue=\"code\"\n                    :showClear=\"true\"\n                    :filter=\"true\"\n                    placeholder=\"Pilih Peripheral\"\n                    autofocus\n                    :class=\"{ 'p-invalid': errors.nama }\"\n                  />\n                  <small v-if=\"errors.nama\" class=\"p-error\">\n                    {{ errors.nama[0] }}\n                  </small>\n                    <small v-if=\"error.nama\" class=\"p-error\">\n                      {{ error.nama }}\n                    </small>\n                </div>\n            </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n              <label style=\"width:155px\"></label>\n                <div class=\"col-10 md-6\">\n                  <div class=\"card\" style=\"height: 20 rem;\">\n                    <img :src=\"preview\" class=\"master-image\"/>\n                  </div>\n                </div>\n            </div>\n            <div class=\"field grid\">\n              <label style=\"width:155px\"></label>\n                <div class=\"col-10 md-6\">\n                  <input type=\"file\" :class=\"{ 'p-invalid': error.foto }\" name=\"foto\" ref=\"fileInput\" class=\"form-control\" @change=\"fileImage\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"error.foto\">\n                      {{ error.foto }}\n                    </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\n            </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                  <label style=\"width:155px\">Lokasi Sebelumnya</label>\n                    <div class=\"col-6\">\n                    <InputText\n                        type=\"text\"\n                        v-model=\"prevloct\"\n                        :class=\"{ 'p-invalid': errors.prevloct }\"\n                        placeholder=\"Masukan Lokasi sebelumnya\"\n                        disabled\n                    /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevloct\">\n                        {{ errors.prevloct[0] }}\n                      </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\n                 </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                  <label style=\"width:155px\">Penguna Sebelumnya</label>\n                    <div class=\"col-6\">\n                       <InputText\n                        type=\"text\"\n                        v-model=\"prevuser\"\n                        :class=\"{ 'p-invalid': errors.prevuser  }\"\n                        placeholder=\"Masukan Pengguna sebelumnya\"\n                        disabled\n                    /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\n                        {{ errors.prevuser[0] }}\n                      </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\n                 </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")])])]);
 }
 
 /***/ }),

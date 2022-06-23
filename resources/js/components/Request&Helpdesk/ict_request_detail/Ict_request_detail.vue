@@ -7,11 +7,11 @@
         <Toolbar class="mb-4">
           <template v-slot:start>
 						<div class="my-2">
-				        <h4>ICT Request (Detail) </h4>
+				      <h4>ICT Request (Detail) </h4>
             </div>
           </template>
           <template v-slot:end>
-              <label style="width:130px">No. Request: {{this.kode}}</label>
+            <label style="width:130px">No. Request: {{this.kode}}</label>
           </template>
         </Toolbar>
         <DataTable

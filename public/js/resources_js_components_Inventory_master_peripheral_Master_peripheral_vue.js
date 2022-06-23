@@ -422,8 +422,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
 
-  var _component_qrcode_vue = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("qrcode-vue");
-
   var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
@@ -444,7 +442,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Master Peripheral ICT",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Master Peripheral",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -518,14 +516,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Merk",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "invent_bu",
-        header: "Bisnis Unit",
+        field: "invent_type",
+        header: "Type",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        headerStyle: "min-width:14rem"
+        headerStyle: "min-width:6rem"
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+            "class": "p-button-rounded p-button-secondary mr-2",
+            icon: "pi pi-info-circle",
+            onClick: function onClick($event) {
+              return _ctx.$router.push({
+                name: 'Master Peripheral Detail',
+                params: {
+                  code: slotProps.data.invent_code
+                }
+              });
+            }
+          }, null, 8
+          /* PROPS */
+          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+            left: true
+          }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-info mr-2",
             icon: "pi pi-pencil",
             onClick: function onClick($event) {
@@ -539,7 +552,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8
           /* PROPS */
           , ["onClick"]), [[_directive_tooltip, 'Edit', void 0, {
-            left: true
+            bottom: true
           }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             icon: "pi pi-trash",
             "class": "p-button-rounded p-button-danger mr-2",
@@ -550,17 +563,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           /* PROPS */
           , ["onClick"]), [[_directive_tooltip, 'Delete', void 0, {
             top: true
-          }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-            icon: "pi pi-qrcode",
-            "class": "p-button-rounded p-button-success mt-2",
-            onClick: function onClick($event) {
-              return $options.previewBarcode(slotProps.data.invent_code);
-            }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Print QR-Code', void 0, {
-            right: true
-          }]])];
+          }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\n                icon=\"pi pi-qrcode\"\n                class=\"p-button-rounded p-button-success mt-2\"\n                @click=\"previewBarcode(slotProps.data.invent_code)\"\n                v-tooltip.right=\"'Print QR-Code'\"\n              /> ")];
         }),
         _: 1
         /* STABLE */
@@ -572,47 +575,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
-    id: "qrcode",
-    visible: $data.displayBarcode,
-    "onUpdate:visible": _cache[5] || (_cache[5] = function ($event) {
-      return $data.displayBarcode = $event;
-    }),
-    style: {
-      width: '400px'
-    },
-    header: "Preview QR-Code",
-    modal: true,
-    "class": "p-fluid"
-  }, {
-    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Pdf",
-        icon: "pi pi-download",
-        onClick: _cache[4] || (_cache[4] = function ($event) {
-          return $options.downloadBarcodePdf();
-        }),
-        "class": "p-button-danger"
-      })];
-    }),
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_qrcode_vue, {
-        value: $data.barcode,
-        ref: "qr",
-        size: 300,
-        level: "L"
-      }, null, 8
-      /* PROPS */
-      , ["value"])];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+  , ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Dialog\n          id=\"qrcode\"\n          v-model:visible=\"displayBarcode\"\n          :style=\"{ width: '400px' }\"\n          header=\"Preview QR-Code\"\n          :modal=\"true\"\n          class=\"p-fluid\"\n        >\n        <qrcode-vue :value=\"barcode\" ref=\"qr\" :size=\"300\" level=\"L\" /> \n          <template #footer>\n            <Button label=\"Pdf\" icon=\"pi pi-download\" @click=\"downloadBarcodePdf()\" class=\"p-button-danger\" />\n          </template>\n        </Dialog> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.displayKode,
-    "onUpdate:visible": _cache[19] || (_cache[19] = function ($event) {
+    "onUpdate:visible": _cache[17] || (_cache[17] = function ($event) {
       return $data.displayKode = $event;
     }),
     breakpoints: {
@@ -630,7 +595,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         label: "Close",
         "class": "p-button-raised p-button-danger mr-2",
         icon: "pi pi-times",
-        onClick: _cache[18] || (_cache[18] = function ($event) {
+        onClick: _cache[16] || (_cache[16] = function ($event) {
           return _this.displayKode = false;
         }),
         autofocus: ""
@@ -640,7 +605,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-2\">/ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         type: "text",
         modelValue: $data.detail.invent_code,
-        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $data.detail.invent_code = $event;
         }),
         disabled: ""
@@ -648,7 +613,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.detail.invent_desc,
-        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
           return $data.detail.invent_desc = $event;
         }),
         disabled: ""
@@ -656,7 +621,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.detail.invent_brand,
-        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
           return $data.detail.invent_brand = $event;
         }),
         disabled: ""
@@ -665,14 +630,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         disabled: "",
         modelValue: $data.detail.invent_type,
-        "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
           return $data.detail.invent_type = $event;
         })
       }, null, 8
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.detail.invent_sn,
-        "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
           return $data.detail.invent_sn = $event;
         }),
         disabled: ""
@@ -680,7 +645,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.detail.invent_tgl_perolehan,
-        "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
+        "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
           return $data.detail.invent_tgl_perolehan = $event;
         }),
         disabled: ""
@@ -688,7 +653,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.detail.invent_kondisi,
-        "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
+        "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
           return $data.detail.invent_kondisi = $event;
         }),
         disabled: ""
@@ -696,7 +661,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.detail.invent_bu,
-        "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
+        "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
           return $data.detail.invent_bu = $event;
         }),
         disabled: ""
@@ -705,7 +670,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>/ ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         type: "text",
         modelValue: $data.detail.invent_lokasi_update,
-        "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
+        "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
           return $data.detail.invent_lokasi_update = $event;
         }),
         disabled: ""
@@ -714,7 +679,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         type: "text",
         modelValue: $data.detail.invent_pengguna_update,
-        "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
+        "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
           return $data.detail.invent_pengguna_update = $event;
         }),
         disabled: ""
@@ -722,7 +687,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.detail.invent_lokasi_previous,
-        "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
+        "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
           return $data.detail.invent_lokasi_previous = $event;
         }),
         disabled: ""
@@ -730,7 +695,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.detail.invent_pengguna_previous,
-        "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
+        "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
           return $data.detail.invent_pengguna_previous = $event;
         }),
         disabled: ""

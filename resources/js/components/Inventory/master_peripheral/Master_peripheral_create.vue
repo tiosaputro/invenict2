@@ -1,49 +1,71 @@
 <template>
   <div>
-        <Toast />
+      <Toast />
         <div class="card">
           <Toolbar class="mb-4">
             <template v-slot:start>
-                  <h4>Master Peripheral</h4>
+              <h4>Master Peripheral</h4>
             </template>
           </Toolbar>
           <div class="row">
             <div class="col-sm-6">
-            <form @submit.prevent="CreateMaster">
+             <form @submit.prevent="CreateMaster">
                <div class="field grid">
-                    <label style="width:155px">Kode</label>
-                    <div class="col-3 md-6">
+                  <label class="col-fixed w-9rem">Kode</label>
+                    <div class="col-fixed w-9rem">
                       <InputText
                         type="text"
                         disabled
                       />
                   </div>
-                  </div>
-                    <div class="field grid">
-                     <label style="width:155px">Merk</label>
-                      <div class="col-4">
-                        <Dropdown
-                          v-model="merk"
-                          :options="merks"
-                          optionLabel="name"
-                          optionValue="code"
-                          :showClear="true"
-                          :filter="true"
-                          placeholder="Pilih Merk"
-                          autofocus
-                          :class="{ 'p-invalid': errors.merk }"
-                        />
+                </div>
+                <div class="field grid">
+                  <label class="col-fixed w-9rem">Nama Peripheral</label>
+                    <div class="col-fixed w-9rem">
+                      <Dropdown
+                        v-model="nama"
+                        :options="kategori"
+                        optionLabel="name"
+                        optionValue="name"
+                        :showClear="true"
+                        :filter="true"
+                        placeholder="Pilih Peripheral"
+                        autofocus
+                        :class="{ 'p-invalid': errors.nama }"
+                      />
+                      <small v-if="errors.nama" class="p-error">
+                        {{ errors.nama[0] }}
+                      </small>
+                      <small v-if="error.nama" class="p-error">
+                        {{ error.nama }}
+                      </small>
+                    </div>
+                </div>
+                <div class="field grid">
+                  <label class="col-fixed w-9rem">Merk</label>
+                    <div class="col-fixed w-9rem">
+                      <Dropdown
+                        v-model="merk"
+                        :options="merks"
+                        optionLabel="name"
+                        optionValue="code"
+                        :showClear="true"
+                        :filter="true"
+                        placeholder="Pilih Merk"
+                        autofocus
+                        :class="{ 'p-invalid': errors.merk }"
+                      />
                       <small v-if="errors.merk" class="p-error">
                           {{ errors.merk[0] }}
                       </small>
                       <small v-if="error.merk" class="p-error">
                           {{ error.merk }}
                       </small>
-                  </div>
-                  </div>
-               <div class="field grid">
-                <label style="width:155px">Tipe</label>
-                 <div class="col-4">
+                    </div>
+                </div>
+                <div class="field grid">
+                  <label class="col-fixed w-9rem">Tipe</label>
+                    <div class="col-fixed w-9rem">
                      <InputText
                         type="text"
                         v-model= "type"
@@ -56,9 +78,9 @@
                       <small v-if="error.type" class="p-error">
                           {{ error.type }}
                       </small>
-                 </div>
-              </div>
-               <div class="field grid">
+                    </div>
+                </div>
+               <!-- <div class="field grid">
                   <label style="width:155px">S/N</label>
                     <div class="col-3 md-6">
                     <InputText
@@ -124,7 +146,7 @@
                           {{ errors.kondisi[0] }}
                       </small>
                </div>
-              </div>
+              </div> -->
               <!-- <div class="field grid">
                 <label style="width:155px">QR-Code</label>
                 <div class="col-12 md:col-6">
@@ -139,7 +161,7 @@
                       </small>
                 </div>
               </div>  -->
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label for="notlp2" style="width:155px">Bisnis Unit</label>
                   <div class="col-4">
                     <Dropdown 
@@ -169,13 +191,13 @@
                         :class="{ 'p-invalid': errors.lastloct }"
                         placeholder="Masukan Lokasi terakhir"
                         disabled
-                      />
+                      /> -->
                       <!-- <small v-if="errors.lastloct" class="p-error">
                           {{ errors.lastloct[0] }}
                       </small> -->
-                    </div>
-                  </div>
-                  <div class="field grid">
+                    <!-- </div>
+                  </div> -->
+                  <!-- <div class="field grid">
                     <label style="width:155px">Pengguna Terakhir</label>
                       <div class="col-6">
                         <InputText
@@ -184,12 +206,12 @@
                           :class="{ 'p-invalid': errors.lastuser }"
                           placeholder="Masukan Pengguna Terakhir"
                           disabled
-                        />
+                        /> -->
                         <!-- <small v-if="errors.lastuser" class="p-error">
                             {{ errors.lastuser[0] }}
                         </small> -->
-                      </div>
-                    </div> 
+                      <!-- </div>
+                    </div>  -->
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -206,7 +228,7 @@
               </div>
             </form>
            </div>
-           <div class="col-sm-6">
+           <!-- <div class="col-sm-6">
             <div class="field grid">
               <label style="width:155px">Nama Peripheral</label>
                 <div class="col-4">
@@ -228,8 +250,8 @@
                       {{ error.nama }}
                     </small>
                 </div>
-            </div> 
-            <div class="field grid">
+            </div>  -->
+            <!-- <div class="field grid">
               <label style="width:155px"></label>
                 <div class="col-10 md-6">
                   <div class="card" style="height: 20 rem;">
@@ -240,13 +262,13 @@
             <div class="field grid">
               <label style="width:155px"></label>
                 <div class="col-10 md-6">
-                  <input type="file" :class="{ 'p-invalid': error.foto }" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
+                  <input type="file" :class="{ 'p-invalid': error.foto }" name="foto" ref="fileInput" class="form-control" @change="fileImage" /> -->
                     <!-- <small class="p-error" v-if="error.foto">
                       {{ error.foto }}
                     </small> -->
-                </div>
-            </div>
-                <div class="field grid">
+                <!-- </div>
+            </div> -->
+                <!-- <div class="field grid">
                   <label style="width:155px">Lokasi Sebelumnya</label>
                     <div class="col-6">
                     <InputText
@@ -255,13 +277,13 @@
                         :class="{ 'p-invalid': errors.prevloct }"
                         placeholder="Masukan Lokasi sebelumnya"
                         disabled
-                    />
+                    /> -->
                       <!-- <small class="p-error" v-if="errors.prevloct">
                         {{ errors.prevloct[0] }}
                       </small> -->
-                    </div>
-                 </div>
-                 <div class="field grid">
+                    <!-- </div>
+                 </div> -->
+                 <!-- <div class="field grid">
                   <label style="width:155px">Penguna Sebelumnya</label>
                     <div class="col-6">
                        <InputText
@@ -270,13 +292,13 @@
                         :class="{ 'p-invalid': errors.prevuser  }"
                         placeholder="Masukan Pengguna sebelumnya"
                         disabled
-                    />
+                    /> -->
                       <!-- <small class="p-error" v-if="errors.prevuser">
                         {{ errors.prevuser[0] }}
                       </small> -->
-                    </div>
-                 </div>
-          </div>
+                    <!-- </div>
+                 </div> -->
+          <!-- </div> -->
           </div>
       </div>
     </div>
@@ -354,83 +376,82 @@ export default {
            }
         });
       },
-    Scan(){
-      this.aktif = false;
-      let routeData = this.$router.resolve({name: 'Scan'});
-      window.open(routeData.href, '_blank');
-      setTimeout( () => this.getBarcode(),2000);
-    },
-    getBarcode(){
-      this.barcode = localStorage.getItem('barcode');
-      if(!this.barcode){
-        setTimeout( () => this.getBarcode(),3000);
-      }
-    },
-    hapus(){
-      localStorage.removeItem('barcode');
-      this.barcode = null;
-      this.aktif = true;
-    },
-    fileImage(event) {
-      this.foto = event.target.files[0];
-      this.displayImage = true;
-      this.preview = URL.createObjectURL(event.target.files[0]);
-      this.createImage(this.foto);
-      },
-    createImage(invent_photo) {
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this;
-      reader.onload = function (e) {
-        vm.image = e.target.result;
-      };
-      reader.readAsDataURL(invent_photo);
-    },
+    // Scan(){
+    //   this.aktif = false;
+    //   let routeData = this.$router.resolve({name: 'Scan'});
+    //   window.open(routeData.href, '_blank');
+    //   setTimeout( () => this.getBarcode(),2000);
+    // },
+    // getBarcode(){
+    //   this.barcode = localStorage.getItem('barcode');
+    //   if(!this.barcode){
+    //     setTimeout( () => this.getBarcode(),3000);
+    //   }
+    // },
+    // hapus(){
+    //   localStorage.removeItem('barcode');
+    //   this.barcode = null;
+    //   this.aktif = true;
+    // },
+    // fileImage(event) {
+    //   this.foto = event.target.files[0];
+    //   this.displayImage = true;
+    //   this.preview = URL.createObjectURL(event.target.files[0]);
+    //   this.createImage(this.foto);
+    //   },
+    // createImage(invent_photo) {
+    //   var image = new Image();
+    //   var reader = new FileReader();
+    //   var vm = this;
+    //   reader.onload = function (e) {
+    //     vm.image = e.target.result;
+    //   };
+    //   reader.readAsDataURL(invent_photo);
+    // },
     CreateMaster() {
       this.errors = [];
       this.error = [];
       if (
-        this.bu != null &&
+        // this.bu != null &&
         this.merk != null &&
         this.nama != null
         // this.foto != null
       ) {
-        if(this.image){
-          const data = new FormData();
-          data.append("nama", this.nama);
-          data.append("tgl", this.tgl);
-          data.append("sn", this.sn);
-          data.append("bu", this.bu);
-          data.append("merk", this.merk);
-          data.append("type", this.type);
+        // if(this.image){
+          // const data = new FormData();
+          // data.append("nama", this.nama);
+          // data.append("tgl", this.tgl);
+          // data.append("sn", this.sn);
+          // data.append("bu", this.bu);
+          // data.append("merk", this.merk);
+          // data.append("type", this.type);
           // data.append("lastuser", this.lastuser);
           // data.append("prevuser", this.prevuser);
           // data.append("prevloct", this.prevloct);
           // data.append("lastloct", this.lastloct);
-          data.append("foto", this.image);
-          data.append("kondisi", this.kondisi);
+          // data.append("foto", this.image);
+          // data.append("kondisi", this.kondisi);
           // data.append("barcode", this.barcode);
           // data.append("garansi", this.garansi);
           
-        this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-          localStorage.removeItem("barcode");
-          setTimeout( () => this.$router.push('/master-peripheral'),1000);
-          this.$toast.add({
-            severity: "success",
-            summary: "Success Message",
-            detail: "Success Create",
-          });
-        }).catch(error=>{
-            this.errors = error.response.data.errors;
-        });
-        }
-        else{
+        // this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        //   setTimeout( () => this.$router.push('/master-peripheral'),1000);
+        //   this.$toast.add({
+        //     severity: "success",
+        //     summary: "Success Message",
+        //     detail: "Success Create",
+        //   });
+        // }).catch(error=>{
+        //     this.errors = error.response.data.errors;
+        // });
+        // }
+        // else{
           const data = new FormData();
           data.append("nama", this.nama);
-          data.append("code", this.code);
-          data.append("tgl", this.tgl);
-          data.append("sn", this.sn);
-          data.append("bu", this.bu);
+          // data.append("code", this.code);
+          // data.append("tgl", this.tgl);
+          // data.append("sn", this.sn);
+          // data.append("bu", this.bu);
           data.append("merk", this.merk);
           data.append("type", this.type);
           // data.append("lastuser", this.lastuser);
@@ -438,12 +459,11 @@ export default {
           // data.append("prevloct", this.prevloct);
           // data.append("lastloct", this.lastloct);
           // data.append("foto", this.image);
-          data.append("kondisi", this.kondisi);
+          // data.append("kondisi", this.kondisi);
           // data.append("barcode", this.barcode);
           // data.append("garansi", this.garansi);
           
         this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-          localStorage.removeItem("barcode");
           setTimeout( () => this.$router.push('/master-peripheral'),1000);
           this.$toast.add({
             severity: "success",
@@ -453,11 +473,11 @@ export default {
         }).catch(error=>{
             this.errors = error.response.data.errors;
         });
-        }
+        // }
       }else{
-        if(this.bu == null){
-          this.error.bu = "Bisnis Unit Belum Diisi"
-        }
+        // if(this.bu == null){
+        //   this.error.bu = "Bisnis Unit Belum Diisi"
+        // }
         if(this.merk == null){
           this.error.merk = "Merk Belum Diisi"
         }

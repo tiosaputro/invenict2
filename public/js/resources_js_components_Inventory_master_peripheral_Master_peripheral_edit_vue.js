@@ -62,80 +62,51 @@ __webpack_require__.r(__webpack_exports__);
         this.$router.push('/login');
       }
     },
-    Scan: function Scan() {
-      var _this2 = this;
-
-      this.aktif = false;
-      var routeData = this.$router.resolve({
-        name: 'Scan'
-      });
-      window.open(routeData.href, '_blank');
-      setTimeout(function () {
-        return _this2.getBarcode();
-      }, 2000);
-    },
-    hapus: function hapus() {
-      this.master.invent_barcode = null;
-      this.aktif = true;
-    },
-    getBarcode: function getBarcode() {
-      var _this3 = this;
-
-      this.master.invent_barcode = localStorage.getItem("barcode");
-
-      if (!this.master.invent_barcode) {
-        setTimeout(function () {
-          return _this3.getBarcode();
-        }, 3000);
-      }
-    },
-    getBisnis: function getBisnis() {
-      var _this4 = this;
-
-      this.axios.get('/api/get-bisnis', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.bisnis = response.data;
-      });
-    },
-    getMerk: function getMerk() {
-      var _this5 = this;
-
-      this.axios.get('/api/getMerk', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this5.merks = response.data;
-      });
-    },
-    getKondisi: function getKondisi() {
-      var _this6 = this;
-
-      this.axios.get('/api/getKondisi', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this6.kondi = response.data;
-      });
-    },
+    // Scan(){
+    //   this.aktif = false;
+    //   let routeData = this.$router.resolve({name: 'Scan'});
+    //   window.open(routeData.href, '_blank');
+    //   setTimeout( () => this.getBarcode(),2000);
+    // },
+    // hapus(){
+    //   this.master.invent_barcode = null;
+    //   this.aktif = true;
+    // },
+    // getBarcode(){
+    //   this.master.invent_barcode = localStorage.getItem("barcode");
+    //   if(!this.master.invent_barcode){
+    //     setTimeout( () => this.getBarcode(),3000);
+    //   }
+    // }, 
+    //   getBisnis(){
+    //     this.axios.get('/api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    //       this.bisnis = response.data;
+    //     });
+    //   },
+    // getMerk(){
+    //   this.axios.get('/api/getMerk', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    //       this.merks = response.data;
+    //   });
+    // },
+    // getKondisi(){
+    //   this.axios.get('/api/getKondisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    //       this.kondi = response.data;
+    //   });
+    // },
     getMaster: function getMaster() {
-      var _this7 = this;
+      var _this2 = this;
 
       this.axios.get('/api/edit-mas/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this7.master = response.data.mas;
-        _this7.bisnis = response.data.bisnis;
-        _this7.kondi = response.data.kondisi;
+        _this2.master = response.data.mas;
+        _this2.bisnis = response.data.bisnis;
+        _this2.kondi = response.data.kondisi;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this7.$toast.add({
+          _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Sesi Login Expired'
@@ -144,41 +115,44 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this7.$router.push('/login');
+            return _this2.$router.push('/login');
           }, 2000);
         }
 
         if (error.response.status == 403) {
-          _this7.$router.push('/access');
+          _this2.$router.push('/access');
         }
       });
     },
-    fileImage: function fileImage(event) {
-      this.invent_photo = event.target.files[0];
-      this.displayImage = true;
-      this.preview = URL.createObjectURL(event.target.files[0]);
-      this.createImage(this.invent_photo);
-    },
-    createImage: function createImage(invent_photo) {
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this.master;
-
-      reader.onload = function (e) {
-        vm.image = e.target.result;
-      };
-
-      reader.readAsDataURL(invent_photo);
-    },
+    //   fileImage(event) {
+    //   this.invent_photo = event.target.files[0];
+    //   this.displayImage = true;
+    //   this.preview = URL.createObjectURL(event.target.files[0]);
+    //   this.createImage(this.invent_photo);
+    //   },
+    //   createImage(invent_photo) {
+    //   var image = new Image();
+    //   var reader = new FileReader();
+    //   var vm = this.master;
+    //   reader.onload = function (e) {
+    //     vm.image = e.target.result;
+    //   };
+    //   reader.readAsDataURL(invent_photo);
+    // },
     UpdateMaster: function UpdateMaster() {
-      var _this8 = this;
+      var _this3 = this;
 
       this.submitted = true;
 
-      if (this.master.invent_desc != null && // this.master.invent_brand != null &&
-      this.master.invent_type != null && this.master.invent_sn != null && this.master.invent_tgl_perolehan != null && // this.master.invent_lama_garansi != null &&
-      this.master.invent_kondisi != null && // this.master.invent_barcode != null &&
-      this.master.invent_bu != null // this.master.invent_lokasi_update != null &&
+      if ( // this.master.invent_desc != null &&
+      // this.master.invent_brand != null &&
+      this.master.invent_type != null // this.master.invent_sn != null &&
+      // this.master.invent_tgl_perolehan != null &&
+      // this.master.invent_lama_garansi != null &&
+      // this.master.invent_kondisi != null &&
+      // this.master.invent_barcode != null &&
+      // this.master.invent_bu != null 
+      // this.master.invent_lokasi_update != null &&
       // this.master.invent_pengguna_update != null &&
       // this.master.invent_lokasi_previous != null &&
       // this.master.invent_pengguna_previous != null  
@@ -190,18 +164,18 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           localStorage.removeItem("barcode");
           setTimeout(function () {
-            return _this8.$router.push('/master-peripheral');
+            return _this3.$router.push('/master-peripheral');
           }, 1000);
 
-          _this8.$toast.add({
+          _this3.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Update"
           });
         })["catch"](function (error) {
           if (error.response.status == 422) {
-            _this8.submitted = false;
-            _this8.errors = error.response.data.errors;
+            _this3.submitted = false;
+            _this3.errors = error.response.data.errors;
           }
         });
       }
@@ -245,273 +219,59 @@ var _hoisted_5 = {
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
+  "class": "col-fixed w-9rem"
 }, "Kode", -1
 /* HOISTED */
 );
 
 var _hoisted_7 = {
-  "class": "col-3 md-6"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_8 = {
   "class": "field grid"
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Merk", -1
+  "class": "col-fixed w-9rem"
+}, "Nama Peripheral", -1
 /* HOISTED */
 );
 
 var _hoisted_10 = {
-  "class": "col-3 md-6"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_11 = {
   "class": "field grid"
 };
 
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Tipe", -1
+  "class": "col-fixed w-9rem"
+}, "Merk", -1
 /* HOISTED */
 );
 
 var _hoisted_13 = {
-  "class": "col-3 md-6"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_14 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_15 = {
   "class": "field grid"
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "S/N", -1
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, "Tipe", -1
 /* HOISTED */
 );
 
+var _hoisted_16 = {
+  "class": "col-fixed w-9rem"
+};
 var _hoisted_17 = {
-  "class": "col-3 md-6"
+  key: 0,
+  "class": "p-error"
 };
 var _hoisted_18 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_19 = {
-  "class": "field grid"
-};
-
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Tgl. Perolehan", -1
-/* HOISTED */
-);
-
-var _hoisted_21 = {
-  "class": "col-12 md:col-6"
-};
-var _hoisted_22 = {
-  "class": "flex items-center"
-};
-var _hoisted_23 = ["value", "onClick"];
-var _hoisted_24 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_25 = {
-  "class": "field grid"
-};
-
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Lama Garansi", -1
-/* HOISTED */
-);
-
-var _hoisted_27 = {
-  "class": "col-12 md:col-6"
-};
-var _hoisted_28 = {
-  "class": "p-inputgroup"
-};
-
-var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "p-inputgroup-addon"
-}, " Tahun ", -1
-/* HOISTED */
-);
-
-var _hoisted_30 = {
-  "class": "field grid"
-};
-
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Kondisi", -1
-/* HOISTED */
-);
-
-var _hoisted_32 = {
-  "class": "col-4"
-};
-var _hoisted_33 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_34 = {
-  "class": "field grid"
-};
-
-var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Bisnis Unit", -1
-/* HOISTED */
-);
-
-var _hoisted_36 = {
-  "class": "col-4"
-};
-var _hoisted_37 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_38 = {
-  "class": "field grid"
-};
-
-var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Lokasi Terakhir", -1
-/* HOISTED */
-);
-
-var _hoisted_40 = {
-  "class": "col-3 md-6"
-};
-var _hoisted_41 = {
-  "class": "field grid"
-};
-
-var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Pengguna Terakhir", -1
-/* HOISTED */
-);
-
-var _hoisted_43 = {
-  "class": "col-3 md-6"
-};
-var _hoisted_44 = {
   "class": "p-p-0 p-p-sm-1 p-p-md-2 p-p-lg-3"
-};
-var _hoisted_45 = {
-  "class": "col-sm-6"
-};
-var _hoisted_46 = {
-  "class": "field grid"
-};
-
-var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Nama", -1
-/* HOISTED */
-);
-
-var _hoisted_48 = {
-  "class": "col-12 md:col-4"
-};
-var _hoisted_49 = {
-  "class": "field grid"
-};
-
-var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_51 = {
-  "class": "col-10 md-6"
-};
-var _hoisted_52 = {
-  "class": "card",
-  style: {
-    "height": "19.5rem"
-  }
-};
-var _hoisted_53 = ["src"];
-var _hoisted_54 = ["src"];
-var _hoisted_55 = {
-  "class": "field grid"
-};
-
-var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_57 = {
-  "class": "p-col-10 p-md-6"
-};
-var _hoisted_58 = {
-  "class": "field grid"
-};
-
-var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Lokasi Sebelumnya", -1
-/* HOISTED */
-);
-
-var _hoisted_60 = {
-  "class": "col-12 md:col-4"
-};
-var _hoisted_61 = {
-  "class": "field grid"
-};
-
-var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  style: {
-    "width": "155px"
-  }
-}, "Penguna Sebelumnya", -1
-/* HOISTED */
-);
-
-var _hoisted_63 = {
-  "class": "col-12 md:col-4"
 };
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
@@ -525,14 +285,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
-  var _component_DatePicker = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DatePicker");
-
-  var _component_InputNumber = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputNumber");
-
-  var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
-
-  var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
@@ -543,7 +295,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[12] || (_cache[12] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.UpdateMaster && $options.UpdateMaster.apply($options, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
@@ -557,17 +309,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.master.lookup_desc,
+    modelValue: $data.master.invent_desc,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $data.master.lookup_desc = $event;
+      return $data.master.invent_desc = $event;
     }),
+    placeholder: "Masukan Nama",
     disabled: ""
   }, null, 8
   /* PROPS */
   , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.master.invent_type,
+    modelValue: $data.master.lookup_desc,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.master.lookup_desc = $event;
+    }),
+    disabled: ""
+  }, null, 8
+  /* PROPS */
+  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+    type: "text",
+    modelValue: $data.master.invent_type,
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.master.invent_type = $event;
     }),
     placeholder: "Masukan Tipe",
@@ -576,119 +338,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.submitted && !$data.master.invent_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_14, "Type Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.master.invent_sn,
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.master.invent_sn = $event;
-    }),
-    placeholder: "Masukan S/N",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.submitted && !$data.master.invent_sn
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), $data.submitted && !$data.master.invent_sn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_18, "S/N Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
-    modelValue: $data.master.invent_tgl_perolehan,
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-      return $data.master.invent_tgl_perolehan = $event;
-    }),
-    masks: $data.mask
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref) {
-      var inputValue = _ref.inputValue,
-          togglePopover = _ref.togglePopover;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        "class": "bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none",
-        value: inputValue,
-        onClick: togglePopover,
-        placeholder: "Pilih Tanggal",
-        readonly: ""
-      }, null, 8
-      /* PROPS */
-      , _hoisted_23), !$data.master.invent_tgl_perolehan ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 0,
-        icon: "pi pi-calendar",
-        onClick: togglePopover
-      }, null, 8
-      /* PROPS */
-      , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 1,
-        icon: "pi pi-trash",
-        "class": "p-button-danger",
-        onClick: _cache[4] || (_cache[4] = function ($event) {
-          return $data.master.invent_tgl_perolehan = null;
-        })
-      }, null, 512
-      /* NEED_PATCH */
-      )), [[_directive_tooltip, 'Click to delete']])])];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["modelValue", "masks"]), $data.submitted && !$data.master.invent_tgl_perolehan ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_24, " Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
-    modelValue: $data.master.invent_lama_garansi,
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-      return $data.master.invent_lama_garansi = $event;
-    }),
-    placeholder: "Masukan Garansi"
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"]), _hoisted_29])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
-    modelValue: $data.master.invent_kondisi,
-    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
-      return $data.master.invent_kondisi = $event;
-    }),
-    options: $data.kondi,
-    showClear: true,
-    filter: true,
-    optionLabel: "name",
-    optionValue: "code",
-    placeholder: "Pilih Kondisi",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.submitted && !$data.master.invent_kondisi
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.submitted && !$data.master.invent_kondisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_33, "Bisnis Unit Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label style=\"width:155px\">QR-Code</label>\n                 <div class=\"col-12 md:col-6\">\n                <div class=\"p-inputgroup\">\n                  <InputText v-model=\"master.invent_barcode\" readonly v-if=\"master.invent_barcode\"/>\n                  <img :src=\"'/assets/loading2.gif'\" height=\"50\" class=\"mb-3\" v-if=\"!aktif && !master.invent_barcode\" >\n                 <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"master.invent_barcode\" @click=\"hapus()\" v-tooltip=\"'Click to delete'\"/>\n                  <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\n                </div>\n                      <small v-if=\"submitted && !master.invent_barcode\" class=\"p-error\">\n                          QR-Code Belum Diisi.\n                      </small>\n                </div>\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
-    modelValue: $data.master.invent_bu,
-    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
-      return $data.master.invent_bu = $event;
-    }),
-    options: $data.bisnis,
-    optionLabel: "name",
-    showClear: true,
-    filter: true,
-    optionValue: "code",
-    placeholder: "Pilih Bisnis Unit",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.submitted && !$data.master.invent_bu
-    })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.submitted && !$data.master.invent_bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_37, "Bisnis Unit Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.master.invent_lokasi_update,
-    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
-      return $data.master.invent_lokasi_update = $event;
-    }),
-    placeholder: "Masukan Lokasi terakhir",
-    disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [_hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.master.invent_pengguna_update,
-    "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
-      return $data.master.invent_pengguna_update = $event;
-    }),
-    placeholder: "Masukan Pengguna Terakhir",
-    disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  , ["modelValue", "class"]), $data.submitted && !$data.master.invent_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, "Type Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                  <label style=\"width:155px\">S/N</label>\n                    <div class=\"col-3 md-6\">\n                    <InputText\n                      type =\"text\"\n                      v-model=\"master.invent_sn\"\n                      placeholder=\"Masukan S/N\"\n                      :class=\"{ 'p-invalid': submitted && !master.invent_sn }\"\n                    />\n                    <small class=\"p-error\" v-if=\"submitted && !master.invent_sn\"\n                        >S/N Belum Diisi.\n                      </small>\n                  </div>\n              </div>\n              <div class=\"field grid\">\n                    <label style=\"width:155px\">Tgl. Perolehan</label>\n                    <div class=\"col-12 md:col-6\">\n                      <DatePicker v-model=\"master.invent_tgl_perolehan\" :masks=\"mask\">\n                        <template v-slot=\"{ inputValue, togglePopover }\">\n                         <div class=\"flex items-center\"> \n                          <input\n                            class=\"bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none\"\n                            :value=\"inputValue\"\n                            @click=\"togglePopover\"\n                            placeholder=\"Pilih Tanggal\"\n                            readonly\n                          />\n                      <Button icon=\"pi pi-calendar\" v-if=\"!master.invent_tgl_perolehan\" @click=\"togglePopover\"/>\n                      <Button icon=\"pi pi-trash\" v-tooltip=\"'Click to delete'\" class=\"p-button-danger\" v-else @click=\"master.invent_tgl_perolehan = null\" />\n                        </div>\n                        </template>\n                      </DatePicker>\n                      <small class=\"p-error\" v-if=\"submitted && !master.invent_tgl_perolehan\"\n                        > Belum Diisi.\n                      </small>\n                  </div>\n                </div>\n               <div class=\"field grid\">\n                  <label style=\"width:155px\">Lama Garansi</label>\n                    <div class=\"col-12 md:col-6\">\n                      <div class=\"p-inputgroup\">\n                      <InputNumber\n                          v-model=\"master.invent_lama_garansi\"\n                          placeholder=\"Masukan Garansi\"\n                        />\n                        <span class=\"p-inputgroup-addon\"> Tahun </span>\n                    </div>\n                </div>\n              </div>\n              <div class=\"field grid\">\n                <label style=\"width:155px\">Kondisi</label>\n                 <div class=\"col-4\">\n                  <Dropdown \n                    v-model=\"master.invent_kondisi\"\n                    :options=\"kondi\"\n                    :showClear=\"true\"\n                    :filter=\"true\"\n                    optionLabel=\"name\"\n                    optionValue=\"code\"\n                    placeholder=\"Pilih Kondisi\"\n                    :class=\"{ 'p-invalid': submitted && !master.invent_kondisi }\"\n                  />                 \n                    <small class=\"p-error\" v-if=\"submitted && !master.invent_kondisi\"\n                      >Bisnis Unit Belum Diisi.\n                    </small>\n               </div>\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label style=\"width:155px\">QR-Code</label>\n                 <div class=\"col-12 md:col-6\">\n                <div class=\"p-inputgroup\">\n                  <InputText v-model=\"master.invent_barcode\" readonly v-if=\"master.invent_barcode\"/>\n                  <img :src=\"'/assets/loading2.gif'\" height=\"50\" class=\"mb-3\" v-if=\"!aktif && !master.invent_barcode\" >\n                 <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"master.invent_barcode\" @click=\"hapus()\" v-tooltip=\"'Click to delete'\"/>\n                  <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\n                </div>\n                      <small v-if=\"submitted && !master.invent_barcode\" class=\"p-error\">\n                          QR-Code Belum Diisi.\n                      </small>\n                </div>\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label style=\"width:155px\">Bisnis Unit</label>\n                  <div class=\"col-4\">\n                    <Dropdown \n                    v-model=\"master.invent_bu\"\n                    :options=\"bisnis\"\n                    optionLabel=\"name\"\n                    :showClear=\"true\"\n                    :filter=\"true\"\n                    optionValue=\"code\"\n                    placeholder=\"Pilih Bisnis Unit\"\n                    :class=\"{ 'p-invalid': submitted && !master.invent_bu }\"\n                    />\n                    <small class=\"p-error\" v-if=\"submitted && !master.invent_bu\"\n                        >Bisnis Unit Belum Diisi.\n                      </small>\n                </div>\n              </div>\n              <div class=\"field grid\">\n                <label style=\"width:155px\">Lokasi Terakhir</label>\n                    <div class=\"col-3 md-6\">\n                      <InputText\n                        type=\"text\"\n                        v-model=\"master.invent_lokasi_update\"\n                        placeholder=\"Masukan Lokasi terakhir\"\n                        disabled\n                      />\n                  </div>\n                </div>\n                <div class=\"field grid\">\n                  <label style=\"width:155px\">Pengguna Terakhir</label>\n                    <div class=\"col-3 md-6\">\n                      <InputText\n                        type=\"text\"\n                        v-model=\"master.invent_pengguna_update\"\n                        placeholder=\"Masukan Pengguna Terakhir\"\n                        disabled\n                      />\n                    </div>\n                </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -697,64 +347,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mr-2",
     icon: "pi pi-times",
-    onClick: _cache[11] || (_cache[11] = function ($event) {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
       return _ctx.$router.push('/master-peripheral');
     })
   })])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.master.invent_desc,
-    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
-      return $data.master.invent_desc = $event;
-    }),
-    placeholder: "Masukan Nama",
-    disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [_hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [$data.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
-    key: 0,
-    src: $data.preview,
-    "class": "master-image"
-  }, null, 8
-  /* PROPS */
-  , _hoisted_53)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
-    key: 1,
-    src: '/master_peripheral/' + $data.master.invent_photo,
-    "class": "master-image"
-  }, null, 8
-  /* PROPS */
-  , _hoisted_54))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [_hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "file",
-    name: "foto",
-    ref: "fileInput",
-    "class": "form-control",
-    onChange: _cache[14] || (_cache[14] = function () {
-      return $options.fileImage && $options.fileImage.apply($options, arguments);
-    })
-  }, null, 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [_hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.master.invent_lokasi_previous,
-    "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
-      return $data.master.invent_lokasi_previous = $event;
-    }),
-    placeholder: "Masukan Lokasi sebelumnya",
-    disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.master.invent_pengguna_previous,
-    "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
-      return $data.master.invent_pengguna_previous = $event;
-    }),
-    placeholder: "Masukan Pengguna sebelumnya",
-    disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])])])])])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\">\n            <div class=\"field grid\">\n              <label style=\"width:155px\">Nama</label>\n                <div class=\"col-12 md:col-4\">\n                  <InputText\n                    type =\"text\"\n                    v-model=\"master.invent_desc\"\n                    placeholder=\"Masukan Nama\"\n                    disabled\n                  />\n                </div>\n                </div> \n                <div class=\"field grid\">\n                  <label style=\"width:155px\"></label>\n                    <div class=\"col-10 md-6\">\n                      <div class=\"card\" style=\"height: 19.5rem;\">\n                        <img :src=\"preview\" class=\"master-image\" v-if=\"preview\"/>\n                        <img :src=\"'/master_peripheral/' +master.invent_photo\" class=\"master-image\" v-else />\n                      </div>\n                    </div>\n                </div>\n                <div class=\"field grid\">\n                  <label style=\"width:155px\"></label>\n                    <div class=\"p-col-10 p-md-6\">\n                      <input type=\"file\" name=\"foto\" ref=\"fileInput\" class=\"form-control\" @change=\"fileImage\" />\n                    </div>\n                </div>\n                <div class=\"field grid\">\n                  <label style=\"width:155px\">Lokasi Sebelumnya</label>\n                    <div class=\"col-12 md:col-4\">\n                      <InputText\n                          type=\"text\"\n                          v-model=\"master.invent_lokasi_previous\"\n                          placeholder=\"Masukan Lokasi sebelumnya\"\n                          disabled\n                      />\n                    </div>\n                </div>\n                <div class=\"field grid\">\n                  <label style=\"width:155px\">Penguna Sebelumnya</label>\n                    <div class=\"col-12 md:col-4\">\n                       <InputText\n                        type=\"text\"\n                        v-model=\"master.invent_pengguna_previous\"\n                        placeholder=\"Masukan Pengguna sebelumnya\"\n                        disabled\n                    />\n                    </div>\n                </div>\n            </div> ")])])]);
 }
 
 /***/ }),
