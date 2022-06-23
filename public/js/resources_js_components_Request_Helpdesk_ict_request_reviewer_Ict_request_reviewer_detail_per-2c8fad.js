@@ -235,7 +235,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Kembali",
+        label: "Back",
         "class": "p-button-raised p-button mr-2",
         icon: "pi pi-chevron-left",
         onClick: _cache[1] || (_cache[1] = function ($event) {
@@ -256,13 +256,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
         header: "Nama Peripheral",
-        sortable: true,
-        style: {
-          "min-width": "11rem"
-        }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_desc",
-        header: "Deskripsi",
         sortable: true,
         style: {
           "min-width": "11rem"

@@ -319,9 +319,49 @@ class IctController extends Controller
             ->orderBy('im.ireq_date','DESC')
             ->get();
 
-            $ict5 = DB::Table('v_ireq_mst_sudah_dikerjakan')->get();
+            $ict5 = DB::table('ireq_dtl as id')
+            ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftJoin('lookup_refs as lr',function ($join) {
+                $join->on('id.ireq_status','lr.lookup_code')
+                      ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+            })
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('id.ireq_type','lrs.lookup_code')
+                      ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->leftJoin('lookup_refs as lrfs',function ($join) {
+                $join->on('id.invent_code','lrfs.lookup_code')
+                      ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
+            ->select('im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+            'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+            'dr.div_name','id.ireq_qty')
+            ->where('id.ireq_status','D')
+            ->orderBy('im.ireq_date','DESC')
+            ->get();
 
-            $ict6 = DB::Table('v_ireq_mst_selesai')->get();
+            $ict6 = DB::table('ireq_dtl as id')
+            ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->leftJoin('lookup_refs as lr',function ($join) {
+                $join->on('id.ireq_status','lr.lookup_code')
+                      ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+            })
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('id.ireq_type','lrs.lookup_code')
+                      ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->leftJoin('lookup_refs as lrfs',function ($join) {
+                $join->on('id.invent_code','lrfs.lookup_code')
+                      ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
+            ->select('im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+            'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+            'dr.div_name','id.ireq_qty')
+            ->where('id.ireq_status','C')
+            ->orderBy('im.ireq_date','DESC')
+            ->get();
             
             $ict7 = DB::table('ireq_mst as im')
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
@@ -341,6 +381,28 @@ class IctController extends Controller
         }else{
             return response(["message"=>"Cannot Access"],403);
          }
+    }
+    function detailRequestReviewer($ireq_id){
+        $dtl = DB::table('ireq_dtl as id')
+        ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
+         'id.ireq_id','id.ireq_assigned_to1_reason','id.ireq_assigned_to1','im.ireq_no',
+         'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
+         'id.ireq_desc', 'id.ireq_qty','lrs.lookup_desc as kategori','llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
+        ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
+        ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->leftJoin('lookup_refs as llr',function ($join) {
+            $join->on('id.ireq_status','llr.lookup_code')
+                  ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+        })
+        ->where('id.ireq_id',$ireq_id)
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->orderBy('im.ireq_date','DESC')
+        ->get();
+            return response()->json($dtl);
     }
     function rejectReviewer(Request $request, $code)
     {
@@ -1245,7 +1307,7 @@ class IctController extends Controller
             'created_by' => Auth::user()->usr_name,
             'program_name'=>"Ict_Save",
         ]);
-        return response()->json($ict,200);
+        return response()->json($ict);
     }
     Public function edit($code)
     {
@@ -1259,7 +1321,7 @@ class IctController extends Controller
             ->first();
         $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
             ->where('lookup_status','T')
-            ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+            ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
             ->orderBy('lookup_desc','ASC')
             ->get();
     
@@ -1285,7 +1347,7 @@ class IctController extends Controller
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_date = $newDate;
         $ict->ireq_prio_level = $request->ireq_prio_level;
-        $ict->ireq_remark = $request->ireq_remark;
+        // $ict->ireq_remark = $request->ireq_remark;
         $ict->ireq_type = $request->ireq_type;
         $ict->ireq_user = $request->ireq_user;
         $ict->ireq_divisi_user = $request->ireq_divisi_user;
@@ -1298,7 +1360,7 @@ class IctController extends Controller
             'success' => true,
             'message' => 'Updated Successfully'
         ];
-        return response()->json($ict);
+        return response()->json($message);
     }
     Public function delete($ireq_id)
     {
@@ -2169,7 +2231,7 @@ class IctController extends Controller
         ]);
         $LINK = Link::where('ireq_id',$ireq_id)->first();
         $send_mail = 'icthelpdesk.admin@emp.id';
-        SendNotifRequest::dispatchAfterResponse($send_mail,$ICT,$LINK);
+        // SendNotifRequest::dispatchAfterResponse($send_mail,$ICT,$LINK);
         return response()->json('Success Update Status');
     }
     public function cekVerif($code)
@@ -2221,21 +2283,25 @@ class IctController extends Controller
         return response()->json('Success Update');
     }
     function getDataIct(){
-        $ict = DB::table('ireq_mst as im')
+        $ict=DB::table('ireq_dtl as id')
+        ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->leftJoin('lookup_refs as lr',function ($join) {
-            $join->on('im.ireq_status','lr.lookup_code')
+            $join->on('id.ireq_status','lr.lookup_code')
                   ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         })
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
-        ->whereNotNull('im.ireq_status')
-        ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-        2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-        im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-         WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-         WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-         im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-         Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('id.ireq_type','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+        })
+        ->leftJoin('lookup_refs as lrfs',function ($join) {
+            $join->on('id.invent_code','lrfs.lookup_code')
+                  ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
+        ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+        'dr.div_name','id.ireq_qty')
+        ->orderBy('im.ireq_date','DESC')
         ->get();
         
         return response()->json($ict);
@@ -2249,13 +2315,7 @@ class IctController extends Controller
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->select('im.ireq_no','dr.div_name','im.ireq_date','im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
         ->where('im.ireq_status',$statuss)
-        ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-        2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-        im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-         WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-         WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-         im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-         Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+        ->orderBy('im.ireq_date','DESC')
         ->get();
         return response()->json($ict);
     }

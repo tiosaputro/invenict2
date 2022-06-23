@@ -20,14 +20,14 @@
                 </div>
               </div>
               <div class="field grid">
-               <label class="col-fixed w-9rem">Tipe Request</label>
+               <label class="col-fixed w-9rem">Request Type</label>
                 <div class="col-fixed w-9rem">
                   <Dropdown 
                     v-model="tipereq"
                     :options="type"
                     optionLabel="name"
                     optionValue="code"
-                    placeholder="Pilih Tipe Request"
+                    placeholder="Select One"
                     @change="getIreq(tipereq)"
                     :showClear="true"
                     :class="{ 'p-invalid': error.tipereq }"
@@ -41,14 +41,14 @@
                 </div>
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
-                <label class="col-fixed w-9rem">Nama Peripheral</label>
+                <label class="col-fixed w-9rem"> Peripheral</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model="kode"
                         :options="kodeperi"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Nama Peripheral "
+                        placeholder="Select One "
                         :showClear="true"
                         :filter="true"
                         :class="{ 'p-invalid': error.kode }"
@@ -61,9 +61,8 @@
                   </small>
                 </div>
               </div>
-
-              <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S' ">
-                <label class="col-fixed w-9rem">Deskripsi</label>
+              <!-- <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S' ">
+                <label class="col-fixed w-9rem">Description</label>
                  <div class="col-fixed w-9rem">
                      <InputText
                         type="text"
@@ -71,13 +70,13 @@
                         placeholder="Masukan Deskripsi(Optional)"
                      />
                 </div>
-              </div>
+              </div> -->
               <div class="field grid" v-if="this.cekTipeReq =='P'">
                 <label class="col-fixed w-9rem">Qty</label>
                  <div class="col-fixed w-9rem">
                      <InputNumber
                         v-model="qty"
-                        placeholder="Masukan Qty"
+                        placeholder="Enter Qty"
                         :class="{ 'p-invalid': errors.qty }"
                      />
                      <small v-if="errors.qty" class="p-error">
@@ -86,14 +85,14 @@
                 </div>
               </div>
               <div class="field grid"  v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S'">
-                <label class="col-fixed w-9rem">Keterangan</label>
+                <label class="col-fixed w-9rem">Remark</label>
                  <div class="col-fixed w-9rem">
                      <Textarea
                         :autoResize="true"
                         type="text"
                         v-model="ket"
                         rows="5" 
-                        placeholder="Masukan Keterangan"
+                        placeholder="Enter Remark"
                         :class="{ 'p-invalid': errors.ket }"
                         class="inputfield"
                      />
@@ -106,13 +105,13 @@
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  label="Simpan"
+                  label="Save"
                   type="submit"
                 />
                 <Button
                   class="p-button-rounded p-button-success mr-2 mt-2"
-                  icon="pi pi-check"
-                  label="Simpan & Add"
+                  icon="pi pi-plus"
+                  label="Add Request"
                   @click="saveclick"
                 />
                 <Button
@@ -190,13 +189,13 @@ export default {
          });
       }else{
         if(this.kode == null){
-          this.error.kode = "Nama Peripheral Belum Diisi"
+          this.error.kode = "Peripheral not filled"
         }
         if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Belum Diisi"
+          this.error.tipereq = "Request Type not filled"
         }
         if(this.tipereq == 'null'){
-          this.error.tipereq = "Tipe Request Belum Diisi"
+          this.error.tipereq = "Request Type not filled"
         }
       }
      }else{
@@ -220,10 +219,10 @@ export default {
          });
       }else{
         if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Belum Diisi"
+          this.error.tipereq = "Request Type not filled"
         }
         if(this.tipereq == 'null'){
-          this.error.tipereq = "Tipe Request Belum Diisi"
+          this.error.tipereq = "Request Type not filled"
         }
       }
      }
@@ -295,10 +294,10 @@ export default {
           this.error.kode = "Nama Peripheral Belum Diisi"
         }
         if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Belum Diisi"
+          this.error.tipereq = "Request Type Belum Diisi"
         }
         if(this.tipereq == 'null'){
-          this.error.tipereq = "Tipe Request Belum Diisi"
+          this.error.tipereq = "Request Type Belum Diisi"
         }
       }
       }else{
@@ -321,10 +320,10 @@ export default {
          });
       }else{
         if(this.tipereq == null){
-          this.error.tipereq = "Tipe Request Belum Diisi"
+          this.error.tipereq = "Request Type Belum Diisi"
         }
         if(this.tipereq == 'null'){
-          this.error.tipereq = "Tipe Request Belum Diisi"
+          this.error.tipereq = "Request Type Belum Diisi"
         }
       }
       }

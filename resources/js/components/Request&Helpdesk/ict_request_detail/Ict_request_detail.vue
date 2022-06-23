@@ -62,12 +62,12 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:10rem"/>
-          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+          <Column field="name" header="Peripheral" :sortable="true" style="min-width:12rem"/>
+          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
@@ -95,7 +95,7 @@
 			        <div class="col">
 				        <div class="box">
                    <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
@@ -248,12 +248,12 @@ export default {
     },
     DeleteIct(ireqd_id,code){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure you want to delete this record data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",

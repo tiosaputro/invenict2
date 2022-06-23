@@ -117,12 +117,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure you want to delete this record data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this4.$toast.add({
             severity: "info",
@@ -335,7 +335,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Kembali",
+        label: "Back",
         "class": "p-button-raised p-button mr-2",
         icon: "pi pi-chevron-left",
         onClick: _cache[3] || (_cache[3] = function ($event) {
@@ -428,21 +428,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_type",
-        header: "Tipe Request",
+        header: "Request Type",
         sortable: true,
         style: {
           "min-width": "10rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
-        header: "Nama Peripheral",
-        sortable: true,
-        style: {
-          "min-width": "12rem"
-        }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_desc",
-        header: "Deskripsi",
+        header: "Peripheral",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -456,7 +449,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_remark",
-        header: "Keterangan",
+        header: "Remark",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -464,7 +457,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), _this.ireq.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
         key: 0,
         field: "ireq_assigned_to",
-        header: "Petugas ICT",
+        header: "Personnel ICT",
         sortable: true,
         style: {
           "min-width": "12rem"

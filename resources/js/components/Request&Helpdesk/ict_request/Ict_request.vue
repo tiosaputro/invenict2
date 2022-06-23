@@ -9,8 +9,8 @@
                 <h4>ICT Request</h4>
               </template>
             </Toolbar> 
-            <TabView ref="tabView2" scrollable v-model:activeIndex="active1">
-              <TabPanel header="Permohonan">
+            <TabView ref="tabView2" v-model:activeIndex="active1">
+              <TabPanel header="Request">
                 <DataTable
                   :value="ict"
                   :paginator="true"
@@ -23,15 +23,9 @@
                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
                   responsiveLayout="scroll"
                 >
-                <template #header>
-                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                      <Button
-                      label="Add"
-                      class="p-button-raised"
-                      icon="bi bi-file-earmark-plus"
-                      @click="$router.push('/Add-ict-request')"
-                    />
-                      <span class="block mt-2 md:mt-0 p-input-icon-left">
+                  <template #header>
+                    <div class="table-header text-right">
+                      <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText
                           v-model="filters['global'].value"
@@ -47,12 +41,12 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10 rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
                   <Column headerStyle="min-width:13rem">
                     <template #body="slotProps">
                       <Button
@@ -67,7 +61,7 @@
                         v-if="slotProps.data.ireq_status == null"
                         class="p-button-rounded p-button-info mr-2"
                         icon="pi pi-pencil"
-                        v-tooltip.left="'Edit'"
+                        v-tooltip.bottom="'Edit'"
                         @click="
                           $router.push({
                             name: 'Edit Ict Request',
@@ -124,7 +118,7 @@
                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
                   responsiveLayout="scroll"
                 >
-                <template #header>
+                  <template #header>
                     <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
@@ -142,12 +136,12 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column headerStyle="min-width:14rem">
                     <template #body="slotProps">
@@ -183,7 +177,7 @@
                   </template>
                 </DataTable>   
               </TabPanel>
-                <TabPanel header="Yang Telah Diverifikasi">
+                <TabPanel header="Verified">
                   <DataTable
                     :value="verif"
                     :paginator="true"
@@ -214,12 +208,12 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
@@ -255,7 +249,7 @@
                   </template>
                 </DataTable>   
                 </TabPanel>
-                <TabPanel header="Yang Di Reject">
+                <TabPanel header="Rejected">
                    <DataTable
                     :value="reject"
                     :paginator="true"
@@ -286,14 +280,14 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -328,7 +322,7 @@
                   </template>
                 </DataTable>  
                 </TabPanel>
-                <TabPanel header="Penugasan Request">
+                <TabPanel header="Assignment Request">
                   <DataTable
                     :value="penugasan"
                     :paginator="true"
@@ -359,13 +353,13 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:8rem">
@@ -382,7 +376,7 @@
                   </Column>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Sedang Dikerjakan">
+                <TabPanel header="In Progress">
                    <DataTable
                     :value="sedangDikerjakan"
                     :paginator="true"
@@ -413,13 +407,13 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -454,7 +448,7 @@
                   </template>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Sudah Dikerjakan">
+                <TabPanel header="Done">
                     <DataTable
                     :value="sudahDikerjakan"
                     :paginator="true"
@@ -486,16 +480,16 @@
                   </template>
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-                  <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                  <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
                   <template #footer>
                       <div class="grid dir-col">
@@ -519,7 +513,7 @@
                   </template>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Selesai">
+                <TabPanel header="Close">
                     <DataTable
                     :value="selesai"
                     :paginator="true"
@@ -551,23 +545,23 @@
                   </template>
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-                  <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                  <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
                         v-if="slotProps.data.ireq_value == null"
                         class="p-button-rounded p-button-info mr-2"
-                        label = "Penilaian"
+                        label = "Rating"
                         @click="tes(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                       />
                     </template>
@@ -823,17 +817,17 @@ export default {
     },
     SubmitIct(ireq_id){
       this.$confirm.require({
-        message: "Apakah Anda Yakin Mensubmit?",
-        header: "ICT Request    ",
+        message: "Are you sure you want to submit this request?",
+        header: "Confirmation Submit",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Submit",
+            detail: "Successfully Submit",
             life: 3000,
           });
           this.axios.get('api/updateStatusSubmit/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
@@ -844,12 +838,12 @@ export default {
     },
     DeleteIct(ireq_id){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure you want to delete this record data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",

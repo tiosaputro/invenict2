@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           if (_this.checkname.includes("Request") || _this.checkto.includes("/ict-request")) {
-            _this.getKode();
+            _this.getIct();
           } else {
             _this.$router.push('/access');
           }
@@ -70,16 +70,13 @@ __webpack_require__.r(__webpack_exports__);
     getKode: function getKode() {
       var _this2 = this;
 
-      this.axios.get('/api/get-kode', {
+      this.axios.get('/api/getAddDetail', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.kodeperi = response.data;
-
-        _this2.getReq();
-
-        _this2.getIct();
+        _this2.type = response.data.ref;
+        _this2.kodeperi = response.data.kode;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this2.$toast.add({
@@ -106,36 +103,12 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this3.ict = response.data;
         _this3.cekTipeReq = _this3.ict.ireq_type;
+
+        _this3.getKode();
       });
-    },
-    getReq: function getReq() {
-      var _this4 = this;
-
-      this.axios.get('/api/getType', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.type = response.data;
-      });
-    },
-    getImage: function getImage() {
-      var _this5 = this;
-
-      this.kode = this.ict.invent_code;
-
-      if (this.kode) {
-        this.axios.get('/api/getImage/' + this.kode, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this5.ict.photo = response.data;
-        });
-      }
     },
     UpdateIctDetail: function UpdateIctDetail() {
-      var _this6 = this;
+      var _this4 = this;
 
       this.errors = [];
       this.error = [];
@@ -147,25 +120,25 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + this.token
             }
           }).then(function () {
-            _this6.$toast.add({
+            _this4.$toast.add({
               severity: "success",
               summary: "Success Message",
               detail: "Success Update"
             });
 
             setTimeout(function () {
-              return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
+              return _this4.$router.push('/ict-request-detail/' + _this4.$route.params.code);
             }, 1000);
           })["catch"](function (error) {
-            _this6.errors = error.response.data.errors;
+            _this4.errors = error.response.data.errors;
           });
         } else {
           if (this.ict.ireq_type == null) {
-            this.error.ireq_type = "Tipe Request Belum Diisi";
+            this.error.ireq_type = "Request Type not filled";
           }
 
           if (this.ict.invent_code == null) {
-            this.error.invent_code = "Nama Peripheral Belum Diisi";
+            this.error.invent_code = "Peripheral not filled";
           }
         }
       } else {
@@ -175,21 +148,21 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + this.token
             }
           }).then(function () {
-            _this6.$toast.add({
+            _this4.$toast.add({
               severity: "success",
               summary: "Success Message",
               detail: "Success Update"
             });
 
             setTimeout(function () {
-              return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
+              return _this4.$router.push('/ict-request-detail/' + _this4.$route.params.code);
             }, 1000);
           })["catch"](function (error) {
-            _this6.errors = error.response.data.errors;
+            _this4.errors = error.response.data.errors;
           });
         } else {
           if (this.ict.ireq_type == null) {
-            this.error.ireq_type = "Tipe Request Belum Diisi";
+            this.error.ireq_type = "Request Type not filled";
           }
         }
       }
@@ -253,7 +226,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   style: {
     "width": "120px"
   }
-}, "Tipe Request", -1
+}, "Request Type", -1
 /* HOISTED */
 );
 
@@ -278,7 +251,7 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "120px"
   }
-}, "Nama Peripheral", -1
+}, "Peripheral", -1
 /* HOISTED */
 );
 
@@ -294,6 +267,7 @@ var _hoisted_17 = {
   "class": "p-error"
 };
 var _hoisted_18 = {
+  key: 1,
   "class": "field grid"
 };
 
@@ -302,63 +276,40 @@ var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "120px"
   }
-}, "Deskripsi", -1
-/* HOISTED */
-);
-
-var _hoisted_20 = {
-  "class": "col"
-};
-var _hoisted_21 = {
-  key: 1,
-  "class": "field grid"
-};
-
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "120px"
-  }
 }, "Qty", -1
 /* HOISTED */
 );
 
-var _hoisted_23 = {
-  "class": "col"
+var _hoisted_20 = {
+  "class": "col-fixed w-9rem"
 };
-var _hoisted_24 = {
+var _hoisted_21 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_25 = {
+var _hoisted_22 = {
   "class": "field grid"
 };
 
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
-}, "Keterangan", -1
+}, "Remark", -1
 /* HOISTED */
 );
 
-var _hoisted_27 = {
-  "class": "col"
+var _hoisted_24 = {
+  "class": "col-fixed w-9rem"
 };
-var _hoisted_28 = {
+var _hoisted_25 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_29 = {
+var _hoisted_26 = {
   "class": "form-group"
 };
-var _hoisted_30 = {
-  key: 0,
-  "class": "col-6"
-};
-var _hoisted_31 = ["src"];
-var _hoisted_32 = ["src"];
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
@@ -387,7 +338,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.UpdateIctDetail && $options.UpdateIctDetail.apply($options, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
@@ -408,7 +359,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     optionLabel: "name",
     optionValue: "code",
-    placeholder: "Pilih Tipe Request",
+    placeholder: "Select One",
     onChange: _cache[2] || (_cache[2] = function ($event) {
       return $options.getIreq();
     }),
@@ -430,11 +381,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     options: $data.kodeperi,
     optionLabel: "name",
     optionValue: "code",
-    placeholder: "Pilih Nama Peripheral ",
+    placeholder: "Select One ",
     showClear: true,
-    onChange: _cache[4] || (_cache[4] = function ($event) {
-      return $options.getImage();
-    }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.invent_code
     })
@@ -444,71 +392,50 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.invent_code ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.invent_code), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    modelValue: $data.ict.ireq_desc,
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-      return $data.ict.ireq_desc = $event;
-    }),
-    placeholder: "Masukan Deskripsi(Optional)"
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Deskripsi</label>\n                 <div class=\"col\">\n                     <InputText\n                        type=\"text\"\n                        v-model=\"ict.ireq_desc\"\n                        placeholder=\"Enter Deskripsi(Optional)\"\n                     />\n                </div>\n              </div> "), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
     modelValue: $data.ict.ireq_qty,
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.ict.ireq_qty = $event;
     }),
-    placeholder: "Masukan Qty",
+    placeholder: "Enter Qty",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.ireq_qty
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.errors.ireq_qty ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_qty[0]), 1
+  , ["modelValue", "class"]), $data.errors.ireq_qty ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_qty[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
     autoResize: true,
     rows: "5",
     type: "text",
     modelValue: $data.ict.ireq_remark,
-    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.ict.ireq_remark = $event;
     }),
-    placeholder: "Masukan ket",
+    placeholder: "Enter Remark",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.ireq_remark
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.errors.ireq_remark ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_remark[0]), 1
+  , ["modelValue", "class"]), $data.errors.ireq_remark ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_remark[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
-    label: "Simpan",
+    label: "Save",
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
-    onClick: _cache[8] || (_cache[8] = function ($event) {
+    onClick: _cache[6] || (_cache[6] = function ($event) {
       return _ctx.$router.go(-1);
     })
   })])], 32
   /* HYDRATE_EVENTS */
-  )]), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_30, [this.ict.photo && !this.kode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
-    key: 0,
-    src: '/master_peripheral/' + $data.ict.photo,
-    "class": "ict-image"
-  }, null, 8
-  /* PROPS */
-  , _hoisted_31)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.kode && this.ict.photo.photo ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
-    key: 1,
-    src: '/master_peripheral/' + $data.ict.photo.photo,
-    "class": "ict-image"
-  }, null, 8
-  /* PROPS */
-  , _hoisted_32)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\" v-if=\"this.cekTipeReq =='P'\">\n                    <img :src=\"'/master_peripheral/' + ict.photo\" class=\"ict-image\" v-if=\"this.ict.photo && !this.kode\" />\n                    <img :src=\"'/master_peripheral/' + ict.photo.photo\" class=\"ict-image\" v-if=\"this.kode && this.ict.photo.photo\" />\n              </div> ")])])]);
 }
 
 /***/ }),

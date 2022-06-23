@@ -46,7 +46,7 @@
           </template>
           <Column field="ireq_type" header="Tipe Request" :sortable="true"  style="min-width:11rem"/>
           <Column field="name" header="Nama Peripheral" :sortable="true"  style="min-width:11rem"/>
-          <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:11rem"/>
+          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:11rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:11rem"/>
           <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:11rem"/>
@@ -55,7 +55,7 @@
 			        <div class="col">
 				        <div class="box">
                    <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({

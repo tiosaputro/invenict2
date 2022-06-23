@@ -59,7 +59,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     formatDate: function formatDate(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
     cekUser: function cekUser() {
       var _this2 = this;
@@ -77,7 +77,7 @@ __webpack_require__.r(__webpack_exports__);
             return x.name;
           });
 
-          if (_this2.checkname.includes("Divisi Requestor Per Status") || _this2.checkto.includes("/report-div-req-per-status")) {
+          if (_this2.checkto.includes("/report-ict-report")) {
             _this2.getIct();
 
             _this2.getStatus();
@@ -313,38 +313,95 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         field: "ireq_no",
         header: "No. Request",
         style: {
-          "min-width": "10rem"
-        }
+          "min-width": "8rem"
+        },
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireqd_id",
+        header: "No. Detail",
+        style: {
+          "min-width": "8rem"
+        },
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_type",
+        header: "Request Type",
+        style: {
+          "min-width": "8rem"
+        },
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "kategori",
+        header: "Peripheral",
+        style: {
+          "min-width": "8rem"
+        },
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_qty",
+        header: "Qty",
+        style: {
+          "min-width": "8rem"
+        },
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_remark",
+        header: "Remark",
+        style: {
+          "min-width": "8rem"
+        },
+        sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_date",
-        header: "Tanggal Request",
+        header: "Request Date",
         style: {
-          "min-width": "10rem"
-        }
+          "min-width": "8rem"
+        },
+        sortable: true
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate(slotProps.data.ireq_date)), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_requestor",
-        header: "Pemohon",
+        header: "Requestor",
         style: {
-          "min-width": "10rem"
-        }
+          "min-width": "8rem"
+        },
+        sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_user",
-        header: "Pengguna",
+        header: "User",
         style: {
-          "min-width": "10rem"
-        }
+          "min-width": "8rem"
+        },
+        sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "div_name",
-        header: "Divisi Pengguna",
+        header: "Division User",
         style: {
-          "min-width": "10rem"
-        }
+          "min-width": "8rem"
+        },
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_assigned_to",
+        header: "Personnel ICT",
+        style: {
+          "min-width": "8rem"
+        },
+        sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_status",
         header: "Status",
         style: {
-          "min-width": "10rem"
-        }
+          "min-width": "8rem"
+        },
+        sortable: true
       })];
     }),
     _: 1

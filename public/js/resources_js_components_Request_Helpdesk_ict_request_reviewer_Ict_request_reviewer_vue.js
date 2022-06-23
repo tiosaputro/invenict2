@@ -20,6 +20,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dialogAssign: false,
+      displayDetailRequest: false,
       submitted: false,
       assign: {
         id: null,
@@ -34,6 +35,8 @@ __webpack_require__.r(__webpack_exports__);
       },
       loading: true,
       permohonan: [],
+      detail: [],
+      ireq_no: '',
       atasandivisi: [],
       manager: [],
       reject: [],
@@ -301,6 +304,19 @@ __webpack_require__.r(__webpack_exports__);
         },
         reject: function reject() {}
       });
+    },
+    detailRequest: function detailRequest(ireq_id) {
+      var _this9 = this;
+
+      this.axios.get('/api/detail-request-reviewer/' + ireq_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this9.detail = response.data;
+        _this9.ireq_no = response.data[0].ireq_no;
+      });
+      this.displayDetailRequest = true;
     },
     CetakPdfPermohonan: function CetakPdfPermohonan() {
       window.open('api/report-ict-pdf-reviewer-permohonan');
@@ -606,23 +622,24 @@ var _hoisted_68 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Loading ICT Request data. Please wait. ");
 
-var _hoisted_70 = {
+var _hoisted_70 = ["onClick"];
+var _hoisted_71 = {
   "class": "grid dir-col"
 };
-var _hoisted_71 = {
+var _hoisted_72 = {
   "class": "col"
 };
-var _hoisted_72 = {
+var _hoisted_73 = {
   "class": "box"
 };
-var _hoisted_73 = {
+var _hoisted_74 = {
   "class": "p-fluid"
 };
-var _hoisted_74 = {
+var _hoisted_75 = {
   "class": "field grid"
 };
 
-var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_76 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "100px"
@@ -631,33 +648,50 @@ var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_76 = {
+var _hoisted_77 = {
   "class": "col"
 };
-var _hoisted_77 = {
+var _hoisted_78 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_78 = {
+var _hoisted_79 = {
   "class": "fluid"
 };
-var _hoisted_79 = {
+var _hoisted_80 = {
   "class": "field grid"
 };
 
-var _hoisted_80 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_81 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
 }, "Petugas (ICT)", -1
 /* HOISTED */
 );
 
-var _hoisted_81 = {
+var _hoisted_82 = {
   "class": "col-fixed w-9rem"
 };
-var _hoisted_82 = {
+var _hoisted_83 = {
   key: 0,
   "class": "p-error"
 };
+var _hoisted_84 = {
+  style: {
+    "width": "130px"
+  }
+};
+var _hoisted_85 = {
+  "class": "table-header text-right"
+};
+var _hoisted_86 = {
+  "class": "p-input-icon-left"
+};
+
+var _hoisted_87 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "pi pi-search"
+}, null, -1
+/* HOISTED */
+);
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
@@ -700,7 +734,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabView, {
-    scrollable: "",
     ref: "tabView2"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -764,7 +797,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -780,21 +813,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "Division User",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -996,7 +1029,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1012,21 +1045,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "Division User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1216,7 +1249,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "7rem"
@@ -1232,21 +1265,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "7rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "7rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "Division User",
                 sortable: true,
                 style: {
                   "min-width": "7rem"
@@ -1416,7 +1449,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1432,21 +1465,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "Division User",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1563,7 +1596,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1579,21 +1612,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "Division User",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1730,7 +1763,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "5rem"
@@ -1746,14 +1779,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "4rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "4rem"
@@ -1767,7 +1800,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "Division User",
                 sortable: true,
                 style: {
                   "min-width": "4rem"
@@ -1868,32 +1901,53 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_no",
-                header: "No.Request",
-                sortable: true,
+                header: "No. Request",
                 style: {
                   "min-width": "8rem"
-                }
+                },
+                sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireqd_id",
-                header: "No.Detail",
-                sortable: true,
+                header: "No. Detail",
                 style: {
                   "min-width": "8rem"
-                }
+                },
+                sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "invent_code",
-                header: "Nama Peripheral",
-                sortable: true,
+                field: "ireq_type",
+                header: "Request Type",
                 style: {
-                  "min-width": "10rem"
-                }
+                  "min-width": "8rem"
+                },
+                sortable: true
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "kategori",
+                header: "Peripheral",
+                style: {
+                  "min-width": "8rem"
+                },
+                sortable: true
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_qty",
+                header: "Qty",
+                style: {
+                  "min-width": "8rem"
+                },
+                sortable: true
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_remark",
+                header: "Remark",
+                style: {
+                  "min-width": "8rem"
+                },
+                sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
-                sortable: true,
+                header: "Request Date",
                 style: {
                   "min-width": "8rem"
-                }
+                },
+                sortable: true
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate(slotProps.data.ireq_date)), 1
@@ -1905,39 +1959,39 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
-                sortable: true,
+                header: "Requestor",
                 style: {
                   "min-width": "8rem"
-                }
+                },
+                sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
-                sortable: true,
+                header: "User",
                 style: {
                   "min-width": "8rem"
-                }
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "ireq_assigned_to",
-                header: "Petugas ICT",
-                sortable: true,
-                style: {
-                  "min-width": "10rem"
-                }
+                },
+                sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
-                sortable: true,
+                header: "Division User",
                 style: {
-                  "min-width": "10rem"
-                }
+                  "min-width": "8rem"
+                },
+                sortable: true
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_assigned_to",
+                header: "Personnel ICT",
+                style: {
+                  "min-width": "8rem"
+                },
+                sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
                 header: "Status",
-                sortable: true,
                 style: {
                   "min-width": "8rem"
-                }
+                },
+                sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [slotProps.data.ireq_status == 'Done' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
@@ -2000,7 +2054,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               return [_hoisted_69];
             }),
             footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
@@ -2024,6 +2078,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "8rem"
                 }
+              }, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+                    onClick: function onClick($event) {
+                      return $options.detailRequest(slotProps.data.ireq_id);
+                    },
+                    style: {
+                      "cursor": "pointer"
+                    }
+                  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_no), 9
+                  /* TEXT, PROPS */
+                  , _hoisted_70)];
+                }),
+                _: 1
+                /* STABLE */
+
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireqd_id",
                 header: "No.Detail",
@@ -2032,15 +2102,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "invent_code",
+                field: "ireq_type",
+                header: "Request Type",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "kategori",
                 header: "Nama Peripheral",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_qty",
+                header: "Qty",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_remark",
+                header: "Remark",
+                sortable: true,
+                style: {
+                  "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -2056,21 +2147,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "Division User",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -2137,7 +2228,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [_hoisted_75, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_76, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [_hoisted_76, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
         autoResize: true,
         type: "text",
         modelValue: $data.rbr.ket,
@@ -2151,7 +2242,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.rbr.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_77, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "class"]), $data.submitted && !$data.rbr.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_78, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
@@ -2188,7 +2279,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_78, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [_hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [_hoisted_81, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
         modelValue: $data.assign.name,
         "onUpdate:modelValue": _cache[28] || (_cache[28] = function ($event) {
           return $data.assign.name = $event;
@@ -2202,7 +2293,116 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_82, " Petugas(ICT) Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_83, " Petugas(ICT) Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.displayDetailRequest,
+    "onUpdate:visible": _cache[33] || (_cache[33] = function ($event) {
+      return $data.displayDetailRequest = $event;
+    }),
+    style: {
+      width: '1200px'
+    },
+    header: "Detail Request",
+    modal: true
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
+        "class": "mb-4"
+      }, {
+        end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_84, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.ireq_no), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+        value: $data.detail,
+        paginator: true,
+        rows: 10,
+        filters: $data.filters,
+        rowHover: true,
+        paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
+        rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+        currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request (Detail)",
+        responsiveLayout: "scroll"
+      }, {
+        header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_86, [_hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+            modelValue: $data.filters['global'].value,
+            "onUpdate:modelValue": _cache[32] || (_cache[32] = function ($event) {
+              return $data.filters['global'].value = $event;
+            }),
+            placeholder: "Search. . ."
+          }, null, 8
+          /* PROPS */
+          , ["modelValue"])])])];
+        }),
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireqd_id",
+            header: "No. Detail",
+            sortable: true,
+            style: {
+              "min-width": "6rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_type",
+            header: "Request Type",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "kategori",
+            header: "Nama Peripheral",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_qty",
+            header: "Qty",
+            sortable: true,
+            style: {
+              "min-width": "6rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_remark",
+            header: "Remark",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_assigned_to",
+            header: "Personnel ICT",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+            field: "ireq_status",
+            header: "Status",
+            sortable: true,
+            style: {
+              "min-width": "12rem"
+            }
+          })];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["value", "filters"])];
     }),
     _: 1
     /* STABLE */

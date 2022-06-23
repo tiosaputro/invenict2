@@ -184,63 +184,77 @@ class LaporanController extends Controller
         $status = $request->status;
         if($request->start && $request->end){
             if($status){
-            $ict = DB::table('ireq_mst as im')
-            ->leftJoin('lookup_refs as lr',function ($join) {
-                $join->on('im.ireq_status','lr.lookup_code')
-                    ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-            })
-            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
-            ->where('im.ireq_status',$status)
-            ->whereBetween('im.ireq_date',[$Newstart,$Newend])
-            ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-            2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-            im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-            WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-            WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-            im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-            Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
-            ->get();
+                $ict = DB::table('ireq_dtl as id')
+                ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
+                ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+                ->leftJoin('lookup_refs as lr',function ($join) {
+                    $join->on('id.ireq_status','lr.lookup_code')
+                          ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+                })
+                ->leftJoin('lookup_refs as lrs',function ($join) {
+                    $join->on('id.ireq_type','lrs.lookup_code')
+                          ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+                })
+                ->leftJoin('lookup_refs as lrfs',function ($join) {
+                    $join->on('id.invent_code','lrfs.lookup_code')
+                          ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+                })
+                ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+                'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+                'dr.div_name','id.ireq_qty')
+                ->where('id.ireq_status',$status)
+                ->whereBetween('im.ireq_date',[$Newstart,$Newend])
+                ->orderBy('im.ireq_date','DESC')
+                ->get();
             return response()->json($ict);
             }
             else {
-                $ict = DB::table('ireq_mst as im')
-                ->leftJoin('lookup_refs as lr',function ($join) {
-                    $join->on('im.ireq_status','lr.lookup_code')
-                        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-                })
+                $ict = DB::table('ireq_dtl as id')
+                ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
                 ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-                ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
-                ->whereNotNull('im.ireq_status')
+                ->leftJoin('lookup_refs as lr',function ($join) {
+                    $join->on('id.ireq_status','lr.lookup_code')
+                          ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+                })
+                ->leftJoin('lookup_refs as lrs',function ($join) {
+                    $join->on('id.ireq_type','lrs.lookup_code')
+                          ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+                })
+                ->leftJoin('lookup_refs as lrfs',function ($join) {
+                    $join->on('id.invent_code','lrfs.lookup_code')
+                          ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+                })
+                ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+                'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+                'dr.div_name','id.ireq_qty')
                 ->whereBetween('im.ireq_date',[$Newstart,$Newend])
-                ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-                2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-                im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-                WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-                WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-                im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-                Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+                ->orderBy('im.ireq_date','DESC')
                 ->get();
                 return response()->json($ict);
             }
         }
         else{
-            $ict = DB::table('ireq_mst as im')
-            ->leftJoin('lookup_refs as lr',function ($join) {
-                $join->on('im.ireq_status','lr.lookup_code')
-                    ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-            })
-            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
-            ->where('im.ireq_status',$status)
-            ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-            2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-            im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-            WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-            WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-            im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-            Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
-            ->get();
+            $ict = DB::table('ireq_dtl as id')
+                ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
+                ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+                ->leftJoin('lookup_refs as lr',function ($join) {
+                    $join->on('id.ireq_status','lr.lookup_code')
+                          ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+                })
+                ->leftJoin('lookup_refs as lrs',function ($join) {
+                    $join->on('id.ireq_type','lrs.lookup_code')
+                          ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+                })
+                ->leftJoin('lookup_refs as lrfs',function ($join) {
+                    $join->on('id.invent_code','lrfs.lookup_code')
+                          ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+                })
+                ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+                'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+                'dr.div_name','id.ireq_qty')
+                ->where('id.ireq_status',$status)
+                ->orderBy('im.ireq_date','DESC')
+                ->get();
             return response()->json($ict);
         }
     }

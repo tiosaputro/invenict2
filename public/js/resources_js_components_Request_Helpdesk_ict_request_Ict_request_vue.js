@@ -243,17 +243,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.$confirm.require({
-        message: "Apakah Anda Yakin Mensubmit?",
-        header: "ICT Request    ",
+        message: "Are you sure you want to submit this request?",
+        header: "Confirmation Submit",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this3.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Submit",
+            detail: "Successfully Submit",
             life: 3000
           });
 
@@ -272,12 +272,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure you want to delete this record data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this4.$toast.add({
             severity: "info",
@@ -372,10 +372,10 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = {
-  "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+  "class": "table-header text-right"
 };
 var _hoisted_6 = {
-  "class": "block mt-2 md:mt-0 p-input-icon-left"
+  "class": "p-input-icon-left"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
@@ -611,11 +611,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
 
-  var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
 
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
+
+  var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
 
@@ -644,15 +644,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabView, {
     ref: "tabView2",
-    scrollable: "",
     activeIndex: $data.active1,
-    "onUpdate:activeIndex": _cache[23] || (_cache[23] = function ($event) {
+    "onUpdate:activeIndex": _cache[22] || (_cache[22] = function ($event) {
       return $data.active1 = $event;
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Permohonan"
+        header: "Request"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -668,16 +667,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                label: "Add",
-                "class": "p-button-raised",
-                icon: "bi bi-file-earmark-plus",
-                onClick: _cache[0] || (_cache[0] = function ($event) {
-                  return _ctx.$router.push('/Add-ict-request');
-                })
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
                 modelValue: $data.filters['global'].value,
-                "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+                "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
                   return $data.filters['global'].value = $event;
                 }),
                 placeholder: "Search. . ."
@@ -696,14 +688,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
-                onClick: _cache[2] || (_cache[2] = function ($event) {
+                onClick: _cache[1] || (_cache[1] = function ($event) {
                   return $options.CetakPdfPermohonan();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
-                onClick: _cache[3] || (_cache[3] = function ($event) {
+                onClick: _cache[2] || (_cache[2] = function ($event) {
                   return $options.CetakExcelPermohonan();
                 })
               })])])])];
@@ -718,7 +710,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -734,7 +726,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -773,7 +765,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }, null, 8
                   /* PROPS */
                   , ["onClick"])), [[_directive_tooltip, 'Edit', void 0, {
-                    left: true
+                    bottom: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 1,
                     icon: "pi pi-trash",
@@ -832,7 +824,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
                 modelValue: $data.filters['global'].value,
-                "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+                "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
                   return $data.filters['global'].value = $event;
                 }),
                 placeholder: "Search. . ."
@@ -851,14 +843,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
-                onClick: _cache[5] || (_cache[5] = function ($event) {
+                onClick: _cache[4] || (_cache[4] = function ($event) {
                   return $options.CetakPdfReviewer();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
-                onClick: _cache[6] || (_cache[6] = function ($event) {
+                onClick: _cache[5] || (_cache[5] = function ($event) {
                   return $options.CetakExcelReviewer();
                 })
               })])])])];
@@ -873,7 +865,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -889,7 +881,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -938,7 +930,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Yang Telah Diverifikasi"
+        header: "Verified"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -956,7 +948,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
                 modelValue: $data.filters['global'].value,
-                "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+                "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
                   return $data.filters['global'].value = $event;
                 }),
                 placeholder: "Search. . ."
@@ -975,14 +967,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
-                onClick: _cache[8] || (_cache[8] = function ($event) {
+                onClick: _cache[7] || (_cache[7] = function ($event) {
                   return $options.CetakPdfVerifikasi();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
-                onClick: _cache[9] || (_cache[9] = function ($event) {
+                onClick: _cache[8] || (_cache[8] = function ($event) {
                   return $options.CetakExcelVerifikasi();
                 })
               })])])])];
@@ -997,7 +989,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -1013,7 +1005,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -1064,7 +1056,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Yang Di Reject"
+        header: "Rejected"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1082,7 +1074,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
                 modelValue: $data.filters['global'].value,
-                "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+                "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
                   return $data.filters['global'].value = $event;
                 }),
                 placeholder: "Search. . ."
@@ -1101,14 +1093,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
-                onClick: _cache[11] || (_cache[11] = function ($event) {
+                onClick: _cache[10] || (_cache[10] = function ($event) {
                   return $options.CetakPdfTabReject();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
-                onClick: _cache[12] || (_cache[12] = function ($event) {
+                onClick: _cache[11] || (_cache[11] = function ($event) {
                   return $options.CetakExcelTabReject();
                 })
               })])])])];
@@ -1123,7 +1115,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -1139,7 +1131,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -1153,7 +1145,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_reason",
-                header: "Alasan",
+                header: "Reason",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -1197,7 +1189,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Penugasan Request"
+        header: "Assignment Request"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1215,7 +1207,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
                 modelValue: $data.filters['global'].value,
-                "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
+                "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
                   return $data.filters['global'].value = $event;
                 }),
                 placeholder: "Search. . ."
@@ -1239,7 +1231,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1255,14 +1247,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1320,7 +1312,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Sedang Dikerjakan"
+        header: "In Progress"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1338,7 +1330,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_43, [_hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
                 modelValue: $data.filters['global'].value,
-                "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
+                "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
                   return $data.filters['global'].value = $event;
                 }),
                 placeholder: "Search. . ."
@@ -1357,14 +1349,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
-                onClick: _cache[15] || (_cache[15] = function ($event) {
+                onClick: _cache[14] || (_cache[14] = function ($event) {
                   return $options.CetakPdfSedangDikerjakan();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
-                onClick: _cache[16] || (_cache[16] = function ($event) {
+                onClick: _cache[15] || (_cache[15] = function ($event) {
                   return $options.CetakExcelSedangDikerjakan();
                 })
               })])])])];
@@ -1379,7 +1371,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -1395,14 +1387,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
-                header: "Petugas ICT",
+                header: "Personnel ICT",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -1446,7 +1438,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Sudah Dikerjakan"
+        header: "Done"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1464,7 +1456,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_51, [_hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
                 modelValue: $data.filters['global'].value,
-                "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
+                "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
                   return $data.filters['global'].value = $event;
                 }),
                 placeholder: "Search. . ."
@@ -1483,14 +1475,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
-                onClick: _cache[18] || (_cache[18] = function ($event) {
+                onClick: _cache[17] || (_cache[17] = function ($event) {
                   return $options.CetakPdfSudahDikerjakan();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
-                onClick: _cache[19] || (_cache[19] = function ($event) {
+                onClick: _cache[18] || (_cache[18] = function ($event) {
                   return $options.CetakExcelSudahgDikerjakan();
                 })
               })])])])];
@@ -1512,14 +1504,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "invent_code",
-                header: "Nama Peripheral",
+                header: "Peripheral",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1535,28 +1527,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
-                header: "Petugas ICT",
+                header: "Personnel ICT",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "User Division",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1581,7 +1573,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Selesai"
+        header: "Close"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1599,7 +1591,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_59, [_hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
                 modelValue: $data.filters['global'].value,
-                "onUpdate:modelValue": _cache[20] || (_cache[20] = function ($event) {
+                "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
                   return $data.filters['global'].value = $event;
                 }),
                 placeholder: "Search. . ."
@@ -1618,14 +1610,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
-                onClick: _cache[21] || (_cache[21] = function ($event) {
+                onClick: _cache[20] || (_cache[20] = function ($event) {
                   return $options.CetakPdfSelesai();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
-                onClick: _cache[22] || (_cache[22] = function ($event) {
+                onClick: _cache[21] || (_cache[21] = function ($event) {
                   return $options.CetakExcelSelesai();
                 })
               })])])])];
@@ -1647,14 +1639,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "invent_code",
-                header: "Nama Peripheral",
+                header: "Peripheral",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1670,28 +1662,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
-                header: "Petugas ICT",
+                header: "Personnel ICT",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "User Division",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1712,7 +1704,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   return [slotProps.data.ireq_value == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
                     "class": "p-button-rounded p-button-info mr-2",
-                    label: "Penilaian",
+                    label: "Rating",
                     onClick: function onClick($event) {
                       return $options.tes(slotProps.data.ireqd_id, slotProps.data.ireq_id);
                     }
@@ -1744,7 +1736,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["activeIndex"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogEdit,
-    "onUpdate:visible": _cache[27] || (_cache[27] = function ($event) {
+    "onUpdate:visible": _cache[26] || (_cache[26] = function ($event) {
       return $data.dialogEdit = $event;
     }),
     style: {
@@ -1756,14 +1748,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Yes",
-        onClick: _cache[25] || (_cache[25] = function ($event) {
+        onClick: _cache[24] || (_cache[24] = function ($event) {
           return $options.Update();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "No",
-        onClick: _cache[26] || (_cache[26] = function ($event) {
+        onClick: _cache[25] || (_cache[25] = function ($event) {
           return $options.cancel();
         }),
         "class": "p-button-text"
@@ -1847,7 +1839,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         autoResize: true,
         type: "text",
         modelValue: $data.reason.ket,
-        "onUpdate:modelValue": _cache[24] || (_cache[24] = function ($event) {
+        "onUpdate:modelValue": _cache[23] || (_cache[23] = function ($event) {
           return $data.reason.ket = $event;
         }),
         placeholder: "Berikan Ulasan ",

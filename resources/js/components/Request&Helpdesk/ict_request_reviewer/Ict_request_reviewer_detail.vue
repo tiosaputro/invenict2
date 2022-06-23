@@ -46,24 +46,33 @@
           </template>
           <Column field="ireq_type" header="Tipe Request" :sortable="true"  style="min-width:8rem"/>
           <Column field="name" header="Nama Peripheral" :sortable="true"  style="min-width:8rem"/>
-          <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:8rem"/>
+          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:8rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to1_reason" header="Alasan" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
           <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
           <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:8rem"/>
-          <Column style="min-width:14rem">
+          <Column style="min-width:17rem">
             <template #body="slotProps">
               <Button
-                v-if="slotProps.data.ireq_status == 'Reject By ICT Personnel' && this.status != 'RT'"
-                class="p-button-raised p-button-text mr-2"
+                v-if="slotProps.data.cekstatus == 'RT'"
+                class="p-button-raised p-button-text mr-2 mt-2"
+                label="Assign"
+                icon="pi pi-user-edit"
+                @click="AssignPerDetail(slotProps.data.ireqd_id)"
+              />
+              <Button
+                v-if="slotProps.data.cekstatus == 'NT'"
+                class="p-button-raised p-button-text mr-2 mt-2"
+                icon="pi pi-user-edit"
                 label="Assign"
                 @click="AssignPerDetail(slotProps.data.ireqd_id)"
               />
               <Button
-                v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.ireq_status == 'Reject By ICT Personnel' && this.status != 'RT'"
-                class="p-button-raised p-button-text mr-2 mt-2"
+                v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.cekstatus == 'RT' || slotProps.data.ireq_assigned_to2 && slotProps.data.cekstatus == 'NT'"
+                class="p-button-raised p-button-success p-button-text mr-2 mt-2"
+                icon="pi pi-check"
                 label="Submit"
                 @click="Submit(slotProps.data.ireqd_id)"
               />
@@ -74,7 +83,7 @@
 			        <div class="col">
 				        <div class="box">
                    <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
@@ -131,6 +140,24 @@
               </div>
           </div>
           <div class="field grid">
+            <label class="col-fixed w-9rem">No Detail</label>
+              <div class="col-fixed">
+                <InputText
+                  v-model="assign.ireqd_id"
+                  disabled
+                />
+              </div>
+          </div>
+          <div class="field grid">
+            <label class="col-fixed w-9rem">Request Type</label>
+              <div class="col-fixed">
+                <InputText
+                  v-model="assign.ireq_type"
+                  disabled
+                />
+              </div>
+          </div>
+          <div class="field grid">
             <label class="col-fixed w-9rem">Nama Peripheral</label>
               <div class="col-fixed">
                 <InputText
@@ -140,6 +167,41 @@
               </div>
           </div>
           <div class="field grid">
+            <label class="col-fixed w-9rem">Qty</label>
+              <div class="col-fixed">
+                <InputText
+                  v-model="assign.ireq_qty"
+                  disabled
+                />
+              </div>
+          </div>
+           <div class="field grid">
+            <label class="col-fixed w-9rem">Remark</label>
+              <div class="col-fixed">
+                <Textarea
+                  v-model="assign.ireq_remark"
+                  disabled
+                  autoResize
+                />
+              </div>
+          </div>
+          <div class="field grid" v-if="assign.status == 'NT'">
+            <label class="col-fixed w-9rem">Reason</label>
+              <div class="col-fixed">
+                <Textarea
+                  v-model="assign.ireq_assigned_to1_reason"
+                  :autoResize="true" 
+                  rows="5" 
+                  cols="20"
+                  placeholder="Enter Reason"
+                  :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to1_reason }"
+                  />
+              </div>
+              <small v-if="submitted && !assign.ireq_assigned_to1_reason" class="p-error">
+                  Reason not filled
+                </small>
+          </div>
+          <div class="field grid">
             <label class="col-fixed w-9rem">Petugas (ICT)</label>
               <div class="col-fixed">
                 <Dropdown
@@ -147,11 +209,11 @@
                   :options="petugas"
                   optionValue="name"
                   optionLabel="name"
-                  placeholder="Pilih Petugas (ICT)"
+                  placeholder="Select One"
                   :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to1 }"
                 />
                 <small v-if="submitted && !assign.ireq_assigned_to1" class="p-error">
-                  Petugas(ICT) Belum Diisi
+                  Petugas(ICT) not filled
                 </small>
               </div>
             </div>
@@ -220,6 +282,7 @@ export default {
     updateAssign(){
       this.submitted = true;
       this.code = this.assign.ireqd_id
+      if(this.assign.status =='RT'){
         if(this.assign.ireq_assigned_to1 != null){
           this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.assign = [];
@@ -234,6 +297,22 @@ export default {
             this.getIctDetail();
           });
         }
+      }else{
+        if(this.assign.ireq_assigned_to1 != null && this.assign.ireq_assigned_to1_reason != null){
+          this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.assign = [];
+            this.dialogAssign = false;
+            this.submitted = false;
+            this.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Berhasil Assign",
+              life: 3000,
+            });
+            this.getIctDetail();
+          });
+        }
+      }
     },
     Submit(ireqd_id){
       this.$confirm.require({

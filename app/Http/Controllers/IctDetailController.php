@@ -30,7 +30,7 @@ class IctDetailController extends Controller
         ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
          'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1',
          'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
-         'id.ireq_desc', 'id.ireq_qty','lrs.lookup_desc as name','llr.lookup_desc as ireq_status')
+         'id.ireq_desc', 'id.ireq_qty','lrs.lookup_desc as name','llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
         ->leftJoin('lookup_refs as lrs',function ($join) {
             $join->on('id.invent_code','lrs.lookup_code')
                   ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
@@ -130,10 +130,10 @@ class IctDetailController extends Controller
     {
         if($request->tipereq == 'P'){
             $message = [
-                'invent_code.required'=>'Nama Peripheral Belum Diisi',
-                'qty.required'=>'Qty Belum diisi',
-                'qty.numeric'=>'Qty Belum diisi',
-                'ket.required'=>'Keterangan Belum Diisi'
+                'invent_code.required'=>'Peripheral not filled',
+                'qty.required'=>'Qty not filled',
+                'qty.numeric'=>'Qty not filled',
+                'ket.required'=>'Remark not filled'
             ];
                 $request->validate([
                     'invent_code'=>'required',
@@ -145,7 +145,7 @@ class IctDetailController extends Controller
                 'ireq_id' => $code,
                 'ireq_type' => $request->tipereq,
                 'invent_code'=>$request->invent_code,
-                'ireq_desc'=> $request->desk,
+                // 'ireq_desc'=> $request->desk,
                 'ireq_qty'=> $request->qty,
                 'ireq_remark'=>$request->ket,
                 'creation_date'=>$this->newCreation,
@@ -158,7 +158,7 @@ class IctDetailController extends Controller
             ]);
         } else{
             $message = [
-                'ket.required'=>'Keterangan Belum Diisi'
+                'ket.required'=>'Remark not filled'
             ];
                 $request->validate([
                     'ket' => 'required'
@@ -167,7 +167,7 @@ class IctDetailController extends Controller
             $dtl = IctDetail::create([
                 'ireq_id' => $code,
                 'ireq_type' => $request->tipereq,
-                'ireq_desc'=> $request->desk,
+                // 'ireq_desc'=> $request->desk,
                 'ireq_remark'=>$request->ket,
                 'creation_date'=>$this->newCreation,
                 'created_by' => Auth::user()->usr_name,
@@ -196,10 +196,10 @@ class IctDetailController extends Controller
     {
         if($request->ireq_type == 'P'){
         $message = [
-            'ireq_type.required'=>'Tipe Request Belum Diisi',
-            'invent_code.required'=>'Nama Peripheral Belum Diisi',
-            'ireq_qty.required'=>'Qty Belum diisi',
-            'ireq_remark.required'=>'Keterangan Belum Diisi'
+            'ireq_type.required'=>'Request type not filled',
+            'invent_code.required'=>'Peripheral not filled',
+            'ireq_qty.required'=>'Qty not filled',
+            'ireq_remark.required'=>'Remark not filled'
         ];
             $request->validate([
                 'ireq_type' => 'required',
@@ -435,11 +435,16 @@ class IctDetailController extends Controller
     }
     public function getDetail($ireqd_id,$ireq_id){
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_assigned_to1','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 'lrs.lookup_desc as name')
+        ->select('id.ireq_assigned_to1','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 
+        'lrs.lookup_desc as name','lr.lookup_desc as ireq_type','id.ireq_qty','id.ireq_remark','id.ireq_assigned_to1_reason')
         ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
         ->leftJoin('lookup_refs as lrs',function ($join) {
             $join->on('id.invent_code','lrs.lookup_code')
                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('id.ireq_type','lr.lookup_code')
+                 ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
         })
         ->where('id.ireqd_id',$ireqd_id)
         ->where('id.ireq_id',$ireq_id)
@@ -464,6 +469,7 @@ class IctDetailController extends Controller
         ->where('ireqd_id',$code)
         ->where('ireq_id',$request->ireq_id)
         ->update([
+            'ireq_assigned_to1_reason'=>$request->ireq_assigned_to1_reason,
             'ireq_assigned_to2' => $request->ireq_assigned_to1,
             'last_update_date' => $this->newUpdate,
             'last_updated_by' => Auth::user()->usr_name

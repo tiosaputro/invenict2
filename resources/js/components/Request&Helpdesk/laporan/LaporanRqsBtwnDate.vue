@@ -42,12 +42,22 @@
               <Button icon="pi pi-filter" @click="this.dialogFilterDate = true"/>
             </div>
           </template>
-          <Column field="ireq_no" header="No. Request" style="min-width:10rem"/>
-          <Column field="ireq_date" header="Tanggal Request" style="min-width:10rem"/>
-          <Column field="ireq_requestor" header="Pemohon" style="min-width:10rem"/>
-          <Column field="ireq_user" header="Pengguna" style="min-width:10rem"/>
-          <Column field="div_name" header="Divisi Pengguna" style="min-width:10rem"/>
-          <Column field="ireq_status" header="Status" style="min-width:10rem"/>
+          <Column field="ireq_no" header="No. Request" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireqd_id" header="No. Detail" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireq_type" header="Request Type" style="min-width:8rem" :sortable="true"/>
+          <Column field="kategori" header="Peripheral" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireq_qty" header="Qty" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireq_remark" header="Remark" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireq_date" header="Request Date" style="min-width:8rem" :sortable="true">
+            <template #body="slotProps">
+              {{ formatDate(slotProps.data.ireq_date) }}
+            </template>
+          </Column>
+          <Column field="ireq_requestor" header="Requestor" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
+          <Column field="div_name" header="Division User" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireq_status" header="Status" style="min-width:8rem" :sortable="true"/>
         </DataTable> 
         <Dialog
           v-model:visible="dialogFilterDate"
@@ -126,14 +136,14 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY")
+      return moment(date).format("DD MMM YYYY HH:mm")
     },
     cekUser(){
       if(this.id){
       this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Divisi Requestor Per Status") || this.checkto.includes("/report-div-req-per-status")){
+        if(this.checkto.includes("/report-ict-report")){
           this.getIct();
           this.getStatus();
         }

@@ -202,6 +202,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/sapr/{ireq_id}','IctController@submitAssignPerRequest');
     Route::get('/dataIct','IctController@getDataIct');
     Route::get('/getdataIctByStatus/{statuss}','IctController@getdataIctByStatus');
+    Route::get('/detail-request-reviewer/{code}','IctController@detailRequestReviewer');
+
 
     //ict request manager
     Route::get('/get-data-manager','IctController@getDataManager');

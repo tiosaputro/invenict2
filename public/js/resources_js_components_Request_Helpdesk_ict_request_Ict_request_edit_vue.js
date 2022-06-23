@@ -27,7 +27,8 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id')
+      id: localStorage.getItem('id'),
+      requestor: localStorage.getItem('usr_name')
     };
   },
   created: function created() {
@@ -116,27 +117,19 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         if (this.mutasi.ireq_prio_level == null) {
-          this.error.ireq_prio_level = "Prioritas Level Belum Diisi";
-        }
-
-        if (this.mutasi.ireq_remark == null) {
-          this.error.ireq_remark = "Keterangan Belum Diisi";
+          this.error.ireq_prio_level = "Priority level not filled";
         }
 
         if (this.mutasi.ireq_divisi_user == null) {
-          this.error.ireq_divisi_user = "Divisi Pengguna Belum Diisi";
+          this.error.ireq_divisi_user = "User division not filled";
         }
 
         if (this.mutasi.ireq_bu == null) {
-          this.error.ireq_bu = "Bisnis Unit Belum Diisi";
+          this.error.ireq_bu = "Business unit not filled";
         }
 
         if (this.mutasi.ireq_user == null) {
-          this.error.ireq_user = "Pengguna Belum Diisi";
-        }
-
-        if (this.mutasi.ireq_date == '') {
-          this.error.ireq_date = "Tgl. Request Belum Diisi";
+          this.error.ireq_user = "User not filled";
         }
       }
     }
@@ -209,11 +202,8 @@ var _hoisted_11 = {
 };
 
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "120px"
-  }
-}, "Pengguna", -1
+  "class": "col-fixed w-9rem"
+}, "Requestor", -1
 /* HOISTED */
 );
 
@@ -221,54 +211,70 @@ var _hoisted_13 = {
   "class": "col-fixed w-9rem"
 };
 var _hoisted_14 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_15 = {
   "class": "field grid"
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
-}, "Divisi Pengguna", -1
+}, "User", -1
 /* HOISTED */
 );
 
-var _hoisted_17 = {
+var _hoisted_16 = {
   "class": "col-fixed w-9rem"
+};
+var _hoisted_17 = {
+  key: 0,
+  "class": "p-error"
 };
 var _hoisted_18 = {
-  key: 0,
-  "class": "p-error"
-};
-var _hoisted_19 = {
   "class": "field grid"
 };
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "120px"
   }
-}, "Bisnis Unit", -1
+}, "User Division", -1
 /* HOISTED */
 );
 
-var _hoisted_21 = {
+var _hoisted_20 = {
   "class": "col-fixed w-9rem"
 };
-var _hoisted_22 = {
+var _hoisted_21 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_23 = {
+var _hoisted_22 = {
+  "class": "field grid"
+};
+
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "120px"
+  }
+}, "Business Unit", -1
+/* HOISTED */
+);
+
+var _hoisted_24 = {
+  "class": "col-fixed w-9rem"
+};
+var _hoisted_25 = {
+  key: 0,
+  "class": "p-error"
+};
+var _hoisted_26 = {
   key: 1,
   "class": "p-error"
 };
-var _hoisted_24 = {
+var _hoisted_27 = {
   "class": "form-group"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -292,7 +298,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.UpdateIct && $options.UpdateIct.apply($options, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
@@ -312,7 +318,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     options: $data.level,
     optionLabel: "name",
     optionValue: "code",
-    placeholder: "Pilih Level",
+    placeholder: "Select One",
     showClear: true,
     filter: true,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
@@ -325,27 +331,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.mutasi.ireq_user,
+    modelValue: $data.requestor,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.requestor = $event;
+    }),
+    disabled: ""
+  }, null, 8
+  /* PROPS */
+  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+    type: "text",
+    modelValue: $data.mutasi.ireq_user,
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.mutasi.ireq_user = $event;
     }),
-    placeholder: "Masukan Pengguna",
+    placeholder: "Enter User",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.ireq_user
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.error.ireq_user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.ireq_user), 1
+  , ["modelValue", "class"]), $data.error.ireq_user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.ireq_user), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.mutasi.ireq_divisi_user,
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.mutasi.ireq_divisi_user = $event;
     }),
     options: $data.divisi,
     optionLabel: "name",
     optionValue: "code",
-    placeholder: "Pilih Divisi Pengguna",
+    placeholder: "Select One",
     filter: true,
     showClear: true,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
@@ -353,17 +368,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.error.ireq_divisi_user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.ireq_divisi_user), 1
+  , ["modelValue", "options", "class"]), $data.error.ireq_divisi_user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.ireq_divisi_user), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.mutasi.ireq_bu,
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.mutasi.ireq_bu = $event;
     }),
     options: $data.bu,
     optionLabel: "name",
     optionValue: "code",
-    placeholder: "Pilih Bisnis Unit",
+    placeholder: "Select One",
     showClear: true,
     filter: true,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
@@ -371,20 +386,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.ireq_bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_bu[0]), 1
+  , ["modelValue", "options", "class"]), $data.errors.ireq_bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_bu[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.ireq_bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.ireq_bu), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.ireq_bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.ireq_bu), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Keterangan</label>\n                 <div class=\"field col-12 md:col-4\">\n                  <Textarea \n                    v-model=\"mutasi.ireq_remark\"\n                    :autoResize=\"true\" \n                    rows=\"5\" \n                    cols=\"20\"\n                    placeholder=\"Masukan Keterangan . . .\"\n                    :class=\"{ 'p-invalid': error.ireq_remark }\"\n                  />\n                      <small class=\"p-error\" v-if=\"error.ireq_remark\"\n                        >{{error.ireq_remark}}\n                      </small>\n                </div>\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Keterangan</label>\n                 <div class=\"field col-12 md:col-4\">\n                  <Textarea \n                    v-model=\"mutasi.ireq_remark\"\n                    :autoResize=\"true\" \n                    rows=\"5\" \n                    cols=\"20\"\n                    placeholder=\"Masukan Keterangan . . .\"\n                    :class=\"{ 'p-invalid': error.ireq_remark }\"\n                  />\n                      <small class=\"p-error\" v-if=\"error.ireq_remark\"\n                        >{{error.ireq_remark}}\n                      </small>\n                </div>\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
-    label: "Simpan",
+    label: "Save",
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
-    onClick: _cache[5] || (_cache[5] = function ($event) {
+    onClick: _cache[6] || (_cache[6] = function ($event) {
       return _ctx.$router.push('/ict-request');
     })
   })])], 32

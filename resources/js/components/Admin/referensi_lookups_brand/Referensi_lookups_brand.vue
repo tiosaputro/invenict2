@@ -40,7 +40,7 @@
           <template #loading>
             Loading Lookups data. Please wait.
           </template>
-          <Column field="lookup_type" header="Tipe" :sortable="true" style="min-width:10rem"/>
+          <!-- <Column field="lookup_type" header="Tipe" :sortable="true" style="min-width:10rem"/> -->
           <Column field="lookup_code" header="Kode" :sortable="true" style="min-width:10rem"/>
           <Column field="lookup_desc" header="Deskripsi" :sortable="true" style="min-width:10rem"/>
           <Column field="lookup_status" header="Status" :sortable="true" style="min-width:10rem"/>

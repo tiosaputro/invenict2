@@ -61,7 +61,7 @@
                         :options="level"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Priority Level"
+                        placeholder="Select One"
                         :showClear="true"
                         :filter="true"
                         :class="{ 'p-invalid': error.priolev }"
@@ -72,12 +72,22 @@
                 </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem">Pengguna</label>
+                <label class="col-fixed w-9rem">Requestor</label>
+                 <div class="col-fixed w-9rem">
+                  <InputText
+                    type="text"
+                    v-model="requestor"
+                    disabled
+                  />
+                 </div>
+              </div>
+              <div class="field grid">
+                <label class="col-fixed w-9rem">User</label>
                  <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
                     v-model="usr_name"
-                    placeholder="Masukan Pengguna"
+                    placeholder="Enter User"
                     :class="{ 'p-invalid': error.usr_name }"
                   />
                   <small v-if="error.usr_name" class="p-error">
@@ -86,7 +96,7 @@
                  </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem">Divisi Pengguna</label>
+                <label class="col-fixed w-9rem">User Division</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="usr_divisi"
@@ -94,7 +104,7 @@
                         optionLabel="name"
                         optionValue="code"
                         :class="{ 'p-invalid': error.usr_divisi }"
-                        placeholder="Pilih Divisi Pengguna"
+                        placeholder="Select One"
                         :filter="true"
                         :showClear="true"
                      />
@@ -104,7 +114,7 @@
                 </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem">Bisnis Unit</label>
+                <label class="col-fixed w-9rem">Business Unit</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="bisnis"
@@ -112,7 +122,7 @@
                         optionLabel="name"
                         optionValue="code"
                         :class="{ 'p-invalid': error.bisnis }"
-                        placeholder="Pilih Bisnis Unit"
+                        placeholder="Select One"
                         :filter="true"
                         :showClear="true"
                      />
@@ -141,7 +151,7 @@
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  label="Simpan"
+                  label="Save"
                   type="submit"
                 />
                 <Button
@@ -168,6 +178,7 @@ export default {
       priolev:null,
       usr_name:null,
       usr_divisi : null,
+      requestor:localStorage.getItem('usr_name'),
       ket:null,
       divisi:[],
       bisnis: null,
@@ -257,16 +268,16 @@ export default {
          });
       }else{
         if(this.priolev == null){
-          this.error.priolev = "Priority Level Belum Diisi"
+          this.error.priolev = "Priority level not filled"
         }
         if(this.bisnis == null){
-          this.error.bisnis = "Bisnis Unit Belum Diisi"
+          this.error.bisnis = "Business unit not filled"
         }
         if(this.usr_name == null){
-          this.error.usr_name = "Pengguna Belum Diisi"
+          this.error.usr_name = "User not filled"
         }
         if(this.usr_divisi == null){
-          this.error.usr_divisi = "Divisi Pengguna Unit Belum Diisi"
+          this.error.usr_divisi = "User division not filled"
         }
         
       }

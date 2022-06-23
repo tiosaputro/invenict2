@@ -9,7 +9,7 @@
         </Toolbar>
             <div class="card-body">
              <form @submit.prevent="UpdateLookup">
-               <div class="field grid">
+               <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Tipe</label>
                  <div class="col">
                   <InputText
@@ -18,7 +18,7 @@
                   disabled
                   />
                 </div>
-              </div>
+              </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Kode</label>
                  <div class="col">

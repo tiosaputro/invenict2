@@ -1025,35 +1025,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   /* PROPS */
                   , ["onClick"])), [[_directive_tooltip, 'Note', void 0, {
                     bottom: true
-                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                    "class": "p-button-raised p-button-info p-button-text mr-2",
-                    label: "CA",
-                    onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'add Cash Advance',
-                        params: {
-                          code: slotProps.data.ireq_id,
-                          dtl: slotProps.data.ireqd_id
-                        }
-                      });
-                    }
-                  }, null, 8
-                  /* PROPS */
-                  , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                    "class": "p-button-raised p-button-success p-button-text mt-2",
-                    label: "PR",
-                    onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'add Payment Request',
-                        params: {
-                          code: slotProps.data.ireq_id,
-                          dtl: slotProps.data.ireqd_id
-                        }
-                      });
-                    }
-                  }, null, 8
-                  /* PROPS */
-                  , ["onClick"])];
+                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\n                        class=\"p-button-raised p-button-info p-button-text mr-2\"\n                        label=\"CA\"\n                        @click=\"$router.push({\n                            name: 'add Cash Advance',\n                            params: { code: slotProps.data.ireq_id, dtl:slotProps.data.ireqd_id } })\"\n                      />\n                      <Button\n                        class=\"p-button-raised p-button-success p-button-text mt-2\"\n                        label=\"PR\"\n                        @click=\"$router.push({\n                            name: 'add Payment Request',\n                            params: { code: slotProps.data.ireq_id, dtl:slotProps.data.ireqd_id } })\"\n                      /> ")];
                 }),
                 _: 1
                 /* STABLE */

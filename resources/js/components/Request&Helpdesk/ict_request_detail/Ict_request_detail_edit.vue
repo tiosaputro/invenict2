@@ -22,7 +22,7 @@
               </div>
 
             <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
+                <label class="col-fixed w-9rem" style="width:120px">Request Type</label>
                  <div class="field col-12 md:col-4">
                        <Dropdown
                         :options="type"
@@ -30,7 +30,7 @@
                         v-model="ict.ireq_type"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Tipe Request"
+                        placeholder="Select One"
                         @change="getIreq()"
                         :showClear="true"
                         :class="{ 'p-invalid': error.ireq_type }"
@@ -44,16 +44,15 @@
                 </div>
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
-                <label class="col-fixed w-9rem" style="width:120px">Nama Peripheral</label>
+                <label class="col-fixed w-9rem" style="width:120px">Peripheral</label>
                  <div class="field col-12 md:col-4">
                      <Dropdown 
                         v-model="ict.invent_code"
                         :options="kodeperi"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Nama Peripheral "
+                        placeholder="Select One "
                         :showClear="true"
-                        @change="getImage()"
                         :class="{ 'p-invalid': errors.invent_code }"
                      />
                      <small v-if="errors.invent_code" class="p-error">
@@ -64,23 +63,23 @@
                     </small>
               </div>
               </div>
-              <div class="field grid">
+              <!-- <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Deskripsi</label>
                  <div class="col">
                      <InputText
                         type="text"
                         v-model="ict.ireq_desc"
-                        placeholder="Masukan Deskripsi(Optional)"
+                        placeholder="Enter Deskripsi(Optional)"
                      />
                 </div>
-              </div>
+              </div> -->
 
               <div class="field grid" v-if="this.cekTipeReq =='P'">
                 <label class="col-fixed w-9rem" style="width:120px">Qty</label>
-                 <div class="col">
+                 <div class="col-fixed w-9rem">
                      <InputNumber
                         v-model="ict.ireq_qty"
-                        placeholder="Masukan Qty"
+                        placeholder="Enter Qty"
                         :class="{ 'p-invalid': errors.ireq_qty }"
                      />
                      <small v-if="errors.ireq_qty" class="p-error">
@@ -90,14 +89,14 @@
               </div>
 
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Keterangan</label>
-                 <div class="col">
+                <label class="col-fixed w-9rem" style="width:120px">Remark</label>
+                 <div class="col-fixed w-9rem">
                      <Textarea
                         :autoResize="true"
                         rows="5" 
                         type="text"
                         v-model="ict.ireq_remark"
-                        placeholder="Masukan ket"
+                        placeholder="Enter Remark"
                         :class="{ 'p-invalid': errors.ireq_remark }"
                      />
                      <small v-if="errors.ireq_remark" class="p-error">
@@ -109,7 +108,7 @@
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  label="Simpan"
+                  label="Save"
                   type="submit"
                 />
                 <Button
@@ -121,10 +120,10 @@
               </div>
             </form>
           </div>
-          <div class="col-6" v-if="this.cekTipeReq =='P'">
+          <!-- <div class="col-6" v-if="this.cekTipeReq =='P'">
                     <img :src="'/master_peripheral/' + ict.photo" class="ict-image" v-if="this.ict.photo && !this.kode" />
                     <img :src="'/master_peripheral/' + ict.photo.photo" class="ict-image" v-if="this.kode && this.ict.photo.photo" />
-              </div>
+              </div> -->
           </div>
       </div>
     </div>
@@ -165,7 +164,7 @@ export default {
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-           this.getKode();
+        this.getIct();
         }
         else {
           this.$router.push('/access');
@@ -176,11 +175,10 @@ export default {
       }
     },
     getKode(){
-          this.axios.get('/api/get-kode',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.kodeperi = response.data;         
-              this.getReq();
-              this.getIct();
-          }).catch(error=>{
+        this.axios.get('/api/getAddDetail',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.type = response.data.ref;
+        this.kodeperi = response.data.kode;   
+      }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
             severity:'error', summary: 'Error', detail:'Sesi Login Expired'
@@ -194,21 +192,9 @@ export default {
       getIct(){
           this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
               this.ict = response.data;
-              this.cekTipeReq = this.ict.ireq_type
+              this.cekTipeReq = this.ict.ireq_type;
+              this.getKode();
           });
-      },
-      getReq(){
-          this.axios.get('/api/getType',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.type = response.data;
-          });
-      },
-      getImage(){
-        this.kode = this.ict.invent_code;
-        if(this.kode){
-          this.axios.get('/api/getImage/'+this.kode, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.ict.photo = response.data;
-          });
-        }
       },
     UpdateIctDetail() {
       this.errors = [];
@@ -228,10 +214,10 @@ export default {
          });
       }else{
         if(this.ict.ireq_type == null){
-          this.error.ireq_type = "Tipe Request Belum Diisi"
+          this.error.ireq_type = "Request Type not filled"
         }
         if(this.ict.invent_code == null){
-          this.error.invent_code = "Nama Peripheral Belum Diisi"
+          this.error.invent_code = "Peripheral not filled"
         }
       }
       }else{
@@ -249,7 +235,7 @@ export default {
          });
       }else{
         if(this.ict.ireq_type == null){
-          this.error.ireq_type = "Tipe Request Belum Diisi"
+          this.error.ireq_type = "Request Type not filled"
         }
       }
       }

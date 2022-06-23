@@ -63,7 +63,7 @@
                         :options="level"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Level"
+                        placeholder="Select One"
                         :showClear="true"
                         :filter="true"
                         :class="{ 'p-invalid': error.ireq_prio_level }"
@@ -75,12 +75,22 @@
                 </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Pengguna</label>
+                <label class="col-fixed w-9rem">Requestor</label>
+                 <div class="col-fixed w-9rem">
+                  <InputText
+                    type="text"
+                    v-model="requestor"
+                    disabled
+                  />
+                 </div>
+              </div>
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:120px">User</label>
                  <div class="col-fixed w-9rem">
                      <InputText
                         type="text"
                         v-model="mutasi.ireq_user"
-                        placeholder="Masukan Pengguna"
+                        placeholder="Enter User"
                         :class="{ 'p-invalid': errors.ireq_user }"
                      />
                         <small v-if="error.ireq_user" class="p-error">
@@ -89,14 +99,14 @@
                 </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Divisi Pengguna</label>
+                <label class="col-fixed w-9rem" style="width:120px">User Division</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="mutasi.ireq_divisi_user"
                         :options="divisi"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Divisi Pengguna"
+                        placeholder="Select One"
                         :filter="true"
                         :showClear="true"
                         :class="{ 'p-invalid': errors.ireq_divisi_user }"
@@ -107,14 +117,14 @@
                 </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Bisnis Unit</label>
+                <label class="col-fixed w-9rem" style="width:120px">Business Unit</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model ="mutasi.ireq_bu"
                         :options="bu"
                         optionLabel="name"
                         optionValue="code"
-                        placeholder="Pilih Bisnis Unit"
+                        placeholder="Select One"
                         :showClear="true"
                         :filter="true"
                         :class="{ 'p-invalid': errors.ireq_bu }"
@@ -147,7 +157,7 @@
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  label="Simpan"
+                  label="Save"
                   type="submit"
                 />
                 <Button
@@ -177,9 +187,10 @@ export default {
         input: 'DD MMM YYYY'
       },
       token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
-        id : localStorage.getItem('id'),
+      checkname : [],
+      checkto : [],
+      id : localStorage.getItem('id'),
+      requestor:localStorage.getItem('usr_name'),
     };
   },
   created(){
@@ -244,22 +255,16 @@ export default {
       }
       else{
         if(this.mutasi.ireq_prio_level == null){
-          this.error.ireq_prio_level = "Prioritas Level Belum Diisi"
+          this.error.ireq_prio_level = "Priority level not filled"
       }
-         if(this.mutasi.ireq_remark == null){
-          this.error.ireq_remark = "Keterangan Belum Diisi"
-        }
         if(this.mutasi.ireq_divisi_user == null){
-          this.error.ireq_divisi_user = "Divisi Pengguna Belum Diisi"
+          this.error.ireq_divisi_user = "User division not filled"
         }
         if(this.mutasi.ireq_bu == null){
-          this.error.ireq_bu = "Bisnis Unit Belum Diisi"
+          this.error.ireq_bu = "Business unit not filled"
         }
         if(this.mutasi.ireq_user == null){
-          this.error.ireq_user = "Pengguna Belum Diisi"
-        }
-        if(this.mutasi.ireq_date == ''){
-          this.error.ireq_date = "Tgl. Request Belum Diisi"
+          this.error.ireq_user = "User not filled"
         }
       }
       },

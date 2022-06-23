@@ -28,7 +28,7 @@ class MutasiController extends Controller
             $mutasi = DB::table('invent_mutasi as im')
             ->select('im.*','invent_mst.invent_code','invent_mst.invent_desc')
             ->leftjoin('invent_mst','im.invent_code','invent_mst.invent_code')
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.creation_date','DESC')
             ->get();
             return response()->json($mutasi);
         }
