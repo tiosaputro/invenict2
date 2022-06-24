@@ -21,6 +21,7 @@ __webpack_require__.r(__webpack_exports__);
       displayKode: false,
       header: '',
       detail: [],
+      detailPeripheral: [],
       loading: true,
       displayBarcode: false,
       token: localStorage.getItem('token'),
@@ -77,19 +78,15 @@ __webpack_require__.r(__webpack_exports__);
       this.barcode = '';
       this.displayBarcode = false;
     },
-    previewBarcode: function previewBarcode(invent_code) {
-      // this.axios.get('api/getBarcode/'+invent_code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-      //   this.barcode = 'Kode Peripheral ' + ': ' + response.data.invent_code +', '+ 'Nama Peripheral ' + ': ' + response.data.invent_desc + ', '+ 'Merk '+': '+ response.data.invent_brand+', '
-      //   + 'Tipe '+': '+ response.data.invent_type+', '+'S/N '+': '+response.data.invent_sn+', '+ 'Bisnis Unit '+': '+response.data.invent_bu +', '+'Lokasi Terakhir '+': '
-      //   +response.data.invent_lokasi_previous+', '+'Pengguna Terakhir '+': '+response.data.invent_pengguna_previous+', '+'Lama Garansi '+': '+response.data.invent_lama_garansi+' Tahun'+', '+'Tanggal Perolehan '+': '+response.data.invent_tgl_perolehan; 
-      this.barcode = 'http://localhost:8000/detPeri/' + invent_code;
-      this.displayBarcode = true; // });
+    previewBarcode: function previewBarcode(invent_code_dtl) {
+      this.barcode = 'http://localhost:8000/detPeripheral/' + invent_code_dtl;
+      this.displayBarcode = true;
     },
     detailKode: function detailKode(invent_code) {
       var _this2 = this;
 
       this.displayKode = true;
-      this.axios.get('api/detail-peripheral/' + invent_code, {
+      this.axios.get('/api/detail-peripheral/' + invent_code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -106,7 +103,8 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.master = response.data;
+        _this3.master = response.data.dtl;
+        _this3.detailPeripheral = response.data.mas;
         _this3.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -126,16 +124,16 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    DeleteMas: function DeleteMas(invent_code) {
+    DeleteMas: function DeleteMas(invent_code_dtl) {
       var _this4 = this;
 
       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure you want to delete this data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this4.$toast.add({
             severity: "info",
@@ -144,7 +142,7 @@ __webpack_require__.r(__webpack_exports__);
             life: 3000
           });
 
-          _this4.axios["delete"]('api/delete-mas/' + invent_code, {
+          _this4.axios["delete"]('/api/delete-master-detail/' + invent_code_dtl, {
             headers: {
               'Authorization': 'Bearer ' + _this4.token
             }
@@ -193,7 +191,7 @@ var _hoisted_3 = {
   "class": "card"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Master Peripheral", -1
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Master Peripheral (Detail) ", -1
 /* HOISTED */
 );
 
@@ -246,6 +244,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
 
+  var _component_qrcode_vue = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("qrcode-vue");
+
   var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
@@ -253,6 +253,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_4];
+    }),
+    end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.detailPeripheral.name), 1
+      /* TEXT */
+      )];
     }),
     _: 1
     /* STABLE */
@@ -300,24 +305,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Pdf",
-        "class": "p-button-raised p-button-danger mr-2",
-        icon: "pi pi-file-pdf",
+        label: "Back",
+        "class": "p-button-raised p-button mr-2",
+        icon: "pi pi-chevron-left",
         onClick: _cache[2] || (_cache[2] = function ($event) {
-          return $options.CetakPdf();
+          return _ctx.$router.push({
+            name: 'Master Peripheral'
+          });
         })
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Excel",
-        "class": "p-button-raised p-button-success mr-2",
-        icon: "bi bi-file-earmark-spreadsheet",
-        onClick: _cache[3] || (_cache[3] = function ($event) {
-          return $options.CetakExcel();
-        })
-      })])])])];
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\r\n                    label=\"Pdf\"\r\n                    class=\"p-button-raised p-button-danger mr-2\"\r\n                    icon=\"pi pi-file-pdf\"\r\n                    @click=\"CetakPdf()\"\r\n                  />\r\n                  <Button \r\n                    label=\"Excel\"\r\n                    class=\"p-button-raised p-button-success mr-2\"\r\n                    icon=\"bi bi-file-earmark-spreadsheet\"\r\n                    @click=\"CetakExcel()\" \r\n                  /> ")])])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "invent_sn",
         header: "Serial Number",
         sortable: true
       }, {
@@ -329,7 +328,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             style: {
               "cursor": "pointer"
             }
-          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.invent_code), 9
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.invent_sn), 9
           /* TEXT, PROPS */
           , _hoisted_10)];
         }),
@@ -342,39 +341,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "invent_lokasi_update",
-        header: "Lokasi Sesudahnya",
+        header: "Lokasi Terakhir",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "invent_pengguna_previous",
-        header: "Type",
+        header: "Pengguna Sebelumnya",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        headerStyle: "min-width:6rem"
+        field: "invent_pengguna_update",
+        header: "Pengguna Terakhir",
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        headerStyle: "min-width:12rem"
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-            "class": "p-button-rounded p-button-secondary mr-2",
-            icon: "pi pi-info-circle",
-            onClick: function onClick($event) {
-              return _ctx.$router.push({
-                name: 'Master Peripheral Detail',
-                params: {
-                  code: slotProps.data.invent_code
-                }
-              });
-            }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-            left: true
-          }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-info mr-2",
             icon: "pi pi-pencil",
             onClick: function onClick($event) {
               return _ctx.$router.push({
-                name: 'Edit Master Peripheral',
+                name: 'Edit Master Peripheral Detail',
                 params: {
-                  code: slotProps.data.invent_code
+                  code: slotProps.data.invent_code_dtl,
+                  kode: slotProps.data.invent_code
                 }
               });
             }
@@ -386,13 +375,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             icon: "pi pi-trash",
             "class": "p-button-rounded p-button-danger mr-2",
             onClick: function onClick($event) {
-              return $options.DeleteMas(slotProps.data.invent_code);
+              return $options.DeleteMas(slotProps.data.invent_code_dtl);
             }
           }, null, 8
           /* PROPS */
           , ["onClick"]), [[_directive_tooltip, 'Delete', void 0, {
             top: true
-          }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\r\n                icon=\"pi pi-qrcode\"\r\n                class=\"p-button-rounded p-button-success mt-2\"\r\n                @click=\"previewBarcode(slotProps.data.invent_code)\"\r\n                v-tooltip.right=\"'Print QR-Code'\"\r\n              /> ")];
+          }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+            icon: "pi pi-qrcode",
+            "class": "p-button-rounded p-button-success mt-2",
+            onClick: function onClick($event) {
+              return $options.previewBarcode(slotProps.data.invent_code_dtl);
+            }
+          }, null, 8
+          /* PROPS */
+          , ["onClick"]), [[_directive_tooltip, 'Print QR-Code', void 0, {
+            right: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -404,7 +403,45 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Dialog\r\n          id=\"qrcode\"\r\n          v-model:visible=\"displayBarcode\"\r\n          :style=\"{ width: '400px' }\"\r\n          header=\"Preview QR-Code\"\r\n          :modal=\"true\"\r\n          class=\"p-fluid\"\r\n        >\r\n        <qrcode-vue :value=\"barcode\" ref=\"qr\" :size=\"300\" level=\"L\" /> \r\n          <template #footer>\r\n            <Button label=\"Pdf\" icon=\"pi pi-download\" @click=\"downloadBarcodePdf()\" class=\"p-button-danger\" />\r\n          </template>\r\n        </Dialog> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Dialog\r\n          v-model:visible=\"displayKode\"\r\n          :breakpoints=\"{'960px': '75vw'}\"\r\n          :style=\"{ width: '450px' }\"\r\n          :header=\"this.header\"\r\n          :modal=\"true\"\r\n          class=\"fluid\"\r\n        > "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"hidden lg:inline-flex row\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n              <label class=\"col-fixed\" style=\"width:100px\">Kode</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-2\">/ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                    type=\"text\"\r\n                    v-model=\"detail.invent_code\"\r\n                    disabled\r\n                  /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n              <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Nama</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_desc\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> \r\n              <div class=\"field grid\">\r\n                <label class=\"col-fixed\" style=\"width:100px\">Merk</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                      v-model=\"detail.invent_brand\"\r\n                      disabled\r\n                    /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                <div class=\"field grid\">\r\n                  <label class=\"col-fixed\" style=\"width:100px\">Tipe</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                        disabled\r\n                        v-model= \"detail.invent_type\"\r\n                      /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">S/N</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_sn\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Tgl. Perolehan</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_tgl_perolehan\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                    <label style=\"width:155px\">Lama Garansi</label>\r\n                      <div class=\"col-3\">\r\n                        <div class=\"p-inputgroup\">\r\n                          <InputText\r\n                            v-model=\"detail.invent_lama_garansi\"\r\n                            disabled\r\n                          />\r\n                            <span class=\"p-inputgroup-addon\"> Tahun </span> \r\n                        </div>\r\n                    </div>\r\n                  </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Kondisi</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_kondisi\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Bisnis Unit</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_bu\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>/ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Lokasi Terakhir</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          type=\"text\"\r\n                          v-model=\"detail.invent_lokasi_update\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Pengguna Terakhir</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          type=\"text\"\r\n                          v-model=\"detail.invent_pengguna_update\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Lokasi Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_lokasi_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                    <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Penguna Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_pengguna_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Nama</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_desc\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\"></label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-10 md-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"card\" style=\"height: 16 rem;\">\r\n                            <img :src=\"'/master_peripheral/' +detail.invent_photo\" class=\"master-image\" />\r\n                          </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Lokasi Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_lokasi_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                    <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Penguna Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_pengguna_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <template #footer>\r\n                      <Button label=\"Close\" class=\"p-button-raised p-button-danger mr-2\" icon=\"pi pi-times\" @click=\"this.displayKode = false\" autofocus/>\r\n                    </template>\r\n          </Dialog>   ")])])]);
+  , ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    id: "qrcode",
+    visible: $data.displayBarcode,
+    "onUpdate:visible": _cache[4] || (_cache[4] = function ($event) {
+      return $data.displayBarcode = $event;
+    }),
+    style: {
+      width: '400px'
+    },
+    header: "Preview QR-Code",
+    modal: true,
+    "class": "p-fluid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Pdf",
+        icon: "pi pi-download",
+        onClick: _cache[3] || (_cache[3] = function ($event) {
+          return $options.downloadBarcodePdf();
+        }),
+        "class": "p-button-danger"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_qrcode_vue, {
+        value: $data.barcode,
+        ref: "qr",
+        size: 300,
+        level: "L"
+      }, null, 8
+      /* PROPS */
+      , ["value"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Dialog\r\n          v-model:visible=\"displayKode\"\r\n          :breakpoints=\"{'960px': '75vw'}\"\r\n          :style=\"{ width: '450px' }\"\r\n          :header=\"this.header\"\r\n          :modal=\"true\"\r\n          class=\"fluid\"\r\n        > "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"hidden lg:inline-flex row\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n              <label class=\"col-fixed\" style=\"width:100px\">Kode</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-2\">/ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                    type=\"text\"\r\n                    v-model=\"detail.invent_code\"\r\n                    disabled\r\n                  /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n              <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Nama</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_desc\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> \r\n              <div class=\"field grid\">\r\n                <label class=\"col-fixed\" style=\"width:100px\">Merk</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                      v-model=\"detail.invent_brand\"\r\n                      disabled\r\n                    /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                <div class=\"field grid\">\r\n                  <label class=\"col-fixed\" style=\"width:100px\">Tipe</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                        disabled\r\n                        v-model= \"detail.invent_type\"\r\n                      /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">S/N</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_sn\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Tgl. Perolehan</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_tgl_perolehan\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                    <label style=\"width:155px\">Lama Garansi</label>\r\n                      <div class=\"col-3\">\r\n                        <div class=\"p-inputgroup\">\r\n                          <InputText\r\n                            v-model=\"detail.invent_lama_garansi\"\r\n                            disabled\r\n                          />\r\n                            <span class=\"p-inputgroup-addon\"> Tahun </span> \r\n                        </div>\r\n                    </div>\r\n                  </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Kondisi</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_kondisi\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Bisnis Unit</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_bu\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>/ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Lokasi Terakhir</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          type=\"text\"\r\n                          v-model=\"detail.invent_lokasi_update\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Pengguna Terakhir</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          type=\"text\"\r\n                          v-model=\"detail.invent_pengguna_update\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Lokasi Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_lokasi_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                    <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Penguna Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_pengguna_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Nama</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_desc\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\"></label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-10 md-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"card\" style=\"height: 16 rem;\">\r\n                            <img :src=\"'/master_peripheral/' +detail.invent_photo\" class=\"master-image\" />\r\n                          </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Lokasi Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_lokasi_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                    <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Penguna Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_pengguna_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <template #footer>\r\n                      <Button label=\"Close\" class=\"p-button-raised p-button-danger mr-2\" icon=\"pi pi-times\" @click=\"this.displayKode = false\" autofocus/>\r\n                    </template>\r\n          </Dialog>   ")])])]);
 }
 
 /***/ }),

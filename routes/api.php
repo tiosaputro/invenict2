@@ -70,6 +70,11 @@ Route::middleware('auth:sanctum')->group(function(){
     //master peripheral detail
     Route::get('/master-detail/{code}','MasterDetailController@index');
     Route::get('/add-master-detail/{code}','MasterDetailController@addDetail');
+    Route::post('/save-master-detail','MasterDetailController@SaveDetail');
+    Route::get('/edit-master-detail/{code}','MasterDetailController@editDetail');
+    Route::put('/update-master-detail/{code}','MasterDetailController@updateDetail');
+    Route::delete('/delete-master-detail/{invent_code_dtl}','MasterDetailController@deleteDetail');
+
 
     //mutasi peripheral
     Route::get('/mut','MutasiController@index');

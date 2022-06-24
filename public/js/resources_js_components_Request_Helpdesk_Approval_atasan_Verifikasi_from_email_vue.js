@@ -35,6 +35,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.verif = res.data;
 
         if (res.data == null) {
+          localStorage.clear();
+
           _this.$router.push({
             name: 'error',
             params: {
@@ -55,6 +57,7 @@ __webpack_require__.r(__webpack_exports__);
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("id", res.data.id);
                 localStorage.setItem("usr_name", res.data.usr_name);
+                _this.loading = false;
 
                 _this.$router.push({
                   name: 'error',
@@ -62,8 +65,6 @@ __webpack_require__.r(__webpack_exports__);
                     stat: 'expired'
                   }
                 });
-
-                _this.loading = false;
               });
             });
           }
@@ -121,7 +122,7 @@ var _hoisted_3 = {
   "class": "card"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Memverifikasi Link ");
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Link Verification ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");

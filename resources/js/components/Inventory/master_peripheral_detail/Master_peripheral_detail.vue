@@ -7,7 +7,10 @@
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
-			<h4>Master Peripheral</h4>
+			      <h4>Master Peripheral (Detail) </h4>
+          </template>
+          <template v-slot:end>
+			      <h4>{{this.detailPeripheral.name}}</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -48,72 +51,72 @@
           <template #loading>
             Loading Master Peripheral data. Please wait.
           </template>
-          <Column field="invent_sn" header="Serial Number" :sortable="true">
+          <Column header="Serial Number" :sortable="true">
            <template #body="slotProps">
-              <p @click="detailKode(slotProps.data.invent_code)" style="cursor:pointer;"> {{slotProps.data.invent_code}}
+              <p @click="detailKode(slotProps.data.invent_code)" style="cursor:pointer;"> {{slotProps.data.invent_sn}}
               </p> 
             </template>
           </Column>
           <Column field="invent_lokasi_previous" header="Lokasi Sebelumnya" :sortable="true"/>
-          <Column field="invent_lokasi_update" header="Lokasi Sesudahnya" :sortable="true"/>
-          <Column field="invent_pengguna_previous" header="Type" :sortable="true"/>
-          <Column headerStyle="min-width:6rem">
+          <Column field="invent_lokasi_update" header="Lokasi Terakhir" :sortable="true"/>
+          <Column field="invent_pengguna_previous" header="Pengguna Sebelumnya" :sortable="true"/>
+          <Column field="invent_pengguna_update" header="Pengguna Terakhir" :sortable="true"/>
+          <Column headerStyle="min-width:12rem">
             <template #body="slotProps">
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
-                @click="$router.push({
-                  name: 'Master Peripheral Detail',
-                  params: { code: slotProps.data.invent_code }, })"
-                />
               <Button
                 class="p-button-rounded p-button-info mr-2"
                 icon="pi pi-pencil"
                 v-tooltip.bottom="'Edit'"
                 @click="
                   $router.push({
-                    name: 'Edit Master Peripheral',
-                    params: { code: slotProps.data.invent_code },
+                    name: 'Edit Master Peripheral Detail',
+                    params: { code: slotProps.data.invent_code_dtl, kode:slotProps.data.invent_code },
                   })
                 "
               />
               <Button
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-danger mr-2"
-                @click="DeleteMas(slotProps.data.invent_code)"
+                @click="DeleteMas(slotProps.data.invent_code_dtl)"
                 v-tooltip.top="'Delete'"
               />
-              <!-- <Button
+              <Button
                 icon="pi pi-qrcode"
                 class="p-button-rounded p-button-success mt-2"
-                @click="previewBarcode(slotProps.data.invent_code)"
+                @click="previewBarcode(slotProps.data.invent_code_dtl)"
                 v-tooltip.right="'Print QR-Code'"
-              /> -->
+              />
             </template>
           </Column>
           <template #footer>
             <div class="p-grid p-dir-col">
-			    <div class="p-col">
-				    <div class="box">
-                     <Button
-                       label="Pdf"
-                       class="p-button-raised p-button-danger mr-2"
-                       icon="pi pi-file-pdf"
-                       @click="CetakPdf()"
-                     />
-                     <Button 
-                       label="Excel"
-                       class="p-button-raised p-button-success mr-2"
-                       icon="bi bi-file-earmark-spreadsheet"
-                       @click="CetakExcel()" 
-                     />
-                    </div>
-			    </div>
+              <div class="p-col">
+                <div class="box">
+                  <Button
+                    label="Back"
+                    class="p-button-raised p-button mr-2"
+                    icon="pi pi-chevron-left"
+                    @click="$router.push({
+                    name: 'Master Peripheral'})"
+                  />
+                  <!-- <Button
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mr-2"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdf()"
+                  />
+                  <Button 
+                    label="Excel"
+                    class="p-button-raised p-button-success mr-2"
+                    icon="bi bi-file-earmark-spreadsheet"
+                    @click="CetakExcel()" 
+                  /> -->
+                </div>
+			        </div>
             </div>
           </template>
         </DataTable>   
-        <!-- <Dialog
+        <Dialog
           id="qrcode"
           v-model:visible="displayBarcode"
           :style="{ width: '400px' }"
@@ -125,7 +128,7 @@
           <template #footer>
             <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" class="p-button-danger" />
           </template>
-        </Dialog> -->
+        </Dialog>
         <!-- <Dialog
           v-model:visible="displayKode"
           :breakpoints="{'960px': '75vw'}"
@@ -315,6 +318,7 @@ export default {
         displayKode: false,
         header: '',
         detail:[],
+        detailPeripheral:[],
         loading: true,
         displayBarcode: false,
         token: localStorage.getItem('token'),
@@ -356,27 +360,21 @@ export default {
       this.barcode= '';
       this.displayBarcode = false;
     },
-    previewBarcode(invent_code){
-      // this.axios.get('api/getBarcode/'+invent_code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-      //   this.barcode = 'Kode Peripheral ' + ': ' + response.data.invent_code +', '+ 'Nama Peripheral ' + ': ' + response.data.invent_desc + ', '+ 'Merk '+': '+ response.data.invent_brand+', '
-      //   + 'Tipe '+': '+ response.data.invent_type+', '+'S/N '+': '+response.data.invent_sn+', '+ 'Bisnis Unit '+': '+response.data.invent_bu +', '+'Lokasi Terakhir '+': '
-      //   +response.data.invent_lokasi_previous+', '+'Pengguna Terakhir '+': '+response.data.invent_pengguna_previous+', '+'Lama Garansi '+': '+response.data.invent_lama_garansi+' Tahun'+', '+'Tanggal Perolehan '+': '+response.data.invent_tgl_perolehan; 
-        
-        
-        this.barcode = 'http://localhost:8000/detPeri/' +invent_code
+    previewBarcode(invent_code_dtl){
+        this.barcode = 'http://localhost:8000/detPeripheral/' +invent_code_dtl
         this.displayBarcode = true;
-      // });
     },
     detailKode(invent_code){
       this.displayKode = true;
-      this.axios.get('api/detail-peripheral/' +invent_code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail-peripheral/' +invent_code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.detail = response.data;
         this.header = 'Detail Peripheral '+this.detail.name;
       });
     },
     getMaster(){
       this.axios.get('/api/master-detail/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.master = response.data;
+        this.master = response.data.dtl;
+        this.detailPeripheral = response.data.mas;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401){
@@ -392,14 +390,14 @@ export default {
           }
         });
     },
-    DeleteMas(invent_code){
+    DeleteMas(invent_code_dtl){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure you want to delete this data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
@@ -407,7 +405,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-mas/' +invent_code,{headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('/api/delete-master-detail/' +invent_code_dtl,{headers: {'Authorization': 'Bearer '+this.token}});
           this.getMaster();
         },
         reject: () => {},

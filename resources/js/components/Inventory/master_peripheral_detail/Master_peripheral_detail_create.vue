@@ -25,7 +25,7 @@
                     <div class="col-fixed w-9rem">
                       <InputText
                         type="text"
-                        v-model="detail.invent_brand"
+                        v-model="detail.tes"
                         disabled
                       />
                     </div>
@@ -137,9 +137,6 @@
                       <small v-if="errors.invent_bu" class="p-error">
                           {{ errors.invent_bu[0] }}
                       </small>
-                      <small v-if="error.invent_bu" class="p-error">
-                          {{ error.invent_bu }}
-                      </small>
                 </div>
               </div>
               <div class="field grid">
@@ -148,7 +145,6 @@
                     <InputText
                       type="text"
                       v-model="detail.invent_lokasi_update"
-                      :class="{ 'p-invalid': errors.lastloct }"
                       disabled
                     />
                     <!-- <small v-if="errors.lastloct" class="p-error">
@@ -162,7 +158,31 @@
                     <InputText
                       type="text"
                       v-model="detail.invent_pengguna_terakhir"
-                      :class="{ 'p-invalid': errors.invent_pengguna_terakhir }"
+                      disabled
+                    />
+                    <!-- <small v-if="errors.lastuser" class="p-error">
+                      {{ errors.lastuser[0] }}
+                    </small> -->
+                  </div>
+              </div> 
+               <div class="field grid">
+                <label class="col-fixed w-9rem">Divisi Pengguna Terakhir</label>
+                  <div class="col-fixed w-9rem">
+                    <InputText
+                      type="text"
+                      v-model="detail.invent_divisi_update"
+                      disabled
+                    />
+                    <!-- <small v-if="errors.lastuser" class="p-error">
+                      {{ errors.lastuser[0] }}
+                    </small> -->
+                  </div>
+              </div>  <div class="field grid">
+                <label class="col-fixed w-9rem">Bisnis Unit Terakhir</label>
+                  <div class="col-fixed w-9rem">
+                    <InputText
+                      type="text"
+                      v-model="detail.invent_pengguna_terakhir"
                       disabled
                     />
                     <!-- <small v-if="errors.lastuser" class="p-error">
@@ -241,6 +261,34 @@
                   </small> -->
                 </div>
             </div>
+            <div class="field grid">
+              <label class="col-fixed w-9rem">Divisi Pengguna Sebelumnya</label>
+                <div class="col-fixed w-9rem">
+                  <InputText
+                    type="text"
+                    v-model="detail.invent_pengguna_previous"
+                    :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
+                    disabled
+                  />
+                  <!-- <small class="p-error" v-if="errors.prevuser">
+                    {{ errors.prevuser[0] }}
+                  </small> -->
+                </div>
+            </div>
+            <div class="field grid">
+              <label class="col-fixed w-9rem">Bisnis Unit Sebelumnya</label>
+                <div class="col-fixed w-9rem">
+                  <InputText
+                    type="text"
+                    v-model="detail.invent_pengguna_previous"
+                    :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
+                    disabled
+                  />
+                  <!-- <small class="p-error" v-if="errors.prevuser">
+                    {{ errors.prevuser[0] }}
+                  </small> -->
+                </div>
+            </div>
           </div>
         </div>
       </div>
@@ -266,22 +314,7 @@ export default {
       checkname : [],
       checkto : [],
       id : localStorage.getItem('id'),
-      detail:[{
-        invent_code:'',
-        invent_desc:'',
-        invent_brand:'',
-        invent_type:'',
-        invent_sn:'',
-        invent_tgl_perolehan:'',
-        invent_lama_garansi:'',
-        invent_kondisi:'',
-        invent_lokasi_update:'',
-        invent_pengguna_update:'',
-        invent_photo:'',
-        invent_lokasi_previous:'',
-        invent_pengguna_previous:'',
-        invent_bu:'',
-      }],
+      detail:[]
     };
   },
   created(){
@@ -294,8 +327,8 @@ export default {
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Master Peripheral") || this.checkto.includes("/master-peripheral")){
-          this.getMerk();
           this.getDetail();
+          this.getMerk();
         }
         else {
           this.$router.push('/access');
@@ -344,78 +377,36 @@ export default {
     //   this.barcode = null;
     //   this.aktif = true;
     // },
-    // fileImage(event) {
-    //   this.foto = event.target.files[0];
-    //   this.displayImage = true;
-    //   this.preview = URL.createObjectURL(event.target.files[0]);
-    //   this.createImage(this.foto);
-    //   },
-    // createImage(invent_photo) {
-    //   var image = new Image();
-    //   var reader = new FileReader();
-    //   var vm = this;
-    //   reader.onload = function (e) {
-    //     vm.image = e.target.result;
-    //   };
-    //   reader.readAsDataURL(invent_photo);
-    // },
+    fileImage(event) {
+      this.foto = event.target.files[0];
+      this.displayImage = true;
+      this.preview = URL.createObjectURL(event.target.files[0]);
+      this.createImage(this.foto);
+      },
+    createImage(invent_photo) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+      reader.onload = function (e) {
+        vm.image = e.target.result;
+      };
+      reader.readAsDataURL(invent_photo);
+    },
     CreateMaster() {
       this.errors = [];
       this.error = [];
-      if (
-        // this.bu != null &&
-        this.merk != null &&
-        this.nama != null
-        // this.foto != null
-      ) {
-        // if(this.image){
-          // const data = new FormData();
-          // data.append("nama", this.nama);
-          // data.append("tgl", this.tgl);
-          // data.append("sn", this.sn);
-          // data.append("bu", this.bu);
-          // data.append("merk", this.merk);
-          // data.append("type", this.type);
-          // data.append("lastuser", this.lastuser);
-          // data.append("prevuser", this.prevuser);
-          // data.append("prevloct", this.prevloct);
-          // data.append("lastloct", this.lastloct);
-          // data.append("foto", this.image);
-          // data.append("kondisi", this.kondisi);
-          // data.append("barcode", this.barcode);
-          // data.append("garansi", this.garansi);
-          
-        // this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-        //   setTimeout( () => this.$router.push('/master-peripheral'),1000);
-        //   this.$toast.add({
-        //     severity: "success",
-        //     summary: "Success Message",
-        //     detail: "Success Create",
-        //   });
-        // }).catch(error=>{
-        //     this.errors = error.response.data.errors;
-        // });
-        // }
-        // else{
+        if(this.image){
           const data = new FormData();
-          data.append("nama", this.nama);
-          // data.append("code", this.code);
-          // data.append("tgl", this.tgl);
-          // data.append("sn", this.sn);
-          // data.append("bu", this.bu);
-          data.append("merk", this.merk);
-          data.append("type", this.type);
-          // data.append("lastuser", this.lastuser);
-          // data.append("prevuser", this.prevuser);
-          // data.append("prevloct", this.prevloct);
-          // data.append("lastloct", this.lastloct);
-          // data.append("foto", this.image);
-          // data.append("kondisi", this.kondisi);
-          // data.append("barcode", this.barcode);
-          // data.append("garansi", this.garansi);
+          data.append('code',this.detail.invent_code);
+          data.append("tgl", this.detail.invent_tgl_perolehan);
+          data.append("sn", this.detail.invent_sn);
+          data.append("bu", this.detail.invent_bu);
+          data.append("foto", this.image);
+          data.append("kondisi", this.detail.invent_kondisi);
+          data.append("garansi", this.detail.invent_lama_garansi);
           
-        this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-          setTimeout( () => this.$router.push('/master-peripheral'),1000);
+        this.axios.post('/api/save-master-detail',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          setTimeout( () => this.$router.push('/master-peripheral-detail/'+this.$route.params.code),1000);
           this.$toast.add({
             severity: "success",
             summary: "Success Message",
@@ -424,28 +415,34 @@ export default {
         }).catch(error=>{
             this.errors = error.response.data.errors;
         });
-        // }
-      }else{
-        // if(this.bu == null){
-        //   this.error.bu = "Bisnis Unit Belum Diisi"
-        // }
-        if(this.merk == null){
-          this.error.merk = "Merk Belum Diisi"
         }
-        if(this.nama == null){
-          this.error.nama = "Nama Peripheral Belum Diisi"
+        else{
+          const data = new FormData();
+          data.append('code',this.detail.invent_code);
+          data.append("tgl", this.detail.invent_tgl_perolehan);
+          data.append("sn", this.detail.invent_sn);
+          data.append("bu", this.detail.invent_bu);
+          data.append("kondisi", this.detail.invent_kondisi);
+          data.append("garansi", this.detail.invent_lama_garansi);
+          
+        this.axios.post('/api/add-master-detail',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          setTimeout( () => this.$router.push('/master-peripheral-detail/'+this.$route.params.code),1000);
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+          });
+        }).catch(error=>{
+            this.errors = error.response.data.errors;
+        });
         }
-        // if(this.foto == null){
-        //   this.error.foto = "Foto Belum Diisi"
-        // }
-      }
     }
   },
 };
 </script>
 <style scoped lang="scss">
 .master-image {
-  height:200pt;
+  height:155pt;
   object-fit:contain;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }

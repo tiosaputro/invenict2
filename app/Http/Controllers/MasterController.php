@@ -30,7 +30,7 @@ class MasterController extends Controller
         if($aksesmenu->contains($this->to)){
             $mas = DB::table('invent_mst as im')
             ->select('im.invent_code','im.invent_type','lr.lookup_desc as invent_brand','im.invent_desc')
-            ->leftjoin('vcompany_refs as vf','im.invent_bu','vf.company_code')
+            // ->leftjoin('vcompany_refs as vf','im.invent_bu','vf.company_code')
             ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
             // ->leftjoin('lookup_refs as lrs','im.invent_desc','lrs.lookup_code')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
@@ -144,19 +144,26 @@ class MasterController extends Controller
         }
     }
     
-    public function detailPeripheral($invent_code)
+    public function detailPeripheral($invent_code_dtl)
     {
-        $mas = DB::table('invent_mst as im')
-        ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
-        ->leftjoin('lookup_refs as llr','im.invent_kondisi','llr.lookup_code')
-        ->leftjoin('vcompany_refs as vr','im.invent_bu','vr.company_code')
-        ->select('im.invent_code','im.invent_desc','lr.lookup_desc as invent_brand','im.invent_type','im.invent_sn','llr.lookup_desc as invent_kondisi',
-                'im.invent_lama_garansi','im.invent_lokasi_update','im.invent_pengguna_update','im.invent_photo',
-                'im.invent_lokasi_previous', 'im.invent_pengguna_previous', 'vr.name as invent_bu', 
-                DB::raw("TO_CHAR(im.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"),DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
-        ->where('im.invent_code',$invent_code)
-        ->where('lr.lookup_type','Merk')
-        ->where('llr.lookup_type','Kondisi')
+        $mas = DB::table('invent_dtl as id')
+        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftJoin('lookup_refs as lrs',function ($join) {
+            $join->on('im.invent_brand','lrs.lookup_code')
+                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+        })
+        ->leftJoin('lookup_refs as lrfs',function ($join) {
+            $join->on('id.invent_kondisi','lrfs.lookup_code')
+                  ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kondisi')).'%']);
+        })
+        ->leftJoin('vcompany_refs as vr',function ($join) {
+            $join->on('id.invent_bu','vr.company_code');
+        })
+        ->select('im.invent_code','im.invent_type','id.invent_photo','im.invent_desc','lrs.lookup_desc as invent_brand',
+        'id.invent_sn','id.invent_tgl_perolehan','id.invent_lama_garansi','lrfs.lookup_desc as invent_kondisi','vr.name as invent_bu',
+        'id.invent_lokasi_previous','id.invent_lokasi_update','id.invent_bu_previous','id.invent_bu_update','id.invent_pengguna_previous',
+        'id.invent_pengguna_update')
+        ->where('id.invent_code_dtl',$invent_code_dtl)
         ->first();
         return response()->json($mas);
     }

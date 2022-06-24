@@ -30,6 +30,7 @@ class NotificationApproval extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->from('icthelpdesk.admin@emp.id')
+                    ->subject('Notification For Approval')
                     ->view('emailApproval')
                     ->with(['ict' => $this->ict,
                             'link'=>$this->LINK]);

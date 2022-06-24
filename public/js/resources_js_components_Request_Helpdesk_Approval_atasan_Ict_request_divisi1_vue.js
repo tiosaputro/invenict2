@@ -101,8 +101,8 @@ __webpack_require__.r(__webpack_exports__);
       this.confirmationVerifikasi = false;
 
       this.$confirm.require({
-        message: "Approval Permohonan Dilanjutkan?",
-        header: "ICT Request    ",
+        message: "Are you sure you agree with this application?",
+        header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Ya",
@@ -110,8 +110,8 @@ __webpack_require__.r(__webpack_exports__);
         accept: function accept() {
           _this2.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Permohonan Dilanjutkan",
+            summary: "Success Message",
+            detail: "Successfully approved the request",
             life: 1000
           });
 
@@ -153,8 +153,8 @@ __webpack_require__.r(__webpack_exports__);
 
           _this3.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Direject",
+            summary: "Success Message",
+            detail: "Successfully rejected the request",
             life: 1000
           });
 
@@ -435,7 +435,7 @@ var _hoisted_63 = {
 
 var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
-}, "Alasan", -1
+}, "Reason", -1
 /* HOISTED */
 );
 
@@ -1514,14 +1514,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Yes",
+        label: "Save",
         onClick: _cache[24] || (_cache[24] = function ($event) {
           return $options.updateReject();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "No",
+        label: "Cancel",
         onClick: _cache[25] || (_cache[25] = function ($event) {
           return $options.cancelReject();
         }),
@@ -1537,13 +1537,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data.reason.ket = $event;
         }),
         rows: "5",
-        placeholder: "Masukan Alasan",
+        placeholder: "Give a reason",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
           'p-invalid': $data.submitted && !$data.reason.ket
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_66, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_66, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */

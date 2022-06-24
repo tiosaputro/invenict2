@@ -132,8 +132,8 @@ const routes = [
     },
     {
         name: 'Detail Peripheral',
-        path: '/detPeri/:invent_code',
-        component: ()=> import('./pages/Master_peripheral_detail.vue'),
+        path: '/detPeripheral/:invent_code_dtl',
+        component: ()=> import('./pages/Master_peripheral_detail_qrcode.vue'),
 
     },
     {
@@ -159,9 +159,9 @@ const routes = [
         component: ()=> import('./components/Inventory/master_peripheral_detail/Master_peripheral_detail_create.vue'),
     },
     {
-        name: 'Edit Master Peripheral',
-        path: '/Edit-master-peripheral/:code',
-        component: ()=> import('./components/Inventory/master_peripheral/Master_peripheral_edit.vue'),
+        name: 'Edit Master Peripheral Detail',
+        path: '/Edit-master-peripheral/:code/:kode',
+        component: ()=> import('./components/Inventory/master_peripheral_detail/Master_peripheral_detail_edit.vue'),
     },
     //mutasi peripheral
     {
@@ -595,6 +595,16 @@ const routes = [
         name: 'Ict Request Manager Detail Penugasan',
         path: '/ict-request-manager/detail-penugasan/:code',
         component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_manager_detail_penugasan.vue'),
+    },
+    {
+        name: 'Verifikasi From Email ICT Manager',
+        path: '/ictinv_resp_mng/:code/:status',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Verifikasi_from_email.vue'),
+    },
+    {
+        name: 'Ict Request Verifikasi From Email ICT Manager',
+        path: '/verifikasi-request-mng/:code/:status',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_verifikasi_from_email.vue'),
     },
     {
         path: '/error',

@@ -530,25 +530,25 @@
         <Dialog v-model:visible="dialogReject" :breakpoints="{'960px': '75vw'}" :style="{ width: '400px' }" header="Form Dialog Reject" :modal="true" class="field grid">
          <div class="field"> 
           <div class="field grid">
-            <label class="col-fixed w-9rem">Alasan</label>
+            <label class="col-fixed w-9rem">Reason</label>
               <div class="fol-fixed">
                 <Textarea
                   :autoResize="true"
                   type="text"
                   v-model="reason.ket"
                   rows="5" 
-                  placeholder="Masukan Alasan"
+                  placeholder="Give a reason"
                   :class="{ 'p-invalid': submitted && !reason.ket }"
                 />
                   <small v-if="submitted && !reason.ket" class="p-error">
-                    Alasan Harus Diisi
+                    Reason not filled
                   </small>
               </div>
             </div>
           </div>
         <template #footer>
-            <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
-            <Button label="No" @click="cancelReject()" class="p-button-text" />
+            <Button label="Save" @click="updateReject()" class="p-button" autofocus />
+            <Button label="Cancel" @click="cancelReject()" class="p-button-text" />
         </template>
         </Dialog>
       </div>
@@ -621,8 +621,8 @@ export default {
     approve(){
       this.confirmationVerifikasi = false;
       this.$confirm.require({
-            message: "Approval Permohonan Dilanjutkan?",
-            header: "ICT Request    ",
+            message: "Are you sure you agree with this application?",
+            header: "Confirmation Approval",
             icon: "pi pi-info-circle",
             acceptClass: "p-button",
             acceptLabel: "Ya",
@@ -630,8 +630,8 @@ export default {
             accept: () => {
               this.$toast.add({
                 severity: "info",
-                summary: "Confirmed",
-                detail: "Permohonan Dilanjutkan",
+                summary: "Success Message",
+                detail: "Successfully approved the request",
                 life : 1000
               });
               this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
@@ -658,8 +658,8 @@ export default {
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
-                summary: "Confirmed",
-                detail: "Berhasil Direject",
+                summary: "Success Message",
+                detail: "Successfully rejected the request",
                 life: 1000
               });
                this.code = null;

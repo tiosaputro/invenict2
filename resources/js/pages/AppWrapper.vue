@@ -14,7 +14,7 @@ import Login from './Login';
 import Error from './Error';
 import NotFound from './NotFound';
 import Access from './Access';
-import Detail from './Master_peripheral_detail';
+import Detail from './Master_peripheral_detail_qrcode';
 
 export default {
     methods: {

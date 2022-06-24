@@ -656,17 +656,17 @@ export default {
     approve(){
       this.ConfirmationVerifikasi = false;
       this.$confirm.require({
-            message: "Approval Permohonan Dilanjutkan?",
-            header: "ICT Request    ",
+            message: "Are you sure you agree with this application?",
+            header: "Confirmation Approval",
             icon: "pi pi-info-circle",
             acceptClass: "p-button",
-            acceptLabel: "Ya",
-            rejectLabel: "Tidak",
+            acceptLabel: "Yes",
+            rejectLabel: "No",
             accept: () => {
               this.$toast.add({
                 severity: "info",
-                summary: "Confirmed",
-                detail: "Permohonan Dilanjutkan",
+                summary: "Success Message",
+                detail: "Successfully approved the request",
                 life : 1000
               });
               this.axios.get('/api/abm/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
@@ -693,8 +693,8 @@ export default {
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
-                summary: "Confirmed",
-                detail: "Berhasil Direject",
+                summary: "Success Message",
+                detail: "Successfully rejected the request",
                 life: 1000
               });
                this.code = null;

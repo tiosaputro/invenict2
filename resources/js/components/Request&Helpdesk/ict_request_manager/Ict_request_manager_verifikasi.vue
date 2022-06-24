@@ -81,7 +81,7 @@
       >
         <div class="p-field">
           <div class="field grid">
-            <label class="col-fixed w-9rem" style="width:100px">Alasan</label>
+            <label class="col-fixed w-9rem" style="width:100px">Reason</label>
               <div class="co-fixed">
                 <Textarea
                     :autoResize="true"
@@ -89,18 +89,18 @@
                     v-model="reason.ket"
                     rows="5" 
                     cols="30"
-                    placeholder="Masukan Alasan"
+                    placeholder="Give a reason"
                     :class="{ 'p-invalid': submitted && !reason.ket }"
                   />
                     <small v-if="submitted && !reason.ket" class="p-error">
-                    Alasan Harus Diisi
+                    Reason not filled
                     </small>
                 </div>
               </div>
             </div>
         <template #footer>
-            <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
-            <Button label="No" @click="cancelReject()" class="p-button-text" />
+            <Button label="Save" @click="updateReject()" class="p-button" autofocus />
+            <Button label="Cancel" @click="cancelReject()" class="p-button-text" />
         </template>
       </Dialog>
       </div>

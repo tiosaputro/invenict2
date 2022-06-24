@@ -43,6 +43,7 @@ use Illuminate\Http\Request;
 use App\Jobs\SendNotifApproval;
 use App\Jobs\SendNotifPersonnel;
 use App\Jobs\SendNotifRequest;
+use App\Jobs\SendNotifIctManager;
 use Mail;
 use Illuminate\Support\Facades\Hash;
 
@@ -452,18 +453,25 @@ class IctController extends Controller
                     ->select('mu.usr_email','mu.usr_id')
                     ->where('dr.div_id',$divisiPengguna)
                     ->first();
-        $ict = DB::table('ireq_mst as im')
-        ->leftjoin('ireq_dtl as id','im.ireq_id','id.ireq_id')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
-        })
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
-        ->select('im.ireq_no','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
-                 'im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty')
-        ->where('im.ireq_id',$ireq_id)
-        ->get();
+        $ict = DB::table('ireq_dtl as id')
+            ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('id.invent_code','lrs.lookup_code')
+                    ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
+            ->leftJoin('lookup_refs as lrfs',function ($join) {
+                $join->on('id.ireq_type','lrfs.lookup_code')
+                     ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->leftJoin('vcompany_refs as vr',function ($join) {
+                $join->on('im.ireq_bu','vr.company_code');
+            })
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
+            ->select('im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+                    'im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
+            ->where('im.ireq_id',$ireq_id)
+            ->get();
 
         $Date = $this->date->addDays(1);
         $link = Link::create([
@@ -473,6 +481,7 @@ class IctController extends Controller
             'usr_id'=>$emailVerifikator->usr_id,
             'ireq_id'=>$ireq_id
         ]);
+        
         $LINK = Link::where('ireq_id',$ireq_id)->first();
         $send_mail = $emailVerifikator->usr_email .= '@emp.id';
         SendNotifApproval::dispatchAfterResponse($send_mail,$ict,$LINK);
@@ -480,22 +489,56 @@ class IctController extends Controller
     }
     function needApprovalManager($ireq_id)
     {
-        $ict = Ict::where('ireq_id',$ireq_id)->first();
-        $ict->ireq_status = 'NA2';
-        $ict->ireq_verificator = Auth::user()->usr_name;
-        $ict->last_update_date = $this->newUpdate;
-        $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->program_name = "IctController_needApprovalManager";
-        $ict->save();
+        $ICT = Ict::where('ireq_id',$ireq_id)->first();
+        // $ICT->ireq_status = 'NA2';
+        // $ICT->ireq_verificator = Auth::user()->usr_name;
+        // $ICT->last_update_date = $this->newUpdate;
+        // $ICT->last_updated_by = Auth::user()->usr_name;
+        // $ICT->program_name = "IctController_needApprovalManager";
+        // $ICT->save();
 
-        $dtl = DB::table('ireq_dtl')
-        ->where('ireq_id',$ireq_id)
-        ->update([
-            'ireq_status' => 'NA2',
-            'last_update_date' => $this->newUpdate,
-            'last_updated_by' => Auth::user()->usr_name,
-            'program_name' => "IctController_needApprovalManager",
+        // $dtl = DB::table('ireq_dtl')
+        // ->where('ireq_id',$ireq_id)
+        // ->update([
+        //     'ireq_status' => 'NA2',
+        //     'last_update_date' => $this->newUpdate,
+        //     'last_updated_by' => Auth::user()->usr_name,
+        //     'program_name' => "IctController_needApprovalManager",
+        // ]);
+        $emailVerifikator = DB::table('mng_users')
+            ->select('usr_id')
+            ->where('usr_email','arifin.tahir')
+            ->first();
+            $ict = DB::table('ireq_dtl as id')
+            ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->leftJoin('lookup_refs as lrs',function ($join) {
+                $join->on('id.invent_code','lrs.lookup_code')
+                    ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
+            ->leftJoin('lookup_refs as lrfs',function ($join) {
+                $join->on('id.ireq_type','lrfs.lookup_code')
+                     ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->leftJoin('vcompany_refs as vr',function ($join) {
+                $join->on('im.ireq_bu','vr.company_code');
+            })
+            ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
+            ->select('im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+                    'im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
+            ->where('im.ireq_id',$ireq_id)
+            ->get();
+        $Date = $this->date->addDays(1);
+        $link = Link::create([
+            'link_id'=> md5($this->date),
+            'link_action'=> 'http://localhost:8000/ict-request-verifikasi/'.''.$ireq_id,
+            'expired_at'=>Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'usr_id'=>$emailVerifikator->usr_id,
+            'ireq_id'=>$ireq_id
         ]);
+        $LINK = Link::where('ireq_id',$ireq_id)->first();
+        $send_mail = 'adhitya.saputro@emp.id';
+        SendNotifIctManager::dispatchAfterResponse($send_mail,$ict,$LINK);
         return response()->json('Success Update Status');
     }
     function asignPerRequestReviewer(Request $request)

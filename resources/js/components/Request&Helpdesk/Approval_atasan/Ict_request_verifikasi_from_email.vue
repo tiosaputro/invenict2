@@ -40,11 +40,12 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
+          <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:12rem"/>
+          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
           <template #footer>
             <div class="p-grid p-dir-col">
               <div class="p-col">
@@ -84,7 +85,7 @@
         class="field grid"
       >
         <div class="field grid">
-            <label style="width:100px">Alasan</label>
+            <label style="width:100px">Reason</label>
               <div class="col-3 md-6">
                 <Textarea
                     :autoResize="true"
@@ -92,11 +93,11 @@
                     rows="5" 
                     cols="20"
                     v-model="reason.ket"
-                    placeholder="Masukan Alasan"
+                    placeholder="Give a reason"
                     :class="{ 'p-invalid': submitted && !reason.ket }"
                   />
                     <small v-if="submitted && !reason.ket" class="p-error">
-                    Alasan Harus Diisi
+                    Reason not filled
                     </small>
             </div>
         </div>
@@ -145,18 +146,18 @@ export default {
       Approve(){
       this.$confirm.require({
         group: 'positionDialog',
-        message: "Approval Permohonan Dilanjutkan?",
+        message: "Are you sure you agree with this application?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         position: 'top',
         accept: () => {
           this.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Permohonan Dilanjutkan",
+            summary: "Success Message",
+            detail: "Successfully approved the request",
           });
           this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
           setTimeout( () =>  this.$router.push('/ict-request-divisi1'),1000);
@@ -171,8 +172,8 @@ export default {
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
-                summary: "Confirmed",
-                detail: "Berhasil Direject",
+                summary: "Success Message",
+                detail: "Successfully rejected the request",
               });
               setTimeout( () => this.$router.push('/ict-request-divisi1'),1000);
             });
@@ -202,12 +203,8 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
-        if(this.kode.ireq_status == 'Permohonan'){
-            this.getIctDetail();
-          }
-        else{
-            this.getIctDetail();
-        }
+        this.getIctDetail();
+        
       });
     },
   },

@@ -56,18 +56,18 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$confirm.require({
         group: 'positionDialog',
-        message: "Approval Permohonan Dilanjutkan?",
+        message: "Are you sure you agree with this application?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         position: 'top',
         accept: function accept() {
           _this.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Permohonan Dilanjutkan"
+            summary: "Success Message",
+            detail: "Successfully approved the request"
           });
 
           _this.axios.get('/api/updateStatusPermohonan/' + _this.$route.params.code, {
@@ -98,8 +98,8 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Direject"
+            summary: "Success Message",
+            detail: "Successfully rejected the request"
           });
 
           setTimeout(function () {
@@ -151,11 +151,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this4.kode = response.data;
 
-        if (_this4.kode.ireq_status == 'Permohonan') {
-          _this4.getIctDetail();
-        } else {
-          _this4.getIctDetail();
-        }
+        _this4.getIctDetail();
       });
     }
   }
@@ -228,7 +224,7 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "100px"
   }
-}, "Alasan", -1
+}, "Reason", -1
 /* HOISTED */
 );
 
@@ -332,22 +328,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireqd_id",
+        header: "No. Detail",
+        sortable: true,
+        style: {
+          "min-width": "6rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_type",
-        header: "Tipe Request",
+        header: "Request Type",
         sortable: true,
         style: {
           "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "name",
-        header: "Nama Peripheral",
-        sortable: true,
-        style: {
-          "min-width": "12rem"
-        }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_desc",
-        header: "Deskripsi",
+        field: "invent_desc",
+        header: "Peripheral",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -361,7 +357,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_remark",
-        header: "Keterangan",
+        header: "Remark",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -412,13 +408,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $data.reason.ket = $event;
         }),
-        placeholder: "Masukan Alasan",
+        placeholder: "Give a reason",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
           'p-invalid': $data.submitted && !$data.reason.ket
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])];
+      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])];
     }),
     _: 1
     /* STABLE */
