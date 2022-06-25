@@ -146,7 +146,7 @@ export default {
       Approve(){
       this.$confirm.require({
         group: 'positionDialog',
-        message: "Are you sure you agree with this application?",
+        message: "Are you sure you agree to this request?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",

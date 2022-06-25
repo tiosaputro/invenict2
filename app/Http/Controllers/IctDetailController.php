@@ -430,6 +430,7 @@ class IctDetailController extends Controller
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->orderby('id.ireqd_id','ASC')
         ->get();
             return response()->json($dtl);
     }

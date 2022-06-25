@@ -468,9 +468,11 @@ class IctController extends Controller
             })
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
-            ->select('im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+            ->leftjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
+            ->select('mu.usr_fullname','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
                     'im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
             ->where('im.ireq_id',$ireq_id)
+            ->orderby('id.ireqd_id','ASC')
             ->get();
 
         $Date = $this->date->addDays(1);
@@ -485,26 +487,26 @@ class IctController extends Controller
         $LINK = Link::where('ireq_id',$ireq_id)->first();
         $send_mail = $emailVerifikator->usr_email .= '@emp.id';
         SendNotifApproval::dispatchAfterResponse($send_mail,$ict,$LINK);
-        return response()->json('Success Update Status');
+        return response()->json('success send notification');
     }
     function needApprovalManager($ireq_id)
     {
         $ICT = Ict::where('ireq_id',$ireq_id)->first();
-        // $ICT->ireq_status = 'NA2';
-        // $ICT->ireq_verificator = Auth::user()->usr_name;
-        // $ICT->last_update_date = $this->newUpdate;
-        // $ICT->last_updated_by = Auth::user()->usr_name;
-        // $ICT->program_name = "IctController_needApprovalManager";
-        // $ICT->save();
+        $ICT->ireq_status = 'NA2';
+        $ICT->ireq_verificator = Auth::user()->usr_name;
+        $ICT->last_update_date = $this->newUpdate;
+        $ICT->last_updated_by = Auth::user()->usr_name;
+        $ICT->program_name = "IctController_needApprovalManager";
+        $ICT->save();
 
-        // $dtl = DB::table('ireq_dtl')
-        // ->where('ireq_id',$ireq_id)
-        // ->update([
-        //     'ireq_status' => 'NA2',
-        //     'last_update_date' => $this->newUpdate,
-        //     'last_updated_by' => Auth::user()->usr_name,
-        //     'program_name' => "IctController_needApprovalManager",
-        // ]);
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->update([
+            'ireq_status' => 'NA2',
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_needApprovalManager",
+        ]);
         $emailVerifikator = DB::table('mng_users')
             ->select('usr_id')
             ->where('usr_email','arifin.tahir')
@@ -524,9 +526,11 @@ class IctController extends Controller
             })
             ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->rightjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
-            ->select('im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+            ->leftjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
+            ->select('mu.usr_fullname','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
                     'im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
             ->where('im.ireq_id',$ireq_id)
+            ->orderby('id.ireqd_id','ASC')
             ->get();
         $Date = $this->date->addDays(1);
         $link = Link::create([
@@ -539,7 +543,7 @@ class IctController extends Controller
         $LINK = Link::where('ireq_id',$ireq_id)->first();
         $send_mail = 'adhitya.saputro@emp.id';
         SendNotifIctManager::dispatchAfterResponse($send_mail,$ict,$LINK);
-        return response()->json('Success Update Status');
+        return response()->json('Success send notification');
     }
     function asignPerRequestReviewer(Request $request)
     {

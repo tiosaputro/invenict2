@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
       this.confirmationVerifikasi = false;
 
       this.$confirm.require({
-        message: "Are you sure you agree with this application?",
+        message: "Are you sure you agree to this request?",
         header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
