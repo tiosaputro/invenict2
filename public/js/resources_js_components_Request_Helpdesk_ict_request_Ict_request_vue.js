@@ -706,7 +706,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "10 rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -861,7 +861,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -887,14 +887,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "ireq_status",
                 header: "Status",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "14rem"
                 }
+              }, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+                    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
+                  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+                  /* TEXT, CLASS */
+                  )];
+                }),
+                _: 1
+                /* STABLE */
+
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                headerStyle: "min-width:14rem"
+                headerStyle: "min-width:10rem"
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
@@ -985,7 +995,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1015,11 +1025,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Status",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "14rem"
                 }
+              }, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+                    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
+                  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+                  /* TEXT, CLASS */
+                  )];
+                }),
+                _: 1
+                /* STABLE */
+
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1111,7 +1132,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1141,8 +1162,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Status",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "14rem"
                 }
+              }, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+                    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
+                  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+                  /* TEXT, CLASS */
+                  )];
+                }),
+                _: 1
+                /* STABLE */
+
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_reason",
                 header: "Reason",
@@ -1152,7 +1184,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1401,7 +1433,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1558,8 +1590,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Status",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "14rem"
                 }
+              }, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+                    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
+                  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+                  /* TEXT, CLASS */
+                  )];
+                }),
+                _: 1
+                /* STABLE */
+
               })];
             }),
             _: 1
@@ -1642,7 +1685,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Peripheral",
                 sortable: true,
                 style: {
-                  "min-width": "10rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1693,11 +1736,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Status",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "14rem"
                 }
+              }, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+                    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
+                  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+                  /* TEXT, CLASS */
+                  )];
+                }),
+                _: 1
+                /* STABLE */
+
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {

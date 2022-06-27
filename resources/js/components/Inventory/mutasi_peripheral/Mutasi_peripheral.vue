@@ -46,13 +46,17 @@
           </template>
           <Column field="invent_code" header="Kode" :sortable="true">
             <template #body="slotProps">
-              <p @click="detailKode(slotProps.data.invent_code)" style="cursor:pointer;"> {{slotProps.data.invent_code}}
+              <p @click="detailKode(slotProps.data.invent_code_dtl)" style="cursor:pointer;"> {{slotProps.data.invent_code}}
               </p> 
             </template>
           </Column>
-          <Column field="invent_desc" header="Nama" :sortable="true"/>
-          <Column field="imutasi_pengguna" header="Pengguna" :sortable="true"/>
+          <Column field="invent_desc" header="Peripheral" :sortable="true"/>
+          <Column field="invent_type" header="Type" :sortable="true"/>
+          <Column field="invent_sn" header="S/N" :sortable="true"/>
+          <Column field="imutasi_pengguna" header="User" :sortable="true"/>
           <Column field="imutasi_lokasi" header="Lokasi" :sortable="true"/>
+          <Column field="imutasi_divisi" header="User Division" :sortable="true"/>
+          <Column field="imutasi_bu" header="Business Unit" :sortable="true"/>
           <Column headerStyle="min-width:12rem">
             <template #body="slotProps">
               <Button

@@ -18,6 +18,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loading: true,
       dialogReject: false,
+      confirmationVerifikasi: false,
       submitted: false,
       verif: [],
       kode: [],
@@ -40,6 +41,9 @@ __webpack_require__.r(__webpack_exports__);
     this.getNoreq();
   },
   methods: {
+    VerifikasiRequest: function VerifikasiRequest() {
+      this.confirmationVerifikasi = true;
+    },
     cek: function cek() {
       this.status = this.$route.params.status;
 
@@ -53,6 +57,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     Approve: function Approve() {
       var _this = this;
+
+      this.confirmationVerifikasi = false;
 
       this.$confirm.require({
         group: 'positionDialog',
@@ -83,9 +89,14 @@ __webpack_require__.r(__webpack_exports__);
         reject: function reject() {}
       });
     },
+    rejectRequest: function rejectRequest() {
+      this.confirmationVerifikasi = false;
+      this.dialogReject = true;
+    },
     updateReject: function updateReject() {
       var _this2 = this;
 
+      this.confirmationVerifikasi = false;
       this.submitted = true;
 
       if (this.reason.ket != null) {
@@ -151,7 +162,19 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this4.kode = response.data;
 
-        _this4.getIctDetail();
+        if (_this4.kode.cekstatus == 'NA1') {
+          _this4.getIctDetail();
+        } else {
+          _this4.$toast.add({
+            severity: "error",
+            summary: "Error Message",
+            detail: "This request has been verified"
+          });
+
+          setTimeout(function () {
+            return _this4.$router.push('/ict-request-divisi1');
+          }, 2000);
+        }
       });
     }
   }
@@ -235,6 +258,18 @@ var _hoisted_17 = {
   key: 0,
   "class": "p-error"
 };
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "confirmation-content"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "pi pi-exclamation-triangle mr-3",
+  style: {
+    "font-size": "2rem"
+  }
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Request Verification")], -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -255,6 +290,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
 
   var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
+
+  var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog, {
     group: "positionDialog"
@@ -360,8 +397,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Remark",
         sortable: true,
         style: {
-          "min-width": "12rem"
+          "min-width": "10rem"
         }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        style: {
+          "min-width": "8rem"
+        }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [slotProps.data.ireq_status == 'NA1' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+            key: 0,
+            "class": "p-button-rounded p-button-success mr-2",
+            icon: "pi pi-check-square",
+            onClick: function onClick($event) {
+              return $options.VerifikasiRequest(slotProps.data.ireq_id);
+            }
+          }, null, 8
+          /* PROPS */
+          , ["onClick"])), [[_directive_tooltip, 'Verifikasi', void 0, {
+            right: true
+          }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+        }),
+        _: 1
+        /* STABLE */
+
       })];
     }),
     _: 1
@@ -377,7 +436,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     style: {
       width: '400px'
     },
-    header: "ICT Request Form Dialog Reject",
+    header: "Form Dialog Reject",
     modal: true,
     position: "top",
     "class": "field grid"
@@ -415,6 +474,43 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    header: "Confirmation",
+    visible: $data.confirmationVerifikasi,
+    "onUpdate:visible": _cache[8] || (_cache[8] = function ($event) {
+      return $data.confirmationVerifikasi = $event;
+    }),
+    style: {
+      width: '350px'
+    },
+    modal: true
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Reject",
+        icon: "pi pi-times",
+        onClick: $options.rejectRequest,
+        "class": "p-button-raised p-button-danger p-button-text"
+      }, null, 8
+      /* PROPS */
+      , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Approve",
+        icon: "pi pi-check",
+        onClick: $options.Approve,
+        "class": "p-button-raised p-button-text",
+        autofocus: ""
+      }, null, 8
+      /* PROPS */
+      , ["onClick"])];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_18];
     }),
     _: 1
     /* STABLE */

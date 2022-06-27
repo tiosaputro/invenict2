@@ -40,7 +40,7 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10 rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -135,15 +135,19 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
-                  <Column headerStyle="min-width:14rem">
+                  <Column header="Status" :sortable="true" style="min-width:14rem">
+                  <template #body= "slotProps">
+                    <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                  </template>
+                  </Column>
+                  <Column headerStyle="min-width:10rem">
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -207,15 +211,19 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
-                  <Column style="min-width:12rem">
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
+                  <template #body= "slotProps">
+                    <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                  </template>
+                  </Column>
+                  <Column style="min-width:8rem">
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -279,16 +287,20 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
+                  <template #body= "slotProps">
+                    <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                  </template>
+                  </Column>
                   <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
-                  <Column style="min-width:12rem">
+                  <Column style="min-width:8rem">
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -414,7 +426,7 @@
                   </Column>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
-                  <Column style="min-width:12rem">
+                  <Column style="min-width:8rem">
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -490,7 +502,11 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
+                  <template #body= "slotProps">
+                    <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                  </template>
+                  </Column>
                   <template #footer>
                       <div class="grid dir-col">
                       <div class="col">
@@ -545,7 +561,7 @@
                   </template>
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-                  <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -555,8 +571,12 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
-                  <Column style="min-width:12rem">
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
+                  <template #body= "slotProps">
+                    <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                  </template>
+                  </Column>
+                  <Column style="min-width:10rem">
                     <template #body="slotProps">
                       <Button
                         v-if="slotProps.data.ireq_value == null"

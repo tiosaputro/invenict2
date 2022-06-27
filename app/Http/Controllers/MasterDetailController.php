@@ -144,4 +144,5 @@ class MasterDetailController extends Controller
         $mas->delete();
             return response()->json('Successfully deleted');
     }
+    
 }

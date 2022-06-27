@@ -45,7 +45,18 @@
           <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:12rem"/>
           <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+          <Column style="min-width:8rem">
+           <template #body="slotProps">
+            <Button
+              v-if="slotProps.data.ireq_status == 'NA1'"
+              class="p-button-rounded p-button-success mr-2"
+              icon="pi pi-check-square"
+              v-tooltip.right="'Verifikasi'"
+              @click="VerifikasiRequest(slotProps.data.ireq_id)"
+            />
+           </template>
+          </Column>
           <template #footer>
             <div class="p-grid p-dir-col">
               <div class="p-col">
@@ -79,7 +90,7 @@
         <Dialog
         v-model:visible="dialogReject"
         :style="{ width: '400px' }"
-        header="ICT Request Form Dialog Reject"
+        header="Form Dialog Reject"
         :modal="true"
         position="top"
         class="field grid"
@@ -106,6 +117,16 @@
             <Button label="No" @click="cancelReject()" class="p-button-text" />
         </template>
       </Dialog>
+      <Dialog header="Confirmation" v-model:visible="confirmationVerifikasi" :style="{width: '350px'}" :modal="true">
+            <div class="confirmation-content">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                <span>Request Verification</span>
+            </div>
+            <template #footer>
+                <Button label="Reject" icon="pi pi-times" @click="rejectRequest" class="p-button-raised p-button-danger p-button-text"/>
+                <Button label="Approve" icon="pi pi-check" @click="Approve" class="p-button-raised p-button-text" autofocus />
+            </template>
+        </Dialog>
       </div>
     </div>
   </div>
@@ -117,6 +138,7 @@ export default {
     return {
         loading: true,
         dialogReject: false,
+        confirmationVerifikasi:false,
         submitted:false,
         verif: [],
         kode:[],
@@ -134,8 +156,11 @@ export default {
     this.getNoreq();
   },
   methods: {
+    VerifikasiRequest(){
+      this.confirmationVerifikasi = true;
+    },
       cek(){
-          this.status = this.$route.params.status;
+        this.status = this.$route.params.status;
           if(this.status == 'approve'){
               this.Approve();
           }
@@ -144,6 +169,7 @@ export default {
           }
       },
       Approve(){
+      this.confirmationVerifikasi = false;
       this.$confirm.require({
         group: 'positionDialog',
         message: "Are you sure you agree to this request?",
@@ -165,7 +191,12 @@ export default {
         reject: () => {},
       });
       },
+      rejectRequest(){
+      this.confirmationVerifikasi = false;
+      this.dialogReject = true;
+      },
       updateReject(){
+      this.confirmationVerifikasi = false;
           this.submitted = true;
            if(this.reason.ket != null){
             this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
@@ -203,8 +234,17 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
-        this.getIctDetail();
-        
+        if(this.kode.cekstatus =='NA1'){
+          this.getIctDetail();
+        }
+        else{
+          this.$toast.add({
+            severity: "error",
+            summary: "Error Message",
+            detail: "This request has been verified",
+          });
+          setTimeout( () =>  this.$router.push('/ict-request-divisi1'),2000);
+        }
       });
     },
   },

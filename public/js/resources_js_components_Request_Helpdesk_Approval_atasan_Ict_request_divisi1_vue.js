@@ -422,7 +422,7 @@ var _hoisted_61 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "font-size": "2rem"
   }
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Verifikasi Request")], -1
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Request Verification")], -1
 /* HOISTED */
 );
 
@@ -484,7 +484,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabView, {
     ref: "tabview1",
-    scrollable: "",
     activeIndex: $data.active1,
     "onUpdate:activeIndex": _cache[21] || (_cache[21] = function ($event) {
       return $data.active1 = $event;
@@ -492,7 +491,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Permohonan"
+        header: "Request"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -504,7 +503,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Request",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -551,7 +550,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -567,14 +566,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -636,7 +635,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Yang Telah Diverifikasi"
+        header: "Approved"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -648,7 +647,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Approved",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -691,11 +690,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -711,14 +710,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -769,7 +768,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Yang Di Reject"
+        header: "Rejected"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -781,7 +780,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Rejected",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -824,11 +823,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -844,21 +843,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_reason",
-                header: "Alasan",
+                header: "Reason",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -909,7 +908,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Penugasan Request"
+        header: "Request Assignment"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -921,7 +920,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Penugasan Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Request Assignment",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -970,7 +969,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -986,14 +985,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1051,7 +1050,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Sedang Dikerjakan"
+        header: "In Progress"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1063,7 +1062,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} In Progress",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1106,11 +1105,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -1126,14 +1125,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -1184,7 +1183,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Sudah Dikerjakan"
+        header: "Done"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1196,7 +1195,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Done",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1257,7 +1256,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1273,14 +1272,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1294,7 +1293,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "User Division",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1319,7 +1318,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Selesai"
+        header: "Close"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1331,7 +1330,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Close",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1392,7 +1391,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
-                header: "Tgl.Request",
+                header: "Request Date",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1408,14 +1407,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_requestor",
-                header: "Pemohon",
+                header: "Requestor",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
-                header: "Pengguna",
+                header: "User",
                 sortable: true,
                 style: {
                   "min-width": "8rem"
@@ -1429,7 +1428,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "div_name",
-                header: "Divisi Pengguna",
+                header: "User Division",
                 sortable: true,
                 style: {
                   "min-width": "10rem"

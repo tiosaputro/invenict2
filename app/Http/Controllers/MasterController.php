@@ -282,4 +282,15 @@ class MasterController extends Controller
             ->first();
             return response()->json($mas);
     }
+    function getPeripheral(){
+        $dtl = db::table('invent_mst as im')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('im.invent_brand','lr.lookup_code')
+                ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+        })
+        ->select('im.invent_code as code',DB::raw("(im.invent_desc ||'-'|| lr.lookup_desc ||'-'||  im.invent_type) as name"))
+        ->orderBy('im.invent_desc','ASC')
+        ->get();
+        return json_encode($dtl);
+    }
 }

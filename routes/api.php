@@ -279,6 +279,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/getMethodePurch','LookupsController@getMethodePurch');
     Route::get('/getSatuan','LookupsController@getSatuan');
     Route::get('/get-kode','MasterController@getKode');
+    Route::get('/get-kode-peripheral','MasterController@getPeripheral');
     Route::get('/get-kode-ict/{code}','MasterController@getKodeIct');
     Route::get('/getAddReq','LookupsController@getAddReq');
     Route::get('/getAddDetail','LookupsController@getAddDetail');

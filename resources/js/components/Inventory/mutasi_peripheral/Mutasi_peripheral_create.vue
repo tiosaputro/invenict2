@@ -33,6 +33,28 @@
                       </small>
                     </div>
                   </div>
+                  <div class="field grid">
+                    <label class="col-fixed w-9rem" style="width:145px">S/N</label>
+                    <div class="field col-12 md:col-6">
+                      <Dropdown 
+                        v-model="kode"
+                        :options="kodeperi"
+                        optionLabel="name"
+                        optionValue="code"
+                        :showClear="true"
+                        :filter="true"
+                        @change="getImage()"
+                        placeholder="Pilih Nama Peripheral"
+                        :class="{ 'p-invalid': submitted && !kode }"
+                      />
+                      <small v-if="errors.kode" class="p-error">
+                          {{ errors.kode[0] }}
+                      </small>  
+                      <small class="p-error" v-if="submitted && !kode"
+                        > Nama Peripheral Belum Diisi.
+                      </small>
+                    </div>
+                  </div>
                   <div class="field grid ">
                    <label class="col-fixed w-9rem" style="width:145px">Dari Tgl</label>
                     <div class="col-12 md:col-6">
@@ -202,7 +224,7 @@ export default {
       }
     },   
     getKode(){
-      this.axios.get('api/get-kode', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/get-kode-peripheral', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kodeperi = response.data;
       }).catch(error=>{
           if (error.response.status == 401){

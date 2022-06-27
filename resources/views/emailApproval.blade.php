@@ -307,7 +307,7 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <h1 class="v-font-size" style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: arial,helvetica,sans-serif; font-size: 15px;">
-    <strong>Business Unit</strong>
+    <strong>User Division</strong>
   </h1>
 
       </td>
@@ -434,7 +434,7 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%;">{{$ict[0]->ireq_bu}}</p>
+    <p style="font-size: 14px; line-height: 140%;">{{$ict[0]->div_name}}</p>
   </div>
 
       </td>
@@ -533,7 +533,7 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <h1 class="v-font-size" style="margin: 0px; color: #000000; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 15px;">
-    <strong>Tipe Request<br /></strong>
+    <strong>Request Type<br /></strong>
   </h1>
 
       </td>

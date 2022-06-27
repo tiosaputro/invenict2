@@ -1,11 +1,11 @@
-.reviewer-atasan,
-.reviewer-manager,
+.status-bagde,
 .manager-belum-verifikasi,
 .manager-sudah-verifikasi,
 .user-status,
 .requestor-verifikasi,
 .requestor-reviewer,
-.reviewer-atasan {
+.user-request,
+.status-bagde {
     border-radius: var(--border-radius);
     padding: .25em .5rem;
     text-transform: uppercase;
@@ -17,20 +17,10 @@
         background: #f1a598;
         color:  #C63737;
     }
-
     &.status-a1 {
         background: #9bface;
         color: #256029;
     }
-}
-.reviewer-manager {
-    border-radius: var(--border-radius);
-    padding: .25em .5rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: .3px;
-
     &.status-na2  {
         background: #f1a598;
         color:  #C63737;
@@ -40,7 +30,40 @@
         background: #9bface;
         color: #256029;
     }
-}
+    &.status-rt  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+    &.status-ra1  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+    &.status-ra2  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+    &.status-rr  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+    &.status-d {
+        background: #9bface;
+        color: #256029;
+    }
+    &.status-c {
+        background: #9bface;
+        color: #256029;
+    }
+    &.status-nt  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+    &.status-t {
+        background: #9bface;
+        color: #256029;
+    }
+
+} 
 .manager-sudah-verifikasi {
     border-radius: var(--border-radius);
     padding: .25em .5rem;
@@ -126,6 +149,56 @@
     }
 
     &.status-a2 {
+        background: #9bface;
+        color: #256029;
+    }
+}
+.user-request {
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+
+    &.status-rr  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+    &.status-ra1  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+    &.status-ra2  {
+        background: #f1a598;
+        color:  #C63737;
+    }
+
+    &.status-p {
+        background: #9bface;
+        color: #256029;
+    }
+    &.status-a1 {
+        background: #9bface;
+        color: #256029;
+    }
+    &.status-a2 {
+        background: #9bface;
+        color: #256029;
+    }
+    &.status-na1 {
+        background: #f1a598;
+        color: #C63737;
+    }
+    &.status-na2 {
+        background: #f1a598;
+        color: #C63737;
+    }
+    &.status-c {
+        background: #9bface;
+        color: #256029;
+    }
+    &.status-d {
         background: #9bface;
         color: #256029;
     }

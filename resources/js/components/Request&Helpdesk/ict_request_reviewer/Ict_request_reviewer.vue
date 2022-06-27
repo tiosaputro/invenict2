@@ -10,7 +10,7 @@
             </template>
         </Toolbar>
             <TabView ref="tabView2">
-              <TabPanel header="Permohonan Divisi">
+              <TabPanel header="Request">
                 <DataTable
                   :value="permohonan"
                   :paginator="true"
@@ -49,7 +49,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
-                  <Column columnKey="ireq_count_status" header="Personnel ICT" :sortable="true" style="min-width:8rem">
+                  <Column columnKey="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:8rem">
                   <template #body="slotProps">
                     {{slotProps.data.ireq_assigned_to}}
                   </template>
@@ -180,7 +180,7 @@
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:16rem">
                   <template #body= "slotProps">
-                    <span :class="'reviewer-atasan status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                   </template>
                   </Column>
                   <Column headerStyle="min-width:35rem">
@@ -204,19 +204,19 @@
                             params: { code: slotProps.data.ireq_id }, })"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove Atasan'"
+                        v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.status == 'A1'"
                         class="p-button-raised p-button-text p-button-sm mr-2"
                         @click="ApproveManager(slotProps.data.ireq_id)"
                         label="Persetujuan ICT Manager"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_status == 'Sudah Diapprove Atasan'"
+                        v-if="slotProps.data.status == 'A1'"
                         class="p-button-raised p-button-text p-button-sm mt-2"
                         @click="AssignPerRequest(slotProps.data.ireq_id)"
                         label="Assign Per-Request"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_status == 'Sudah Diapprove Atasan'"
+                        v-if="slotProps.data.status == 'A1'"
                         class="p-button-raised p-button-text p-button-sm mt-2"
                         @click="$router.push({
                             name: 'Ict Request Reviewer Assign Per Detail',
@@ -224,7 +224,7 @@
                         label="Assign Per-Detail"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove Atasan'"
+                        v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.status == 'A1'"
                         class="p-button-raised p-button-text p-button-sm mr-2"
                         @click="Submit(slotProps.data.ireq_id)"
                         label="Submit"
@@ -299,7 +299,7 @@
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:7rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                     <template #body= "slotProps">
-                      <span :class="'reviewer-manager status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
                   <Column headerStyle="min-width:30rem">
@@ -323,13 +323,13 @@
                             params: { code: slotProps.data.ireq_id }, })"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_status == 'Sudah Diapprove ICT Manager'"
+                        v-if="slotProps.data.status == 'A2'"
                         class="p-button-raised p-button-text p-button-sm mt-2"
                         @click="AssignPerRequest(slotProps.data.ireq_id)"
                         label="Assign Per-Request"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_status == 'Sudah Diapprove ICT Manager'"
+                        v-if="slotProps.data.status == 'A2'"
                         class="p-button-raised p-button-text p-button-sm mt-2"
                         @click="$router.push({
                             name: 'Ict Request Reviewer Assign Per Detail',
@@ -337,7 +337,7 @@
                         label="Assign Per-Detail"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove ICT Manager'"
+                        v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.status == 'A2'"
                         class="p-button-raised p-button-text p-button-sm mr-2"
                         @click="Submit(slotProps.data.ireq_id)"
                         label="Submit"
@@ -368,7 +368,7 @@
                   </template>
                 </DataTable>  
                 </TabPanel>
-                <TabPanel header="Yang Direject">
+                <TabPanel header="Rejected">
                    <DataTable
                     :value="reject"
                     :paginator="true"
@@ -407,8 +407,12 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                    <template #body= "slotProps">
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <Column headerStyle="min-width:8rem">
                     <template #body="slotProps">
                       <Button
@@ -445,7 +449,7 @@
                   </template>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Penugasan Request">
+                <TabPanel header="Request Assignment">
                   <DataTable
                     :value="penugasan"
                     :paginator="true"
@@ -485,7 +489,11 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                  <template #body= "slotProps">
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <Column style="min-width:20rem">
                     <template #body="slotProps">
                       <Button
@@ -497,13 +505,13 @@
                             params: { code: slotProps.data.ireq_id }, })"
                       />
                        <Button
-                        v-if="slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+                        v-if="slotProps.data.status == 'RT'"
                         class="p-button-raised p-button-text p-button-sm mt-2"
                         @click="AssignPerRequest(slotProps.data.ireq_id)"
                         label="Assign Per-Request"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+                        v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.status == 'RT'"
                         class="p-button-raised p-button-text p-button-sm p-button-success mr-2"
                         @click="Submit(slotProps.data.ireq_id)"
                         label="Submit"
@@ -534,7 +542,7 @@
                   </template>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Sedang Dikerjakan">
+                <TabPanel header="In Progress">
                     <DataTable
                     :value="sedangDikerjakan"
                     :paginator="true"
@@ -574,7 +582,11 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:4rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:3rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                  <template #body= "slotProps">
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <Column headerStyle="min-width:6rem">
                     <template #body="slotProps">
                       <Button
@@ -611,7 +623,7 @@
                   </template>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Sudah Dikerjakan">
+                <TabPanel header="Done">
                     <DataTable
                     :value="sudahDikerjakan"
                     :paginator="true"
@@ -656,11 +668,15 @@
                   <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
                   <Column field="div_name" header="Division User" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_status" header="Status" style="min-width:8rem" :sortable="true"/>
+                  <Column field="ireq_status" header="Status" style="min-width:8rem" :sortable="true">
+                  <template #body= "slotProps">
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <Column>
                     <template #body="slotProps">
                      <Button
-                          v-if="slotProps.data.ireq_status == 'Done'"
+                          v-if="slotProps.data.status == 'D'"
                           class="p-button-raised p-button-text mr-2"
                           label="Closing"
                           @click="ClosingPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_id)"
@@ -689,7 +705,7 @@
                   </template>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Selesai">
+                <TabPanel header="Close">
                     <DataTable
                     :value="selesai"
                     :paginator="true"
@@ -727,7 +743,7 @@
                   </Column>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:8rem"/>
-                  <Column field="kategori" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
@@ -739,7 +755,11 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+                  <template #body= "slotProps">
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <template #footer>
                       <div class="grid dir-col">
                       <div class="col">
@@ -772,25 +792,25 @@
             >
                 <div class="p-fluid">
                   <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:100px">Alasan</label>
+                    <label class="col-fixed w-9rem" style="width:100px">Reason</label>
                      <div class="col">
                           <Textarea
                             :autoResize="true"
                             type="text"
                             v-model="rbr.ket"
                             rows="5" 
-                            placeholder="Masukan Alasan"
+                            placeholder="Enter Reason"
                             :class="{ 'p-invalid': submitted && !rbr.ket }"
                           />
                             <small v-if="submitted && !rbr.ket" class="p-error">
-                            Alasan Harus Diisi
+                            Reason not filled
                             </small>
                      </div>
                    </div>
                 </div>
                 <template #footer>
-                    <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
-                    <Button label="No" @click="cancelReject()" class="p-button-text" />
+                    <Button label="Save" @click="updateReject()" class="p-button" autofocus />
+                    <Button label="Cancel" @click="cancelReject()" class="p-button-text" />
                 </template>
             </Dialog>
             <Dialog
@@ -803,24 +823,24 @@
             >
                 <div class="fluid">
                 <div class="field grid">
-                    <label class="col-fixed w-9rem">Petugas (ICT)</label>
+                    <label class="col-fixed w-9rem">Personnel (ICT)</label>
                     <div class="col-fixed w-9rem">
                         <Dropdown
                             v-model="assign.name"
                             :options="petugas"
                             optionValue="name"
                             optionLabel="name"
-                            placeholder="Pilih Petugas (ICT)"
+                            placeholder="Choose One"
                             :class="{ 'p-invalid': submitted && !assign.name }"
                         />
                         <small v-if="submitted && !assign.name" class="p-error">
-                            Petugas(ICT) Harus Diisi
+                            Personnel (ICT) not filled
                         </small>
                     </div>
                 </div>
                 </div>
                 <template #footer>
-                    <Button label="Simpan" @click="updateAssign()" class="p-button" autofocus />
+                    <Button label="Save" @click="updateAssign()" class="p-button" autofocus />
                     <Button label="Cancel" @click="cancelAssign()" class="p-button-text" />
                 </template>
             </Dialog>
@@ -859,7 +879,7 @@
           </template>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
-          <Column field="kategori" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
+          <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:12rem"/>
           <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>

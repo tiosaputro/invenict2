@@ -9,8 +9,8 @@
                 <h4>ICT Request</h4>
               </template>
             </Toolbar>
-            <TabView ref="tabview1" scrollable v-model:activeIndex="active1">
-              <TabPanel header="Permohonan">
+            <TabView ref="tabview1" v-model:activeIndex="active1">
+              <TabPanel header="Request">
                 <DataTable
                   :value="permohonan"
                   :paginator="true"
@@ -20,7 +20,7 @@
                   :rowHover="true"
                   paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                   :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request"
                   responsiveLayout="scroll"
                 >
                 <template #header>
@@ -41,13 +41,13 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:10rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
@@ -90,7 +90,7 @@
                   </template>
                 </DataTable>   
               </TabPanel>
-                <TabPanel header="Yang Telah Diverifikasi">
+                <TabPanel header="Approved">
                   <DataTable
                     :value="verif"
                     :paginator="true"
@@ -100,7 +100,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Approved"
                     responsiveLayout="scroll"
                  >
                 <template #header>
@@ -120,14 +120,14 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
@@ -163,7 +163,7 @@
                   </template>
                 </DataTable>   
                 </TabPanel>
-                <TabPanel header="Yang Di Reject">
+                <TabPanel header="Rejected">
                    <DataTable
                     :value="reject"
                     :paginator="true"
@@ -173,7 +173,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Rejected"
                     responsiveLayout="scroll"
                  >
                 <template #header>
@@ -193,15 +193,15 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
@@ -237,7 +237,7 @@
                   </template>
                 </DataTable>  
                 </TabPanel>
-                <TabPanel header="Penugasan Request">
+                <TabPanel header="Request Assignment">
                   <DataTable
                     :value="penugasan"
                     :paginator="true"
@@ -247,7 +247,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Penugasan Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request Assignment"
                     responsiveLayout="scroll"
                   >
                   <template #header>
@@ -268,13 +268,13 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:8rem">
@@ -313,7 +313,7 @@
                   </template>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Sedang Dikerjakan">
+                <TabPanel header="In Progress">
                    <DataTable
                     :value="sedangDikerjakan"
                     :paginator="true"
@@ -323,7 +323,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} In Progress"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -343,14 +343,14 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
@@ -386,7 +386,7 @@
                   </template>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Sudah Dikerjakan">
+                <TabPanel header="Done">
                     <DataTable
                     :value="sudahDikerjakan"
                     :paginator="true"
@@ -396,7 +396,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Done"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -419,15 +419,15 @@
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
                   <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
                   <template #footer>
                     <div class="grid dir-col">
@@ -451,7 +451,7 @@
                   </template>
                 </DataTable>
                 </TabPanel>
-                <TabPanel header="Selesai">
+                <TabPanel header="Close">
                     <DataTable
                     :value="selesai"
                     :paginator="true"
@@ -461,7 +461,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Close"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -484,15 +484,15 @@
                    <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
                   <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
                   <template #footer>
                     <div class="grid dir-col">
@@ -520,7 +520,7 @@
             <Dialog header="Confirmation" v-model:visible="confirmationVerifikasi" :style="{width: '350px'}" :modal="true">
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                <span>Verifikasi Request</span>
+                <span>Request Verification</span>
             </div>
             <template #footer>
                 <Button label="Reject" icon="pi pi-times" @click="rejectRequest" class="p-button-raised p-button-danger p-button-text"/>

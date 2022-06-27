@@ -508,7 +508,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
             onClick: function onClick($event) {
-              return $options.detailKode(slotProps.data.invent_code);
+              return $options.detailKode(slotProps.data.invent_code_dtl);
             },
             style: {
               "cursor": "pointer"
@@ -522,15 +522,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "invent_desc",
-        header: "Nama",
+        header: "Peripheral",
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "invent_type",
+        header: "Type",
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "invent_sn",
+        header: "S/N",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "imutasi_pengguna",
-        header: "Pengguna",
+        header: "User",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "imutasi_lokasi",
         header: "Lokasi",
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "imutasi_divisi",
+        header: "User Division",
+        sortable: true
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "imutasi_bu",
+        header: "Business Unit",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         headerStyle: "min-width:12rem"

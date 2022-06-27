@@ -8,7 +8,7 @@ class Mutasi extends Model
 {
     protected $fillable = [
         'imutasi_id',
-        'invent_code',
+        'invent_code_dtl',
         'imutasi_tgl_dari',
         'imutasi_tgl_sd',
         'imutasi_lokasi',
@@ -20,6 +20,7 @@ class Mutasi extends Model
         'last_updated_by',
         'program_name',
         'imutasi_bu',
+        'imutasi_divisi'
     ];
     protected $table='invent_mutasi';
     protected $primaryKey='imutasi_id';
