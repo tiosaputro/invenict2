@@ -105,18 +105,21 @@
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
+                  v-tooltip.left="'Click to save detail'"
                   label="Save"
                   type="submit"
                 />
                 <Button
                   class="p-button-rounded p-button-success mr-2 mt-2"
                   icon="pi pi-plus"
+                  v-tooltip.bottom="'Click to save & add new detail'"
                   label="Add Request"
                   @click="saveclick"
                 />
                 <Button
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mt-2"
+                  v-tooltip.right="'Click to cancel create data'"
                   icon="pi pi-times"
                   @click="$router.push({
                     name: 'Ict Request Detail',
@@ -291,13 +294,13 @@ export default {
          });
       }else{
         if(this.kode == null){
-          this.error.kode = "Nama Peripheral Belum Diisi"
+          this.error.kode = "Peripheral not filled"
         }
         if(this.tipereq == null){
-          this.error.tipereq = "Request Type Belum Diisi"
+          this.error.tipereq = "Request Type not filled"
         }
         if(this.tipereq == 'null'){
-          this.error.tipereq = "Request Type Belum Diisi"
+          this.error.tipereq = "Request Type not filled"
         }
       }
       }else{
@@ -320,10 +323,10 @@ export default {
          });
       }else{
         if(this.tipereq == null){
-          this.error.tipereq = "Request Type Belum Diisi"
+          this.error.tipereq = "Request Type not filled"
         }
         if(this.tipereq == 'null'){
-          this.error.tipereq = "Request Type Belum Diisi"
+          this.error.tipereq = "Request Type not filled"
         }
       }
       }

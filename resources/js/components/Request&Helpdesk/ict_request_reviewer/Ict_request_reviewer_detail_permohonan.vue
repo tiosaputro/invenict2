@@ -49,7 +49,11 @@
           <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:11rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:11rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:11rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:11rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
             <div class="grid dir-col">
 			        <div class="col">

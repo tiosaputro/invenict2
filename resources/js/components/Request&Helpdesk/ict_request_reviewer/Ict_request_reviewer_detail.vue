@@ -45,14 +45,18 @@
             Loading ICT Request (Detail) data. Please wait.
           </template>
           <Column field="ireq_type" header="Tipe Request" :sortable="true"  style="min-width:8rem"/>
-          <Column field="name" header="Nama Peripheral" :sortable="true"  style="min-width:8rem"/>
+          <Column field="name" header="Peripheral" :sortable="true"  style="min-width:8rem"/>
           <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:8rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to1_reason" header="Alasan" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
           <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
-          <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:8rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:8rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:17rem">
             <template #body="slotProps">
               <Button
@@ -158,7 +162,7 @@
               </div>
           </div>
           <div class="field grid">
-            <label class="col-fixed w-9rem">Nama Peripheral</label>
+            <label class="col-fixed w-9rem">Peripheral</label>
               <div class="col-fixed">
                 <InputText
                   v-model="assign.name"
@@ -218,7 +222,7 @@
               </div>
             </div>
           <template #footer>
-            <Button label="Simpan" @click="updateAssign()" class="p-button" autofocus />
+            <Button label="Save" @click="updateAssign()" class="p-button" autofocus />
             <Button label="Cancel" @click="cancelAssign()" class="p-button-text" />
           </template>
         </Dialog>
@@ -316,17 +320,17 @@ export default {
     },
     Submit(ireqd_id){
       this.$confirm.require({
-        message: "Apakah anda yakin?",
+        message: "Are you sure you want to submit this request?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
           accept: () => {
             this.$toast.add({
               severity: "info",
-              summary: "Confirmed",
-              detail: "Berhasil Diassign",
+              summary: "Success Message",
+              detail: "Success Submit",
               life : 1000
             });
             this.axios.get('/api/appd/' +ireqd_id + '/' +this.$route.params.code ,{headers: {'Authorization': 'Bearer '+this.token}});

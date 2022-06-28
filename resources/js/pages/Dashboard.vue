@@ -4,7 +4,7 @@
 			<div @click="blmDiverifikasiAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Belum Diverifikasi </span>
+						<span class="block text-500 font-medium mb-3">Waiting for verification </span>
 						<div class="text-900 font-medium text-xl">{{count5.belumdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -17,7 +17,7 @@
 			<div @click="sdhDiverifikasiAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
+						<span class="block text-500 font-medium mb-3">Already Verified</span>
 						<div class="text-900 font-medium text-xl">{{count5.sudahdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -30,7 +30,7 @@
 			<div @click="diRejectAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Di Reject</span>
+						<span class="block text-500 font-medium mb-3">Rejected</span>
 						<div class="text-900 font-medium text-xl">{{count5.direject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -43,7 +43,7 @@
 			<div @click="sdgDikerjakanAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">In Progress</span>
 						<div class="text-900 font-medium text-xl">{{count5.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -56,7 +56,7 @@
 			<div @click="sdhDikerjakanAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">Done</span>
 						<div class="text-900 font-medium text-xl">{{count5.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -69,7 +69,7 @@
 			<div @click="sdhSelesaiAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
+						<span class="block text-500 font-medium mb-3">Close</span>
 						<div class="text-900 font-medium text-xl">{{count5.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -82,7 +82,7 @@
 			<div @click="totalKeseluruhanAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Total Request</span>
+						<span class="block text-500 font-medium mb-3">Overall Request</span>
 						<div class="text-900 font-medium text-xl">{{count5.countrequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -97,7 +97,7 @@
 			<div @click="sdgDireview()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sedang Direview </span>
+						<span class="block text-500 font-medium mb-3">Under review </span>
 						<div class="text-900 font-medium text-xl">{{count.sedangdireview}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -110,7 +110,7 @@
 			<div @click="blmDiverifikasi()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Belum Diverifikasi </span>
+						<span class="block text-500 font-medium mb-3">Waiting for verification </span>
 						<div class="text-900 font-medium text-xl">{{count.belumdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -123,7 +123,7 @@
 			<div @click="sdhDiverifikasi()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
+						<span class="block text-500 font-medium mb-3">Already verified</span>
 						<div class="text-900 font-medium text-xl">{{count.sudahdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -136,7 +136,7 @@
 			<div @click="diReject()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Di Reject</span>
+						<span class="block text-500 font-medium mb-3">Rejected</span>
 						<div class="text-900 font-medium text-xl">{{count.direject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -149,7 +149,7 @@
 			<div @click="sdgDikerjakan()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">In Progress</span>
 						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -162,7 +162,7 @@
 			<div @click="sdhDikerjakan()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">Done</span>
 						<div class="text-900 font-medium text-xl">{{count.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -175,7 +175,7 @@
 			<div @click="sdhSelesai()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
+						<span class="block text-500 font-medium mb-3">Close</span>
 						<div class="text-900 font-medium text-xl">{{count.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -188,7 +188,7 @@
 			<div @click="totalKeseluruhan()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Total Request</span>
+						<span class="block text-500 font-medium mb-3">Overall Request</span>
 						<div class="text-900 font-medium text-xl">{{count.countrequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -203,7 +203,7 @@
 			<div @click="sdgDireview1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sedang Direview </span>
+						<span class="block text-500 font-medium mb-3">Under Review </span>
 						<div class="text-900 font-medium text-xl">{{count1.sedangdireview}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -216,7 +216,7 @@
 			<div @click="blmDiverifikasi1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Belum Diverifikasi </span>
+						<span class="block text-500 font-medium mb-3">Waiting for verification </span>
 						<div class="text-900 font-medium text-xl">{{count1.belumdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -229,7 +229,7 @@
 			<div @click="sdhDiverifikasi1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
+						<span class="block text-500 font-medium mb-3">Already Verified</span>
 						<div class="text-900 font-medium text-xl">{{count1.sudahdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -242,7 +242,7 @@
 			<div @click="diReject1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Di Reject</span>
+						<span class="block text-500 font-medium mb-3">Rejected</span>
 						<div class="text-900 font-medium text-xl">{{count1.direject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -255,7 +255,7 @@
 			<div @click="sdgDikerjakan1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">In Progress</span>
 						<div class="text-900 font-medium text-xl">{{count1.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -268,7 +268,7 @@
 			<div @click="sdhDikerjakan1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">Done</span>
 						<div class="text-900 font-medium text-xl">{{count1.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -281,7 +281,7 @@
 			<div @click="sdhSelesai1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
+						<span class="block text-500 font-medium mb-3">Close</span>
 						<div class="text-900 font-medium text-xl">{{ count1.sudahselesai }}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -294,7 +294,7 @@
 			<div @click="totalRequest1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Total Request</span>
+						<span class="block text-500 font-medium mb-3">Overall Request</span>
 						<div class="text-900 font-medium text-xl">{{count1.total}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -309,7 +309,7 @@
 			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Belum Diverifikasi</span>
+						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
 						<div class="text-900 font-medium text-xl">{{count2.blmDiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -348,7 +348,7 @@
 			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Direject</span>
+						<span class="block text-500 font-medium mb-3">Rejected</span>
 						<div class="text-900 font-medium text-xl">{{count2.reject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -361,7 +361,7 @@
 			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Penugasan Request</span>
+						<span class="block text-500 font-medium mb-3">Request Assignment</span>
 						<div class="text-900 font-medium text-xl">{{count2.penugasanRequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -374,7 +374,7 @@
 			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">In Progress</span>
 						<div class="text-900 font-medium text-xl">{{count2.sdgdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -387,7 +387,7 @@
 			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">Done</span>
 						<div class="text-900 font-medium text-xl">{{count2.sdhdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -400,7 +400,7 @@
 			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
+						<span class="block text-500 font-medium mb-3">Close</span>
 						<div class="text-900 font-medium text-xl">{{count2.sdhselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -413,7 +413,7 @@
 			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Total Request</span>
+						<span class="block text-500 font-medium mb-3">Overall Request</span>
 						<div class="text-900 font-medium text-xl">{{count2.totalRequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -428,7 +428,7 @@
 			<div @click="blmSelesai3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">In Progress</span>
 						<div class="text-900 font-medium text-xl">{{count3.belumselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -441,7 +441,7 @@
 			<div @click="sdHDikerjakan3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">Done</span>
 						<div class="text-900 font-medium text-xl">{{count3.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -454,7 +454,7 @@
 			<div @click="sdhSelesai3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
+						<span class="block text-500 font-medium mb-3">Close</span>
 						<div class="text-900 font-medium text-xl">{{count3.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -469,7 +469,7 @@
 			<div @click="sdgDireview4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sedang Direview </span>
+						<span class="block text-500 font-medium mb-3">Under Review </span>
 						<div class="text-900 font-medium text-xl">{{count4.sedangdireview}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -482,7 +482,7 @@
 			<div @click="blmDiverifikasi4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Belum Diverifikasi</span>
+						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
 						<div class="text-900 font-medium text-xl">{{count4.blmdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -495,7 +495,7 @@
 			<div @click="sdhDiverifikasi4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Diverifikasi</span>
+						<span class="block text-500 font-medium mb-3">Already Verified</span>
 						<div class="text-900 font-medium text-xl">{{count4.sudahdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -508,7 +508,7 @@
 			<div @click="direject4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Direject</span>
+						<span class="block text-500 font-medium mb-3">Rejected</span>
 						<div class="text-900 font-medium text-xl">{{count4.direject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -521,7 +521,7 @@
 			<div @click="penugasanRequest4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Penugasan Request</span>
+						<span class="block text-500 font-medium mb-3">Request Assignment</span>
 						<div class="text-900 font-medium text-xl">{{count4.penugasanrequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -534,7 +534,7 @@
 			<div @click="sdgdikerjakan4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sedang Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">In Progress</span>
 						<div class="text-900 font-medium text-xl">{{count4.sedangdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -547,7 +547,7 @@
 			<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Dikerjakan</span>
+						<span class="block text-500 font-medium mb-3">Done</span>
 						<div class="text-900 font-medium text-xl">{{count4.sudahdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -560,7 +560,7 @@
 			<div @click="sdhSelesai4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Sudah Selesai</span>
+						<span class="block text-500 font-medium mb-3">Close</span>
 						<div class="text-900 font-medium text-xl">{{count4.sudahselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
@@ -573,7 +573,7 @@
 			<div @click="totalRequest4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
-						<span class="block text-500 font-medium mb-3">Total Request</span>
+						<span class="block text-500 font-medium mb-3">Overall Request</span>
 						<div class="text-900 font-medium text-xl">{{count4.totalrequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">

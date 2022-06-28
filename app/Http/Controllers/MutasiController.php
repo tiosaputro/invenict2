@@ -26,9 +26,11 @@ class MutasiController extends Controller
 
         if($aksesmenu->contains($this->to)){
             $mutasi = DB::table('invent_mutasi as im')
-            ->select('im.*','id.invent_code','id.invent_sn','imm.invent_desc')
+            ->select('im.imutasi_pengguna','im.imutasi_lokasi','im.imutasi_id','id.invent_code','id.invent_sn','imm.invent_type','imm.invent_desc','dr.div_name as imutasi_divisi','vr.name as imutasi_bu')
             ->leftjoin('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
             ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
+            ->leftjoin('divisi_refs as dr','im.imutasi_divisi','dr.div_id')
+            ->leftjoin('vcompany_refs as vr','im.imutasi_bu','vr.company_code')
             ->orderBy('im.creation_date','DESC')
             ->get();
             return response()->json($mutasi);
@@ -45,11 +47,13 @@ class MutasiController extends Controller
         if ($request->todate){   
         $newToDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->todate)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         $mut = Mutasi::Create([
-            'invent_code'=> $request->kode,
+            'invent_code_dtl'=> $request->invent_sn,
             'imutasi_tgl_dari' => $newFromDate,
             'imutasi_tgl_sd'=>$newToDate,
             'imutasi_lokasi' => $request->lokasi,
             'imutasi_pengguna' => $request->user,
+            'imutasi_divisi' => $request->invent_divisi,
+            'imutasi_bu' => $request->invent_bu,
             'imutasi_keterangan' => $request->ket,
             'creation_date'=> $newCreation,
             'created_by' => Auth::user()->usr_name,
@@ -57,10 +61,12 @@ class MutasiController extends Controller
         ]);
     }else{
     $mut = Mutasi::Create([
-        'invent_code'=> $request->kode,
+        'invent_code_dtl'=> $request->invent_sn,
         'imutasi_tgl_dari' => $newFromDate,
         'imutasi_lokasi' => $request->lokasi,
         'imutasi_pengguna' => $request->user,
+        'imutasi_divisi' => $request->invent_divisi,
+        'imutasi_bu' => $request->invent_bu,
         'imutasi_keterangan' => $request->ket,
         'creation_date'=> $newCreation,
         'created_by' => Auth::user()->usr_name,
@@ -81,11 +87,16 @@ class MutasiController extends Controller
 
         if($aksesmenu->contains($this->to)){
             $mut = DB::table('invent_mutasi as im')
-                ->Select('im.imutasi_lokasi','im.imutasi_pengguna','im.imutasi_keterangan','imm.invent_photo',
+                ->Select(DB::raw("(imm.invent_desc || '-' || lr.lookup_desc || '-' ||  imm.invent_type) as invent_code"),'id.invent_sn',
+                'im.imutasi_lokasi','im.imutasi_pengguna','im.imutasi_keterangan','id.invent_photo','im.imutasi_divisi','im.imutasi_bu',
                         DB::raw("TO_CHAR(im.imutasi_tgl_dari,' dd Mon YYYY') as imutasi_tgl_dari"),
-                        DB::raw("TO_CHAR(im.imutasi_tgl_sd,' dd Mon YYYY') as imutasi_tgl_sd"),
-                        DB::raw("(im.invent_code ||'-'|| imm.invent_desc) as invent_code"))
-                ->join('invent_mst as imm','im.invent_code','imm.invent_code')
+                        DB::raw("TO_CHAR(im.imutasi_tgl_sd,' dd Mon YYYY') as imutasi_tgl_sd"))
+                ->leftjoin('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
+                ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
+                ->leftJoin('lookup_refs as lr',function ($join) {
+                    $join->on('imm.invent_brand','lr.lookup_code')
+                        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+                })
                 ->Where('im.imutasi_id',$code)
                 ->first();
                 return response()->json($mut);
@@ -107,6 +118,8 @@ class MutasiController extends Controller
             $mut->imutasi_tgl_sd = $newToDate;
             $mut->imutasi_lokasi = $request->imutasi_lokasi;
             $mut->imutasi_pengguna = $request->imutasi_pengguna;
+            $mut->imutasi_divisi = $request->imutasi_divisi;
+            $mut->imutasi_bu = $request->imutasi_bu;
             $mut->imutasi_keterangan = $request->imutasi_keterangan;
             $mut->last_update_date = $newUpdate;
             $mut->last_updated_by = Auth::user()->usr_name;
@@ -118,6 +131,8 @@ class MutasiController extends Controller
             $mut->imutasi_tgl_sd = $request->imutasi_tgl_sd;
             $mut->imutasi_lokasi = $request->imutasi_lokasi;
             $mut->imutasi_pengguna = $request->imutasi_pengguna;
+            $mut->imutasi_divisi = $request->imutasi_divisi;
+            $mut->imutasi_bu = $request->imutasi_bu;
             $mut->imutasi_keterangan = $request->imutasi_keterangan;
             $mut->last_update_date = $newUpdate;
             $mut->last_updated_by = Auth::user()->usr_name;

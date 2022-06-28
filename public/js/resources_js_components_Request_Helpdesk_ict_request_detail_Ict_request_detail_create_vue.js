@@ -231,15 +231,15 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           if (this.kode == null) {
-            this.error.kode = "Nama Peripheral Belum Diisi";
+            this.error.kode = "Peripheral not filled";
           }
 
           if (this.tipereq == null) {
-            this.error.tipereq = "Request Type Belum Diisi";
+            this.error.tipereq = "Request Type not filled";
           }
 
           if (this.tipereq == 'null') {
-            this.error.tipereq = "Request Type Belum Diisi";
+            this.error.tipereq = "Request Type not filled";
           }
         }
       } else {
@@ -271,11 +271,11 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           if (this.tipereq == null) {
-            this.error.tipereq = "Request Type Belum Diisi";
+            this.error.tipereq = "Request Type not filled";
           }
 
           if (this.tipereq == 'null') {
-            this.error.tipereq = "Request Type Belum Diisi";
+            this.error.tipereq = "Request Type not filled";
           }
         }
       }
@@ -426,6 +426,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
+  var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
@@ -519,19 +521,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "class"]), $data.errors.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ket[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Save",
     type: "submit"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[_directive_tooltip, 'Click to save detail', void 0, {
+    left: true
+  }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-success mr-2 mt-2",
     icon: "pi pi-plus",
     label: "Add Request",
     onClick: $options.saveclick
   }, null, 8
   /* PROPS */
-  , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  , ["onClick"]), [[_directive_tooltip, 'Click to save & add new detail', void 0, {
+    bottom: true
+  }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
@@ -543,7 +551,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       });
     })
-  })])], 32
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[_directive_tooltip, 'Click to cancel create data', void 0, {
+    right: true
+  }]])])], 32
   /* HYDRATE_EVENTS */
   )])])]);
 }

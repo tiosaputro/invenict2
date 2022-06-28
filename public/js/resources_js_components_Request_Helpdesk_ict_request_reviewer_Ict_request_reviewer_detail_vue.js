@@ -145,17 +145,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this4 = this;
 
       this.$confirm.require({
-        message: "Apakah anda yakin?",
+        message: "Are you sure you want to submit this request?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this4.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Diassign",
+            summary: "Success Message",
+            detail: "Success Submit",
             life: 1000
           });
 
@@ -338,7 +338,7 @@ var _hoisted_23 = {
 
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
-}, "Nama Peripheral", -1
+}, "Peripheral", -1
 /* HOISTED */
 );
 
@@ -526,7 +526,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
-        header: "Nama Peripheral",
+        header: "Peripheral",
         sortable: true,
         style: {
           "min-width": "8rem"
@@ -575,6 +575,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "8rem"
         }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
           "min-width": "17rem"
@@ -638,7 +649,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Simpan",
+        label: "Save",
         onClick: _cache[14] || (_cache[14] = function ($event) {
           return $options.updateAssign();
         }),

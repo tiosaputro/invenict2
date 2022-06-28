@@ -166,7 +166,7 @@
                   </template>
                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem">
                   <template #body="slotProps">
-                      <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.ireq_status == 'Belum Diapprove Atasan'">{{slotProps.data.ireq_no}}</p>
+                      <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.status == 'NA1'">{{slotProps.data.ireq_no}}</p>
                       <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
                   </template>
                  </Column>
@@ -285,7 +285,7 @@
                   </template>
                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:7rem">
                   <template #body="slotProps">
-                      <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.ireq_status == 'Belum Diapprove ICT Manager'">{{slotProps.data.ireq_no}}</p>
+                      <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.status == 'NA2'">{{slotProps.data.ireq_no}}</p>
                       <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
                   </template>
                  </Column>

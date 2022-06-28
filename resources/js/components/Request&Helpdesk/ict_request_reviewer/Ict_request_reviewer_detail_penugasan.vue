@@ -49,7 +49,11 @@
           <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_note_personnel" header="Reason" :sortable="true" style="min-width:4rem" v-if="this.status == 'T'"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:4rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
             <div class="p-grid p-dir-col">
 			        <div class="p-col">

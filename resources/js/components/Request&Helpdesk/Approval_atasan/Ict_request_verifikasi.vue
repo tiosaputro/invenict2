@@ -6,7 +6,7 @@
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="p-mb-4">
           <template v-slot:start>
-				        <h4>ICT Request (Verifikasi) </h4>
+				        <h4>ICT Request (Verification) </h4>
           </template>
         </Toolbar>
         <DataTable
@@ -18,7 +18,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Verifikasi)"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Verification)"
           responsiveLayout="scroll"
         >
         
@@ -40,17 +40,17 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
+          <Column field="name" header="Peripheral" :sortable="true" style="min-width:12rem"/>
+          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
           <template #footer>
             <div class="grid p-dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
@@ -81,7 +81,7 @@
         class="field grid"
       >
         <div class="field grid">
-            <label style="width:100px">Alasan</label>
+            <label style="width:100px">Reason</label>
               <div class="col-3 md-6">
                 <Textarea
                     :autoResize="true"
@@ -89,17 +89,17 @@
                     v-model="reason.ket"
                     rows="5" 
                     cols="30"
-                    placeholder="Masukan Alasan"
+                    placeholder="Give a reason"
                     :class="{ 'p-invalid': submitted && !reason.ket }"
                   />
                     <small v-if="submitted && !reason.ket" class="p-error">
-                    Alasan Harus Diisi
+                    Reason not filled
                     </small>
               </div>
         </div>
         <template #footer>
-            <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
-            <Button label="No" @click="cancelReject()" class="p-button-text" />
+            <Button label="Save" @click="updateReject()" class="p-button" autofocus />
+            <Button label="Cancel" @click="cancelReject()" class="p-button-text" />
         </template>
       </Dialog>
       </div>
@@ -150,17 +150,17 @@ export default {
     },
       Approve(){
       this.$confirm.require({
-        message: "Approval Permohonan Dilanjutkan?",
-        header: "ICT Request    ",
+        message: "Are you sure you agree to this request?",
+        header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Permohonan Dilanjutkan",
+            summary: "Success Message",
+            detail: "Successfully approved this request",
           });
           this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
           setTimeout( () =>  this.$router.push('/ict-request-divisi1'),1000);
@@ -175,8 +175,8 @@ export default {
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
-                summary: "Confirmed",
-                detail: "Berhasil Direject",
+                summary: "Success Message",
+                detail: "Successfully rejected this request",
               });
               setTimeout( () => this.$router.push('/ict-request-divisi1'),1000);
             });

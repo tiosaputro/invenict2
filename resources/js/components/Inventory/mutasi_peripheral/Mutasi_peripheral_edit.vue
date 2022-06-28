@@ -1,110 +1,169 @@
 <template>
   <div>
-        <ConfirmDialog> </ConfirmDialog>
-        <Toast />
+    <ConfirmDialog> </ConfirmDialog>
+    <Toast />
         <div class="card">
           <Toolbar class="mb-4">
             <template v-slot:start>
-                  <h4>Mutasi Peripheral</h4>
+              <h4>Mutasi Peripheral</h4>
             </template>
           </Toolbar>
-          <div class="row">
+        <div class="row">
           <div class="col-sm-6">
             <form @submit.prevent="UpdateMutasi">
-              <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:155px">Kode Peripheral</label>
-                    <div class="col">
+               <div class="field grid">
+                    <label class="col-fixed w-9rem" style="width:145px">Peripheral</label>
+                    <div class="field col-12 md:col-6">
                       <InputText
-                        type="text" 
-                        v-model="mutasi.invent_code"
-                        disabled
-                      /> 
+                      v-model="mut.invent_code"
+                      disabled
+                      />
+                    </div>
                   </div>
-                 </div>
-                 <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:155px">Dari Tgl</label>
+                  <div class="field grid">
+                    <label class="col-fixed w-9rem" style="width:145px">S/N</label>
+                    <div class="field col-12 md:col-6">
+                      <InputText
+                       v-model="mut.invent_sn"
+                       disabled
+                      />
+                    </div>
+                  </div>
+                  <div class="field grid ">
+                   <label class="col-fixed w-9rem" style="width:145px">From Date</label>
                     <div class="col-12 md:col-6">
-                      <DatePicker v-model="mutasi.imutasi_tgl_dari" :masks="mask" >
+                      <DatePicker v-model="mut.imutasi_tgl_dari" :masks="mask" >
+                        <template v-slot="{ inputValue, togglePopover }">
+                         <div class="flex items-center">
+                          <input
+                            class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
+                            :value="inputValue"
+                            @click="togglePopover"
+                            placeholder="Pilih Dari Tanggal"
+                            readonly
+                          />
+                        <Button icon="pi pi-calendar" v-if="!fromdate" @click="togglePopover"/>
+                        <Button icon="pi pi-trash" class="p-button-danger" v-else @click="fromdate = ''" />
+                       </div>
+                      </template>
+                      </DatePicker>
+                      <small class="p-error" v-if="submitted && !fromdate"
+                        > Dari Tgl Belum Diisi.
+                      </small>
+                  </div>
+                </div>
+                <div class="field grid">
+                 <label class="col-fixed w-9rem" style="width:145px">To Date</label>
+                  <div class="col-12 md:col-6">
+                      <DatePicker v-model="mut.imutasi_tgl_sd" :masks="mask" :min-date="fromdate" >
                         <template v-slot="{ inputValue, togglePopover }">
                           <div class="flex items-center">
                           <input
                             class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
                             :value="inputValue"
                             @click="togglePopover"
-                            placeholder="Pilih Tanggal"
+                            placeholder="Pilih SD Tanggal"
                             readonly
                           />
-                          <Button icon="pi pi-calendar" v-if="!mutasi.imutasi_tgl_dari" @click="togglePopover"/>
-                          <Button icon="pi pi-trash" class="p-button-danger" v-else @click="mutasi.imutasi_tgl_dari = ''" /> 
+                          <Button icon="pi pi-calendar" v-if="!todate" @click="togglePopover"/>
+                          <Button icon="pi pi-trash" class="p-button-danger" v-else @click="todate = ''" />
                          </div>
                         </template>
-                      </DatePicker> 
-                      <small class="p-error" v-if="submitted && !mutasi.imutasi_tgl_dari"
-                        >Dari Tgl Belum Diisi.
+                      </DatePicker>
+                  </div>
+              </div>
+                <div class="field grid">
+                  <label class="col-fixed w-9rem" style="width:145px">Location</label>
+                    <div class="col-10 md:col-4">
+                    <InputText
+                      type ="text"
+                      v-model="mut.imutasi_lokasi"
+                      placeholder="Masukan Lokasi. . ."
+                      :class="{ 'p-invalid': submitted && !lokasi }"
+                    />
+                      <small class="p-error" v-if="submitted && !lokasi"
+                        >Lokasi Belum Diisi.
                       </small>
-                    </div>
                   </div>
-                  <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:155px">SD Tgl</label>
-                      <div class="col-12 md:col-6">
-                        <DatePicker v-model="mutasi.imutasi_tgl_sd" :min-date="mutasi.imutasi_tgl_dari" :masks="mask" >
-                          <template v-slot="{ inputValue, togglePopover }">
-                            <div class="flex items-center">
-                              <input
-                                class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
-                                :value="inputValue"
-                                @click="togglePopover"
-                                placeholder="Pilih Tanggal"
-                                readonly
-                              />
-                              <Button icon="pi pi-calendar" v-if="!mutasi.imutasi_tgl_sd" @click="togglePopover"/>
-                              <Button icon="pi pi-trash" class="p-button-danger" v-else @click="mutasi.imutasi_tgl_sd = ''" />
-                            </div>
-                          </template>
-                        </DatePicker>
-                      </div>
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:155px">Lokasi</label>
-                      <div class="col-12 md:col-4">
-                        <InputText
-                          type ="text"
-                          v-model="mutasi.imutasi_lokasi"
-                          placeholder="Masukan Lokasi. . ."
-                          :class="{ 'p-invalid': submitted && !mutasi.imutasi_lokasi }"
-                        />
-                        <small class="p-error" v-if="submitted && !mutasi.imutasi_lokasi"
-                          >Lokasi Belum Diisi.
-                        </small>
-                      </div>
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:155px">Pengguna</label>
-                      <div class="col-12 md:col-6">
-                        <InputText
+              </div>
+                <div class="field grid">
+                  <label class="col-fixed w-9rem" style="width:145px">User</label>
+                    <div class="col-12 md:col-6">
+                      <InputText
                           type="text"
-                          v-model="mutasi.imutasi_pengguna"
+                          v-model="mut.imutasi_pengguna"
                           placeholder="Masukan Pengguna . . ."
-                          :class="{ 'p-invalid': submitted && !mutasi.imutasi_pengguna }"
+                          :class="{ 'p-invalid': submitted && !user }"
                         />
-                      <small class="p-error" v-if="submitted && !mutasi.imutasi_pengguna"
+                        
+                      <small class="p-error" v-if="submitted && !user"
                         >Pengguna Belum Diisi.
                       </small>
-                    </div>
-                  </div>
+                      <small v-if="errors.user" class="p-error">
+                          {{ errors.user[0] }}
+                      </small>
+                </div>
+              </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:155px">Keterangan</label>
+                  <label class="col-fixed w-9rem" style="width:145px">Division User</label>
+                    <div class="col-12 md:col-6">
+                      <Dropdown 
+                        v-model="mut.imutasi_divisi"
+                        :options="divisi"
+                        optionLabel="name"
+                        optionValue="code"
+                        :showClear="true"
+                        :filter="true"
+                        placeholder="Select"
+                        :class="{ 'p-invalid': submitted && !mut.imutasi_divisi }"
+                      />
+                        
+                      <small class="p-error" v-if="submitted && !mut.imutasi_divisi"
+                        >Division User not filled.
+                      </small>
+                      <small v-if="errors.imutasi_divisi" class="p-error">
+                          {{ errors.imutasi_divisi[0] }}
+                      </small>
+                </div>
+              </div>
+              <div class="field grid">
+                  <label class="col-fixed w-9rem" style="width:145px">Business Unit</label>
+                    <div class="col-12 md:col-6">
+                      <Dropdown 
+                        v-model="mut.imutasi_bu"
+                        :options="bu"
+                        optionLabel="name"
+                        optionValue="code"
+                        :showClear="true"
+                        :filter="true"
+                        placeholder="Select"
+                        :class="{ 'p-invalid': submitted && !mut.imutasi_bu }"
+                      />
+                        
+                      <small class="p-error" v-if="submitted && !mut.imutasi_bu"
+                        >Business Unit not filled.
+                      </small>
+                      <small v-if="errors.imutasi_bu" class="p-error">
+                          {{ errors.imutasi_bu[0] }}
+                      </small>
+                </div>
+              </div>
+               <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:145px">Remark</label>
                  <div class="col-12 md:col-6">
                   <Textarea
-                    v-model="mutasi.imutasi_keterangan"
+                    v-model="mut.imutasi_keterangan"
                     :autoResize="true" 
                     rows="5" 
                     cols="20"
-                    placeholder="Masukan Keterangan . . ."
-                    :class="{ 'p-invalid': submitted && !mutasi.imutasi_keterangan }"
+                    placeholder="Enter remark"
+                    :class="{ 'p-invalid': submitted && !mut.imutasi_keterangan }"
                   />
-                      <small class="p-error" v-if="submitted && !mutasi.imutasi_keterangan"
+                      <small class="p-error" v-if="submitted && !mut.imutasi_keterangan"
                         >Keterangan Belum Diisi.
+                      </small>
+                      <small v-if="errors.imutasi_keterangan" class="p-error">
+                        {{ errors.imutasi_keterangan[0] }}
                       </small>
                </div>
               </div>
@@ -112,7 +171,7 @@
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  label="Simpan"
+                  label="Update"
                   type="submit"
                 />
                 <Button
@@ -123,11 +182,11 @@
                 />
               </div>
             </form>
+            </div>
+          <div class="col-sm-6">
+            <img :src="'/master_peripheral/' + mut.invent_photo" class="mutasi-image" />
           </div>
-        <div class="col-sm-6">
-          <img :src="'/master_peripheral/' +mutasi.invent_photo" class="mutasi-image" />
-        </div>
-      </div>
+       </div>
       </div>
     </div>
 </template>
@@ -135,19 +194,35 @@
 export default {
   data() {
     return {
+      submitted: false,
+      errors: [],
+      kode: null,
+      fromdate: new Date(),
+      todate: '',
+      ket:null,
+      user:null,
+      lokasi:null,
+      detail:[],
+      kodeperi:[],
+      divisi:[],
+      invent_bu:null,
+      invent_sn:null,
+      invent_divisi:null,
+      sn:[],
+      bu:[],
       mutasi:[],
-      submitted:false,
+      mut:[],
       mask:{
         input: 'DD MMM YYYY'
       },
       token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
-      id : localStorage.getItem('id'),
+        checkname : [],
+        checkto : [],
+        id : localStorage.getItem('id'),
     };
   },
-  created(){
-    this.getMutasi();
+  mounted(){
+    this.cekUser();
   },
   methods: {
   cekUser(){
@@ -166,42 +241,48 @@ export default {
         this.$router.push('/login');
       }
     },
-    
     getMutasi(){
-      this.axios.get('/api/edit-mut/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.mutasi = response.data;
+      this.axios.get('/api/edit-mut/'+this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.mut = response.data;
+      });
+        this.getKode();
+    }, 
+    getKode(){
+      this.axios.get('/api/get-kode-peripheral', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.kodeperi = response.data.kode;
+        this.divisi = response.data.divisi;
+        this.bu = response.data.bu;
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
             severity:'error', summary: 'Error', detail:'Sesi Login Expired'
           });
           localStorage.clear();
-          localStorage.setItem('Expired','true')
+          localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
-           }
-           if(error.response.status == 403){
-             this.$router.push('/access');
            }
         });
     },
     UpdateMutasi() {
       this.$confirm.require({
-        message: "Apakah anda sudah yakin?",
-        header: "Update Confirmation",
+        message: "Are you sure to update this data?",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
-        acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptClass: "p-button",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
         this.submitted=true;
-          this.errors = [];
         if (
-          this.mutasi.imutasi_tgl_dari != '' &&
-          this.mutasi.imutasi_lokasi != '' &&
-          this.mutasi.imutasi_pengguna != '' &&
-          this.mutasi.imutasi_keterangan != '' 
+            this.mut.imutasi_tgl_dari != null &&
+            this.mut.imutasi_keterangan != null &&
+            this.mut.imutasi_pengguna != null &&
+            this.mut.imutasi_divisi != null &&
+            this.mut.imutasi_bu != null &&
+            this.mut.imutasi_lokasi != null 
         ) {
-        this.axios.put('/api/update-mut/' + this.$route.params.code, this.mutasi, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+
+        this.axios.put('/api/update-mut/'+this.$route.params.code, this.mut, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           setTimeout( () => this.$router.push('/mutasi-peripheral'),1000);
           this.$toast.add({
             severity: "success",
@@ -211,7 +292,7 @@ export default {
         }).catch(error=>{
             this.errors = error.response.data.errors;
             this.submitted = false;
-        });
+      });
       }
         },
         reject: () => {},
@@ -223,6 +304,7 @@ export default {
 <style scoped lang="scss">
 .mutasi-image {
   width: 450px;
+  object-fit:contain;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 </style>

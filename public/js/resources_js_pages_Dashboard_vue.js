@@ -370,7 +370,7 @@ var _hoisted_3 = {
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Belum Diverifikasi ", -1
+}, "Waiting for verification ", -1
 /* HOISTED */
 );
 
@@ -402,7 +402,7 @@ var _hoisted_8 = {
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Diverifikasi", -1
+}, "Already Verified", -1
 /* HOISTED */
 );
 
@@ -434,7 +434,7 @@ var _hoisted_13 = {
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Di Reject", -1
+}, "Rejected", -1
 /* HOISTED */
 );
 
@@ -466,7 +466,7 @@ var _hoisted_18 = {
 
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Dikerjakan", -1
+}, "In Progress", -1
 /* HOISTED */
 );
 
@@ -499,7 +499,7 @@ var _hoisted_23 = {
 
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Dikerjakan", -1
+}, "Done", -1
 /* HOISTED */
 );
 
@@ -532,7 +532,7 @@ var _hoisted_28 = {
 
 var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Selesai", -1
+}, "Close", -1
 /* HOISTED */
 );
 
@@ -565,7 +565,7 @@ var _hoisted_33 = {
 
 var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Total Request", -1
+}, "Overall Request", -1
 /* HOISTED */
 );
 
@@ -602,7 +602,7 @@ var _hoisted_39 = {
 
 var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Direview ", -1
+}, "Under review ", -1
 /* HOISTED */
 );
 
@@ -634,7 +634,7 @@ var _hoisted_44 = {
 
 var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Belum Diverifikasi ", -1
+}, "Waiting for verification ", -1
 /* HOISTED */
 );
 
@@ -666,7 +666,7 @@ var _hoisted_49 = {
 
 var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Diverifikasi", -1
+}, "Already verified", -1
 /* HOISTED */
 );
 
@@ -698,7 +698,7 @@ var _hoisted_54 = {
 
 var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Di Reject", -1
+}, "Rejected", -1
 /* HOISTED */
 );
 
@@ -731,7 +731,7 @@ var _hoisted_59 = {
 
 var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Dikerjakan", -1
+}, "In Progress", -1
 /* HOISTED */
 );
 
@@ -764,7 +764,7 @@ var _hoisted_64 = {
 
 var _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Dikerjakan", -1
+}, "Done", -1
 /* HOISTED */
 );
 
@@ -797,7 +797,7 @@ var _hoisted_69 = {
 
 var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Selesai", -1
+}, "Close", -1
 /* HOISTED */
 );
 
@@ -830,7 +830,7 @@ var _hoisted_74 = {
 
 var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Total Request", -1
+}, "Overall Request", -1
 /* HOISTED */
 );
 
@@ -867,7 +867,7 @@ var _hoisted_80 = {
 
 var _hoisted_81 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Direview ", -1
+}, "Under Review ", -1
 /* HOISTED */
 );
 
@@ -899,7 +899,7 @@ var _hoisted_85 = {
 
 var _hoisted_86 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Belum Diverifikasi ", -1
+}, "Waiting for verification ", -1
 /* HOISTED */
 );
 
@@ -931,7 +931,7 @@ var _hoisted_90 = {
 
 var _hoisted_91 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Diverifikasi", -1
+}, "Already Verified", -1
 /* HOISTED */
 );
 
@@ -963,7 +963,7 @@ var _hoisted_95 = {
 
 var _hoisted_96 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Di Reject", -1
+}, "Rejected", -1
 /* HOISTED */
 );
 
@@ -996,7 +996,7 @@ var _hoisted_100 = {
 
 var _hoisted_101 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Dikerjakan", -1
+}, "In Progress", -1
 /* HOISTED */
 );
 
@@ -1029,7 +1029,7 @@ var _hoisted_105 = {
 
 var _hoisted_106 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Dikerjakan", -1
+}, "Done", -1
 /* HOISTED */
 );
 
@@ -1062,7 +1062,7 @@ var _hoisted_110 = {
 
 var _hoisted_111 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Selesai", -1
+}, "Close", -1
 /* HOISTED */
 );
 
@@ -1095,7 +1095,7 @@ var _hoisted_115 = {
 
 var _hoisted_116 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Total Request", -1
+}, "Overall Request", -1
 /* HOISTED */
 );
 
@@ -1132,7 +1132,7 @@ var _hoisted_121 = {
 
 var _hoisted_122 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Belum Diverifikasi", -1
+}, "Waiting for verification", -1
 /* HOISTED */
 );
 
@@ -1228,7 +1228,7 @@ var _hoisted_136 = {
 
 var _hoisted_137 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Direject", -1
+}, "Rejected", -1
 /* HOISTED */
 );
 
@@ -1260,7 +1260,7 @@ var _hoisted_141 = {
 
 var _hoisted_142 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Penugasan Request", -1
+}, "Request Assignment", -1
 /* HOISTED */
 );
 
@@ -1292,7 +1292,7 @@ var _hoisted_146 = {
 
 var _hoisted_147 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Dikerjakan", -1
+}, "In Progress", -1
 /* HOISTED */
 );
 
@@ -1324,7 +1324,7 @@ var _hoisted_151 = {
 
 var _hoisted_152 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Dikerjakan", -1
+}, "Done", -1
 /* HOISTED */
 );
 
@@ -1357,7 +1357,7 @@ var _hoisted_156 = {
 
 var _hoisted_157 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Selesai", -1
+}, "Close", -1
 /* HOISTED */
 );
 
@@ -1390,7 +1390,7 @@ var _hoisted_161 = {
 
 var _hoisted_162 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Total Request", -1
+}, "Overall Request", -1
 /* HOISTED */
 );
 
@@ -1427,7 +1427,7 @@ var _hoisted_167 = {
 
 var _hoisted_168 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Dikerjakan", -1
+}, "In Progress", -1
 /* HOISTED */
 );
 
@@ -1459,7 +1459,7 @@ var _hoisted_172 = {
 
 var _hoisted_173 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Dikerjakan", -1
+}, "Done", -1
 /* HOISTED */
 );
 
@@ -1491,7 +1491,7 @@ var _hoisted_177 = {
 
 var _hoisted_178 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Selesai", -1
+}, "Close", -1
 /* HOISTED */
 );
 
@@ -1527,7 +1527,7 @@ var _hoisted_183 = {
 
 var _hoisted_184 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Direview ", -1
+}, "Under Review ", -1
 /* HOISTED */
 );
 
@@ -1559,7 +1559,7 @@ var _hoisted_188 = {
 
 var _hoisted_189 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Belum Diverifikasi", -1
+}, "Waiting for verification", -1
 /* HOISTED */
 );
 
@@ -1591,7 +1591,7 @@ var _hoisted_193 = {
 
 var _hoisted_194 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Diverifikasi", -1
+}, "Already Verified", -1
 /* HOISTED */
 );
 
@@ -1623,7 +1623,7 @@ var _hoisted_198 = {
 
 var _hoisted_199 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Direject", -1
+}, "Rejected", -1
 /* HOISTED */
 );
 
@@ -1655,7 +1655,7 @@ var _hoisted_203 = {
 
 var _hoisted_204 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Penugasan Request", -1
+}, "Request Assignment", -1
 /* HOISTED */
 );
 
@@ -1687,7 +1687,7 @@ var _hoisted_208 = {
 
 var _hoisted_209 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sedang Dikerjakan", -1
+}, "In Progress", -1
 /* HOISTED */
 );
 
@@ -1720,7 +1720,7 @@ var _hoisted_213 = {
 
 var _hoisted_214 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Dikerjakan", -1
+}, "Done", -1
 /* HOISTED */
 );
 
@@ -1752,7 +1752,7 @@ var _hoisted_218 = {
 
 var _hoisted_219 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Sudah Selesai", -1
+}, "Close", -1
 /* HOISTED */
 );
 
@@ -1784,7 +1784,7 @@ var _hoisted_223 = {
 
 var _hoisted_224 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Total Request", -1
+}, "Overall Request", -1
 /* HOISTED */
 );
 

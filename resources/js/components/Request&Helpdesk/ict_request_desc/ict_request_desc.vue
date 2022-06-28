@@ -6,7 +6,7 @@
         <ConfirmDialog/> 
         <Toolbar class="mb-4" v-if="this.active == 1">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Belum Diverifikasi)</h4>
+                <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -19,7 +19,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Waiting for verification)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -40,13 +40,18 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:10rem">
             <template #body="slotProps">
               <Button
@@ -81,7 +86,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -94,7 +99,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 2">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Diverifikasi)</h4>
+                <h4>ICT Request (Already verified)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -128,13 +133,18 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+          <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -152,7 +162,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -165,7 +175,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 3">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Direject)</h4>
+                <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -178,7 +188,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Rejected)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -199,14 +209,19 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+          <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -224,7 +239,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -237,7 +252,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 4">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sedang Dikerjakan)</h4>
+                <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -250,7 +265,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (In Progress)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -271,13 +286,19 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -295,7 +316,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -308,7 +329,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 5">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Dikerjakan)</h4>
+                <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -321,7 +342,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Done)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -343,22 +364,27 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+          <template #body= "slotProps">
+            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
         <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -371,7 +397,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 6">
           <template v-slot:start>
-			      <h4>ICT Request (Request Yang Sudah Selesai)</h4>
+			      <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -384,7 +410,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Close)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -406,22 +432,27 @@
         </template>
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>    
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>    
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -434,7 +465,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 7">
           <template v-slot:start>
-			      <h4>ICT Request (Request Yang Menunggu Diverifikasi)</h4>
+			      <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -447,7 +478,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Waiting for verification)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -468,14 +499,18 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -500,7 +535,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -513,7 +548,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 8">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Diverifikasi)</h4>
+                <h4>ICT Request (Already verified)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -526,7 +561,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Already verified)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -547,14 +582,18 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -572,7 +611,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -585,7 +624,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 9">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Direject)</h4>
+                <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -598,7 +637,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Rejected)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -619,15 +658,19 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -645,7 +688,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -658,7 +701,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 10">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sedang Dikerjakan)</h4>
+                <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -671,7 +714,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (In Progress)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -692,14 +735,19 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -717,7 +765,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -730,7 +778,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 11">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Dikerjakan)</h4>
+                <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -743,7 +791,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Done)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -765,23 +813,30 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
+          <template #body= "slotProps">
+            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+         </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -794,7 +849,7 @@
         </DataTable> 
         <Toolbar class="mb-4" v-if="this.active == 12">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Selesai)</h4>
+                <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -807,7 +862,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Close)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -829,23 +884,30 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+          <template #body= "slotProps">
+            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -858,7 +920,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 13">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Belum Diverifikasi)</h4>
+                <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -871,7 +933,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Waiting for verification)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -892,15 +954,19 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:50rem">
             <template #body="slotProps">
               <Button
@@ -954,7 +1020,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -967,7 +1033,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 14">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sedang Dikerjakan)</h4>
+                <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -980,7 +1046,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (In Progress)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -1001,16 +1067,20 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:2rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:5rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:5rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:4rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:4rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:4rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:3rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:4rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -1028,7 +1098,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1041,7 +1111,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 15">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Dikerjakan)</h4>
+                <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -1054,7 +1124,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Done)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -1076,17 +1146,24 @@
         </template>
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+          <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column>
             <template #body="slotProps">
               <Button
@@ -1102,7 +1179,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1115,7 +1192,7 @@
         </DataTable> 
         <Toolbar class="mb-4" v-if="this.active == 16">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Selesai)</h4>
+                <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -1150,23 +1227,30 @@
         </template>
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+          <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1179,7 +1263,7 @@
         </DataTable>     
         <Toolbar class="mb-4" v-if="this.active == 17">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sedang Dikerjakan)</h4>
+                <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -1192,7 +1276,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (In Progress)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -1214,34 +1298,27 @@
         </template>
         <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
         <Column style="min-width:15rem">
           <template #body="slotProps">
             <Button
-              v-if="slotProps.data.ireq_status == 'Penugasan'"
+              v-if="slotProps.data.status == 'T'"
               class="p-button-rounded p-button-info mr-2"
               icon="pi pi-pencil"
               @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
-            />
-            <Button
-              class="p-button-raised p-button-info p-button-text mr-2"
-              label="CA"
-              @click="$router.push({
-                name: 'add Cash Advance',
-                params: { code: slotProps.data.ireq_id }, })"
-            />
-            <Button
-              class="p-button-raised p-button-text mt-2"
-              label="PR"
             />
           </template>
         </Column>
@@ -1250,7 +1327,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1263,7 +1340,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 18">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Dikerjakan)</h4>
+                <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -1276,7 +1353,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Done)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -1298,22 +1375,26 @@
         </template>
         <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1326,7 +1407,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 19">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Selesai)</h4>
+                <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -1361,22 +1442,26 @@
         </template>
         <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1389,7 +1474,7 @@
         </DataTable>     
         <Toolbar class="mb-4" v-if="this.active == 20">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Dikerjakan)</h4>
+                <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -1402,7 +1487,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Done)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -1424,15 +1509,18 @@
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+          <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
           <Column>
             <template #body="slotProps">
               <Button
@@ -1448,7 +1536,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1461,7 +1549,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 21">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Selesai)</h4>
+                <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -1496,21 +1584,24 @@
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+          <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1523,7 +1614,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 22">
           <template v-slot:start>
-                <h4>ICT Request (Total Keseluruhan Request)</h4>
+                <h4>ICT Request (Overall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -1557,13 +1648,18 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -1581,7 +1677,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1594,7 +1690,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 23">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Belum Diverifikasi)</h4>
+                <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -1607,7 +1703,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Waiting for verification)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -1628,12 +1724,12 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:10rem">
             <template #body="slotProps">
@@ -1669,7 +1765,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1682,7 +1778,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 24">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Diverifikasi)</h4>
+                <h4>ICT Request (Already verified)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -1695,7 +1791,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Already verified)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -1716,13 +1812,13 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
@@ -1740,7 +1836,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1753,7 +1849,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 25">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Direject)</h4>
+                <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -1766,7 +1862,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Rejected)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -1787,13 +1883,13 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
@@ -1812,7 +1908,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1825,7 +1921,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 26">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sedang Dikerjakan)</h4>
+                <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -1859,13 +1955,13 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -1883,7 +1979,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1896,7 +1992,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 27">
           <template v-slot:start>
-                <h4>ICT Request (Request Yang Sudah Dikerjakan)</h4>
+                <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -1931,23 +2027,23 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -1960,7 +2056,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 28">
           <template v-slot:start>
-			      <h4>ICT Request (Request Yang Sudah Selesai)</h4>
+			      <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -1995,23 +2091,23 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2024,7 +2120,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 29">
           <template v-slot:start>
-                <h4>ICT Request (Total Keseluruhan Request)</h4>
+                <h4>ICT Request (Overall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2058,13 +2154,18 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2081,7 +2182,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2094,7 +2195,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 30">
           <template v-slot:start>
-                <h4>ICT Request (Atasan Divisi)</h4>
+                <h4>ICT Request (Higher Level)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2107,7 +2208,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Higher Level)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -2129,19 +2230,23 @@
         </template>
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
-            <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.ireq_status == 'Belum Diapprove Atasan'">{{slotProps.data.ireq_no}}</p>
+            <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.status == 'NA1'">{{slotProps.data.ireq_no}}</p>
             <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
           </template>
           </Column>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column headerStyle="min-width:35rem">
           <template #body="slotProps">
             <Button
@@ -2159,13 +2264,13 @@
               label="Persetujuan ICT Manager"
             />
             <Button
-              v-if="slotProps.data.ireq_status == 'Sudah Diapprove Atasan'"
+              v-if="slotProps.data.status == 'A1'"
               class="p-button-raised p-button-text p-button-sm mt-2"
               @click="AssignPerRequest(slotProps.data.ireq_id)"
               label="Assign Per-Request"
             />
             <Button
-              v-if="slotProps.data.ireq_status == 'Sudah Diapprove Atasan'"
+              v-if="slotProps.data.status == 'A1'"
               class="p-button-raised p-button-text p-button-sm mt-2"
               @click="$router.push({
                 name: 'Ict Request Desc Assign Per Detail',
@@ -2173,7 +2278,7 @@
               label="Assign Per-Detail"
             />
             <Button
-              v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove Atasan'"
+              v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.status == 'A1'"
               class="p-button-raised p-button-text p-button-sm mr-2"
               @click="Submit(slotProps.data.ireq_id)"
               label="Submit"
@@ -2185,7 +2290,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2233,19 +2338,23 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem">
         <template #body="slotProps">
-          <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.ireq_status == 'Belum Diapprove ICT Manager'">{{slotProps.data.ireq_no}}</p>
+          <p style="color:orangered" class="pi pi-times text-xl" v-if="slotProps.data.status == 'NA2'">{{slotProps.data.ireq_no}}</p>
           <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
         </template>
         </Column>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+          <template #body= "slotProps">
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
         <Column headerStyle="min-width:30rem">
           <template #body="slotProps">
             <Button
@@ -2257,13 +2366,13 @@
                 params: { code: slotProps.data.ireq_id }, })"
             /> 
             <Button
-              v-if="slotProps.data.ireq_status == 'Sudah Diapprove ICT Manager'"
+              v-if="slotProps.data.status == 'A2'"
               class="p-button-raised p-button-text p-button-sm mt-2"
               @click="AssignPerRequest(slotProps.data.ireq_id)"
               label="Assign Per-Request"
             />
             <Button
-              v-if="slotProps.data.ireq_status == 'Sudah Diapprove ICT Manager'"
+              v-if="slotProps.data.ireq_status == 'A2'"
               class="p-button-raised p-button-text p-button-sm mt-2"
               @click="$router.push({
                 name: 'Ict Request Desc Assign Per Detail',
@@ -2271,7 +2380,7 @@
               label="Assign Per-Detail"
             />
             <Button
-              v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove ICT Manager'"
+              v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'A2'"
               class="p-button-raised p-button-text p-button-sm mr-2"
               @click="Submit(slotProps.data.ireq_id)"
               label="Submit"
@@ -2283,7 +2392,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2296,7 +2405,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 32">
           <template v-slot:start>
-                <h4>ICT Request (Direject)</h4>
+                <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2330,15 +2439,19 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2355,7 +2468,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2402,14 +2515,18 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.ireq_statuss.toLowerCase()">{{slotProps.data.ireq_statuss}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2433,7 +2550,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2480,13 +2597,13 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
@@ -2504,7 +2621,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2517,7 +2634,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 35">
           <template v-slot:start>
-                <h4>ICT Request (Direject)</h4>
+                <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2551,14 +2668,14 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
           <Column>
             <template #body="slotProps">
@@ -2576,7 +2693,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2589,7 +2706,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 36">
           <template v-slot:start>
-                <h4>ICT Request (Sedang Dikerjakan)</h4>
+                <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2602,7 +2719,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (In Progress)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -2623,14 +2740,14 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
             <template #body="slotProps">
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
-          <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2647,7 +2764,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2660,7 +2777,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 37">
           <template v-slot:start>
-                <h4>ICT Request (Total Request)</h4>
+                <h4>ICT Request (Overhall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2673,7 +2790,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Overhall Request)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -2694,16 +2811,20 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
-          <Column style="min-width:12rem">
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+          <template #body= "slotProps">
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
+        <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
@@ -2719,7 +2840,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2732,7 +2853,7 @@
         </DataTable>
          <Toolbar class="mb-4" v-if="this.active == 38">
           <template v-slot:start>
-                <h4>ICT Request (Total Request)</h4>
+                <h4>ICT Request (Overhall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2766,15 +2887,19 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+          <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+        </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2791,7 +2916,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2804,7 +2929,7 @@
         </DataTable>
          <Toolbar class="mb-4" v-if="this.active == 39">
           <template v-slot:start>
-                <h4>ICT Request (Total Request)</h4>
+                <h4>ICT Request (Overhall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2838,15 +2963,19 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+          <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2863,7 +2992,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2876,7 +3005,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 40">
           <template v-slot:start>
-                <h4>ICT Request (Sedang Direview)</h4>
+                <h4>ICT Request (Under review)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2889,7 +3018,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Under review)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -2910,19 +3039,24 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+          <template #body= "slotProps">
+            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.right="'Click to view detail'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2934,7 +3068,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -2947,7 +3081,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 41">
           <template v-slot:start>
-                <h4>ICT Request (Sedang Direview)</h4>
+              <h4>ICT Request (Under review)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2960,7 +3094,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Under review)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -2981,14 +3115,18 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+          <template #body= "slotProps">
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -3005,7 +3143,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -3018,7 +3156,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 42">
           <template v-slot:start>
-                <h4>ICT Request (Sedang Direview)</h4>
+                <h4>ICT Request (Under review)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -3052,15 +3190,19 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+          <template #body= "slotProps">
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -3077,7 +3219,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -3090,7 +3232,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 43">
           <template v-slot:start>
-                <h4>ICT Request (Penugasan Request)</h4>
+                <h4>ICT Request (Assignment Request)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -3103,7 +3245,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Assignment Request)"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -3124,16 +3266,20 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+          <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+        </Column>
         <Column style="min-width:20rem">
           <template #body="slotProps">
             <Button
@@ -3145,13 +3291,13 @@
                 params: { code: slotProps.data.ireq_id }, })"
             />
             <Button
-              v-if="slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+              v-if="slotProps.data.status == 'RT'"
               class="p-button-raised p-button-text p-button-sm mt-2"
               @click="AssignPerRequest(slotProps.data.ireq_id)"
               label="Assign Per-Request"
             />
             <Button
-              v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.ireq_status == 'Reject By ICT Personnel'"
+              v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.status == 'RT'"
               class="p-button-raised p-button-text p-button-sm p-button-success mr-2"
               @click="Submit(slotProps.data.ireq_id)"
               label="Submit"
@@ -3163,7 +3309,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -3176,7 +3322,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 44">
           <template v-slot:start>
-            <h4>ICT Request (Penugasan Request)</h4>
+            <h4>ICT Request (Assignment Request)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -3210,15 +3356,15 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Tgl.Request" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_requestor" header="Pemohon" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="Pengguna" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="Divisi Pengguna" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
         <Column style="min-width:20rem">
           <template #body="slotProps">
@@ -3237,7 +3383,7 @@
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="bi bi-skip-backward-fill"
                     @click="$router.push({
@@ -3256,18 +3402,18 @@
           class="field grid"
         >
         <div class="field grid">
-            <label style="width:100px">Petugas (ICT)</label>
+            <label style="width:100px">Personnel (ICT)</label>
               <div class="col-3 md-6">
                 <Dropdown
                   v-model="assign.name"
                     :options="petugas"
                     optionValue="name"
                     optionLabel="name"
-                    placeholder="Pilih Petugas (ICT)"
+                    placeholder="Select One"
                     :class="{ 'p-invalid': submitted && !assign.name }"
                 />
                 <small v-if="submitted && !assign.name" class="p-error">
-                  Petugas(ICT) Harus Diisi
+                  Personnel (ICT) not filled
                 </small>
           </div>
         </div>
@@ -3284,18 +3430,18 @@
         >
           <div class="p-fluid">
             <div class="field grid">
-              <label class="col-fixed w-9rem" style="width:100px">Alasan</label>
+              <label class="col-fixed w-9rem" style="width:100px">Reason</label>
                 <div class="col">
                   <Textarea
                     :autoResize="true"
                     type="text"
                     v-model="rbr.ket"
                     rows="5" 
-                    placeholder="Masukan Alasan"
+                    placeholder="Enter Reason"
                     :class="{ 'p-invalid': submitted && !rbr.ket }"
                   />
                   <small v-if="submitted && !rbr.ket" class="p-error">
-                    Alasan Harus Diisi
+                    Reason not filled
                   </small>
                 </div>
               </div>
@@ -3326,7 +3472,7 @@
         >
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                <span>Verifikasi Request</span>
+                <span>Request Verification</span>
             </div>
             <template #footer>
                 <Button label="Reject" icon="pi pi-times" @click="rejectManager" class="p-button-raised p-button-danger p-button-text"/>
@@ -3342,18 +3488,18 @@
         >
          <div class="field"> 
           <div class="field grid">
-            <label class="col-fixed w-9rem">Alasan</label>
+            <label class="col-fixed w-9rem">Reason</label>
               <div class="fol-fixed">
                 <Textarea
                   :autoResize="true"
                   type="text"
                   v-model="reason.ket"
                   rows="5" 
-                  placeholder="Masukan Alasan"
+                  placeholder="Enter Reason"
                   :class="{ 'p-invalid': submitted && !reason.ket }"
                 />
                   <small v-if="submitted && !reason.ket" class="p-error">
-                    Alasan Harus Diisi
+                    Reason not filled
                   </small>
               </div>
             </div>
@@ -3371,18 +3517,18 @@
           >
             <div class="field">
               <div class="field grid">
-                <label class="col-fixed w-9rem">Alasan</label>
+                <label class="col-fixed w-9rem">Reason</label>
                   <div class="co-fixed w-9rem">
                     <Textarea
                     :autoResize="true"
                     type="text"
                     v-model="reason.ket"
                     rows="5"
-                    placeholder="Masukan Alasan"
+                    placeholder="Enter Reason"
                     :class="{ 'p-invalid': submitted && !reason.ket }"
                   />
                     <small v-if="submitted && !reason.ket" class="p-error">
-                    Alasan Harus Diisi
+                    Reason not filled
                     </small>
                 </div>
               </div>
@@ -3411,7 +3557,7 @@
             </div>
             <div class="fluid">
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">Nama Peripheral</label>
+                <label class="col-fixed w-9rem" style="width:100px">Peripheral</label>
                   <div class="col-fixed">
                     <InputText
                       v-model="editDetail.name"
@@ -3564,7 +3710,7 @@ export default {
           this.ict = response.data.ict6;
           this.sdhDiverifikasi = response.data.ict1;
           this.diReject = response.data.ict2;
-          this.sdgDikerjakan = response.data.ict3;
+          this.sdgDikerjakan = response.data.ict9;
           this.sdhDikerjakan = response.data.ict4;
           this.sdhSelesai = response.data.ict5;
           this.sedangDireview = response.data.ict7;

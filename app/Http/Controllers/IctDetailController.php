@@ -28,7 +28,7 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_dtl as id')
         ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
-         'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1',
+         'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
          'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
          'id.ireq_desc', 'id.ireq_qty','lrs.lookup_desc as name','llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
         ->leftJoin('lookup_refs as lrs',function ($join) {
@@ -49,7 +49,7 @@ class IctDetailController extends Controller
     Public function detailPenugasan($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_qty','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
+        ->select('id.ireq_qty','id.ireq_status as status','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
             'lr.lookup_desc as ireq_type','llr.lookup_desc as ireq_status','id.ireq_desc','lrs.lookup_desc as name',
             DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
         ->leftJoin('lookup_refs as lrs',function ($join) {
@@ -80,6 +80,7 @@ class IctDetailController extends Controller
         ->where('imm.ireq_id',$code)
         ->where('id.ireq_assigned_to1',$usr_fullname)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->orderBy('id.ireqd_id','ASC')
         ->get();
             return response()->json($dtl);
     }

@@ -254,7 +254,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Kembali",
+        label: "Back",
         "class": "p-button-raised p-button mr-2",
         icon: "pi pi-chevron-left",
         onClick: _cache[1] || (_cache[1] = function ($event) {
@@ -267,14 +267,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_type",
-        header: "Tipe Request",
+        header: "Request Type",
         sortable: true,
         style: {
           "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
-        header: "Nama Peripheral",
+        header: "Peripheral",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -288,7 +288,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_remark",
-        header: "Keterangan",
+        header: "Remark",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -296,7 +296,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), _this.ireq.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
         key: 0,
         field: "ireq_assigned_to",
-        header: "Petugas ICT",
+        header: "Personnel (ICT)",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -308,6 +308,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "12rem"
         }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.cekstatus.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
           "min-width": "12rem"

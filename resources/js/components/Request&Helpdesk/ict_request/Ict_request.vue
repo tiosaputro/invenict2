@@ -52,7 +52,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.bottom="'Detail'"
+                        v-tooltip.bottom="'View Detail'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -152,7 +152,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.bottom="'Detail'"
+                        v-tooltip.bottom="'View Detail'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -228,7 +228,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.left="'View Detail'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -305,7 +305,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.left="'View Detail'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -379,7 +379,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.right="'Detail'"
+                        v-tooltip.right="'View Detail'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -431,7 +431,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.left="'View Detail'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"

@@ -24,6 +24,12 @@ __webpack_require__.r(__webpack_exports__);
       lokasi: null,
       detail: [],
       kodeperi: [],
+      divisi: [],
+      invent_bu: null,
+      invent_sn: null,
+      invent_divisi: null,
+      sn: [],
+      bu: [],
       mutasi: [],
       mask: {
         input: 'DD MMM YYYY'
@@ -67,8 +73,8 @@ __webpack_require__.r(__webpack_exports__);
     getImage: function getImage() {
       var _this2 = this;
 
-      if (this.kode) {
-        this.axios.get('api/getImage/' + this.kode, {
+      if (this.invent_sn) {
+        this.axios.get('api/getImage/' + this.invent_sn, {
           headers: {
             'Authorization': 'Bearer ' + this.token
           }
@@ -77,18 +83,33 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    getKode: function getKode() {
+    getSn: function getSn() {
       var _this3 = this;
+
+      if (this.kode) {
+        this.axios.get('/api/get-sn-peripheral/' + this.kode, {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function (response) {
+          _this3.sn = response.data;
+        });
+      }
+    },
+    getKode: function getKode() {
+      var _this4 = this;
 
       this.axios.get('api/get-kode-peripheral', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.kodeperi = response.data;
+        _this4.kodeperi = response.data.kode;
+        _this4.divisi = response.data.divisi;
+        _this4.bu = response.data.bu;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this4.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Sesi Login Expired'
@@ -97,50 +118,53 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this4.$router.push('/login');
           }, 2000);
         }
       });
     },
     CreateMutasi: function CreateMutasi() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$confirm.require({
-        message: "Apakah anda sudah yakin?",
+        message: "Are you sure to save this data?",
         header: "Confirmation",
         icon: "pi pi-info-circle",
-        acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptClass: "p-button",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this4.submitted = true;
+          _this5.submitted = true;
 
-          if (_this4.kode != null && _this4.fromdate != null && _this4.ket != null && _this4.user != null && _this4.lokasi != null) {
+          if (_this5.kode != null && _this5.invent_sn != null && _this5.fromdate != null && _this5.ket != null && _this5.user != null && _this5.invent_divisi != null && _this5.invent_bu != null && _this5.lokasi != null) {
             var data = new FormData();
-            data.append("kode", _this4.kode);
-            data.append("fromdate", _this4.fromdate);
-            data.append("ket", _this4.ket);
-            data.append("todate", _this4.todate);
-            data.append("user", _this4.user);
-            data.append("lokasi", _this4.lokasi);
+            data.append("kode", _this5.kode);
+            data.append("fromdate", _this5.fromdate);
+            data.append("ket", _this5.ket);
+            data.append("todate", _this5.todate);
+            data.append("user", _this5.user);
+            data.append("lokasi", _this5.lokasi);
+            data.append("invent_bu", _this5.invent_bu);
+            data.append("invent_divisi", _this5.invent_divisi);
+            data.append("invent_sn", _this5.invent_sn);
 
-            _this4.axios.post('api/add-mut', data, {
+            _this5.axios.post('api/add-mut', data, {
               headers: {
-                'Authorization': 'Bearer ' + _this4.token
+                'Authorization': 'Bearer ' + _this5.token
               }
             }).then(function () {
               setTimeout(function () {
-                return _this4.$router.push('/mutasi-peripheral');
+                return _this5.$router.push('/mutasi-peripheral');
               }, 1000);
 
-              _this4.$toast.add({
+              _this5.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Create"
               });
             })["catch"](function (error) {
-              _this4.errors = error.response.data.errors;
-              _this4.submitted = false;
+              _this5.errors = error.response.data.errors;
+              _this5.submitted = false;
             });
           }
         },
@@ -190,7 +214,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   style: {
     "width": "145px"
   }
-}, "Nama Peripheral", -1
+}, "Peripheral", -1
 /* HOISTED */
 );
 
@@ -238,7 +262,7 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "145px"
   }
-}, "Dari Tgl", -1
+}, "From Date", -1
 /* HOISTED */
 );
 
@@ -262,7 +286,7 @@ var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "145px"
   }
-}, "SD Tgl", -1
+}, "To Date", -1
 /* HOISTED */
 );
 
@@ -282,7 +306,7 @@ var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "145px"
   }
-}, "Lokasi", -1
+}, "Location", -1
 /* HOISTED */
 );
 
@@ -302,7 +326,7 @@ var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "145px"
   }
-}, "Pengguna", -1
+}, "User", -1
 /* HOISTED */
 );
 
@@ -326,7 +350,7 @@ var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "145px"
   }
-}, "Keterangan", -1
+}, "Division User", -1
 /* HOISTED */
 );
 
@@ -342,12 +366,60 @@ var _hoisted_39 = {
   "class": "p-error"
 };
 var _hoisted_40 = {
+  "class": "field grid"
+};
+
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "145px"
+  }
+}, "Business Unit", -1
+/* HOISTED */
+);
+
+var _hoisted_42 = {
+  "class": "col-12 md:col-6"
+};
+var _hoisted_43 = {
+  key: 0,
+  "class": "p-error"
+};
+var _hoisted_44 = {
+  key: 1,
+  "class": "p-error"
+};
+var _hoisted_45 = {
+  "class": "field grid"
+};
+
+var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "145px"
+  }
+}, "Remark", -1
+/* HOISTED */
+);
+
+var _hoisted_47 = {
+  "class": "col-12 md:col-6"
+};
+var _hoisted_48 = {
+  key: 0,
+  "class": "p-error"
+};
+var _hoisted_49 = {
+  key: 1,
+  "class": "p-error"
+};
+var _hoisted_50 = {
   "class": "form-group"
 };
-var _hoisted_41 = {
+var _hoisted_51 = {
   "class": "col-sm-6"
 };
-var _hoisted_42 = ["src"];
+var _hoisted_52 = ["src"];
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
@@ -378,7 +450,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[12] || (_cache[12] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[14] || (_cache[14] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.CreateMutasi && $options.CreateMutasi.apply($options, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
@@ -392,9 +464,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     showClear: true,
     filter: true,
     onChange: _cache[1] || (_cache[1] = function ($event) {
-      return $options.getImage();
+      return $options.getSn();
     }),
-    placeholder: "Pilih Nama Peripheral",
+    placeholder: "Select",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.submitted && !$data.kode
     })
@@ -402,12 +474,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "options", "class"]), $data.errors.kode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.kode[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.submitted && !$data.kode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_9, " Nama Peripheral Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
-    modelValue: $data.kode,
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.submitted && !$data.kode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_9, " Peripheral not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+    modelValue: $data.invent_sn,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.kode = $event;
+      return $data.invent_sn = $event;
     }),
-    options: $data.kodeperi,
+    options: $data.sn,
     optionLabel: "name",
     optionValue: "code",
     showClear: true,
@@ -415,15 +487,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onChange: _cache[3] || (_cache[3] = function ($event) {
       return $options.getImage();
     }),
-    placeholder: "Pilih Nama Peripheral",
+    placeholder: "Select",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.submitted && !$data.kode
+      'p-invalid': $data.submitted && !$data.invent_sn
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.kode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.kode[0]), 1
+  , ["modelValue", "options", "class"]), $data.errors.invent_sn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.invent_sn[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.submitted && !$data.kode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_14, " Nama Peripheral Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.submitted && !$data.invent_sn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_14, " S/N not filled. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
     modelValue: $data.fromdate,
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.fromdate = $event;
@@ -524,45 +596,81 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.submitted && !$data.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_33, "Pengguna Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.errors.garansi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.user[0]), 1
+  , ["modelValue", "class"]), $data.submitted && !$data.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_33, "Pengguna Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.errors.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.user[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
-    modelValue: $data.ket,
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+    modelValue: $data.invent_divisi,
     "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+      return $data.invent_divisi = $event;
+    }),
+    options: $data.divisi,
+    optionLabel: "name",
+    optionValue: "code",
+    showClear: true,
+    filter: true,
+    placeholder: "Select",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+      'p-invalid': $data.submitted && !$data.invent_divisi
+    })
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "options", "class"]), $data.submitted && !$data.invent_divisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_38, "Pengguna Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.errors.invent_divisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.invent_divisi[0]), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+    modelValue: $data.invent_bu,
+    "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
+      return $data.invent_bu = $event;
+    }),
+    options: $data.bu,
+    optionLabel: "name",
+    optionValue: "code",
+    showClear: true,
+    filter: true,
+    placeholder: "Select",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+      'p-invalid': $data.submitted && !$data.invent_bu
+    })
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "options", "class"]), $data.submitted && !$data.invent_bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_43, "Business Unit not filled. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.errors.invent_bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.invent_bu[0]), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [_hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+    modelValue: $data.ket,
+    "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
       return $data.ket = $event;
     }),
     autoResize: true,
     rows: "5",
     cols: "20",
-    placeholder: "Masukan Keterangan . . .",
+    placeholder: "Enter remark",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.submitted && !$data.ket
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.submitted && !$data.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_38, "Keterangan Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.errors.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ket[0]), 1
+  , ["modelValue", "class"]), $data.submitted && !$data.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_48, "Keterangan Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.errors.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ket[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
-    label: "Simpan",
+    label: "Save",
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mr-2",
     icon: "pi pi-times",
-    onClick: _cache[11] || (_cache[11] = function ($event) {
+    onClick: _cache[13] || (_cache[13] = function ($event) {
       return _ctx.$router.push('/mutasi-peripheral');
     })
   })])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [this.kode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [this.invent_sn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
     key: 0,
     src: '/master_peripheral/' + $data.detail.photo,
     "class": "mutasi-image"
   }, null, 8
   /* PROPS */
-  , _hoisted_42)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
+  , _hoisted_52)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
 }
 
 /***/ }),
@@ -583,7 +691,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".mutasi-image[data-v-98812f70] {\n  width: 450px;\n  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".mutasi-image[data-v-98812f70] {\n  width: 450px;\n  -o-object-fit: contain;\n     object-fit: contain;\n  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

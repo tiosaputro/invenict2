@@ -470,7 +470,7 @@ var _hoisted_67 = {
 
 var _hoisted_68 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
-}, "Penguna Sebelumnya", -1
+}, "Pengguna Sebelumnya", -1
 /* HOISTED */
 );
 
@@ -507,6 +507,8 @@ var _hoisted_75 = {
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
@@ -672,9 +674,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastloct\" class=\"p-error\">\r\n                      {{ errors.lastloct[0] }}\r\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.detail.invent_pengguna_terakhir,
+    modelValue: $data.detail.invent_pengguna_update,
     "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
-      return $data.detail.invent_pengguna_terakhir = $event;
+      return $data.detail.invent_pengguna_update = $event;
     }),
     disabled: ""
   }, null, 8
@@ -690,9 +692,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\r\n                      {{ errors.lastuser[0] }}\r\n                    </small> ")])]), _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.detail.invent_pengguna_terakhir,
+    modelValue: $data.detail.invent_bu_update,
     "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
-      return $data.detail.invent_pengguna_terakhir = $event;
+      return $data.detail.invent_bu_update = $event;
     }),
     disabled: ""
   }, null, 8
@@ -700,14 +702,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\r\n                      {{ errors.lastuser[0] }}\r\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
-    label: "Simpan",
+    label: "Save",
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mr-2",
     icon: "pi pi-times",
     onClick: _cache[13] || (_cache[13] = function ($event) {
-      return _ctx.$router.push('/master-peripheral');
+      return _ctx.$router.push('/master-peripheral-detail/' + _this.$route.params.kode);
     })
   })])], 32
   /* HYDRATE_EVENTS */
@@ -757,37 +759,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[18] || (_cache[18] = function ($event) {
       return $data.detail.invent_pengguna_previous = $event;
     }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.invent_pengguna_previous
-    }),
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                    {{ errors.prevuser[0] }}\r\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [_hoisted_71, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                    {{ errors.prevuser[0] }}\r\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [_hoisted_71, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.detail.invent_pengguna_previous,
+    modelValue: $data.detail.invent_divisi_previous,
     "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
-      return $data.detail.invent_pengguna_previous = $event;
-    }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.invent_pengguna_previous
+      return $data.detail.invent_divisi_previous = $event;
     }),
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                    {{ errors.prevuser[0] }}\r\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [_hoisted_74, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                    {{ errors.prevuser[0] }}\r\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [_hoisted_74, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.detail.invent_pengguna_previous,
+    modelValue: $data.detail.invent_bu_previous,
     "onUpdate:modelValue": _cache[20] || (_cache[20] = function ($event) {
-      return $data.detail.invent_pengguna_previous = $event;
-    }),
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.errors.invent_pengguna_previous
+      return $data.detail.invent_bu_previous = $event;
     }),
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                    {{ errors.prevuser[0] }}\r\n                  </small> ")])])])])])]);
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                    {{ errors.prevuser[0] }}\r\n                  </small> ")])])])])])]);
 }
 
 /***/ }),

@@ -94,9 +94,22 @@ class MasterDetailController extends Controller
             $join->on('im.invent_brand','lrs.lookup_code')
                   ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
         })
+        ->leftJoin('divisi_refs as dr',function ($join) {
+            $join->on('id.invent_divisi_update','dr.div_id');
+        })
+        ->leftJoin('divisi_refs as drs',function ($join) {
+            $join->on('id.invent_divisi_previous','drs.div_id');
+        })
+        ->leftJoin('vcompany_refs as vr',function ($join) {
+            $join->on('id.invent_bu_update','vr.company_code');
+        })
+        ->leftJoin('vcompany_refs as vrs',function ($join) {
+            $join->on('id.invent_bu_previous','vrs.company_code');
+        })
         ->select('im.invent_code','im.invent_type','id.invent_photo','im.invent_desc','lrs.lookup_desc as invent_brand',
         'id.invent_sn','id.invent_tgl_perolehan','id.invent_lama_garansi','id.invent_kondisi','id.invent_bu',
-        'id.invent_lokasi_previous','id.invent_lokasi_update','id.invent_bu_previous','id.invent_bu_update','id.invent_pengguna_previous','id.invent_pengguna_update')
+        'id.invent_lokasi_previous','id.invent_lokasi_update','vrs.name as invent_bu_previous','vr.name as invent_bu_update',
+        'id.invent_pengguna_previous','id.invent_pengguna_update','dr.div_name as invent_divisi_update','drs.div_name as invent_divisi_previous')
         ->where('id.invent_code_dtl',$code)
         ->first();
         return response()->json($mas);

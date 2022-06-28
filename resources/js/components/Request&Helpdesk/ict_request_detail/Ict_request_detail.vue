@@ -32,6 +32,7 @@
             <Button
               label="Add"
               class="p-button-raised"
+              v-tooltip.right="'Click to add new detail'"
               icon="bi bi-file-earmark-plus"
               @click="$router.push({
                 name: 'Add Ict Request Detail',
@@ -90,8 +91,8 @@
               />
             </template>
           </Column>
-          <template #footer>
-               <div class="grid dir-col">
+          <template>
+            <div class="grid dir-col">
 			        <div class="col">
 				        <div class="box">
                    <Button
@@ -100,6 +101,12 @@
                     icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Ict Request'})"
+                  />
+                  <Button
+                    class="p-button-rounded p-button-success mt-2"
+                    icon="pi pi-check"
+                    @click="SubmitIct(slotProps.data.ireq_id)"
+                    v-tooltip.Right="'Click to submit request'"
                   />
                   <Button
                     v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'"

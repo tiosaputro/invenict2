@@ -157,7 +157,7 @@
                   <div class="col-fixed w-9rem">
                     <InputText
                       type="text"
-                      v-model="detail.invent_pengguna_terakhir"
+                      v-model="detail.invent_pengguna_update"
                       disabled
                     />
                     <!-- <small v-if="errors.lastuser" class="p-error">
@@ -182,7 +182,7 @@
                   <div class="col-fixed w-9rem">
                     <InputText
                       type="text"
-                      v-model="detail.invent_pengguna_terakhir"
+                      v-model="detail.invent_bu_update"
                       disabled
                     />
                     <!-- <small v-if="errors.lastuser" class="p-error">
@@ -194,14 +194,14 @@
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  label="Simpan"
+                  label="Save"
                   type="submit"
                 />
                 <Button
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mr-2"
                   icon="pi pi-times"
-                  @click="$router.push('/master-peripheral')"
+                  @click="$router.push('/master-peripheral-detail/'+this.$route.params.kode)"
                 />
               </div>
             </form>
@@ -246,12 +246,11 @@
                 </div>
             </div>
             <div class="field grid">
-              <label class="col-fixed w-9rem">Penguna Sebelumnya</label>
+              <label class="col-fixed w-9rem">Pengguna Sebelumnya</label>
                 <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
                     v-model="detail.invent_pengguna_previous"
-                    :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
                     disabled
                   />
                   <!-- <small class="p-error" v-if="errors.prevuser">
@@ -264,8 +263,7 @@
                 <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
-                    v-model="detail.invent_pengguna_previous"
-                    :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
+                    v-model="detail.invent_divisi_previous"
                     disabled
                   />
                   <!-- <small class="p-error" v-if="errors.prevuser">
@@ -278,8 +276,7 @@
                 <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
-                    v-model="detail.invent_pengguna_previous"
-                    :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
+                    v-model="detail.invent_bu_previous"
                     disabled
                   />
                   <!-- <small class="p-error" v-if="errors.prevuser">

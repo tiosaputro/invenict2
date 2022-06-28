@@ -717,9 +717,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\n                      {{ errors.lastuser[0] }}\n                    </small> ")])]), _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.detail.invent_pengguna_terakhir,
+    modelValue: $data.detail.invent_bu_update,
     "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
-      return $data.detail.invent_pengguna_terakhir = $event;
+      return $data.detail.invent_bu_update = $event;
     }),
     disabled: ""
   }, null, 8
@@ -787,9 +787,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\n                    {{ errors.prevuser[0] }}\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [_hoisted_70, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.detail.invent_pengguna_previous,
+    modelValue: $data.detail.invent_divisi_previous,
     "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
-      return $data.detail.invent_pengguna_previous = $event;
+      return $data.detail.invent_divisi_previous = $event;
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.invent_pengguna_previous
@@ -799,9 +799,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\n                    {{ errors.prevuser[0] }}\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [_hoisted_73, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.detail.invent_pengguna_previous,
+    modelValue: $data.detail.invent_bu_previous,
     "onUpdate:modelValue": _cache[20] || (_cache[20] = function ($event) {
-      return $data.detail.invent_pengguna_previous = $event;
+      return $data.detail.invent_bu_previous = $event;
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.invent_pengguna_previous

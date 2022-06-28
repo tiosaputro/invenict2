@@ -14,7 +14,7 @@ const routes = [
     },
     {
         name: 'Ict Request Detail Desc',
-        path: '/ict-request-desc/:code',
+        path: '/ict-request-descc/:code',
         component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_detail.vue'),
     },
     {
@@ -24,7 +24,7 @@ const routes = [
     },
     {
         name: 'Ict Request Desc Detail Divisi 3',
-        path: '/ict-request-desc/:code',
+        path: '/Ict-request-desc/:code',
         component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_divisi3_detail_desc.vue'),
     },
     {
@@ -34,7 +34,7 @@ const routes = [
     },
     {
         name: 'Ict Request Desc Verifikasi',
-        path: '/ict-request-desc/:code',
+        path: '/Ict-Request-desc/:code',
         component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_verifikasi.vue'),
     },
     {

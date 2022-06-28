@@ -266,7 +266,7 @@ class MasterController extends Controller
     }
     public function getImage($kode)
     {
-        $mas = Master::select('invent_photo as photo')->where('invent_code',$kode)->first();
+        $mas = DB::table('invent_dtl')->select('invent_photo as photo')->where('invent_code_dtl',$kode)->first();
         return response()->json($mas);
     }
     public function getBarcode($invent_code)
@@ -283,14 +283,25 @@ class MasterController extends Controller
             return response()->json($mas);
     }
     function getPeripheral(){
-        $dtl = db::table('invent_mst as im')
+        $kode = db::table('invent_mst as im')
         ->leftJoin('lookup_refs as lr',function ($join) {
             $join->on('im.invent_brand','lr.lookup_code')
                 ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
         })
-        ->select('im.invent_code as code',DB::raw("(im.invent_desc ||'-'|| lr.lookup_desc ||'-'||  im.invent_type) as name"))
+        ->select('im.invent_code as code',DB::raw("(im.invent_desc || '-' || lr.lookup_desc || '-' ||  im.invent_type) as name"))
         ->orderBy('im.invent_desc','ASC')
         ->get();
-        return json_encode($dtl);
+
+        $divisi = DB::table('divisi_refs')->select('div_id as code','div_name as name')->orderBy('div_name','ASC')->get(); 
+        $bu = DB::table('vcompany_refs')->select('company_code as code','name')->orderBy('name','ASC')->get();
+        return json_encode(['kode'=>$kode,'divisi'=>$divisi,'bu'=>$bu],200);
+    }
+    function getSn($kode){
+        $sn = DB::table('invent_dtl')
+        ->select('invent_code_dtl as code','invent_sn as name')
+        ->orderBy('invent_sn','ASC')
+        ->where('invent_code',$kode)
+        ->get();
+        return json_encode($sn);
     }
 }

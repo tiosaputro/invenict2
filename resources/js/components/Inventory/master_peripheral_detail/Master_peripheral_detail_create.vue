@@ -182,7 +182,7 @@
                   <div class="col-fixed w-9rem">
                     <InputText
                       type="text"
-                      v-model="detail.invent_pengguna_terakhir"
+                      v-model="detail.invent_bu_update"
                       disabled
                     />
                     <!-- <small v-if="errors.lastuser" class="p-error">
@@ -266,7 +266,7 @@
                 <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
-                    v-model="detail.invent_pengguna_previous"
+                    v-model="detail.invent_divisi_previous"
                     :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
                     disabled
                   />
@@ -280,7 +280,7 @@
                 <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
-                    v-model="detail.invent_pengguna_previous"
+                    v-model="detail.invent_bu_previous"
                     :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
                     disabled
                   />

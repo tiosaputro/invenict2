@@ -73,17 +73,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.$confirm.require({
-        message: "Approval Permohonan Dilanjutkan?",
-        header: "ICT Request    ",
+        message: "Are you sure you agree to this request?",
+        header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this2.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Permohonan Dilanjutkan"
+            summary: "Success Message",
+            detail: "Successfully approved this request"
           });
 
           _this2.axios.get('/api/updateStatusPermohonan/' + _this2.$route.params.code, {
@@ -114,8 +114,8 @@ __webpack_require__.r(__webpack_exports__);
 
           _this3.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Direject"
+            summary: "Success Message",
+            detail: "Successfully rejected this request"
           });
 
           setTimeout(function () {
@@ -228,7 +228,7 @@ var _hoisted_3 = {
   "class": "card"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Verifikasi) ", -1
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Verification) ", -1
 /* HOISTED */
 );
 
@@ -271,7 +271,7 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "100px"
   }
-}, "Alasan", -1
+}, "Reason", -1
 /* HOISTED */
 );
 
@@ -321,7 +321,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request (Verifikasi)",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request (Verification)",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -345,7 +345,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Kembali",
+        label: "Back",
         "class": "p-button-raised p-button mr-2",
         icon: "pi pi-chevron-left",
         onClick: _cache[1] || (_cache[1] = function ($event) {
@@ -372,21 +372,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_type",
-        header: "Tipe Request",
+        header: "Request Type",
         sortable: true,
         style: {
           "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
-        header: "Nama Peripheral",
-        sortable: true,
-        style: {
-          "min-width": "12rem"
-        }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_desc",
-        header: "Deskripsi",
+        header: "Peripheral",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -400,7 +393,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_remark",
-        header: "Keterangan",
+        header: "Remark",
         sortable: true,
         style: {
           "min-width": "12rem"
@@ -426,14 +419,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Yes",
+        label: "Save",
         onClick: _cache[5] || (_cache[5] = function ($event) {
           return $options.updateReject();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "No",
+        label: "Cancel",
         onClick: _cache[6] || (_cache[6] = function ($event) {
           return $options.cancelReject();
         }),
@@ -450,13 +443,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         rows: "5",
         cols: "30",
-        placeholder: "Masukan Alasan",
+        placeholder: "Give a reason",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
           'p-invalid': $data.submitted && !$data.reason.ket
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])];
+      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])];
     }),
     _: 1
     /* STABLE */

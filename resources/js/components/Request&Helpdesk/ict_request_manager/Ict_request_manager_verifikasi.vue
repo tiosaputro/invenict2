@@ -40,16 +40,16 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="invent_code" header="Kode" :sortable="true" style="min-width:12rem"/>
-          <Column field="invent_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
+          <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
+          <Column field="invent_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
           <template #footer>
             <div class="grid p-dir-col">
               <div class="col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({

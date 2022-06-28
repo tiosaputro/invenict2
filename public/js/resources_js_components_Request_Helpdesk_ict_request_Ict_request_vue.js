@@ -748,7 +748,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
                     bottom: true
                   }]]), slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
@@ -920,7 +920,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -1057,7 +1057,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
                     left: true
                   }]])];
                 }),
@@ -1201,7 +1201,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
                     left: true
                   }]])];
                 }),
@@ -1324,7 +1324,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
                     right: true
                   }]])];
                 }),
@@ -1450,7 +1450,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
                     left: true
                   }]])];
                 }),

@@ -68,7 +68,11 @@
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.cekstatus.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
