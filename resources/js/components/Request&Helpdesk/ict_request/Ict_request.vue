@@ -20,7 +20,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request"
                     responsiveLayout="scroll"
                   >
                     <template #header>
@@ -117,7 +117,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Reviewer"
                     responsiveLayout="scroll"
                   >
                     <template #header>
@@ -195,7 +195,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Verified"
                     responsiveLayout="scroll"
                  >
                 <template #header>
@@ -273,7 +273,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Rejected"
                     responsiveLayout="scroll"
                  >
                 <template #header>
@@ -352,7 +352,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Penugasan Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Assignment Request"
                     responsiveLayout="scroll"
                   >
                   <template #header>
@@ -411,7 +411,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} In Progress"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -485,7 +485,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Done"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -554,7 +554,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Close"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -595,8 +595,8 @@
                     <template #body="slotProps">
                       <Button
                         v-if="slotProps.data.ireq_value == null"
-                        class="p-button-rounded p-button-info mr-2"
-                        label = "Rating"
+                        class="p-button-raised p-button-secondary p-button-sm mr-2"
+                        label = "Give Feedback"
                         @click="tes(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                       />
                     </template>
@@ -672,7 +672,7 @@
               <Button label="Yes" @click="Update()" class="p-button" autofocus />
               <Button label="No" @click="cancel()" class="p-button-text" />
             </template>
-        </Dialog>  
+            </Dialog>  
       </div>
     </div>
   </div>

@@ -663,7 +663,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Request",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -832,7 +832,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Reviewer",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -980,7 +980,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Verified",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1131,7 +1131,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Rejected",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1289,7 +1289,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Penugasan Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Assignment Request",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1430,7 +1430,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} In Progress",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1570,7 +1570,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Done",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1716,7 +1716,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Close",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1845,8 +1845,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [slotProps.data.ireq_value == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
-                    "class": "p-button-rounded p-button-info mr-2",
-                    label: "Rating",
+                    "class": "p-button-raised p-button-secondary p-button-sm mr-2",
+                    label: "Give Feedback",
                     onClick: function onClick($event) {
                       return $options.tes(slotProps.data.ireqd_id, slotProps.data.ireq_id);
                     }
