@@ -41,12 +41,12 @@
           <template #loading>
             Loading data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:9rem"/>
-          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:9rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:9rem"/>
+          <Column field="name" header="Peripheral" :sortable="true" style="min-width:9rem"/>
           <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:9rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:9rem"/>
-          <Column field="ireq_assigned_to1" header="Petugas (ICT)" :sortable="true" style="min-width:9rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:9rem"/>
+          <Column field="ireq_assigned_to1" header="Personnel (ICT)" :sortable="true" style="min-width:9rem"/>
           <Column style="min-width:9rem">
             <template #body="slotProps">
                 <Button
@@ -93,10 +93,32 @@
               </div>
               <div class="p-fluid">
                 <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">Nama Peripheral</label>
+                <label class="col-fixed w-9rem" style="width:100px">Request Type</label>
+                 <div class="col-fixed">
+                     <InputText
+                        v-model="assign.ireq_type"
+                        disabled
+                     />
+                  </div>
+                </div>
+              </div>
+              <div class="p-fluid">
+                <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:100px">Peripheral</label>
                  <div class="col-fixed">
                      <InputText
                         v-model="assign.name"
+                        disabled
+                     />
+                  </div>
+                </div>
+              </div>
+              <div class="p-fluid">
+                <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:100px">Remark</label>
+                 <div class="col-fixed">
+                     <InputText
+                        v-model="assign.ireq_remark"
                         disabled
                      />
                   </div>

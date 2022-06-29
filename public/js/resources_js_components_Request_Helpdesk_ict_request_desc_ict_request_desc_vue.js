@@ -2431,7 +2431,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             right: true
           }]])];
         }),
@@ -2572,7 +2572,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -2720,7 +2720,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -2868,7 +2868,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -3295,7 +3295,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]]), slotProps.data.ireq_statuss == 'NA1' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
@@ -3447,7 +3447,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -3595,7 +3595,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -3743,7 +3743,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -4219,7 +4219,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]]), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
@@ -4431,7 +4431,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -5689,7 +5689,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -5839,7 +5839,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             Right: true
           }]])];
         }),
@@ -6097,7 +6097,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -6220,7 +6220,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]])];
         }),
@@ -6780,7 +6780,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]]), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove Atasan' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
@@ -6978,7 +6978,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             left: true
           }]]), slotProps.data.status == 'A2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
@@ -8712,7 +8712,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             right: true
           }]]), slotProps.data.status == 'RT' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
@@ -8874,7 +8874,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
             right: true
           }]])];
         }),

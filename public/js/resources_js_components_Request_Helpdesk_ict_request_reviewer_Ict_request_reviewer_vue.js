@@ -359,6 +359,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     CetakExcelSelesai: function CetakExcelSelesai() {
       window.open('api/report-ict-excel-reviewer-selesai');
+    },
+    CetakPdf: function CetakPdf(ireq_id) {
+      window.open('/api/print-out-ict-request/' + ireq_id);
     }
   }
 });
@@ -624,22 +627,13 @@ var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_70 = ["onClick"];
 var _hoisted_71 = {
-  "class": "grid dir-col"
-};
-var _hoisted_72 = {
-  "class": "col"
-};
-var _hoisted_73 = {
-  "class": "box"
-};
-var _hoisted_74 = {
   "class": "p-fluid"
 };
-var _hoisted_75 = {
+var _hoisted_72 = {
   "class": "field grid"
 };
 
-var _hoisted_76 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "100px"
@@ -648,46 +642,46 @@ var _hoisted_76 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_77 = {
+var _hoisted_74 = {
   "class": "col"
 };
-var _hoisted_78 = {
+var _hoisted_75 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_79 = {
+var _hoisted_76 = {
   "class": "fluid"
 };
-var _hoisted_80 = {
+var _hoisted_77 = {
   "class": "field grid"
 };
 
-var _hoisted_81 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
 }, "Personnel (ICT)", -1
 /* HOISTED */
 );
 
-var _hoisted_82 = {
+var _hoisted_79 = {
   "class": "col-fixed w-9rem"
 };
-var _hoisted_83 = {
+var _hoisted_80 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_84 = {
+var _hoisted_81 = {
   style: {
     "width": "130px"
   }
 };
-var _hoisted_85 = {
+var _hoisted_82 = {
   "class": "table-header text-right"
 };
-var _hoisted_86 = {
+var _hoisted_83 = {
   "class": "p-input-icon-left"
 };
 
-var _hoisted_87 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_84 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "pi pi-search"
 }, null, -1
 /* HOISTED */
@@ -1654,7 +1648,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Status",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "14rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -2097,23 +2091,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             loading: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [_hoisted_69];
             }),
-            footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                label: "Pdf",
-                "class": "p-button-raised p-button-danger mr-2",
-                icon: "pi pi-file-pdf",
-                onClick: _cache[22] || (_cache[22] = function ($event) {
-                  return $options.CetakPdfSelesai();
-                })
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                label: "Excel",
-                "class": "p-button-raised p-button-success mr-2",
-                icon: "pi pi-print",
-                onClick: _cache[23] || (_cache[23] = function ($event) {
-                  return $options.CetakExcelSelesai();
-                })
-              })])])])];
-            }),
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_no",
@@ -2256,7 +2233,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogReject,
-    "onUpdate:visible": _cache[27] || (_cache[27] = function ($event) {
+    "onUpdate:visible": _cache[25] || (_cache[25] = function ($event) {
       return $data.dialogReject = $event;
     }),
     style: {
@@ -2269,25 +2246,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Save",
-        onClick: _cache[25] || (_cache[25] = function ($event) {
+        onClick: _cache[23] || (_cache[23] = function ($event) {
           return $options.updateReject();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Cancel",
-        onClick: _cache[26] || (_cache[26] = function ($event) {
+        onClick: _cache[24] || (_cache[24] = function ($event) {
           return $options.cancelReject();
         }),
         "class": "p-button-text"
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [_hoisted_76, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [_hoisted_73, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
         autoResize: true,
         type: "text",
         modelValue: $data.rbr.ket,
-        "onUpdate:modelValue": _cache[24] || (_cache[24] = function ($event) {
+        "onUpdate:modelValue": _cache[22] || (_cache[22] = function ($event) {
           return $data.rbr.ket = $event;
         }),
         rows: "5",
@@ -2297,7 +2274,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.rbr.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_78, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "class"]), $data.submitted && !$data.rbr.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_75, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
@@ -2306,7 +2283,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogAssign,
-    "onUpdate:visible": _cache[31] || (_cache[31] = function ($event) {
+    "onUpdate:visible": _cache[29] || (_cache[29] = function ($event) {
       return $data.dialogAssign = $event;
     }),
     style: {
@@ -2320,23 +2297,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Save",
-        onClick: _cache[29] || (_cache[29] = function ($event) {
+        onClick: _cache[27] || (_cache[27] = function ($event) {
           return $options.updateAssign();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Cancel",
-        onClick: _cache[30] || (_cache[30] = function ($event) {
+        onClick: _cache[28] || (_cache[28] = function ($event) {
           return $options.cancelAssign();
         }),
         "class": "p-button-text"
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [_hoisted_81, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_76, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [_hoisted_78, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
         modelValue: $data.assign.name,
-        "onUpdate:modelValue": _cache[28] || (_cache[28] = function ($event) {
+        "onUpdate:modelValue": _cache[26] || (_cache[26] = function ($event) {
           return $data.assign.name = $event;
         }),
         options: $data.petugas,
@@ -2348,7 +2325,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_83, " Personnel (ICT) not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_80, " Personnel (ICT) not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
@@ -2357,7 +2334,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.displayDetailRequest,
-    "onUpdate:visible": _cache[33] || (_cache[33] = function ($event) {
+    "onUpdate:visible": _cache[31] || (_cache[31] = function ($event) {
       return $data.displayDetailRequest = $event;
     }),
     style: {
@@ -2371,7 +2348,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mb-4"
       }, {
         end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_84, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.ireq_no), 1
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_81, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.ireq_no), 1
           /* TEXT */
           )];
         }),
@@ -2390,9 +2367,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         responsiveLayout: "scroll"
       }, {
         header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_86, [_hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_83, [_hoisted_84, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
             modelValue: $data.filters['global'].value,
-            "onUpdate:modelValue": _cache[32] || (_cache[32] = function ($event) {
+            "onUpdate:modelValue": _cache[30] || (_cache[30] = function ($event) {
               return $data.filters['global'].value = $event;
             }),
             placeholder: "Search. . ."

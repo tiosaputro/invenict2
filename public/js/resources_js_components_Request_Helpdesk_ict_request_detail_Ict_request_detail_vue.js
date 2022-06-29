@@ -142,36 +142,67 @@ __webpack_require__.r(__webpack_exports__);
         reject: function reject() {}
       });
     },
+    SubmitIct: function SubmitIct() {
+      var _this5 = this;
+
+      this.$confirm.require({
+        message: "Are you sure you want to submit this request?",
+        header: "Confirmation Submit",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
+        accept: function accept() {
+          _this5.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Successfully Submit",
+            life: 3000
+          });
+
+          _this5.axios.get('/api/updateStatusSubmit/' + _this5.code, {
+            headers: {
+              'Authorization': 'Bearer ' + _this5.token
+            }
+          });
+
+          setTimeout(function () {
+            return _this5.$router.push('/ict-request');
+          }, 1000);
+        },
+        reject: function reject() {}
+      });
+    },
     CetakPdf: function CetakPdf() {
-      window.open('/api/report-ict-detail-pdf/' + this.code);
-    },
-    CetakExcel: function CetakExcel() {
-      window.open('/api/report-ict-detail-excel/' + this.code);
-    },
-    CetakPdfReject: function CetakPdfReject() {
-      window.open('/api/report-ict-detail-pdf-tab-reject/' + this.code);
-    },
-    CetakExcelReject: function CetakExcelReject() {
-      window.open('/api/report-ict-detail-excel-tab-reject/' + this.code);
-    },
-    CetakPdfTabReviewer: function CetakPdfTabReviewer() {
-      window.open('/api/report-ict-detail-pdf-tab-reviewer/' + this.code);
-    },
-    CetakExcelTabReviewer: function CetakExcelTabReviewer() {
-      window.open('/api/report-ict-detail-excel-tab-reviewer/' + this.code);
-    },
-    CetakPdfTabVerifikasi: function CetakPdfTabVerifikasi() {
-      window.open('/api/report-ict-detail-pdf-tab-verifikasi/' + this.code);
-    },
-    CetakExcelTabVerifikasi: function CetakExcelTabVerifikasi() {
-      window.open('/api/report-ict-detail-excel-tab-verifikasi/' + this.code);
-    },
-    CetakPdfTabSedangDikerjakan: function CetakPdfTabSedangDikerjakan() {
-      window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' + this.code);
-    },
-    CetakExcelTabSedangDikerjakan: function CetakExcelTabSedangDikerjakan() {
-      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' + this.code);
-    }
+      window.open('/api/print-out-ict-request/' + this.code);
+    } // CetakExcel(){
+    //   window.open('/api/report-ict-detail-excel/' +this.code);
+    // },
+    // CetakPdfReject(){
+    //   window.open('/api/print-out-ict-request/' +this.code);
+    // },
+    // CetakExcelReject(){
+    //   window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
+    // },
+    // CetakPdfTabReviewer(){
+    //   window.open('/api/report-ict-detail-pdf-tab-reviewer/' +this.code);
+    // },
+    // CetakExcelTabReviewer(){
+    //   window.open('/api/report-ict-detail-excel-tab-reviewer/' +this.code);
+    // },
+    // CetakPdfTabVerifikasi(){
+    //   window.open('/api/report-ict-detail-pdf-tab-verifikasi/' +this.code);
+    // },
+    // CetakExcelTabVerifikasi(){
+    //   window.open('/api/report-ict-detail-excel-tab-verifikasi/' +this.code);
+    // },
+    // CetakPdfTabSedangDikerjakan(){
+    //   window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' +this.code);
+    // },
+    // CetakExcelTabSedangDikerjakan(){
+    //   window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' +this.code);
+    // },
+
   }
 });
 
@@ -337,6 +368,45 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     loading: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_13];
     }),
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Back",
+        "class": "p-button-raised p-button mr-2",
+        icon: "pi pi-chevron-left",
+        onClick: _cache[3] || (_cache[3] = function ($event) {
+          return _ctx.$router.push({
+            name: 'Ict Request'
+          });
+        })
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[_directive_tooltip, 'Click to back', void 0, {
+        bottom: true
+      }]]), _this.detail.length && _this.status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+        key: 0,
+        "class": "p-button-raised p-button-success mr-2",
+        icon: "pi pi-check",
+        label: "Submit",
+        onClick: _cache[4] || (_cache[4] = function ($event) {
+          return $options.SubmitIct();
+        })
+      }, null, 512
+      /* NEED_PATCH */
+      )), [[_directive_tooltip, 'Click to submit request', void 0, {
+        bottom: true
+      }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Pdf",
+        "class": "p-button-raised p-button-danger mt-2",
+        icon: "pi pi-file-pdf",
+        onClick: _cache[5] || (_cache[5] = function ($event) {
+          return $options.CetakPdf();
+        })
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+        bottom: true
+      }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\n                    v-if=\"this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'\" \n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcelReject()\" \n                  />\n                  <Button\n                    v-if=\"this.status == 'P'\" \n                    label=\"Pdf\"\n                    class=\"p-button-raised p-button-danger mr-2\"\n                    icon=\"pi pi-file-pdf\"\n                    @click=\"CetakPdf()\"\n                  />\n                  <Button\n                    v-if=\"this.status == 'P'\" \n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcel()\" \n                  />\n                  <Button\n                    v-if=\"this.status == 'NA1' || this.status == 'NA2'\" \n                    label=\"Pdf\"\n                    class=\"p-button-raised p-button-danger mr-2\"\n                    icon=\"pi pi-file-pdf\"\n                    @click=\"CetakPdfTabReviewer()\"\n                  />\n                  <Button\n                    v-if=\"this.status == 'NA1' || this.status == 'NA2'\"\n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcelTabReviewer()\" \n                  />\n                  <Button\n                    v-if=\"this.status == 'A1' || this.status == 'A2'\" \n                    label=\"Pdf\"\n                    class=\"p-button-raised p-button-danger mr-2\"\n                    icon=\"pi pi-file-pdf\"\n                    @click=\"CetakPdfTabVerifikasi()\"\n                  />\n                  <Button\n                    v-if=\"this.status == 'A1' || this.status == 'A2'\"\n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcelTabVerifikasi()\" \n                  />\n                  <Button\n                    v-if=\"this.status =='T'\" \n                    label=\"Pdf\"\n                    class=\"p-button-raised p-button-danger mr-2\"\n                    icon=\"pi pi-file-pdf\"\n                    @click=\"CetakPdfTabSedangDikerjakan()\"\n                  />\n                  <Button\n                    v-if=\"this.status == 'T'\"\n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcelTabSedangDikerjakan()\" \n                  /> ")])])])];
+    }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_type",
@@ -381,6 +451,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "12rem"
         }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [slotProps.data.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+            key: 0,
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+        }),
+        _: 1
+        /* STABLE */
+
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
           "min-width": "12rem"
@@ -402,7 +484,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])), [[_directive_tooltip, 'Edit', void 0, {
+          , ["onClick"])), [[_directive_tooltip, 'Click to edit data', void 0, {
             left: true
           }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 1,
@@ -413,113 +495,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])), [[_directive_tooltip, 'Delete', void 0, {
+          , ["onClick"])), [[_directive_tooltip, 'Click to delete data', void 0, {
             right: true
           }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
         }),
         _: 1
         /* STABLE */
 
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("template", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Back",
-        "class": "p-button-raised p-button mr-2",
-        icon: "pi pi-chevron-left",
-        onClick: _cache[3] || (_cache[3] = function ($event) {
-          return _ctx.$router.push({
-            name: 'Ict Request'
-          });
-        })
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        "class": "p-button-rounded p-button-success mt-2",
-        icon: "pi pi-check",
-        onClick: _cache[4] || (_cache[4] = function ($event) {
-          return _ctx.SubmitIct(_ctx.slotProps.data.ireq_id);
-        })
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[_directive_tooltip, 'Click to submit request', void 0, {
-        Right: true
-      }]]), _this.status == 'RR' || _this.status == 'RA1' || _this.status == 'RA2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 0,
-        label: "Pdf",
-        "class": "p-button-raised p-button-danger mr-2",
-        icon: "pi pi-file-pdf",
-        onClick: _cache[5] || (_cache[5] = function ($event) {
-          return $options.CetakPdfReject();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'RR' || _this.status == 'RA1' || _this.status == 'RA2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 1,
-        label: "Excel",
-        "class": "p-button-raised p-button-success mt-2",
-        icon: "pi pi-print",
-        onClick: _cache[6] || (_cache[6] = function ($event) {
-          return $options.CetakExcelReject();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 2,
-        label: "Pdf",
-        "class": "p-button-raised p-button-danger mr-2",
-        icon: "pi pi-file-pdf",
-        onClick: _cache[7] || (_cache[7] = function ($event) {
-          return $options.CetakPdf();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 3,
-        label: "Excel",
-        "class": "p-button-raised p-button-success mt-2",
-        icon: "pi pi-print",
-        onClick: _cache[8] || (_cache[8] = function ($event) {
-          return $options.CetakExcel();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'NA1' || _this.status == 'NA2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 4,
-        label: "Pdf",
-        "class": "p-button-raised p-button-danger mr-2",
-        icon: "pi pi-file-pdf",
-        onClick: _cache[9] || (_cache[9] = function ($event) {
-          return $options.CetakPdfTabReviewer();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'NA1' || _this.status == 'NA2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 5,
-        label: "Excel",
-        "class": "p-button-raised p-button-success mt-2",
-        icon: "pi pi-print",
-        onClick: _cache[10] || (_cache[10] = function ($event) {
-          return $options.CetakExcelTabReviewer();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'A1' || _this.status == 'A2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 6,
-        label: "Pdf",
-        "class": "p-button-raised p-button-danger mr-2",
-        icon: "pi pi-file-pdf",
-        onClick: _cache[11] || (_cache[11] = function ($event) {
-          return $options.CetakPdfTabVerifikasi();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'A1' || _this.status == 'A2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 7,
-        label: "Excel",
-        "class": "p-button-raised p-button-success mt-2",
-        icon: "pi pi-print",
-        onClick: _cache[12] || (_cache[12] = function ($event) {
-          return $options.CetakExcelTabVerifikasi();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 8,
-        label: "Pdf",
-        "class": "p-button-raised p-button-danger mr-2",
-        icon: "pi pi-file-pdf",
-        onClick: _cache[13] || (_cache[13] = function ($event) {
-          return $options.CetakPdfTabSedangDikerjakan();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 9,
-        label: "Excel",
-        "class": "p-button-raised p-button-success mt-2",
-        icon: "pi pi-print",
-        onClick: _cache[14] || (_cache[14] = function ($event) {
-          return $options.CetakExcelTabSedangDikerjakan();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])];
+      })];
     }),
     _: 1
     /* STABLE */

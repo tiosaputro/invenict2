@@ -2,7 +2,7 @@
 <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title> Testing</title>
+<title> ICT REQUEST</title>
 <style>
 #invoice{
     padding: 30px;
@@ -74,7 +74,7 @@ p {
     font-size: 1.2em
 }
 
-/* .invoice table {
+.invoice table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
@@ -90,7 +90,7 @@ p {
 .invoice table th {
     white-space: nowrap;
     font-weight: 400;
-    font-size: 16px
+    font-size: 14px
 }
 
 .invoice table td h3 {
@@ -146,7 +146,7 @@ p {
 
 .invoice table tfoot tr td:first-child {
     border: none
-} */
+}
 
 .invoice footer {
     width: 100%;
@@ -168,6 +168,8 @@ p {
   float: left;
   width: 50%;
   padding: 5px;
+  margin-left:2px;
+  margin-right:-10px;
 }
 
 /* Clearfix (clear floats) */
@@ -195,24 +197,110 @@ th, td {
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
+.textareacss{
+    resize: none; 
+    border:solid 1px;
+    font-weight: bold;
+    overflow:hidden;
+    margin: 1px;
+    padding: 1px;
+    min-width: 99%;
+    min-height: 200px;
+    text-align: left;
+    outline: none;
+}
 @media print {
+    .invoice table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 1px;
+}
+
+.invoice table td,.invoice table th {
+    padding: 15px;
+    background: #eee;
+    border-bottom: 1px solid #fff
+}
+
+.invoice table th {
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: 14px
+}
+
+.invoice table td h3 {
+    margin: 0;
+    font-weight: 400;
+    color: #3989c6;
+    font-size: 1.2em
+}
+
+.invoice table .qty,.invoice table .total,.invoice table .unit {
+    text-align: right;
+    font-size: 1.2em
+}
+
+.invoice table .no {
+    color: #fff;
+    font-size: 1.6em;
+    background: #3989c6
+}
+
+.invoice table .unit {
+    background: #ddd
+}
+
+.invoice table .total {
+    background: #3989c6;
+    color: #fff
+}
+
+.invoice table tbody tr:last-child td {
+    border: none;
+    page-break-after: auto;
+}
+
+.invoice table tfoot td {
+    background: 0 0;
+    border-bottom: none;
+    white-space: nowrap;
+    text-align: right;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-top: 1px solid #aaa
+}
+
+.invoice table tfoot tr:first-child td {
+    border-top: none
+}
+
+.invoice table tfoot tr:last-child td {
+    color: #3989c6;
+    font-size: 1.4em;
+    border-top: 1px solid #3989c6;
+    page-break-after: auto;
+}
+
+.invoice table tfoot tr td:first-child {
+    border: none
+}
     #printInvoice {
         display: none;
     }
     .invoice {
         font-size: 12px!important;
-        overflow: hidden!important
+        overflow: hidden!important;
     }
 
     .invoice footer {
         position: absolute;
         bottom: 10px;
-        page-break-after: always
     }
 
     .invoice>div:last-child {
-        page-break-before: always
+        /* page-break-before: always */
+        page-break-after: auto;
     }
     .table {
         border: solid #000 !important;
@@ -253,17 +341,17 @@ tr:nth-child(even) {
 
 .invoice .contacts {
     margin-bottom: 20px
-    border: solid #000 !important;
+    /* border: solid #000 !important; */
 
 }
 
 .invoice .invoice-to {
-    border: solid #000 !important;
+    /* border: solid #000 !important; */
     text-align: left
 }
 
 .invoice .invoice-to .to {
-    border: solid #000 !important;
+    /* border: solid #000 !important; */
     margin-top: 0;
     margin-bottom: 0
 }
@@ -312,7 +400,7 @@ tr:nth-child(even) {
 .invoice table th {
     white-space: nowrap;
     font-weight: 400;
-    font-size: 16px
+    font-size: 14px
 }
 
 .invoice table td h3 {
@@ -343,7 +431,8 @@ tr:nth-child(even) {
 }
 
 .invoice table tbody tr:last-child td {
-    border: none
+    border: none;
+    page-break-after: auto;
 }
 
 .invoice table tfoot td {
@@ -363,7 +452,8 @@ tr:nth-child(even) {
 .invoice table tfoot tr:last-child td {
     color: #3989c6;
     font-size: 1.4em;
-    border-top: 1px solid #3989c6
+    border-top: 1px solid #3989c6;
+    page-break-after: auto;
 }
 
 .invoice table tfoot tr td:first-child {
@@ -373,9 +463,21 @@ tr:nth-child(even) {
   float: left;
   width: 50%;
   padding: 5px;
-  border:solid 1px;
+  margin-left:2px;
+  margin-right:-10px;
+  /* border:solid 1px; */
 }
-
+.textareacss{
+    resize: none; 
+    border:solid 1px;
+    font-weight: bold;
+    overflow:hidden;
+    margin: 1px;
+    padding: 1px;
+    min-width: 99%;
+    min-height: 200px;
+    outline: none;
+}
 
 }
 </style>
@@ -411,18 +513,17 @@ tr:nth-child(even) {
                         <div class="text-gray-light"><p> Please submit to Helpdesk Supervisor (27th Floor) Or  Call Hotline Number Extension 511 </p></div>
                     </div>
                 </div>
-                <div class="row contacts">
+                <div class="row contacts" contenteditable="false">
                     <div class="col invoice-to">
                         <div class="address" style="font-weight:bold">I. Description Of Request/Problem Experienced</div>
-                            <textarea rows="8" cols="100" style="resize: none; border:solid 1px;" disabled> 
-                            @php $no = 1 @endphp 
-                            @foreach($detail as $d) 
-                           {{ $no++ }}. {{ $d->ireq_remark }}@endforeach
+                            <textarea class="textareacss" cols="90" rows="8"  disabled> @php $no = 1 @endphp 
+@foreach($detail as $d)  {{$no++}}.{{$d->ireq_remark}}
+@endforeach
                             </textarea>
                         </div>
                         <div class="col invoice-to">
                           <div class="address" style="font-weight:bold">Priority Level</div>
-                            <textarea rows="8" cols="25" style="resize: none; border:solid 1px;" disabled> {{$detail[0]->prio_level}}  </textarea>
+                            <textarea rows="8" cols="25" class="textareacss" disabled> {{$detail[0]->prio_level}}  </textarea>
                         </div>
                 </div>
                 <div class="row">
@@ -444,12 +545,21 @@ tr:nth-child(even) {
                     </div>
                     <div class="column">
                         <table> <p> Approved By : (For new installation/software loan) </p>
+                            @if ($detail[0]->date_approver1)
                             <tr>
                                 <th style="border:solid 1px;">{{$detail[0]->usr_fullname}}</th>
                                 <th style="border:solid 1px;">Manager {{$detail[0]->div_name}}</th>
                                 <th style="border:solid 1px;">{{$detail[0]->date_approver1}}</th>
                                 <th style="border:solid 1px;"></th>
                             </tr>
+                            @else
+                            <tr>
+                                <th height="50px" style="border:solid 1px;"></th>
+                                <th style="border:solid 1px;"></th>
+                                <th style="border:solid 1px;"></th>
+                                <th style="border:solid 1px;"></th>
+                            </tr>
+                            @endif
                             <tr>
                                 <td style="border:solid 1px;">Name</td>
                                 <td style="border:solid 1px;">Position</td>
@@ -465,13 +575,23 @@ tr:nth-child(even) {
                 <div class="row">
                   <br> 
                     <table> <p> Approved By :   (Note : Sr. Manager approval needed for new equipment/software/tools)</p>
-                      <tr> 
-                        <th style="border:solid 1px;"></th>
-                        <th style="border:solid 1px;"></th>
-                        <th style="border:solid 1px;"></th>
-                        <th style="border:solid 1px;"></th>
-                        <th style="border:solid 1px;"></th>
+                        @if($detail[0]->date_approver2)
+                        <tr>
+                            <th style="border:solid 1px;">Arifin Tahir</th>
+                            <th style="border:solid 1px;">ICT Manager</th>
+                            <th style="border:solid 1px;">{{$detail[0]->date_approver2}}</th>
+                            <th style="border:solid 1px;"></th>
+                            <th style="border:solid 1px;"></th>
+                        </tr>
+                      @else
+                      <tr>
+                            <th height="50" style="border:solid 1px;"></th>
+                            <th style="border:solid 1px;"></th>
+                            <th style="border:solid 1px;"></th>
+                            <th style="border:solid 1px;"></th>
+                            <th style="border:solid 1px;"></th>
                       </tr>
+                      @endif
                       <tr>
                         <td style="border:solid 1px;">Name</td>
                         <td style="border:solid 1px;">Position</td>
@@ -486,8 +606,8 @@ tr:nth-child(even) {
                   <br> 
                     <table>
                       <tr> 
-                        <th style="border:solid 1px;"></th>
-                        <th style="border:solid 1px;"></th>
+                        <th style="border:solid 1px;">{{$detail[0]->ireq_verificator}}</th>
+                        <th style="border:solid 1px;">{{$detail[0]->ireq_assigned_to}}</th>
                         <th style="border:solid 1px;">{{$detail[0]->date_assigned}}</th>
                         <th style="border:solid 1px;"></th>
                         <th style="border:solid 1px;"></th>
@@ -512,7 +632,7 @@ tr:nth-child(even) {
                 <div class="row contacts">
                     <div class="col invoice-to">
                         <div class="address" style="font-weight:bold">Solution/Action Implemented/Analysis</div>
-                            <textarea rows="10" cols="120" style="resize: none; border:solid 1px;" disabled> </textarea>
+                            <textarea rows="8" cols="110" class="textareacss" disabled> </textarea>
                     </div>
                     <div class="col invoice-to">
                       <br>
@@ -520,10 +640,10 @@ tr:nth-child(even) {
                         <div class="address" style="font-weight:bold"></div>
                           <table id="tes" style="table-layout:fixed;">
                             <tr> 
-                                <th style="height:132px; border:solid 1px; "> Adhitya Trinanda Saputro </th>
+                                <th style="height:100px; border:solid 1px; "> </th>
                             </tr>
                             <tr>
-                                <td style="height:132px;border:solid 1px;">Further Action By</td>
+                                <td style="height:100px;border:solid 1px;">Further Action By</td>
                             </tr>
                           </table>
                           </div>
@@ -535,8 +655,8 @@ tr:nth-child(even) {
                           <br> 
                             <table>
                             <tr> 
-                                <th style="height:100px; width:200px; border:solid 1px;">tes</th>
-                                <th style="height:100px; width:200px; border:solid 1px;">tess</th>
+                                <th style="height:50px; width:200px; border:solid 1px;"></th>
+                                <th style="width:200px; border:solid 1px;"></th>
                                 <th style="border:solid 1px;"></th>
                             </tr>
                             <tr>
@@ -549,7 +669,7 @@ tr:nth-child(even) {
                 </div>
             </main>
             <footer>
-                This pdf was created on a system and is valid without the signature and seal.
+                <strong>This PDF was created on a system and is valid without the signature and seal.</strong>
             </footer>
         </div>
         <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->

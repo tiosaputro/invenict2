@@ -120,6 +120,9 @@ class IctDetailController extends Controller
             $join->on('im.ireq_status','lr.lookup_code')
                   ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         })
+        ->leftJoin('ireq_dtl as id',function ($join) {
+            $join->on('im.ireq_id','id.ireq_id');
+        })
         ->select('im.ireq_no as noreq','im.ireq_type','im.ireq_status as cekStatus',
                 'lr.lookup_desc as ireq_status')
          ->where('im.ireq_id',$code)
@@ -392,9 +395,13 @@ class IctDetailController extends Controller
     public function cetak_pdf_sedang_dikerjakan($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('id.ireq_type','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname','id.ireq_remark','lllr.lookup_desc as prio_level','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
-                'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned"),DB::raw("TO_CHAR(imm.ireq_date,'HH24:MI') as time_request"),DB::raw("TO_CHAR(imm.ireq_approver1_date,' dd Mon YYYY') as date_approver1"),
-                DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status','lrs.lookup_desc as name')
+        ->select('id.ireq_type','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname','id.ireq_remark','lllr.lookup_desc as prio_level',
+                'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type', 'vr.name as ireq_bu',
+                DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned"),
+                DB::raw("TO_CHAR(imm.ireq_date,'HH24:MI') as time_request"),DB::raw("TO_CHAR(imm.ireq_approver1_date,' dd Mon YYYY') as date_approver1"),
+                DB::raw("COALESCE(imm.ireq_assigned_to2,imm.ireq_assigned_to1) AS ireq_assigned_to"),'imm.ireq_verificator',
+                DB::raw("TO_CHAR(imm.ireq_approver2_date,' dd Mon YYYY') as date_approver2"),
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status','lrs.lookup_desc as name')
         ->leftJoin('lookup_refs as lrs',function ($join) {
             $join->on('id.invent_code','lrs.lookup_code')
                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);

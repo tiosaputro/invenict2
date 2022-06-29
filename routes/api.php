@@ -352,7 +352,7 @@ Route::get('/report-ict-detail-pdf-tab-verifikasi/{code}','IctDetailController@c
 Route::get('/report-ict-detail-excel-tab-verifikasi/{code}','IctDetailController@cetak_excel_tab_verifikasi');
 Route::get('/report-ict-detail-pdf-tab-reject/{code}','IctDetailController@cetak_pdf_reject');
 Route::get('/report-ict-detail-excel-tab-reject/{code}','IctDetailController@cetak_excel_reject');
-Route::get('/report-ict-detail-pdf-tab-sedang-dikerjakan/{code}','IctDetailController@cetak_pdf_sedang_dikerjakan');
+Route::get('/print-out-ict-request/{code}','IctDetailController@cetak_pdf_sedang_dikerjakan');
 Route::get('/report-ict-detail-excel-tab-sedang-dikerjakan/{code}','IctDetailController@cetak_excel_sedang_dikerjakan');
 
 //report atasan requestor

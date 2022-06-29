@@ -191,14 +191,14 @@
                   <Column style="min-width:15rem">
                   <template #body="slotProps">
                     <Button
-                      v-if="slotProps.data.ireq_status == 'Penugasan'"
+                      v-if="slotProps.data.status == 'T'"
                       class="p-button-rounded p-button-info mr-2"
                       v-tooltip.left="'Ubah Status'"
                       icon="pi pi-pencil"
                       @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                     />
                     <Button
-                      v-if="slotProps.data.ireq_status == 'Penugasan'"
+                      v-if="slotProps.data.status == 'T'"
                       class="p-button-rounded p-button-help mr-2"
                       icon="bi bi-journal-text"
                       v-tooltip.bottom="'Note'"

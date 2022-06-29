@@ -148,7 +148,7 @@ export default {
       });
     },
     CetakPdfSedangDikerjakan(){
-     window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/'+this.$route.params.code);
+     window.open('/api/print-out-ict-request/'+this.$route.params.code);
     },
     CetakExcelSedangDikerjakan(){
       window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.$route.params.code);

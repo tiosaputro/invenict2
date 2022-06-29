@@ -489,7 +489,7 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
@@ -760,7 +760,18 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <template #footer>
+                  <!-- <Column>
+                  <template #body="slotProps">
+                    <Button
+                      label="Pdf"
+                      class="p-button-raised p-button-danger mr-2"
+                      v-tooltip.bottom="'Click to print out (PDF)'"
+                      icon="pi pi-file-pdf"
+                      @click="CetakPdf(slotProps.data.ireq_id)"
+                    />
+                    </template>
+                  </Column> -->
+                  <!-- <template #footer>
                       <div class="grid dir-col">
                       <div class="col">
                         <div class="box">
@@ -779,7 +790,7 @@
                         </div>
                       </div>
                     </div>
-                  </template>
+                  </template> -->
                 </DataTable>
                 </TabPanel>
             </TabView>
@@ -1157,6 +1168,9 @@ export default {
     },
     CetakExcelSelesai(){
       window.open('api/report-ict-excel-reviewer-selesai');
+    },
+    CetakPdf(ireq_id){
+      window.open('/api/print-out-ict-request/' +ireq_id);
     },
   },
 };

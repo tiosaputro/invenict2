@@ -74,7 +74,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.right="'Detail'"
+                v-tooltip.right="'Click to view detail'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc Requestor',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -150,7 +150,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc Requestor',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -225,7 +225,7 @@
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
                 @click="$router.push({
@@ -304,7 +304,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                       name: 'Ict Request Desc Detail Penugasan',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -516,7 +516,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -599,7 +599,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -676,7 +676,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -753,7 +753,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -972,7 +972,7 @@
               <Button
                 class="p-button-rounded p-button-sm p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -1086,7 +1086,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                   name: 'Ict Request Desc Detail Penugasan',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -1665,7 +1665,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1753,7 +1753,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.Right="'Detail'"
+                v-tooltip.Right="'Click to view detail'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1896,7 +1896,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1967,7 +1967,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click to view detail'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2252,7 +2252,7 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.left="'Detail'"
+              v-tooltip.left="'Click to view detail'"
               @click="$router.push({
                 name: 'Ict Request Detail Desc',
                 params: { code: slotProps.data.ireq_id }, })"
@@ -2360,7 +2360,7 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.left="'Detail'"
+              v-tooltip.left="'Click to view detail'"
               @click="$router.push({
                 name: 'Ict Request Detail Desc',
                 params: { code: slotProps.data.ireq_id }, })"
@@ -3285,7 +3285,7 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.right="'Detail'"
+              v-tooltip.right="'Click to view detail'"
               @click="$router.push({
                 name: 'Ict Request Reviewer Detail',
                 params: { code: slotProps.data.ireq_id }, })"
@@ -3371,7 +3371,7 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.right="'Detail'"
+              v-tooltip.right="'Click to view detail'"
               @click="$router.push({
                 name: 'Ict Request Detail Desc',
                 params: { code: slotProps.data.ireq_id }, })"

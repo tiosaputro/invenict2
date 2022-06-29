@@ -253,7 +253,7 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "100px"
   }
-}, "Nama Peripheral", -1
+}, "Request Type", -1
 /* HOISTED */
 );
 
@@ -272,7 +272,7 @@ var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "100px"
   }
-}, "Petugas (ICT)", -1
+}, "Peripheral", -1
 /* HOISTED */
 );
 
@@ -280,6 +280,44 @@ var _hoisted_25 = {
   "class": "col-fixed"
 };
 var _hoisted_26 = {
+  "class": "p-fluid"
+};
+var _hoisted_27 = {
+  "class": "field grid"
+};
+
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Remark", -1
+/* HOISTED */
+);
+
+var _hoisted_29 = {
+  "class": "col-fixed"
+};
+var _hoisted_30 = {
+  "class": "p-fluid"
+};
+var _hoisted_31 = {
+  "class": "field grid"
+};
+
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Petugas (ICT)", -1
+/* HOISTED */
+);
+
+var _hoisted_33 = {
+  "class": "col-fixed"
+};
+var _hoisted_34 = {
   key: 0,
   "class": "p-error"
 };
@@ -360,14 +398,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_type",
-        header: "Tipe Request",
+        header: "Request Type",
         sortable: true,
         style: {
           "min-width": "9rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
-        header: "Nama Peripheral",
+        header: "Peripheral",
         sortable: true,
         style: {
           "min-width": "9rem"
@@ -381,14 +419,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_remark",
-        header: "Keterangan",
+        header: "Remark",
         sortable: true,
         style: {
           "min-width": "9rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_assigned_to1",
-        header: "Petugas (ICT)",
+        header: "Personnel (ICT)",
         sortable: true,
         style: {
           "min-width": "9rem"
@@ -421,7 +459,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogAssign,
-    "onUpdate:visible": _cache[7] || (_cache[7] = function ($event) {
+    "onUpdate:visible": _cache[9] || (_cache[9] = function ($event) {
       return $data.dialogAssign = $event;
     }),
     style: {
@@ -435,14 +473,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Simpan",
-        onClick: _cache[5] || (_cache[5] = function ($event) {
+        onClick: _cache[7] || (_cache[7] = function ($event) {
           return $options.updateAssign();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Cancel",
-        onClick: _cache[6] || (_cache[6] = function ($event) {
+        onClick: _cache[8] || (_cache[8] = function ($event) {
           return $options.cancelAssign();
         }),
         "class": "p-button-text"
@@ -458,16 +496,32 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-        modelValue: $data.assign.name,
+        modelValue: $data.assign.ireq_type,
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+          return $data.assign.ireq_type = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.assign.name,
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $data.assign.name = $event;
         }),
         disabled: ""
       }, null, 8
       /* PROPS */
-      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.assign.ireq_remark,
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+          return $data.assign.ireq_remark = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
         modelValue: $data.assign.ireq_assigned_to1,
-        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
           return $data.assign.ireq_assigned_to1 = $event;
         }),
         options: $data.petugas,
@@ -479,7 +533,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.ireq_assigned_to1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_26, " Petugas(ICT) Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.ireq_assigned_to1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_34, " Petugas(ICT) Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */

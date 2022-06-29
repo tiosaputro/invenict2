@@ -104,7 +104,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
-      window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' + this.$route.params.code);
+      window.open('/api/print-out-ict-request/' + this.$route.params.code);
     },
     CetakExcelSedangDikerjakan: function CetakExcelSedangDikerjakan() {
       window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' + this.$route.params.code);

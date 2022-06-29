@@ -60,10 +60,18 @@
 				        <div class="box">
                    <Button
                     label="Back"
+                    v-tooltip.bottom="'Click to back'"
                     class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Ict Request Reviewer'})"
+                  />
+                   <Button
+                    label="Pdf"
+                    class="p-button-raised p-button-danger mt-2"
+                    v-tooltip.bottom="'Click to print out (PDF)'"
+                    icon="pi pi-file-pdf"
+                    @click="CetakPdf()"
                   />
                 </div>
 			        </div>
@@ -137,6 +145,9 @@ export default {
         this.kode = response.data.noreq;
         this.status = response.data.cekstatus;
       });
+    },
+    CetakPdf(){
+      window.open('/api/print-out-ict-request/' +this.$route.params.code);
     },
   },
 };

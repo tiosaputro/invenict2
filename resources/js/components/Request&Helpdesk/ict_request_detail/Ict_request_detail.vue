@@ -69,14 +69,18 @@
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span v-if="slotProps.data.status" :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
                 v-if=" slotProps.data.ireq_status == null"
                 class="p-button-rounded p-button-info mr-2"
                 icon="pi pi-pencil"
-                v-tooltip.left="'Edit'"
+                v-tooltip.left="'Click to edit data'"
                 @click="
                   $router.push({
                     name: 'Edit Ict Request Detail',
@@ -85,37 +89,40 @@
               <Button
                 v-if=" slotProps.data.ireq_status == null"
                 icon="pi pi-trash"
-                v-tooltip.right="'Delete'"
+                v-tooltip.right="'Click to delete data'"
                 class="p-button-rounded p-button-danger mr-2"
                 @click="DeleteIct(slotProps.data.ireqd_id,this.code)"
               />
             </template>
           </Column>
-          <template>
+          <template #footer>
             <div class="grid dir-col">
 			        <div class="col">
 				        <div class="box">
                    <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
+                    v-tooltip.bottom="'Click to back'"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Ict Request'})"
                   />
                   <Button
-                    class="p-button-rounded p-button-success mt-2"
+                    class="p-button-raised p-button-success mr-2"
                     icon="pi pi-check"
-                    @click="SubmitIct(slotProps.data.ireq_id)"
-                    v-tooltip.Right="'Click to submit request'"
+                    label="Submit"
+                    v-if="this.detail.length && this.status == null"
+                    @click="SubmitIct()"
+                    v-tooltip.bottom="'Click to submit request'"
                   />
-                  <Button
-                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'"
+                   <Button
                     label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
+                    class="p-button-raised p-button-danger mt-2"
+                    v-tooltip.bottom="'Click to print out (PDF)'"
                     icon="pi pi-file-pdf"
-                    @click="CetakPdfReject()"
+                    @click="CetakPdf()"
                   />
-                  <Button
+                  <!-- <Button
                     v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'" 
                     label="Excel"
                     class="p-button-raised p-button-success mt-2"
@@ -177,7 +184,7 @@
                     class="p-button-raised p-button-success mt-2"
                     icon="pi pi-print"
                     @click="CetakExcelTabSedangDikerjakan()" 
-                  />
+                  /> -->
                 </div>
 			        </div>
             </div>
@@ -274,36 +281,57 @@ export default {
         reject: () => {},
       });
     },
+     SubmitIct(){
+      this.$confirm.require({
+        message: "Are you sure you want to submit this request?",
+        header: "Confirmation Submit",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
+        accept: () => {
+          this.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Successfully Submit",
+            life: 3000,
+          });
+          this.axios.get('/api/updateStatusSubmit/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
+          setTimeout( () => this.$router.push('/ict-request'),1000);
+        },
+        reject: () => {},
+      })
+    },
     CetakPdf(){
-      window.open('/api/report-ict-detail-pdf/' +this.code);
+      window.open('/api/print-out-ict-request/' +this.code);
     },
-    CetakExcel(){
-      window.open('/api/report-ict-detail-excel/' +this.code);
-    },
-    CetakPdfReject(){
-      window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
-    },
-    CetakExcelReject(){
-      window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
-    },
-    CetakPdfTabReviewer(){
-      window.open('/api/report-ict-detail-pdf-tab-reviewer/' +this.code);
-    },
-    CetakExcelTabReviewer(){
-      window.open('/api/report-ict-detail-excel-tab-reviewer/' +this.code);
-    },
-    CetakPdfTabVerifikasi(){
-      window.open('/api/report-ict-detail-pdf-tab-verifikasi/' +this.code);
-    },
-    CetakExcelTabVerifikasi(){
-      window.open('/api/report-ict-detail-excel-tab-verifikasi/' +this.code);
-    },
-    CetakPdfTabSedangDikerjakan(){
-      window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' +this.code);
-    },
-    CetakExcelTabSedangDikerjakan(){
-      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' +this.code);
-    },
+    // CetakExcel(){
+    //   window.open('/api/report-ict-detail-excel/' +this.code);
+    // },
+    // CetakPdfReject(){
+    //   window.open('/api/print-out-ict-request/' +this.code);
+    // },
+    // CetakExcelReject(){
+    //   window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
+    // },
+    // CetakPdfTabReviewer(){
+    //   window.open('/api/report-ict-detail-pdf-tab-reviewer/' +this.code);
+    // },
+    // CetakExcelTabReviewer(){
+    //   window.open('/api/report-ict-detail-excel-tab-reviewer/' +this.code);
+    // },
+    // CetakPdfTabVerifikasi(){
+    //   window.open('/api/report-ict-detail-pdf-tab-verifikasi/' +this.code);
+    // },
+    // CetakExcelTabVerifikasi(){
+    //   window.open('/api/report-ict-detail-excel-tab-verifikasi/' +this.code);
+    // },
+    // CetakPdfTabSedangDikerjakan(){
+    //   window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' +this.code);
+    // },
+    // CetakExcelTabSedangDikerjakan(){
+    //   window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' +this.code);
+    // },
   },
 };
 </script>

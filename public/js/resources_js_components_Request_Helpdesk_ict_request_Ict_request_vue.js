@@ -580,15 +580,15 @@ var _hoisted_68 = {
   "class": "col-fixed"
 };
 
-var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Sangat Kurang");
+var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Very Less");
 
-var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Kurang");
+var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Less");
 
-var _hoisted_71 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Biasa");
+var _hoisted_71 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Normal");
 
-var _hoisted_72 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("bagus");
+var _hoisted_72 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Good");
 
-var _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Sangat Bagus");
+var _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Very Good");
 
 var _hoisted_74 = {
   key: 0,
@@ -725,8 +725,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_requestor",
+                header: "Requestor",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "User",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "User Division",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -748,7 +762,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
                     bottom: true
                   }]]), slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
@@ -764,7 +778,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])), [[_directive_tooltip, 'Edit', void 0, {
+                  , ["onClick"])), [[_directive_tooltip, 'Click to edit data', void 0, {
                     bottom: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 1,
@@ -775,7 +789,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])), [[_directive_tooltip, 'Delete', void 0, {
+                  , ["onClick"])), [[_directive_tooltip, 'Click to delete data', void 0, {
                     top: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.count > 0 && slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 2,
@@ -786,7 +800,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])), [[_directive_tooltip, 'Submit', void 0, {
+                  , ["onClick"])), [[_directive_tooltip, 'Click to submit request', void 0, {
                     Right: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
                 }),
@@ -880,11 +894,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_requestor",
+                header: "Requestor",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "User",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "User Division",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 header: "Status",
@@ -920,7 +948,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -1014,11 +1042,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_requestor",
+                header: "Requestor",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "User",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "User Division",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
@@ -1057,7 +1099,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
                     left: true
                   }]])];
                 }),
@@ -1151,11 +1193,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_requestor",
+                header: "Requestor",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "User",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "User Division",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
@@ -1201,7 +1257,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
                     left: true
                   }]])];
                 }),
@@ -1292,6 +1348,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "User Division",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
                 header: "Personnel ICT",
                 sortable: true,
@@ -1305,6 +1368,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "12rem"
                 }
+              }, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+                    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
+                  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+                  /* TEXT, CLASS */
+                  )];
+                }),
+                _: 1
+                /* STABLE */
+
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
                   "min-width": "8rem"
@@ -1324,7 +1398,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
                     right: true
                   }]])];
                 }),
@@ -1418,11 +1492,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_requestor",
+                header: "Requestor",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "User",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "div_name",
+                header: "User Division",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
@@ -1450,7 +1538,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'View Detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
                     left: true
                   }]])];
                 }),
@@ -1796,7 +1884,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     style: {
       width: '400px'
     },
-    header: "ICT Request",
+    header: "Give Feedback",
     "class": "field grid"
   }, {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1892,11 +1980,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         key: 0,
         autoResize: true,
         type: "text",
+        rows: "5",
         modelValue: $data.reason.ket,
         "onUpdate:modelValue": _cache[23] || (_cache[23] = function ($event) {
           return $data.reason.ket = $event;
         }),
-        placeholder: "Berikan Ulasan ",
+        placeholder: "Tell us about your experience and we will improve the quality of our service",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
           'p-invalid': $data.submitted && !$data.reason.ket
         })

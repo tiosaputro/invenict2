@@ -108,6 +108,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.kode = response.data.noreq;
         _this3.status = response.data.cekstatus;
       });
+    },
+    CetakPdf: function CetakPdf() {
+      window.open('/api/print-out-ict-request/' + this.$route.params.code);
     }
   }
 });
@@ -190,6 +193,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
 
+  var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
@@ -234,7 +239,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_10];
     }),
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
         icon: "pi pi-chevron-left",
@@ -243,7 +248,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 'Ict Request Reviewer'
           });
         })
-      })])])])];
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[_directive_tooltip, 'Click to back', void 0, {
+        bottom: true
+      }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Pdf",
+        "class": "p-button-raised p-button-danger mt-2",
+        icon: "pi pi-file-pdf",
+        onClick: _cache[2] || (_cache[2] = function ($event) {
+          return $options.CetakPdf();
+        })
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+        bottom: true
+      }]])])])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
