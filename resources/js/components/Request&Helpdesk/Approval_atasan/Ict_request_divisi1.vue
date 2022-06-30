@@ -48,7 +48,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                    <template #body= "slotProps">
+                        <span :class="'user-request status-' + slotProps.data.ireq_statuss.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -128,7 +132,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                    <template #body= "slotProps">
+                      <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -202,7 +210,11 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                    <template #body= "slotProps">
+                      <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <Column style="min-width:12rem">
                     <template #body="slotProps">
                       <Button
@@ -276,7 +288,11 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                    <template #body= "slotProps">
+                      <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <Column style="min-width:8rem">
                     <template #body="slotProps">
                       <Button
@@ -428,7 +444,11 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
+                    <template #body= "slotProps">
+                      <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <template #footer>
                     <div class="grid dir-col">
                       <div class="col">
@@ -493,7 +513,11 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
+                    <template #body= "slotProps">
+                      <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
+                  </Column>
                   <template #footer>
                     <div class="grid dir-col">
                       <div class="col">
@@ -621,12 +645,12 @@ export default {
     approve(){
       this.confirmationVerifikasi = false;
       this.$confirm.require({
-            message: "Are you sure you agree to this request?",
+            message: "Are you sure you approve to this request?",
             header: "Confirmation Approval",
             icon: "pi pi-info-circle",
             acceptClass: "p-button",
-            acceptLabel: "Ya",
-            rejectLabel: "Tidak",
+            acceptLabel: "Yes",
+            rejectLabel: "No",
             accept: () => {
               this.$toast.add({
                 severity: "info",

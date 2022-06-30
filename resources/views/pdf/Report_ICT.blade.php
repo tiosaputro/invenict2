@@ -2,7 +2,8 @@
 <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<title> ICT REQUEST</title>
+
+<title> ICT REQUEST  {{ date('Y-m-d') }}</title>
 <style>
 #invoice{
     padding: 30px;
@@ -78,30 +79,34 @@ p {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    margin-bottom: 20px
+    margin-bottom: 20px;
+    table-layout:fixed;
 }
 
 .invoice table td,.invoice table th {
     padding: 15px;
-    background: #eee;
-    border-bottom: 1px solid #fff
+    border-bottom: 1px solid #fff;
+    max-height: 0.5px;
 }
 
 .invoice table th {
-    white-space: nowrap;
+    /* white-space: nowrap; */
     font-weight: 400;
-    font-size: 14px
+    font-size: 14px;
+    table-layout:fixed;
+
 }
 
 .invoice table td h3 {
     margin: 0;
     font-weight: 400;
+    max-height: 0.5px;
     color: #3989c6;
     font-size: 1.2em
 }
 
 .invoice table .qty,.invoice table .total,.invoice table .unit {
-    text-align: right;
+    text-align: left;
     font-size: 1.2em
 }
 
@@ -128,7 +133,7 @@ p {
     background: 0 0;
     border-bottom: none;
     white-space: nowrap;
-    text-align: right;
+    text-align: center;
     padding: 10px 20px;
     font-size: 1.2em;
     border-top: 1px solid #aaa
@@ -145,15 +150,15 @@ p {
 }
 
 .invoice table tfoot tr td:first-child {
-    border: none
+    border: none;
 }
 
 .invoice footer {
     width: 100%;
     text-align: center;
-    color: #777;
-    border-top: 1px solid #aaa;
-    padding: 8px 0
+    font-weight:bold;
+    color: black;
+    border-top: 1px solid #3989c6;
 }
 * {
   box-sizing: border-box;
@@ -179,37 +184,61 @@ p {
   display: table;
 }
 
-table {
+.table {
   border-collapse: collapse;
-  border-spacing: 0;
   width: 100%;
-  border: 1px solid #ddd;
+  max-width: 100%;
 }
 th, td {
-  text-align: left;
-  padding: 16px;
-  border: 1px solid #ddd;
   text-align: center;
-  border:solid 1px;
-
+  max-height: 0.5px;
+  padding: 16px;
+  border:solid 2px;
+  overflow-x: scroll;
+  text-overflow: ellipsis;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color:#7CB9E8;
+  font-weight: bold;
 }
 .textareacss{
     resize: none; 
-    border:solid 1px;
+    border:solid 2px;
     font-weight: bold;
     overflow:hidden;
     margin: 1px;
     padding: 1px;
     min-width: 99%;
-    min-height: 200px;
+    min-height: 170px;
+    text-align: left;
+    outline: none;
+}
+.csssolution{
+    resize: none; 
+    border:solid 2px;
+    font-weight: bold;
+    overflow:hidden;
+    margin: 1px;
+    padding: 1px;
+    min-width: 99%;
+    min-height: 150px;
     text-align: left;
     outline: none;
 }
 @media print {
+    .csssolution{
+    resize: none; 
+    border:solid 2px;
+    font-weight: bold;
+    overflow:hidden;
+    margin: 1px;
+    padding: 1px;
+    min-width: 99%;
+    min-height: 120px;
+    text-align: left;
+    outline: none;
+}
     .invoice table {
     width: 100%;
     border-collapse: collapse;
@@ -219,14 +248,15 @@ tr:nth-child(even) {
 
 .invoice table td,.invoice table th {
     padding: 15px;
-    background: #eee;
     border-bottom: 1px solid #fff
 }
 
 .invoice table th {
-    white-space: nowrap;
+    /* white-space: nowrap; */
     font-weight: 400;
-    font-size: 14px
+    font-size: 14px;
+    table-layout:fixed;
+
 }
 
 .invoice table td h3 {
@@ -294,8 +324,11 @@ tr:nth-child(even) {
     }
 
     .invoice footer {
-        position: absolute;
-        bottom: 10px;
+        width: 100%;
+        text-align: center;
+        font-weight:bold;
+        color: black;
+        border-top: 1px solid #3989c6;
     }
 
     .invoice>div:last-child {
@@ -303,14 +336,17 @@ tr:nth-child(even) {
         page-break-after: auto;
     }
     .table {
-        border: solid #000 !important;
-        border-width: 1px 0 0 1px !important;
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%;
     }
     th, td {
-        /* border: solid #000 !important;
-        border-width: 0 1px 1px 0 !important; */
-        border:solid 1px;
-
+        text-align: center;
+        max-height: 0.5px;
+        padding: 16px;
+        border:solid 2px;
+        overflow-x: scroll;
+        text-overflow: ellipsis;
     }
     p {
     font-weight: bold;
@@ -393,14 +429,15 @@ tr:nth-child(even) {
 
 .invoice table td,.invoice table th {
     padding: 15px;
-    background: #eee;
     border-bottom: 1px solid #fff
 }
 
 .invoice table th {
-    white-space: nowrap;
+    /* white-space: nowrap; */
     font-weight: 400;
-    font-size: 14px
+    font-size: 14px;
+    table-layout:fixed;
+
 }
 
 .invoice table td h3 {
@@ -469,13 +506,13 @@ tr:nth-child(even) {
 }
 .textareacss{
     resize: none; 
-    border:solid 1px;
+    border:solid 2px;
     font-weight: bold;
     overflow:hidden;
     margin: 1px;
     padding: 1px;
     min-width: 99%;
-    min-height: 200px;
+    min-height: 170px;
     outline: none;
 }
 
@@ -501,7 +538,7 @@ tr:nth-child(even) {
                     <div class="col company-details">
                         <h2 class="name">
                             <a>
-                                ICT SERVICE REQUEST 
+                                <p>ICT SERVICE REQUEST </p>
                             </a>
                         </h2>
                     </div>
@@ -516,30 +553,27 @@ tr:nth-child(even) {
                 <div class="row contacts" contenteditable="false">
                     <div class="col invoice-to">
                         <div class="address" style="font-weight:bold">I. Description Of Request/Problem Experienced</div>
-                            <textarea class="textareacss" cols="90" rows="8"  disabled> @php $no = 1 @endphp 
+                            <textarea class="textareacss" cols="90" rows="8" style="font-weight: bold" readonly> @php $no = 1 @endphp 
 @foreach($detail as $d)  {{$no++}}.{{$d->ireq_remark}}
 @endforeach
                             </textarea>
                         </div>
                         <div class="col invoice-to">
-                          <div class="address" style="font-weight:bold">Priority Level</div>
-                            <textarea rows="8" cols="25" class="textareacss" disabled> {{$detail[0]->prio_level}}  </textarea>
+                          <div class="address" style="font-weight:bold">No. Request : {{$detail[0]->ireq_no}}</div>
+                            <textarea rows="8" cols="25" class="textareacss" readonly>Priority Level : {{$detail[0]->prio_level}}  </textarea>
                         </div>
                 </div>
                 <div class="row">
                     <div class="column">
                         <table> <p> II. Requester / Reported By : </p>
                         <tr>
-                            <th style="border:solid 1px;">{{$detail[0]->div_name}}</th>
-                            <th style="border:solid 1px;">{{$detail[0]->ireq_requestor}}</th>
-                            <th style="border:solid 1px;">{{$detail[0]->date_request}}</th>
-                            <th style="border:solid 1px;">{{$detail[0]->time_request}}</th>
+                            <th style="height:75px;">{{$detail[0]->ireq_requestor}}</th>
+                            <th>{{$detail[0]->div_name}}</th>
+                            <th rowspan="2" style="border:solid 2px;font-weight:bold;">Request on {{$detail[0]->date_request}} and verified by the system </th>
                         </tr>
                         <tr>
-                            <td style="border:solid 1px;">Divison</td>
-                            <td style="border:solid 1px;">Name</td>
-                            <td style="border:solid 1px;">Date</td>
-                            <td style="border:solid 1px;">Time</td>
+                            <td style="border:solid 2px;">Name</td>
+                            <td style="border:solid 2px;">Divison</td>
                         </tr>
                         </table>
                     </div>
@@ -547,24 +581,24 @@ tr:nth-child(even) {
                         <table> <p> Approved By : (For new installation/software loan) </p>
                             @if ($detail[0]->date_approver1)
                             <tr>
-                                <th style="border:solid 1px;">{{$detail[0]->usr_fullname}}</th>
-                                <th style="border:solid 1px;">Manager {{$detail[0]->div_name}}</th>
-                                <th style="border:solid 1px;">{{$detail[0]->date_approver1}}</th>
-                                <th style="border:solid 1px;"></th>
+                                <th>{{$detail[0]->usr_fullname}}</th>
+                                <th>Manager {{$detail[0]->div_name}}</th>
+                                 @if($detail[0]->status == "RA1")
+                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;">Rejected on {{$detail[0]->date_approver1}} and verified by the system</th>
+                                 @else
+                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;">Approved on {{$detail[0]->date_approver1}} and verified by the system</th>
+                                 @endif
                             </tr>
                             @else
                             <tr>
-                                <th height="50px" style="border:solid 1px;"></th>
-                                <th style="border:solid 1px;"></th>
-                                <th style="border:solid 1px;"></th>
-                                <th style="border:solid 1px;"></th>
+                                <th style="height:75px;"></th>
+                                <th></th>
+                                <th rowspan="2" style="border:solid 2px;"></th>
                             </tr>
                             @endif
                             <tr>
-                                <td style="border:solid 1px;">Name</td>
-                                <td style="border:solid 1px;">Position</td>
-                                <td style="border:solid 1px;">Date</td>
-                                <td style="border:solid 1px;">Signature</td>
+                                <td style="border:solid 2px;">Name</td>
+                                <td style="border:solid 2px;">Position</td>
                             </tr>
                         </table>
                     </div>
@@ -577,27 +611,27 @@ tr:nth-child(even) {
                     <table> <p> Approved By :   (Note : Sr. Manager approval needed for new equipment/software/tools)</p>
                         @if($detail[0]->date_approver2)
                         <tr>
-                            <th style="border:solid 1px;">Arifin Tahir</th>
-                            <th style="border:solid 1px;">ICT Manager</th>
-                            <th style="border:solid 1px;">{{$detail[0]->date_approver2}}</th>
-                            <th style="border:solid 1px;"></th>
-                            <th style="border:solid 1px;"></th>
+                            <th>Arifin Tahir</th>
+                            <th>ICT Manager</th>
+                            @if($detail[0]->status=='RA2')
+                             <th rowspan="2" style="border:solid 2px;font-weight:bold;">Rejected on {{$detail[0]->date_approver2}} and verified by the system</th>
+                            @else
+                             <th rowspan="2" style="border:solid 2px;font-weight:bold;">Approved on {{$detail[0]->date_approver2}} and verified by the system</th>
+                            @endif
+                            <th></th>
                         </tr>
                       @else
                       <tr>
-                            <th height="50" style="border:solid 1px;"></th>
-                            <th style="border:solid 1px;"></th>
-                            <th style="border:solid 1px;"></th>
-                            <th style="border:solid 1px;"></th>
-                            <th style="border:solid 1px;"></th>
+                            <th height="50"></th>
+                            <th></th>
+                            <th rowspan="2" style="border:solid 2px;"></th>
+                            <th></th>
                       </tr>
                       @endif
                       <tr>
-                        <td style="border:solid 1px;">Name</td>
-                        <td style="border:solid 1px;">Position</td>
-                        <td style="border:solid 1px;">Date</td>
-                        <td style="border:solid 1px;">Signature</td>
-                        <td style="border:solid 1px;">Remarks(Including OE if required)</td>
+                        <td style="border:solid 2px;">Name</td>
+                        <td style="border:solid 2px;">Position</td>
+                        <td style="border:solid 2px;">Remarks(Including OE if required)</td>
                       </tr>
                     </table>
                 </div>
@@ -606,24 +640,24 @@ tr:nth-child(even) {
                   <br> 
                     <table>
                       <tr> 
-                        <th style="border:solid 1px;">{{$detail[0]->ireq_verificator}}</th>
-                        <th style="border:solid 1px;">{{$detail[0]->ireq_assigned_to}}</th>
-                        <th style="border:solid 1px;">{{$detail[0]->date_assigned}}</th>
-                        <th style="border:solid 1px;"></th>
-                        <th style="border:solid 1px;"></th>
-                        <th style="border:solid 1px;"></th>
-                        <th style="border:solid 1px;"></th>
-                        <th style="border:solid 1px;"></th>
+                        <th>{{$detail[0]->ireq_verificator}}</th>
+                        <th>{{$detail[0]->ireq_assigned_to}}</th>
+                        <th>{{$detail[0]->date_assigned}}</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                       </tr>
                       <tr>
-                        <td style="border:solid 1px;">Received By</td>
-                        <td style="border:solid 1px;">Assigned To</td>
-                        <td style="border:solid 1px;">Date Assigned</td>
-                        <td style="border:solid 1px;">Date Completed</td>
-                        <td style="border:solid 1px;">Manpower Effort</td>
-                        <td style="border:solid 1px;">Costs</td>
-                        <td style="border:solid 1px;">Category *(A/I/N/S)</td>
-                        <td style="border:solid 1px;">Problem Area</td>
+                        <td style="border:solid 2px;">Received By</td>
+                        <td style="border:solid 2px;">Assigned To</td>
+                        <td style="border:solid 2px;">Date Assigned</td>
+                        <td style="border:solid 2px;">Date Completed</td>
+                        <td style="border:solid 2px;">Manpower Effort</td>
+                        <td style="border:solid 2px;">Costs</td>
+                        <td style="border:solid 2px;">Category *(A/I/N/S)</td>
+                        <td style="border:solid 2px;">Problem Area</td>
                       </tr>
                     </table>
                 </div>
@@ -632,7 +666,7 @@ tr:nth-child(even) {
                 <div class="row contacts">
                     <div class="col invoice-to">
                         <div class="address" style="font-weight:bold">Solution/Action Implemented/Analysis</div>
-                            <textarea rows="8" cols="110" class="textareacss" disabled> </textarea>
+                            <textarea cols="110" class="csssolution" readonly> </textarea>
                     </div>
                     <div class="col invoice-to">
                       <br>
@@ -640,10 +674,10 @@ tr:nth-child(even) {
                         <div class="address" style="font-weight:bold"></div>
                           <table id="tes" style="table-layout:fixed;">
                             <tr> 
-                                <th style="height:100px; border:solid 1px; "> </th>
+                                <th style="height:70px;"> </th>
                             </tr>
                             <tr>
-                                <td style="height:100px;border:solid 1px;">Further Action By</td>
+                                <td style="height:0px;border:solid 2px;">Further Action By</td>
                             </tr>
                           </table>
                           </div>
@@ -655,14 +689,14 @@ tr:nth-child(even) {
                           <br> 
                             <table>
                             <tr> 
-                                <th style="height:50px; width:200px; border:solid 1px;"></th>
-                                <th style="width:200px; border:solid 1px;"></th>
-                                <th style="border:solid 1px;"></th>
+                                <th style="height:50px; width:200px;"></th>
+                                <th style="width:200px; border:solid 2px;"></th>
+                                <th></th>
                             </tr>
                             <tr>
-                                <td style="border:solid 1px;">User/Signature</td>
-                                <td style="border:solid 1px;">Date & Time</td>
-                                <td style="text-align: center; border:solid 1px; ">Remarks</td>
+                                <td style="border:solid 2px;height:0.5px;">User/Signature</td>
+                                <td style="border:solid 2px;">Date & Time</td>
+                                <td style="text-align: center; border:solid 2px; ">Remarks</td>
                             </tr>
                             </table>
                     </div>
