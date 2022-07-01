@@ -134,7 +134,7 @@
                   </template>
                 </DataTable>   
               </TabPanel>
-                <TabPanel header="Atasan Divisi">
+                <TabPanel header="Higher Level">
                   <DataTable
                     :value="atasandivisi"
                     :paginator="true"
@@ -144,7 +144,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Atasan Divisi"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Higher Level"
                     responsiveLayout="scroll"
                  >
                 <template #header>

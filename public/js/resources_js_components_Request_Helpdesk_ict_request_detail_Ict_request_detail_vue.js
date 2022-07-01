@@ -394,7 +394,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* NEED_PATCH */
       )), [[_directive_tooltip, 'Click to submit request', void 0, {
         bottom: true
-      }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+      }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status != null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+        key: 1,
         label: "Pdf",
         "class": "p-button-raised p-button-danger mt-2",
         icon: "pi pi-file-pdf",
@@ -403,9 +404,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 512
       /* NEED_PATCH */
-      ), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+      )), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
         bottom: true
-      }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\n                    v-if=\"this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'\" \n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcelReject()\" \n                  />\n                  <Button\n                    v-if=\"this.status == 'P'\" \n                    label=\"Pdf\"\n                    class=\"p-button-raised p-button-danger mr-2\"\n                    icon=\"pi pi-file-pdf\"\n                    @click=\"CetakPdf()\"\n                  />\n                  <Button\n                    v-if=\"this.status == 'P'\" \n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcel()\" \n                  />\n                  <Button\n                    v-if=\"this.status == 'NA1' || this.status == 'NA2'\" \n                    label=\"Pdf\"\n                    class=\"p-button-raised p-button-danger mr-2\"\n                    icon=\"pi pi-file-pdf\"\n                    @click=\"CetakPdfTabReviewer()\"\n                  />\n                  <Button\n                    v-if=\"this.status == 'NA1' || this.status == 'NA2'\"\n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcelTabReviewer()\" \n                  />\n                  <Button\n                    v-if=\"this.status == 'A1' || this.status == 'A2'\" \n                    label=\"Pdf\"\n                    class=\"p-button-raised p-button-danger mr-2\"\n                    icon=\"pi pi-file-pdf\"\n                    @click=\"CetakPdfTabVerifikasi()\"\n                  />\n                  <Button\n                    v-if=\"this.status == 'A1' || this.status == 'A2'\"\n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcelTabVerifikasi()\" \n                  />\n                  <Button\n                    v-if=\"this.status =='T'\" \n                    label=\"Pdf\"\n                    class=\"p-button-raised p-button-danger mr-2\"\n                    icon=\"pi pi-file-pdf\"\n                    @click=\"CetakPdfTabSedangDikerjakan()\"\n                  />\n                  <Button\n                    v-if=\"this.status == 'T'\"\n                    label=\"Excel\"\n                    class=\"p-button-raised p-button-success mt-2\"\n                    icon=\"pi pi-print\"\n                    @click=\"CetakExcelTabSedangDikerjakan()\" \n                  /> ")])])])];
+      }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {

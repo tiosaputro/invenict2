@@ -6,7 +6,7 @@
       <!-- Section: CTA -->
       <section class="">
         <p class="d-flex justify-content-center align-items-center">
-          <span class="me-3">Need Help? Click <a rel="noopener" href="mailto:icthelpdesk.admin@emp.id?subject=Need%20help%20for%20approval&body=" target="_blank">here</a></span>
+          <span class="me-3">Need Help? Click <a rel="noopener" href="mailto:icthelpdesk.admin@emp.id?subject=%20help%20for%20app%20usage&body=" target="_blank">here</a></span>
         </p>
       </section>
       <!-- Section: CTA -->

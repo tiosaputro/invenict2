@@ -342,7 +342,7 @@
                   </template>
                 </DataTable>  
                 </TabPanel>
-                <TabPanel header="Assignment Request">
+                <TabPanel header="Request Assignment">
                   <DataTable
                     :value="penugasan"
                     :paginator="true"
@@ -352,7 +352,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Assignment Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request Assignment"
                     responsiveLayout="scroll"
                   >
                   <template #header>

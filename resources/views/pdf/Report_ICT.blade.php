@@ -77,6 +77,7 @@ p {
 
 .invoice table {
     width: 100%;
+    border:solid 2px;
     border-collapse: collapse;
     border-spacing: 0;
     margin-bottom: 20px;
@@ -186,16 +187,31 @@ p {
 
 .table {
   border-collapse: collapse;
-  width: 100%;
-  max-width: 100%;
+  border:solid 2px;
+  width: 99%;
+  max-width: 99%;
 }
-th, td {
+td {
+  max-width:1px;
+  vertical-align: top;
   text-align: center;
   max-height: 0.5px;
-  padding: 16px;
+  padding: 0;
   border:solid 2px;
   overflow-x: scroll;
   text-overflow: ellipsis;
+  font-weight:bold;
+}
+th{
+  vertical-align: top;
+  text-align: center;
+  max-height: 0.5px;
+  padding: 0;
+  border:solid 2px;
+  overflow-x: scroll;
+  text-overflow: ellipsis;
+  border:solid 2px;
+  font-weight:bold;
 }
 
 tr:nth-child(even) {
@@ -241,6 +257,7 @@ tr:nth-child(even) {
 }
     .invoice table {
     width: 100%;
+    border:solid 2px;
     border-collapse: collapse;
     border-spacing: 0;
     margin-bottom: 1px;
@@ -337,17 +354,32 @@ tr:nth-child(even) {
     }
     .table {
         border-collapse: collapse;
-        width: 100%;
+        border:solid 2px;
+        width: 199%;
         max-width: 100%;
     }
-    th, td {
-        text-align: center;
-        max-height: 0.5px;
-        padding: 16px;
-        border:solid 2px;
-        overflow-x: scroll;
-        text-overflow: ellipsis;
-    }
+td {
+    vertical-align: top;
+    max-width:1px;
+    text-align: center;
+    max-height: 0.5px;
+    padding: 0;
+    border:solid 2px;
+    overflow-x: scroll;
+    font-weight:bold;
+    text-overflow: ellipsis;
+}
+th{
+  vertical-align: top;
+  text-align: center;
+  max-height: 0.5px;
+  padding: 0;
+  border:solid 2px;
+  overflow-x: scroll;
+  text-overflow: ellipsis;
+  font-weight:bold;
+  border:solid 2px;
+}
     p {
     font-weight: bold;
 }
@@ -569,7 +601,7 @@ tr:nth-child(even) {
                         <tr>
                             <th style="height:75px;">{{$detail[0]->ireq_requestor}}</th>
                             <th>{{$detail[0]->div_name}}</th>
-                            <th rowspan="2" style="border:solid 2px;font-weight:bold;">Request on {{$detail[0]->date_request}} and verified by the system </th>
+                            <th rowspan="2" style="border:solid 2px;font-weight:bold;">Requested on {{$detail[0]->date_request}} and verified by the system </th>
                         </tr>
                         <tr>
                             <td style="border:solid 2px;">Name</td>
@@ -591,7 +623,7 @@ tr:nth-child(even) {
                             </tr>
                             @else
                             <tr>
-                                <th style="height:75px;"></th>
+                                <th style="height:95px;"></th>
                                 <th></th>
                                 <th rowspan="2" style="border:solid 2px;"></th>
                             </tr>

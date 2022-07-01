@@ -120,71 +120,9 @@
                     class="p-button-raised p-button-danger mt-2"
                     v-tooltip.bottom="'Click to print out (PDF)'"
                     icon="pi pi-file-pdf"
+                    v-if="this.status != null"
                     @click="CetakPdf()"
                   />
-                  <!-- <Button
-                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'" 
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcelReject()" 
-                  />
-                  <Button
-                    v-if="this.status == 'P'" 
-                    label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
-                    icon="pi pi-file-pdf"
-                    @click="CetakPdf()"
-                  />
-                  <Button
-                    v-if="this.status == 'P'" 
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcel()" 
-                  />
-                  <Button
-                    v-if="this.status == 'NA1' || this.status == 'NA2'" 
-                    label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
-                    icon="pi pi-file-pdf"
-                    @click="CetakPdfTabReviewer()"
-                  />
-                  <Button
-                    v-if="this.status == 'NA1' || this.status == 'NA2'"
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcelTabReviewer()" 
-                  />
-                  <Button
-                    v-if="this.status == 'A1' || this.status == 'A2'" 
-                    label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
-                    icon="pi pi-file-pdf"
-                    @click="CetakPdfTabVerifikasi()"
-                  />
-                  <Button
-                    v-if="this.status == 'A1' || this.status == 'A2'"
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcelTabVerifikasi()" 
-                  />
-                  <Button
-                    v-if="this.status =='T'" 
-                    label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
-                    icon="pi pi-file-pdf"
-                    @click="CetakPdfTabSedangDikerjakan()"
-                  />
-                  <Button
-                    v-if="this.status == 'T'"
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcelTabSedangDikerjakan()" 
-                  /> -->
                 </div>
 			        </div>
             </div>
