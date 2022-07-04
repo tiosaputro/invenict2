@@ -522,7 +522,7 @@ class IctController extends Controller
         $Date = $this->date->addDays(1);
         $link = Link::create([
             'link_id'=> md5($this->date),
-            'link_action'=> 'http://localhost:8000/ict-request-verifikasi/'.''.$ireq_id,
+            'link_action'=> env('APP_VERIF_HIGHER_LEVEL').''.$ireq_id,
             'expired_at'=>Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'usr_id'=>$emailVerifikator->usr_id,
             'ireq_id'=>$ireq_id
@@ -579,13 +579,13 @@ class IctController extends Controller
         $Date = $this->date->addDays(1);
         $link = Link::create([
             'link_id'=> md5($this->date),
-            'link_action'=> 'http://localhost:8000/ict-request-verifikasi/'.''.$ireq_id,
+            'link_action'=> env('APP_VERIF_ICT_MANAGER').''.$ireq_id,
             'expired_at'=> Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'usr_id'=>$emailVerifikator->usr_id,
             'ireq_id'=>$ireq_id
         ]);
         $LINK = Link::where('ireq_id',$ireq_id)->first();
-        $send_mail = 'adhitya.saputro@emp.id';
+        $send_mail = env('APP_MAIL_ICT_MANAGER');
         SendNotifIctManager::dispatchAfterResponse($send_mail,$ict,$LINK);
         return response()->json('Success send notification');
     }
@@ -2341,12 +2341,12 @@ class IctController extends Controller
         ]);
         $link = Link::create([
             'link_id'=> md5($this->date),
-            'link_action'=> 'http://localhost:8000/ict-request-verifikasi-reviewer/'.''.$ireq_id,
+            'link_action'=> env('APP_VERIF_REVIEWER').''.$ireq_id,
             'ireq_id'=>$ireq_id
         ]);
         $LINK = Link::where('ireq_id',$ireq_id)->first();
-        $send_mail = 'icthelpdesk.admin@emp.id';
-        // SendNotifRequest::dispatchAfterResponse($send_mail,$ICT,$LINK);
+        $send_mail = env('APP_MAIL_REVIEWER');
+        SendNotifRequest::dispatchAfterResponse($send_mail,$ICT,$LINK);
         return response()->json('Success Update Status');
     }
     public function cekVerif($code)
