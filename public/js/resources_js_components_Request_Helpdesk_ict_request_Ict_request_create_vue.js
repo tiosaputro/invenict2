@@ -41,36 +41,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {},
   mounted: function mounted() {
-    this.cekUser();
+    this.getType();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      if (this.id) {
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Request") || _this.checkto.includes("/ict-request")) {
-            // this.getUser();
-            _this.getType();
-          } else {
-            _this.$router.push('/access');
-          }
-        });
-      } else {
-        this.$router.push('/login');
-      }
-    },
+    // cekUser(){
+    //   if(this.id){
+    //   this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    //     this.checkto = response.data.map((x)=> x.to)
+    //     this.checkname = response.data.map((x)=> x.name)
+    //     if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
+    //       // this.getUser();
+    //       this.getType();
+    //     }
+    //     else {
+    //       this.$router.push('/access');
+    //     }
+    //   });
+    //   } else {
+    //     this.$router.push('/login');
+    //   }
+    // },
     // getUser(){
     //   this.axios.get('api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
     //     this.user = response.data;
@@ -80,21 +70,21 @@ __webpack_require__.r(__webpack_exports__);
     // });
     // },
     getType: function getType() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('api/getAddReq', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.type = response.data.ref;
-        _this2.bu = response.data.bisnis;
-        _this2.divisi = response.data.divisi;
-        _this2.level = response.data.prio;
+        _this.type = response.data.ref;
+        _this.bu = response.data.bisnis;
+        _this.divisi = response.data.divisi;
+        _this.level = response.data.prio;
       });
     },
     CreateIct: function CreateIct() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.errors = [];
       this.error = [];
@@ -102,8 +92,8 @@ __webpack_require__.r(__webpack_exports__);
       if ( // this.tipereq != null &&
       this.priolev != null && this.usr_name != null && this.usr_divisi != null && this.bisnis != null) {
         var data = new FormData();
-        data.append("tgl", this.tgl);
-        data.append("tipereq", this.tipereq);
+        data.append("tgl", this.tgl); // data.append("tipereq", this.tipereq);
+
         data.append("bisnis", this.bisnis);
         data.append("user_name", this.usr_name);
         data.append("user_divisi", this.usr_divisi); // data.append("ket", this.ket);
@@ -114,23 +104,23 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (response) {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
 
-          _this3.code = response.data.ireq_id;
+          _this2.code = response.data.ireq_id;
           setTimeout(function () {
-            return _this3.$router.push({
+            return _this2.$router.push({
               name: 'Add Ict Request Detail',
               params: {
-                code: _this3.code
+                code: _this2.code
               }
             });
           }, 1000);
         })["catch"](function (error) {
-          _this3.errors = error.response.data.errors;
+          _this2.errors = error.response.data.errors;
         });
       } else {
         if (this.priolev == null) {

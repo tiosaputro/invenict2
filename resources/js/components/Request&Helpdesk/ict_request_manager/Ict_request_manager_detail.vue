@@ -59,32 +59,10 @@
                     name: 'Ict Request Manager'})"
                   />
                   <Button
-                    v-if="this.status != 'RR' && this.status != 'RA1' && this.status != 'RA2' &&  this.status != 'T' && this.status != 'D' && this.status != 'C'" 
                     label="Pdf"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-file-pdf"
                     @click="CetakPdf()"
-                  />
-                  <Button
-                    v-if="this.status != 'RR' && this.status != 'RA1' && this.status != 'RA2' &&  this.status != 'T' && this.status != 'D' && this.status != 'C'"
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcel()" 
-                  />
-                  <Button
-                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'"  
-                    label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
-                    icon="pi pi-file-pdf"
-                    @click="CetakPdfReject()"
-                  />
-                  <Button
-                    v-if="this.status == 'RR' || this.status == 'RA1' || this.status == 'RA2'" 
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcelReject()" 
                   />
                 </div>
 			        </div>
@@ -176,17 +154,17 @@ export default {
       });
     },
     CetakPdf(){
-      window.open('/api/report-ict-detail-pdf/' +this.code);
+      window.open('/api/print-out-ict-request/' +this.code);
     },
-    CetakExcel(){
-      window.open('/api/report-ict-detail-excel/' +this.code);
-    },
-    CetakPdfReject(){
-     window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
-    },
-    CetakExcelReject(){
-      window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
-    },
+    // CetakExcel(){
+    //   window.open('/api/report-ict-detail-excel/' +this.code);
+    // },
+    // CetakPdfReject(){
+    //  window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
+    // },
+    // CetakExcelReject(){
+    //   window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
+    // },
   },
 };
 </script>

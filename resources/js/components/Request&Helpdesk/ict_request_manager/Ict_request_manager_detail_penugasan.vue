@@ -6,7 +6,7 @@
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
-			<h4>ICT Request (Detail) </h4>
+			      <h4>ICT Request (Detail) </h4>
           </template>
           <template v-slot:end>
               <label style="width:140px">No. Request: {{kode.noreq}}</label>
@@ -144,11 +144,11 @@ export default {
       });
     },
     CetakPdfSedangDikerjakan(){
-     window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/'+this.$route.params.code);
+     window.open('/api/print-out-ict-request/'+this.$route.params.code);
     },
-    CetakExcelSedangDikerjakan(){
-      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.$route.params.code);
-    }
+    // CetakExcelSedangDikerjakan(){
+    //   window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.$route.params.code);
+    // }
   },
 };
 </script>

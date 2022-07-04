@@ -72,7 +72,7 @@ p {
 }
 
 .invoice main .notices .notice {
-    font-size: 1.2em
+    font-size: 1.5em
 }
 
 .invoice table {
@@ -93,7 +93,7 @@ p {
 .invoice table th {
     /* white-space: nowrap; */
     font-weight: 400;
-    font-size: 14px;
+    font-size: 15px;
     table-layout:fixed;
 
 }
@@ -103,12 +103,12 @@ p {
     font-weight: 400;
     max-height: 0.5px;
     color: #3989c6;
-    font-size: 1.2em
+    font-size: 1.5em
 }
 
 .invoice table .qty,.invoice table .total,.invoice table .unit {
     text-align: left;
-    font-size: 1.2em
+    font-size: 1.5em
 }
 
 .invoice table .no {
@@ -136,7 +136,7 @@ p {
     white-space: nowrap;
     text-align: center;
     padding: 10px 20px;
-    font-size: 1.2em;
+    font-size: 1.5em;
     border-top: 1px solid #aaa
 }
 
@@ -280,12 +280,12 @@ tr:nth-child(even) {
     margin: 0;
     font-weight: 400;
     color: #3989c6;
-    font-size: 1.2em
+    font-size: 1.5em
 }
 
 .invoice table .qty,.invoice table .total,.invoice table .unit {
     text-align: right;
-    font-size: 1.2em
+    font-size: 1.5em
 }
 
 .invoice table .no {
@@ -314,7 +314,7 @@ tr:nth-child(even) {
     white-space: nowrap;
     text-align: right;
     padding: 10px 20px;
-    font-size: 1.2em;
+    font-size: 1.5em;
     border-top: 1px solid #aaa
 }
 
@@ -449,7 +449,7 @@ th{
 }
 
 .invoice main .notices .notice {
-    font-size: 1.2em
+    font-size: 1.5em
 }
 
 .invoice table {
@@ -476,12 +476,12 @@ th{
     margin: 0;
     font-weight: 400;
     color: #3989c6;
-    font-size: 1.2em
+    font-size: 1.5em
 }
 
 .invoice table .qty,.invoice table .total,.invoice table .unit {
     text-align: right;
-    font-size: 1.2em
+    font-size: 1.5em
 }
 
 .invoice table .no {
@@ -510,7 +510,7 @@ th{
     white-space: nowrap;
     text-align: right;
     padding: 10px 20px;
-    font-size: 1.2em;
+    font-size: 1.5em;
     border-top: 1px solid #aaa
 }
 
@@ -579,7 +579,7 @@ th{
             <main>
                 <div class="row contacts">
                     <div class="col invoice-to">
-                        <div class="text-gray-light"><p> Please submit to Helpdesk Supervisor (27th Floor) Or  Call Hotline Number Extension 511 </p></div>
+                        <div class="text-gray-light" style="font-size:18px;"><p> Please submit to Helpdesk Supervisor (27th Floor) Or  Call Hotline Number Extension 511 </p></div>
                     </div>
                 </div>
                 <div class="row contacts" contenteditable="false">
@@ -591,7 +591,7 @@ th{
                             </textarea>
                         </div>
                         <div class="col invoice-to">
-                          <div class="address" style="font-weight:bold">No. Request : {{$detail[0]->ireq_no}}</div>
+                          <div class="address" style="font-weight:bold;font-size:18px">No. Request : {{$detail[0]->ireq_no}}</div>
                             <textarea rows="8" cols="25" class="textareacss" readonly>Priority Level : {{$detail[0]->prio_level}}  </textarea>
                         </div>
                 </div>
@@ -715,7 +715,7 @@ th{
                           </div>
                     </div>
                 </div>
-                <div class="row contacts">
+                <!-- <div class="row contacts">
                     <div class="col invoice-to">
                         <div class="text-gray-light"><p> IV. User Acceptance </p></div>
                           <br> 
@@ -732,7 +732,7 @@ th{
                             </tr>
                             </table>
                     </div>
-                </div>
+                </div> -->
             </main>
             <footer>
                 <strong>This PDF was created on a system and is valid without the signature and seal.</strong>

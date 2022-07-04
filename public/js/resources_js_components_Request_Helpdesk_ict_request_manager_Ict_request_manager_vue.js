@@ -49,54 +49,44 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getPermohonan();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      if (this.id) {
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Approval Manager") || _this.checkto.includes("/ict-request-manager")) {
-            _this.getPermohonan();
-          } else {
-            _this.$router.push('/access');
-          }
-        });
-      } else {
-        this.$router.push('/login');
-      }
-    },
+    // cekUser(){
+    //   if(this.id){
+    //   this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    //     this.checkto = response.data.map((x)=> x.to)
+    //     this.checkname = response.data.map((x)=> x.name)
+    //     if(this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-manager")){ 
+    //       this.getPermohonan();
+    //     }
+    //     else {
+    //       this.$router.push('/access');
+    //     }
+    //   });
+    //   } else {
+    //     this.$router.push('/login');
+    //   }
+    // },
     getPermohonan: function getPermohonan() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('api/get-data-manager', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.blmdiverifikasi = response.data.ict;
-        _this2.sdhdiverifikasi = response.data.ict1;
-        _this2.reject = response.data.ict2;
-        _this2.penugasan = response.data.ict6;
-        _this2.sedangDikerjakan = response.data.ict3;
-        _this2.sudahDikerjakan = response.data.ict4;
-        _this2.selesai = response.data.ict5;
-        _this2.loading = false;
+        _this.blmdiverifikasi = response.data.ict;
+        _this.sdhdiverifikasi = response.data.ict1;
+        _this.reject = response.data.ict2;
+        _this.penugasan = response.data.ict6;
+        _this.sedangDikerjakan = response.data.ict3;
+        _this.sudahDikerjakan = response.data.ict4;
+        _this.selesai = response.data.ict5;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Sesi Login Expired'
@@ -105,8 +95,12 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+
+        if (error.response.status == 403) {
+          _this.$router.push('/login');
         }
       });
     },
@@ -118,7 +112,7 @@ __webpack_require__.r(__webpack_exports__);
       this.ConfirmationVerifikasi = true;
     },
     approve: function approve() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.ConfirmationVerifikasi = false;
 
@@ -130,22 +124,22 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully approved the request",
             life: 1000
           });
 
-          _this3.axios.get('/api/abm/' + _this3.code, {
+          _this2.axios.get('/api/abm/' + _this2.code, {
             headers: {
-              'Authorization': 'Bearer ' + _this3.token
+              'Authorization': 'Bearer ' + _this2.token
             }
           });
 
-          _this3.code = null;
+          _this2.code = null;
 
-          _this3.getPermohonan();
+          _this2.getPermohonan();
         },
         reject: function reject() {}
       });
@@ -161,7 +155,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = false;
     },
     updateReject: function updateReject() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.submitted = true;
 
@@ -171,18 +165,18 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this4.dialogReject = false;
+          _this3.dialogReject = false;
 
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully rejected the request",
             life: 1000
           });
 
-          _this4.code = null;
+          _this3.code = null;
 
-          _this4.getPermohonan();
+          _this3.getPermohonan();
         });
       }
     },

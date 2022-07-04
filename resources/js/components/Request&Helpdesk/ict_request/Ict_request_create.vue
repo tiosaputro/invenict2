@@ -199,26 +199,26 @@ export default {
     
   },
   mounted(){
-      this.cekUser();
+      this.getType();
   },
   methods: {
-    cekUser(){
-      if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-          // this.getUser();
-          this.getType();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-      } else {
-        this.$router.push('/login');
-      }
-    },
+    // cekUser(){
+    //   if(this.id){
+    //   this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    //     this.checkto = response.data.map((x)=> x.to)
+    //     this.checkname = response.data.map((x)=> x.name)
+    //     if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
+    //       // this.getUser();
+    //       this.getType();
+    //     }
+    //     else {
+    //       this.$router.push('/access');
+    //     }
+    //   });
+    //   } else {
+    //     this.$router.push('/login');
+    //   }
+    // },
     // getUser(){
     //   this.axios.get('api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
     //     this.user = response.data;
@@ -248,7 +248,7 @@ export default {
       {
         const data = new FormData();
         data.append("tgl", this.tgl);
-        data.append("tipereq", this.tipereq);
+        // data.append("tipereq", this.tipereq);
         data.append("bisnis", this.bisnis);
         data.append("user_name", this.usr_name);
         data.append("user_divisi", this.usr_divisi);

@@ -626,25 +626,25 @@ export default {
     };
   },
   created() {
-    this.cekUser();
+    this.getPermohonan();
   },
   methods: {
-    cekUser(){
-      if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-manager")){ 
-          this.getPermohonan();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-      } else {
-        this.$router.push('/login');
-      }
-    },
+    // cekUser(){
+    //   if(this.id){
+    //   this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+    //     this.checkto = response.data.map((x)=> x.to)
+    //     this.checkname = response.data.map((x)=> x.name)
+    //     if(this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-manager")){ 
+    //       this.getPermohonan();
+    //     }
+    //     else {
+    //       this.$router.push('/access');
+    //     }
+    //   });
+    //   } else {
+    //     this.$router.push('/login');
+    //   }
+    // },
      getPermohonan(){
       this.axios.get('api/get-data-manager',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.blmdiverifikasi = response.data.ict;
@@ -663,6 +663,9 @@ export default {
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
+           }
+           if (error.response.status == 403) {
+            this.$router.push('/login');
            }
         });
     },

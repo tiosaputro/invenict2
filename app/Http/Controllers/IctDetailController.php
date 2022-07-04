@@ -397,8 +397,8 @@ class IctDetailController extends Controller
         $detail = DB::table('ireq_dtl as id')
         ->select('id.ireq_type','imm.ireq_no','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname','id.ireq_remark','lllr.lookup_desc as prio_level',
                 'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type', 'vr.name as ireq_bu','imm.ireq_status as status',
-                DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned")
-                ,DB::raw("TO_CHAR(imm.ireq_approver1_date,' dd Mon YYYY') as date_approver1"),
+                DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY HH:MI') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned")
+                ,DB::raw("TO_CHAR(imm.ireq_approver1_date,' dd Mon YYYY HH:MI') as date_approver1"),
                 DB::raw("COALESCE(imm.ireq_assigned_to2,imm.ireq_assigned_to1) AS ireq_assigned_to"),'imm.ireq_verificator',
                 DB::raw("TO_CHAR(imm.ireq_approver2_date,' dd Mon YYYY') as date_approver2"),
                 'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status','lrs.lookup_desc as name')

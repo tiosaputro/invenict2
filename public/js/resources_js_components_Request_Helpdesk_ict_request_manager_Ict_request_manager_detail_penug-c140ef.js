@@ -104,11 +104,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
-      window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' + this.$route.params.code);
-    },
-    CetakExcelSedangDikerjakan: function CetakExcelSedangDikerjakan() {
-      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' + this.$route.params.code);
-    }
+      window.open('/api/print-out-ict-request/' + this.$route.params.code);
+    } // CetakExcelSedangDikerjakan(){
+    //   window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.$route.params.code);
+    // }
+
   }
 });
 
@@ -255,7 +255,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "p-button-raised p-button-success mt-2",
         icon: "pi pi-print",
         onClick: _cache[3] || (_cache[3] = function ($event) {
-          return $options.CetakExcelSedangDikerjakan();
+          return _ctx.CetakExcelSedangDikerjakan();
         })
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),

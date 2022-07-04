@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use Excel;
 use App\Exports\LookupExport;
 use Illuminate\Validation\Rule;
+use App\Mng_usr_roles;
+use App\Mng_role_menu;
 
 class LookupsController extends Controller
 {
@@ -19,6 +21,7 @@ class LookupsController extends Controller
         $date = Carbon::now();
         $this->newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $this->requestor='/ict-request';
     }
     public function index()
     {
@@ -184,6 +187,10 @@ class LookupsController extends Controller
     
     Public function getAddReq()
     {
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->requestor)){
         $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
         ->where('lookup_status','T')
         ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
@@ -204,6 +211,9 @@ class LookupsController extends Controller
         ->get();
 
         return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'divisi'=>$divisi,'prio'=>$priority],200);
+        }else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     Public function getAddDetail()
     {
