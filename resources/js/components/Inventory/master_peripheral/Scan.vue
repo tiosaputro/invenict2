@@ -48,10 +48,7 @@ export default {
             this.displayDialog = true;
           }
           else {
-            this.$toast.add({
-              severity:'error', summary: '403', detail:'Cannot Access This Page'
-            });
-            setTimeout( () => this.$router.push('/dashboard'),2000);
+            this.$router.push('/access');
           }
         });
       } else {

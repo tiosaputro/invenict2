@@ -50,15 +50,7 @@ __webpack_require__.r(__webpack_exports__);
           if (_this.checkto.includes("/scan")) {
             _this.displayDialog = true;
           } else {
-            _this.$toast.add({
-              severity: 'error',
-              summary: '403',
-              detail: 'Cannot Access This Page'
-            });
-
-            setTimeout(function () {
-              return _this.$router.push('/dashboard');
-            }, 2000);
+            _this.$router.push('/access');
           }
         });
       } else {

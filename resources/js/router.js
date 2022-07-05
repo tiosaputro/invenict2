@@ -13,6 +13,12 @@ const routes = [
 
     },
     {
+        name: 'Login Legality',
+        path: '/loginn/:status/:code',
+        component: () => import('./pages/LoginLegality.vue'),
+
+    },
+    {
         name: 'Ict Request Detail Desc',
         path: '/ict-request-descc/:code',
         component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_detail.vue'),
@@ -573,6 +579,29 @@ const routes = [
         name: 'Ict Request Verifikasi Reviewer',
         path: '/ict-request-verifikasi-reviewer/:code',
         component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_verifikasi_mail.vue'),
+    },
+    
+    //legality_qr_code
+
+    {
+        name: 'Check legality Qr-code Higher Level',
+        path: '/legality-qrcode-higher-level/:code',
+        component: ()=> import('./components/Request&Helpdesk/legality_qr_code/legality_approval_atasan.vue'),
+    },
+    {
+        name: 'Check legality Qr-code ICT Manager',
+        path: '/legality-qrcode-ict-manager/:code',
+        component: ()=> import('./components/Request&Helpdesk/legality_qr_code/legality_approval_ict_manager.vue'),
+    },
+    {
+        name: 'Check legality Qr-code Requestor',
+        path: '/legality-qrcode-requester/:code',
+        component: ()=> import('./components/Request&Helpdesk/legality_qr_code/legality_request.vue'),
+    },
+    {
+        name: 'Scan Legality',
+        path: '/scan-qr-code',
+        component: ()=> import('./components/Request&Helpdesk/legality_qr_code/Scan_legality.vue'),
     },
 
     //ict request manager

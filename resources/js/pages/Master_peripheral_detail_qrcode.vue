@@ -43,8 +43,8 @@
                   <label class="col-fixed" style="width:100px">Tipe</label>
                     <!-- <div class="col-4"> -->
                       <InputText
+                        v-model="detail.invent_type"
                         disabled
-                        v-model= "detail.invent_type"
                       />
                     <!-- </div> -->
                   </div>

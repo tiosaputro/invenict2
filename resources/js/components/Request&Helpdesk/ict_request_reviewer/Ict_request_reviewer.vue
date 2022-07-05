@@ -856,11 +856,11 @@
                 </template>
             </Dialog>
             <Dialog
-          v-model:visible="displayDetailRequest"
-          :style="{ width: '1200px' }"
-          header="Detail Request"
-          :modal="true"
-        >
+              v-model:visible="displayDetailRequest"
+              :style="{ width: '1200px' }"
+              header="Detail Request"
+              :modal="true"
+            >
         <Toolbar class="mb-4">
           <template v-slot:end>
               <label style="width:130px">No. Request: {{this.ireq_no}}</label>

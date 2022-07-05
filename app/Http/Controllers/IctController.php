@@ -2435,4 +2435,16 @@ class IctController extends Controller
         ->get();
         return response()->json($ict);
     }
+    function detailNoRequest($code){
+        $ict = DB::table('ireq_mst as im')
+        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
+        ->leftjoin('mng_users as mu','im.ireq_approver1','mu.usr_name')
+        ->leftjoin('mng_users as muu','im.ireq_approver2','muu.usr_name')
+        ->select('im.ireq_no','im.ireq_date','vr.name as ireq_bu','im.ireq_approver1_date as date_approver1',
+        'im.ireq_approver2_date as date_approver2','dr.div_name','im.ireq_user','im.ireq_requestor','mu.usr_fullname as ireq_approval1','muu.usr_fullname as ireq_approval2')
+        ->where('im.ireq_id',$code)
+        ->get();
+        return json_encode($ict);
+    }
 }

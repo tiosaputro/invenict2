@@ -1,5 +1,6 @@
 <template>
     <Login v-if="$route.path === '/login'" />
+    <LoginLegality v-else-if="$route.name === 'Login Legality'" />
     <Error v-else-if="$route.path === '/error'" />
     <NotFound v-else-if="$route.path === '/notfound'" />
     <Access v-else-if="$route.path === '/access'" />
@@ -15,6 +16,8 @@ import Error from './Error';
 import NotFound from './NotFound';
 import Access from './Access';
 import Detail from './Master_peripheral_detail_qrcode';
+import LoginLegality from './LoginLegality';
+
 
 export default {
     methods: {
@@ -36,7 +39,8 @@ export default {
         Error,
         NotFound,
         Access,
-        Detail
+        Detail,
+        LoginLegality
     }
 }
 </script>

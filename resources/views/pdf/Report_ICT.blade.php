@@ -87,7 +87,6 @@ p {
 .invoice table td,.invoice table th {
     padding: 15px;
     border-bottom: 1px solid #fff;
-    max-height: 0.5px;
 }
 
 .invoice table th {
@@ -95,6 +94,7 @@ p {
     font-weight: 400;
     font-size: 15px;
     table-layout:fixed;
+
 
 }
 
@@ -114,7 +114,7 @@ p {
 .invoice table .no {
     color: #fff;
     font-size: 1.6em;
-    background: #3989c6
+    /* background: #3989c6 */
 }
 
 .invoice table .unit {
@@ -579,29 +579,39 @@ th{
             <main>
                 <div class="row contacts">
                     <div class="col invoice-to">
-                        <div class="text-gray-light" style="font-size:18px;"><p> Please submit to Helpdesk Supervisor (27th Floor) Or  Call Hotline Number Extension 511 </p></div>
+                        <p style="text-align:left;font-size:16px;">Please submit to Helpdesk Supervisor (27th Floor) Or  Call Hotline Number Extension 511
+                            <span style="float:right;">
+                                No.request : {{$detail[0]->ireq_no}}
+                            </span>
+                        </p>
                     </div>
                 </div>
                 <div class="row contacts" contenteditable="false">
                     <div class="col invoice-to">
-                        <div class="address" style="font-weight:bold">I. Description Of Request/Problem Experienced</div>
+                        <div class="address" style="font-weight:bold;font-size:18px;">I. Description Of Request/Problem Experienced</div>
                             <textarea class="textareacss" cols="90" rows="8" style="font-weight: bold" readonly> @php $no = 1 @endphp 
 @foreach($detail as $d)  {{$no++}}.{{$d->ireq_remark}}
 @endforeach
                             </textarea>
                         </div>
                         <div class="col invoice-to">
-                          <div class="address" style="font-weight:bold;font-size:18px">No. Request : {{$detail[0]->ireq_no}}</div>
-                            <textarea rows="8" cols="25" class="textareacss" readonly>Priority Level : {{$detail[0]->prio_level}}  </textarea>
+                          <div class="address" style="font-weight:bold;font-size:18px;">Priority Level</div>
+                            <textarea rows="8" cols="25" class="textareacss" readonly>{{$detail[0]->prio_level}}  </textarea>
                         </div>
                 </div>
+                @php 
+                    $linkRequester = "http://localhost:8000/legality-qrcode-requester/{$detail[0]->ireq_id}"; 
+                    $linkIctManager = "http://localhost:8000/legality-qrcode-ict-manager/{$detail[0]->ireq_id}"; 
+                    $linkHigherLevel = "http://localhost:8000/legality-qrcode-higher-level/{$detail[0]->ireq_id}"; 
+                @endphp
+
                 <div class="row">
                     <div class="column">
-                        <table> <p> II. Requester / Reported By : </p>
+                        <table> <p style="font-size:18px;"> II. Requester / Reported By : </p>
                         <tr>
-                            <th style="height:75px;">{{$detail[0]->ireq_requestor}}</th>
+                            <th>{{$detail[0]->ireq_requestor}}</th>
                             <th>{{$detail[0]->div_name}}</th>
-                            <th rowspan="2" style="border:solid 2px;font-weight:bold;">Requested on {{$detail[0]->date_request}} and verified by the system </th>
+                            <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(130)->generate($linkRequester); !!}</th>
                         </tr>
                         <tr>
                             <td style="border:solid 2px;">Name</td>
@@ -610,7 +620,7 @@ th{
                         </table>
                     </div>
                     <div class="column">
-                        <table> <p> Approved By : (For new installation/software loan) </p>
+                        <table> <p style="font-size:18px;"> Approved By : (For new installation/software loan) </p>
                             @if ($detail[0]->date_approver1)
                             <tr>
                                 <th>{{$detail[0]->usr_fullname}}</th>
@@ -618,12 +628,12 @@ th{
                                  @if($detail[0]->status == "RA1")
                                     <th rowspan="2" style="border:solid 2px;font-weight:bold;">Rejected on {{$detail[0]->date_approver1}} and verified by the system</th>
                                  @else
-                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;">Approved on {{$detail[0]->date_approver1}} and verified by the system</th>
+                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(130)->generate($linkHigherLevel); !!}</th>
                                  @endif
                             </tr>
                             @else
                             <tr>
-                                <th style="height:95px;"></th>
+                                <th></th>
                                 <th></th>
                                 <th rowspan="2" style="border:solid 2px;"></th>
                             </tr>
@@ -637,10 +647,10 @@ th{
                 </div>
                 <div class="row contacts">
                   <div class="col invoice-to"><br>
-                    <div class="text-gray-light"> <p> III. IT Use Only</p> </div>
+                    <div class="text-gray-light"> <p style="font-size:18px;"> III. IT Use Only</p> </div>
                 <div class="row">
                   <br> 
-                    <table> <p> Approved By :   (Note : Sr. Manager approval needed for new equipment/software/tools)</p>
+                    <table> <p style="font-size:18px;"> Approved By :   (Note : Sr. Manager approval needed for new equipment/software/tools)</p>
                         @if($detail[0]->date_approver2)
                         <tr>
                             <th>Arifin Tahir</th>
@@ -648,7 +658,7 @@ th{
                             @if($detail[0]->status=='RA2')
                              <th rowspan="2" style="border:solid 2px;font-weight:bold;">Rejected on {{$detail[0]->date_approver2}} and verified by the system</th>
                             @else
-                             <th rowspan="2" style="border:solid 2px;font-weight:bold;">Approved on {{$detail[0]->date_approver2}} and verified by the system</th>
+                             <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(130)->generate($linkIctManager); !!}</th>
                             @endif
                             <th></th>
                         </tr>
@@ -697,19 +707,19 @@ th{
                 </div>
                 <div class="row contacts">
                     <div class="col invoice-to">
-                        <div class="address" style="font-weight:bold">Solution/Action Implemented/Analysis</div>
-                            <textarea cols="110" class="csssolution" readonly> </textarea>
+                        <div class="address" style="font-weight:bold;">Solution/Action Implemented/Analysis</div>
+                            <textarea cols="100" class="csssolution" readonly> </textarea>
                     </div>
+                    
                     <div class="col invoice-to">
-                      <br>
                       <div class="row">
-                        <div class="address" style="font-weight:bold"></div>
-                          <table id="tes" style="table-layout:fixed;">
+                        <div class="address" style="font-weight:bold;">*(A)ccident/(I)ncident/I(N)stall/Assi(S)t</div>
+                          <table >
                             <tr> 
                                 <th style="height:70px;"> </th>
                             </tr>
                             <tr>
-                                <td style="height:0px;border:solid 2px;">Further Action By</td>
+                                <td style="height:30px;border:solid 2px;">Further Action By</td>
                             </tr>
                           </table>
                           </div>
