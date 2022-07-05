@@ -3,7 +3,7 @@
   <Dialog></Dialog>
     <Dialog
         v-model:visible="displayDetailRequest"
-        :style="{ width: '1200px' }"
+        :style="{ width: '1400px' }"
         header="Detail Request"
         :modal="true"
     >
@@ -17,16 +17,16 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
           responsiveLayout="scroll"
         >
-          <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
+          <Column field="ireq_no" header="No. Request" style="min-width:6rem"/>
+          <Column field="ireq_date" header="Request Date" style="min-width:12rem">
           <template #body="slotProps">
             {{formatDate(slotProps.data.ireq_date)}}
           </template>
           </Column>
-          <Column field="ireq_requestor" header="Requester" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="Division User" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_bu" header="Business Unit" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_requestor" header="Requester" style="min-width:6rem"/>
+          <Column field="ireq_user" header="User" style="min-width:12rem"/>
+          <Column field="div_name" header="Division User" style="min-width:12rem"/>
+          <Column field="ireq_bu" header="Business Unit" style="min-width:12rem"/>
         </DataTable>
         </Dialog>  
 </template>

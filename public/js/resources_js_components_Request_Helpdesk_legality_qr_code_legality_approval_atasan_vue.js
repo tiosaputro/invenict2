@@ -135,7 +135,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.displayDetailRequest = $event;
     }),
     style: {
-      width: '1200px'
+      width: '1400px'
     },
     header: "Detail Request",
     modal: true
@@ -155,14 +155,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "ireq_no",
             header: "No. Request",
-            sortable: true,
             style: {
               "min-width": "6rem"
             }
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "ireq_date",
             header: "Request Date",
-            sortable: true,
             style: {
               "min-width": "12rem"
             }
@@ -178,42 +176,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "ireq_requestor",
             header: "Requester",
-            sortable: true,
             style: {
               "min-width": "6rem"
             }
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "ireq_user",
             header: "User",
-            sortable: true,
             style: {
               "min-width": "12rem"
             }
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "div_name",
             header: "Division User",
-            sortable: true,
             style: {
               "min-width": "12rem"
             }
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "ireq_bu",
             header: "Business Unit",
-            sortable: true,
             style: {
               "min-width": "12rem"
             }
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "ireq_approval1",
             header: "Approval By",
-            sortable: true,
             style: {
               "min-width": "12rem"
             }
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "date_approver1",
             header: "Approval Date",
-            sortable: true,
             style: {
               "min-width": "12rem"
             }

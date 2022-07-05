@@ -51,7 +51,7 @@
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                   <template #body= "slotProps">
-                    <span :class="'manager-belum-verifikasi status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                   </template>
                   </Column>
                   <Column style="min-width:8rem">
@@ -213,7 +213,7 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
                     <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                   </template>
@@ -292,12 +292,12 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
                     <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                   </template>
                   </Column>
-                  <Column style="min-width:20rem">
+                  <Column>
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -524,11 +524,22 @@
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
-                  <template #body= "slotProps">
-                    <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                  </template>
+                    <template #body= "slotProps">
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
                   </Column>
-                  <template #footer>
+                  <Column>
+                    <template #body="slotProps">
+                      <Button
+                        label="Pdf"
+                        class="p-button-raised p-button-danger p-button-sm mr-2"
+                        v-tooltip.bottom="'Click to print out (PDF)'"
+                        icon="pi pi-file-pdf"
+                        @click="CetakPdf(slotProps.data.ireq_id)"
+                      />
+                    </template>
+                  </Column>
+                  <!-- <template #footer>
                     <div class="grid dir-col">
                       <div class="col">
                         <div class="box">
@@ -547,9 +558,9 @@
                         </div>
                       </div>
                     </div>
-                  </template>
+                  </template> -->
                 </DataTable>
-                </TabPanel>
+              </TabPanel>
             </TabView>
             <Dialog
               v-model:visible="dialogReject"
@@ -645,7 +656,7 @@ export default {
     //     this.$router.push('/login');
     //   }
     // },
-     getPermohonan(){
+    getPermohonan(){
       this.axios.get('api/get-data-manager',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.blmdiverifikasi = response.data.ict;
         this.sdhdiverifikasi = response.data.ict1;
@@ -668,6 +679,9 @@ export default {
             this.$router.push('/login');
            }
         });
+    },
+    CetakPdf(ireq_id){
+      window.open('/api/print-out-ict-request/' +ireq_id);
     },
     formatDate(date) {
       return moment(date).format("DD MMM YYYY HH:mm")

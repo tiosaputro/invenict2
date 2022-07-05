@@ -586,22 +586,30 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
+                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
                       <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <Column style="min-width:10rem">
+                  <Column style="min-width:16rem">
                     <template #body="slotProps">
                       <Button
                         v-if="slotProps.data.ireq_value == null"
-                        class="p-button-raised p-button-secondary p-button-sm mr-2"
+                        v-tooltip.bottom="'Click to give feedback'"
+                        class="p-button-raised p-button p-button-sm mr-2"
                         label = "Give Feedback"
                         @click="tes(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                       />
+                      <Button
+                      label="Pdf"
+                      class="p-button-raised p-button-danger p-button-sm mt-2"
+                      v-tooltip.bottom="'Click to print out (PDF)'"
+                      icon="pi pi-file-pdf"
+                      @click="CetakPdf(slotProps.data.ireq_id)"
+                    />
                     </template>
                   </Column>
-                  <template #footer>
+                  <!-- <template #footer>
                       <div class="grid dir-col">
                       <div class="col">
                         <div class="box">
@@ -620,7 +628,7 @@
                         </div>
                       </div>
                     </div>
-                  </template>
+                  </template> -->
                 </DataTable>
                 </TabPanel>
             </TabView>
@@ -934,6 +942,9 @@ export default {
     },
     CetakExcelSelesai(){
       window.open('api/report-ict-excel-selesai/'+this.usr_name);
+    },
+    CetakPdf(ireq_id){
+      window.open('/api/print-out-ict-request/' +ireq_id);
     },
   },
 };

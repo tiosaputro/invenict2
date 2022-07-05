@@ -760,7 +760,7 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <!-- <Column>
+                  <Column>
                   <template #body="slotProps">
                     <Button
                       label="Pdf"
@@ -770,7 +770,7 @@
                       @click="CetakPdf(slotProps.data.ireq_id)"
                     />
                     </template>
-                  </Column> -->
+                  </Column>
                   <!-- <template #footer>
                       <div class="grid dir-col">
                       <div class="col">
@@ -1127,51 +1127,51 @@ export default {
       });
       this.displayDetailRequest = true;
     },
-    CetakPdfPermohonan(){
-      window.open('api/report-ict-pdf-reviewer-permohonan');
-    },
-    CetakExcelPermohonan(){
-      window.open('api/report-ict-excel-reviewer-permohonan');
-    },
-    CetakPdfAtasanDivisi(){
-      window.open('api/report-ict-pdf-reviewer-atasan-divisi');
-    },
-    CetakExcelAtasanDivisi(){
-      window.open('api/report-ict-excel-reviewer-atasan-divisi');
-    },
-    CetakPdfIctManager(){
-      window.open('api/report-ict-pdf-reviewer-ict-manager');
-    },
-    CetakExcelIctManager(){
-      window.open('api/report-ict-excel-reviewer-ict-manager');
-    },
-    CetakPdfReject(){
-      window.open('api/report-ict-pdf-reviewer-reject');
-    },
-    CetakExcelReject(){
-      window.open('api/report-ict-excel-reviewer-reject');
-    },
-    CetakPdfSedangDikerjakan(){
-      window.open('api/report-ict-pdf-reviewer-sedang-dikerjakan');
-    },
-    CetakExcelSedangDikerjakan(){
-      window.open('api/report-ict-excel-reviewer-sedang-dikerjakan');
-    },
-    CetakPdfSudahDikerjakan(){
-      window.open('api/report-ict-pdf-reviewer-sudah-dikerjakan');
-    },
-    CetakExcelSudahDikerjakan(){
-      window.open('api/report-ict-excel-reviewer-sudah-dikerjakan');
-    },
-    CetakPdfSelesai(){
-      window.open('api/report-ict-pdf-reviewer-selesai');
-    },
-    CetakExcelSelesai(){
-      window.open('api/report-ict-excel-reviewer-selesai');
-    },
     CetakPdf(ireq_id){
       window.open('/api/print-out-ict-request/' +ireq_id);
     },
+    // CetakPdfPermohonan(){
+    //   window.open('api/report-ict-pdf-reviewer-permohonan');
+    // },
+    // CetakExcelPermohonan(){
+    //   window.open('api/report-ict-excel-reviewer-permohonan');
+    // },
+    // CetakPdfAtasanDivisi(){
+    //   window.open('api/report-ict-pdf-reviewer-atasan-divisi');
+    // },
+    // CetakExcelAtasanDivisi(){
+    //   window.open('api/report-ict-excel-reviewer-atasan-divisi');
+    // },
+    // CetakPdfIctManager(){
+    //   window.open('api/report-ict-pdf-reviewer-ict-manager');
+    // },
+    // CetakExcelIctManager(){
+    //   window.open('api/report-ict-excel-reviewer-ict-manager');
+    // },
+    // CetakPdfReject(){
+    //   window.open('api/report-ict-pdf-reviewer-reject');
+    // },
+    // CetakExcelReject(){
+    //   window.open('api/report-ict-excel-reviewer-reject');
+    // },
+    // CetakPdfSedangDikerjakan(){
+    //   window.open('api/report-ict-pdf-reviewer-sedang-dikerjakan');
+    // },
+    // CetakExcelSedangDikerjakan(){
+    //   window.open('api/report-ict-excel-reviewer-sedang-dikerjakan');
+    // },
+    // CetakPdfSudahDikerjakan(){
+    //   window.open('api/report-ict-pdf-reviewer-sudah-dikerjakan');
+    // },
+    // CetakExcelSudahDikerjakan(){
+    //   window.open('api/report-ict-excel-reviewer-sudah-dikerjakan');
+    // },
+    // CetakPdfSelesai(){
+    //   window.open('api/report-ict-pdf-reviewer-selesai');
+    // },
+    // CetakExcelSelesai(){
+    //   window.open('api/report-ict-excel-reviewer-selesai');
+    // },
   },
 };
 </script>
