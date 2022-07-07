@@ -59,7 +59,22 @@ const routes = [
         component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc.vue'),
 
     },
-
+    //referensi_location
+    {
+        name: 'Referensi Location',
+        path: '/referensi-location',
+        component: () => import('./components/Admin/location_refs/Referensi_location.vue'),
+    },
+    {
+        name: 'Create Referensi Location',
+        path: '/Add-referensi-loc',
+        component: () => import('./components/Admin/location_refs/Referensi_location_create.vue'),
+    },
+    {
+        name: 'Edit Referensi Location',
+        path: '/Edit-referensi-loc/:code',
+        component: ()=> import('./components/Admin/location_refs/Referensi_location_edit.vue'),
+    },
     //lookup_admin
     {
         name: 'Referensi Lookups',

@@ -3731,16 +3731,16 @@ export default {
         });
       },
       getIct3(){
-        this.axios.get('api/get-permohonan-divisi',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-          this.blmDiverifikasi = response.data.ict1;
-          this.atasanDivisi = response.data.ict2;
-          this.ictManager = response.data.ict3;
-          this.direject2 = response.data.ict4;
-          this.sudahDiassign = response.data.ict5;
-          this.sudahDikerjakann = response.data.ict6;
-          this.sudahslsi = response.data.ict7
+        this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+          this.blmDiverifikasi = response.data.ict;
+          this.atasanDivisi = response.data.ict1;
+          this.ictManager = response.data.ict2;
+          this.direject2 = response.data.ict3;
+          this.sudahDiassign = response.data.ict4;
+          this.sudahDikerjakann = response.data.ict5;
+          this.sudahslsi = response.data.ict6;
           this.totalRequest2 = response.data.ict8;
-          this.penugasanRequest2 = response.data.ict9;
+          this.penugasanRequest2 = response.data.ict7;
           this.loading = false;
         });
       },

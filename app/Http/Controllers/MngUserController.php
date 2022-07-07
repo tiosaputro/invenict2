@@ -35,6 +35,7 @@ class MngUserController extends Controller
             'usr_passwd.required'=>'Password Belum Diisi',
             'div.required'=>'Divisi Belum Diisi',
             'usr_bu.required'=>'Bisnis Unit Belum Diisi',
+            'usr_loc'=>'Lokasi Belum Diisi'
         ];
         $request->validate([
             'usr_name' => 'required',
@@ -44,7 +45,8 @@ class MngUserController extends Controller
             'usr_fullname'=>'required',
             'usr_status'=>'required',
             'div'=>'required',
-            'usr_bu'=>'required'
+            'usr_bu'=>'required',
+            'usr_loc'=>'required'
         ],$message);
 
         $newfullName = strtoupper($request->usr_fullname);
@@ -68,6 +70,7 @@ class MngUserController extends Controller
             'usr_foto'=> $nama_file,
             'created_by'=> Auth::user()->usr_name,
             'creation_date'=> $this->newCreation,
+            'usr_loc'=>$request->usr_loc,
             'program_name'=>'MngUser_SAVE'
         ]);
        
@@ -79,7 +82,7 @@ class MngUserController extends Controller
     public function edit($code)
     {
         $user = DB::table('mng_users as mu')
-        ->select('mu.usr_id','mu.usr_name','mu.usr_bu','mu.usr_stat','mu.div_id','mu.usr_fullname', 'mu.usr_email','mu.usr_alamat','mu.usr_foto','mg.rol_id')
+        ->select('mu.usr_id','mu.usr_name','mu.usr_loc','mu.usr_bu','mu.usr_stat','mu.div_id','mu.usr_fullname', 'mu.usr_email','mu.usr_alamat','mu.usr_foto','mg.rol_id')
         ->join('mng_usr_roles as mg','mu.usr_id','mg.usr_id')
         ->where('mu.usr_id',$code)
         ->first();
@@ -96,6 +99,7 @@ class MngUserController extends Controller
             'usr_stat.required'=>'Status Belum Diisi',
             'div_id.required'=>'Divisi Belum Diisi',
             'usr_bu.required'=>'Bisnis Unit Belum Diisi',
+            'usr_loc.required'=>'Location Belum Diisi',
         ];
         $request->validate([
             'usr_email'=>[
@@ -106,6 +110,7 @@ class MngUserController extends Controller
             'usr_fullname'=>'required',
             'usr_stat'=>'required',
             'div_id'=>'required',
+            'usr_loc'=>'required',
             'usr_bu'=>'required'
         ],$message);
         $newfullName = strtoupper($request->usr_fullname);
@@ -127,6 +132,7 @@ class MngUserController extends Controller
                     $user->div_id = $request->div_id;
                     $user->usr_bu = $request->usr_bu;
                     $user->usr_foto = $nama_file;
+                    $user->usr_loc = $request->usr_loc;
                     $user->last_update_date = $this->newUpdate;
                     $user->last_updated_by = Auth::user()->usr_name;
                     $user->program_name = 'MngUserController_UPDATE';
@@ -145,6 +151,7 @@ class MngUserController extends Controller
                     $user->usr_stat = $request->usr_stat;
                     $user->usr_email = $request->usr_email;
                     $user->div_id = $request->div_id;
+                    $user->usr_loc = $request->usr_loc;
                     $user->usr_bu = $request->usr_bu;
                     $user->usr_foto = $nama_file;
                     $user->last_update_date = $this->newUpdate;
@@ -160,6 +167,7 @@ class MngUserController extends Controller
                 $user->usr_email = $request->usr_email;
                 $user->usr_passwd = Hash::make($request->usr_password);
                 $user->div_id = $request->div_id;
+                $user->usr_loc = $request->usr_loc;
                 $user->usr_bu = $request->usr_bu;
                 $user->last_update_date = $this->newUpdate;
                 $user->last_updated_by = Auth::user()->usr_name;
@@ -172,6 +180,7 @@ class MngUserController extends Controller
             $user->usr_stat = $request->usr_stat;
             $user->usr_email = $request->usr_email;
             $user->div_id = $request->div_id;
+            $user->usr_loc = $request->usr_loc;
             $user->usr_bu = $request->usr_bu;
             $user->last_update_date = $this->newUpdate;
             $user->last_updated_by = Auth::user()->usr_name;

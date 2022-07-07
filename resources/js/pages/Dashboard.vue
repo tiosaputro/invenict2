@@ -304,13 +304,13 @@
 			</div>
     </div>
 </div>
-<div class="grid" v-else-if="this.role_name.includes('Supervisor')">
+<div class="grid" v-else-if="this.role_name.includes('Reviewer Bentu')">
 	<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
-						<div class="text-900 font-medium text-xl">{{count2.blmDiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{countBentu.blmDiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -323,7 +323,7 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Atasan Divisi</span>
-						<div class="text-900 font-medium text-xl">{{count2.atasandivisi}}</div>
+						<div class="text-900 font-medium text-xl">{{countBentu.atasandivisi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-clipboard-check text-xl" style="color: green;"></i>
@@ -336,7 +336,7 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">ICT Manager</span>
-						<div class="text-900 font-medium text-xl">{{count2.manager}}</div>
+						<div class="text-900 font-medium text-xl">{{countBentu.manager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-bookmark-fill text-xl" style="color: green;"></i>
@@ -349,7 +349,7 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
-						<div class="text-900 font-medium text-xl">{{count2.reject}}</div>
+						<div class="text-900 font-medium text-xl">{{countBentu.reject}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -362,7 +362,7 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
-						<div class="text-900 font-medium text-xl">{{count2.penugasanRequest}}</div>
+						<div class="text-900 font-medium text-xl">{{countBentu.penugasanRequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
@@ -375,7 +375,7 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
-						<div class="text-900 font-medium text-xl">{{count2.sdgdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{countBentu.sdgdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -388,7 +388,7 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
-						<div class="text-900 font-medium text-xl">{{count2.sdhdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{countBentu.sdhdikerjakan}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
@@ -401,7 +401,7 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
-						<div class="text-900 font-medium text-xl">{{count2.sdhselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{countBentu.sdhselesai}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -414,7 +414,245 @@
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
-						<div class="text-900 font-medium text-xl">{{count2.totalRequest}}</div>
+						<div class="text-900 font-medium text-xl">{{countBentu.totalRequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>	
+</div>
+<div class="grid" v-else-if="this.role_name.includes('Reviewer Kurau')">
+	<div class="col-12 lg:col-6 xl:col-3" >
+			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
+						<div class="text-900 font-medium text-xl">{{countKurau.blmDiverifikasi}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-check text-xl" style="color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div @click="atasanDivisi2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Atasan Divisi</span>
+						<div class="text-900 font-medium text-xl">{{countKurau.atasandivisi}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-clipboard-check text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div @click="IctManager2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">ICT Manager</span>
+						<div class="text-900 font-medium text-xl">{{countKurau.manager}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-journal-bookmark-fill text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Rejected</span>
+						<div class="text-900 font-medium text-xl">{{countKurau.reject}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-times text-xl" style="color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Request Assignment</span>
+						<div class="text-900 font-medium text-xl">{{countKurau.penugasanRequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">In Progress</span>
+						<div class="text-900 font-medium text-xl">{{countKurau.sdgdikerjakan}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-check text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Done</span>
+						<div class="text-900 font-medium text-xl">{{countKurau.sdhdikerjakan}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Close</span>
+						<div class="text-900 font-medium text-xl">{{countKurau.sdhselesai}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Overall Request</span>
+						<div class="text-900 font-medium text-xl">{{countKurau.totalRequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>	
+</div>
+<div class="grid" v-else-if="this.role_name.includes('Reviewer Jakarta')">
+	<div class="col-12 lg:col-6 xl:col-3" >
+			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
+						<div class="text-900 font-medium text-xl">{{countJakarta.blmDiverifikasi}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-check text-xl" style="color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div @click="atasanDivisi2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Atasan Divisi</span>
+						<div class="text-900 font-medium text-xl">{{countJakarta.atasandivisi}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-clipboard-check text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div @click="IctManager2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">ICT Manager</span>
+						<div class="text-900 font-medium text-xl">{{countJakarta.manager}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-journal-bookmark-fill text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3" >
+			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Rejected</span>
+						<div class="text-900 font-medium text-xl">{{countJakarta.reject}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-times text-xl" style="color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Request Assignment</span>
+						<div class="text-900 font-medium text-xl">{{countJakarta.penugasanRequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">In Progress</span>
+						<div class="text-900 font-medium text-xl">{{countJakarta.sdgdikerjakan}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-check text-xl" style="color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Done</span>
+						<div class="text-900 font-medium text-xl">{{countJakarta.sdhdikerjakan}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Close</span>
+						<div class="text-900 font-medium text-xl">{{countJakarta.sdhselesai}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Overall Request</span>
+						<div class="text-900 font-medium text-xl">{{countJakarta.totalRequest}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -592,7 +830,9 @@ export default {
 			role_name :[],
             count:[],
             count1:[],
-            count2:[],
+            countBentu:[],
+            countKurau:[],
+            countJakarta:[],
             count3:[],
             count4:[],
             count5:[],
@@ -606,8 +846,8 @@ export default {
     },
     methods:{
       CekUser(){
-		this.role_name = localStorage.getItem('rolename');
-		if(this.role_name != null){
+		this.axios.get('api/cek-role/'+this.id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+			this.role_name = response.data.map((x)=>x.rol_name);
 			if(this.role_name.includes('Requestor Divisi')){
             this.getData();
           	}
@@ -617,46 +857,36 @@ export default {
 			else if(this.role_name.includes('Atasan Requestor Divisi')){
 				this.getData1();
 			}
-			else if(this.role_name.includes('Supervisor')){
-				this.getData2();
+			else if(this.role_name.includes('Reviewer Bentu')){
+				this.getDataBentu();
+			}
+			else if(this.role_name.includes('Reviewer Kurau')){
+				this.getDataKurau();
+			}
+			else if(this.role_name.includes('Reviewer Jakarta')){
+				this.getDataJakarta();
 			}
 			else if(this.role_name.includes('Personel ICT')){
 				this.getUser();
 			}
 			else if(this.role_name.includes('Manager')){
 				this.getData4();
-			}
-	  	}else {
-		  if(this.id){
-			this.axios.get('api/cek-role/'+this.id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-			  this.role_name = response.data.map((x)=>x.rol_name);
-				const role =  response.data.map((x)=>x.rol_name);
-				localStorage.setItem("rolename",role);
-					if(this.role_name.includes('Requestor Divisi')){
-						this.getData();
-					}
-					else if(this.role_name.includes('Admin')){
-						this.getData5();
-					}
-					else if(this.role_name.includes('Atasan Requestor Divisi')){
-						this.getData1();
-					}
-					else if(this.role_name.includes('Supervisor')){
-						this.getData2();
-					}
-					else if(this.role_name.includes('Personel ICT')){
-						this.getUser();
-					}
-					else if(this.role_name.includes('Manager')){
-						this.getData4();
-					}
-			  });
-		  } else {
-			this.$router.push('/login');
 		  }
-		}
+		}).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
+        });
       },
-      getData(){
+      	getData(){
             this.axios.get('api/getCountUser/'+this.usr_name,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.count = response.data;
             });
@@ -759,9 +989,19 @@ export default {
 		  this.$router.push('/ict-request-desc')
           localStorage.setItem('active',38);
 		},
-        getData2(){
-            this.axios.get('api/getCountDivisi2',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.count2 = response.data;
+        getDataBentu(){
+            this.axios.get('api/getCountReviewerBentu',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.countBentu = response.data;
+            });
+        },
+		getDataKurau(){
+            this.axios.get('api/getCountReviewerKurau',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.countKurau = response.data;
+            });
+        },
+		getDataJakarta(){
+            this.axios.get('api/getCountReviewerJakarta',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.countJakarta = response.data;
             });
         },
 		atasanDivisi2(){

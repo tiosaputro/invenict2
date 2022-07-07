@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
- });
+Route::get('/user','LoginController@show')->middleware('auth:sanctum');
 Route::get('/get-rolee/{id}','MngUsrRoleController@getRole');
 Route::get('/cek-verif-id/{code}','IctController@cekVerif');
 Route::post('/login', 'LoginController@index');
@@ -23,6 +21,14 @@ Route::get('/detail-peripherall/{invent_code}','MasterController@detailPeriphera
 Route::post('/login-approval', 'LoginController@loginFromEmail');
 Route::get('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function(){
+//referensi_location
+    Route::get('/loc', 'LocationController@index');
+    Route::post('/add-loc','LocationController@save');
+    Route::get('/edit-loc/{code}','LocationController@edit');
+    Route::put('/update-loc/{code}','LocationController@update');
+    Route::delete('/delete-loc/{loc_code}','LocationController@delete');
+    Route::get('/ref-loc', 'LocationController@getLocation');
+
 //referensi_lookups
     Route::get('/ref', 'LookupsController@index');
     Route::get('/ref-lookup-brand', 'LookupsController@lookupBrand');
@@ -177,7 +183,9 @@ Route::middleware('auth:sanctum')->group(function(){
     //dashboard
     Route::get('/getCountUser/{usr_name}','DashboardController@countUser');
     Route::get('/getCountDivisi1/{usr_name}','DashboardController@countDivisi1');
-    Route::get('/getCountDivisi2','DashboardController@countDivisi2');
+    Route::get('/getCountReviewerBentu','DashboardController@CountReviewerBentu');
+    Route::get('/getCountReviewerKurau','DashboardController@CountReviewerKurau');
+    Route::get('/getCountReviewerJakarta','DashboardController@CountReviewerJakarta');
     Route::get('/getCountDivisi3/{full_name}','DashboardController@countDivisi3');
     Route::get('/getCountDivisi4','DashboardController@countDivisi4');
     Route::get('/getCountAdmin','DashboardController@countAdmin');

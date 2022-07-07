@@ -88,7 +88,7 @@ p {
 }
 
 .invoice table td,.invoice table th {
-    padding: 15px;
+    padding: 11.25pt;
     border-bottom: 1px solid #fff;
 }
 
@@ -96,10 +96,8 @@ p {
     /* white-space: nowrap; */
     font-weight: 400;
     overflow: hidden;
-    font-size: 15px;
+    font-size: 16px;
     table-layout:fixed;
-
-
 }
 
 .invoice table td h3 {
@@ -108,7 +106,7 @@ p {
     font-weight: 400;
     max-height: 0.5px;
     color: #3989c6;
-    font-size: 1.5em
+    font-size: 16px;
 }
 
 .invoice table .qty,.invoice table .total,.invoice table .unit {
@@ -141,8 +139,7 @@ p {
     white-space: nowrap;
     text-align: center;
     padding: 10px 20px;
-    font-size: 1.5em;
-    border-top: 1px solid #aaa
+    font-size: 16px;
 }
 
 .invoice table tfoot tr:first-child td {
@@ -151,7 +148,7 @@ p {
 
 .invoice table tfoot tr:last-child td {
     color: #3989c6;
-    font-size: 1.4em;
+    font-size: 16px;
     border-top: 1px solid #3989c6
 }
 
@@ -197,10 +194,10 @@ p {
   max-width: 99%;
 }
 td {
-  max-width:1px;
+  width:1px;
   vertical-align: top;
   text-align: center;
-  max-height: 0.5px;
+  height: 0.375pt;
   padding: 0;
   border:solid 2px;
   overflow-x: scroll;
@@ -242,7 +239,7 @@ tr:nth-child(even) {
     overflow:hidden;
     margin: 1px;
     padding: 1px;
-    min-width: 99%;
+    width:100pt;
     min-height: 150px;
     text-align: left;
     outline: none;
@@ -250,8 +247,9 @@ tr:nth-child(even) {
 @media screen {
     #invoice{
         padding: 30px;
-        size: A4;
-        margin: 0;
+        /* size: A4; */
+        size: 7in 9.25in;
+        margin: 27mm 16mm 27mm 16mm;
     }
     .csssolution{
         resize: none; 
@@ -260,7 +258,7 @@ tr:nth-child(even) {
         overflow:hidden;
         margin: 1px;
         padding: 1px;
-        width: 70em;
+        width: 550pt;
         min-height: 120px;
         text-align: left;
         outline: none;
@@ -281,7 +279,7 @@ tr:nth-child(even) {
     .invoice table th {
         /* white-space: nowrap; */
         font-weight: 400;
-        font-size: 14px;
+        font-size: 16px;
         table-layout:fixed;
         overflow: hidden;
 
@@ -291,8 +289,9 @@ tr:nth-child(even) {
         margin: 0;
         overflow: hidden;
         font-weight: 400;
+        height:0.375pt;
         color: #3989c6;
-        font-size: 1.5em;
+        font-size: 16px;
         overflow: hidden;
     }
 
@@ -327,8 +326,7 @@ tr:nth-child(even) {
         white-space: nowrap;
         text-align: right;
         padding: 10px 20px;
-        font-size: 1.5em;
-        border-top: 1px solid #aaa
+        font-size: 16px;
     }
 
     .invoice table tfoot tr:first-child td {
@@ -369,10 +367,10 @@ tr:nth-child(even) {
         max-width: 100%;
     }
     td {
-        vertical-align: top;
-        max-width:1px;
+        vertical-align: bottom;
+        width:1px;
         text-align: center;
-        max-height: 0.5px;
+        height: 0.375pt;
         padding: 0;
         border:solid 2px;
         overflow-x: scroll;
@@ -480,7 +478,7 @@ tr:nth-child(even) {
         /* white-space: nowrap; */
         overflow: hidden;
         font-weight: 400;
-        font-size: 14px;
+        font-size: 16px;
         table-layout:fixed;
 
     }
@@ -566,9 +564,9 @@ tr:nth-child(even) {
 @media print {
     
     #invoice{
-        padding: 30px;
-        size: A4;
-        margin: 0;
+        /* padding: 30px; */
+        size: 7in 9.25in;
+        /* margin: 27mm 16mm 27mm 16mm; */
     }
     .csssolution{
         resize: none; 
@@ -577,7 +575,7 @@ tr:nth-child(even) {
         overflow:hidden;
         margin: 1px;
         padding: 1px;
-        min-width: 99%;
+        width: 470pt;
         min-height: 120px;
         text-align: left;
         outline: none;
@@ -599,7 +597,7 @@ tr:nth-child(even) {
         /* white-space: nowrap; */
         overflow: hidden;
         font-weight: 400;
-        font-size: 14px;
+        font-size: 16px;
         table-layout:fixed;
 
     }
@@ -609,7 +607,8 @@ tr:nth-child(even) {
         overflow: hidden;
         font-weight: 400;
         color: #3989c6;
-        font-size: 1.5em
+        font-size: 16px;
+        height: 0.75px;
     }
 
     .invoice table .qty,.invoice table .total,.invoice table .unit {
@@ -689,8 +688,8 @@ tr:nth-child(even) {
         max-width: 100%;
     }
     td {
-        vertical-align: top;
-        max-width:1px;
+        vertical-align: bottom;
+        max-width:0.75pt;
         text-align: center;
         max-height: 0.5px;
         padding: 0;
@@ -700,15 +699,15 @@ tr:nth-child(even) {
         text-overflow: ellipsis;
     }
     th{
-    vertical-align: top;
-    text-align: center;
-    max-height: 0.5px;
-    padding: 0;
-    border:solid 2px;
-    overflow-x: scroll;
-    text-overflow: ellipsis;
-    font-weight:bold;
-    border:solid 2px;
+        vertical-align: top;
+        text-align: center;
+        max-height: 0.5px;
+        padding: 0;
+        border:solid 1.5pt;
+        overflow-x: scroll;
+        text-overflow: ellipsis;
+        font-weight:bold;
+        border:solid 1.5pt;
     }
         p {
         font-weight: bold;
@@ -717,8 +716,8 @@ tr:nth-child(even) {
     .invoice {
         position: relative;
         background-color: #FFF;
-        min-height: 680px;
-        padding: 30px;
+        min-height: 510pt;
+        padding: 22pt;
         size: A4;
         margin: 0;
     }
@@ -788,7 +787,7 @@ tr:nth-child(even) {
         width: 100%;
         border-collapse: collapse;
         border-spacing: 0;
-        margin-bottom: 20px
+        margin-bottom: 12pt;
     }
 
     .invoice table td,.invoice table th {
@@ -800,7 +799,7 @@ tr:nth-child(even) {
         /* white-space: nowrap; */
         font-weight: 400;
         overflow: hidden;
-        font-size: 14px;
+        font-size: 16px;
         table-layout:fixed;
 
     }
@@ -810,7 +809,7 @@ tr:nth-child(even) {
         font-weight: 400;
         overflow: hidden;
         color: #3989c6;
-        font-size: 1.5em
+        font-size: 16px;
     }
 
     .invoice table .qty,.invoice table .total,.invoice table .unit {
@@ -863,22 +862,22 @@ tr:nth-child(even) {
         border: none
     }
     .column {
-    float: left;
-    width: 50%;
-    padding: 5px;
-    margin-left:2px;
-    margin-right:-10px;
-    /* border:solid 1px; */
+        float: left;
+        width: 50%;
+        padding: 5px;
+        margin-left:2px;
+        margin-right:-10px;
+        /* border:solid 1px; */
     }
     .textareacss{
         resize: none; 
-        border:solid 2px;
+        border:solid 1.5pt;
         font-weight: bold;
         overflow:hidden;
-        margin: 1px;
-        padding: 1px;
-        min-width: 99%;
-        min-height: 170px;
+        margin: 0.75pt;
+        padding: 0.75pt;
+        min-width:100pt;
+        min-height: 90pt;
         outline: none;
     }
 }
@@ -944,10 +943,10 @@ tr:nth-child(even) {
                         <tr>
                             <th>{{$detail[0]->ireq_requestor}}</th>
                             <th>{{$detail[0]->div_name}}</th>
-                            <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(100)->generate($linkRequester); !!}</th>
+                            <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(90)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
                         </tr>
                         <tr>
-                            <td style="border:solid 2px;overflow: hidden;height:1px;">Name</td>
+                            <td style="border:solid 2px;overflow: hidden;height:0.5px;">Name</td>
                             <td style="border:solid 2px;overflow: hidden;">Divison</td>
                         </tr>
                         </table>
@@ -961,7 +960,7 @@ tr:nth-child(even) {
                                  @if($detail[0]->status == "RA1")
                                     <th rowspan="2" style="border:solid 2px;font-weight:bold;">Rejected on {{$detail[0]->date_approver1}} and verified by the system</th>
                                  @else
-                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(100)->generate($linkHigherLevel); !!}</th>
+                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(90)->generate($linkHigherLevel); !!}<br>{{$detail[0]->date_approver1}}</th>
                                  @endif
                             </tr>
                             @else
@@ -972,7 +971,7 @@ tr:nth-child(even) {
                             </tr>
                             @endif
                             <tr>
-                                <td style="border:solid 2px;height:1px;overflow: hidden;">Name</td>
+                                <td style="border:solid 2px;height:0.5px;overflow: hidden;">Name</td>
                                 <td style="border:solid 2px;overflow: hidden;">Position</td>
                             </tr>
                         </table>
@@ -991,7 +990,7 @@ tr:nth-child(even) {
                             @if($detail[0]->status=='RA2')
                              <th rowspan="2" style="border:solid 2px;font-weight:bold;">Rejected on {{$detail[0]->date_approver2}} and verified by the system</th>
                             @else
-                             <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(100)->generate($linkIctManager); !!}</th>
+                             <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(90)->generate($linkIctManager); !!} <br>{{$detail[0]->date_approver2}}</th>
                             @endif
                             <th></th>
                         </tr>
@@ -1006,7 +1005,7 @@ tr:nth-child(even) {
                       <tr>
                         <td style="border:solid 2px;overflow: hidden;">Name</td>
                         <td style="border:solid 2px;overflow: hidden;">Position</td>
-                        <td style="border:solid 2px;height:1px;overflow: hidden;">Remarks(Including OE if required)</td>
+                        <td style="border:solid 2px;height:0.5px;overflow: hidden;">Remarks(Including OE if required)</td>
                       </tr>
                     </table>
                 </div>
@@ -1025,7 +1024,7 @@ tr:nth-child(even) {
                         <th></th>
                       </tr>
                       <tr>
-                        <td style="border:solid 2px;height:1px;overflow: hidden;">Received By</td>
+                        <td style="border:solid 2px;height:0.375pt;overflow: hidden;">Received By</td>
                         <td style="border:solid 2px;overflow: hidden;">Assigned To</td>
                         <td style="border:solid 2px;overflow: hidden;">Date Assigned</td>
                         <td style="border:solid 2px;overflow: hidden;">Date Completed</td>
@@ -1040,13 +1039,13 @@ tr:nth-child(even) {
                 </div>
                 <div class="row contacts">
                     <div class="col invoice-to">
-                        <div class="address" style="font-weight:bold;">Solution/Action Implemented/Analysis</div>
-                            <textarea cols="100" class="csssolution" readonly> </textarea>
+                        <div class="address" style="font-weight:bold;font-size:16px;">Solution/Action Implemented/Analysis</div>
+                            <textarea cols="90" class="csssolution" readonly> </textarea>
                     </div>
                     
                     <div class="col invoice-to">
                       <div class="row">
-                        <div class="address" style="font-weight:bold;">*(A)ccident/(I)ncident/I(N)stall/Assi(S)t</div>
+                        <div class="address" style="font-weight:bold;text-align:left;font-size:16px;">*(A)ccident/(I)ncident/I(N)stall/Assi(S)t</div>
                           <table >
                             <tr> 
                                 <th style="height:70px;"> </th>

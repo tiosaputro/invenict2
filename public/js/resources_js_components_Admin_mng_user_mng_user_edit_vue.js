@@ -35,7 +35,8 @@ __webpack_require__.r(__webpack_exports__);
       checkname: [],
       checkto: [],
       id: localStorage.getItem('id'),
-      bu: []
+      bu: [],
+      loc: []
     };
   },
   created: function created() {
@@ -68,6 +69,8 @@ __webpack_require__.r(__webpack_exports__);
             _this.getDivisi();
 
             _this.getBisnis();
+
+            _this.getLocation();
           } else {
             _this.$router.push('/access');
           }
@@ -109,29 +112,40 @@ __webpack_require__.r(__webpack_exports__);
         _this4.divisi = response.data;
       });
     },
-    getUser: function getUser() {
+    getLocation: function getLocation() {
       var _this5 = this;
+
+      this.axios.get('/api/ref-loc', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this5.loc = response.data;
+      });
+    },
+    getUser: function getUser() {
+      var _this6 = this;
 
       this.axios.get('/api/edit-user/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this5.user = response.data;
+        _this6.user = response.data;
       });
     },
     getRoles: function getRoles() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.axios.get('/api/get-role', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this6.roles = response.data;
+        _this7.roles = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this6.$toast.add({
+          _this7.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Sesi Login Expired'
@@ -140,7 +154,7 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this6.$router.push('/login');
+            return _this7.$router.push('/login');
           }, 2000);
         }
       });
@@ -163,7 +177,7 @@ __webpack_require__.r(__webpack_exports__);
       reader.readAsDataURL(foto);
     },
     UpdateUser: function UpdateUser() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.errors = [];
       this.error = [];
@@ -174,23 +188,23 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this7.axios.put('/api/update-usr-role/' + _this7.$route.params.code, _this7.role, {
+          _this8.axios.put('/api/update-usr-role/' + _this8.$route.params.code, _this8.role, {
             headers: {
-              'Authorization': 'Bearer ' + _this7.token
+              'Authorization': 'Bearer ' + _this8.token
             }
           });
 
-          _this7.$toast.add({
+          _this8.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Update"
           });
 
           setTimeout(function () {
-            return _this7.$router.push('/mng-user');
+            return _this8.$router.push('/mng-user');
           }, 1000);
         })["catch"](function (error) {
-          _this7.errors = error.response.data.errors;
+          _this8.errors = error.response.data.errors;
         });
       } else {
         this.error.role = "Roles Belum Diisi";
@@ -393,16 +407,35 @@ var _hoisted_38 = {
   "class": "p-error"
 };
 var _hoisted_39 = {
+  "class": "field grid"
+};
+
+var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  style: {
+    "width": "120px"
+  }
+}, "Lokasi", -1
+/* HOISTED */
+);
+
+var _hoisted_41 = {
+  "class": "col-4"
+};
+var _hoisted_42 = {
+  key: 0,
+  "class": "p-error"
+};
+var _hoisted_43 = {
   "class": "card",
   style: {
     "width": "33rem"
   }
 };
-var _hoisted_40 = {
+var _hoisted_44 = {
   "class": "field grid"
 };
 
-var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
@@ -410,24 +443,24 @@ var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_42 = {
+var _hoisted_46 = {
   "class": "col-3"
 };
-var _hoisted_43 = {
+var _hoisted_47 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_44 = {
+var _hoisted_48 = {
   "class": "form-group"
 };
-var _hoisted_45 = {
+var _hoisted_49 = {
   "class": "col-sm-6"
 };
-var _hoisted_46 = {
+var _hoisted_50 = {
   "class": "field grid"
 };
 
-var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -435,22 +468,22 @@ var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_48 = {
+var _hoisted_52 = {
   "class": "col-10 md-6"
 };
-var _hoisted_49 = {
+var _hoisted_53 = {
   "class": "card",
   style: {
     "height": "23.5rem"
   }
 };
-var _hoisted_50 = ["src"];
-var _hoisted_51 = ["src"];
-var _hoisted_52 = {
+var _hoisted_54 = ["src"];
+var _hoisted_55 = ["src"];
+var _hoisted_56 = {
   "class": "field grid"
 };
 
-var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "155px"
   }
@@ -458,7 +491,7 @@ var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_54 = {
+var _hoisted_58 = {
   "class": "col-10 md-6"
 };
 
@@ -491,7 +524,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[11] || (_cache[11] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[12] || (_cache[12] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.UpdateUser && $options.UpdateUser.apply($options, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
@@ -622,9 +655,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "options", "class"]), $data.errors.usr_stat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.usr_stat[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MultiSelect, {
-    modelValue: $data.role.role,
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+    modelValue: $data.user.usr_loc,
     "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+      return $data.user.usr_loc = $event;
+    }),
+    options: $data.loc,
+    showClear: true,
+    filter: true,
+    optionLabel: "name",
+    optionValue: "code",
+    placeholder: "Select One",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+      'p-invalid': $data.errors.usr_loc
+    })
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "options", "class"]), $data.errors.usr_loc ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.usr_loc[0]), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [_hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MultiSelect, {
+    modelValue: $data.role.role,
+    "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
       return $data.role.role = $event;
     }),
     options: $data.roles,
@@ -637,9 +688,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.error.role ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.role), 1
+  , ["modelValue", "options", "class"]), $data.error.role ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.role), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -648,24 +699,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
-    onClick: _cache[10] || (_cache[10] = function ($event) {
+    onClick: _cache[11] || (_cache[11] = function ($event) {
       return _ctx.$router.push('/mng-user');
     })
   })])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [$data.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [$data.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
     key: 0,
     src: $data.preview,
     "class": "user-image"
   }, null, 8
   /* PROPS */
-  , _hoisted_50)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+  , _hoisted_54)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
     key: 1,
     src: '/profile/' + $data.user.usr_foto,
     "class": "user-image"
   }, null, 8
   /* PROPS */
-  , _hoisted_51))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [_hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , _hoisted_55))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [_hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "file",
     name: "foto",
     ref: "fileInput",

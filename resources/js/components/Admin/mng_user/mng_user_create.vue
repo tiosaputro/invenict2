@@ -133,11 +133,29 @@
                       :filter="true"
                       optionLabel="nama"
                       optionValue="code"
-                      placeholder="Select A Status"
+                      placeholder="Select One"
                       :class="{ 'p-invalid': errors.usr_status }"
                     />
                    <small v-if="errors.usr_status" class="p-error">
                       {{ errors.usr_status[0] }}
+                  </small>
+                </div>
+              </div>
+              <div class="field grid">
+                <label style="width:120px">Lokasi</label>
+                 <div class="col-4">
+                  <Dropdown
+                      v-model="user.usr_loc"
+                      :options="loc"
+                      :showClear="true"
+                      :filter="true"
+                      optionLabel="name"
+                      optionValue="code"
+                      placeholder="Select One"
+                      :class="{ 'p-invalid': errors.usr_loc }"
+                    />
+                   <small v-if="errors.usr_loc" class="p-error">
+                      {{ errors.usr_loc[0] }}
                   </small>
                 </div>
               </div>
@@ -219,7 +237,8 @@ export default {
           usr_roles:'',
           image:'',
           div:'',
-          usr_bu:''
+          usr_bu:'',
+          usr_loc:''
         },
       preview:'',
       stat: [
@@ -232,7 +251,8 @@ export default {
       checkname : [],
       checkto : [],
       id : localStorage.getItem('id'),
-      bu:[]
+      bu:[],
+      loc:[]
     };
   },
   created(){
@@ -248,6 +268,7 @@ export default {
           this.getRoles();
           this.getDivisi();
           this.getBisnis();
+          this.getLocation();
         }
         else {
           this.$router.push('/access');
@@ -280,6 +301,11 @@ export default {
     getDivisi(){
       this.axios.get('api/get-divisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.divisi = response.data;
+      });
+    },
+    getLocation(){
+      this.axios.get('api/ref-loc', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.loc = response.data;
       });
     },
     getRoles(){

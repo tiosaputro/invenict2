@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Session;
 use App\Mng_User;
+use App\Mng_roles;
+use App\Mng_usr_roles;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -57,12 +59,15 @@ class LoginController extends Controller
             if(Hash::check($request->password, $user->usr_passwd)) {
                 $token = $user->createToken('ApiToken')->plainTextToken;
                 $id = $user->usr_id;
+                $roleid = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
+                $role = Mng_roles::select('rol_name')->whereIn('rol_id',$roleid)->pluck('rol_name');
                     $response = [
                         'success'   => true,
-                        'user'      => $user,
                         'token'     => $token,
                         'id'        => $id,
-                        'usr_name'  => $user->usr_name
+                        'usr_name'  => $user->usr_name,
+                        'usr_loc'   =>$user->usr_loc
+
                     ];
                     return json_encode($response, 200);
                 }else{
@@ -96,5 +101,10 @@ class LoginController extends Controller
             'success'    => true,
             'message'    => $user,
         ], 200);
+    }
+    public function show()
+    {
+        $user = Auth::user();
+        return json_encode($user);
     }
 }

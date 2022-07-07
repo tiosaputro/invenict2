@@ -28,7 +28,8 @@ class IctDetail extends Model
         'program_name',
         'ireq_value',
         'ireq_note',
-        'ireq_note_personnel'
+        'ireq_note_personnel',
+        'ireq_date_closing'
     ];
     protected $table = 'ireq_dtl';
     protected $primaryKey ='ireqd_id';

@@ -35,27 +35,31 @@ class DashboardController extends Controller
         ->first();
         return response()->json($grafik);
     }
-    public function countDivisi2()
+    public function countReviewerJakarta()
     {
         $blmdiverifikasi = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as blmdiverifikasi'))
             ->where('ireq_status','P')
+            ->where('ireq_loc','OJ')
             ->pluck('blmdiverifikasi')
             ->first();
         $atasandivisi = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as atasandivisi'))
+            ->where('ireq_loc','OJ')
             ->where('ireq_status','NA1')
             ->orWhere('ireq_status','A1')
             ->pluck('atasandivisi')
             ->first();
         $manager = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as manager'))
+            ->where('ireq_loc','OJ')
             ->where('ireq_status','NA2')
             ->orWhere('ireq_status','A2')
             ->pluck('manager')
             ->first();
         $reject = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as reject'))
+            ->where('ireq_loc','OJ')
             ->where(function($query){
                 return $query
                 ->where('ireq_status','RR')
@@ -66,28 +70,253 @@ class DashboardController extends Controller
             ->first();
         $sdgdikerjakan = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as sdgdikerjakan'))
+            ->where('ireq_loc','OJ')
             ->where('ireq_status','T')
             ->pluck('sdgdikerjakan')
             ->first();
         $sdhdikerjakan = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as sdhdikerjakan'))
+            ->where('ireq_loc','OJ')
             ->where('ireq_status','D')
             ->pluck('sdhdikerjakan')
             ->first();
         $sdhselesai = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as sdhselesai'))
+            ->where('ireq_loc','OJ')
             ->where('ireq_status','C')
             ->pluck('sdhselesai')
             ->first();
         $penugasanRequest = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as tes'))
+            ->where('ireq_loc','OJ')
             ->where('ireq_status','NT')
             ->orWhere('ireq_status','RT')
             ->pluck('tes')
             ->first();
         $total = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as total'))
+            ->where('ireq_loc','OJ')
             ->whereNotNull('ireq_status')
+            ->pluck('total')
+            ->first();
+        return response()->json(['blmDiverifikasi'=>$blmdiverifikasi,'atasandivisi'=>$atasandivisi,'manager'=>$manager,'reject'=>$reject,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai,'totalRequest'=>$total,'penugasanRequest'=>$penugasanRequest]);
+    }public function countReviewerKurau()
+    {
+        $blmdiverifikasi = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as blmdiverifikasi'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OK')
+                ->OrWhere('ireq_loc','FK');
+            })
+            ->where('ireq_status','P')
+            ->pluck('blmdiverifikasi')
+            ->first();
+        $atasandivisi = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as atasandivisi'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OK')
+                ->OrWhere('ireq_loc','FK');
+            })
+            ->where(function ($query){
+                return $query
+                ->where('ireq_status','NA1')
+                ->orWhere('ireq_status','A1');
+            })
+            ->pluck('atasandivisi')
+            ->first();
+        $manager = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as manager'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OK')
+                ->OrWhere('ireq_loc','FK');
+            })
+            ->where(function ($query){
+                return $query
+                ->where('ireq_status','NA2')
+                ->orWhere('ireq_status','A2');
+            })
+            ->pluck('manager')
+            ->first();
+        $reject = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as reject'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OK')
+                ->OrWhere('ireq_loc','FK');
+            })
+            ->where(function($query){
+                return $query
+                ->where('ireq_status','RR')
+                ->orWhere('ireq_status','RA1')
+                ->orWhere('ireq_status','RA2');
+            })
+            ->pluck('reject')
+            ->first();
+        $sdgdikerjakan = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as sdgdikerjakan'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OK')
+                ->OrWhere('ireq_loc','FK');
+            })
+            ->where('ireq_status','T')
+            ->pluck('sdgdikerjakan')
+            ->first();
+        $sdhdikerjakan = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as sdhdikerjakan'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OK')
+                ->OrWhere('ireq_loc','FK');
+            })
+            ->where('ireq_status','D')
+            ->pluck('sdhdikerjakan')
+            ->first();
+        $sdhselesai = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as sdhselesai'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OK')
+                ->OrWhere('ireq_loc','FK');
+            })
+            ->where('ireq_status','C')
+            ->pluck('sdhselesai')
+            ->first();
+        $penugasanRequest = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as tes'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OK')
+                ->OrWhere('ireq_loc','FK');
+            })
+            ->where(function ($query){
+                return $query
+                ->where('ireq_status','NT')
+                ->orWhere('ireq_status','RT');
+            })
+            ->pluck('tes')
+            ->first();
+        $total = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as total'))
+            ->whereNotNull('ireq_status')
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OK')
+                ->OrWhere('ireq_loc','FK');
+            })
+            ->pluck('total')
+            ->first();
+        return response()->json(['blmDiverifikasi'=>$blmdiverifikasi,'atasandivisi'=>$atasandivisi,'manager'=>$manager,'reject'=>$reject,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai,'totalRequest'=>$total,'penugasanRequest'=>$penugasanRequest]);
+    }public function countReviewerBentu()
+    {
+        $blmdiverifikasi = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as blmdiverifikasi'))
+            ->where('ireq_status','P')
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OB')
+                ->OrWhere('ireq_loc','FB');
+            })
+            ->pluck('blmdiverifikasi')
+            ->first();
+        $atasandivisi = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as atasandivisi'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OB')
+                ->OrWhere('ireq_loc','FB');
+            })
+            ->where(function ($query){
+                return $query
+                ->where('ireq_status','NA1')
+                ->orWhere('ireq_status','A1');
+            })
+            ->pluck('atasandivisi')
+            ->first();
+        $manager = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as manager'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OB')
+                ->OrWhere('ireq_loc','FB');
+            })
+            ->where(function ($query){
+                return $query
+                ->where('ireq_status','NA2')
+                ->orWhere('ireq_status','A2');
+            })
+            ->pluck('manager')
+            ->first();
+        $reject = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as reject'))
+            ->where(function($query){
+                return $query
+                ->where('ireq_status','RR')
+                ->orWhere('ireq_status','RA1')
+                ->orWhere('ireq_status','RA2');
+            })
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OB')
+                ->OrWhere('ireq_loc','FB');
+            })
+            ->pluck('reject')
+            ->first();
+        $sdgdikerjakan = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as sdgdikerjakan'))
+            ->where('ireq_status','T')
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OB')
+                ->OrWhere('ireq_loc','FB');
+            })
+            ->pluck('sdgdikerjakan')
+            ->first();
+        $sdhdikerjakan = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as sdhdikerjakan'))
+            ->where('ireq_status','D')
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OB')
+                ->OrWhere('ireq_loc','FB');
+            })
+            ->pluck('sdhdikerjakan')
+            ->first();
+        $sdhselesai = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as sdhselesai'))
+            ->where('ireq_status','C')
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OB')
+                ->OrWhere('ireq_loc','FB');
+            })
+            ->pluck('sdhselesai')
+            ->first();
+        $penugasanRequest = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as tes'))
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OB')
+                ->OrWhere('ireq_loc','FB');
+            })
+            ->where(function ($query){
+                return $query
+                ->where('ireq_status','NT')
+                ->orWhere('ireq_status','RT');
+            })
+            ->pluck('tes')
+            ->first();
+        $total = DB::table('ireq_mst')
+            ->select(DB::raw('count(ireq_id) as total'))
+            ->whereNotNull('ireq_status')
+            ->where(function ($query){
+                return $query
+                ->Where('ireq_loc','OB')
+                ->OrWhere('ireq_loc','FB');
+            })
             ->pluck('total')
             ->first();
         return response()->json(['blmDiverifikasi'=>$blmdiverifikasi,'atasandivisi'=>$atasandivisi,'manager'=>$manager,'reject'=>$reject,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai,'totalRequest'=>$total,'penugasanRequest'=>$penugasanRequest]);

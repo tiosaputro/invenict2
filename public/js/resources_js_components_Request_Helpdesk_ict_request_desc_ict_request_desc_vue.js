@@ -171,20 +171,20 @@ __webpack_require__.r(__webpack_exports__);
     getIct3: function getIct3() {
       var _this3 = this;
 
-      this.axios.get('api/get-permohonan-divisi', {
+      this.axios.get('api/get-data-reviewer', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.blmDiverifikasi = response.data.ict1;
-        _this3.atasanDivisi = response.data.ict2;
-        _this3.ictManager = response.data.ict3;
-        _this3.direject2 = response.data.ict4;
-        _this3.sudahDiassign = response.data.ict5;
-        _this3.sudahDikerjakann = response.data.ict6;
-        _this3.sudahslsi = response.data.ict7;
+        _this3.blmDiverifikasi = response.data.ict;
+        _this3.atasanDivisi = response.data.ict1;
+        _this3.ictManager = response.data.ict2;
+        _this3.direject2 = response.data.ict3;
+        _this3.sudahDiassign = response.data.ict4;
+        _this3.sudahDikerjakann = response.data.ict5;
+        _this3.sudahslsi = response.data.ict6;
         _this3.totalRequest2 = response.data.ict8;
-        _this3.penugasanRequest2 = response.data.ict9;
+        _this3.penugasanRequest2 = response.data.ict7;
         _this3.loading = false;
       });
     },
