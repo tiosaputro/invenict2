@@ -105,7 +105,7 @@
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  v-tooltip.left="'Click to save detail'"
+                  v-tooltip.bottom="'Click to save detail'"
                   label="Save"
                   type="submit"
                 />
@@ -119,7 +119,7 @@
                 <Button
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mt-2"
-                  v-tooltip.right="'Click to cancel create data'"
+                  v-tooltip.bottom="'Click to cancel create data'"
                   icon="pi pi-times"
                   @click="$router.push({
                     name: 'Ict Request Detail',

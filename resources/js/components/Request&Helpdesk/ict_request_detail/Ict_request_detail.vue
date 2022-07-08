@@ -80,7 +80,7 @@
                 v-if=" slotProps.data.ireq_status == null"
                 class="p-button-rounded p-button-info mr-2"
                 icon="pi pi-pencil"
-                v-tooltip.left="'Click to edit data'"
+                v-tooltip.bottom="'Click to edit data'"
                 @click="
                   $router.push({
                     name: 'Edit Ict Request Detail',
@@ -89,7 +89,7 @@
               <Button
                 v-if=" slotProps.data.ireq_status == null"
                 icon="pi pi-trash"
-                v-tooltip.right="'Click to delete data'"
+                v-tooltip.bottom="'Click to delete data'"
                 class="p-button-rounded p-button-danger mr-2"
                 @click="DeleteIct(slotProps.data.ireqd_id,this.code)"
               />

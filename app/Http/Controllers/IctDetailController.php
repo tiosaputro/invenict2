@@ -407,7 +407,6 @@ class IctDetailController extends Controller
         })
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
-        // ->leftjoin('divisi_refs as dvr','imm.ireq_divisi_user','dvr.div_id')
         ->leftjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
         ->leftjoin('lookup_refs as lllr','imm.ireq_prio_level','lllr.lookup_code')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')

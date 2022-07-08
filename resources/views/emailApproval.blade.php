@@ -912,7 +912,7 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 40px 19px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%;">Need Help? Click <a rel="noopener" href="mailto:icthelpdesk.admin@emp.id?subject=Need%20help%20for%20approval&body=" target="_blank">here</a></p>
+    <p style="font-size: 14px; line-height: 140%;">Need Help? Click <a rel="noopener" href="mailto:{{$ict[0]->loc_email}}?subject=Need%20help%20for%20approval&body=" target="_blank">here</a></p>
 <p style="font-size: 14px; line-height: 140%;">Copyright &copy; 2022 ICT Helpdesk All rights reserved</p>
   </div>
 
