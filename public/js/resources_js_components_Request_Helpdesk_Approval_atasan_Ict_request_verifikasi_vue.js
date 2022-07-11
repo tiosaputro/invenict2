@@ -138,7 +138,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this4.verif = response.data;
-        _this4.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this4.$toast.add({
@@ -164,6 +163,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this5.kode = response.data;
+        _this5.loading = false;
       });
     },
     DeleteIct: function DeleteIct(ireqd_id) {

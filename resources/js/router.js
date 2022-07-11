@@ -600,17 +600,17 @@ const routes = [
 
     {
         name: 'Check legality Qr-code Higher Level',
-        path: '/legality-qrcode-higher-level/:code',
+        path: '/check-legality-qrcode-higher-level/:code',
         component: ()=> import('./components/Request&Helpdesk/legality_qr_code/legality_approval_atasan.vue'),
     },
     {
         name: 'Check legality Qr-code ICT Manager',
-        path: '/legality-qrcode-ict-manager/:code',
+        path: '/check-legality-qrcode-ict-manager/:code',
         component: ()=> import('./components/Request&Helpdesk/legality_qr_code/legality_approval_ict_manager.vue'),
     },
     {
         name: 'Check legality Qr-code Requestor',
-        path: '/legality-qrcode-requester/:code',
+        path: '/check-legality-qrcode-requester/:code',
         component: ()=> import('./components/Request&Helpdesk/legality_qr_code/legality_request.vue'),
     },
     {

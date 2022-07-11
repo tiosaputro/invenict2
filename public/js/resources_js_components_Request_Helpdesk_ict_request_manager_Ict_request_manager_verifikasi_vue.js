@@ -164,6 +164,20 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this5.kode = response.data;
+
+        if (_this5.kode.cekstatus == 'NA2') {
+          _this5.getIctDetail();
+        } else {
+          _this5.$toast.add({
+            severity: "error",
+            summary: "Error Message",
+            detail: "This request has been verified"
+          });
+
+          setTimeout(function () {
+            return _this5.$router.push('/ict-request-divisi1');
+          }, 2000);
+        }
       });
     }
   }

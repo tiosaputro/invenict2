@@ -486,7 +486,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8
           /* PROPS */
           , ["onClick"])), [[_directive_tooltip, 'Click to edit data', void 0, {
-            left: true
+            bottom: true
           }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 1,
             icon: "pi pi-trash",
@@ -497,7 +497,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8
           /* PROPS */
           , ["onClick"])), [[_directive_tooltip, 'Click to delete data', void 0, {
-            right: true
+            bottom: true
           }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
         }),
         _: 1

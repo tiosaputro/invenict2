@@ -158,8 +158,8 @@ __webpack_require__.r(__webpack_exports__);
 
           _this3.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Direject",
+            summary: "Success",
+            detail: "Successfully rejected the request",
             life: 2000
           });
 
@@ -171,17 +171,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.$confirm.require({
-        message: "Apakah Anda Yakin?",
+        message: "Are you sure this request need approval from higher level?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this4.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Update",
+            detail: "Success Update Request",
             life: 2000
           });
 
@@ -200,17 +200,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       this.$confirm.require({
-        message: "Apakah Anda Yakin?",
+        message: "Are you sure this request need approval from ICT Manager?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this5.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Update",
+            detail: "Success Update Request",
             life: 2000
           });
 
@@ -259,7 +259,7 @@ __webpack_require__.r(__webpack_exports__);
           _this7.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Assign",
+            detail: "Assignment request successful",
             life: 2000
           });
 
@@ -280,17 +280,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this8 = this;
 
       this.$confirm.require({
-        message: "Closing Permohonan Dilanjutkan?",
+        message: "Are you sure to close this request?",
         header: "Closing Per Detail",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this8.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Diclosing",
+            summary: "Success",
+            detail: "Closing request successful",
             life: 3000
           });
 
@@ -794,7 +794,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Request Date",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -831,7 +831,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Personnel ICT",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -880,7 +880,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     left: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 2,
-                    "class": "p-button-raised p-button-text mr-2",
+                    "class": "p-button-raised p-button-danger p-button-text mr-2",
                     onClick: function onClick($event) {
                       return $options.Reject(slotProps.data.ireq_id);
                     },
@@ -893,7 +893,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     onClick: function onClick($event) {
                       return $options.ApproveAtasan(slotProps.data.ireq_id);
                     },
-                    label: "Persetujuan Atasannya"
+                    label: "Higher Level Approval"
                   }, null, 8
                   /* PROPS */
                   , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
@@ -902,7 +902,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     onClick: function onClick($event) {
                       return $options.ApproveManager(slotProps.data.ireq_id);
                     },
-                    label: "Persetujuan ICT Manager"
+                    label: "ICT Manager Approval"
                   }, null, 8
                   /* PROPS */
                   , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
@@ -1118,7 +1118,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     onClick: function onClick($event) {
                       return $options.ApproveManager(slotProps.data.ireq_id);
                     },
-                    label: "Persetujuan ICT Manager"
+                    label: "ICT Manager Approval"
                   }, null, 8
                   /* PROPS */
                   , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.status == 'A1' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {

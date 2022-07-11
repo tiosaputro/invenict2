@@ -17,12 +17,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      displayDetailRequest: false,
-      header: null,
+      loading: true,
       detail: [],
       token: localStorage.getItem('token'),
-      kode: null,
-      date: null
+      verif: []
     };
   },
   created: function created() {
@@ -33,17 +31,33 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
     checkLogin: function checkLogin() {
-      var loggedIn = localStorage.getItem('loggedIn');
+      var _this = this;
 
-      if (loggedIn) {
-        this.cekUser();
-      } else {
-        var status = 'requester';
-        this.$router.push('/loginn/' + status + '/' + this.$route.params.code);
-      }
+      this.axios.get('/api/cek-verif-id/' + this.$route.params.code).then(function (res) {
+        _this.verif = res.data;
+
+        if (!_this.verif) {
+          _this.$router.push({
+            name: 'error',
+            params: {
+              stat: 'notvalid'
+            }
+          });
+        } else {
+          var loggedIn = localStorage.getItem('loggedIn');
+
+          if (loggedIn) {
+            _this.cekUser();
+          } else {
+            var status = 'requester';
+
+            _this.$router.push('/loginn/' + status + '/' + _this.$route.params.code);
+          }
+        }
+      });
     },
     cekUser: function cekUser() {
-      var _this = this;
+      var _this2 = this;
 
       var id = localStorage.getItem('id');
       this.axios.get('/api/cek-user/' + id, {
@@ -51,55 +65,30 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
+        _this2.checkto = response.data.map(function (x) {
           return x.to;
         });
-        _this.checkname = response.data.map(function (x) {
+        _this2.checkname = response.data.map(function (x) {
           return x.name;
         });
 
-        if (_this.checkname.includes("Scan Legality") || _this.checkto.includes("/scan-qr-code")) {
-          _this.getIctDetail();
+        if (_this2.checkname.includes("Scan Legality") || _this2.checkto.includes("/scan-qr-code")) {
+          _this2.getIctDetail();
         } else {
-          _this.$router.push('/access');
+          _this2.$router.push('/access');
         }
       });
     },
     getIctDetail: function getIctDetail() {
-      var _this2 = this;
-
-      this.axios.get('/api/detail-norequest/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.detail = response.data;
-        _this2.displayDetailRequest = true;
-      })["catch"](function (error) {
-        if (error.response.status == 401) {
-          _this2.$toast.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Sesi Login Expired'
-          });
-
-          localStorage.clear();
-          localStorage.setItem('Expired', 'true');
-          setTimeout(function () {
-            return _this2.$router.push('/login');
-          }, 2000);
-        }
-      });
-    },
-    getNoreq: function getNoreq() {
       var _this3 = this;
 
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
+      this.axios.get('/api/detail-norequest/' + this.verif.ireq_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.kode = response.data.noreq;
+        _this3.detail = response.data;
+        _this3.loading = false;
       });
     }
   }
@@ -120,100 +109,106 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
+var _hoisted_1 = {
+  "class": "grid"
+};
+var _hoisted_2 = {
+  "class": "col-12"
+};
+var _hoisted_3 = {
+  "class": "card"
+};
 
-  var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request", -1
+/* HOISTED */
+);
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Loading ICT Request data. Please wait. ");
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
 
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
 
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
-    visible: $data.displayDetailRequest,
-    "onUpdate:visible": _cache[0] || (_cache[0] = function ($event) {
-      return $data.displayDetailRequest = $event;
-    }),
-    style: {
-      width: '1400px'
-    },
-    header: "Detail Request",
-    modal: true
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
+    "class": "mb-4"
   }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
-        value: $data.detail,
-        paginator: true,
-        rows: 10,
-        rowHover: true,
-        paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
-        rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-        currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
-        responsiveLayout: "scroll"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-            field: "ireq_no",
-            header: "No. Request",
-            style: {
-              "min-width": "6rem"
-            }
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-            field: "ireq_date",
-            header: "Request Date",
-            style: {
-              "min-width": "12rem"
-            }
-          }, {
-            body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate(slotProps.data.ireq_date)), 1
-              /* TEXT */
-              )];
-            }),
-            _: 1
-            /* STABLE */
+    start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_4];
+    }),
+    _: 1
+    /* STABLE */
 
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-            field: "ireq_requestor",
-            header: "Requester",
-            style: {
-              "min-width": "6rem"
-            }
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-            field: "ireq_user",
-            header: "User",
-            style: {
-              "min-width": "12rem"
-            }
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-            field: "div_name",
-            header: "Division User",
-            style: {
-              "min-width": "12rem"
-            }
-          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-            field: "ireq_bu",
-            header: "Business Unit",
-            style: {
-              "min-width": "12rem"
-            }
-          })];
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+    value: $data.detail,
+    paginator: true,
+    rows: 10,
+    loading: $data.loading,
+    rowHover: true,
+    paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
+    rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+    responsiveLayout: "scroll"
+  }, {
+    loading: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_5];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_no",
+        header: "No. Request",
+        style: {
+          "min-width": "8rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_date",
+        header: "Request Date",
+        style: {
+          "min-width": "10rem"
+        }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate(slotProps.data.ireq_date)), 1
+          /* TEXT */
+          )];
         }),
         _: 1
         /* STABLE */
 
-      }, 8
-      /* PROPS */
-      , ["value"])];
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_requestor",
+        header: "Requester",
+        style: {
+          "min-width": "10rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_user",
+        header: "User",
+        style: {
+          "min-width": "10rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "div_name",
+        header: "Division User",
+        style: {
+          "min-width": "12rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_bu",
+        header: "Business Unit",
+        style: {
+          "min-width": "12rem"
+        }
+      })];
     }),
     _: 1
     /* STABLE */
 
   }, 8
   /* PROPS */
-  , ["visible"])], 64
-  /* STABLE_FRAGMENT */
-  );
+  , ["value", "loading"])])])]);
 }
 
 /***/ }),

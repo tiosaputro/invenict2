@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\IctDetail;
 use App\Ict;
+use App\Link;
 use App\Exports\IctDetailExport;
 use App\Exports\IctDetailExportReject;
 use App\Exports\IctDetailTabReviewerExport;
@@ -418,7 +419,21 @@ class IctDetailController extends Controller
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('id.ireqd_id','ASC')
         ->get();
-        return view('pdf/Report_ICT', compact('detail'));
+
+        $checkLink = Link::where('ireq_id',$code)->first();
+
+        if($checkLink){
+            $link = $checkLink;
+        }else{
+            $Date = $this->date->addDays(1);
+            $createLink = Link::create([
+                'link_id'=> md5($this->date),
+                'expired_at'=>Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                'ireq_id'=>$code
+            ]);
+            $link = Link::where('ireq_id',$code)->first();
+        }
+        return view('pdf/Report_ICT', compact('detail','link'));
     }
     public function cetak_excel_sedang_dikerjakan($code)
     {

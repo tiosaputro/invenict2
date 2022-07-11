@@ -529,7 +529,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 512
   /* NEED_PATCH */
   ), [[_directive_tooltip, 'Click to save detail', void 0, {
-    left: true
+    bottom: true
   }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-success mr-2 mt-2",
     icon: "pi pi-plus",
@@ -554,7 +554,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 512
   /* NEED_PATCH */
   ), [[_directive_tooltip, 'Click to cancel create data', void 0, {
-    right: true
+    bottom: true
   }]])])], 32
   /* HYDRATE_EVENTS */
   )])])]);

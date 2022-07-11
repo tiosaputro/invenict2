@@ -932,9 +932,9 @@ tr:nth-child(even) {
                         </div>
                 </div>
                 @php 
-                    $linkRequester = "http://localhost:8000/legality-qrcode-requester/{$detail[0]->ireq_id}"; 
-                    $linkIctManager = "http://localhost:8000/legality-qrcode-ict-manager/{$detail[0]->ireq_id}"; 
-                    $linkHigherLevel = "http://localhost:8000/legality-qrcode-higher-level/{$detail[0]->ireq_id}"; 
+                    $linkRequester = "http://localhost:8000/check-legality-qrcode-requester/{$link->link_id}"; 
+                    $linkIctManager = "http://localhost:8000/check-legality-qrcode-ict-manager/{$link->link_id}"; 
+                    $linkHigherLevel = "http://localhost:8000/check-legality-qrcode-higher-level/{$link->link_id}"; 
                 @endphp
 
                 <div class="row">

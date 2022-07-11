@@ -111,7 +111,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.$toast.add({
             severity: "info",
             summary: "Success Message",
-            detail: "Successfully approved the request",
+            detail: "Successfully approved this request",
             life: 1000
           });
 
@@ -154,7 +154,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.$toast.add({
             severity: "info",
             summary: "Success Message",
-            detail: "Successfully rejected the request",
+            detail: "Successfully rejected this request",
             life: 1000
           });
 
@@ -615,8 +615,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]]), slotProps.data.ireq_statuss == 'NA1' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
                     "class": "p-button-rounded p-button-success mr-2",
@@ -626,8 +626,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])), [[_directive_tooltip, 'Verifikasi', void 0, {
-                    right: true
+                  , ["onClick"])), [[_directive_tooltip, 'Click to Verification', void 0, {
+                    bottom: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
                 }),
                 _: 1
@@ -701,7 +701,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -770,8 +770,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]])];
                 }),
                 _: 1
@@ -845,7 +845,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -921,8 +921,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]])];
                 }),
                 _: 1
@@ -998,14 +998,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No.Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
                 header: "Request Date",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "12rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1074,8 +1074,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    right: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]])];
                 }),
                 _: 1
@@ -1149,7 +1149,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1207,8 +1207,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]])];
                 }),
                 _: 1

@@ -41,7 +41,7 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -49,7 +49,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
-                  <Column columnKey="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:8rem">
+                  <Column columnKey="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem">
                   <template #body="slotProps">
                     {{slotProps.data.ireq_assigned_to}}
                   </template>
@@ -76,7 +76,7 @@
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-raised p-button-text mr-2"
+                        class="p-button-raised p-button-danger p-button-text mr-2"
                         @click="Reject(slotProps.data.ireq_id)"
                         label="Reject"
                       />
@@ -84,13 +84,13 @@
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
                         class="p-button-raised p-button-text"
                         @click="ApproveAtasan(slotProps.data.ireq_id)"
-                        label="Persetujuan Atasannya"
+                        label="Higher Level Approval"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
                         class="p-button-raised p-button-text"
                         @click="ApproveManager(slotProps.data.ireq_id)"
-                        label="Persetujuan ICT Manager"
+                        label="ICT Manager Approval"
                       />
                       <Button
                         class="p-button-raised p-button-text p-button-sm mt-2"
@@ -207,7 +207,7 @@
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.status == 'A1'"
                         class="p-button-raised p-button-text p-button-sm mr-2"
                         @click="ApproveManager(slotProps.data.ireq_id)"
-                        label="Persetujuan ICT Manager"
+                        label="ICT Manager Approval"
                       />
                       <Button
                         v-if="slotProps.data.status == 'A1'"
@@ -1015,8 +1015,8 @@ export default {
             this.submitted = false;
               this.$toast.add({
                 severity: "info",
-                summary: "Confirmed",
-                detail: "Berhasil Direject",
+                summary: "Success",
+                detail: "Successfully rejected the request",
                 life: 2000,
               });
               this.getIct();
@@ -1025,17 +1025,17 @@ export default {
     },
     ApproveAtasan(ireq_id){
     this.$confirm.require({
-        message: "Apakah Anda Yakin?",
+        message: "Are you sure this request need approval from higher level?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Update",
+            detail: "Success Update Request",
             life:2000
           });
           this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
@@ -1046,17 +1046,17 @@ export default {
     },
     ApproveManager(ireq_id){
         this.$confirm.require({
-        message: "Apakah Anda Yakin?",
+        message: "Are you sure this request need approval from ICT Manager?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Update",
+            detail: "Success Update Request",
             life:2000
           });
           this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
@@ -1085,7 +1085,7 @@ export default {
             this.$toast.add({
               severity: "info",
               summary: "Confirmed",
-              detail: "Berhasil Assign",
+              detail: "Assignment request successful",
               life: 2000,
             });
             this.getIct();
@@ -1101,17 +1101,17 @@ export default {
     }, 
     ClosingPerDetail(ireqd_id,ireq_id){
         this.$confirm.require({
-          message: "Closing Permohonan Dilanjutkan?",
+          message: "Are you sure to close this request?",
           header: "Closing Per Detail",
           icon: "pi pi-info-circle",
           acceptClass: "p-button",
-          acceptLabel: "Ya",
-          rejectLabel: "Tidak",
+          acceptLabel: "Yes",
+          rejectLabel: "No",
           accept: () => {
             this.$toast.add({
               severity: "info",
-              summary: "Confirmed",
-              detail: "Berhasil Diclosing",
+              summary: "Success",
+              detail: "Closing request successful",
               life: 3000,
             });
             this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});

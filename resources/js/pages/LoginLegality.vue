@@ -8,6 +8,12 @@
             <div class="co l-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color), rgba(33, 150, 243, 0) 30%);">
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                   <form @submit.prevent="Login">
+                    <div class="text-center mb-5">
+                        <div class="text-900 text-3xl font-medium mb-3">Selamat Datang di</div>
+                        <span class="text-600 font-medium">System ICT Helpdesk 👋</span>
+                        <Message severity="warn" v-if="this.error">Periksa kembali koneksi sophos atau wifi anda</Message>
+                        <Message severity="warn" v-if="this.errorr">Periksa kembali domain account anda</Message>
+                    </div>
                         <div class="w-full md:w-10 mx-auto">
                           <label for="email1" class="block text-900 text-xl font-medium mb-2">Username/Email</label>
                             <InputText 
@@ -96,15 +102,16 @@ export default {
               localStorage.setItem("loggedIn", "true");
               localStorage.setItem("token", response.data.token);
               localStorage.setItem("id", response.data.id);
+              localStorage.setItem("usr_loc", response.data.usr_loc);
               localStorage.setItem("usr_name", response.data.usr_name);
               if(this.$route.params.status =='requester'){
-                setTimeout( () => this.$router.push('/legality-qrcode-requester/'+this.$route.params.code), 1000);
+                setTimeout( () => this.$router.push('/check-legality-qrcode-requester/'+this.$route.params.code), 1000);
               }
               else if (this.$route.params.status =='ictmanager'){
-                setTimeout( () => this.$router.push('/legality-qrcode-ict-manager/'+this.$route.params.code), 1000);
+                setTimeout( () => this.$router.push('/check-legality-qrcode-ict-manager/'+this.$route.params.code), 1000);
               }
               else if(this.$route.params.status =='higherlevel'){
-                setTimeout( () => this.$router.push('/legality-qrcode-higher-level/'+this.$route.params.code), 1000);
+                setTimeout( () => this.$router.push('/check-legality-qrcode-higher-level/'+this.$route.params.code), 1000);
               }
             }).catch(error=> {
                 this.submitted = false;

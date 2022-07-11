@@ -206,6 +206,17 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
+        if(this.kode.cekstatus =='NA2'){
+          this.getIctDetail();
+        }
+        else{
+          this.$toast.add({
+            severity: "error",
+            summary: "Error Message",
+            detail: "This request has been verified",
+          });
+          setTimeout( () =>  this.$router.push('/ict-request-divisi1'),2000);
+        }
       });
     },
   },

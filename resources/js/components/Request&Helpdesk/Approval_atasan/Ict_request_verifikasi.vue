@@ -190,7 +190,6 @@ export default {
     getIctDetail(){
       this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.verif = response.data;
-        this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
@@ -205,6 +204,7 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
+        this.loading = false;
       });
     },
     DeleteIct(ireqd_id){

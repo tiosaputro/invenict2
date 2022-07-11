@@ -946,7 +946,7 @@ class IctController extends Controller
             'ireq_id'=>$ireq_id
         ]);
         
-        $LINK = Link::where('ireq_id',$ireq_id)->first();
+        $LINK = Link::where('ireq_id',$ireq_id)->where('usr_id',$emailVerifikator->usr_id)->first();
         // $send_mail = $emailVerifikator->usr_email .= '@emp.id';
         $send_mail = 'adhitya.saputro@emp.id';
         SendNotifApproval::dispatchAfterResponse($send_mail,$ict,$LINK);
@@ -1002,7 +1002,7 @@ class IctController extends Controller
             'usr_id'=>$emailVerifikator->usr_id,
             'ireq_id'=>$ireq_id
         ]);
-        $LINK = Link::where('ireq_id',$ireq_id)->first();
+        $LINK = Link::where('ireq_id',$ireq_id)->where('usr_id',$emailVerifikator->usr_id)->first();
         $send_mail = env('APP_MAIL_ICT_MANAGER');
         SendNotifIctManager::dispatchAfterResponse($send_mail,$ict,$LINK);
         return response()->json('Success send notification');
@@ -1370,7 +1370,7 @@ class IctController extends Controller
                 ->orwhere('im.ireq_status','P');
             })
             ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','lr.lookup_desc')
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get();
             
             $ict1 = DB::table('ireq_mst as im')
@@ -1385,7 +1385,7 @@ class IctController extends Controller
                 ->Where('im.ireq_status','A1')
                 ->orwhere('im.ireq_status','A2');
                 })
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get();
 
             $ict2 = DB::table('ireq_mst as im')
@@ -1401,7 +1401,7 @@ class IctController extends Controller
                 ->orwhere('im.ireq_status','RA2')
                 ->orwhere('im.ireq_status','RR');
                 })
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get();
 
             $ict3 = DB::table('ireq_mst as im')
@@ -1413,7 +1413,7 @@ class IctController extends Controller
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->where('im.ireq_status','T')
             ->groupBy('im.ireq_id','im.ireq_no','im.ireq_date','lr.lookup_desc','im.ireq_user','im.ireq_status','im.creation_date','im.ireq_requestor',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
-            ->orderBy('im.creation_date','ASC')
+            ->orderBy('im.ireq_date','DESC')
             ->get();
 
             $ict4 = DB::table('ireq_mst as im')
@@ -2773,7 +2773,7 @@ class IctController extends Controller
     public function cekVerif($code)
     {
         $link = Link::where('link_id',$code)->first();
-        return response()->json($link);
+        return json_encode($link);
     }
     function updateStatusPenugasan($ireq_id)
     {

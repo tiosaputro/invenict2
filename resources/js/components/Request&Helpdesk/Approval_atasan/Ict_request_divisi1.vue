@@ -58,7 +58,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -67,7 +67,7 @@
                         v-if="slotProps.data.ireq_statuss == 'NA1'"
                         class="p-button-rounded p-button-success mr-2"
                         icon="pi pi-check-square"
-                        v-tooltip.right="'Verifikasi'"
+                        v-tooltip.bottom="'Click to Verification'"
                         @click="VerifikasiRequest(slotProps.data.ireq_id)"
                       />
                     </template>
@@ -124,7 +124,7 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -142,7 +142,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -201,7 +201,7 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -220,7 +220,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -279,8 +279,8 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -298,7 +298,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.right="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -359,7 +359,7 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -373,7 +373,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -655,7 +655,7 @@ export default {
               this.$toast.add({
                 severity: "info",
                 summary: "Success Message",
-                detail: "Successfully approved the request",
+                detail: "Successfully approved this request",
                 life : 1000
               });
               this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
@@ -683,7 +683,7 @@ export default {
               this.$toast.add({
                 severity: "info",
                 summary: "Success Message",
-                detail: "Successfully rejected the request",
+                detail: "Successfully rejected this request",
                 life: 1000
               });
                this.code = null;

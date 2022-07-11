@@ -67,6 +67,7 @@ export default {
           localStorage.clear();
           localStorage.setItem("loggedIn", "true");
           localStorage.setItem("token", res.data.token);
+          localStorage.setItem("usr_loc", res.data.usr_loc);
           localStorage.setItem("id", res.data.id);
           localStorage.setItem("usr_name", res.data.usr_name);
           this.$router.push({ name: 'Ict Request Verifikasi From Email ICT Manager', params: { code: this.ireq_id, status: this.$route.params.status } })

@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.$toast.add({
             severity: "info",
             summary: "Success Message",
-            detail: "Successfully approved the request",
+            detail: "Successfully approved this request",
             life: 1000
           });
 
@@ -173,7 +173,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.$toast.add({
             severity: "info",
             summary: "Success Message",
-            detail: "Successfully rejected the request",
+            detail: "Successfully rejected this request",
             life: 1000
           });
 
@@ -628,8 +628,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]]), slotProps.data.status == 'NA2' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
                     "class": "p-button-rounded p-button-success mr-2",
@@ -639,8 +639,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])), [[_directive_tooltip, 'Verification', void 0, {
-                    right: true
+                  , ["onClick"])), [[_directive_tooltip, 'Click to verification', void 0, {
+                    bottom: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
                 }),
                 _: 1
@@ -786,8 +786,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]])];
                 }),
                 _: 1
@@ -944,8 +944,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    left: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]])];
                 }),
                 _: 1
@@ -1100,8 +1100,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    right: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]])];
                 }),
                 _: 1
@@ -1258,8 +1258,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Detail', void 0, {
-                    right: true
+                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                    bottom: true
                   }]])];
                 }),
                 _: 1

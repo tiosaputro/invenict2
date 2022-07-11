@@ -59,7 +59,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Manager Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -68,7 +68,7 @@
                         v-if="slotProps.data.status == 'NA2'"
                         class="p-button-rounded p-button-success mr-2"
                         icon="pi pi-check-square"
-                        v-tooltip.right="'Verification'"
+                        v-tooltip.bottom="'Click to verification'"
                         @click="Verifikasi(slotProps.data.ireq_id)"
                       />
                     </template>
@@ -144,7 +144,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Manager Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -223,7 +223,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Manager Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -302,7 +302,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.right="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Manager Detail Penugasan',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -383,7 +383,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.right="'Detail'"
+                        v-tooltip.bottom="'Click to request details'"
                         @click="$router.push({
                             name: 'Ict Request Manager Detail Penugasan',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -703,7 +703,7 @@ export default {
               this.$toast.add({
                 severity: "info",
                 summary: "Success Message",
-                detail: "Successfully approved the request",
+                detail: "Successfully approved this request",
                 life : 1000
               });
               this.axios.get('/api/abm/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
@@ -731,7 +731,7 @@ export default {
               this.$toast.add({
                 severity: "info",
                 summary: "Success Message",
-                detail: "Successfully rejected the request",
+                detail: "Successfully rejected this request",
                 life: 1000
               });
                this.code = null;
