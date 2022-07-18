@@ -52,6 +52,7 @@ export default {
                 localStorage.setItem("loggedIn", "true");
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("id", res.data.id);
+                localStorage.setItem("usr_loc", res.data.usr_loc);
                 localStorage.setItem("usr_name", res.data.usr_name);
                 this.loading = false;
                 this.$router.push({ name: 'error', params: { stat: 'expired' } }) 

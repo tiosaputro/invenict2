@@ -382,29 +382,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* NEED_PATCH */
       ), [[_directive_tooltip, 'Click to back', void 0, {
         bottom: true
-      }]]), _this.detail.length && _this.status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+      }]]), _this.status != null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 0,
-        "class": "p-button-raised p-button-success mr-2",
-        icon: "pi pi-check",
-        label: "Submit",
-        onClick: _cache[4] || (_cache[4] = function ($event) {
-          return $options.SubmitIct();
-        })
-      }, null, 512
-      /* NEED_PATCH */
-      )), [[_directive_tooltip, 'Click to submit request', void 0, {
-        bottom: true
-      }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status != null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 1,
         label: "Pdf",
         "class": "p-button-raised p-button-danger mt-2",
         icon: "pi pi-file-pdf",
-        onClick: _cache[5] || (_cache[5] = function ($event) {
+        onClick: _cache[4] || (_cache[4] = function ($event) {
           return $options.CetakPdf();
         })
       }, null, 512
       /* NEED_PATCH */
       )), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+        bottom: true
+      }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.detail.length && _this.status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+        key: 1,
+        "class": "p-button-raised p-button-success mr-2",
+        icon: "pi pi-check",
+        label: "Submit",
+        onClick: _cache[5] || (_cache[5] = function ($event) {
+          return $options.SubmitIct();
+        })
+      }, null, 512
+      /* NEED_PATCH */
+      )), [[_directive_tooltip, 'Click to submit request', void 0, {
         bottom: true
       }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),

@@ -59,6 +59,7 @@ class LoginController extends Controller
             if(Hash::check($request->password, $user->usr_passwd)) {
                 $token = $user->createToken('ApiToken')->plainTextToken;
                 $id = $user->usr_id;
+                Session::put('id', $user->usr_id);
                 $roleid = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
                 $role = Mng_roles::select('rol_name')->whereIn('rol_id',$roleid)->pluck('rol_name');
                     $response = [

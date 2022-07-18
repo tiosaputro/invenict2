@@ -107,14 +107,6 @@
                     @click="$router.push({
                     name: 'Ict Request'})"
                   />
-                  <Button
-                    class="p-button-raised p-button-success mr-2"
-                    icon="pi pi-check"
-                    label="Submit"
-                    v-if="this.detail.length && this.status == null"
-                    @click="SubmitIct()"
-                    v-tooltip.bottom="'Click to submit request'"
-                  />
                    <Button
                     label="Pdf"
                     class="p-button-raised p-button-danger mt-2"
@@ -122,6 +114,14 @@
                     icon="pi pi-file-pdf"
                     v-if="this.status != null"
                     @click="CetakPdf()"
+                  />
+                  <Button
+                    class="p-button-raised p-button-success mr-2"
+                    icon="pi pi-check"
+                    label="Submit"
+                    v-if="this.detail.length && this.status == null"
+                    @click="SubmitIct()"
+                    v-tooltip.bottom="'Click to submit request'"
                   />
                 </div>
 			        </div>

@@ -876,8 +876,8 @@ tr:nth-child(even) {
         overflow:hidden;
         margin: 0.75pt;
         padding: 0.75pt;
-        min-width:100pt;
-        min-height: 90pt;
+        min-width:50pt;
+        max-height: 140pt;
         outline: none;
     }
 }
@@ -943,7 +943,7 @@ tr:nth-child(even) {
                         <tr>
                             <th>{{$detail[0]->ireq_requestor}}</th>
                             <th>{{$detail[0]->div_name}}</th>
-                            <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(90)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
+                            <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(90)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
                         </tr>
                         <tr>
                             <td style="border:solid 2px;overflow: hidden;height:0.5px;">Name</td>
@@ -958,14 +958,14 @@ tr:nth-child(even) {
                                 <th>{{$detail[0]->usr_fullname}}</th>
                                 <th>Manager {{$detail[0]->div_name}}</th>
                                  @if($detail[0]->status == "RA1")
-                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;">Rejected on {{$detail[0]->date_approver1}} and verified by the system</th>
+                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br>Rejected on {{$detail[0]->date_approver1}}</th>
                                  @else
-                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(90)->generate($linkHigherLevel); !!}<br>{{$detail[0]->date_approver1}}</th>
+                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br>{{$detail[0]->date_approver1}}</th>
                                  @endif
                             </tr>
                             @else
                             <tr>
-                                <th style="height:87px;"></ths>
+                                <th style="height:104px;"></ths>
                                 <th></th>
                                 <th rowspan="2" style="border:solid 2px;"></th>
                             </tr>
@@ -988,9 +988,9 @@ tr:nth-child(even) {
                             <th>Arifin Tahir</th>
                             <th>ICT Manager</th>
                             @if($detail[0]->status=='RA2')
-                             <th rowspan="2" style="border:solid 2px;font-weight:bold;">Rejected on {{$detail[0]->date_approver2}} and verified by the system</th>
+                             <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br>{{$detail[0]->date_approver2}}</th>
                             @else
-                             <th rowspan="2" style="border:solid 2px;font-weight:bold;">{!! QrCode::errorCorrection('M')->size(90)->generate($linkIctManager); !!} <br>{{$detail[0]->date_approver2}}</th>
+                             <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br>{{$detail[0]->date_approver2}}</th>
                             @endif
                             <th></th>
                         </tr>
