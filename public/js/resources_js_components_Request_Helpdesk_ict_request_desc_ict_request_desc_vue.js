@@ -88,9 +88,11 @@ __webpack_require__.r(__webpack_exports__);
       ConfirmationVerifikasiManager: false,
       dialogRejectAtasan: false,
       dialogRejectManager: false,
+      dialogApproveManager: false,
       code: null,
       reason: {
-        ket: null
+        ket: null,
+        remark: null
       },
       totalRequest2: [],
       totalRequest1: [],
@@ -483,17 +485,17 @@ __webpack_require__.r(__webpack_exports__);
       this.confirmationVerifikasi = false;
 
       this.$confirm.require({
-        message: "Approval Permohonan Dilanjutkan?",
-        header: "ICT Request    ",
+        message: "Are you sure you approve to this request?",
+        header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this16.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Permohonan Dilanjutkan",
+            summary: "Success Message",
+            detail: "Successfully approved this request",
             life: 1000
           });
 
@@ -603,37 +605,39 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     approveManager: function approveManager() {
-      var _this21 = this;
-
       this.ConfirmationVerifikasiManager = false;
+      this.dialogApproveManager = true;
+    },
+    cancelApproveManager: function cancelApproveManager() {
+      this.dialogApproveManager = false;
+      this.code = null;
+      this.reason.remark = null;
+    },
+    updateApproveManager: function updateApproveManager() {
+      this.ConfirmationVerifikasiManager = false; // this.$confirm.require({
+      //       message: "Approval Permohonan Dilanjutkan?",
+      //       header: "ICT Request    ",
+      //       icon: "pi pi-info-circle",
+      //       acceptClass: "p-button",
+      //       acceptLabel: "Ya",
+      //       rejectLabel: "Tidak",
+      //       accept: () => {
 
-      this.$confirm.require({
-        message: "Approval Permohonan Dilanjutkan?",
-        header: "ICT Request    ",
-        icon: "pi pi-info-circle",
-        acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
-        accept: function accept() {
-          _this21.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Permohonan Dilanjutkan",
-            life: 1000
-          });
-
-          _this21.axios.get('/api/abm/' + _this21.code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this21.token
-            }
-          });
-
-          _this21.code = null;
-
-          _this21.getActive();
-        },
-        reject: function reject() {}
+      this.$toast.add({
+        severity: "info",
+        summary: "Confirmed",
+        detail: "Permohonan Dilanjutkan",
+        life: 1000
       });
+      this.axios.put('/api/abm/' + this.code, this.reason, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      });
+      this.cancelApproveManager();
+      this.getActive(); //   },
+      //   reject: () => {},
+      // });
     },
     rejectManager: function rejectManager() {
       this.ConfirmationVerifikasiManager = false;
@@ -646,7 +650,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = false;
     },
     updateRejectManager: function updateRejectManager() {
-      var _this22 = this;
+      var _this21 = this;
 
       this.submitted = true;
 
@@ -656,16 +660,16 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this22.$toast.add({
+          _this21.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Berhasil Direject",
             life: 1000
           });
 
-          _this22.cancelRejectManager();
+          _this21.cancelRejectManager();
 
-          _this22.getActive();
+          _this21.getActive();
         });
       }
     }
@@ -1717,7 +1721,7 @@ var _hoisted_295 = {
   "class": "box"
 };
 
-var _hoisted_296 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Belum Diverifikasi)", -1
+var _hoisted_296 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Waiting for verification)", -1
 /* HOISTED */
 );
 
@@ -1748,7 +1752,7 @@ var _hoisted_304 = {
   "class": "box"
 };
 
-var _hoisted_305 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Sudah Diverifikasi)", -1
+var _hoisted_305 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Already Verified)", -1
 /* HOISTED */
 );
 
@@ -2124,7 +2128,7 @@ var _hoisted_410 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
 );
 
 var _hoisted_411 = {
-  "class": "col"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_412 = {
   key: 0,
@@ -2167,7 +2171,7 @@ var _hoisted_417 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
 );
 
 var _hoisted_418 = {
-  "class": "fol-fixed"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_419 = {
   key: 0,
@@ -2182,7 +2186,7 @@ var _hoisted_421 = {
 
 var _hoisted_422 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
-}, "Reason", -1
+}, "Remark", -1
 /* HOISTED */
 );
 
@@ -2190,27 +2194,24 @@ var _hoisted_423 = {
   "class": "co-fixed w-9rem"
 };
 var _hoisted_424 = {
-  key: 0,
-  "class": "p-error"
+  "class": "field"
 };
 var _hoisted_425 = {
-  "class": "fluid"
-};
-var _hoisted_426 = {
   "class": "field grid"
 };
 
-var _hoisted_427 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "100px"
-  }
-}, "No. Request", -1
+var _hoisted_426 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, "Reason", -1
 /* HOISTED */
 );
 
+var _hoisted_427 = {
+  "class": "co-fixed w-9rem"
+};
 var _hoisted_428 = {
-  "class": "col-fixed"
+  key: 0,
+  "class": "p-error"
 };
 var _hoisted_429 = {
   "class": "fluid"
@@ -2224,7 +2225,7 @@ var _hoisted_431 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
   style: {
     "width": "100px"
   }
-}, "Peripheral", -1
+}, "No. Request", -1
 /* HOISTED */
 );
 
@@ -2243,7 +2244,7 @@ var _hoisted_435 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
   style: {
     "width": "100px"
   }
-}, "Status", -1
+}, "Peripheral", -1
 /* HOISTED */
 );
 
@@ -2251,6 +2252,25 @@ var _hoisted_436 = {
   "class": "col-fixed"
 };
 var _hoisted_437 = {
+  "class": "fluid"
+};
+var _hoisted_438 = {
+  "class": "field grid"
+};
+
+var _hoisted_439 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Status", -1
+/* HOISTED */
+);
+
+var _hoisted_440 = {
+  "class": "col-fixed"
+};
+var _hoisted_441 = {
   key: 0,
   "class": "p-error"
 };
@@ -2321,7 +2341,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[1] || (_cache[1] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -2431,8 +2451,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            right: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -2489,7 +2509,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[3] || (_cache[3] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -2572,8 +2592,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -2630,7 +2650,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[5] || (_cache[5] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -2701,11 +2721,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
         /* STABLE */
 
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        style: {
-          "min-width": "12rem"
-        }
-      }, {
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
@@ -2720,8 +2736,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -2778,7 +2794,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[7] || (_cache[7] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -2849,11 +2865,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
         /* STABLE */
 
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        style: {
-          "min-width": "12rem"
-        }
-      }, {
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
@@ -2868,8 +2880,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -2926,7 +2938,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[9] || (_cache[9] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -3069,7 +3081,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[11] || (_cache[11] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -3188,7 +3200,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request (Waiting for verification)",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Waiting for verification",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -3212,7 +3224,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[13] || (_cache[13] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -3295,8 +3307,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]]), slotProps.data.ireq_statuss == 'NA1' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
             "class": "p-button-rounded p-button-success mr-2",
@@ -3306,8 +3318,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])), [[_directive_tooltip, 'Verifikasi', void 0, {
-            right: true
+          , ["onClick"])), [[_directive_tooltip, 'Click to Verification', void 0, {
+            bottom: true
           }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
         }),
         _: 1
@@ -3364,7 +3376,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[15] || (_cache[15] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -3447,8 +3459,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -3505,7 +3517,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_83, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[17] || (_cache[17] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -3595,8 +3607,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -3653,7 +3665,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_91, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_92, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_93, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[19] || (_cache[19] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -3743,8 +3755,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -3801,7 +3813,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_100, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_101, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_102, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[21] || (_cache[21] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -3965,7 +3977,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_109, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_111, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[23] || (_cache[23] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -4129,7 +4141,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_118, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_119, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_120, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[25] || (_cache[25] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -4219,8 +4231,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]]), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
             "class": "p-button-raised p-button-sm p-button-text mr-2",
@@ -4334,7 +4346,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_127, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_128, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_129, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[27] || (_cache[27] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -4431,8 +4443,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -4489,7 +4501,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_136, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_137, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_138, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[29] || (_cache[29] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -4669,7 +4681,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_145, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_146, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_147, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[31] || (_cache[31] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -4833,7 +4845,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_154, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_155, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_156, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[33] || (_cache[33] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -5006,7 +5018,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_163, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_164, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_165, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[35] || (_cache[35] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -5159,7 +5171,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_172, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_173, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_174, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[37] || (_cache[37] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -5261,6 +5273,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "10rem"
         }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       })];
     }),
     _: 1
@@ -5312,7 +5335,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_181, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_182, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_183, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[39] || (_cache[39] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -5443,7 +5466,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Close",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -5467,7 +5490,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_190, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_191, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_192, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[41] || (_cache[41] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -5555,6 +5578,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "8rem"
         }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_status",
+        header: "Status",
+        sortable: true,
+        style: {
+          "min-width": "10rem"
+        }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       })];
     }),
     _: 1
@@ -5606,7 +5647,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_199, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_200, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_201, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[43] || (_cache[43] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -5689,8 +5730,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -5747,7 +5788,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_208, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_209, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_210, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[45] || (_cache[45] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -5839,8 +5880,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            Right: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -5897,7 +5938,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_217, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_218, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_219, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[47] || (_cache[47] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -5956,7 +5997,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -5969,7 +6010,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -6025,7 +6068,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_226, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_227, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_228, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[49] || (_cache[49] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -6097,8 +6140,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -6155,7 +6198,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_235, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_236, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_237, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[51] || (_cache[51] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -6220,8 +6263,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -6278,7 +6321,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_244, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_245, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_246, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[53] || (_cache[53] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -6410,7 +6453,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_253, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_254, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_255, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[55] || (_cache[55] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -6542,7 +6585,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_262, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_263, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_264, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[57] || (_cache[57] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -6612,7 +6655,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -6625,7 +6668,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -6681,7 +6726,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_273, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_274, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_275, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[59] || (_cache[59] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -6780,8 +6825,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]]), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove Atasan' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
             "class": "p-button-raised p-button-text p-button-sm mr-2",
@@ -6879,7 +6924,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_284, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_285, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_286, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[61] || (_cache[61] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -6978,8 +7023,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            left: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]]), slotProps.data.status == 'A2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
             "class": "p-button-raised p-button-text p-button-sm mt-2",
@@ -7068,7 +7113,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_293, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_294, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_295, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[63] || (_cache[63] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -7145,7 +7190,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -7158,7 +7203,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -7190,7 +7237,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Waiting for verification",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -7214,7 +7261,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_302, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_303, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_304, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[65] || (_cache[65] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -7270,8 +7317,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.ireq_statuss.toLowerCase())
-          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_statuss), 3
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
           /* TEXT, CLASS */
           )];
         }),
@@ -7284,7 +7331,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -7297,7 +7344,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), slotProps.data.ireq_status == 'NA2' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]]), slotProps.data.status == 'NA2' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
             "class": "p-button-rounded p-button-success mr-2",
             icon: "pi pi-check-square",
@@ -7340,7 +7389,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Already Verified",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -7364,7 +7413,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_311, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_312, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_313, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[67] || (_cache[67] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -7417,13 +7466,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "12rem"
         }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
           "min-width": "12rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -7436,7 +7496,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -7468,7 +7530,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Rejected",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -7492,7 +7554,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_320, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_321, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_322, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[69] || (_cache[69] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -7552,9 +7614,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "12rem"
         }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -7567,7 +7640,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -7623,7 +7698,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_329, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_330, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_331, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[71] || (_cache[71] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -7682,7 +7757,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -7695,7 +7770,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -7751,7 +7828,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_338, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_339, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_340, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[73] || (_cache[73] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -7828,7 +7905,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -7841,7 +7918,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -7897,7 +7976,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_347, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_348, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_349, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[75] || (_cache[75] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -7974,7 +8053,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -7987,7 +8066,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -8019,7 +8100,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Overhall Request",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -8043,7 +8124,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_356, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_357, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_358, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[77] || (_cache[77] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -8064,7 +8145,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Request Date",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -8116,11 +8197,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
-          "min-width": "12rem"
+          "min-width": "8rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -8133,7 +8214,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -8189,7 +8272,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_365, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_366, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_367, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[79] || (_cache[79] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -8272,8 +8355,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            right: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -8330,7 +8413,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_374, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_375, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_376, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[81] || (_cache[81] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -8351,7 +8434,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Request Date",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -8386,7 +8469,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.status.toLowerCase())
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.ireq_statuss.toLowerCase())
           }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
           /* TEXT, CLASS */
           )];
@@ -8394,13 +8477,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
         /* STABLE */
 
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        style: {
-          "min-width": "12rem"
-        }
-      }, {
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -8413,7 +8492,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -8445,7 +8526,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Under review",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -8469,7 +8550,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_383, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_384, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_385, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[83] || (_cache[83] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -8490,7 +8571,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Request Date",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -8520,7 +8601,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "User Division",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_status",
@@ -8546,7 +8627,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
             icon: "pi pi-info-circle",
             onClick: function onClick($event) {
@@ -8559,7 +8640,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])];
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
+          }]])];
         }),
         _: 1
         /* STABLE */
@@ -8615,7 +8698,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_392, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_393, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_394, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[85] || (_cache[85] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -8712,8 +8795,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            right: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]]), slotProps.data.status == 'RT' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
             "class": "p-button-raised p-button-text p-button-sm mt-2",
@@ -8764,7 +8847,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Assignment Request",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -8788,7 +8871,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_401, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_402, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_403, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
         "class": "p-button-raised p-button mr-2",
-        icon: "bi bi-skip-backward-fill",
+        icon: "pi pi-chevron-left",
         onClick: _cache[87] || (_cache[87] = function ($event) {
           return _ctx.$router.push({
             name: 'Dashboard'
@@ -8809,7 +8892,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Request Date",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -8855,11 +8938,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "12rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        style: {
-          "min-width": "20rem"
-        }
       }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('status-bagde status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-secondary mr-2",
@@ -8874,8 +8964,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
-            right: true
+          , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+            bottom: true
           }]])];
         }),
         _: 1
@@ -9117,9 +9207,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
-    visible: $data.dialogRejectManager,
+    visible: $data.dialogApproveManager,
     "onUpdate:visible": _cache[105] || (_cache[105] = function ($event) {
-      return $data.dialogRejectManager = $event;
+      return $data.dialogApproveManager = $event;
     }),
     style: {
       width: '400px'
@@ -9132,14 +9222,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Yes",
         onClick: _cache[103] || (_cache[103] = function ($event) {
-          return $options.updateRejectManager();
+          return $options.updateApproveManager();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "No",
         onClick: _cache[104] || (_cache[104] = function ($event) {
-          return $options.cancelRejectManager();
+          return $options.cancelApproveManager();
         }),
         "class": "p-button-text"
       })];
@@ -9148,8 +9238,55 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_420, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_421, [_hoisted_422, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_423, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
         autoResize: true,
         type: "text",
-        modelValue: $data.reason.ket,
+        modelValue: $data.reason.remark,
         "onUpdate:modelValue": _cache[102] || (_cache[102] = function ($event) {
+          return $data.reason.remark = $event;
+        }),
+        rows: "5",
+        placeholder: "IF Required"
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogRejectManager,
+    "onUpdate:visible": _cache[109] || (_cache[109] = function ($event) {
+      return $data.dialogRejectManager = $event;
+    }),
+    style: {
+      width: '400px'
+    },
+    header: "ICT Request",
+    modal: true,
+    "class": "field"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[107] || (_cache[107] = function ($event) {
+          return $options.updateRejectManager();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[108] || (_cache[108] = function ($event) {
+          return $options.cancelRejectManager();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_424, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_425, [_hoisted_426, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_427, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        autoResize: true,
+        type: "text",
+        modelValue: $data.reason.ket,
+        "onUpdate:modelValue": _cache[106] || (_cache[106] = function ($event) {
           return $data.reason.ket = $event;
         }),
         rows: "5",
@@ -9159,7 +9296,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_424, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_428, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
@@ -9168,7 +9305,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogEdit,
-    "onUpdate:visible": _cache[111] || (_cache[111] = function ($event) {
+    "onUpdate:visible": _cache[115] || (_cache[115] = function ($event) {
       return $data.dialogEdit = $event;
     }),
     style: {
@@ -9181,39 +9318,39 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Yes",
-        onClick: _cache[109] || (_cache[109] = function ($event) {
+        onClick: _cache[113] || (_cache[113] = function ($event) {
           return $options.submitt();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "No",
-        onClick: _cache[110] || (_cache[110] = function ($event) {
+        onClick: _cache[114] || (_cache[114] = function ($event) {
           return $options.cancel();
         }),
         "class": "p-button-text"
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_425, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_426, [_hoisted_427, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_428, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_429, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_430, [_hoisted_431, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_432, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.editDetail.ireq_no,
-        "onUpdate:modelValue": _cache[106] || (_cache[106] = function ($event) {
+        "onUpdate:modelValue": _cache[110] || (_cache[110] = function ($event) {
           return $data.editDetail.ireq_no = $event;
         }),
         disabled: ""
       }, null, 8
       /* PROPS */
-      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_429, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_430, [_hoisted_431, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_432, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_433, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_434, [_hoisted_435, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_436, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.editDetail.name,
-        "onUpdate:modelValue": _cache[107] || (_cache[107] = function ($event) {
+        "onUpdate:modelValue": _cache[111] || (_cache[111] = function ($event) {
           return $data.editDetail.name = $event;
         }),
         disabled: ""
       }, null, 8
       /* PROPS */
-      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_433, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_434, [_hoisted_435, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_436, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_437, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_438, [_hoisted_439, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_440, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
         modelValue: $data.editDetail.status,
-        "onUpdate:modelValue": _cache[108] || (_cache[108] = function ($event) {
+        "onUpdate:modelValue": _cache[112] || (_cache[112] = function ($event) {
           return $data.editDetail.status = $event;
         }),
         options: $data.status,
@@ -9225,7 +9362,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options", "class"]), $data.submitted && !$data.editDetail.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_437, "Status Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.editDetail.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_441, "Status Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */

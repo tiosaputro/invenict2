@@ -20,10 +20,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dialogReject: false,
+      dialogApprove: false,
       ConfirmationVerifikasi: false,
       reason: {
         ket: null,
-        id: null
+        remark: null
       },
       submitted: false,
       loading: true,
@@ -115,41 +116,37 @@ __webpack_require__.r(__webpack_exports__);
       this.ConfirmationVerifikasi = true;
     },
     approve: function approve() {
-      var _this2 = this;
-
-      this.ConfirmationVerifikasi = false;
-
-      this.$confirm.require({
-        message: "Are you sure you approve to this request?",
-        header: "Confirmation Approval",
-        icon: "pi pi-info-circle",
-        acceptClass: "p-button",
-        acceptLabel: "Yes",
-        rejectLabel: "No",
-        accept: function accept() {
-          _this2.$toast.add({
-            severity: "info",
-            summary: "Success Message",
-            detail: "Successfully approved this request",
-            life: 1000
-          });
-
-          _this2.axios.get('/api/abm/' + _this2.code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          });
-
-          _this2.code = null;
-
-          _this2.getPermohonan();
-        },
-        reject: function reject() {}
+      // this.$confirm.require({
+      //       message: "Are you sure you approve to this request?",
+      //       header: "Confirmation Approval",
+      //       icon: "pi pi-info-circle",
+      //       acceptClass: "p-button",
+      //       acceptLabel: "Yes",
+      //       rejectLabel: "No",
+      //       accept: () => {
+      this.$toast.add({
+        severity: "info",
+        summary: "Success Message",
+        detail: "Successfully approved this request",
+        life: 1000
       });
+      this.axios.put('/api/abm/' + this.code, this.reason, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      });
+      this.cancelApprove();
+      this.getPermohonan(); // },
+      //   reject: () => {},
+      // });
     },
     rejectRequest: function rejectRequest() {
       this.ConfirmationVerifikasi = false;
       this.dialogReject = true;
+    },
+    approveRequest: function approveRequest() {
+      this.ConfirmationVerifikasi = false;
+      this.dialogApprove = true;
     },
     cancelReject: function cancelReject() {
       this.dialogReject = false;
@@ -157,8 +154,13 @@ __webpack_require__.r(__webpack_exports__);
       this.reason.ket = null;
       this.submitted = false;
     },
+    cancelApprove: function cancelApprove() {
+      this.dialogApprove = false;
+      this.code = null;
+      this.reason.remark = null;
+    },
     updateReject: function updateReject() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.submitted = true;
 
@@ -168,18 +170,18 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this3.dialogReject = false;
+          _this2.dialogReject = false;
 
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully rejected this request",
             life: 1000
           });
 
-          _this3.code = null;
+          _this2.cancelReject();
 
-          _this3.getPermohonan();
+          _this2.getPermohonan();
         });
       }
     },
@@ -444,8 +446,24 @@ var _hoisted_62 = {
   key: 0,
   "class": "p-error"
 };
+var _hoisted_63 = {
+  "class": "field"
+};
+var _hoisted_64 = {
+  "class": "field grid"
+};
 
-var _hoisted_63 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, "Remark", -1
+/* HOISTED */
+);
+
+var _hoisted_66 = {
+  "class": "co-fixed w-9rem"
+};
+
+var _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "confirmation-content"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "pi pi-exclamation-triangle mr-3",
@@ -1628,9 +1646,56 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogApprove,
+    "onUpdate:visible": _cache[26] || (_cache[26] = function ($event) {
+      return $data.dialogApprove = $event;
+    }),
+    style: {
+      width: '400px'
+    },
+    header: "ICT Request",
+    modal: true,
+    "class": "field"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[24] || (_cache[24] = function ($event) {
+          return $options.approve();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[25] || (_cache[25] = function ($event) {
+          return $options.cancelApprove();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [_hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        autoResize: true,
+        type: "text",
+        modelValue: $data.reason.remark,
+        "onUpdate:modelValue": _cache[23] || (_cache[23] = function ($event) {
+          return $data.reason.remark = $event;
+        }),
+        rows: "5",
+        placeholder: "IF Required"
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     header: "Confirmation",
     visible: $data.ConfirmationVerifikasi,
-    "onUpdate:visible": _cache[23] || (_cache[23] = function ($event) {
+    "onUpdate:visible": _cache[27] || (_cache[27] = function ($event) {
       return $data.ConfirmationVerifikasi = $event;
     }),
     style: {
@@ -1649,7 +1714,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Approve",
         icon: "pi pi-check",
-        onClick: $options.approve,
+        onClick: $options.approveRequest,
         "class": "p-button-raised p-button-text",
         autofocus: ""
       }, null, 8
@@ -1657,7 +1722,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , ["onClick"])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_63];
+      return [_hoisted_67];
     }),
     _: 1
     /* STABLE */

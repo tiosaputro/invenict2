@@ -18,11 +18,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loading: true,
       dialogReject: false,
+      dialogApprove: false,
       submitted: false,
       verif: [],
       kode: [],
       reason: {
-        ket: null
+        ket: null,
+        remark: null
       },
       filters: {
         'global': {
@@ -44,7 +46,7 @@ __webpack_require__.r(__webpack_exports__);
       this.status = this.$route.params.status;
 
       if (this.status == 'approve') {
-        this.Approve();
+        this.dialogApprove = true;
       }
 
       if (this.status == 'reject') {
@@ -54,34 +56,31 @@ __webpack_require__.r(__webpack_exports__);
     Approve: function Approve() {
       var _this = this;
 
-      this.$confirm.require({
-        group: 'positionDialog',
-        message: "Are you sure you approve to this request?",
-        header: "Confirmation Approval",
-        icon: "pi pi-info-circle",
-        acceptClass: "p-button",
-        acceptLabel: "Yes",
-        rejectLabel: "No",
-        position: 'top',
-        accept: function accept() {
-          _this.$toast.add({
-            severity: "info",
-            summary: "Success Message",
-            detail: "Successfully approved the request"
-          });
-
-          _this.axios.get('/api/abm/' + _this.code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this.token
-            }
-          });
-
-          setTimeout(function () {
-            return _this.$router.push('/ict-request-manager');
-          }, 1000);
-        },
-        reject: function reject() {}
+      // this.$confirm.require({
+      //   group: 'positionDialog',
+      //   message: "Are you sure you approve to this request?",
+      //   header: "Confirmation Approval",
+      //   icon: "pi pi-info-circle",
+      //   acceptClass: "p-button",
+      //   acceptLabel: "Yes",
+      //   rejectLabel: "No",
+      //   position: 'top',
+      //   accept: () => {
+      this.$toast.add({
+        severity: "info",
+        summary: "Success Message",
+        detail: "Successfully approved the request"
       });
+      this.axios.put('/api/abm/' + this.code, this.reason, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      });
+      setTimeout(function () {
+        return _this.$router.push('/ict-request-manager');
+      }, 1000); //   },
+      //   reject: () => {},
+      // });
     },
     updateReject: function updateReject() {
       var _this2 = this;
@@ -112,6 +111,10 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogReject = false;
       this.reason.ket = null;
       this.submitted = false;
+    },
+    cancelApprove: function cancelApprove() {
+      this.dialogApprove = false;
+      this.reason.remark = null;
     },
     getIctDetail: function getIctDetail() {
       var _this3 = this;
@@ -234,6 +237,22 @@ var _hoisted_16 = {
 var _hoisted_17 = {
   key: 0,
   "class": "p-error"
+};
+var _hoisted_18 = {
+  "class": "field"
+};
+var _hoisted_19 = {
+  "class": "field grid"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, "Remark", -1
+/* HOISTED */
+);
+
+var _hoisted_21 = {
+  "class": "co-fixed w-9rem"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
@@ -415,6 +434,53 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogApprove,
+    "onUpdate:visible": _cache[11] || (_cache[11] = function ($event) {
+      return $data.dialogApprove = $event;
+    }),
+    style: {
+      width: '400px'
+    },
+    header: "ICT Request",
+    modal: true,
+    "class": "field"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[9] || (_cache[9] = function ($event) {
+          return _ctx.approve();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[10] || (_cache[10] = function ($event) {
+          return $options.cancelApprove();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        autoResize: true,
+        type: "text",
+        modelValue: $data.reason.remark,
+        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+          return $data.reason.remark = $event;
+        }),
+        rows: "5",
+        placeholder: "IF Required"
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])])];
     }),
     _: 1
     /* STABLE */

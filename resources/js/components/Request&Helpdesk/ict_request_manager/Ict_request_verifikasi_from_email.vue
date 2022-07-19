@@ -106,6 +106,32 @@
             <Button label="No" @click="cancelReject()" class="p-button-text" />
         </template>
       </Dialog>
+      <Dialog
+        v-model:visible="dialogApprove"
+        :style="{ width: '400px' }"
+        header="ICT Request"
+        :modal="true" 
+        class="field"
+       >
+        <div class="field">
+          <div class="field grid">
+            <label class="col-fixed w-9rem">Remark</label>
+              <div class="co-fixed w-9rem">
+                <Textarea
+                  :autoResize="true"
+                  type="text"
+                  v-model="reason.remark"
+                  rows="5"
+                  placeholder="IF Required"
+                />
+              </div>
+          </div>
+        </div>
+          <template #footer>
+            <Button label="Yes" @click="approve()" class="p-button" autofocus />
+            <Button label="No" @click="cancelApprove()" class="p-button-text" />
+          </template>
+      </Dialog>
       </div>
     </div>
   </div>
@@ -117,11 +143,13 @@ export default {
     return {
         loading: true,
         dialogReject: false,
+        dialogApprove: false,
         submitted:false,
         verif: [],
         kode:[],
         reason:{
             ket:null,
+            remark:null,
         },
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
@@ -137,33 +165,33 @@ export default {
       cek(){
           this.status = this.$route.params.status;
           if(this.status == 'approve'){
-              this.Approve();
+              this.dialogApprove = true;
           }
           if(this.status == 'reject'){
               this.dialogReject = true;
           }
       },
       Approve(){
-      this.$confirm.require({
-        group: 'positionDialog',
-        message: "Are you sure you approve to this request?",
-        header: "Confirmation Approval",
-        icon: "pi pi-info-circle",
-        acceptClass: "p-button",
-        acceptLabel: "Yes",
-        rejectLabel: "No",
-        position: 'top',
-        accept: () => {
+      // this.$confirm.require({
+      //   group: 'positionDialog',
+      //   message: "Are you sure you approve to this request?",
+      //   header: "Confirmation Approval",
+      //   icon: "pi pi-info-circle",
+      //   acceptClass: "p-button",
+      //   acceptLabel: "Yes",
+      //   rejectLabel: "No",
+      //   position: 'top',
+      //   accept: () => {
           this.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully approved the request",
           });
-          this.axios.get('/api/abm/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.put('/api/abm/' +this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
           setTimeout( () =>  this.$router.push('/ict-request-manager'),1000);
-        },
-        reject: () => {},
-      });
+      //   },
+      //   reject: () => {},
+      // });
       },
       updateReject(){
           this.submitted = true;
@@ -183,6 +211,10 @@ export default {
         this.dialogReject = false;
         this.reason.ket = null;
         this.submitted = false;
+      },
+      cancelApprove(){
+        this.dialogApprove = false;
+        this.reason.remark = null;
       },
     getIctDetail(){
       this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {

@@ -221,7 +221,7 @@ Route::middleware('auth:sanctum')->group(function(){
     //ict request manager
     Route::get('/get-data-manager','IctController@getDataManager');
     Route::get('/get-data-manager-verifikasi/{code}','IctController@getDataManagerVerifikasi');
-    Route::get('/abm/{code}','IctController@approveByManager');
+    Route::put('/abm/{code}','IctController@approveByManager');
     Route::put('/rbm/{code}','IctController@rejectByManager');
 
     //ict request

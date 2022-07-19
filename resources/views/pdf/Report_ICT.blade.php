@@ -354,6 +354,7 @@ tr:nth-child(even) {
         font-weight:bold;
         color: black;
         border-top: 1px solid #3989c6;
+        overflow: hidden;
     }
 
     .invoice>div:last-child {
@@ -676,6 +677,8 @@ tr:nth-child(even) {
         color: black;
         border-top: 1px solid #3989c6;
         overflow: hidden;
+        position:fixed;
+        bottom:0;
     }
     .invoice>div:last-child {
         /* page-break-before: always */
@@ -943,7 +946,7 @@ tr:nth-child(even) {
                         <tr>
                             <th>{{$detail[0]->ireq_requestor}}</th>
                             <th>{{$detail[0]->div_name}}</th>
-                            <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(90)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
+                            <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
                         </tr>
                         <tr>
                             <td style="border:solid 2px;overflow: hidden;height:0.5px;">Name</td>
@@ -965,7 +968,7 @@ tr:nth-child(even) {
                             </tr>
                             @else
                             <tr>
-                                <th style="height:104px;"></ths>
+                                <th style="height:86px;"></ths>
                                 <th></th>
                                 <th rowspan="2" style="border:solid 2px;"></th>
                             </tr>
@@ -992,7 +995,7 @@ tr:nth-child(even) {
                             @else
                              <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br>{{$detail[0]->date_approver2}}</th>
                             @endif
-                            <th></th>
+                            <th>{{$detail[0]->ireq_approver2_remark}}</th>
                         </tr>
                       @else
                       <tr>

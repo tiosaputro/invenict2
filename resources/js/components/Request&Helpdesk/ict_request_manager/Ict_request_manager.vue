@@ -574,34 +574,60 @@
                 <label class="col-fixed w-9rem">Alasan</label>
                   <div class="co-fixed w-9rem">
                     <Textarea
-                    :autoResize="true"
-                    type="text"
-                    v-model="reason.ket"
-                    rows="5"
-                    placeholder="Masukan Alasan"
-                    :class="{ 'p-invalid': submitted && !reason.ket }"
-                  />
+                      :autoResize="true"
+                      type="text"
+                      v-model="reason.ket"
+                      rows="5"
+                      placeholder="Masukan Alasan"
+                      :class="{ 'p-invalid': submitted && !reason.ket }"
+                    />
                     <small v-if="submitted && !reason.ket" class="p-error">
                     Alasan Harus Diisi
                     </small>
+                  </div>
                 </div>
               </div>
-            </div>
-        <template #footer>
-            <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
-            <Button label="No" @click="cancelReject()" class="p-button-text" />
-        </template>
-      </Dialog>
-      <Dialog header="Confirmation" v-model:visible="ConfirmationVerifikasi" :style="{width: '350px'}" :modal="true">
-            <div class="confirmation-content">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                <span>Verifikasi Request</span>
-            </div>
-            <template #footer>
-                <Button label="Reject" icon="pi pi-times" @click="rejectRequest" class="p-button-raised p-button-danger p-button-text"/>
-                <Button label="Approve" icon="pi pi-check" @click="approve" class="p-button-raised p-button-text" autofocus />
-            </template>
-        </Dialog>
+              <template #footer>
+                  <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
+                  <Button label="No" @click="cancelReject()" class="p-button-text" />
+              </template>
+            </Dialog>
+            <Dialog
+              v-model:visible="dialogApprove"
+              :style="{ width: '400px' }"
+              header="ICT Request"
+              :modal="true"
+              class="field"
+            >
+            <div class="field">
+              <div class="field grid">
+                <label class="col-fixed w-9rem">Remark</label>
+                  <div class="co-fixed w-9rem">
+                    <Textarea
+                      :autoResize="true"
+                      type="text"
+                      v-model="reason.remark"
+                      rows="5"
+                      placeholder="IF Required"
+                    />
+                  </div>
+                </div>
+              </div>
+              <template #footer>
+                  <Button label="Yes" @click="approve()" class="p-button" autofocus />
+                  <Button label="No" @click="cancelApprove()" class="p-button-text" />
+              </template>
+            </Dialog>
+            <Dialog header="Confirmation" v-model:visible="ConfirmationVerifikasi" :style="{width: '350px'}" :modal="true">
+                  <div class="confirmation-content">
+                      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                      <span>Verifikasi Request</span>
+                  </div>
+                  <template #footer>
+                      <Button label="Reject" icon="pi pi-times" @click="rejectRequest" class="p-button-raised p-button-danger p-button-text"/>
+                      <Button label="Approve" icon="pi pi-check" @click="approveRequest" class="p-button-raised p-button-text" autofocus />
+                  </template>
+            </Dialog>
       </div>
     </div>
   </div>
@@ -613,10 +639,11 @@ export default {
   data() {
     return {
         dialogReject:false,
+        dialogApprove:false,
         ConfirmationVerifikasi:false,
         reason :{
           ket:null,
-          id:null,
+          remark:null,
         },
         submitted:false,
         loading: true,
@@ -691,37 +718,45 @@ export default {
       this.ConfirmationVerifikasi = true;
     },
     approve(){
-      this.ConfirmationVerifikasi = false;
-      this.$confirm.require({
-            message: "Are you sure you approve to this request?",
-            header: "Confirmation Approval",
-            icon: "pi pi-info-circle",
-            acceptClass: "p-button",
-            acceptLabel: "Yes",
-            rejectLabel: "No",
-            accept: () => {
+      // this.$confirm.require({
+      //       message: "Are you sure you approve to this request?",
+      //       header: "Confirmation Approval",
+      //       icon: "pi pi-info-circle",
+      //       acceptClass: "p-button",
+      //       acceptLabel: "Yes",
+      //       rejectLabel: "No",
+      //       accept: () => {
               this.$toast.add({
                 severity: "info",
                 summary: "Success Message",
                 detail: "Successfully approved this request",
                 life : 1000
               });
-              this.axios.get('/api/abm/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
-              this.code = null;
+              this.axios.put('/api/abm/' +this.code,this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
+              this.cancelApprove();
               this.getPermohonan();
-        },
-        reject: () => {},
-      });
+        // },
+      //   reject: () => {},
+      // });
     },
     rejectRequest(){
       this.ConfirmationVerifikasi = false;
       this.dialogReject = true;
+    },
+    approveRequest(){
+      this.ConfirmationVerifikasi = false;
+      this.dialogApprove = true;
     },
     cancelReject(){
       this.dialogReject = false;
       this.code = null;
       this.reason.ket = null;
       this.submitted = false;
+    },
+    cancelApprove(){
+      this.dialogApprove = false;
+      this.code = null;
+      this.reason.remark = null;
     },
     updateReject(){
           this.submitted = true;
@@ -734,7 +769,7 @@ export default {
                 detail: "Successfully rejected this request",
                 life: 1000
               });
-               this.code = null;
+               this.cancelReject();
                this.getPermohonan();
             });
           }

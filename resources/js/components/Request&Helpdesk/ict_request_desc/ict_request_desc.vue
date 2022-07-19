@@ -74,7 +74,8 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.right="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
+                
                 @click="$router.push({
                       name: 'Ict Request Detail Desc Requestor',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -88,7 +89,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -150,7 +151,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc Requestor',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -164,7 +165,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -222,12 +223,12 @@
               <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
-          <Column style="min-width:12rem">
+          <Column>
             <template #body="slotProps">
               <Button
-                v-tooltip.left="'Click to view detail'"
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc Requestor',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -241,7 +242,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -299,12 +300,12 @@
               <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
-          <Column style="min-width:12rem">
+          <Column>
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Desc Detail Penugasan',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -318,7 +319,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -386,7 +387,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -454,7 +455,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -478,7 +479,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Waiting for verification)"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Waiting for verification"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -516,7 +517,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -525,7 +526,7 @@
                 v-if="slotProps.data.ireq_statuss == 'NA1'"
                 class="p-button-rounded p-button-success mr-2"
                 icon="pi pi-check-square"
-                v-tooltip.right="'Verifikasi'"
+                v-tooltip.bottom="'Click to Verification'"
                 @click="VerifikasiRequestAtasan(slotProps.data.ireq_id)"
               />
             </template>
@@ -537,7 +538,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -599,7 +600,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -613,7 +614,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -676,7 +677,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -690,7 +691,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -753,7 +754,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -767,7 +768,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -838,7 +839,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -909,7 +910,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -972,7 +973,7 @@
               <Button
                 class="p-button-rounded p-button-sm p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -1022,7 +1023,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1086,7 +1087,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                   name: 'Ict Request Desc Detail Penugasan',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -1100,7 +1101,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1181,7 +1182,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1252,7 +1253,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1329,7 +1330,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1396,7 +1397,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1455,7 +1456,11 @@
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+          <template #body= "slotProps">
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -1463,7 +1468,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1538,7 +1543,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1562,7 +1567,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Close"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -1596,6 +1601,11 @@
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -1603,7 +1613,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1665,7 +1675,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1679,7 +1689,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1753,7 +1763,8 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.Right="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
+                
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1767,7 +1778,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1825,6 +1836,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1838,7 +1850,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1896,7 +1908,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1910,7 +1922,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -1967,7 +1979,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1981,7 +1993,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2045,7 +2057,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2109,7 +2121,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2171,6 +2183,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2184,7 +2197,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2252,7 +2265,7 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.left="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
               @click="$router.push({
                 name: 'Ict Request Detail Desc',
                 params: { code: slotProps.data.ireq_id }, })"
@@ -2292,7 +2305,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2360,7 +2373,7 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.left="'Click to view detail'"
+              v-tooltip.bottom="'Click to request details'"
               @click="$router.push({
                 name: 'Ict Request Detail Desc',
                 params: { code: slotProps.data.ireq_id }, })"
@@ -2394,7 +2407,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2457,6 +2470,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2470,7 +2484,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2481,7 +2495,7 @@
         </DataTable>
          <Toolbar class="mb-4" v-if="this.active == 33">
           <template v-slot:start>
-            <h4>ICT Request (Belum Diverifikasi)</h4>
+            <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2494,7 +2508,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Waiting for verification"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -2524,7 +2538,7 @@
           <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'status-bagde status-' + slotProps.data.ireq_statuss.toLowerCase()">{{slotProps.data.ireq_statuss}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:12rem">
@@ -2532,12 +2546,13 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
               />
               <Button
-                v-if="slotProps.data.ireq_status == 'NA2'"
+                v-if="slotProps.data.status == 'NA2'"
                 class="p-button-rounded p-button-success mr-2"
                 icon="pi pi-check-square"
                 v-tooltip.right="'Verifikasi'"
@@ -2552,7 +2567,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2563,7 +2578,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 34">
           <template v-slot:start>
-                <h4>ICT Request (Sudah Diverifikasi)</h4>
+                <h4>ICT Request (Already Verified)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2576,7 +2591,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Already Verified"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -2604,12 +2619,17 @@
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2623,7 +2643,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2647,7 +2667,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Rejected"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -2676,12 +2696,17 @@
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column>
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2695,7 +2720,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2753,6 +2778,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Desc Detail Penugasan',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2766,7 +2792,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2829,6 +2855,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2842,7 +2869,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2905,6 +2932,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2918,7 +2946,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -2942,7 +2970,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Overhall Request"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -2963,7 +2991,7 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -2976,11 +3004,12 @@
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
           </template>
           </Column>
-          <Column style="min-width:12rem">
+          <Column style="min-width:8rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2994,7 +3023,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -3056,7 +3085,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.right="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -3070,7 +3099,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -3115,7 +3144,7 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -3124,14 +3153,15 @@
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
-            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            <span :class="'status-bagde status-' + slotProps.data.ireq_statuss.toLowerCase()">{{slotProps.data.ireq_status}}</span>
           </template>
           </Column>
-          <Column style="min-width:12rem">
+          <Column>
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -3145,7 +3175,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -3169,7 +3199,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Under review"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -3190,14 +3220,14 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
             <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3208,6 +3238,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
+                v-tooltip.bottom="'Click to request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -3221,7 +3252,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -3285,7 +3316,8 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.right="'Click to view detail'"
+                v-tooltip.bottom="'Click to request details'"
+              
               @click="$router.push({
                 name: 'Ict Request Reviewer Detail',
                 params: { code: slotProps.data.ireq_id }, })"
@@ -3311,7 +3343,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -3335,7 +3367,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Assignment Request"
           responsiveLayout="scroll"
         >
         <template #header>
@@ -3356,7 +3388,7 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -3365,13 +3397,17 @@
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
-        <Column style="min-width:20rem">
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+          <template #body= "slotProps">
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
+        <Column>
           <template #body="slotProps">
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.right="'Click to view detail'"
+              v-tooltip.bottom="'Click to request details'"
               @click="$router.push({
                 name: 'Ict Request Detail Desc',
                 params: { code: slotProps.data.ireq_id }, })"
@@ -3385,7 +3421,7 @@
                   <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
-                    icon="bi bi-skip-backward-fill"
+                    icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Dashboard'})"
                   />
@@ -3431,7 +3467,7 @@
           <div class="p-fluid">
             <div class="field grid">
               <label class="col-fixed w-9rem" style="width:100px">Reason</label>
-                <div class="col">
+                <div class="col-fixed w-9rem">
                   <Textarea
                     :autoResize="true"
                     type="text"
@@ -3489,7 +3525,7 @@
          <div class="field"> 
           <div class="field grid">
             <label class="col-fixed w-9rem">Reason</label>
-              <div class="fol-fixed">
+              <div class="col-fixed w-9rem">
                 <Textarea
                   :autoResize="true"
                   type="text"
@@ -3508,6 +3544,31 @@
             <Button label="Yes" @click="updateRejectAtasan()" class="p-button" autofocus />
             <Button label="No" @click="cancelRejectAtasan()" class="p-button-text" />
           </template>
+        </Dialog>
+        <Dialog v-model:visible="dialogApproveManager"
+          :style="{ width: '400px' }"
+          header="ICT Request"
+          :modal="true"
+          class="field"
+          >
+            <div class="field">
+              <div class="field grid">
+                <label class="col-fixed w-9rem">Remark</label>
+                  <div class="co-fixed w-9rem">
+                    <Textarea
+                    :autoResize="true"
+                    type="text"
+                    v-model="reason.remark"
+                    rows="5"
+                    placeholder="IF Required"
+                  />
+                </div>
+              </div>
+            </div>
+        <template #footer>
+            <Button label="Yes" @click="updateApproveManager()" class="p-button" autofocus />
+            <Button label="No" @click="cancelApproveManager()" class="p-button-text" />
+        </template>
         </Dialog>
         <Dialog v-model:visible="dialogRejectManager"
           :style="{ width: '400px' }"
@@ -3657,8 +3718,9 @@ export default {
         ConfirmationVerifikasiManager:false,
         dialogRejectAtasan:false,
         dialogRejectManager:false,
+        dialogApproveManager:false,
         code:null,
-        reason:{ ket:null },
+        reason:{ ket:null, remark:null },
         totalRequest2:[],
         totalRequest1:[],
         totalRequest4:[],
@@ -3949,20 +4011,20 @@ export default {
       },
       approveAtasan(){
         this.confirmationVerifikasi = false;
-        this.$confirm.require({
-              message: "Approval Permohonan Dilanjutkan?",
-              header: "ICT Request    ",
-              icon: "pi pi-info-circle",
-              acceptClass: "p-button",
-              acceptLabel: "Ya",
-              rejectLabel: "Tidak",
-              accept: () => {
-                this.$toast.add({
-                  severity: "info",
-                  summary: "Confirmed",
-                  detail: "Permohonan Dilanjutkan",
-                  life : 1000
-                });
+         this.$confirm.require({
+            message: "Are you sure you approve to this request?",
+            header: "Confirmation Approval",
+            icon: "pi pi-info-circle",
+            acceptClass: "p-button",
+            acceptLabel: "Yes",
+            rejectLabel: "No",
+            accept: () => {
+              this.$toast.add({
+                severity: "info",
+                summary: "Success Message",
+                detail: "Successfully approved this request",
+                life : 1000
+              });
                 this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
                 this.code = null;
                 this.getActive();
@@ -4030,26 +4092,35 @@ export default {
       },
       approveManager(){
         this.ConfirmationVerifikasiManager = false;
-        this.$confirm.require({
-              message: "Approval Permohonan Dilanjutkan?",
-              header: "ICT Request    ",
-              icon: "pi pi-info-circle",
-              acceptClass: "p-button",
-              acceptLabel: "Ya",
-              rejectLabel: "Tidak",
-              accept: () => {
+        this.dialogApproveManager = true;
+      },
+      cancelApproveManager(){
+        this.dialogApproveManager = false;
+        this.code = null;
+        this.reason.remark = null;
+      },
+      updateApproveManager(){
+        this.ConfirmationVerifikasiManager = false;
+        // this.$confirm.require({
+        //       message: "Approval Permohonan Dilanjutkan?",
+        //       header: "ICT Request    ",
+        //       icon: "pi pi-info-circle",
+        //       acceptClass: "p-button",
+        //       acceptLabel: "Ya",
+        //       rejectLabel: "Tidak",
+        //       accept: () => {
                 this.$toast.add({
                   severity: "info",
                   summary: "Confirmed",
                   detail: "Permohonan Dilanjutkan",
                   life : 1000
                 });
-                this.axios.get('/api/abm/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
-                this.code = null;
+                this.axios.put('/api/abm/' +this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
+                this.cancelApproveManager();
                 this.getActive();
-          },
-          reject: () => {},
-        });
+        //   },
+        //   reject: () => {},
+        // });
       },
       rejectManager(){
         this.ConfirmationVerifikasiManager = false;
