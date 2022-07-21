@@ -109,6 +109,8 @@ __webpack_require__.r(__webpack_exports__);
               life: 2000
             });
 
+            _this.loading = true;
+
             _this.getIct();
           });
         }
@@ -250,6 +252,8 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
+          _this3.loading = true;
+
           _this3.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -291,6 +295,8 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + _this4.token
             }
           });
+
+          _this4.loading = true;
 
           _this4.getIct();
         },
@@ -700,7 +706,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -756,7 +762,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]]), slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
@@ -772,7 +778,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])), [[_directive_tooltip, 'Click to edit data', void 0, {
+                  , ["onClick"])), [[_directive_tooltip, 'Click to edit request', void 0, {
                     bottom: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 1,
@@ -783,8 +789,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])), [[_directive_tooltip, 'Click to delete data', void 0, {
-                    top: true
+                  , ["onClick"])), [[_directive_tooltip, 'Click to delete the request', void 0, {
+                    bottom: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.count > 0 && slotProps.data.ireq_status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 2,
                     "class": "p-button-rounded p-button-success mt-2",
@@ -795,7 +801,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }, null, 8
                   /* PROPS */
                   , ["onClick"])), [[_directive_tooltip, 'Click to submit request', void 0, {
-                    Right: true
+                    bottom: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
                 }),
                 _: 1
@@ -869,7 +875,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -942,7 +948,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -1017,7 +1023,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1093,7 +1099,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     left: true
                   }]])];
                 }),
@@ -1168,7 +1174,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1251,7 +1257,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     left: true
                   }]])];
                 }),
@@ -1392,7 +1398,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     right: true
                   }]])];
                 }),
@@ -1532,7 +1538,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to view detail', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     left: true
                   }]])];
                 }),

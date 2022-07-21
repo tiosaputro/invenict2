@@ -74,7 +74,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 
                 @click="$router.push({
                       name: 'Ict Request Detail Desc Requestor',
@@ -151,7 +151,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc Requestor',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -228,7 +228,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc Requestor',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -305,7 +305,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Desc Detail Penugasan',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -366,7 +366,7 @@
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
         <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -434,7 +434,7 @@
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
           <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
@@ -517,7 +517,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -600,7 +600,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -677,7 +677,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -754,7 +754,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -814,7 +814,7 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -885,7 +885,7 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -955,7 +955,7 @@
             Loading ICT Request data. Please wait.
         </template>
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
@@ -968,33 +968,38 @@
               <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
-          <Column style="min-width:50rem">
+          <Column style="min-width:60rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-sm p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                   name: 'Ict Request Detail Desc',
                   params: { code: slotProps.data.ireq_id }, })"
               />
               <Button
                 v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                class="p-button-raised p-button-sm p-button-text mr-2"
+                class="p-button-raised p-button-sm p-button-danger p-button-text mr-2"
                 @click="Reject(slotProps.data.ireq_id)"
                 label="Reject"
+              />
+              <Button
+                class="p-button-raised p-button-text p-button-sm mr-2"
+                @click="RemarkReviewer(slotProps.data.ireq_id)"
+                label="Remark"
               />
               <Button
                 v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
                 class="p-button-raised p-button-sm p-button-text"
                 @click="ApproveAtasan(slotProps.data.ireq_id)"
-                label="Persetujuan Atasannya"
+                label="Higher Level Approval"
               />
               <Button
                 v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
                 class="p-button-raised p-button-sm p-button-text"
                 @click="ApproveManager(slotProps.data.ireq_id)"
-                label="Persetujuan ICT Manager"
+                label="ICT Manager Approval"
               />
               <Button
                 class="p-button-raised p-button-sm p-button-text p-button-sm mt-2"
@@ -1087,7 +1092,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                   name: 'Ict Request Desc Detail Penugasan',
                   params: { code: slotProps.data.ireq_id }, })"
@@ -1147,7 +1152,7 @@
         </template>
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
@@ -1228,7 +1233,7 @@
         </template>
           <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
@@ -1299,7 +1304,7 @@
         </template>
         <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -1376,7 +1381,7 @@
         </template>
         <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -1443,7 +1448,7 @@
         </template>
         <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -1514,7 +1519,7 @@
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
@@ -1589,7 +1594,7 @@
         </template>
           <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
@@ -1675,7 +1680,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1763,7 +1768,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
@@ -1836,7 +1841,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1908,7 +1913,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -1979,7 +1984,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2040,7 +2045,7 @@
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
         <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -2104,7 +2109,7 @@
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
         <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -2183,7 +2188,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2247,7 +2252,7 @@
             <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
           </template>
           </Column>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
@@ -2265,16 +2270,21 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
               @click="$router.push({
                 name: 'Ict Request Detail Desc',
                 params: { code: slotProps.data.ireq_id }, })"
             />
             <Button
+                class="p-button-raised p-button-text p-button-sm mr-2"
+                @click="RemarkReviewer(slotProps.data.ireq_id)"
+                label="Remark"
+              />
+            <Button
               v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove Atasan'"
               class="p-button-raised p-button-text p-button-sm mr-2"
               @click="ApproveManager(slotProps.data.ireq_id)"
-              label="Persetujuan ICT Manager"
+              label="ICT Manager Approval"
             />
             <Button
               v-if="slotProps.data.status == 'A1'"
@@ -2355,7 +2365,7 @@
           <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
         </template>
         </Column>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -2373,10 +2383,15 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.bottom="'Click to request details'"
+              v-tooltip.bottom="'Click for request details'"
               @click="$router.push({
                 name: 'Ict Request Detail Desc',
                 params: { code: slotProps.data.ireq_id }, })"
+            />
+            <Button
+              class="p-button-raised p-button-text p-button-sm mr-2"
+              @click="RemarkReviewer(slotProps.data.ireq_id)"
+              label="Remark"
             /> 
             <Button
               v-if="slotProps.data.status == 'A2'"
@@ -2418,7 +2433,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.active == 32">
           <template v-slot:start>
-                <h4>ICT Request (Rejected)</h4>
+            <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2435,15 +2450,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2470,7 +2485,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2546,7 +2561,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2629,7 +2644,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2706,7 +2721,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2778,7 +2793,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Desc Detail Penugasan',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2837,7 +2852,7 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -2855,7 +2870,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -2914,7 +2929,7 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -2932,7 +2947,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -3009,7 +3024,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -3068,7 +3083,7 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -3085,7 +3100,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -3161,7 +3176,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -3238,7 +3253,7 @@
               <Button
                 class="p-button-rounded p-button-secondary mr-2"
                 icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
                       name: 'Ict Request Detail Desc',
                       params: { code: slotProps.data.ireq_id }, })"
@@ -3297,7 +3312,7 @@
             Loading ICT Request data. Please wait.
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
@@ -3316,7 +3331,7 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click to request details'"
+                v-tooltip.bottom="'Click for request details'"
               
               @click="$router.push({
                 name: 'Ict Request Reviewer Detail',
@@ -3407,7 +3422,85 @@
             <Button
               class="p-button-rounded p-button-secondary mr-2"
               icon="pi pi-info-circle"
-              v-tooltip.bottom="'Click to request details'"
+              v-tooltip.bottom="'Click for request details'"
+              @click="$router.push({
+                name: 'Ict Request Detail Desc',
+                params: { code: slotProps.data.ireq_id }, })"
+            />
+          </template>
+        </Column>
+          <template #footer>
+            <div class="grid dir-col">
+              <div class="col">
+                <div class="box">
+                  <Button
+                    label="Back"
+                    class="p-button-raised p-button mr-2"
+                    icon="pi pi-chevron-left"
+                    @click="$router.push({
+                    name: 'Dashboard'})"
+                  />
+                </div>
+			      </div>
+          </div>
+        </template>
+        </DataTable>
+        <Toolbar class="mb-4" v-if="this.active == 45">
+          <template v-slot:start>
+            <h4>ICT Request (Assignment Request)</h4>
+          </template>
+        </Toolbar>
+        <DataTable
+          v-if="this.active == 45"
+          :value="penugasanRequest1"
+          :paginator="true"
+          :rows="10"
+          :loading="loading"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Assignment Request"
+          responsiveLayout="scroll"
+        >
+        <template #header>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
+        </template>
+        <template #empty>
+            Not Found
+        </template>
+        <template #loading>
+            Loading ICT Request data. Please wait.
+        </template>
+        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+          <template #body= "slotProps">
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
+        <Column>
+          <template #body="slotProps">
+            <Button
+              class="p-button-rounded p-button-secondary mr-2"
+              icon="pi pi-info-circle"
+              v-tooltip.bottom="'Click for request details'"
               @click="$router.push({
                 name: 'Ict Request Detail Desc',
                 params: { code: slotProps.data.ireq_id }, })"
@@ -3650,6 +3743,34 @@
                 <Button label="No" @click="cancel()" class="p-button-text" />
             </template>
         </Dialog>  
+        <Dialog v-model:visible="dialogRemarkReviewer"
+          :style="{ width: '400px' }"
+          header="Form Dialog Remark"
+          :modal="true"
+          class="fluid grid"
+        >
+          <div class="p-fluid">
+            <div class="field grid">
+              <label class="col-fixed w-9rem" style="width:100px">Remark</label>
+                <div class="col">
+                  <Textarea
+                    :autoResize="true"
+                    type="text"
+                    v-model="remarkreviewer.remark"
+                    rows="5" 
+                    placeholder="Enter Remark"
+                  />
+                            <!-- <small v-if="submitted && !rbr.ket" class="p-error">
+                            Reason not filled
+                            </small> -->
+                </div>
+            </div>
+          </div>
+          <template #footer>
+            <Button label="Save" @click="updateRemarkReviewer()" class="p-button" autofocus />
+            <Button label="Cancel" @click="cancelRemarkReviewer()" class="p-button-text" />
+          </template>
+        </Dialog>
       </div>
     </div>
   </div>
@@ -3666,6 +3787,7 @@ export default {
         dialogEdit:false,
         atasanDivisi:[],
         ictManager:[],
+        penugasanRequest1:[],
         penugasanRequest2:[],
         direject2:[],
         dialogReject: false,
@@ -3719,6 +3841,11 @@ export default {
         dialogRejectAtasan:false,
         dialogRejectManager:false,
         dialogApproveManager:false,
+        dialogRemarkReviewer:false,
+        remarkreviewer:{
+          id:'',
+          remark:''
+        },
         code:null,
         reason:{ ket:null, remark:null },
         totalRequest2:[],
@@ -3741,7 +3868,7 @@ export default {
           if (this.active <= 6 || this.active == 40){
               this.getIct();
           }
-          else if (this.active >= 7 && this.active <= 12 || this.active == 38 || this.active == 41){
+          else if (this.active >= 7 && this.active <= 12 || this.active == 38 || this.active == 41 || this.active == 45){
             this.getIct2();
           } 
           else if (this.active > 12 && this.active <=16 || this.active == 37|| this.active == 43){
@@ -3785,6 +3912,7 @@ export default {
         this.sedangDireview1 = response.data.ict8;
         this.verif = response.data.ict1;
         this.reject = response.data.ict2;
+        this.penugasanRequest1 = response.data.ict9;
         this.sedangDikerjakan = response.data.ict3;
         this.sudahDikerjakan = response.data.ict4;
         this.selesai = response.data.ict5;
@@ -4146,6 +4274,33 @@ export default {
                 this.getActive();
               });
             }
+      },
+      RemarkReviewer(ireq_id){
+      this.loading = true;
+      this.remarkreviewer.id = ireq_id;
+      this.axios.get('api/get-remark-reviewer/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.remarkreviewer.remark = res.data.ireq_verificator_remark;
+        this.dialogRemarkReviewer = true;
+        this.loading = false;
+      });
+      },
+      cancelRemarkReviewer(){
+        this.remarkreviewer.id = '';
+        this.remarkreviewer.remark = '';
+        this.dialogRemarkReviewer = false;
+      },
+      updateRemarkReviewer(){
+        this.dialogRemarkReviewer = false;
+        this.loading = true;
+        this.axios.post('api/save-remark-reviewer',this.remarkreviewer, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.$toast.add({
+            severity: "info",
+            summary: "Success",
+            detail: "successfully added a remark",
+            life: 2000,
+          });
+          this.remarkreviewer = {id:'',remark:''};
+          this.getActive();
       },
   },
 };

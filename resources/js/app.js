@@ -10,6 +10,7 @@ import '/themes/vela-blue/theme.css';
 import 'jquery/dist/jquery.min';
 import 'popper.js/dist/popper.min';
 import 'bootstrap/dist/js/bootstrap.min';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 import { createApp, reactive } from 'vue';
 import axios from 'axios';
@@ -42,7 +43,6 @@ import Rating from 'primevue/rating';
 import RadioButton from 'primevue/radiobutton';
 import Ripple from 'primevue/ripple';
 import Sidebar from 'primevue/sidebar';
-import Skeleton from 'primevue/skeleton';
 import SplitButton from 'primevue/splitbutton';
 import StyleClass from 'primevue/styleclass';
 import { StreamBarcodeReader } from 'vue-barcode-reader';
@@ -59,7 +59,7 @@ import VueAxios from 'vue-axios';
 import CodeHighlight from './pages/AppCodeHighlight.js';
 import BlockViewer from './pages/BlockViewer.vue';
 import StarRating from 'vue-star-rating';
-
+import VueLoading from 'vue-loading-overlay';
 
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
@@ -74,15 +74,17 @@ app.use(ConfirmationService);
 app.use(ToastService);
 app.use(VueAxios,axios);
 app.use(router);
-app.config.devtools = false;
-app.config.debug = false;
-app.config.silent = true;
+app.use(VueLoading);
+// app.config.devtools = false;
+// app.config.debug = false;
+// app.config.silent = true;
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);
 app.directive('code', CodeHighlight);
 app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
+
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);
 app.component('Button', Button);
@@ -107,7 +109,6 @@ app.component('QrcodeVue',QrcodeVue);
 app.component('RadioButton', RadioButton);
 app.component('Rating', Rating);
 app.component('Sidebar', Sidebar);
-app.component('Skeleton', Skeleton);
 app.component('StarRating',StarRating);
 app.component('SplitButton', SplitButton);
 app.component('StreamBarcodeReader', StreamBarcodeReader);

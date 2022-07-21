@@ -58,7 +58,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.bottom="'Click to request details'"
+                        v-tooltip.bottom="'Click for request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -142,7 +142,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.bottom="'Click to request details'"
+                        v-tooltip.bottom="'Click for request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -220,7 +220,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.bottom="'Click to request details'"
+                        v-tooltip.bottom="'Click for request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -287,7 +287,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
                       <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -298,7 +298,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.bottom="'Click to request details'"
+                        v-tooltip.bottom="'Click for request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -373,7 +373,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.bottom="'Click to request details'"
+                        v-tooltip.bottom="'Click for request details'"
                         @click="$router.push({
                             name: 'Ict Request Divisi 1 Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -442,8 +442,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
                     <template #body= "slotProps">
                       <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -511,8 +511,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
                     <template #body= "slotProps">
                       <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -541,7 +541,7 @@
                 </DataTable>
                 </TabPanel>
             </TabView>
-            <Dialog header="Confirmation" v-model:visible="confirmationVerifikasi" :style="{width: '350px'}" :modal="true">
+            <Dialog header="Verification" v-model:visible="confirmationVerifikasi" :style="{width: '350px'}" :modal="true">
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                 <span>Request Verification</span>
@@ -555,7 +555,7 @@
          <div class="field"> 
           <div class="field grid">
             <label class="col-fixed w-9rem">Reason</label>
-              <div class="fol-fixed">
+              <div class="col-fixed">
                 <Textarea
                   :autoResize="true"
                   type="text"
@@ -660,6 +660,7 @@ export default {
               });
               this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
               this.code = null;
+              this.loading = true;
               this.getPermohonan();
         },
         reject: () => {},
@@ -687,6 +688,7 @@ export default {
                 life: 1000
               });
                this.code = null;
+               this.loading = true;
                this.getPermohonan();
             });
           }

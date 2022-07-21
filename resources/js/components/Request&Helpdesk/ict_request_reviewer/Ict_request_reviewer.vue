@@ -54,7 +54,7 @@
                     {{slotProps.data.ireq_assigned_to}}
                   </template>
                   </Column>
-                  <Column headerStyle="min-width:55rem">
+                  <Column headerStyle="min-width:60rem">
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -79,6 +79,11 @@
                         class="p-button-raised p-button-danger p-button-text mr-2"
                         @click="Reject(slotProps.data.ireq_id)"
                         label="Reject"
+                      />
+                      <Button
+                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        @click="Remark(slotProps.data.ireq_id)"
+                        label="Remark"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
@@ -134,7 +139,7 @@
                   </template>
                 </DataTable>   
               </TabPanel>
-                <TabPanel header="Higher Level">
+              <TabPanel header="Higher Level">
                   <DataTable
                     :value="atasandivisi"
                     :paginator="true"
@@ -179,11 +184,11 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:16rem">
-                  <template #body= "slotProps">
-                    <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                  </template>
+                    <template #body= "slotProps">
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
                   </Column>
-                  <Column headerStyle="min-width:35rem">
+                  <Column headerStyle="min-width:40rem">
                     <template #body="slotProps">
                        <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -202,6 +207,11 @@
                         @click="$router.push({
                             name: 'Ict Request Reviewer Detail',
                             params: { code: slotProps.data.ireq_id }, })"
+                      />
+                      <Button
+                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        @click="Remark(slotProps.data.ireq_id)"
+                        label="Remark"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.status == 'A1'"
@@ -252,8 +262,8 @@
                     </div>
                   </template>
                 </DataTable>   
-                </TabPanel>
-                <TabPanel header="ICT Manager">
+              </TabPanel>
+              <TabPanel header="ICT Manager">
                    <DataTable
                     :value="manager"
                     :paginator="true"
@@ -302,7 +312,7 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <Column headerStyle="min-width:30rem">
+                  <Column headerStyle="min-width:35rem">
                     <template #body="slotProps">
                        <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -321,6 +331,11 @@
                         @click="$router.push({
                             name: 'Ict Request Reviewer Detail',
                             params: { code: slotProps.data.ireq_id }, })"
+                      />
+                      <Button
+                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        @click="Remark(slotProps.data.ireq_id)"
+                        label="Remark"
                       />
                       <Button
                         v-if="slotProps.data.status == 'A2'"
@@ -367,8 +382,8 @@
                     </div>
                   </template>
                 </DataTable>  
-                </TabPanel>
-                <TabPanel header="Rejected">
+              </TabPanel>
+              <TabPanel header="Rejected">
                    <DataTable
                     :value="reject"
                     :paginator="true"
@@ -448,8 +463,8 @@
                     </div>
                   </template>
                 </DataTable>
-                </TabPanel>
-                <TabPanel header="Request Assignment">
+              </TabPanel>
+              <TabPanel header="Request Assignment">
                   <DataTable
                     :value="penugasan"
                     :paginator="true"
@@ -541,8 +556,8 @@
                     </div>
                   </template>
                 </DataTable>
-                </TabPanel>
-                <TabPanel header="In Progress">
+              </TabPanel>
+              <TabPanel header="In Progress">
                     <DataTable
                     :value="sedangDikerjakan"
                     :paginator="true"
@@ -622,8 +637,8 @@
                     </div>
                   </template>
                 </DataTable>
-                </TabPanel>
-                <TabPanel header="Done">
+              </TabPanel>
+              <TabPanel header="Done">
                     <DataTable
                     :value="sudahDikerjakan"
                     :paginator="true"
@@ -704,8 +719,8 @@
                     </div>
                   </template>
                 </DataTable>
-                </TabPanel>
-                <TabPanel header="Close">
+              </TabPanel>
+              <TabPanel header="Close">
                     <DataTable
                     :value="selesai"
                     :paginator="true"
@@ -792,10 +807,9 @@
                     </div>
                   </template> -->
                 </DataTable>
-                </TabPanel>
+              </TabPanel>
             </TabView>
-            <Dialog
-                v-model:visible="dialogReject"
+            <Dialog v-model:visible="dialogReject"
                 :style="{ width: '400px' }"
                 header="Form Dialog Reject"
                 :modal="true"
@@ -824,8 +838,7 @@
                     <Button label="Cancel" @click="cancelReject()" class="p-button-text" />
                 </template>
             </Dialog>
-            <Dialog
-                v-model:visible="dialogAssign"
+            <Dialog v-model:visible="dialogAssign"
                 :style="{ width: '500px' }"
                 header="Assign Per-Request"
                 :modal="true"
@@ -855,49 +868,76 @@
                     <Button label="Cancel" @click="cancelAssign()" class="p-button-text" />
                 </template>
             </Dialog>
-            <Dialog
-              v-model:visible="displayDetailRequest"
+            <Dialog v-model:visible="displayDetailRequest"
               :style="{ width: '1200px' }"
               header="Detail Request"
               :modal="true"
             >
-        <Toolbar class="mb-4">
-          <template v-slot:end>
-              <label style="width:130px">No. Request: {{this.ireq_no}}</label>
-          </template>
-        </Toolbar>
-        <DataTable
-          :value="detail"
-          :paginator="true"
-          :rows="10"
-          :filters="filters"
-          :rowHover="true"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
-          responsiveLayout="scroll"
-        >
-       <template #header>
-            <div class="table-header text-right">
-              <span class="p-input-icon-left">
-                <i class="pi pi-search" />
-                  <InputText
-                    v-model="filters['global'].value"
-                    placeholder="Search. . ."
-                  />
-              </span>
-            </div>
-          </template>
-          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
-          <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:12rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
-          <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
-        </DataTable>
-        </Dialog>  
+            <Toolbar class="mb-4">
+              <template v-slot:end>
+                  <label style="width:130px">No. Request: {{this.ireq_no}}</label>
+              </template>
+            </Toolbar>
+              <DataTable
+                :value="detail"
+                :paginator="true"
+                :rows="10"
+                :filters="filters"
+                :rowHover="true"
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
+                responsiveLayout="scroll"
+              >
+                <template #header>
+                  <div class="table-header text-right">
+                    <span class="p-input-icon-left">
+                      <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                    </span>
+                  </div>
+                </template>
+                <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
+                <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
+                <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:12rem"/>
+                <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
+                <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
+                <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+                <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
+                <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+              </DataTable>
+            </Dialog>  
+            <Dialog v-model:visible="dialogRemark"
+                :style="{ width: '400px' }"
+                header="Form Dialog Remark"
+                :modal="true"
+                class="fluid grid"
+            >
+                <div class="p-fluid">
+                  <div class="field grid">
+                    <label class="col-fixed w-9rem" style="width:100px">Remark</label>
+                     <div class="col">
+                          <Textarea
+                            :autoResize="true"
+                            type="text"
+                            v-model="remark.remark"
+                            rows="5" 
+                            placeholder="Enter Remark"
+                          />
+                            <!-- <small v-if="submitted && !rbr.ket" class="p-error">
+                            Reason not filled
+                            </small> -->
+                     </div>
+                   </div>
+                </div>
+                <template #footer>
+                    <Button label="Save" @click="updateRemark()" class="p-button" autofocus />
+                    <Button label="Cancel" @click="cancelRemark()" class="p-button-text" />
+                </template>
+            </Dialog>
       </div>
     </div>
   </div>
@@ -909,6 +949,11 @@ export default {
   data() {
     return {
         dialogAssign:false,
+        dialogRemark:false,
+        remark:{
+          remark:'',
+          id:''
+        },
         displayDetailRequest:false,
         submitted:false,
         assign:{
@@ -991,10 +1036,38 @@ export default {
             life: 3000,
           });
           this.axios.get('api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.loading = true;
           this.getIct();
         },
         reject: () => {},
       })
+    },
+    Remark(ireq_id){
+      this.loading = true;
+      this.remark.id = ireq_id;
+      this.axios.get('api/get-remark-reviewer/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.remark.remark = res.data.ireq_verificator_remark;
+        this.dialogRemark = true;
+        this.loading = false;
+      });
+    },
+    cancelRemark(){
+      this.remark.id = '';
+      this.remark.remark = '';
+      this.dialogRemark = false;
+    },
+    updateRemark(){
+      this.dialogRemark = false;
+      this.loading = true;
+      this.axios.post('api/save-remark-reviewer',this.remark, {headers: {'Authorization': 'Bearer '+this.token}});
+        this.$toast.add({
+          severity: "info",
+          summary: "Success",
+          detail: "successfully added a remark",
+          life: 2000,
+        });
+        this.remark = {id:'',remark:''};
+        this.getIct();
     },
     Reject(ireq_id){
         this.dialogReject = true;
@@ -1019,6 +1092,7 @@ export default {
                 detail: "Successfully rejected the request",
                 life: 2000,
               });
+              this.loading = true;
               this.getIct();
         });
         }
@@ -1039,6 +1113,7 @@ export default {
             life:2000
           });
           this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.loading = true;
           this.getIct();
         },
         reject: () => {},
@@ -1060,6 +1135,7 @@ export default {
             life:2000
           });
           this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.loading = true;
           this.getIct();
         },
         reject: () => {},
@@ -1088,6 +1164,7 @@ export default {
               detail: "Assignment request successful",
               life: 2000,
             });
+            this.loading = true;
             this.getIct();
           });
         }
@@ -1115,7 +1192,8 @@ export default {
               life: 3000,
             });
             this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
-           this.getIct();
+            this.loading = true;
+            this.getIct();
           },
           reject: () => {},
         });

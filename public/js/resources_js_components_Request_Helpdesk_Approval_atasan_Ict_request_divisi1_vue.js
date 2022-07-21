@@ -122,6 +122,7 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           _this2.code = null;
+          _this2.loading = true;
 
           _this2.getPermohonan();
         },
@@ -159,6 +160,7 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           _this3.code = null;
+          _this3.loading = true;
 
           _this3.getPermohonan();
         });
@@ -440,7 +442,7 @@ var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_65 = {
-  "class": "fol-fixed"
+  "class": "col-fixed"
 };
 var _hoisted_66 = {
   key: 0,
@@ -615,7 +617,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]]), slotProps.data.ireq_statuss == 'NA1' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
@@ -770,7 +772,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -921,7 +923,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -1032,7 +1034,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
-                header: "Personnel ICT",
+                header: "Personnel (ICT)",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1074,7 +1076,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -1207,7 +1209,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -1329,15 +1331,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "ireq_assigned_to",
-                header: "Petugas ICT",
+                field: "div_name",
+                header: "User Division",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "div_name",
-                header: "User Division",
+                field: "ireq_assigned_to",
+                header: "Personnel (ICT)",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1475,15 +1477,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "ireq_assigned_to",
-                header: "Personnel (ICT)",
+                field: "div_name",
+                header: "User Division",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "div_name",
-                header: "User Division",
+                field: "ireq_assigned_to",
+                header: "Personnel (ICT)",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1526,7 +1528,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["activeIndex"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
-    header: "Confirmation",
+    header: "Verification",
     visible: $data.confirmationVerifikasi,
     "onUpdate:visible": _cache[22] || (_cache[22] = function ($event) {
       return $data.confirmationVerifikasi = $event;

@@ -397,7 +397,7 @@ class IctDetailController extends Controller
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('id.ireq_type','imm.ireq_id','imm.ireq_no','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname','id.ireq_remark','lllr.lookup_desc as prio_level',
-                'imm.ireq_requestor','imm.ireq_no','imm.ireq_approver2_remark','llr.lookup_desc as ireq_type', 'vr.name as ireq_bu','imm.ireq_status as status',
+                'imm.ireq_requestor','imm.ireq_no','imm.ireq_approver2_remark','llr.lookup_desc as ireq_type', 'vr.name as ireq_bu','imm.ireq_status as status','loc_refs.loc_desc as ireq_loc',
                 DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY HH24:MI') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned"),
                 DB::raw("TO_CHAR(imm.ireq_approver1_date,' dd Mon YYYY HH24:MI') as date_approver1"),'imm.ireq_verificator',
                 DB::raw("COALESCE(imm.ireq_assigned_to2,imm.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireqq_status',
@@ -407,6 +407,7 @@ class IctDetailController extends Controller
                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
         })
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('location_refs as loc_refs','imm.ireq_loc','loc_refs.loc_code')
         ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
         ->leftjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
         ->leftjoin('lookup_refs as lllr','imm.ireq_prio_level','lllr.lookup_code')

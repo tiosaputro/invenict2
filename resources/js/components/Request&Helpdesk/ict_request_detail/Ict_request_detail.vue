@@ -80,7 +80,7 @@
                 v-if=" slotProps.data.ireq_status == null"
                 class="p-button-rounded p-button-info mr-2"
                 icon="pi pi-pencil"
-                v-tooltip.bottom="'Click to edit data'"
+                v-tooltip.bottom="'Click to edit request'"
                 @click="
                   $router.push({
                     name: 'Edit Ict Request Detail',
@@ -89,7 +89,7 @@
               <Button
                 v-if=" slotProps.data.ireq_status == null"
                 icon="pi pi-trash"
-                v-tooltip.bottom="'Click to delete data'"
+                v-tooltip.bottom="'Click to delete request'"
                 class="p-button-rounded p-button-danger mr-2"
                 @click="DeleteIct(slotProps.data.ireqd_id,this.code)"
               />
@@ -139,7 +139,7 @@ export default {
     return {
         loading: true,
         detail: [],
-        status:'',
+        status:null,
         kode:'',
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
@@ -234,6 +234,7 @@ export default {
             detail: "Successfully Submit",
             life: 3000,
           });
+          this.loading = true;
           this.axios.get('/api/updateStatusSubmit/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
           setTimeout( () => this.$router.push('/ict-request'),1000);
         },

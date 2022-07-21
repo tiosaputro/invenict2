@@ -136,6 +136,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       this.cancelApprove();
+      this.loading = true;
       this.getPermohonan(); // },
       //   reject: () => {},
       // });
@@ -180,6 +181,8 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           _this2.cancelReject();
+
+          _this2.loading = true;
 
           _this2.getPermohonan();
         });
@@ -646,7 +649,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]]), slotProps.data.status == 'NA2' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
@@ -804,7 +807,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -962,7 +965,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -1118,7 +1121,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]])];
                 }),
@@ -1276,7 +1279,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"]), [[_directive_tooltip, 'Click to request details', void 0, {
+                  , ["onClick"]), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
                   }]])];
                 }),

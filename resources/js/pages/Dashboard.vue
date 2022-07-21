@@ -1,4 +1,5 @@
 <template>
+<Toast />
 <div class="grid" v-if="this.role_name.includes('Admin')">
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="blmDiverifikasiAdmin()" style="cursor:pointer;" class="card mb-0">
@@ -247,6 +248,19 @@
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="fontSize: 4rem; color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="penugasanRequest1()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Request Assignment</span>
+						<div class="text-900 font-medium text-xl">{{count1.penugasanrequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
 					</div>
 				</div>
 			</div>
@@ -826,6 +840,8 @@
 export default {
     data() {
         return {
+			fullPage: false,
+			loader:'',
             user:[],
 			role_name :[],
             count:[],
@@ -845,50 +861,57 @@ export default {
         this.CekUser();
     },
     methods:{
-      CekUser(){
-		this.axios.get('api/cek-role/'+this.id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-			this.role_name = response.data.map((x)=>x.rol_name);
-			if(this.role_name.includes('Requestor Divisi')){
-            this.getData();
-          	}
-			else if(this.role_name.includes('Admin')){
-				this.getData5();
+		CekUser(){
+			this.loader = this.$loading.show({
+			// Pass props by their camelCased names
+			container: this.$refs.loadingContainer,
+			color: '#2772d9',
+			loader: 'spinner',
+			width: 64,
+			height: 64,
+			backgroundColor: '#1f2d40',
+			opacity: 0.5,
+			zIndex: 999,
+		}, {});
+			this.axios.get('api/cek-role/'+this.id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+				this.role_name = response.data.map((x)=>x.rol_name);
+				if(this.role_name.includes('Requestor Divisi')){
+				this.getData();
+				}
+				else if(this.role_name.includes('Admin')){
+					this.getData5();
+				}
+				else if(this.role_name.includes('Atasan Requestor Divisi')){
+					this.getData1();
+				}
+				else if(this.role_name.includes('Reviewer Bentu')){
+					this.getDataBentu();
+				}
+				else if(this.role_name.includes('Reviewer Kurau')){
+					this.getDataKurau();
+				}
+				else if(this.role_name.includes('Reviewer Jakarta')){
+					this.getDataJakarta();
+				}
+				else if(this.role_name.includes('Personel ICT')){
+					this.getUser();
+				}
+				else if(this.role_name.includes('Manager')){
+					this.getData4();
 			}
-			else if(this.role_name.includes('Atasan Requestor Divisi')){
-				this.getData1();
+			}).catch(error=>{
+			if (error.response.status == 401) {
+				localStorage.clear();
+				localStorage.setItem('Expired','true')
+				this.$router.push('/login');
+				this.loader.hide();
 			}
-			else if(this.role_name.includes('Reviewer Bentu')){
-				this.getDataBentu();
-			}
-			else if(this.role_name.includes('Reviewer Kurau')){
-				this.getDataKurau();
-			}
-			else if(this.role_name.includes('Reviewer Jakarta')){
-				this.getDataJakarta();
-			}
-			else if(this.role_name.includes('Personel ICT')){
-				this.getUser();
-			}
-			else if(this.role_name.includes('Manager')){
-				this.getData4();
-		  }
-		}).catch(error=>{
-         if (error.response.status == 401) {
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-           }
-          if(error.response.status == 403){
-            this.$router.push('/access');
-          }
-        });
-      },
+			});
+		},
       	getData(){
             this.axios.get('api/getCountUser/'+this.usr_name,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.count = response.data;
+				this.loader.hide();
             });
         },
         blmDiverifikasiAdmin(){
@@ -955,6 +978,7 @@ export default {
         getData1(){
             this.axios.get('api/getCountDivisi1/'+this.usr_name,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.count1 = response.data;
+				this.loader.hide();
             });
         },
 		sdgDireview1(){
@@ -973,6 +997,10 @@ export default {
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',9);
         },
+		penugasanRequest1(){
+		  this.$router.push('/ict-request-desc')
+          localStorage.setItem('active',45);
+		},
         sdgDikerjakan1(){
           this.$router.push('/ict-request-desc')
           localStorage.setItem('active',10);
@@ -992,16 +1020,19 @@ export default {
         getDataBentu(){
             this.axios.get('api/getCountReviewerBentu',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.countBentu = response.data;
+				this.loader.hide();
             });
         },
 		getDataKurau(){
             this.axios.get('api/getCountReviewerKurau',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.countKurau = response.data;
+				this.loader.hide();
             });
         },
 		getDataJakarta(){
             this.axios.get('api/getCountReviewerJakarta',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.countJakarta = response.data;
+				this.loader.hide();
             });
         },
 		atasanDivisi2(){
@@ -1049,6 +1080,7 @@ export default {
         getData3(){
             this.axios.get('api/getCountDivisi3/'+this.user.usr_fullname,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.count3 = response.data;
+				this.loader.hide();
             });
         },
         blmSelesai3(){
@@ -1066,6 +1098,7 @@ export default {
         getData4(){
             this.axios.get('api/getCountDivisi4',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.count4 = response.data;
+				this.loader.hide();
             });
         },
 		sdgDireview4(){
@@ -1107,6 +1140,7 @@ export default {
         getData5(){
           this.axios.get('api/getCountAdmin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.count5 = response.data;
+				this.loader.hide();
           });
         },
     }

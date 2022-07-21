@@ -40,7 +40,7 @@
                     <template #loading>
                       Loading ICT Request data. Please wait.
                     </template>
-                    <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                    <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                     <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                       <template #body="slotProps">
                         {{ formatDate(slotProps.data.ireq_date) }}
@@ -54,7 +54,7 @@
                         <Button
                           class="p-button-rounded p-button-secondary mr-2"
                           icon="pi pi-info-circle"
-                          v-tooltip.bottom="'Click to view detail'"
+                          v-tooltip.bottom="'Click for request details'"
                           @click="$router.push({
                               name: 'Ict Request Detail',
                               params: { code: slotProps.data.ireq_id }, })"
@@ -63,7 +63,7 @@
                           v-if="slotProps.data.ireq_status == null"
                           class="p-button-rounded p-button-info mr-2"
                           icon="pi pi-pencil"
-                          v-tooltip.bottom="'Click to edit data'"
+                          v-tooltip.bottom="'Click to edit request'"
                           @click="
                             $router.push({
                               name: 'Edit Ict Request',
@@ -74,14 +74,14 @@
                           icon="pi pi-trash"
                           class="p-button-rounded p-button-danger mr-2"
                           @click="DeleteIct(slotProps.data.ireq_id)"
-                          v-tooltip.top="'Click to delete data'"
+                          v-tooltip.bottom="'Click to delete the request'"
                         />
                         <Button
                           v-if="slotProps.data.count > 0 && slotProps.data.ireq_status == null"
                           class="p-button-rounded p-button-success mt-2"
                           icon="pi pi-check"
                           @click="SubmitIct(slotProps.data.ireq_id)"
-                          v-tooltip.Right="'Click to submit request'"
+                          v-tooltip.bottom="'Click to submit request'"
                         />
                       </template>
                     </Column>
@@ -137,7 +137,7 @@
                     <template #loading>
                       Loading ICT Request data. Please wait.
                     </template>
-                    <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                    <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                     <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                       <template #body="slotProps">
                         {{ formatDate(slotProps.data.ireq_date) }}
@@ -156,7 +156,7 @@
                         <Button
                           class="p-button-rounded p-button-secondary mr-2"
                           icon="pi pi-info-circle"
-                          v-tooltip.bottom="'Click to view detail'"
+                          v-tooltip.bottom="'Click for request details'"
                           @click="$router.push({
                               name: 'Ict Request Detail',
                               params: { code: slotProps.data.ireq_id }, })"
@@ -215,7 +215,7 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -234,7 +234,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Click to view detail'"
+                        v-tooltip.left="'Click for request details'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -293,7 +293,7 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -313,7 +313,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Click to view detail'"
+                        v-tooltip.left="'Click for request details'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -392,7 +392,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.right="'Click to view detail'"
+                        v-tooltip.right="'Click for request details'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -446,7 +446,7 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.left="'Click to view detail'"
+                        v-tooltip.left="'Click for request details'"
                         @click="$router.push({
                             name: 'Ict Request Detail',
                             params: { code: slotProps.data.ireq_id }, })"
@@ -756,6 +756,7 @@ export default {
           this.$toast.add({
             severity:'info', summary: 'Success Submit', detail:'Ulasan Berhasil Disubmit',life:2000
           });
+          this.loading = true;
           this.getIct();
         });
         }
@@ -868,6 +869,7 @@ export default {
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
+          this.loading = true;
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -896,6 +898,7 @@ export default {
             life: 3000,
           });
           this.axios.delete('api/delete-ict/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}});
+          this.loading = true;
           this.getIct();
         },
         reject: () => {},

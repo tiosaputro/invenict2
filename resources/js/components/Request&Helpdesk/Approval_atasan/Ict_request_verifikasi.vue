@@ -80,23 +80,24 @@
         :modal="true"
         class="field grid"
       >
-        <div class="field grid">
-            <label style="width:100px">Reason</label>
-              <div class="col-3 md-6">
+        <div class="field"> 
+          <div class="field grid">
+            <label class="col-fixed w-9rem">Reason</label>
+              <div class="col-fixed w-9rem">
                 <Textarea
-                    :autoResize="true"
-                    type="text"
-                    v-model="reason.ket"
-                    rows="5" 
-                    cols="30"
-                    placeholder="Give a reason"
-                    :class="{ 'p-invalid': submitted && !reason.ket }"
-                  />
-                    <small v-if="submitted && !reason.ket" class="p-error">
+                  :autoResize="true"
+                  type="text"
+                  v-model="reason.ket"
+                  rows="5" 
+                  placeholder="Give a reason"
+                  :class="{ 'p-invalid': submitted && !reason.ket }"
+                />
+                  <small v-if="submitted && !reason.ket" class="p-error">
                     Reason not filled
-                    </small>
+                  </small>
               </div>
-        </div>
+            </div>
+          </div>
         <template #footer>
             <Button label="Save" @click="updateReject()" class="p-button" autofocus />
             <Button label="Cancel" @click="cancelReject()" class="p-button-text" />

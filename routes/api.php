@@ -216,6 +216,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/dataIct','IctController@getDataIct');
     Route::get('/getdataIctByStatus/{statuss}','IctController@getdataIctByStatus');
     Route::get('/detail-request-reviewer/{code}','IctController@detailRequestReviewer');
+    Route::get('/get-remark-reviewer/{ireq_id}','IctController@getRemarkReviewer');
+    Route::post('/save-remark-reviewer','IctController@SaveRemarkReviewer');
 
 
     //ict request manager

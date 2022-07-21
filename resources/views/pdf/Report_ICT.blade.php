@@ -4,7 +4,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<title> ICT REQUEST  {{ date('Y-m-d') }}</title>
+<title> ICT REQUEST REPORT  {{ date('d M yy') }}</title>
 <style>
 #invoice{
     padding: 30px;
@@ -78,7 +78,7 @@ p {
     font-size: 1.5em
 }
 
-.invoice table {
+/* .invoice table {
     width: 100%;
     border:solid 2px;
     border-collapse: collapse;
@@ -93,7 +93,7 @@ p {
 }
 
 .invoice table th {
-    /* white-space: nowrap; */
+    white-space: nowrap;
     font-weight: 400;
     overflow: hidden;
     font-size: 16px;
@@ -107,7 +107,7 @@ p {
     max-height: 0.5px;
     color: #3989c6;
     font-size: 16px;
-}
+} */
 
 .invoice table .qty,.invoice table .total,.invoice table .unit {
     text-align: left;
@@ -187,7 +187,7 @@ p {
   display: table;
 }
 
-.table {
+/* .table {
   border-collapse: collapse;
   border:solid 2px;
   width: 99%;
@@ -214,7 +214,7 @@ th{
   text-overflow: ellipsis;
   border:solid 2px;
   font-weight:bold;
-}
+} */
 
 tr:nth-child(even) {
   background-color:#7CB9E8;
@@ -361,7 +361,7 @@ tr:nth-child(even) {
         /* page-break-before: always */
         page-break-after: auto;
     }
-    .table {
+    /* .table {
         border-collapse: collapse;
         border:solid 2px;
         width: 199%;
@@ -371,27 +371,26 @@ tr:nth-child(even) {
         vertical-align: bottom;
         width:1px;
         text-align: center;
-        height: 0.375pt;
+        height: 10px;
         padding: 0;
         border:solid 2px;
-        overflow-x: scroll;
+        overflow: hidden;
         font-weight:bold;
-        text-overflow: ellipsis;
+
     }
     th{
         vertical-align: top;
         text-align: center;
-        max-height: 0.5px;
+        height: 10px;
         padding: 0;
+        overflow: hidden;
         border:solid 2px;
-        overflow-x: scroll;
-        text-overflow: ellipsis;
         font-weight:bold;
         border:solid 2px;
     }
     p {
         font-weight: bold;
-    }
+    } */
 
     .invoice {
         position: relative;
@@ -561,6 +560,33 @@ tr:nth-child(even) {
         min-height: 170px;
         outline: none;
     }
+    .wrap {
+        display: table;
+        padding:10px;
+        width: 100%;
+        height: 100%; /* need to set height for this to work in Chrome */
+    }
+    .cell-wrap {
+        display: table-cell;
+        vertical-align: top;
+        height: 50%;
+    }
+    .cell-wrap.left {
+        width: 50%;
+        padding-right: 5px;  
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        border:solid 2px;
+        height: 80%;
+        width: 100%;
+    }
+    table td, table th {
+        border:solid 2px;
+        text-align: center;
+        padding: 0em;
+    }
 }
 @media print {
     
@@ -690,30 +716,59 @@ tr:nth-child(even) {
         width: 199%;
         max-width: 100%;
     }
-    td {
+    /* td {
         vertical-align: bottom;
         max-width:0.75pt;
         text-align: center;
         max-height: 0.5px;
         padding: 0;
         border:solid 2px;
+        white-space: nowrap;
+        overflow: hidden;
         overflow-x: scroll;
         font-weight:bold;
-        text-overflow: ellipsis;
     }
     th{
         vertical-align: top;
-        text-align: center;
+        text-align: justify;
         max-height: 0.5px;
         padding: 0;
         border:solid 1.5pt;
+        overflow: hidden;
         overflow-x: scroll;
-        text-overflow: ellipsis;
+        white-space: nowrap;
         font-weight:bold;
         border:solid 1.5pt;
     }
         p {
         font-weight: bold;
+    } */
+    .wrap {
+        display: table;
+        padding:10px;
+        width: 100%;
+        height: 100%; /* need to set height for this to work in Chrome */
+    }
+    .cell-wrap {
+        display: table-cell;
+        vertical-align: top;
+        height: 50%;
+    }
+    .cell-wrap.left {
+        width: 50%;
+        padding-right: 5px;  
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        border:solid 2px;
+        height: 80%;
+        width: 100%;
+    }
+    table td, table th {
+        border:solid 2px;
+        text-align: center;
+        padding: 0em;
     }
 
     .invoice {
@@ -880,7 +935,7 @@ tr:nth-child(even) {
         margin: 0.75pt;
         padding: 0.75pt;
         min-width:50pt;
-        max-height: 140pt;
+        max-height: 100%;
         outline: none;
     }
 }
@@ -919,6 +974,11 @@ tr:nth-child(even) {
                                 No.request : {{$detail[0]->ireq_no}}
                             </span>
                         </p>
+                        <p style="text-align:left;font-size:16px;">
+                            <span style="float:right;">
+                                Location : {{$detail[0]->ireq_loc}}
+                            </span>
+                        </p>
                     </div>
                 </div>
                 <div class="row contacts" contenteditable="false">
@@ -939,8 +999,49 @@ tr:nth-child(even) {
                     $linkIctManager = "http://localhost:8000/check-legality-qrcode-ict-manager/{$link->link_id}"; 
                     $linkHigherLevel = "http://localhost:8000/check-legality-qrcode-higher-level/{$link->link_id}"; 
                 @endphp
-
-                <div class="row">
+                <div class="wrap">
+                    <div class="cell-wrap left">
+                        <table class="left">
+                            <p style="font-size:16px;"> II. Requester / Reported By : </p>
+                        <tr>
+                                <th>{{$detail[0]->ireq_requestor}}</th>
+                                <th>{{$detail[0]->div_name}}</th>
+                                <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
+                        </tr>
+                        <tr>
+                                <td style="border:solid 2px;">Name</td>
+                                <td style="border:solid 2px;">Divison</td>
+                        </tr>
+                        </table>
+                    </div>
+                    <div class="cell-wrap right">
+                        <table class="right">
+                            <p style="font-size:16px;"> Approved By : (For new installation/software loan) </p>
+                            @if ($detail[0]->date_approver1)
+                                <tr>
+                                    <th>{{$detail[0]->usr_fullname}}</th>
+                                    <th>Manager {{$detail[0]->div_name}}</th>
+                                  @if($detail[0]->status == "RA1")
+                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br>Rejected on {{$detail[0]->date_approver1}}</th>
+                                  @else
+                                    <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br>{{$detail[0]->date_approver1}}</th>
+                                  @endif
+                                </tr>
+                            @else
+                                <tr>
+                                    <th style="height:86px;"></th>
+                                    <th></th>
+                                    <th rowspan="2" style="border:solid 2px;"></th>
+                                </tr>
+                            @endif
+                        <tr>
+                            <td style="border:solid 2px;">Name</td>
+                            <td style="border:solid 2px;">Position</td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
+                <!-- <div class="row">
                     <div class="column">
                         <table> <p style="font-size:16px;"> II. Requester / Reported By : </p>
                         <tr>
@@ -949,8 +1050,8 @@ tr:nth-child(even) {
                             <th rowspan="2" style="border:solid 2px;font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
                         </tr>
                         <tr>
-                            <td style="border:solid 2px;overflow: hidden;height:0.5px;">Name</td>
-                            <td style="border:solid 2px;overflow: hidden;">Divison</td>
+                            <td style="border:solid 2px;">Name</td>
+                            <td style="border:solid 2px;">Divison</td>
                         </tr>
                         </table>
                     </div>
@@ -974,12 +1075,12 @@ tr:nth-child(even) {
                             </tr>
                             @endif
                             <tr>
-                                <td style="border:solid 2px;height:0.5px;overflow: hidden;">Name</td>
-                                <td style="border:solid 2px;overflow: hidden;">Position</td>
+                                <td style="border:solid 2px;">Name</td>
+                                <td style="border:solid 2px;">Position</td>
                             </tr>
                         </table>
                     </div>
-                </div>
+                </div> -->
                 <div class="row contacts">
                   <div class="col invoice-to"><br>
                     <div class="text-gray-light"> <p style="font-size:16px;"> III. IT Use Only</p> </div>
@@ -1006,9 +1107,9 @@ tr:nth-child(even) {
                       </tr>
                       @endif
                       <tr>
-                        <td style="border:solid 2px;overflow: hidden;">Name</td>
-                        <td style="border:solid 2px;overflow: hidden;">Position</td>
-                        <td style="border:solid 2px;height:0.5px;overflow: hidden;">Remarks(Including OE if required)</td>
+                        <td style="border:solid 2px;">Name</td>
+                        <td style="border:solid 2px;">Position</td>
+                        <td style="border:solid 2px;">Remarks(Including OE if required)</td>
                       </tr>
                     </table>
                 </div>

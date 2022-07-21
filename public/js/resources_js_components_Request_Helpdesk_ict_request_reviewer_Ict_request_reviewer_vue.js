@@ -20,6 +20,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dialogAssign: false,
+      dialogRemark: false,
+      remark: {
+        remark: '',
+        id: ''
+      },
       displayDetailRequest: false,
       submitted: false,
       assign: {
@@ -126,10 +131,52 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
 
+          _this2.loading = true;
+
           _this2.getIct();
         },
         reject: function reject() {}
       });
+    },
+    Remark: function Remark(ireq_id) {
+      var _this3 = this;
+
+      this.loading = true;
+      this.remark.id = ireq_id;
+      this.axios.get('api/get-remark-reviewer/' + ireq_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (res) {
+        _this3.remark.remark = res.data.ireq_verificator_remark;
+        _this3.dialogRemark = true;
+        _this3.loading = false;
+      });
+    },
+    cancelRemark: function cancelRemark() {
+      this.remark.id = '';
+      this.remark.remark = '';
+      this.dialogRemark = false;
+    },
+    updateRemark: function updateRemark() {
+      this.dialogRemark = false;
+      this.loading = true;
+      this.axios.post('api/save-remark-reviewer', this.remark, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      });
+      this.$toast.add({
+        severity: "info",
+        summary: "Success",
+        detail: "successfully added a remark",
+        life: 2000
+      });
+      this.remark = {
+        id: '',
+        remark: ''
+      };
+      this.getIct();
     },
     Reject: function Reject(ireq_id) {
       this.dialogReject = true;
@@ -141,7 +188,7 @@ __webpack_require__.r(__webpack_exports__);
       this.rbr.ket = null;
     },
     updateReject: function updateReject() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.submitted = true;
 
@@ -151,56 +198,29 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (res) {
-          _this3.dialogReject = false;
-          _this3.rbr.id = null;
-          _this3.rbr.ket = null;
-          _this3.submitted = false;
+          _this4.dialogReject = false;
+          _this4.rbr.id = null;
+          _this4.rbr.ket = null;
+          _this4.submitted = false;
 
-          _this3.$toast.add({
+          _this4.$toast.add({
             severity: "info",
             summary: "Success",
             detail: "Successfully rejected the request",
             life: 2000
           });
 
-          _this3.getIct();
+          _this4.loading = true;
+
+          _this4.getIct();
         });
       }
     },
     ApproveAtasan: function ApproveAtasan(ireq_id) {
-      var _this4 = this;
-
-      this.$confirm.require({
-        message: "Are you sure this request need approval from higher level?",
-        header: "ICT Request    ",
-        icon: "pi pi-info-circle",
-        acceptClass: "p-button",
-        acceptLabel: "Yes",
-        rejectLabel: "No",
-        accept: function accept() {
-          _this4.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Success Update Request",
-            life: 2000
-          });
-
-          _this4.axios.get('/api/naa/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this4.token
-            }
-          });
-
-          _this4.getIct();
-        },
-        reject: function reject() {}
-      });
-    },
-    ApproveManager: function ApproveManager(ireq_id) {
       var _this5 = this;
 
       this.$confirm.require({
-        message: "Are you sure this request need approval from ICT Manager?",
+        message: "Are you sure this request need approval from higher level?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
@@ -214,19 +234,52 @@ __webpack_require__.r(__webpack_exports__);
             life: 2000
           });
 
-          _this5.axios.get('/api/nam/' + ireq_id, {
+          _this5.axios.get('/api/naa/' + ireq_id, {
             headers: {
               'Authorization': 'Bearer ' + _this5.token
             }
           });
+
+          _this5.loading = true;
 
           _this5.getIct();
         },
         reject: function reject() {}
       });
     },
-    AssignPerRequest: function AssignPerRequest(ireq_id) {
+    ApproveManager: function ApproveManager(ireq_id) {
       var _this6 = this;
+
+      this.$confirm.require({
+        message: "Are you sure this request need approval from ICT Manager?",
+        header: "ICT Request    ",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
+        accept: function accept() {
+          _this6.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Success Update Request",
+            life: 2000
+          });
+
+          _this6.axios.get('/api/nam/' + ireq_id, {
+            headers: {
+              'Authorization': 'Bearer ' + _this6.token
+            }
+          });
+
+          _this6.loading = true;
+
+          _this6.getIct();
+        },
+        reject: function reject() {}
+      });
+    },
+    AssignPerRequest: function AssignPerRequest(ireq_id) {
+      var _this7 = this;
 
       this.assign.id = ireq_id;
       this.axios.get('api/get-pekerja', {
@@ -234,12 +287,12 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this6.petugas = response.data;
+        _this7.petugas = response.data;
       });
       this.dialogAssign = true;
     },
     updateAssign: function updateAssign() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.submitted = true;
 
@@ -249,21 +302,23 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this7.assign = {
+          _this8.assign = {
             id: null,
             name: null
           };
-          _this7.submitted = false;
-          _this7.dialogAssign = false;
+          _this8.submitted = false;
+          _this8.dialogAssign = false;
 
-          _this7.$toast.add({
+          _this8.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Assignment request successful",
             life: 2000
           });
 
-          _this7.getIct();
+          _this8.loading = true;
+
+          _this8.getIct();
         });
       }
     },
@@ -277,7 +332,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = false;
     },
     ClosingPerDetail: function ClosingPerDetail(ireqd_id, ireq_id) {
-      var _this8 = this;
+      var _this9 = this;
 
       this.$confirm.require({
         message: "Are you sure to close this request?",
@@ -287,34 +342,36 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this8.$toast.add({
+          _this9.$toast.add({
             severity: "info",
             summary: "Success",
             detail: "Closing request successful",
             life: 3000
           });
 
-          _this8.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_id, {
+          _this9.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this8.token
+              'Authorization': 'Bearer ' + _this9.token
             }
           });
 
-          _this8.getIct();
+          _this9.loading = true;
+
+          _this9.getIct();
         },
         reject: function reject() {}
       });
     },
     detailRequest: function detailRequest(ireq_id) {
-      var _this9 = this;
+      var _this10 = this;
 
       this.axios.get('/api/detail-request-reviewer/' + ireq_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this9.detail = response.data;
-        _this9.ireq_no = response.data[0].ireq_no;
+        _this10.detail = response.data;
+        _this10.ireq_no = response.data[0].ireq_no;
       });
       this.displayDetailRequest = true;
     },
@@ -687,6 +744,26 @@ var _hoisted_84 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
+var _hoisted_85 = {
+  "class": "p-fluid"
+};
+var _hoisted_86 = {
+  "class": "field grid"
+};
+
+var _hoisted_87 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Remark", -1
+/* HOISTED */
+);
+
+var _hoisted_88 = {
+  "class": "col"
+};
+
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -843,7 +920,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                headerStyle: "min-width:55rem"
+                headerStyle: "min-width:60rem"
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [slotProps.data.ireq_count_status <= 0 ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
@@ -887,7 +964,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     label: "Reject"
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                  , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                    "class": "p-button-raised p-button-text p-button-sm mr-2",
+                    onClick: function onClick($event) {
+                      return $options.Remark(slotProps.data.ireq_id);
+                    },
+                    label: "Remark"
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"]), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 3,
                     "class": "p-button-raised p-button-text",
                     onClick: function onClick($event) {
@@ -1077,7 +1162,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                headerStyle: "min-width:35rem"
+                headerStyle: "min-width:40rem"
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [slotProps.data.ireq_count_status <= 0 ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
@@ -1112,7 +1197,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   /* PROPS */
                   , ["onClick"])), [[_directive_tooltip, 'Detail', void 0, {
                     left: true
-                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.status == 'A1' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                    "class": "p-button-raised p-button-text p-button-sm mr-2",
+                    onClick: function onClick($event) {
+                      return $options.Remark(slotProps.data.ireq_id);
+                    },
+                    label: "Remark"
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"]), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.status == 'A1' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 2,
                     "class": "p-button-raised p-button-text p-button-sm mr-2",
                     onClick: function onClick($event) {
@@ -1297,7 +1390,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 /* STABLE */
 
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                headerStyle: "min-width:30rem"
+                headerStyle: "min-width:35rem"
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [slotProps.data.ireq_count_status <= 0 ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
@@ -1332,7 +1425,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   /* PROPS */
                   , ["onClick"])), [[_directive_tooltip, 'Detail', void 0, {
                     left: true
-                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.status == 'A2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                    "class": "p-button-raised p-button-text p-button-sm mr-2",
+                    onClick: function onClick($event) {
+                      return $options.Remark(slotProps.data.ireq_id);
+                    },
+                    label: "Remark"
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"]), slotProps.data.status == 'A2' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 2,
                     "class": "p-button-raised p-button-text p-button-sm mt-2",
                     onClick: function onClick($event) {
@@ -2453,6 +2554,53 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, 8
       /* PROPS */
       , ["value", "filters"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogRemark,
+    "onUpdate:visible": _cache[35] || (_cache[35] = function ($event) {
+      return $data.dialogRemark = $event;
+    }),
+    style: {
+      width: '400px'
+    },
+    header: "Form Dialog Remark",
+    modal: true,
+    "class": "fluid grid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Save",
+        onClick: _cache[33] || (_cache[33] = function ($event) {
+          return $options.updateRemark();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Cancel",
+        onClick: _cache[34] || (_cache[34] = function ($event) {
+          return $options.cancelRemark();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_86, [_hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        autoResize: true,
+        type: "text",
+        modelValue: $data.remark.remark,
+        "onUpdate:modelValue": _cache[32] || (_cache[32] = function ($event) {
+          return $data.remark.remark = $event;
+        }),
+        rows: "5",
+        placeholder: "Enter Remark"
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"submitted && !rbr.ket\" class=\"p-error\">\r\n                            Reason not filled\r\n                            </small> ")])])])];
     }),
     _: 1
     /* STABLE */
