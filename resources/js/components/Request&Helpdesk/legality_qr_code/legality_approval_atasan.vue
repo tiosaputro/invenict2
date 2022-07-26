@@ -4,7 +4,7 @@
       <div class="card">
         <Toolbar class="mb-4">
             <template v-slot:start>
-                <h4>ICT Request</h4>
+                <h4>Check the Legality of QR-CODE Approval Higher Level</h4>
             </template>
         </Toolbar>
         <DataTable
@@ -15,7 +15,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request"
           responsiveLayout="scroll"
         >
           <template #loading>

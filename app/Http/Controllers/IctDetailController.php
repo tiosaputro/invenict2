@@ -85,7 +85,8 @@ class IctDetailController extends Controller
         ->get();
             return response()->json($dtl);
     }
-    function abp($ireq_id, $usr_fullname){
+    function abp($ireq_id){
+        $usr_fullname = Auth::User()->usr_fullname;
         $dtl = DB::table('ireq_dtl')
         ->where('ireq_id',$ireq_id)
         ->where('ireq_assigned_to1',$usr_fullname)
@@ -99,7 +100,8 @@ class IctDetailController extends Controller
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
         return response()->json('Updated Successfully');
     }
-    function rbp(Request $request,$ireq_id, $usr_fullname){
+    function rbp(Request $request,$ireq_id){
+        $usr_fullname = Auth::User()->usr_fullname;
         $dtl = DB::table('ireq_dtl')
         ->where('ireq_id',$ireq_id)
         ->where('ireq_assigned_to1',$usr_fullname)
@@ -396,12 +398,16 @@ class IctDetailController extends Controller
     public function cetak_pdf_sedang_dikerjakan($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('id.ireq_type','imm.ireq_id','imm.ireq_no','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname','id.ireq_remark','lllr.lookup_desc as prio_level',
-                'imm.ireq_requestor','imm.ireq_no','imm.ireq_approver2_remark','llr.lookup_desc as ireq_type', 'vr.name as ireq_bu','imm.ireq_status as status','loc_refs.loc_desc as ireq_loc',
+        ->select('imm.ireq_status','id.ireq_type','imm.ireq_id','imm.ireq_no','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname',
+                'id.ireq_remark','lllr.lookup_desc as prio_level','imm.ireq_requestor','imm.ireq_no','loc_refs.loc_desc as ireq_loc',
+                'imm.ireq_verificator_remark','imm.ireq_approver2_remark','llr.lookup_desc as ireq_type', 'vr.name as ireq_bu','imm.ireq_status as status',
                 DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY HH24:MI') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned"),
                 DB::raw("TO_CHAR(imm.ireq_approver1_date,' dd Mon YYYY HH24:MI') as date_approver1"),'imm.ireq_verificator',
                 DB::raw("COALESCE(imm.ireq_assigned_to2,imm.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireqq_status',
-                DB::raw("TO_CHAR(imm.ireq_approver2_date,' dd Mon YYYY HH24:MI') as date_approver2"),'lrs.lookup_desc as name','lr.lookup_desc as ireq_status')
+                DB::raw("TO_CHAR(imm.ireq_approver2_date,' dd Mon YYYY HH24:MI') as date_approver2"),'lrs.lookup_desc as name',
+                'lr.lookup_desc as ireq_status',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to_detail"),
+                DB::raw("TO_CHAR(id.ireq_assigned_date,' dd Mon YYYY') as date_assigned_detail"),'id.ireq_assigned_remark as assigned_remark_detail','imm.ireq_assigned_remark as assigned_remark_request',
+                'id.ireqd_id', DB::raw("TO_CHAR(id.ireq_date_closing,' dd Mon YYYY') as date_closing_detail"),DB::raw("TO_CHAR(imm.ireq_date_closing,' dd Mon YYYY') as date_closing_request"))
         ->leftJoin('lookup_refs as lrs',function ($join) {
             $join->on('id.invent_code','lrs.lookup_code')
                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
@@ -434,7 +440,12 @@ class IctDetailController extends Controller
             ]);
             $link = Link::where('ireq_id',$code)->first();
         }
-        return view('pdf/Report_ICT', compact('detail','link'));
+        if(!$detail[0]->ireq_assigned_to && isset($detail[0]->ireq_assigned_to_detail)){
+            return view('pdf/Report_ICT_PerDetail', compact('detail','link'));
+        }
+        else{
+            return view('pdf/Report_ICT_PerRequest', compact('detail','link'));
+        }
     }
     public function cetak_excel_sedang_dikerjakan($code)
     {

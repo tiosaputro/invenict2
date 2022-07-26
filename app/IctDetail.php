@@ -20,6 +20,7 @@ class IctDetail extends Model
         'ireq_assigned_to1_reason',
         'ireq_assigned_to2',
         'ireq_assigned_date',
+        'ireq_assigned_remark',
         'ireq_remark',
         'creation_date',
         'created_by',

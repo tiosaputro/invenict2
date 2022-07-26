@@ -28,7 +28,7 @@
         >
         
        <template #header>
-            <div class="table-header text-left">
+            <div class="table-header text-right">
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
                   <InputText

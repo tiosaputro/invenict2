@@ -181,12 +181,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/delete-menu/{menu_id}','MngMenuController@delete');
 
     //dashboard
-    Route::get('/getCountUser/{usr_name}','DashboardController@countUser');
-    Route::get('/getCountDivisi1/{usr_name}','DashboardController@countDivisi1');
+    Route::get('/getCountUser','DashboardController@countUser');
+    Route::get('/getCountDivisi1','DashboardController@countDivisi1');
     Route::get('/getCountReviewerBentu','DashboardController@CountReviewerBentu');
     Route::get('/getCountReviewerKurau','DashboardController@CountReviewerKurau');
     Route::get('/getCountReviewerJakarta','DashboardController@CountReviewerJakarta');
-    Route::get('/getCountDivisi3/{full_name}','DashboardController@countDivisi3');
+    Route::get('/getCountDivisi3','DashboardController@countDivisi3');
     Route::get('/getCountDivisi4','DashboardController@countDivisi4');
     Route::get('/getCountAdmin','DashboardController@countAdmin');
     Route::get('/status-per-divisi','DashboardController@countPerStatusPerDivisi');
@@ -227,7 +227,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/rbm/{code}','IctController@rejectByManager');
 
     //ict request
-    Route::get('/get-ict/{usr_name}','IctController@getIct');
+    Route::get('/get-ict','IctController@getIct');
     Route::post('/add-ict','IctController@save');
     Route::get('/edit-ict/{code}','IctController@edit');
     Route::put('/update-ict/{code}','IctController@update');
@@ -237,13 +237,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/getNameBu/{noreq}/{dtl}','IctController@getNameBu');
     Route::get('/detail-norequest/{code}','IctController@detailNoRequest');
     //divisi 1
-    Route::get('/get-permohonan/{usr_name}','IctController@getPermohonan');
+    Route::get('/get-permohonan','IctController@getPermohonan');
     Route::get('/total-request/{usr_name}','IctController@totalRequest');
     
     //divisi 2
     Route::get('/get-permohonan-divisi','IctController@getPermohonanDivisi');
     //divisi 3
-    Route::get('/get-sedang-dikerjakan/{usr_fullname}','IctController@getSedangDikerjakan');
+    Route::get('/get-sedang-dikerjakan','IctController@getSedangDikerjakan');
     //divisi 4
     Route::get('/get-divisi-4','IctController@ictDivisi4');
     //admin
@@ -261,8 +261,8 @@ Route::middleware('auth:sanctum')->group(function(){
     //ict request (detail)
     Route::get('/ict-detail/{code}','IctDetailController@index');
     Route::get('/ict-detail-penugasan/{code}','IctDetailController@detailPenugasan');
-    Route::put('/rejectPersonnel/{ireq_id}/{usr_fullname}','IctDetailController@rbp');
-    Route::get('/acceptPersonnel/{ireq_id}/{usr_fullname}','IctDetailController@abp');
+    Route::put('/rejectPersonnel/{ireq_id}','IctDetailController@rbp');
+    Route::get('/acceptPersonnel/{ireq_id}','IctDetailController@abp');
     Route::get('/get-detail-done/{code}/{usr_fullname}','IctDetailController@getDetailDone');
     Route::post('/add-ict-detail/{code}','IctDetailController@save');
     Route::get('/edit-ict-detail/{ireq}/{code}','IctDetailController@edit');

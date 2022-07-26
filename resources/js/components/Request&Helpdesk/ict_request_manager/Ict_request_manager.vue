@@ -6,7 +6,7 @@
           <ConfirmDialog> </ConfirmDialog>
             <Toolbar class="p-mb-4">
               <template v-slot:start>
-                <h4>ICT Request</h4>
+                <h4>ICT Manager Approval</h4>
               </template>
             </Toolbar>
             <TabView ref="tabview1">
@@ -38,10 +38,10 @@
                     Not Found
                   </template>
                   <template #loading>
-                    Loading ICT Request data. Please wait.
+                    Please wait
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -123,10 +123,10 @@
                     Not Found
                   </template>
                   <template #loading>
-                    Loading ICT Request data. Please wait.
+                    Please wait
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -201,7 +201,7 @@
                     Not Found
                   </template>
                   <template #loading>
-                    Loading ICT Request data. Please wait.
+                    Please wait
                   </template>
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
@@ -280,10 +280,10 @@
                     Not Found
                   </template>
                   <template #loading>
-                    Loading ICT Request data. Please wait.
+                    Please wait
                   </template>
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -361,10 +361,10 @@
                     Not Found
                   </template>
                   <template #loading>
-                    Loading ICT Request data. Please wait.
+                    Please wait
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -440,12 +440,15 @@
                     Not Found
                   </template>
                   <template #loading>
-                    Loading ICT Request data. Please wait.
+                    Please wait
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-                  <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+                  <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -509,12 +512,15 @@
                     Not Found
                   </template>
                   <template #loading>
-                    Loading ICT Request data. Please wait.
+                    Please wait
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
-                  <Column field="invent_code" header="Nama Peripheral" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+                  <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>

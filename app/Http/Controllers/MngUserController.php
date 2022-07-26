@@ -83,7 +83,7 @@ class MngUserController extends Controller
     {
         $user = DB::table('mng_users as mu')
         ->select('mu.usr_id','mu.usr_name','mu.usr_loc','mu.usr_bu','mu.usr_stat','mu.div_id','mu.usr_fullname', 'mu.usr_email','mu.usr_alamat','mu.usr_foto','mg.rol_id')
-        ->join('mng_usr_roles as mg','mu.usr_id','mg.usr_id')
+        ->leftjoin('mng_usr_roles as mg','mu.usr_id','mg.usr_id')
         ->where('mu.usr_id',$code)
         ->first();
         return response()->json($user);
@@ -204,7 +204,7 @@ class MngUserController extends Controller
     }
     public function getVerif($div_id)
     {
-        $user = Mng_user::select('usr_name as name')->where('div_id',$div_id)->get();
+        $user = Mng_user::select('usr_email as name')->where('div_id',$div_id)->get();
         return response()->json($user);
     }
 }

@@ -79,9 +79,9 @@
                       type ="text"
                       v-model="mut.imutasi_lokasi"
                       placeholder="Masukan Lokasi. . ."
-                      :class="{ 'p-invalid': submitted && !lokasi }"
+                      :class="{ 'p-invalid': submitted && !mut.imutasi_lokasi }"
                     />
-                      <small class="p-error" v-if="submitted && !lokasi"
+                      <small class="p-error" v-if="submitted && !mut.imutasi_lokasi"
                         >Lokasi Belum Diisi.
                       </small>
                   </div>
@@ -93,10 +93,10 @@
                           type="text"
                           v-model="mut.imutasi_pengguna"
                           placeholder="Masukan Pengguna . . ."
-                          :class="{ 'p-invalid': submitted && !user }"
+                          :class="{ 'p-invalid': submitted && !mut.imutasi_pengguna }"
                         />
                         
-                      <small class="p-error" v-if="submitted && !user"
+                      <small class="p-error" v-if="submitted && !mut.imutasi_pengguna"
                         >Pengguna Belum Diisi.
                       </small>
                       <small v-if="errors.user" class="p-error">

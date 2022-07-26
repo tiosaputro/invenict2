@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 use DB;
+use Auth;
 use Illuminate\Http\Request;
 use Appstract\Opcache\OpcacheFacade as OPcache;
 
 class DashboardController extends Controller
 {
-    public function countUser($usr_name)
+    public function countUser()
     {
+        $usr_name = Auth::user()->usr_name;
         $grafik = DB::table('ireq_mst')
         ->select(DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IN ('NA1','NA2') AND ireq_mst.created_by = '$usr_name') as belumdiverifikasi"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.created_by = '$usr_name' AND ireq_mst.ireq_status IN ('A1','A2')) as sudahdiverifikasi"),
@@ -21,18 +23,19 @@ class DashboardController extends Controller
         ->first();
         return response()->json($grafik);
     }
-    public function countDivisi1($usr_name)
+    public function countDivisi1()
     {
+        $usr_email = Auth::user()->usr_email;
         $grafik = DB::table('ireq_mst as im')
-        ->select(DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IN ('NA1','NA2') AND divisi_refs.div_verificator = '$usr_name') as belumdiverifikasi"),
-        DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'P' AND divisi_refs.div_verificator = '$usr_name') as sedangdireview"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IN ('A1','A2') AND divisi_refs.div_verificator = '$usr_name') as sudahdiverifikasi"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IN ('RA1','RR','RA2') AND divisi_refs.div_verificator = '$usr_name') as direject"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IN ('NT','RT') AND divisi_refs.div_verificator = '$usr_name') as penugasanrequest"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'T' AND divisi_refs.div_verificator = '$usr_name') as sedangdikerjakan"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'D' AND divisi_refs.div_verificator = '$usr_name') as sudahdikerjakan"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'C' AND divisi_refs.div_verificator = '$usr_name') as sudahselesai"),
-                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IS NOT NULL AND divisi_refs.div_verificator = '$usr_name') as total"))
+        ->select(DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IN ('NA1','NA2') AND divisi_refs.div_verificator = '$usr_email') as belumdiverifikasi"),
+        DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'P' AND divisi_refs.div_verificator = '$usr_email') as sedangdireview"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IN ('A1','A2') AND divisi_refs.div_verificator = '$usr_email') as sudahdiverifikasi"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IN ('RA1','RR','RA2') AND divisi_refs.div_verificator = '$usr_email') as direject"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IN ('NT','RT') AND divisi_refs.div_verificator = '$usr_email') as penugasanrequest"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'T' AND divisi_refs.div_verificator = '$usr_email') as sedangdikerjakan"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'D' AND divisi_refs.div_verificator = '$usr_email') as sudahdikerjakan"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'C' AND divisi_refs.div_verificator = '$usr_email') as sudahselesai"),
+                 DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IS NOT NULL AND divisi_refs.div_verificator = '$usr_email') as total"))
         ->first();
         return response()->json($grafik);
     }
@@ -101,7 +104,8 @@ class DashboardController extends Controller
             ->pluck('total')
             ->first();
         return response()->json(['blmDiverifikasi'=>$blmdiverifikasi,'atasandivisi'=>$atasandivisi,'manager'=>$manager,'reject'=>$reject,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai,'totalRequest'=>$total,'penugasanRequest'=>$penugasanRequest]);
-    }public function countReviewerKurau()
+    }
+    public function countReviewerKurau()
     {
         $blmdiverifikasi = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as blmdiverifikasi'))
@@ -211,7 +215,8 @@ class DashboardController extends Controller
             ->pluck('total')
             ->first();
         return response()->json(['blmDiverifikasi'=>$blmdiverifikasi,'atasandivisi'=>$atasandivisi,'manager'=>$manager,'reject'=>$reject,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai,'totalRequest'=>$total,'penugasanRequest'=>$penugasanRequest]);
-    }public function countReviewerBentu()
+    }
+    public function countReviewerBentu()
     {
         $blmdiverifikasi = DB::table('ireq_mst')
             ->select(DB::raw('count(ireq_id) as blmdiverifikasi'))
@@ -322,8 +327,9 @@ class DashboardController extends Controller
             ->first();
         return response()->json(['blmDiverifikasi'=>$blmdiverifikasi,'atasandivisi'=>$atasandivisi,'manager'=>$manager,'reject'=>$reject,'sdgdikerjakan'=>$sdgdikerjakan,'sdhdikerjakan'=>$sdhdikerjakan,'sdhselesai'=>$sdhselesai,'totalRequest'=>$total,'penugasanRequest'=>$penugasanRequest]);
     }
-    public function countDivisi3($fullname)
+    public function countDivisi3()
     {
+        $fullname = Auth::user()->usr_fullname;
         $grafik = DB::table('ireq_dtl as im')
         ->select(DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'T' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as belumselesai"),
                  DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'D' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as sudahdikerjakan"),
