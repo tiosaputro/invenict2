@@ -478,7 +478,7 @@
                         </div>
                         <div class="col invoice-to">
                           <div class="address" style="font-weight:bold;font-size:16px;">Priority Level</div>
-                            <textarea rows="8" cols="25" class="textareacss" readonly>{{$detail[0]->prio_level}}  </textarea>
+                            <textarea rows="8" cols="26" class="textareacss" readonly>{{$detail[0]->prio_level}}  </textarea>
                         </div>
                 </div>
                 @php 
@@ -504,27 +504,35 @@
                     <div class="cell-wrap right">
                         <table class="right">
                             <p style="font-size:16px;"> Approved By : (For new installation/software loan) </p>
-                             @if ($detail[0]->date_approver1)
+                             @if ($detail[0]->cekstatus == 'NA1' || $detail[0]->cekstatus == 'A1' )
                                 <tr>
                                     <th>{{$detail[0]->usr_fullname}}</th>
-                                    <th>Manager {{$detail[0]->div_name}}</th>
+                                    <th>{{$detail[0]->div_name}} Manager</th>
                                   @if($detail[0]->status == "RA1")
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br>Rejected on {{$detail[0]->date_approver1}}</th>
-                                  @else
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br>{{$detail[0]->date_approver1}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br><strong>Rejected</strong> on {{$detail[0]->date_approver1}}</th>
+                                  @elseif($detail[0]->status == "A1")
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br><strong>Approved</strong> on {{$detail[0]->date_approver1}}</th>
+                                  @elseif($detail[0]->status == "NA1")
+                                    <th rowspan="2" style="font-size:12pt; font-weight:bold;">Waiting Approval</th>
                                   @endif
+
                                 </tr>
-                             @else
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th rowspan="2"></th>
-                                </tr>
-                             @endif
                                 <tr>
                                     <td>Name</td>
                                     <td>Position</td>
                                 </tr>
+                             @else
+                                <tr>
+                                @if($detail[0]->cekstatus == 'P' )
+                                    <th rowspan="2" style="font-weight:bold;">This request is not yet in higher level approval stage</th>
+                                    @else
+                                    <th rowspan="2" style="font-weight:bold;">This request does not require approval from higher level</th>
+                                    @endif
+                                </tr>
+                                <tr>
+                                    <!-- <td></td> -->
+                                </tr>
+                             @endif
                         </table>
                     </div>
                 </div> <!-- wrap --> 
@@ -532,83 +540,90 @@
                     <div class="col invoice-to">
                       <p style="font-size:16px;"> III. IT Use Only</p>
                          <table> <p style="font-size:16px;"> Approved By :   (Note : Sr. Manager approval needed for new equipment/software/tools)</p>
-                             @if($detail[0]->date_approver2)
+                             @if($detail[0]->cekstatus == 'NA2' || $detail[0]->cekstatus == 'A2' )
                                 <tr>
                                     <th>Arifin Tahir</th>
                                     <th>ICT Manager</th>
                                     @if($detail[0]->status=='RA2')
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br>Rejected On {{$detail[0]->date_approver2}}</th>
-                                    @else
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br>Approved On {{$detail[0]->date_approver2}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br> <strong>Rejected</strong> On {{$detail[0]->date_approver2}}</th>
+                                    @elseif($detail[0]->status=='A2')
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br><strong>Approved</strong> On {{$detail[0]->date_approver2}}</th>
+                                    @elseif($detail[0]->status=='NA2') 
+                                    <th rowspan="2" style="font-size:10pt;"> Waiting Approval</th>
                                     @endif
                                     <th>{{$detail[0]->ireq_approver2_remark}}</th>
                                 </tr>
-                             @else
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th rowspan="2"></th>
-                                    <th></th>
-                                </tr>
-                             @endif
                                 <tr>
                                     <td>Name</td>
                                     <td>Position</td>
                                     <td>Remarks(Including OE if required)</td>
                                 </tr>
+                             @else
+                                <tr>
+                                    @if($detail[0]->cekstatus == 'P' || $detail[0]->cekstatus == 'NA1' || $detail[0]->cekstatus == 'A1' )
+                                    <th rowspan="2" style="font-weight:bold;">This request is not yet in ICT Manager approval stage</th>
+                                    @else
+                                    <th rowspan="2" style="font-weight:bold;">This request does not require approval from ICT Manager</th>
+                                    @endif
+                                </tr>
+                                <tr>
+
+                                </tr>
+                             @endif
                          </table>
                     </div>
                 </div>
                 </div>
                 <div class="row contacts">
                   <div class="col invoice-to">
-                  <p style="font-size:16px;">*(A)ccident/(I)ncident/I(N)stall/Assi(S)t</p>
+                    <p style="font-size:16px;">IV. Request Review</p>
                         <table>
                           <tr> 
-                            <th>{{$detail[0]->ireq_verificator}}</th>
+                            <th width="200px" >{{$detail[0]->ireq_verificator}}</th>
                             <th>{{$detail[0]->ireq_verificator_remark}}</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>{{$detail[0]->ireq_loc}}</th>
-                            <th></th>
+                            <th width="200px">{{$detail[0]->ireq_loc}}</th>
                           </tr>
                           <tr>
-                            <td>Received By</td>
+                            <td width="200px" >Received By</td>
                             <td>Remark</td>
-                            <td>Manpower Effort</td>
-                            <td>Costs</td>
-                            <td>Category *(A/I/N/S)</td>
-                            <td>Problem Area</td>
-                            <td>Further Action By</td>
+                            <td width="200px">Problem Area</td>
                           </tr>
                         </table>
                   </div>
                 </div>
                 <div class="row contacts">
                   <div class="col invoice-to">
-                    <p style="font-size:16px;"></p>
+                    <p></p>
                       <table> 
-                       @foreach($detail as $det)
-                        <tr>
-                            <th width="90px" >{{$det->ireqd_id}}</th>
-                            <!-- <th>{{$det->ireq_remark}}</th> -->
-                            <th>{{$det->ireq_assigned_to_detail}}</th>
-                            <th width="150px">{{$det->date_assigned_detail}}</th>
-                            <th width="150px">{{$det->date_closing_detail}}</th>
-                            <th>{{$det->assigned_remark_detail}}</th>
-                            <th>{{$det->ireq_status}}</th>
-                        </tr>
-                        @endforeach
-                        <tr>
-                            <td width="90px">No Detail</td>
-                            <!-- <td>Description </td> -->
-                            <td>Assigned To</td>
-                            <td width="150px">Date Assigned</td>
-                            <td width="150px">Date Completed</td>
-                            <td>Remark</td>
-                            <td>Status</td>
-                        </tr>
+                        @if($detail[0]->date_assigned_detail)
+                        @foreach($detail as $det)
+                            <tr>
+                                <th width="90px" >{{$det->ireqd_id}}</th>
+                                <!-- <th>{{$det->ireq_remark}}</th> -->
+                                <th>{{$det->ireq_assigned_to_detail}}</th>
+                                <th width="150px">{{$det->date_assigned_detail}}</th>
+                                <th width="150px">{{$det->date_closing_detail}}</th>
+                                <th>{{$det->assigned_remark_detail}}</th>
+                                <th>{{$det->ireq_status}}</th>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <td width="90px">No Detail</td>
+                                <!-- <td>Description </td> -->
+                                <td>Assigned To</td>
+                                <td width="150px">Date Assigned</td>
+                                <td width="150px">Date Completed</td>
+                                <td>Remark</td>
+                                <td>Status</td>
+                            </tr>
+                        @else
+                            <tr>
+                                <th rowspan="2" style="font-weight:bold">This request is not yet in the assignment stage</th>
+                            </tr>
+                            <tr>
+
+                            </tr>
+                        @endif
                       </table>
                   </div>
                 </div>

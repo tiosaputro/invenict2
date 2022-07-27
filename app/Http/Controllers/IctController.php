@@ -2392,7 +2392,7 @@ class IctController extends Controller
     public function cetak_excel_manager_permohonan()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportManagerPermohonan,'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportManagerPermohonan,'ICT Request Report List On '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_manager_verifikasi()
     {

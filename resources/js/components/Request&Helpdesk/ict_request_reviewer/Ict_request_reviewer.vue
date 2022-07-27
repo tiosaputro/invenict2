@@ -175,7 +175,7 @@
                       <p style="color:limegreen" class="pi pi-check text-xl" v-else>{{slotProps.data.ireq_no}}</p>
                   </template>
                  </Column>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -306,7 +306,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:7rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:7rem"/>
-                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:7rem"/>
+                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -414,7 +414,7 @@
                     Please wait
                   </template>
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -495,7 +495,7 @@
                     Please wait
                   </template>
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -668,22 +668,22 @@
                   <template #loading>
                     Please wait
                   </template>
-                  <Column field="ireq_no" header="No. Request" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireqd_id" header="No. Detail" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_type" header="Request Type" style="min-width:8rem" :sortable="true"/>
+                  <Column field="ireq_no" header="No. Request" style="min-width:10rem" :sortable="true"/>
+                  <Column field="ireqd_id" header="No. Detail" style="min-width:10rem" :sortable="true"/>
+                  <Column field="ireq_type" header="Request Type" style="min-width:10rem" :sortable="true"/>
                   <Column field="kategori" header="Peripheral" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_qty" header="Qty" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_remark" header="Remark" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_date" header="Request Date" style="min-width:8rem" :sortable="true">
+                  <Column field="ireq_remark" header="Remark" style="min-width:12rem" :sortable="true"/>
+                  <Column field="ireq_date" header="Request Date" style="min-width:10rem" :sortable="true">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
-                  <Column field="div_name" header="Division User" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_status" header="Status" style="min-width:8rem" :sortable="true">
+                  <Column field="div_name" header="Division User" style="min-width:10rem" :sortable="true"/>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:12rem" :sortable="true"/>
+                  <Column field="ireq_status" header="Status" style="min-width:10rem" :sortable="true">
                   <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
@@ -750,7 +750,7 @@
                   <template #loading>
                     Please wait
                   </template>
-                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem">
                    <template #body="slotProps">
                     <p @click="detailRequest(slotProps.data.ireq_id)" style="cursor:pointer;"> {{slotProps.data.ireq_no}}
                     </p> 
@@ -760,8 +760,8 @@
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
                   <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:8rem">
+                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
@@ -769,7 +769,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
                   <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>

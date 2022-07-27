@@ -44,15 +44,15 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true"  style="min-width:8rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true"  style="min-width:10rem"/>
           <Column field="name" header="Peripheral" :sortable="true"  style="min-width:8rem"/>
           <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:8rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_assigned_to1_reason" header="Alasan" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
-          <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
-          <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:8rem">
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
+          <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true"  style="min-width:12rem" v-if="this.show == true"/>
+          <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:10rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>

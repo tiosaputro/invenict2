@@ -42,11 +42,16 @@
             Loading data. Please wait.
           </template>
           <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
-          <Column field="name" header="Peripheral" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+          <Column field="name" header="Peripheral" :sortable="true" style="min-width:10rem"/>
           <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:14rem"/>
+          <Column header="Status" :sortable="true" style="min-width:14rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
             <div class="p-grid p-dir-col">
               <div class="p-col">
@@ -62,6 +67,7 @@
                     label="Pdf"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-file-pdf"
+                    v-tooltip.bottom="'Click to print out (PDF)'"
                     @click="CetakPdf()"
                   />
                 </div>

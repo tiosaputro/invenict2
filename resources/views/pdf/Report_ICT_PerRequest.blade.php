@@ -512,7 +512,7 @@
                                   @if($detail[0]->status == "RA1")
                                     <th rowspan="2" style="font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br>Rejected on {{$detail[0]->date_approver1}}</th>
                                   @else
-                                    <th rowspan="2" style="font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br>{{$detail[0]->date_approver1}}</th>
+                                    <th rowspan="2" style="font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br>Approved on {{$detail[0]->date_approver1}}</th>
                                   @endif
                                 </tr>
                             @else
@@ -578,9 +578,9 @@
                                 <th>Arifin Tahir</th>
                                 <th>ICT Manager</th>
                                 @if($detail[0]->status=='RA2')
-                                <th rowspan="2" style="font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br>{{$detail[0]->date_approver2}}</th>
+                                <th rowspan="2" style="font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br>Rejected on {{$detail[0]->date_approver2}}</th>
                                 @else
-                                <th rowspan="2" style="font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br>{{$detail[0]->date_approver2}}</th>
+                                <th rowspan="2" style="font-weight:bold;font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br>Approved on {{$detail[0]->date_approver2}}</th>
                                 @endif
                                 <th>{{$detail[0]->ireq_approver2_remark}}</th>
                             </tr>
@@ -602,9 +602,9 @@
                 </div>
                 <div class="row contacts">
                   <div class="col invoice-to"><br>
-                  <p></p>
+                  
                     <br> 
-                        <table><p></p>
+                        <table><p style="font-size:16px;"> IV. Request Review</p>
                         <tr> 
                             <th>{{$detail[0]->ireq_verificator}}</th>
                             <th>{{$detail[0]->ireq_assigned_to}}</th>
@@ -632,7 +632,6 @@
                     <div class="col invoice-to"><br>
                         <div class="address" style="font-weight:bold;font-size:16px;">Solution/Action Implemented/Analysis</div>
                             <textarea rows="9" class="csssolution" readonly style="font-weight: bold;">
-
 {{$detail[0]->ireq_verificator_remark}}
 {{$detail[0]->assigned_remark_request}}</textarea>
                     </div>

@@ -504,10 +504,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_type",
-        header: "Tipe Request",
+        header: "Request Type",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
@@ -525,22 +525,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_remark",
-        header: "Keterangan",
+        header: "Remark",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_assigned_to1",
         header: "Personnel ICT",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }), _this.show == true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
         key: 0,
         field: "ireq_assigned_to1_reason",
-        header: "Alasan",
+        header: "Reason",
         sortable: true,
         style: {
           "min-width": "8rem"
@@ -551,14 +551,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Personnel ICT (2)",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "12rem"
         }
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_status",
         header: "Status",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {

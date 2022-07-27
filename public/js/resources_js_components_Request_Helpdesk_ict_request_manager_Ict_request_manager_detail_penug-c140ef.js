@@ -103,7 +103,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.status = response.data.cekstatus;
       });
     },
-    CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
+    CetakPdf: function CetakPdf() {
       window.open('/api/print-out-ict-request/' + this.$route.params.code);
     } // CetakExcelSedangDikerjakan(){
     //   window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.$route.params.code);
@@ -172,8 +172,6 @@ var _hoisted_13 = {
   "class": "box"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _this = this;
-
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
@@ -187,6 +185,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
+
+  var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
@@ -241,23 +241,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 'Ict Request Manager'
           });
         })
-      }), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 0,
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Pdf",
         "class": "p-button-raised p-button-danger mr-2",
         icon: "pi pi-file-pdf",
         onClick: _cache[2] || (_cache[2] = function ($event) {
-          return $options.CetakPdfSedangDikerjakan();
+          return $options.CetakPdf();
         })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 1,
-        label: "Excel",
-        "class": "p-button-raised p-button-success mt-2",
-        icon: "pi pi-print",
-        onClick: _cache[3] || (_cache[3] = function ($event) {
-          return _ctx.CetakExcelSedangDikerjakan();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+        bottom: true
+      }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\r\n                    v-if=\"this.status == 'T'\" \r\n                    label=\"Excel\"\r\n                    class=\"p-button-raised p-button-success mt-2\"\r\n                    icon=\"pi pi-print\"\r\n                    @click=\"CetakExcelSedangDikerjakan()\" \r\n                  /> ")])])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -307,8 +302,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Status",
         sortable: true,
         style: {
-          "min-width": "4rem"
+          "min-width": "12rem"
         }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       })];
     }),
     _: 1

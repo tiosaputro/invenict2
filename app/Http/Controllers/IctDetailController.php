@@ -60,7 +60,12 @@ class IctDetailController extends Controller
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->leftjoin('lookup_refs as llr','id.ireq_status','llr.lookup_code')
         ->where('id.ireq_id',$code)
-        ->where('id.ireq_status','T')
+        ->where(function($query){
+            return $query
+            ->where('id.ireq_status','NT')
+            ->Orwhere('id.ireq_status','RT')
+            ->Orwhere('id.ireq_status','T');
+        })
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('id.ireqd_id','ASC')
@@ -398,7 +403,7 @@ class IctDetailController extends Controller
     public function cetak_pdf_sedang_dikerjakan($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('imm.ireq_status','id.ireq_type','imm.ireq_id','imm.ireq_no','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname',
+        ->select('imm.ireq_status as cekstatus','id.ireq_type','imm.ireq_id','imm.ireq_no','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname',
                 'id.ireq_remark','lllr.lookup_desc as prio_level','imm.ireq_requestor','imm.ireq_no','loc_refs.loc_desc as ireq_loc',
                 'imm.ireq_verificator_remark','imm.ireq_approver2_remark','llr.lookup_desc as ireq_type', 'vr.name as ireq_bu','imm.ireq_status as status',
                 DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY HH24:MI') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned"),
@@ -415,7 +420,7 @@ class IctDetailController extends Controller
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('location_refs as loc_refs','imm.ireq_loc','loc_refs.loc_code')
         ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
-        ->leftjoin('mng_users as mu','dr.div_verificator','mu.usr_name')
+        ->leftjoin('mng_users as mu','dr.div_verificator','mu.usr_email')
         ->leftjoin('lookup_refs as lllr','imm.ireq_prio_level','lllr.lookup_code')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
         ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
@@ -440,12 +445,7 @@ class IctDetailController extends Controller
             ]);
             $link = Link::where('ireq_id',$code)->first();
         }
-        if(!$detail[0]->ireq_assigned_to && isset($detail[0]->ireq_assigned_to_detail)){
             return view('pdf/Report_ICT_PerDetail', compact('detail','link'));
-        }
-        else{
-            return view('pdf/Report_ICT_PerRequest', compact('detail','link'));
-        }
     }
     public function cetak_excel_sedang_dikerjakan($code)
     {

@@ -1141,7 +1141,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Request Date",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1399,7 +1399,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Division User",
                 sortable: true,
                 style: {
-                  "min-width": "7rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
@@ -1577,7 +1577,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Request Date",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1735,7 +1735,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Request Date",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -2061,21 +2061,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 field: "ireq_no",
                 header: "No. Request",
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 },
                 sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireqd_id",
                 header: "No. Detail",
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 },
                 sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_type",
                 header: "Request Type",
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 },
                 sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -2096,14 +2096,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 field: "ireq_remark",
                 header: "Remark",
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "12rem"
                 },
                 sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
                 header: "Request Date",
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 },
                 sortable: true
               }, {
@@ -2133,21 +2133,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 field: "div_name",
                 header: "Division User",
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 },
                 sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
                 header: "Personnel ICT",
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "12rem"
                 },
                 sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
                 header: "Status",
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 },
                 sortable: true
               }, {
@@ -2225,10 +2225,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_no",
-                header: "No.Request",
+                header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -2279,14 +2279,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Remark",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
                 header: "Request Date",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -2320,10 +2320,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
-                header: "Petugas ICT",
+                header: "Personnel ICT",
                 sortable: true,
                 style: {
-                  "min-width": "10rem"
+                  "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",

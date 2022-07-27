@@ -49,7 +49,11 @@
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:4rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
                <div class="p-grid p-dir-col">
 			        <div class="p-col">
@@ -62,19 +66,19 @@
                     name: 'Ict Request Manager'})"
                   />
                   <Button
-                    v-if="this.status == 'T'"  
                     label="Pdf"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-file-pdf"
-                    @click="CetakPdfSedangDikerjakan()"
+                    v-tooltip.bottom="'Click to print out (PDF)'"
+                    @click="CetakPdf()"
                   />
-                  <Button
+                  <!-- <Button
                     v-if="this.status == 'T'" 
                     label="Excel"
                     class="p-button-raised p-button-success mt-2"
                     icon="pi pi-print"
                     @click="CetakExcelSedangDikerjakan()" 
-                  />
+                  /> -->
                 </div>
 			        </div>
             </div>
@@ -143,7 +147,7 @@ export default {
         this.status = response.data.cekstatus;
       });
     },
-    CetakPdfSedangDikerjakan(){
+    CetakPdf(){
      window.open('/api/print-out-ict-request/'+this.$route.params.code);
     },
     // CetakExcelSedangDikerjakan(){
