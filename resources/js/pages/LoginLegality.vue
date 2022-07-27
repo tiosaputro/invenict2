@@ -105,13 +105,13 @@ export default {
               localStorage.setItem("usr_loc", response.data.usr_loc);
               localStorage.setItem("usr_name", response.data.usr_name);
               if(this.$route.params.status =='requester'){
-                setTimeout( () => this.$router.push('/check-legality-qrcode-requester/'+this.$route.params.code), 1000);
+                setTimeout( () => this.$router.push('/check-requester/'+this.$route.params.code), 1000);
               }
               else if (this.$route.params.status =='ictmanager'){
-                setTimeout( () => this.$router.push('/check-legality-qrcode-ict-manager/'+this.$route.params.code), 1000);
+                setTimeout( () => this.$router.push('/check-ict-manager/'+this.$route.params.code), 1000);
               }
               else if(this.$route.params.status =='higherlevel'){
-                setTimeout( () => this.$router.push('/check-legality-qrcode-higher-level/'+this.$route.params.code), 1000);
+                setTimeout( () => this.$router.push('/check-higher-level/'+this.$route.params.code), 1000);
               }
             }).catch(error=> {
                 this.submitted = false;

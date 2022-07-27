@@ -1,10 +1,7 @@
 <table style ="width:100%">
     <thead>
         <tr>
-            <th colspan="7" style="text-align:center; font-weight: bold; font-size: 14px;"> ICT Request Report List</th>
-        </tr>
-        <tr>
-            <th colspan="7" style="text-align:center; font-weight: bold; font-size: 12px;"> {{date('d M Y')}}</th>
+            <th colspan="7" style="text-align:center; font-weight: bold; font-size: 14px;"> ICT REQUEST STATUS REPORT LIST ON {{date('d M Y')}}</th>
         </tr>
         <tr>
             <br>

@@ -1309,28 +1309,43 @@
             Please wait
         </template>
         <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
         <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
-        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
         <Column style="min-width:15rem">
           <template #body="slotProps">
             <Button
               v-if="slotProps.data.status == 'T'"
               class="p-button-rounded p-button-info mr-2"
               icon="pi pi-pencil"
+              v-tooltip.bottom="'Click to change status'"
               @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
+            />
+            <Button
+              v-if="slotProps.data.status == 'T'"
+              class="p-button-rounded p-button-help mr-2"
+              icon="bi bi-journal-text"
+              v-tooltip.bottom="'Click to create note'"
+              @click="createNoteAssigned(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
+            />
+            <Button
+              v-if="slotProps.data.status == 'T'"
+              class="p-button-rounded p-button-danger mr-2"
+              icon="bi bi-journals"
+              v-tooltip.bottom="'Click to create remark'"
+              @click="createRemarkAssigned(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
             />
           </template>
         </Column>
@@ -3717,14 +3732,14 @@
             </div>
             <div class="fluid">
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">Peripheral</label>
+                <label class="col-fixed w-9rem"> No Detail </label>
                   <div class="col-fixed">
-                    <InputText
-                      v-model="editDetail.name"
-                      disabled
+                    <InputText 
+                    v-model="editDetail.ireqd_id"
+                    disabled
                     />
-                  </div>
-                </div>
+                  </div> 
+              </div>
             </div>
             <div class="fluid">
               <div class="field grid">
@@ -3777,6 +3792,100 @@
             <Button label="Cancel" @click="cancelRemarkReviewer()" class="p-button-text" />
           </template>
         </Dialog>
+        <Dialog v-model:visible="dialogNoteAssigned"
+            :style="{ width: '500px' }"
+            header="Dialog Create Note"
+            :modal="true"
+            class="fluid"
+          >
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Request </label>
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="noteAssigned.ireq_no"
+                    disabled
+                    />
+                  </div>
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Detail </label>
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="noteAssigned.ireqd_id"
+                    disabled
+                    />
+                  </div> 
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:100px">Note</label>
+                  <div class="col-fixed w-9rem">
+                   <Textarea 
+                    v-model="noteAssigned.ireq_reason" 
+                    placeholder="If required"
+                    :autoResize="true" 
+                    rows="5" 
+                    cols="20"
+                  />
+                  </div>
+                </div>
+            </div>
+            <template #footer>
+                <Button label="Yes" @click="submitNoteAssigned()" class="p-button" autofocus />
+                <Button label="No" @click="cancelNoteAssigned()" class="p-button-text" />
+            </template>
+        </Dialog>   
+        <Dialog v-model:visible="dialogRemarkAssigned"
+            :style="{ width: '500px' }"
+            header="Dialog Create Remark"
+            :modal="true"
+            class="fluid"
+          >
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Request </label>
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="remarkAssigned.ireq_no"
+                    disabled
+                    />
+                  </div>
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Detail </label>
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="remarkAssigned.ireqd_id"
+                    disabled
+                    />
+                  </div> 
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:100px">Remark</label>
+                  <div class="col-fixed w-9rem">
+                   <Textarea 
+                    v-model="remarkAssigned.ireq_assigned_remark" 
+                    placeholder="If required"
+                    :autoResize="true" 
+                    rows="5" 
+                    cols="20"
+                  />
+                  </div>
+                </div>
+            </div>
+            <template #footer>
+                <Button label="Yes" @click="submitRemarkAssigned()" class="p-button" autofocus />
+                <Button label="No" @click="cancelRemarkAssigned()" class="p-button-text" />
+            </template>
+        </Dialog>   
       </div>
     </div>
   </div>
@@ -3848,10 +3957,14 @@ export default {
         dialogRejectManager:false,
         dialogApproveManager:false,
         dialogRemarkReviewer:false,
+        dialogRemarkAssigned:false,
+        dialogNoteAssigned: false,
         remarkreviewer:{
           id:'',
           remark:''
         },
+        noteAssigned:[],
+        remarkAssigned:[],
         code:null,
         reason:{ ket:null, remark:null },
         totalRequest2:[],
@@ -4301,6 +4414,50 @@ export default {
           });
           this.remarkreviewer = {id:'',remark:''};
           this.getActive();
+      },
+      createRemarkAssigned(ireqd_id,ireq_id){
+        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.remarkAssigned = response.data;
+          this.dialogRemarkAssigned = true;
+        });
+          this.code = ireqd_id;
+      },
+      createNoteAssigned(ireqd_id,ireq_id){
+        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.noteAssigned = response.data;
+          this.dialogNoteAssigned = true;
+        });
+          this.code = ireqd_id;
+      },
+      submitRemarkAssigned(){
+          this.axios.put('/api/save-remark-assigned/'+this.code,this.remarkAssigned,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
+          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
+            this.noteAssigned = [];
+            this.code = null;
+            this.dialogRemarkAssigned = false;
+          });
+          this.loading = true;
+          this.getIct4();
+      },
+      submitNoteAssigned(){
+          this.axios.put('/api/update-note/'+this.code,this.noteAssigned,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
+          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
+            this.noteAssigned = [];
+            this.code = null;
+            this.dialogNoteAssigned = false;
+          });
+          this.loading = true;
+          this.getIct4();
+      },
+      cancelRemarkAssigned(){
+        this.remarkAssigned = [];
+        this.code = null;
+        this.dialogRemarkAssigned = false;
+      },
+      cancelNoteAssigned(){
+        this.noteAssigned = [];
+        this.code = null;
+        this.dialogNoteAssigned = false;
       },
   },
 };

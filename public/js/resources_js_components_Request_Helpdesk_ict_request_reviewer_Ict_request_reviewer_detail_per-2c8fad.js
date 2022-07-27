@@ -268,14 +268,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_type",
-        header: "Tipe Request",
+        header: "Request Type",
         sortable: true,
         style: {
           "min-width": "11rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
-        header: "Nama Peripheral",
+        header: "Peripheral",
         sortable: true,
         style: {
           "min-width": "11rem"
@@ -289,7 +289,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_remark",
-        header: "Keterangan",
+        header: "Remark",
         sortable: true,
         style: {
           "min-width": "11rem"

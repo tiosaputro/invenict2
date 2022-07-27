@@ -244,6 +244,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-permohonan-divisi','IctController@getPermohonanDivisi');
     //divisi 3
     Route::get('/get-sedang-dikerjakan','IctController@getSedangDikerjakan');
+    Route::put('/save-remark-assigned/{code}','IctDetailController@saveRemark');
     //divisi 4
     Route::get('/get-divisi-4','IctController@ictDivisi4');
     //admin

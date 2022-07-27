@@ -10,7 +10,7 @@
               </template>
             </Toolbar>
             <TabView ref="tabview1">
-              <TabPanel header="Penugasan Request">
+              <TabPanel header="Assignment Request">
                 <DataTable
                   :value="penugasan"
                   :paginator="true"
@@ -20,7 +20,7 @@
                   :rowHover="true"
                   paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                   :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Assignment Request"
                   responsiveLayout="scroll"
                 >
                 <template #header>
@@ -92,7 +92,7 @@
                   </template>
                 </DataTable>   
               </TabPanel>
-              <TabPanel header="Yang Direject">
+              <TabPanel header="Rejected">
                 <DataTable
                   :value="reject"
                   :paginator="true"
@@ -102,7 +102,7 @@
                   :rowHover="true"
                   paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                   :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Rejected"
                   responsiveLayout="scroll"
                 >
                 <template #header>
@@ -145,7 +145,7 @@
                   </Column>
                 </DataTable>   
               </TabPanel>
-              <TabPanel header="Sedang Dikerjakan">
+              <TabPanel header="On Progress">
                 <DataTable
                   :value="sedangDikerjakan"
                   :paginator="true"
@@ -155,7 +155,7 @@
                   :rowHover="true"
                   paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                   :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} On Progress"
                   responsiveLayout="scroll"
                 >
                 <template #header>
@@ -175,12 +175,12 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
                   <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -188,14 +188,15 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:15rem">
                   <template #body="slotProps">
                     <Button
                       v-if="slotProps.data.status == 'T'"
                       class="p-button-rounded p-button-info mr-2"
-                      v-tooltip.left="'Ubah Status'"
+                      v-tooltip.bottom="'Click to change status'"
                       icon="pi pi-pencil"
                       @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                     />
@@ -203,8 +204,15 @@
                       v-if="slotProps.data.status == 'T'"
                       class="p-button-rounded p-button-help mr-2"
                       icon="bi bi-journal-text"
-                      v-tooltip.bottom="'Note'"
+                      v-tooltip.bottom="'Click to create note'"
                       @click="createNote(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
+                    />
+                    <Button
+                      v-if="slotProps.data.status == 'T'"
+                      class="p-button-rounded p-button-danger mr-2"
+                      icon="bi bi-journals"
+                      v-tooltip.bottom="'Click to create remark'"
+                      @click="createRemark(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                     />
                       <!-- <Button
                         class="p-button-raised p-button-info p-button-text mr-2"
@@ -244,7 +252,7 @@
                   </template>
                 </DataTable>   
               </TabPanel>
-              <TabPanel header="Sudah Dikerjakan">
+              <TabPanel header="Done">
                   <DataTable
                     :value="sudahDikerjakan"
                     :paginator="true"
@@ -254,7 +262,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Done"
                     responsiveLayout="scroll"
                  >
                 <template #header>
@@ -274,12 +282,12 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
                   <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -287,8 +295,9 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <template #footer>
                     <div class="p-grid p-dir-col">
                       <div class="p-col">
@@ -311,7 +320,7 @@
                   </template>
                 </DataTable>   
               </TabPanel>
-              <TabPanel header="Selesai">
+              <TabPanel header="Close">
                    <DataTable
                     :value="selesai"
                     :paginator="true"
@@ -321,7 +330,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Close"
                     responsiveLayout="scroll"
                  >
                 <template #header>
@@ -341,12 +350,12 @@
                   <template #loading>
                     Loading ICT Request data. Please wait.
                   </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
                   <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -356,6 +365,7 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
+                  <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                 <template #footer>
                     <div class="p-grid p-dir-col">
                       <div class="p-col">
@@ -465,7 +475,7 @@
           <Dialog
             v-model:visible="dialogNote"
             :style="{ width: '500px' }"
-            header="Dialog Keterangan"
+            header="Dialog Create Note"
             :modal="true"
             class="fluid"
           >
@@ -493,25 +503,69 @@
             </div>
             <div class="fluid">
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">Keterangan</label>
+                <label class="col-fixed w-9rem" style="width:100px">Note</label>
                   <div class="col-fixed w-9rem">
                    <Textarea 
                     v-model="note.ireq_reason" 
-                    placeholder="Masukan Keterangan"
-                    :class="{ 'p-invalid': submitted && !note.ireq_reason }"
+                    placeholder="If required"
                     :autoResize="true" 
                     rows="5" 
                     cols="20"
                   />
-                    <small v-if="submitted && !note.ireq_reason" class="p-error">
-                      Keterangan Belum Diisi
-                    </small>
                   </div>
                 </div>
             </div>
             <template #footer>
                 <Button label="Yes" @click="submitNote()" class="p-button" autofocus />
                 <Button label="No" @click="cancelNote()" class="p-button-text" />
+            </template>
+          </Dialog>   
+          <Dialog
+            v-model:visible="dialogRemark"
+            :style="{ width: '500px' }"
+            header="Dialog Create Remark"
+            :modal="true"
+            class="fluid"
+          >
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Request </label>
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="remark.ireq_no"
+                    disabled
+                    />
+                  </div>
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> No Detail </label>
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="remark.ireqd_id"
+                    disabled
+                    />
+                  </div> 
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:100px">Remark</label>
+                  <div class="col-fixed w-9rem">
+                   <Textarea 
+                    v-model="remark.ireq_assigned_remark" 
+                    placeholder="If required"
+                    :autoResize="true" 
+                    rows="5" 
+                    cols="20"
+                  />
+                  </div>
+                </div>
+            </div>
+            <template #footer>
+                <Button label="Yes" @click="submitRemark()" class="p-button" autofocus />
+                <Button label="No" @click="cancelRemark()" class="p-button-text" />
             </template>
           </Dialog>   
       </div>
@@ -526,6 +580,7 @@ export default {
     return {
         dialogEdit:false,
         dialogNote:false,
+        dialogRemark:false,
         dialogChangeStatus:false,
         loading: true,
         submitted:false,
@@ -543,6 +598,7 @@ export default {
         editDetail:{ ireq_reason :''},
         editStatus:[],
         note:[],
+        remark:[],
         code:null,
         status:[],
     };
@@ -595,25 +651,44 @@ export default {
         });
       }
     },
+    createRemark(ireqd_id,ireq_id){
+      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.remark = response.data;
+        this.dialogRemark = true;
+      });
+        this.code = ireqd_id;
+    },
     createNote(ireqd_id,ireq_id){
       this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.note = response.data;
-        this.code = ireqd_id;
+        this.dialogNote = true;
       });
-      this.dialogNote = true;
+        this.code = ireqd_id;
+    },
+    submitRemark(){
+        this.axios.put('/api/save-remark-assigned/'+this.code,this.remark,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
+         this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
+          this.note = [];
+          this.code = null;
+          this.dialogRemark = false;
+        });
+        this.loading = true;
+        this.getData();
     },
     submitNote(){
-      this.submitted = true;
-      if(this.note.ireq_reason != null){
         this.axios.put('/api/update-note/'+this.code,this.note,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
           this.note = [];
           this.code = null;
-          this.dialogNote = false;
-          this.submitted = false;
+          this.dialogRemark = false;
         });
+        this.loading = true;
         this.getData();
-      }
+    },
+    cancelRemark(){
+      this.remark = [];
+      this.code = null;
+      this.dialogRemark = false;
     },
     cancelNote(){
       this.note = [];

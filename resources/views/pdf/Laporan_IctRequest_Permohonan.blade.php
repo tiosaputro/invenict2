@@ -1,80 +1,501 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<base href="/">
- 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-	<title>ICT REQUEST</title>
-    <style>
-      @media print{
-        .bg-light {
-            background-color: #eae9e9 !important;
-        }
-}
-    </style>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" type="text/css"/>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/pdf/style.css">
-</head>
+<title> ICT REQUEST STATUS REPORT LIST ON {{date('d M Y')}}</title>
+<style>
+@media screen {
+    .row {
+        margin-left:-5px;
+        margin-right:-5px;
+        pad
+    }
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+    .invoice .contacts {
+        margin-bottom: 20px
+    }
+    .invoice .invoice-to {
+        text-align: left
+    }
+    .invoice .invoice-to .to {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+    .invoice .company-details {
+        text-align: left;
+    }
+    .invoice .company-details .name {
+        margin-top: 0;
+        margin-bottom: 0;
+		text-align: left
+    }
+    p {
+        font-weight: bold;
+    }
+    .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+        margin-left:2px;
+        margin-right:-10px;
+    }
+    /* #invoice{
+        padding: 30px;
+        size: A4;
+        size: 7in 9.25in;
+        margin: 27mm 16mm 27mm 16mm;
+    } */
+    #invoice{
+        padding: 20px;
+        size: A4;
+        margin: 0;
+    }
+    .invoice table {
+        width: 100%;
+        border:solid 2px;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin-bottom: 1px;
+    }
 
-<body>
-	<section class="ftco-section">
-		<div>
-			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-6">
-					<h2 style="font-size:30pt; font-weight: bold;">Daftar ICT Request</h2>
-					 <h4 style="font-size:20pt; font-weight: bold;">Pada tanggal : {{date('d M Y')}}</h4>
-				</div>
-			</div>
-			<br><br>
-			<div class="row">
-				<div class="col-md-12">
-					<div>
-						<table class="table table-striped">
-						  <thead>
-						<thead>
-							<tr>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">No Request</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tgl Request</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tipe Request</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pemohon</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pengguna</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Divisi Pengguna</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Bisnis Unit</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Status</th>
-							</tr>
-						</thead>
-						<tbody>
-						@foreach($ict as $i)
+    .invoice table th {
+        font-size: 16px;
+        table-layout:fixed;
+        overflow: hidden;
+    }
+
+
+    .invoice table tbody tr:last-child td {
+        border:solid 2px;
+        page-break-after: auto;
+    }
+
+    .invoice {
+        font-size: 12px!important;
+        overflow: hidden!important;
+    }
+
+    .invoice footer {
+        width: 100%;
+        text-align: center;
+        font-weight:bold;
+        color: black;
+        border-top: 1px solid #;
+        overflow: hidden;
+        bottom:0;
+    }
+
+    .invoice>div:last-child {
+        page-break-after: auto;
+    }
+
+    .invoice {
+        background-color: #FFF;
+        min-height: 680px;
+        padding: 30px;
+        size: A4;
+        margin: 0;
+    }
+
+    .invoice header {
+        padding: 10px 0;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #
+    }
+
+    .invoice main {
+        padding-bottom: 50px
+    }
+
+    .invoice table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin-bottom: 20px;
+        border:solid 2px;
+        overflow: hidden;
+    }
+
+    .invoice table th {
+        overflow: hidden;
+        font-weight: bold;
+        font-size: 16px;
+        table-layout:fixed;
+        border:solid 2px;
+        
+    }
+
+    .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+        margin-left:2px;
+        margin-right:-10px;
+    }
+    .textareacss{
+        resize: none; 
+        border:solid 2px;
+        font-weight: bold;
+        overflow:hidden;
+        margin: 1px;
+        padding: 1px;
+        min-width: 99%;
+        min-height: 170px;
+        outline: none;
+    }
+    .wrap {
+        display: table;
+        table-layout: fixed;
+        padding:10px;
+        width: 100%;
+        height: 100%; /* need to set height for this to work in Chrome */
+    }
+    .cell-wrap {
+        display: table-cell;
+        table-layout: fixed;
+        vertical-align: top;
+        height: 100%;
+    }
+    .cell-wrap.left {
+        width: 50%;
+        padding-right: 5px;  
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        table-layout: fixed;
+        border:solid 2px;
+        height: 80%;
+        width: 100%;
+        border:solid 2px;
+    }
+    table td {
+        padding: 10px;
+        height:15px;
+        border:solid 2px;
+		font-size:14px;
+        text-align: center;
+        background-color:#;
+    }
+    table th {
+        border:solid 2px;
+        font-weight:bold;
+        text-align: center;
+        padding: 5px;
+        background-color:#807a6b;
+
+
+    }
+}
+@media print {
+    .invoice .contacts {
+        margin-bottom: 20px
+    }
+    .invoice .invoice-to {
+        text-align: left
+    }
+    .invoice .invoice-to .to {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+    p {
+        font-weight: bold;
+    }
+    .row {
+        margin-left:-5px;
+        margin-right:-5px;
+    }
+    .row::after {
+        clear: both;
+        display: table;
+    }
+    .invoice .company-details {
+        text-align: right
+    }
+
+    .invoice .company-details .name {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+    .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+        margin-left:2px;
+        margin-right:-10px;
+    }
+    #invoice{
+        padding: 20px;
+        size: A4;
+        margin: 0;
+    }
+    .csssolution{
+        resize: none; 
+        border:solid 2px;
+        font-weight: bold;
+        overflow:hidden;
+        margin: 1px;
+        padding: 1px;
+        width: 470pt;
+        min-height: 120px;
+        text-align: left;
+        outline: none;
+    }
+    .invoice table {
+        width: 100%;
+        border:solid 2px;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin-bottom: 1px;
+    }
+
+    .invoice table td,.invoice table th {
+        padding: 15px;
+        border: 2px solid;
+    }
+
+    .invoice table th {
+        /* white-space: nowrap; */
+        overflow: hidden;
+    	font-weight: bold;
+        font-size: 16px;
+        table-layout:fixed;
+
+    }
+
+    .invoice table td h3 {
+        margin: 0;
+        overflow: hidden;
+        height:0.375pt;
+        color: #;
+        font-size: 16px;
+        overflow: hidden;
+    }
+
+    .invoice table tbody tr:last-child td {
+        border: 2px solid;
+        page-break-after: auto;
+    }
+
+    .invoice table tfoot td {
+        background: 0 0;
+        border-bottom: none;
+        white-space: nowrap;
+        text-align: right;
+        padding: 10px 20px;
+        font-size: 1.5em;
+        border: 2px solid;
+    }
+
+    .invoice table tfoot tr:last-child td {
+        color: #;
+        overflow: hidden;
+        font-size: 1.4em;
+        border: 2px solid;
+        page-break-after: auto;
+    }
+
+    .invoice table tfoot tr td:first-child {
+        border: 2px solid;
+    }
+    #printInvoice {
+        display: none;
+    }
+    .invoice {
+        font-size: 12px!important;
+        overflow: hidden!important;
+    } 
+    .invoice footer {
+        width: 100%;
+        text-align: center;
+        font-weight:bold;
+        color: black;
+        border-top: 1px solid #;
+        overflow: hidden;
+        position:relative;
+    }
+    .invoice>div:last-child {
+        /* page-break-before: always */
+        page-break-after: auto;
+    }
+    .table {
+        border-collapse: collapse;
+        border:solid 2px;
+        width: 199%;
+        max-width: 100%;
+    }
+    .wrap {
+        display: table;
+        table-layout: fixed;
+        padding:10px;
+        width: 100%;
+        height: 100% /* need to set height for this to work in Chrome */
+    }
+    .cell-wrap {
+        display: table-cell;
+        table-layout: fixed;
+        vertical-align: top;
+        height: 100%;
+    }
+    .cell-wrap.left {
+        width: 50%;
+        padding-right: 5px;  
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        table-layout: fixed;
+        border:solid 2px;
+        height: 80%;
+        width: 100%;
+        border:solid 2px;
+    }
+    table td {
+        padding: 10px;
+        height:15px;
+        border:solid 2px;
+        text-align: center;
+    }
+    table th {
+        border:solid 2px;
+        font-weight:bold;
+        text-align: center;
+        background-color:#807a6b;
+        padding: 5px;
+    }
+    .invoice {
+        position: relative;
+        background-color: #FFF;
+        min-height: 510pt;
+        padding: 22pt;
+        margin: 0;
+    }
+    .invoice header {
+        padding: 10px 0;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #
+    }
+    .invoice main {
+        padding-bottom: 50px
+    }
+    .invoice table td,.invoice table th {
+        padding: 15px;
+        border-bottom: 1px solid #fff
+    }
+    .invoice table th {
+        /* white-space: nowrap; */
+        /* font-weight: 400; */
+        overflow: hidden;
+        font-size: 16px;
+        table-layout:fixed;
+    }
+    .invoice table tfoot tr:first-child td {
+        border-top: none
+    }
+
+    .invoice table tfoot tr:last-child td {
+        color: #;
+        font-size: 1.4em;
+        border-top: 1px solid #;
+        page-break-after: auto;
+    }
+
+    .invoice table tfoot tr td:first-child {
+        border: none
+    }
+    .textareacss{
+        resize: none; 
+        border:solid 1.5pt;
+        font-weight: bold;
+        overflow:hidden;
+        margin: 0.75pt;
+        padding: 0.75pt;
+        min-width:100pt;
+        max-height: 100%;
+        outline: none;
+    }
+}
+</style>
+
+<div id="invoice">
+    <div class="col invoice-to">
+        <div class="text-right">
+            <button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> Print</button>
+        </div>
+        <hr>
+    </div>
+    <div class="invoice overflow-auto">
+        <div style="min-width: 600px">
+            <header>
+                <div class="row">
+                    <div class="col">
+                        <a>
+                          <img src="{{asset('assets/layout/images/logo_emp_new.png')}}" width="200" data-holder-rendered="true" />
+                        </a>
+                    </div> 
+					
+				<div class="text-center">
+						<span style="font-weight:bold;font-size:25px;">ICT REQUEST STATUS REPORT LIST ON {{date('d M Y')}}</span>
+					</div>
+                </div>
+            </header>
+            <main>
+                <div class="row contacts">
+                  <div class="col invoice-to">
+                    <p></p>
+                      <table> 
+                            <tr>
+								<th>No Request</th>
+								<th>Request Date</th>
+								<th>Requestor</th>
+								<th>User</th>
+								<th>User Division</th>
+								<th>Business Unit</th>
+								<th>Status</th>
+                            </tr>
+                            @if($ict)
+							@foreach($ict as $i)
 								<tr>
 									<td>{{$i->ireq_no}}</td>
 									<td>{{$i->ireq_date}}</td>
-									<td>{{$i->ireq_type}}</td>
 									<td>{{$i->ireq_requestor}}</td>
 									<td>{{$i->ireq_user}}</td>
 									<td>{{$i->div_name}}</td>
 									<td>{{$i->ireq_bu}}</td>
 									<td>{{$i->ireq_status}}</td>
 								</tr>	
-							@endforeach							
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-		</div>
-	</div>
-</section>
+							@endforeach
+                            @else	
+                            <tr>
+                                <td colspan="7" style="font-weight:bold;font-size:16px;">Data not found...</td>
+                            </tr>
+                            @endif
+                      </table>
+                  </div>
+                </div>
 
-<script type="text/js" src="assets/pdf/jquery.min.js"></script>
-<script type="text/js" src="assets/pdf/popper.js"></script>
-<script type="text/js" src="assets/pdf/bootstrap.min.js'"></script>
-<script type="text/js" src="assets/pdf/main.js'"></script>
-
-</body>
-</html>
+            </main>
+            <!-- <footer>
+                <strong>This PDF was created on a system and is valid without the signature and seal.</strong>
+            </footer> -->
+        </div>
+        <!-- <div></div> -->
+    </div>
+</div>
+ 
+<script>
+     $('#printInvoice').click(function(){
+            Popup($('.invoice')[0].outerHTML);
+            function Popup(data) 
+            {
+                window.print();
+                return true;
+            }
+        });
+</script>

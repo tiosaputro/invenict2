@@ -21,6 +21,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       dialogEdit: false,
       dialogNote: false,
+      dialogRemark: false,
       dialogChangeStatus: false,
       loading: true,
       submitted: false,
@@ -45,6 +46,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       editStatus: [],
       note: [],
+      remark: [],
       code: null,
       status: []
     };
@@ -116,7 +118,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    createNote: function createNote(ireqd_id, ireq_id) {
+    createRemark: function createRemark(ireqd_id, ireq_id) {
       var _this3 = this;
 
       this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
@@ -124,36 +126,72 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.note = response.data;
-        _this3.code = ireqd_id;
+        _this3.remark = response.data;
+        _this3.dialogRemark = true;
       });
-      this.dialogNote = true;
+      this.code = ireqd_id;
     },
-    submitNote: function submitNote() {
+    createNote: function createNote(ireqd_id, ireq_id) {
       var _this4 = this;
 
-      this.submitted = true;
+      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this4.note = response.data;
+        _this4.dialogNote = true;
+      });
+      this.code = ireqd_id;
+    },
+    submitRemark: function submitRemark() {
+      var _this5 = this;
 
-      if (this.note.ireq_reason != null) {
-        this.axios.put('/api/update-note/' + this.code, this.note, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
-          _this4.$toast.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Success Update',
-            life: 2000
-          });
-
-          _this4.note = [];
-          _this4.code = null;
-          _this4.dialogNote = false;
-          _this4.submitted = false;
+      this.axios.put('/api/save-remark-assigned/' + this.code, this.remark, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function () {
+        _this5.$toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Success Update',
+          life: 2000
         });
-        this.getData();
-      }
+
+        _this5.note = [];
+        _this5.code = null;
+        _this5.dialogRemark = false;
+      });
+      this.loading = true;
+      this.getData();
+    },
+    submitNote: function submitNote() {
+      var _this6 = this;
+
+      this.axios.put('/api/update-note/' + this.code, this.note, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function () {
+        _this6.$toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Success Update',
+          life: 2000
+        });
+
+        _this6.note = [];
+        _this6.code = null;
+        _this6.dialogRemark = false;
+      });
+      this.loading = true;
+      this.getData();
+    },
+    cancelRemark: function cancelRemark() {
+      this.remark = [];
+      this.code = null;
+      this.dialogRemark = false;
     },
     cancelNote: function cancelNote() {
       this.note = [];
@@ -161,22 +199,22 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogNote = false;
     },
     edit: function edit(ireqd_id, ireq_id) {
-      var _this5 = this;
+      var _this7 = this;
 
       this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this5.editStatus = response.data;
-        _this5.code = ireq_id;
+        _this7.editStatus = response.data;
+        _this7.code = ireq_id;
 
-        _this5.getStatus();
+        _this7.getStatus();
       });
       this.dialogChangeStatus = true;
     },
     submitStatus: function submitStatus() {
-      var _this6 = this;
+      var _this8 = this;
 
       this.submitted = true;
       this.axios.put('/api/update-status-done/' + this.code, this.editStatus, {
@@ -184,13 +222,13 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this6.editStatus = [];
-        _this6.code = null;
-        _this6.status = [];
-        _this6.dialogChangeStatus = false;
-        _this6.submitted = false;
+        _this8.editStatus = [];
+        _this8.code = null;
+        _this8.status = [];
+        _this8.dialogChangeStatus = false;
+        _this8.submitted = false;
 
-        _this6.$toast.add({
+        _this8.$toast.add({
           severity: 'success',
           summary: 'Success',
           detail: 'Success Update',
@@ -206,22 +244,22 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogChangeStatus = false;
     },
     getData: function getData() {
-      var _this7 = this;
+      var _this9 = this;
 
       this.axios.get('api/get-sedang-dikerjakan', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this7.penugasan = response.data.ict3;
-        _this7.reject = response.data.ict4;
-        _this7.sedangDikerjakan = response.data.ict;
-        _this7.sudahDikerjakan = response.data.ict1;
-        _this7.selesai = response.data.ict2;
-        _this7.loading = false;
+        _this9.penugasan = response.data.ict3;
+        _this9.reject = response.data.ict4;
+        _this9.sedangDikerjakan = response.data.ict;
+        _this9.sudahDikerjakan = response.data.ict1;
+        _this9.selesai = response.data.ict2;
+        _this9.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 403) {
-          _this7.$router.push('/access');
+          _this9.$router.push('/access');
         }
       });
     },
@@ -229,14 +267,14 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
     getStatus: function getStatus() {
-      var _this8 = this;
+      var _this10 = this;
 
       this.axios.get('/api/getStatusIct', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this8.status = response.data;
+        _this10.status = response.data;
       });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
@@ -529,7 +567,7 @@ var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "100px"
   }
-}, "Keterangan", -1
+}, "Note", -1
 /* HOISTED */
 );
 
@@ -537,8 +575,55 @@ var _hoisted_71 = {
   "class": "col-fixed w-9rem"
 };
 var _hoisted_72 = {
-  key: 0,
-  "class": "p-error"
+  "class": "fluid"
+};
+var _hoisted_73 = {
+  "class": "field grid"
+};
+
+var _hoisted_74 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Request ", -1
+/* HOISTED */
+);
+
+var _hoisted_75 = {
+  "class": "col-fixed"
+};
+var _hoisted_76 = {
+  "class": "fluid"
+};
+var _hoisted_77 = {
+  "class": "field grid"
+};
+
+var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Detail ", -1
+/* HOISTED */
+);
+
+var _hoisted_79 = {
+  "class": "col-fixed"
+};
+var _hoisted_80 = {
+  "class": "fluid"
+};
+var _hoisted_81 = {
+  "class": "field grid"
+};
+
+var _hoisted_82 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Remark", -1
+/* HOISTED */
+);
+
+var _hoisted_83 = {
+  "class": "col-fixed w-9rem"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
@@ -581,7 +666,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Penugasan Request"
+        header: "Assignment Request"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -593,7 +678,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Assignment Request",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -728,7 +813,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Yang Direject"
+        header: "Rejected"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -740,7 +825,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Rejected",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -849,7 +934,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Sedang Dikerjakan"
+        header: "On Progress"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -861,7 +946,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} On Progress",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -904,14 +989,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireqd_id",
                 header: "No. Detail",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_type",
@@ -936,10 +1021,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_remark",
-                header: "Remark",
+                header: "Remark Requestor",
                 sortable: true,
                 style: {
-                  "min-width": "10rem"
+                  "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -976,14 +1061,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "User Division",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
                 header: "Personnel (ICT)",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "12rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_assigned_remark",
+                header: "Remark Assigned",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
@@ -1000,8 +1092,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])), [[_directive_tooltip, 'Ubah Status', void 0, {
-                    left: true
+                  , ["onClick"])), [[_directive_tooltip, 'Click to change status', void 0, {
+                    bottom: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.status == 'T' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 1,
                     "class": "p-button-rounded p-button-help mr-2",
@@ -1011,7 +1103,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     }
                   }, null, 8
                   /* PROPS */
-                  , ["onClick"])), [[_directive_tooltip, 'Note', void 0, {
+                  , ["onClick"])), [[_directive_tooltip, 'Click to create note', void 0, {
+                    bottom: true
+                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.status == 'T' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                    key: 2,
+                    "class": "p-button-rounded p-button-danger mr-2",
+                    icon: "bi bi-journals",
+                    onClick: function onClick($event) {
+                      return $options.createRemark(slotProps.data.ireqd_id, slotProps.data.ireq_id);
+                    }
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"])), [[_directive_tooltip, 'Click to create remark', void 0, {
                     bottom: true
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\n                        class=\"p-button-raised p-button-info p-button-text mr-2\"\n                        label=\"CA\"\n                        @click=\"$router.push({\n                            name: 'add Cash Advance',\n                            params: { code: slotProps.data.ireq_id, dtl:slotProps.data.ireqd_id } })\"\n                      />\n                      <Button\n                        class=\"p-button-raised p-button-success p-button-text mt-2\"\n                        label=\"PR\"\n                        @click=\"$router.push({\n                            name: 'add Payment Request',\n                            params: { code: slotProps.data.ireq_id, dtl:slotProps.data.ireqd_id } })\"\n                      /> ")];
                 }),
@@ -1031,7 +1134,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Sudah Dikerjakan"
+        header: "Done"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1043,7 +1146,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Done",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1086,14 +1189,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireqd_id",
                 header: "No. Detail",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_type",
@@ -1118,10 +1221,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_remark",
-                header: "Remark",
+                header: "Remark Requestor",
                 sortable: true,
                 style: {
-                  "min-width": "10rem"
+                  "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1158,14 +1261,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "User Division",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_assigned_to",
                 header: "Personnel (ICT)",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_assigned_remark",
+                header: "Remark Assigned",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
                 }
               })];
             }),
@@ -1180,7 +1290,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* STABLE */
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
-        header: "Selesai"
+        header: "Close"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -1192,7 +1302,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             rowHover: true,
             paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
             rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request",
+            currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} Close",
             responsiveLayout: "scroll"
           }, {
             header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1235,14 +1345,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "No. Request",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireqd_id",
                 header: "No. Detail",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_type",
@@ -1267,10 +1377,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_remark",
-                header: "Remark",
+                header: "Remark Requestor",
                 sortable: true,
                 style: {
-                  "min-width": "10rem"
+                  "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1315,6 +1425,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 sortable: true,
                 style: {
                   "min-width": "8rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_assigned_remark",
+                header: "Remark Assigned",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
                 }
               })];
             }),
@@ -1460,7 +1577,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     style: {
       width: '500px'
     },
-    header: "Dialog Keterangan",
+    header: "Dialog Create Note",
     modal: true,
     "class": "fluid"
   }, {
@@ -1502,16 +1619,76 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[25] || (_cache[25] = function ($event) {
           return $data.note.ireq_reason = $event;
         }),
-        placeholder: "Masukan Keterangan",
-        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-          'p-invalid': $data.submitted && !$data.note.ireq_reason
-        }),
+        placeholder: "If required",
         autoResize: true,
         rows: "5",
         cols: "20"
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.note.ireq_reason ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_72, " Keterangan Belum Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue"])])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogRemark,
+    "onUpdate:visible": _cache[34] || (_cache[34] = function ($event) {
+      return $data.dialogRemark = $event;
+    }),
+    style: {
+      width: '500px'
+    },
+    header: "Dialog Create Remark",
+    modal: true,
+    "class": "fluid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[32] || (_cache[32] = function ($event) {
+          return $options.submitRemark();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[33] || (_cache[33] = function ($event) {
+          return $options.cancelRemark();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [_hoisted_74, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.remark.ireq_no,
+        "onUpdate:modelValue": _cache[29] || (_cache[29] = function ($event) {
+          return $data.remark.ireq_no = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_76, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [_hoisted_78, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.remark.ireqd_id,
+        "onUpdate:modelValue": _cache[30] || (_cache[30] = function ($event) {
+          return $data.remark.ireqd_id = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [_hoisted_82, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_83, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        modelValue: $data.remark.ireq_assigned_remark,
+        "onUpdate:modelValue": _cache[31] || (_cache[31] = function ($event) {
+          return $data.remark.ireq_assigned_remark = $event;
+        }),
+        placeholder: "If required",
+        autoResize: true,
+        rows: "5",
+        cols: "20"
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])])];
     }),
     _: 1
     /* STABLE */

@@ -1674,7 +1674,7 @@ class IctController extends Controller
         $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
         if($aksesmenu->contains($this->personnel)){
             $ict = DB::table('ireq_dtl as id')
-            ->SELECT('imm.ireq_no','id.ireq_status as status','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+            ->SELECT('imm.ireq_no','id.ireq_assigned_remark','id.ireq_status as status','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
                 DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
                 'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
                 'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
@@ -1696,7 +1696,7 @@ class IctController extends Controller
             ->get();
 
             $ict1 = DB::table('ireq_dtl as id')
-            ->SELECT('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
+            ->SELECT('imm.ireq_no','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
                 'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
                 'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
                 'lrs.lookup_desc as invent_code','id.ireq_status as status')
@@ -1717,7 +1717,7 @@ class IctController extends Controller
             ->get();
 
             $ict2 = DB::table('ireq_dtl as id')
-            ->SELECT('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+            ->SELECT('imm.ireq_no','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
                 'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
                 'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date','id.ireq_status as status', 'lrs.lookup_desc as invent_code')
             ->LEFTJOIN('lookup_refs as lrs',function ($join) {
@@ -2042,7 +2042,7 @@ class IctController extends Controller
     public function cetak_excel_atasan_permohonan($usr_name)
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportPermohonanAtasan($usr_name),'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportPermohonanAtasan($usr_name),'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_atasan_verifikasi($usr_name)
     {
@@ -2070,7 +2070,7 @@ class IctController extends Controller
     public function cetak_excel_atasan_verifikasi($usr_name)
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportVerifikasiAtasan($usr_name),'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportVerifikasiAtasan($usr_name),'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_atasan_reject($usr_name)
     {
@@ -2099,7 +2099,7 @@ class IctController extends Controller
     public function cetak_excel_atasan_reject($usr_name)
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportRejectAtasan($usr_name),'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportRejectAtasan($usr_name),'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_atasan_sedang_dikerjakan($usr_name)
     {
@@ -2123,7 +2123,7 @@ class IctController extends Controller
     public function cetak_excel_atasan_sedang_dikerjakan($usr_name)
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportAtasanSedangDikerjakan($usr_name),'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportAtasanSedangDikerjakan($usr_name),'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_atasan_sudah_dikerjakan($usr_name)
     {
@@ -2204,7 +2204,7 @@ class IctController extends Controller
     public function cetak_excel_reviewer_permohonan()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerPermohonan,'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportReviewerPermohonan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_reviewer_atasan_divisi()
     {
@@ -2231,7 +2231,7 @@ class IctController extends Controller
     public function cetak_excel_reviewer_atasan_divisi()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerAtasanDivisi,'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportReviewerAtasanDivisi,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_reviewer_ict_manager()
     {
@@ -2258,7 +2258,7 @@ class IctController extends Controller
     public function cetak_excel_reviewer_ict_manager()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerIctManager,'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportReviewerIctManager,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_reviewer_reject()
     {
@@ -2286,7 +2286,7 @@ class IctController extends Controller
     public function cetak_excel_reviewer_reject()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportRejectReviewer,'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportRejectReviewer,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_reviewer_sedang_dikerjakan()
     {
@@ -2309,7 +2309,7 @@ class IctController extends Controller
     public function cetak_excel_reviewer_sedang_dikerjakan()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerSedangDikerjakan,'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportReviewerSedangDikerjakan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_reviewer_sudah_dikerjakan()
     {
@@ -2370,40 +2370,34 @@ class IctController extends Controller
     Public function cetak_pdf_manager_permohonan()
     {
         $ict =  DB::table('ireq_mst as im')
-        ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
+        ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','im.ireq_user','dr.div_name',
                 DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'llr.lookup_desc as ireq_status')
         ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->LEFTJOIN('lookup_refs as lr',function ($join) {
-            $join->on('im.ireq_type','lr.lookup_code')
-                  ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-        })
         ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->LEFTJOIN('lookup_refs as llr','im.ireq_status','llr.lookup_code')
         ->WHERE(function($query){
             return $query
             ->WHERE('im.ireq_status','NA1')
-            ->Orwhere('im.ireq_status','NA2');
+            ->Orwhere('im.ireq_status','NA2')
+            ->Orwhere('im.ireq_status','P');
+
         })
         ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->ORDERBY('im.creation_date','ASC')
+        ->ORDERBY('im.ireq_date','DESC')
         ->get();
         return view('pdf/Laporan_IctRequest_Permohonan', compact('ict'));
     }
     public function cetak_excel_manager_permohonan()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportManagerPermohonan,'ICT Request Report List On '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportManagerPermohonan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_manager_verifikasi()
     {
         $ict =  DB::table('ireq_mst as im')
-        ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
+        ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','im.ireq_user','dr.div_name',
                 DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'llr.lookup_desc as ireq_status')
         ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->LEFTJOIN('lookup_refs as lr',function ($join) {
-            $join->on('im.ireq_type','lr.lookup_code')
-                  ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-        })
         ->LEFTJOIN('lookup_refs as llr','im.ireq_status','llr.lookup_code')
         ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->WHERE(function($query){
@@ -2412,14 +2406,14 @@ class IctController extends Controller
             ->orwhere('im.ireq_status','A2');
         })
         ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->ORDERBY('im.creation_date','ASC')
+        ->ORDERBY('im.ireq_date','DESC')
         ->get();
         return view('pdf/Laporan_IctRequest_Permohonan', compact('ict'));
     }
     public function cetak_excel_manager_verifikasi()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportVerifikasiManager(),'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportVerifikasiManager(),'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_manager_reject()
     {
@@ -2440,58 +2434,57 @@ class IctController extends Controller
             ->orwhere('im.ireq_status','RA2');
         })
         ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->ORDERBY('im.creation_date','ASC')
+        ->ORDERBY('im.ireq_date','DESC')
         ->get();
         return view('pdf/Laporan_IctRequest_Reject', compact('ict'));
     }
     public function cetak_excel_manager_reject()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportRejectManager,'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportRejectManager,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_manager_sedang_dikerjakan()
     {
         $ict =  DB::table('ireq_mst as im')
-        ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','im.ireq_reason','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),
+        ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','im.ireq_reason','im.ireq_user','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),
                 DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'llr.lookup_desc as ireq_status')
         ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->LEFTJOIN('lookup_refs as lr',function ($join) {
-            $join->on('im.ireq_type','lr.lookup_code')
-                  ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-        })
         ->LEFTJOIN('lookup_refs as llr','im.ireq_status','llr.lookup_code')
         ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->WHERE('im.ireq_status','T')
         ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->ORDERBY('im.creation_date','ASC')
+        ->ORDERBY('im.ireq_date','DESC')
         ->get();
         return view('pdf/Laporan_IctRequest_Sedang_Dikerjakan', compact('ict'));
     }
     public function cetak_excel_manager_sedang_dikerjakan()
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportManagerSedangDikerjakan,'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportManagerSedangDikerjakan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_manager_sudah_dikerjakan()
     {
         $ict =  DB::table('ireq_dtl as id')
-        ->SELECT('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-            'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"), 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
-            'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            'lrs.lookup_desc as name')
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+        ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
+        ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->LEFTJOIN('lookup_refs as lr',function ($join) {
+            $join->on('id.ireq_status','lr.lookup_code')
+                  ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         })
-        ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
-        ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
-        ->LEFTJOIN('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
-        ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
-        ->LEFTJOIN('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
+        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+            $join->on('id.ireq_type','lrs.lookup_code')
+                  ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+        })
+        ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
+            $join->on('id.invent_code','lrfs.lookup_code')
+                  ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
+        ->SELECT('vr.name as ireq_bu','im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+        'dr.div_name','id.ireq_qty','id.ireq_status as status')
         ->WHERE('id.ireq_status','D')
-        ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
-        ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->ORDERBY('id.creation_date','ASC')
+        ->ORDERBY('im.ireq_date','DESC')
         ->get();
         return view('pdf/Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'));
     }
@@ -2637,7 +2630,7 @@ class IctController extends Controller
     public function cetak_excel_permohonan($usr_name)
     {
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportPermohonan($usr_name),'Laporan ICT Request '.$newCreation.'.xlsx');
+        return Excel::download(new IctExportPermohonan($usr_name),'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
     Public function cetak_pdf_tab_reviewer($usr_name)
     {

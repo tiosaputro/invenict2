@@ -91,10 +91,14 @@ __webpack_require__.r(__webpack_exports__);
       dialogRejectManager: false,
       dialogApproveManager: false,
       dialogRemarkReviewer: false,
+      dialogRemarkAssigned: false,
+      dialogNoteAssigned: false,
       remarkreviewer: {
         id: '',
         remark: ''
       },
+      noteAssigned: [],
+      remarkAssigned: [],
       code: null,
       reason: {
         ket: null,
@@ -706,6 +710,86 @@ __webpack_require__.r(__webpack_exports__);
         remark: ''
       };
       this.getActive();
+    },
+    createRemarkAssigned: function createRemarkAssigned(ireqd_id, ireq_id) {
+      var _this22 = this;
+
+      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this22.remarkAssigned = response.data;
+        _this22.dialogRemarkAssigned = true;
+      });
+      this.code = ireqd_id;
+    },
+    createNoteAssigned: function createNoteAssigned(ireqd_id, ireq_id) {
+      var _this23 = this;
+
+      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this23.noteAssigned = response.data;
+        _this23.dialogNoteAssigned = true;
+      });
+      this.code = ireqd_id;
+    },
+    submitRemarkAssigned: function submitRemarkAssigned() {
+      var _this24 = this;
+
+      this.axios.put('/api/save-remark-assigned/' + this.code, this.remarkAssigned, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function () {
+        _this24.$toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Success Update',
+          life: 2000
+        });
+
+        _this24.noteAssigned = [];
+        _this24.code = null;
+        _this24.dialogRemarkAssigned = false;
+      });
+      this.loading = true;
+      this.getIct4();
+    },
+    submitNoteAssigned: function submitNoteAssigned() {
+      var _this25 = this;
+
+      this.axios.put('/api/update-note/' + this.code, this.noteAssigned, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function () {
+        _this25.$toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Success Update',
+          life: 2000
+        });
+
+        _this25.noteAssigned = [];
+        _this25.code = null;
+        _this25.dialogNoteAssigned = false;
+      });
+      this.loading = true;
+      this.getIct4();
+    },
+    cancelRemarkAssigned: function cancelRemarkAssigned() {
+      this.remarkAssigned = [];
+      this.code = null;
+      this.dialogRemarkAssigned = false;
+    },
+    cancelNoteAssigned: function cancelNoteAssigned() {
+      this.noteAssigned = [];
+      this.code = null;
+      this.dialogNoteAssigned = false;
     }
   }
 });
@@ -2305,11 +2389,8 @@ var _hoisted_443 = {
 };
 
 var _hoisted_444 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "col-fixed w-9rem",
-  style: {
-    "width": "100px"
-  }
-}, "Peripheral", -1
+  "class": "col-fixed w-9rem"
+}, " No Detail ", -1
 /* HOISTED */
 );
 
@@ -2357,6 +2438,108 @@ var _hoisted_453 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
 
 var _hoisted_454 = {
   "class": "col"
+};
+var _hoisted_455 = {
+  "class": "fluid"
+};
+var _hoisted_456 = {
+  "class": "field grid"
+};
+
+var _hoisted_457 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Request ", -1
+/* HOISTED */
+);
+
+var _hoisted_458 = {
+  "class": "col-fixed"
+};
+var _hoisted_459 = {
+  "class": "fluid"
+};
+var _hoisted_460 = {
+  "class": "field grid"
+};
+
+var _hoisted_461 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Detail ", -1
+/* HOISTED */
+);
+
+var _hoisted_462 = {
+  "class": "col-fixed"
+};
+var _hoisted_463 = {
+  "class": "fluid"
+};
+var _hoisted_464 = {
+  "class": "field grid"
+};
+
+var _hoisted_465 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Note", -1
+/* HOISTED */
+);
+
+var _hoisted_466 = {
+  "class": "col-fixed w-9rem"
+};
+var _hoisted_467 = {
+  "class": "fluid"
+};
+var _hoisted_468 = {
+  "class": "field grid"
+};
+
+var _hoisted_469 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Request ", -1
+/* HOISTED */
+);
+
+var _hoisted_470 = {
+  "class": "col-fixed"
+};
+var _hoisted_471 = {
+  "class": "fluid"
+};
+var _hoisted_472 = {
+  "class": "field grid"
+};
+
+var _hoisted_473 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem"
+}, " No Detail ", -1
+/* HOISTED */
+);
+
+var _hoisted_474 = {
+  "class": "col-fixed"
+};
+var _hoisted_475 = {
+  "class": "fluid"
+};
+var _hoisted_476 = {
+  "class": "field grid"
+};
+
+var _hoisted_477 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "col-fixed w-9rem",
+  style: {
+    "width": "100px"
+  }
+}, "Remark", -1
+/* HOISTED */
+);
+
+var _hoisted_478 = {
+  "class": "col-fixed w-9rem"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
@@ -5000,24 +5183,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "No. Detail",
         sortable: true,
         style: {
-          "min-width": "8rem"
-        }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_date",
-        header: "Request Date",
-        sortable: true,
-        style: {
           "min-width": "10rem"
         }
-      }, {
-        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate(slotProps.data.ireq_date)), 1
-          /* TEXT */
-          )];
-        }),
-        _: 1
-        /* STABLE */
-
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_type",
         header: "Request Type",
@@ -5041,11 +5208,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_remark",
-        header: "Remark",
+        header: "Remark Requestor",
+        sortable: true,
+        style: {
+          "min-width": "12rem"
+        }
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "ireq_date",
+        header: "Request Date",
         sortable: true,
         style: {
           "min-width": "10rem"
         }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate(slotProps.data.ireq_date)), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_requestor",
         header: "Requestor",
@@ -5065,21 +5248,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "User Division",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_assigned_to",
         header: "Personnel (ICT)",
         sortable: true,
         style: {
-          "min-width": "8rem"
+          "min-width": "10rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-        field: "ireq_status",
-        header: "Status",
+        field: "ireq_assigned_remark",
+        header: "Remark Assigned",
         sortable: true,
         style: {
-          "min-width": "10rem"
+          "min-width": "12rem"
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
@@ -5087,7 +5270,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [slotProps.data.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+          return [slotProps.data.status == 'T' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
             "class": "p-button-rounded p-button-info mr-2",
             icon: "pi pi-pencil",
@@ -5096,7 +5279,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }, null, 8
           /* PROPS */
-          , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+          , ["onClick"])), [[_directive_tooltip, 'Click to change status', void 0, {
+            bottom: true
+          }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.status == 'T' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+            key: 1,
+            "class": "p-button-rounded p-button-help mr-2",
+            icon: "bi bi-journal-text",
+            onClick: function onClick($event) {
+              return $options.createNoteAssigned(slotProps.data.ireqd_id, slotProps.data.ireq_id);
+            }
+          }, null, 8
+          /* PROPS */
+          , ["onClick"])), [[_directive_tooltip, 'Click to create note', void 0, {
+            bottom: true
+          }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.status == 'T' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+            key: 2,
+            "class": "p-button-rounded p-button-danger mr-2",
+            icon: "bi bi-journals",
+            onClick: function onClick($event) {
+              return $options.createRemarkAssigned(slotProps.data.ireqd_id, slotProps.data.ireq_id);
+            }
+          }, null, 8
+          /* PROPS */
+          , ["onClick"])), [[_directive_tooltip, 'Click to create remark', void 0, {
+            bottom: true
+          }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
         }),
         _: 1
         /* STABLE */
@@ -9642,9 +9849,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_442, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_443, [_hoisted_444, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_445, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-        modelValue: $data.editDetail.name,
+        modelValue: $data.editDetail.ireqd_id,
         "onUpdate:modelValue": _cache[113] || (_cache[113] = function ($event) {
-          return $data.editDetail.name = $event;
+          return $data.editDetail.ireqd_id = $event;
         }),
         disabled: ""
       }, null, 8
@@ -9711,6 +9918,132 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"submitted && !rbr.ket\" class=\"p-error\">\n                            Reason not filled\n                            </small> ")])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogNoteAssigned,
+    "onUpdate:visible": _cache[127] || (_cache[127] = function ($event) {
+      return $data.dialogNoteAssigned = $event;
+    }),
+    style: {
+      width: '500px'
+    },
+    header: "Dialog Create Note",
+    modal: true,
+    "class": "fluid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[125] || (_cache[125] = function ($event) {
+          return $options.submitNoteAssigned();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[126] || (_cache[126] = function ($event) {
+          return $options.cancelNoteAssigned();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_455, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_456, [_hoisted_457, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_458, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.noteAssigned.ireq_no,
+        "onUpdate:modelValue": _cache[122] || (_cache[122] = function ($event) {
+          return $data.noteAssigned.ireq_no = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_459, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_460, [_hoisted_461, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_462, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.noteAssigned.ireqd_id,
+        "onUpdate:modelValue": _cache[123] || (_cache[123] = function ($event) {
+          return $data.noteAssigned.ireqd_id = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_463, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_464, [_hoisted_465, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_466, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        modelValue: $data.noteAssigned.ireq_reason,
+        "onUpdate:modelValue": _cache[124] || (_cache[124] = function ($event) {
+          return $data.noteAssigned.ireq_reason = $event;
+        }),
+        placeholder: "If required",
+        autoResize: true,
+        rows: "5",
+        cols: "20"
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogRemarkAssigned,
+    "onUpdate:visible": _cache[133] || (_cache[133] = function ($event) {
+      return $data.dialogRemarkAssigned = $event;
+    }),
+    style: {
+      width: '500px'
+    },
+    header: "Dialog Create Remark",
+    modal: true,
+    "class": "fluid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Yes",
+        onClick: _cache[131] || (_cache[131] = function ($event) {
+          return $options.submitRemarkAssigned();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "No",
+        onClick: _cache[132] || (_cache[132] = function ($event) {
+          return $options.cancelRemarkAssigned();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_467, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_468, [_hoisted_469, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_470, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.remarkAssigned.ireq_no,
+        "onUpdate:modelValue": _cache[128] || (_cache[128] = function ($event) {
+          return $data.remarkAssigned.ireq_no = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_471, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_472, [_hoisted_473, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_474, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.remarkAssigned.ireqd_id,
+        "onUpdate:modelValue": _cache[129] || (_cache[129] = function ($event) {
+          return $data.remarkAssigned.ireqd_id = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_475, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_476, [_hoisted_477, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_478, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        modelValue: $data.remarkAssigned.ireq_assigned_remark,
+        "onUpdate:modelValue": _cache[130] || (_cache[130] = function ($event) {
+          return $data.remarkAssigned.ireq_assigned_remark = $event;
+        }),
+        placeholder: "If required",
+        autoResize: true,
+        rows: "5",
+        cols: "20"
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])])];
     }),
     _: 1
     /* STABLE */

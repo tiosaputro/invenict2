@@ -482,9 +482,9 @@
                         </div>
                 </div>
                 @php 
-                    $linkRequester = "http://localhost:8000/check-legality-qrcode-requester/{$link->link_id}"; 
-                    $linkIctManager = "http://localhost:8000/check-legality-qrcode-ict-manager/{$link->link_id}"; 
-                    $linkHigherLevel = "http://localhost:8000/check-legality-qrcode-higher-level/{$link->link_id}"; 
+                    $linkRequester = "http://localhost:8000/check-requester/{$link->link_id}"; 
+                    $linkIctManager = "http://localhost:8000/check-ict-manager/{$link->link_id}"; 
+                    $linkHigherLevel = "http://localhost:8000/check-higher-level/{$link->link_id}"; 
                 @endphp
                 <div class="wrap">
                     <div class="cell-wrap left">
@@ -493,7 +493,7 @@
                             <tr>
                                 <th>{{$detail[0]->ireq_requestor}}</th>
                                 <th>{{$detail[0]->div_name}}</th>
-                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
+                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
                             </tr>
                             <tr>
                                 <td>Name</td>
@@ -504,14 +504,14 @@
                     <div class="cell-wrap right">
                         <table class="right">
                             <p style="font-size:16px;"> Approved By : (For new installation/software loan) </p>
-                             @if ($detail[0]->cekstatus == 'NA1' || $detail[0]->cekstatus == 'A1' )
+                             @if ($detail[0]->cekstatus == 'NA1' || $detail[0]->cekstatus == 'A1' || $detail[0]->cekstatus == 'RA1' )
                                 <tr>
                                     <th>{{$detail[0]->usr_fullname}}</th>
                                     <th>{{$detail[0]->div_name}} Manager</th>
                                   @if($detail[0]->status == "RA1")
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br><strong>Rejected</strong> on {{$detail[0]->date_approver1}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel); !!}<br><strong>Rejected</strong> on {{$detail[0]->date_approver1}}</th>
                                   @elseif($detail[0]->status == "A1")
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkHigherLevel); !!}<br><strong>Approved</strong> on {{$detail[0]->date_approver1}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel); !!}<br><strong>Approved</strong> on {{$detail[0]->date_approver1}}</th>
                                   @elseif($detail[0]->status == "NA1")
                                     <th rowspan="2" style="font-size:12pt; font-weight:bold;">Waiting Approval</th>
                                   @endif
@@ -540,14 +540,14 @@
                     <div class="col invoice-to">
                       <p style="font-size:16px;"> III. IT Use Only</p>
                          <table> <p style="font-size:16px;"> Approved By :   (Note : Sr. Manager approval needed for new equipment/software/tools)</p>
-                             @if($detail[0]->cekstatus == 'NA2' || $detail[0]->cekstatus == 'A2' )
+                             @if($detail[0]->cekstatus == 'NA2' || $detail[0]->cekstatus == 'A2' || $detail[0]->cekstatus == 'RA2' )
                                 <tr>
                                     <th>Arifin Tahir</th>
                                     <th>ICT Manager</th>
                                     @if($detail[0]->status=='RA2')
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br> <strong>Rejected</strong> On {{$detail[0]->date_approver2}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('L')->size(80)->generate($linkIctManager); !!} <br> <strong>Rejected</strong> On {{$detail[0]->date_approver2}}</th>
                                     @elseif($detail[0]->status=='A2')
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('M')->size(80)->generate($linkIctManager); !!} <br><strong>Approved</strong> On {{$detail[0]->date_approver2}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkIctManager); !!} <br><strong>Approved</strong> On {{$detail[0]->date_approver2}}</th>
                                     @elseif($detail[0]->status=='NA2') 
                                     <th rowspan="2" style="font-size:10pt;"> Waiting Approval</th>
                                     @endif
@@ -578,6 +578,7 @@
                   <div class="col invoice-to">
                     <p style="font-size:16px;">IV. Request Review</p>
                         <table>
+                         @if($detail[0]->ireq_verificator)
                           <tr> 
                             <th width="200px" >{{$detail[0]->ireq_verificator}}</th>
                             <th>{{$detail[0]->ireq_verificator_remark}}</th>
@@ -588,6 +589,14 @@
                             <td>Remark</td>
                             <td width="200px">Problem Area</td>
                           </tr>
+                         @else
+                          <tr>
+                            <th rowspan="2" style="font-weight:bold;">Waiting for Verification</th>
+                          </tr>
+                          <tr>
+
+                          </tr>
+                         @endif
                         </table>
                   </div>
                 </div>

@@ -432,18 +432,17 @@ class IctDetailController extends Controller
         ->orderBy('id.ireqd_id','ASC')
         ->get();
 
-        $checkLink = Link::where('ireq_id',$code)->first();
+        $checkLink = Link::where('ireq_id',$code)->whereNull('usr_id')->first();
 
         if($checkLink){
             $link = $checkLink;
         }else{
-            $Date = $this->date->addDays(1);
+            $links = substr(md5(uniqid(rand(1,6))), 0, 6);
             $createLink = Link::create([
-                'link_id'=> md5($this->date),
-                'expired_at'=>Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                'link_id'=> $links,
                 'ireq_id'=>$code
             ]);
-            $link = Link::where('ireq_id',$code)->first();
+            $link = Link::where('ireq_id',$code)->whereNull('usr_id')->first();
         }
             return view('pdf/Report_ICT_PerDetail', compact('detail','link'));
     }
@@ -469,7 +468,7 @@ class IctDetailController extends Controller
     }
     public function getDetail($ireqd_id,$ireq_id){
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_assigned_to1','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 
+        ->select('id.ireq_assigned_to1','id.ireq_assigned_remark','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 
         'lrs.lookup_desc as name','lr.lookup_desc as ireq_type','id.ireq_qty','id.ireq_remark','id.ireq_assigned_to1_reason')
         ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
         ->leftJoin('lookup_refs as lrs',function ($join) {
@@ -483,7 +482,7 @@ class IctDetailController extends Controller
         ->where('id.ireqd_id',$ireqd_id)
         ->where('id.ireq_id',$ireq_id)
         ->first();
-            return response()->json($dtl);
+            return json_encode($dtl);
     }
     public function updateAssign(Request $request,$code)
     {
@@ -590,5 +589,17 @@ class IctDetailController extends Controller
             
             return response()->json('Updated Successfully');
         }
+    }
+    function saveRemark(Request $request,$code){
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$code)
+        ->where('ireq_id',$request->ireq_id)
+        ->update([
+            'ireq_assigned_remark' => $request->ireq_assigned_remark,
+            'last_update_date' => $this->newUpdate,
+            'last_updated_by' => Auth::user()->usr_name
+        ]);
+
+        return response()->json(['message'=>'Updated Successfully'],200);
     }
 }

@@ -44,11 +44,11 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true"  style="min-width:11rem"/>
-          <Column field="name" header="Nama Peripheral" :sortable="true"  style="min-width:11rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true"  style="min-width:11rem"/>
+          <Column field="name" header="Peripheral" :sortable="true"  style="min-width:11rem"/>
           <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:11rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Keterangan" :sortable="true" style="min-width:11rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:11rem"/>
           <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:11rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
