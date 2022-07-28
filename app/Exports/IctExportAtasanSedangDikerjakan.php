@@ -8,26 +8,22 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class IctExportAtasanSedangDikerjakan implements FromView
 {
-    function __construct($usr_name){
-        $this->usr_name = $usr_name;
+    function __construct($usr_email){
+        $this->usr_email = $usr_email;
     }
     public function view(): View
     {
         return view('excel/Laporan_Ict_Sedang_Dikerjakan', [ 'Ict' => DB::table('ireq_mst as im')
-        ->select('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','im.ireq_reason','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name','im.ireq_assigned_to',
-                DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'llr.lookup_desc as ireq_status')
-        ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->leftjoin('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->leftJoin('lookup_refs as lr',function ($join) {
-            $join->on('im.ireq_type','lr.lookup_code')
-                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-        })
-        ->leftjoin('lookup_refs as llr','im.ireq_status','llr.lookup_code')
-        ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->where('im.ireq_status','T')
-        ->where('dr.div_verificator',$this->usr_name)
-        ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->orderBy('im.creation_date','ASC')
+        ->SELECT('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
+        'im.ireq_requestor','lr.lookup_desc as ireq_status','vr.name as ireq_bu',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+        ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
+        ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+        ->WHERE('dr.div_verificator',$this->usr_email)
+        ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->WHERE('im.ireq_status','T')
+        ->groupBy(DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"),'dr.div_name','vr.name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status','im.ireq_user','im.creation_date','im.ireq_requestor','lr.lookup_desc')
+        ->ORDERBY('im.ireq_date','DESC')
         ->get()
         ]);
     }

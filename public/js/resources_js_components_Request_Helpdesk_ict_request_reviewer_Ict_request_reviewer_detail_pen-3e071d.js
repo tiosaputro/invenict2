@@ -104,7 +104,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
-      window.open('/api/print-out-ict-request/' + this.$route.params.code);
+      var _this4 = this;
+
+      this.loading = true;
+      this.axios.get('/api/print-out-ict-request/' + this.$route.params.code, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this4.loading = false;
+      });
     },
     CetakExcelSedangDikerjakan: function CetakExcelSedangDikerjakan() {
       window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' + this.$route.params.code);
@@ -249,15 +261,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onClick: _cache[2] || (_cache[2] = function ($event) {
           return $options.CetakPdfSedangDikerjakan();
         })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 1,
-        label: "Excel",
-        "class": "p-button-raised p-button-success mt-2",
-        icon: "pi pi-print",
-        onClick: _cache[3] || (_cache[3] = function ($event) {
-          return $options.CetakExcelSedangDikerjakan();
-        })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\r\n                    v-if=\"this.status == 'T'\" \r\n                    label=\"Excel\"\r\n                    class=\"p-button-raised p-button-success mt-2\"\r\n                    icon=\"pi pi-print\"\r\n                    @click=\"CetakExcelSedangDikerjakan()\" \r\n                  /> ")])])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {

@@ -460,7 +460,7 @@
 								<th>Personnel ICT</th>
 								<th>Status</th>
                             </tr>
-                            @if($ict)
+                            @if(sizeof($ict))
 							@foreach($ict as $i)
 								<tr>
 									<td>{{$i->ireq_no}}</td>
@@ -475,7 +475,7 @@
 							@endforeach
                             @else	
                             <tr>
-                                <td colspan="7" style="font-weight:bold;font-size:16px;">Data not found...</td>
+                                <td colspan="8" style="font-weight:bold;font-size:16px;">Data not found...</td>
                             </tr>
                             @endif
                       </table>

@@ -71,13 +71,13 @@
                     icon="pi pi-file-pdf"
                     @click="CetakPdfSedangDikerjakan()"
                   />
-                  <Button
+                  <!-- <Button
                     v-if="this.status == 'T'" 
                     label="Excel"
                     class="p-button-raised p-button-success mt-2"
                     icon="pi pi-print"
                     @click="CetakExcelSedangDikerjakan()" 
-                  />
+                  /> -->
                 </div>
 			        </div>
             </div>
@@ -147,7 +147,13 @@ export default {
       });
     },
     CetakPdfSedangDikerjakan(){
-     window.open('/api/print-out-ict-request/'+this.$route.params.code);
+     this.loading = true;
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelSedangDikerjakan(){
       window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.$route.params.code);

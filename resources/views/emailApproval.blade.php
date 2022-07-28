@@ -114,7 +114,7 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   <tbody>
   <tr>
     <td style="display:none !important;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
-      ICT REQUEST APPROVAL
+    ICT REQUEST NOTIFICATION APPROVAL
     </td>
   </tr>
   

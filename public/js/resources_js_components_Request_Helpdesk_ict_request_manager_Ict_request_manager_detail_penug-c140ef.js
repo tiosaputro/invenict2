@@ -104,7 +104,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     CetakPdf: function CetakPdf() {
-      window.open('/api/print-out-ict-request/' + this.$route.params.code);
+      var _this4 = this;
+
+      this.loading = true;
+      this.axios.get('/api/print-out-ict-request/' + this.$route.params.code, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this4.loading = false;
+      });
     } // CetakExcelSedangDikerjakan(){
     //   window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.$route.params.code);
     // }

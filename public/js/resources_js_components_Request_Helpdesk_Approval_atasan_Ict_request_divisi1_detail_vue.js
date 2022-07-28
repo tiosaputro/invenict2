@@ -143,7 +143,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     CetakPdf: function CetakPdf() {
-      window.open('/api/print-out-ict-request/' + this.$route.params.code);
+      var _this5 = this;
+
+      this.loading = true;
+      this.axios.get('/api/print-out-ict-request/' + this.code, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this5.loading = false;
+      });
     },
     CetakExcel: function CetakExcel() {
       window.open('/api/report-ict-detail-excel/' + this.code);

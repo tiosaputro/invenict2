@@ -163,7 +163,13 @@ export default {
       });
     },
     CetakPdf(){
-      window.open('/api/print-out-ict-request/' +this.$route.params.code);
+      this.loading = true;
+       this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcel(){
       window.open('/api/report-ict-detail-excel/' +this.code);

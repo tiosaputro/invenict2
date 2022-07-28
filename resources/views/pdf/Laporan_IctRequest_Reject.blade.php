@@ -460,7 +460,7 @@
 								<th>Status</th>
 								<th>Reason</th>
                             </tr>
-                            @if($ict)
+                            @if(sizeof($ict))
 							@foreach($ict as $i)
 								<tr>
 									<td>{{$i->ireq_no}}</td>

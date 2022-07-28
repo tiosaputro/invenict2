@@ -6,18 +6,16 @@ use DB;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class IctExportSudahDikerjakan implements FromView
+class IctExportManagerSudahDikerjakan implements FromView
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    function __construct($usr_name){
-        $this->usr_name = $usr_name;
-    }
     public function view(): View
     {
-        return view('excel/Laporan_Ict_Sudah_Dikerjakan', [ 'Ict' => DB::table('ireq_dtl as id')
+        return view('excel/Laporan_Ict_Selesai', [ 'Ict' => DB::table('ireq_dtl as id')
         ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+        ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
         ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->LEFTJOIN('lookup_refs as lr',function ($join) {
             $join->on('id.ireq_status','lr.lookup_code')
@@ -31,11 +29,10 @@ class IctExportSudahDikerjakan implements FromView
             $join->on('id.invent_code','lrfs.lookup_code')
                   ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
         })
-        ->SELECT('im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
-        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+        ->SELECT('vr.name as ireq_bu','im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as name','im.ireq_date','im.ireq_requestor','im.ireq_user',
         'dr.div_name','id.ireq_qty','id.ireq_status as status')
         ->WHERE('id.ireq_status','D')
-        ->WHERE('im.created_by',$this->usr_name)
         ->ORDERBY('im.ireq_date','DESC')
         ->get()
         ]);

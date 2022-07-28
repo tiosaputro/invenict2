@@ -189,40 +189,263 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     CetakPdfBlmDiverifikasi: function CetakPdfBlmDiverifikasi() {
-      window.open('api/report-ict-pdf-manager-permohonan');
+      var _this3 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-manager-permohonan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this3.loading = false;
+      });
     },
     CetakExcelBlmDiverifikasi: function CetakExcelBlmDiverifikasi() {
-      window.open('api/report-ict-excel-manager-permohonan');
+      var _this4 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-manager-permohonan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this4.loading = false;
+      });
     },
     CetakPdfSudahDiverifikasi: function CetakPdfSudahDiverifikasi() {
-      window.open('api/report-ict-pdf-manager-verifikasi');
+      var _this5 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-manager-verifikasi', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this5.loading = false;
+      });
     },
     CetakExcelSudahDiverifikasi: function CetakExcelSudahDiverifikasi() {
-      window.open('api/report-ict-excel-manager-verifikasi');
+      var _this6 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-manager-verifikasi', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this6.loading = false;
+      });
     },
     CetakPdfDireject: function CetakPdfDireject() {
-      window.open('api/report-ict-pdf-manager-reject');
+      var _this7 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-manager-reject', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this7.loading = false;
+      });
     },
     CetakExcelDireject: function CetakExcelDireject() {
-      window.open('api/report-ict-excel-manager-reject');
+      var _this8 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-manager-reject', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this8.loading = false;
+      });
+    },
+    CetakPdfAssignmentRequest: function CetakPdfAssignmentRequest() {
+      var _this9 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-manager-assignment-request', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this9.loading = false;
+      });
+    },
+    CetakExcelAssignmentRequest: function CetakExcelAssignmentRequest() {
+      var _this10 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-manager-assignment-request', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this10.loading = false;
+      });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
-      window.open('api/report-ict-pdf-manager-sedang-dikerjakan');
+      var _this11 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-manager-sedang-dikerjakan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this11.loading = false;
+      });
     },
     CetakExcelSedangDikerjakan: function CetakExcelSedangDikerjakan() {
-      window.open('api/report-ict-excel-manager-sedang-dikerjakan');
+      var _this12 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-manager-sedang-dikerjakan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this12.loading = false;
+      });
     },
     CetakPdfSudahDikerjakan: function CetakPdfSudahDikerjakan() {
-      window.open('api/report-ict-pdf-manager-sudah-dikerjakan');
+      var _this13 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-manager-sudah-dikerjakan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this13.loading = false;
+      });
     },
     CetakExcelSudahDikerjakan: function CetakExcelSudahDikerjakan() {
-      window.open('api/report-ict-excel-manager-sudah-dikerjakan');
+      var _this14 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-manager-sudah-dikerjakan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this14.loading = false;
+      });
     },
     CetakPdfSelesai: function CetakPdfSelesai() {
-      window.open('api/report-ict-pdf-manager-selesai');
+      var _this15 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-manager-selesai', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this15.loading = false;
+      });
     },
     CetakExcelSelesai: function CetakExcelSelesai() {
-      window.open('api/report-ict-excel-manager-selesai');
+      var _this16 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-manager-selesai', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this16.loading = false;
+      });
     }
   }
 });
@@ -430,43 +653,52 @@ var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Please wait ");
 
 var _hoisted_58 = {
-  "class": "field"
+  "class": "grid dir-col"
 };
 var _hoisted_59 = {
+  "class": "col"
+};
+var _hoisted_60 = {
+  "class": "box"
+};
+var _hoisted_61 = {
+  "class": "field"
+};
+var _hoisted_62 = {
   "class": "field grid"
 };
 
-var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_63 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
 }, "Alasan", -1
 /* HOISTED */
 );
 
-var _hoisted_61 = {
+var _hoisted_64 = {
   "class": "co-fixed w-9rem"
 };
-var _hoisted_62 = {
+var _hoisted_65 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_63 = {
+var _hoisted_66 = {
   "class": "field"
 };
-var _hoisted_64 = {
+var _hoisted_67 = {
   "class": "field grid"
 };
 
-var _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_68 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
 }, "Remark", -1
 /* HOISTED */
 );
 
-var _hoisted_66 = {
+var _hoisted_69 = {
   "class": "co-fixed w-9rem"
 };
 
-var _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "confirmation-content"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "pi pi-exclamation-triangle mr-3",
@@ -478,8 +710,6 @@ var _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _this = this;
-
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
@@ -1018,23 +1248,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               return [_hoisted_33];
             }),
             footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_this.reject.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 0,
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
                 onClick: _cache[10] || (_cache[10] = function ($event) {
-                  return _ctx.CetakPdfReject();
+                  return $options.CetakPdfAssignmentRequest();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.reject.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 1,
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
                 onClick: _cache[11] || (_cache[11] = function ($event) {
-                  return _ctx.CetakExcelReject();
+                  return $options.CetakExcelAssignmentRequest();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+              })])])])];
             }),
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -1229,18 +1457,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "ireq_assigned_to",
-                header: "Personnel (ICT)",
+                field: "div_name",
+                header: "User Division",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "div_name",
-                header: "User Division",
+                field: "ireq_assigned_to",
+                header: "Personnel (ICT)",
                 sortable: true,
                 style: {
-                  "min-width": "7rem"
+                  "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
@@ -1389,7 +1617,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Remark",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1422,15 +1650,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "8rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "ireq_assigned_to",
-                header: "Petugas ICT",
+                field: "div_name",
+                header: "User Division",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "div_name",
-                header: "User Division",
+                field: "ireq_assigned_to",
+                header: "Petugas ICT",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1498,6 +1726,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             loading: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [_hoisted_57];
             }),
+            footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                label: "Pdf",
+                "class": "p-button-raised p-button-danger mr-2",
+                icon: "pi pi-file-pdf",
+                onClick: _cache[19] || (_cache[19] = function ($event) {
+                  return $options.CetakPdfSelesai();
+                })
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                label: "Excel",
+                "class": "p-button-raised p-button-success mr-2",
+                icon: "pi pi-print",
+                onClick: _cache[20] || (_cache[20] = function ($event) {
+                  return $options.CetakExcelSelesai();
+                })
+              })])])])];
+            }),
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_no",
@@ -1539,7 +1784,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Remark",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "12rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
@@ -1642,7 +1887,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogReject,
-    "onUpdate:visible": _cache[22] || (_cache[22] = function ($event) {
+    "onUpdate:visible": _cache[24] || (_cache[24] = function ($event) {
       return $data.dialogReject = $event;
     }),
     style: {
@@ -1655,25 +1900,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Yes",
-        onClick: _cache[20] || (_cache[20] = function ($event) {
+        onClick: _cache[22] || (_cache[22] = function ($event) {
           return $options.updateReject();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "No",
-        onClick: _cache[21] || (_cache[21] = function ($event) {
+        onClick: _cache[23] || (_cache[23] = function ($event) {
           return $options.cancelReject();
         }),
         "class": "p-button-text"
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [_hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [_hoisted_63, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
         autoResize: true,
         type: "text",
         modelValue: $data.reason.ket,
-        "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
+        "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
           return $data.reason.ket = $event;
         }),
         rows: "5",
@@ -1683,7 +1928,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_62, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_65, " Alasan Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
@@ -1692,7 +1937,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogApprove,
-    "onUpdate:visible": _cache[26] || (_cache[26] = function ($event) {
+    "onUpdate:visible": _cache[28] || (_cache[28] = function ($event) {
       return $data.dialogApprove = $event;
     }),
     style: {
@@ -1705,25 +1950,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Yes",
-        onClick: _cache[24] || (_cache[24] = function ($event) {
+        onClick: _cache[26] || (_cache[26] = function ($event) {
           return $options.approve();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "No",
-        onClick: _cache[25] || (_cache[25] = function ($event) {
+        onClick: _cache[27] || (_cache[27] = function ($event) {
           return $options.cancelApprove();
         }),
         "class": "p-button-text"
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [_hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [_hoisted_68, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
         autoResize: true,
         type: "text",
         modelValue: $data.reason.remark,
-        "onUpdate:modelValue": _cache[23] || (_cache[23] = function ($event) {
+        "onUpdate:modelValue": _cache[25] || (_cache[25] = function ($event) {
           return $data.reason.remark = $event;
         }),
         rows: "5",
@@ -1740,7 +1985,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     header: "Confirmation",
     visible: $data.ConfirmationVerifikasi,
-    "onUpdate:visible": _cache[27] || (_cache[27] = function ($event) {
+    "onUpdate:visible": _cache[29] || (_cache[29] = function ($event) {
       return $data.ConfirmationVerifikasi = $event;
     }),
     style: {
@@ -1767,7 +2012,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , ["onClick"])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_67];
+      return [_hoisted_70];
     }),
     _: 1
     /* STABLE */

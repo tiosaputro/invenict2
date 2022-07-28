@@ -456,10 +456,9 @@
 								<th>Requestor</th>
 								<th>User</th>
 								<th>User Division</th>
-								<th>Business Unit</th>
 								<th>Status</th>
                             </tr>
-                            @if($ict)
+                            @if(sizeof($ict))
 							@foreach($ict as $i)
 								<tr>
 									<td>{{$i->ireq_no}}</td>
@@ -467,13 +466,12 @@
 									<td>{{$i->ireq_requestor}}</td>
 									<td>{{$i->ireq_user}}</td>
 									<td>{{$i->div_name}}</td>
-									<td>{{$i->ireq_bu}}</td>
 									<td>{{$i->ireq_status}}</td>
 								</tr>	
 							@endforeach
                             @else	
                             <tr>
-                                <td colspan="7" style="font-weight:bold;font-size:16px;">Data not found...</td>
+                                <td colspan="6" style="font-weight:bold;font-size:16px;">Data not found...</td>
                             </tr>
                             @endif
                       </table>

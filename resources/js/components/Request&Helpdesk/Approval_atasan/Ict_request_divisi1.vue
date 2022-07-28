@@ -310,18 +310,16 @@
                       <div class="p-col">
                         <div class="box">
                           <Button
-                            v-if="this.reject.length"
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
-                            @click="CetakPdfReject()"
+                            @click="CetakPdfAssignmentRequest()"
                           />
                           <Button 
-                            v-if="this.reject.length"
                             label="Excel"
                             class="p-button-raised p-button-success mr-2 mt-2"
                             icon="pi pi-print"
-                            @click="CetakExcelReject()" 
+                            @click="CetakExcelAssignmentRequest()" 
                           />
                         </div>
                       </div>
@@ -699,40 +697,165 @@ export default {
           }
     },
     CetakPdfPermohonan(){
-      window.open('api/report-ict-pdf-atasan-permohonan/'+this.usr_name);
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-atasan-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelPermohonan(){
-      window.open('api/report-ict-excel-atasan-permohonan/'+this.usr_name);
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-atasan-permohonan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
     CetakPdfVerifikasi(){
-      window.open('api/report-ict-pdf-atasan-verifikasi/'+this.usr_name);
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-atasan-verifikasi',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelVerifikasi(){
-      window.open('api/report-ict-excel-atasan-verifikasi/'+this.usr_name);
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-atasan-verifikasi',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
     CetakPdfReject(){
-      window.open('api/report-ict-pdf-atasan-reject/'+this.usr_name);
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-atasan-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelReject(){
-      window.open('api/report-ict-excel-atasan-reject/'+this.usr_name);
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-atasan-reject',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
+    },
+    CetakPdfAssignmentRequest(){
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-atasan-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
+    },
+    CetakExcelAssignmentRequest(){
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-atasan-assignment-request',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
     CetakPdfSedangDikerjakan(){
-      window.open('api/report-ict-pdf-atasan-sedang-dikerjakan/'+this.usr_name);
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-atasan-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelSedangDikerjakan(){
-      window.open('api/report-ict-excel-atasan-sedang-dikerjakan/'+this.usr_name);
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-atasan-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
     CetakPdfSudahDikerjakan(){
-      window.open('api/report-ict-pdf-atasan-sudah-dikerjakan/'+this.usr_name);
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-atasan-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelSudahDikerjakan(){
-      window.open('api/report-ict-excel-atasan-sudah-dikerjakan/'+this.usr_name);
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-atasan-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
     CetakPdfSelesai(){
-      window.open('api/report-ict-atasan-pdf-selesai/'+this.usr_name);
+      this.loading = true;
+       this.axios.get('api/report-ict-atasan-pdf-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelSelesai(){
-      window.open('api/report-ict-atasan-excel-selesai/'+this.usr_name);
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-atasan-excel-selesai',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
   },
 };
