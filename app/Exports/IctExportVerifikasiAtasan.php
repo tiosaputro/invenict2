@@ -17,7 +17,7 @@ class IctExportVerifikasiAtasan implements FromView
     public function view(): View
     {
         return view('excel/Laporan_Ict_Permohonan', [ 'Ict' => DB::table('ireq_mst as im')
-        ->SELECT('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as ireq_statuss','im.ireq_user',
+        ->SELECT('dr.div_name','im.ireq_id','im.ireq_no',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_status as ireq_statuss','im.ireq_user',
         'im.ireq_requestor','lr.lookup_desc as ireq_status','vr.name as ireq_bu')
         ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
         ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')

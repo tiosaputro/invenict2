@@ -379,50 +379,316 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     CetakPdf: function CetakPdf(ireq_id) {
-      window.open('/api/print-out-ict-request/' + ireq_id);
-    } // CetakPdfPermohonan(){
-    //   window.open('api/report-ict-pdf-reviewer-permohonan');
-    // },
-    // CetakExcelPermohonan(){
-    //   window.open('api/report-ict-excel-reviewer-permohonan');
-    // },
-    // CetakPdfAtasanDivisi(){
-    //   window.open('api/report-ict-pdf-reviewer-atasan-divisi');
-    // },
-    // CetakExcelAtasanDivisi(){
-    //   window.open('api/report-ict-excel-reviewer-atasan-divisi');
-    // },
-    // CetakPdfIctManager(){
-    //   window.open('api/report-ict-pdf-reviewer-ict-manager');
-    // },
-    // CetakExcelIctManager(){
-    //   window.open('api/report-ict-excel-reviewer-ict-manager');
-    // },
-    // CetakPdfReject(){
-    //   window.open('api/report-ict-pdf-reviewer-reject');
-    // },
-    // CetakExcelReject(){
-    //   window.open('api/report-ict-excel-reviewer-reject');
-    // },
-    // CetakPdfSedangDikerjakan(){
-    //   window.open('api/report-ict-pdf-reviewer-sedang-dikerjakan');
-    // },
-    // CetakExcelSedangDikerjakan(){
-    //   window.open('api/report-ict-excel-reviewer-sedang-dikerjakan');
-    // },
-    // CetakPdfSudahDikerjakan(){
-    //   window.open('api/report-ict-pdf-reviewer-sudah-dikerjakan');
-    // },
-    // CetakExcelSudahDikerjakan(){
-    //   window.open('api/report-ict-excel-reviewer-sudah-dikerjakan');
-    // },
-    // CetakPdfSelesai(){
-    //   window.open('api/report-ict-pdf-reviewer-selesai');
-    // },
-    // CetakExcelSelesai(){
-    //   window.open('api/report-ict-excel-reviewer-selesai');
-    // },
+      var _this11 = this;
 
+      this.loading = true;
+      this.axios.get('api/print-out-ict-request/' + ireq_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this11.loading = false;
+      });
+    },
+    CetakPdfPermohonan: function CetakPdfPermohonan() {
+      var _this12 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-reviewer-permohonan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this12.loading = false;
+      });
+    },
+    CetakExcelPermohonan: function CetakExcelPermohonan() {
+      var _this13 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-reviewer-permohonan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this13.loading = false;
+      });
+    },
+    CetakPdfAtasanDivisi: function CetakPdfAtasanDivisi() {
+      var _this14 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this14.loading = false;
+      });
+    },
+    CetakExcelAtasanDivisi: function CetakExcelAtasanDivisi() {
+      var _this15 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-reviewer-atasan-divisi', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this15.loading = false;
+      });
+    },
+    CetakPdfIctManager: function CetakPdfIctManager() {
+      var _this16 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-reviewer-ict-manager', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this16.loading = false;
+      });
+    },
+    CetakExcelIctManager: function CetakExcelIctManager() {
+      var _this17 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-reviewer-ict-manager', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this17.loading = false;
+      });
+    },
+    CetakPdfReject: function CetakPdfReject() {
+      var _this18 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-reviewer-reject', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this18.loading = false;
+      });
+    },
+    CetakExcelReject: function CetakExcelReject() {
+      var _this19 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-reviewer-reject', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this19.loading = false;
+      });
+    },
+    CetakPdfAssignmentRequest: function CetakPdfAssignmentRequest() {
+      var _this20 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-reviewer-assignment-request', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this20.loading = false;
+      });
+    },
+    CetakExcelAssignmentRequest: function CetakExcelAssignmentRequest() {
+      var _this21 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-reviewer-assignment-request', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this21.loading = false;
+      });
+    },
+    CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
+      var _this22 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this22.loading = false;
+      });
+    },
+    CetakExcelSedangDikerjakan: function CetakExcelSedangDikerjakan() {
+      var _this23 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-reviewer-sedang-dikerjakan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this23.loading = false;
+      });
+    },
+    CetakPdfSudahDikerjakan: function CetakPdfSudahDikerjakan() {
+      var _this24 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this24.loading = false;
+      });
+    },
+    CetakExcelSudahDikerjakan: function CetakExcelSudahDikerjakan() {
+      var _this25 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-reviewer-sudah-dikerjakan', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this25.loading = false;
+      });
+    },
+    CetakPdfSelesai: function CetakPdfSelesai() {
+      var _this26 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-ict-pdf-reviewer-selesai', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this26.loading = false;
+      });
+    },
+    CetakExcelSelesai: function CetakExcelSelesai() {
+      var _this27 = this;
+
+      var date = new Date();
+      var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-ict-excel-reviewer-selesai', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this27.loading = false;
+      });
+    }
   }
 });
 
@@ -707,13 +973,22 @@ var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_70 = ["onClick"];
 var _hoisted_71 = {
-  "class": "p-fluid"
+  "class": "grid dir-col"
 };
 var _hoisted_72 = {
+  "class": "col"
+};
+var _hoisted_73 = {
+  "class": "box"
+};
+var _hoisted_74 = {
+  "class": "p-fluid"
+};
+var _hoisted_75 = {
   "class": "field grid"
 };
 
-var _hoisted_73 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_76 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem",
     style: {
@@ -724,21 +999,21 @@ var _hoisted_73 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_74 = {
+var _hoisted_77 = {
   "class": "col"
 };
-var _hoisted_75 = {
+var _hoisted_78 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_76 = {
+var _hoisted_79 = {
   "class": "fluid"
 };
-var _hoisted_77 = {
+var _hoisted_80 = {
   "class": "field grid"
 };
 
-var _hoisted_78 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_81 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
   }, "Personnel (ICT)", -1
@@ -746,26 +1021,26 @@ var _hoisted_78 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_79 = {
+var _hoisted_82 = {
   "class": "col-fixed w-9rem"
 };
-var _hoisted_80 = {
+var _hoisted_83 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_81 = {
+var _hoisted_84 = {
   style: {
     "width": "130px"
   }
 };
-var _hoisted_82 = {
+var _hoisted_85 = {
   "class": "table-header text-right"
 };
-var _hoisted_83 = {
+var _hoisted_86 = {
   "class": "p-input-icon-left"
 };
 
-var _hoisted_84 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_87 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "pi pi-search"
   }, null, -1
@@ -773,16 +1048,16 @@ var _hoisted_84 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_85 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Loading data. Please wait ");
+var _hoisted_88 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Loading data. Please wait ");
 
-var _hoisted_86 = {
+var _hoisted_89 = {
   "class": "p-fluid"
 };
-var _hoisted_87 = {
+var _hoisted_90 = {
   "class": "field grid"
 };
 
-var _hoisted_88 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_91 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem",
     style: {
@@ -793,7 +1068,7 @@ var _hoisted_88 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_89 = {
+var _hoisted_92 = {
   "class": "col"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -877,14 +1152,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
                 onClick: _cache[1] || (_cache[1] = function ($event) {
-                  return _ctx.CetakPdfPermohonan();
+                  return $options.CetakPdfPermohonan();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
                 onClick: _cache[2] || (_cache[2] = function ($event) {
-                  return _ctx.CetakExcelPermohonan();
+                  return $options.CetakExcelPermohonan();
                 })
               })])])])];
             }),
@@ -1106,14 +1381,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
                 onClick: _cache[4] || (_cache[4] = function ($event) {
-                  return _ctx.CetakPdfAtasanDivisi();
+                  return $options.CetakPdfAtasanDivisi();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
                 onClick: _cache[5] || (_cache[5] = function ($event) {
-                  return _ctx.CetakExcelAtasanDivisi();
+                  return $options.CetakExcelAtasanDivisi();
                 })
               })])])])];
             }),
@@ -1327,23 +1602,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               return [_hoisted_27];
             }),
             footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_this.manager.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 0,
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
                 onClick: _cache[7] || (_cache[7] = function ($event) {
-                  return _ctx.CetakPdfIctManager();
+                  return $options.CetakPdfIctManager();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.manager.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 1,
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
                 onClick: _cache[8] || (_cache[8] = function ($event) {
-                  return _ctx.CetakExcelIctManager();
+                  return $options.CetakExcelIctManager();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+              })])])])];
             }),
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -1369,7 +1642,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Request Date",
                 sortable: true,
                 style: {
-                  "min-width": "7rem"
+                  "min-width": "10rem"
                 }
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1546,23 +1819,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               return [_hoisted_37];
             }),
             footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_this.reject.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 0,
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
                 onClick: _cache[10] || (_cache[10] = function ($event) {
-                  return _ctx.CetakPdfReject();
+                  return $options.CetakPdfReject();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.reject.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 1,
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
                 onClick: _cache[11] || (_cache[11] = function ($event) {
-                  return _ctx.CetakExcelReject();
+                  return $options.CetakExcelReject();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+              })])])])];
             }),
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -1704,23 +1975,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               return [_hoisted_45];
             }),
             footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [_this.reject.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 0,
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
                 onClick: _cache[13] || (_cache[13] = function ($event) {
-                  return _ctx.CetakPdfReject();
+                  return $options.CetakPdfAssignmentRequest();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.reject.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 1,
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
                 onClick: _cache[14] || (_cache[14] = function ($event) {
-                  return _ctx.CetakExcelReject();
+                  return $options.CetakExcelAssignmentRequest();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+              })])])])];
             }),
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -1882,23 +2151,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               return [_hoisted_53];
             }),
             footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [_this.sedangDikerjakan.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 0,
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Pdf",
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
                 onClick: _cache[16] || (_cache[16] = function ($event) {
-                  return _ctx.CetakPdfSedangDikerjakan();
+                  return $options.CetakPdfSedangDikerjakan();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.sedangDikerjakan.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-                key: 1,
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
                 onClick: _cache[17] || (_cache[17] = function ($event) {
-                  return _ctx.CetakExcelSedangDikerjakan();
+                  return $options.CetakExcelSedangDikerjakan();
                 })
-              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+              })])])])];
             }),
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -2045,14 +2312,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 "class": "p-button-raised p-button-danger mr-2",
                 icon: "pi pi-file-pdf",
                 onClick: _cache[19] || (_cache[19] = function ($event) {
-                  return _ctx.CetakPdfSudahDikerjakan();
+                  return $options.CetakPdfSudahDikerjakan();
                 })
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                 label: "Excel",
                 "class": "p-button-raised p-button-success mr-2",
                 icon: "pi pi-print",
                 onClick: _cache[20] || (_cache[20] = function ($event) {
-                  return _ctx.CetakExcelSudahDikerjakan();
+                  return $options.CetakExcelSudahDikerjakan();
                 })
               })])])])];
             }),
@@ -2222,6 +2489,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             loading: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [_hoisted_69];
             }),
+            footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                label: "Pdf",
+                "class": "p-button-raised p-button-danger mr-2",
+                icon: "pi pi-file-pdf",
+                onClick: _cache[22] || (_cache[22] = function ($event) {
+                  return $options.CetakPdfSelesai();
+                })
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                label: "Excel",
+                "class": "p-button-raised p-button-success mr-2",
+                icon: "pi pi-print",
+                onClick: _cache[23] || (_cache[23] = function ($event) {
+                  return $options.CetakExcelSelesai();
+                })
+              })])])])];
+            }),
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
               return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_no",
@@ -2382,7 +2666,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogReject,
-    "onUpdate:visible": _cache[25] || (_cache[25] = function ($event) {
+    "onUpdate:visible": _cache[27] || (_cache[27] = function ($event) {
       return $data.dialogReject = $event;
     }),
     style: {
@@ -2395,25 +2679,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Save",
-        onClick: _cache[23] || (_cache[23] = function ($event) {
+        onClick: _cache[25] || (_cache[25] = function ($event) {
           return $options.updateReject();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Cancel",
-        onClick: _cache[24] || (_cache[24] = function ($event) {
+        onClick: _cache[26] || (_cache[26] = function ($event) {
           return $options.cancelReject();
         }),
         "class": "p-button-text"
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [_hoisted_73, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [_hoisted_76, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
         autoResize: true,
         type: "text",
         modelValue: $data.rbr.ket,
-        "onUpdate:modelValue": _cache[22] || (_cache[22] = function ($event) {
+        "onUpdate:modelValue": _cache[24] || (_cache[24] = function ($event) {
           return $data.rbr.ket = $event;
         }),
         rows: "5",
@@ -2423,7 +2707,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.rbr.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_75, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "class"]), $data.submitted && !$data.rbr.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_78, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
@@ -2432,7 +2716,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogAssign,
-    "onUpdate:visible": _cache[29] || (_cache[29] = function ($event) {
+    "onUpdate:visible": _cache[31] || (_cache[31] = function ($event) {
       return $data.dialogAssign = $event;
     }),
     style: {
@@ -2446,23 +2730,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Save",
-        onClick: _cache[27] || (_cache[27] = function ($event) {
+        onClick: _cache[29] || (_cache[29] = function ($event) {
           return $options.updateAssign();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Cancel",
-        onClick: _cache[28] || (_cache[28] = function ($event) {
+        onClick: _cache[30] || (_cache[30] = function ($event) {
           return $options.cancelAssign();
         }),
         "class": "p-button-text"
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_76, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [_hoisted_78, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [_hoisted_81, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
         modelValue: $data.assign.name,
-        "onUpdate:modelValue": _cache[26] || (_cache[26] = function ($event) {
+        "onUpdate:modelValue": _cache[28] || (_cache[28] = function ($event) {
           return $data.assign.name = $event;
         }),
         options: $data.petugas,
@@ -2474,7 +2758,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_80, " Personnel (ICT) not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_83, " Personnel (ICT) not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
@@ -2483,7 +2767,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.displayDetailRequest,
-    "onUpdate:visible": _cache[31] || (_cache[31] = function ($event) {
+    "onUpdate:visible": _cache[33] || (_cache[33] = function ($event) {
       return $data.displayDetailRequest = $event;
     }),
     style: {
@@ -2497,7 +2781,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mb-4"
       }, {
         end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_81, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.ireq_no), 1
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_84, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.ireq_no), 1
           /* TEXT */
           )];
         }),
@@ -2517,9 +2801,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         responsiveLayout: "scroll"
       }, {
         header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_83, [_hoisted_84, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_86, [_hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
             modelValue: $data.filters['global'].value,
-            "onUpdate:modelValue": _cache[30] || (_cache[30] = function ($event) {
+            "onUpdate:modelValue": _cache[32] || (_cache[32] = function ($event) {
               return $data.filters['global'].value = $event;
             }),
             placeholder: "Search. . ."
@@ -2528,7 +2812,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           , ["modelValue"])])])];
         }),
         loading: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_85];
+          return [_hoisted_88];
         }),
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -2596,7 +2880,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogRemark,
-    "onUpdate:visible": _cache[35] || (_cache[35] = function ($event) {
+    "onUpdate:visible": _cache[37] || (_cache[37] = function ($event) {
       return $data.dialogRemark = $event;
     }),
     style: {
@@ -2609,25 +2893,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Save",
-        onClick: _cache[33] || (_cache[33] = function ($event) {
+        onClick: _cache[35] || (_cache[35] = function ($event) {
           return $options.updateRemark();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Cancel",
-        onClick: _cache[34] || (_cache[34] = function ($event) {
+        onClick: _cache[36] || (_cache[36] = function ($event) {
           return $options.cancelRemark();
         }),
         "class": "p-button-text"
       })];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_86, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_87, [_hoisted_88, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_89, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_89, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_90, [_hoisted_91, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_92, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
         autoResize: true,
         type: "text",
         modelValue: $data.remark.remark,
-        "onUpdate:modelValue": _cache[32] || (_cache[32] = function ($event) {
+        "onUpdate:modelValue": _cache[34] || (_cache[34] = function ($event) {
           return $data.remark.remark = $event;
         }),
         rows: "5",

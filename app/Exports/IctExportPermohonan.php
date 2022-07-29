@@ -25,7 +25,7 @@ class IctExportPermohonan implements FromView
                 ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         })
         ->LEFTJOIN('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
-        ->SELECT('vr.name as ireq_bu','id.ireq_id','id.ireq_status as status','id.ireq_no','id.ireq_date','id.ireq_user','dr.div_name','id.ireq_requestor',
+        ->SELECT(DB::raw("TO_CHAR(id.ireq_date,' dd Mon YYYY') as ireq_date"),'vr.name as ireq_bu','id.ireq_id','id.ireq_status as status','id.ireq_no','id.ireq_date','id.ireq_user','dr.div_name','id.ireq_requestor',
                 DB::raw('count(DISTINCT(idm.ireq_id)) as count'),'llr.lookup_desc as ireq_status')
         ->WHERE('id.created_by',$this->usr_name)
         ->WHERE('id.ireq_status','P')

@@ -20,7 +20,7 @@ class IctExportTabReviewer implements FromView
         ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
         ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
         ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->SELECT('vr.name as ireq_bu','im.ireq_requestor','im.ireq_status as status','dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','lr.lookup_desc as ireq_status')
+        ->SELECT('vr.name as ireq_bu','im.ireq_requestor','im.ireq_status as status','dr.div_name','im.ireq_id','im.ireq_no',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','lr.lookup_desc as ireq_status')
         ->WHERE('im.created_by',$this->usr_name)
         ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->WHERE(function($query){

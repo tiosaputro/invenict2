@@ -863,7 +863,6 @@ export default {
     methods:{
 		CekUser(){
 			this.loader = this.$loading.show({
-			// Pass props by their camelCased names
 			container: this.$refs.loadingContainer,
 			color: '#2772d9',
 			loader: 'spinner',

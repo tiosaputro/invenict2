@@ -9,10 +9,10 @@
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                   <form @submit.prevent="Login">
                     <div class="text-center mb-5">
-                        <div class="text-900 text-3xl font-medium mb-3">Selamat Datang di</div>
+                        <div class="text-900 text-3xl font-medium mb-3">Welcome to</div>
                         <span class="text-600 font-medium">System ICT Helpdesk 👋</span>
                         <Message severity="warn" v-if="this.error">Periksa kembali koneksi sophos atau wifi anda</Message>
-                        <Message severity="warn" v-if="this.errorr">Periksa kembali domain account anda</Message>
+                        <Message severity="warn" v-if="this.errorr">Can't login. Please check your domain account</Message>
                     </div>
                         <div class="w-full md:w-10 mx-auto">
                           <label for="email1" class="block text-900 text-xl font-medium mb-2">Username/Email</label>

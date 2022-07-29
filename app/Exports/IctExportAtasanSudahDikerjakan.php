@@ -33,11 +33,12 @@ class IctExportAtasanSudahDikerjakan implements FromView
                   ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
         })
         ->SELECT('vr.name as ireq_bu','im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
-        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as name','im.ireq_date','im.ireq_requestor','im.ireq_user',
+        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_requestor','im.ireq_user',
         'dr.div_name','id.ireq_qty','id.ireq_status as status')
         ->WHERE('id.ireq_status','D')
         ->WHERE('dr.div_verificator', $this->usr_email)
         ->ORDERBY('im.ireq_date','DESC')
+        ->ORDERBY('id.ireqd_id','ASC')
         ->get()
         ]);
     }
