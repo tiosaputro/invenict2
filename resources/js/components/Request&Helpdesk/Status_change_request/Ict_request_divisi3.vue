@@ -1,5 +1,5 @@
 <template>
-  <div class="grid crud-demo">
+  <div class="grid">
     <div class="col-12">
       <div class="card">
         <Toast />
@@ -78,13 +78,13 @@
                             label="Pdf"
                             class="p-button-raised p-button-danger mr-2"
                             icon="pi pi-file-pdf"
-                            @click="CetakPdfSedangDikerjakan()"
+                            @click="CetakPdfAssignmentRequest()"
                           />
                           <Button 
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
-                            @click="CetakExcelSedangDikerjakan()" 
+                            @click="CetakExcelAssignmentRequest()" 
                           />
                         </div>
                       </div>
@@ -143,6 +143,26 @@
                     />
                     </template>
                   </Column>
+                  <template #footer>
+                    <div class="p-grid p-dir-col">
+                      <div class="p-col">
+                        <div class="box">
+                          <Button
+                            label="Pdf"
+                            class="p-button-raised p-button-danger mr-2"
+                            icon="pi pi-file-pdf"
+                            @click="CetakPdfReject()"
+                          />
+                          <Button 
+                            label="Excel"
+                            class="p-button-raised p-button-success mr-2"
+                            icon="pi pi-print"
+                            @click="CetakExcelReject()" 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
                 </DataTable>   
               </TabPanel>
               <TabPanel header="On Progress">
@@ -366,26 +386,37 @@
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
-                <template #footer>
-                    <div class="p-grid p-dir-col">
-                      <div class="p-col">
-                        <div class="box">
-                          <Button
-                            label="Pdf"
-                            class="p-button-raised p-button-danger mr-2"
-                            icon="pi pi-file-pdf"
-                            @click="CetakPdfSelesai()"
-                          />
-                          <Button 
-                            label="Excel"
-                            class="p-button-raised p-button-success mr-2"
-                            icon="pi pi-print"
-                            @click="CetakExcelSelesai()" 
-                          />
+                  <Column>
+                    <template #body="slotProps">
+                      <Button
+                        label="Pdf"
+                        class="p-button-raised p-button-danger mr-2"
+                        v-tooltip.bottom="'Click to print out (PDF)'"
+                        icon="pi pi-file-pdf"
+                        @click="CetakPdf(slotProps.data.ireq_id)"
+                      />
+                    </template>
+                  </Column>
+                  <template #footer>
+                      <div class="p-grid p-dir-col">
+                        <div class="p-col">
+                          <div class="box">
+                            <Button
+                              label="Pdf"
+                              class="p-button-raised p-button-danger mr-2"
+                              icon="pi pi-file-pdf"
+                              @click="CetakPdfSelesai()"
+                            />
+                            <Button 
+                              label="Excel"
+                              class="p-button-raised p-button-success mr-2"
+                              icon="pi pi-print"
+                              @click="CetakExcelSelesai()" 
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </template>
+                    </template>
                 </DataTable> 
               </TabPanel>
             </TabView>
@@ -628,7 +659,7 @@ export default {
         },
         reject: () => {},
       });
-      },
+    },
     rejectRequest(ireq_id){
       this.code = ireq_id;
       this.dialogEdit = true;
@@ -743,23 +774,129 @@ export default {
         this.status = response.data;
       });
     },
+    CetakPdfAssignmentRequest(){
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-personnel-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
+    },
+    CetakExcelAssignmentRequest(){
+    const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-personnel-assignment-request',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
+    },
+    CetakPdfReject(){
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-personnel-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
+    },
+    CetakExcelReject(){
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-personnel-reject',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
+    },
     CetakPdfSedangDikerjakan(){
-      window.open('/api/report-ict-pdf-personnel-sedang-dikerjakan/'+this.user.usr_fullname);
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-personnel-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelSedangDikerjakan(){
-      window.open('/api/report-ict-excel-personnel-sedang-dikerjakan/'+this.user.usr_fullname);
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-personnel-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
     CetakPdfSudahDikerjakan(){
-      window.open('/api/report-ict-pdf-personnel-sudah-dikerjakan/'+this.user.usr_fullname);
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-personnel-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelSudahDikerjakan(){
-      window.open('/api/report-ict-excel-personnel-sudah-dikerjakan/'+this.user.usr_fullname);
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-personnel-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
     CetakPdfSelesai(){
-      window.open('/api/report-ict-pdf-personnel-selesai/'+this.user.usr_fullname);
+      this.loading = true;
+       this.axios.get('api/report-ict-pdf-personnel-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcelSelesai(){
-      window.open('/api/report-ict-excel-personnel-selesai/'+this.user.usr_fullname);
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-ict-excel-personnel-selesai',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
+    },
+    CetakPdf(ireq_id){
+      this.loading = true;
+       this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
   },
 };

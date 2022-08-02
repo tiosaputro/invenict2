@@ -768,14 +768,14 @@
                     </template>
                   </Column>
                   <Column>
-                  <template #body="slotProps">
-                    <Button
-                      label="Pdf"
-                      class="p-button-raised p-button-danger mr-2"
-                      v-tooltip.bottom="'Click to print out (PDF)'"
-                      icon="pi pi-file-pdf"
-                      @click="CetakPdf(slotProps.data.ireq_id)"
-                    />
+                    <template #body="slotProps">
+                      <Button
+                        label="Pdf"
+                        class="p-button-raised p-button-danger mr-2"
+                        v-tooltip.bottom="'Click to print out (PDF)'"
+                        icon="pi pi-file-pdf"
+                        @click="CetakPdf(slotProps.data.ireq_id)"
+                      />
                     </template>
                   </Column>
                   <template #footer>

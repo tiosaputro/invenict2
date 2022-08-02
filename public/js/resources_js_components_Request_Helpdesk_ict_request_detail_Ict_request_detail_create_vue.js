@@ -523,7 +523,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.ket = $event;
     }),
-    rows: "5",
+    rows: "6",
+    cols: "40",
     placeholder: "Enter Remark",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
       'p-invalid': $data.errors.ket

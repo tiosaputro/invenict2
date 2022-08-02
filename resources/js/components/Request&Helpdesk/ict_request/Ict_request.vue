@@ -770,24 +770,26 @@ export default {
         data.append("ket", this.reason.ket);
         this.axios.post('/api/submit-rating',data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.reason = {id:null, ket :null, ireq_id:null};
+          this.dialogEdit = false;
+          this.loading = true;
           this.sangat_bagus = false;
-          this.bagus=false;
+          this.bagus = false;
           this.baik = false;
           this.kurang = false;
           this.sangat_kurang = false;
           this.must = false;
           this.rating = 0;
           this.submitted = false;
-          this.dialogEdit = false;
           this.$toast.add({
-            severity:'info', summary: 'Success Submit', detail:'Ulasan Berhasil Disubmit',life:2000
+            severity:'info', summary: 'Success Submit', detail:'Thanks for you feedback',life:2000
           });
-          this.loading = true;
           this.getIct();
         });
         }
       }
       else{
+        this.dialogEdit = false;
+        this.loading = true;
         const data = new FormData();
         data.append("rating", this.rating);
         data.append("id", this.reason.id);
@@ -800,9 +802,8 @@ export default {
           this.kurang = false;
           this.sangat_kurang = false;
           this.must = false;
-          this.dialogEdit = false;
           this.$toast.add({
-            severity:'info', summary: 'Success Submit', detail:'Ulasan Berhasil Disubmit',life:2000
+            severity:'info', summary: 'Success Submit', detail:'Thank for your feedback',life:2000
           });
           this.getIct();
         });

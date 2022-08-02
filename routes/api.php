@@ -421,12 +421,16 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/report-ict-pdf-manager-selesai','IctController@cetak_pdf_manager_selesai');
 
     //report status change request
-    Route::get('/report-ict-excel-personnel-sedang-dikerjakan/{usr_fullname}','IctController@cetak_excel_personnel_sedang_dikerjakan');
-    Route::get('/report-ict-pdf-personnel-sedang-dikerjakan/{usr_fullname}','IctController@cetak_pdf_personnel_sedang_dikerjakan');
-    Route::get('/report-ict-excel-personnel-sudah-dikerjakan/{usr_fullname}','IctController@cetak_excel_personnel_sudah_dikerjakan');
-    Route::get('/report-ict-pdf-personnel-sudah-dikerjakan/{usr_fullname}','IctController@cetak_pdf_personnel_sudah_dikerjakan');
-    Route::get('/report-ict-excel-personnel-selesai/{usr_fullname}','IctController@cetak_excel_personnel_selesai');
-    Route::get('/report-ict-pdf-personnel-selesai/{usr_fullname}','IctController@cetak_pdf_personnel_selesai'); 
+    Route::get('/report-ict-excel-personnel-assignment-request','IctController@cetak_excel_personnel_assignment_request');
+    Route::get('/report-ict-pdf-personnel-assignment-request','IctController@cetak_pdf_personnel_assignment_request');
+    Route::get('/report-ict-excel-personnel-reject','IctController@cetak_excel_personnel_reject');
+    Route::get('/report-ict-pdf-personnel-reject','IctController@cetak_pdf_personnel_reject');
+    Route::get('/report-ict-excel-personnel-sedang-dikerjakan','IctController@cetak_excel_personnel_sedang_dikerjakan');
+    Route::get('/report-ict-pdf-personnel-sedang-dikerjakan','IctController@cetak_pdf_personnel_sedang_dikerjakan');
+    Route::get('/report-ict-excel-personnel-sudah-dikerjakan','IctController@cetak_excel_personnel_sudah_dikerjakan');
+    Route::get('/report-ict-pdf-personnel-sudah-dikerjakan','IctController@cetak_pdf_personnel_sudah_dikerjakan');
+    Route::get('/report-ict-excel-personnel-selesai','IctController@cetak_excel_personnel_selesai');
+    Route::get('/report-ict-pdf-personnel-selesai','IctController@cetak_pdf_personnel_selesai'); 
 });
     Route::get('/req-per-status-excel','LaporanController@cetak_excel_per_status');
     Route::get('/req-per-status-pdf','LaporanController@cetak_pdf_per_status');

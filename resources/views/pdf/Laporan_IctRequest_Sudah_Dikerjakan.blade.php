@@ -442,7 +442,7 @@
 								<th>Request Type</th>
 								<th>Peripheral</th>
 								<th>Qty</th>
-								<th>Keterangan</th>
+								<th>Remark</th>
 								<th>Request Date</th>
 								<th>Requestor</th>
 								<th>User</th>

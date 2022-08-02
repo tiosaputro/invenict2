@@ -522,6 +522,17 @@
                       <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
+                  <Column>
+                    <template #body="slotProps">
+                      <Button
+                        label="Pdf"
+                        class="p-button-raised p-button-danger mr-2"
+                        v-tooltip.bottom="'Click to print out (PDF)'"
+                        icon="pi pi-file-pdf"
+                        @click="CetakPdf(slotProps.data.ireq_id)"
+                      />
+                    </template>
+                  </Column>
                   <template #footer>
                     <div class="grid dir-col">
                       <div class="col">
@@ -639,7 +650,7 @@ export default {
         });
     },
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY")
+      return moment(date).format("DD MMM YYYY HH:mm")
     },
     VerifikasiRequest(ireq_id){
       this.code = ireq_id;
@@ -854,6 +865,15 @@ export default {
           link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
           document.body.appendChild(link);
           link.click();
+          this.loading = false;
+       });
+    },
+    CetakPdf(ireq_id){
+      this.loading = true;
+       this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
           this.loading = false;
        });
     },

@@ -88,7 +88,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     formatDate: function formatDate(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
     VerifikasiRequest: function VerifikasiRequest(ireq_id) {
       this.code = ireq_id;
@@ -422,6 +422,21 @@ __webpack_require__.r(__webpack_exports__);
         document.body.appendChild(link);
         link.click();
         _this17.loading = false;
+      });
+    },
+    CetakPdf: function CetakPdf(ireq_id) {
+      var _this18 = this;
+
+      this.loading = true;
+      this.axios.get('api/print-out-ict-request/' + ireq_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this18.loading = false;
       });
     }
   }
@@ -1764,6 +1779,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
                   /* TEXT, CLASS */
                   )];
+                }),
+                _: 1
+                /* STABLE */
+
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                    label: "Pdf",
+                    "class": "p-button-raised p-button-danger mr-2",
+                    icon: "pi pi-file-pdf",
+                    onClick: function onClick($event) {
+                      return $options.CetakPdf(slotProps.data.ireq_id);
+                    }
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"]), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+                    bottom: true
+                  }]])];
                 }),
                 _: 1
                 /* STABLE */

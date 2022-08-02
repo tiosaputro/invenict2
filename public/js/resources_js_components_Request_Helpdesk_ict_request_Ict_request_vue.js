@@ -92,6 +92,8 @@ __webpack_require__.r(__webpack_exports__);
               ket: null,
               ireq_id: null
             };
+            _this.dialogEdit = false;
+            _this.loading = true;
             _this.sangat_bagus = false;
             _this.bagus = false;
             _this.baik = false;
@@ -100,21 +102,21 @@ __webpack_require__.r(__webpack_exports__);
             _this.must = false;
             _this.rating = 0;
             _this.submitted = false;
-            _this.dialogEdit = false;
 
             _this.$toast.add({
               severity: 'info',
               summary: 'Success Submit',
-              detail: 'Ulasan Berhasil Disubmit',
+              detail: 'Thanks for you feedback',
               life: 2000
             });
-
-            _this.loading = true;
 
             _this.getIct();
           });
         }
       } else {
+        this.dialogEdit = false;
+        this.loading = true;
+
         var _data = new FormData();
 
         _data.append("rating", this.rating);
@@ -135,12 +137,11 @@ __webpack_require__.r(__webpack_exports__);
           _this.kurang = false;
           _this.sangat_kurang = false;
           _this.must = false;
-          _this.dialogEdit = false;
 
           _this.$toast.add({
             severity: 'info',
             summary: 'Success Submit',
-            detail: 'Ulasan Berhasil Disubmit',
+            detail: 'Thank for your feedback',
             life: 2000
           });
 
