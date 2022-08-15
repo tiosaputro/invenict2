@@ -90,7 +90,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Sesi Login Expired'
+            detail: 'Session login expired'
           });
 
           localStorage.clear();
@@ -252,7 +252,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_5 = {
   style: {
-    "width": "130px"
+    "width": "200px"
   }
 };
 var _hoisted_6 = {
@@ -322,7 +322,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_4];
     }),
     end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_5, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.kode), 1
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_5, "No. Request : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.kode), 1
       /* TEXT */
       )];
     }),

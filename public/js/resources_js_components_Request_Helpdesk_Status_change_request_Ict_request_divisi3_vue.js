@@ -183,7 +183,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this6.note = [];
         _this6.code = null;
-        _this6.dialogRemark = false;
+        _this6.dialogNote = false;
       });
       this.loading = true;
       this.getData();
@@ -958,7 +958,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                    "class": "p-button-rounded p-button-info mr-2",
+                    "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
                       return _ctx.$router.push({
@@ -1062,6 +1062,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireqd_id",
+                header: "No. Detail",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_type",
+                header: "Request Type",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "invent_code",
+                header: "Peripheral",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_qty",
+                header: "Qty",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",
                 header: "Request Date",
                 sortable: true,
@@ -1105,30 +1133,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "10rem"
                 }
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                style: {
-                  "min-width": "15rem"
-                }
-              }, {
-                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-                    "class": "p-button-rounded p-button-info mr-2",
-                    icon: "pi pi-info-circle",
-                    onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Divisi 3 Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
-                    }
-                  }, null, 8
-                  /* PROPS */
-                  , ["onClick"])];
-                }),
-                _: 1
-                /* STABLE */
-
               })];
             }),
             _: 1
@@ -1293,7 +1297,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [slotProps.data.status == 'T' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 0,
-                    "class": "p-button-rounded p-button-info mr-2",
+                    "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-pencil",
                     onClick: function onClick($event) {
                       return $options.edit(slotProps.data.ireqd_id, slotProps.data.ireq_id);

@@ -52,7 +52,7 @@ export default {
 			}).catch(error=>{
 				if (error.response.status == 401) {
 					this.$toast.add({
-						everity:'error', summary: 'Error', detail:'Sesi Login Expired'
+						everity:'error', summary: 'Error', detail:'Session Login Expired',life: 1000
 					});
 					localStorage.clear();
 					localStorage.setItem("Expired","true")

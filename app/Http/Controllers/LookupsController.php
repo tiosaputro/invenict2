@@ -191,26 +191,26 @@ class LookupsController extends Controller
         $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
         $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
         if($aksesmenu->contains($this->requestor)){
-        $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-        ->where('lookup_status','T')
-        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
-        ->orderBy('lookup_desc','ASC')
-        ->get();
+            $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+            ->where('lookup_status','T')
+            ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+            ->orderBy('lookup_desc','ASC')
+            ->get();
 
-        $bisnis = DB::table('v_company_refs')->get();
+            $bisnis = DB::table('v_company_refs')->get();
 
-        $divisi = DB::table('divisi_refs')
-        ->select('div_id as code',DB::raw("(div_code ||'-'|| div_name) as name"))
-        ->orderBy('div_name','ASC')
-        ->get();
+            // $divisi = DB::table('divisi_refs')
+            // ->select('div_id as code',DB::raw("(div_code ||'-'|| div_name) as name"))
+            // ->orderBy('div_name','ASC')
+            // ->get();
 
-        $priority = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-        ->where('lookup_status','T')
-        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
-        ->orderBy('lookup_desc','ASC')
-        ->get();
+            $priority = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+            ->where('lookup_status','T')
+            ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
+            ->orderBy('lookup_desc','ASC')
+            ->get();
 
-        return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'divisi'=>$divisi,'prio'=>$priority],200);
+            return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'prio'=>$priority],200);
         }else{
             return response(["message"=>"Cannot Access"],403);
         }

@@ -34,7 +34,7 @@
           <Column field="ireq_approval1" header="Approval By" style="min-width:10rem"/>
           <Column field="date_approver1" header="Approval Date" style="min-width:10rem">
           <template #body="slotProps">
-            {{formatDate(slotProps.data.date_approver2)}}
+            {{formatDate(slotProps.data.date_approver1)}}
           </template>
           </Column>
         </DataTable>

@@ -194,7 +194,7 @@ export default {
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
           });
           localStorage.clear();
           localStorage.setItem('Expired','true')

@@ -90,7 +90,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.$toast.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Sesi Login Expired'
+            detail: 'Session login expired'
           });
 
           localStorage.clear();
@@ -477,7 +477,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         var responseHtml = response.data;
-        var myWindow = window.open("", "response", "resizable=yes");
+        var myWindow = window.open("", "response", "resizable=no", "target=_blank");
         myWindow.document.write(responseHtml);
         _this16.loading = false;
       });

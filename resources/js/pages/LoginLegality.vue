@@ -9,13 +9,13 @@
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                   <form @submit.prevent="Login">
                     <div class="text-center mb-5">
-                        <div class="text-900 text-3xl font-medium mb-3">Selamat Datang di</div>
+                        <div class="text-900 text-3xl font-medium mb-3">Welcome to</div>
                         <span class="text-600 font-medium">System ICT Helpdesk 👋</span>
                         <Message severity="warn" v-if="this.error">Periksa kembali koneksi sophos atau wifi anda</Message>
-                        <Message severity="warn" v-if="this.errorr">Periksa kembali domain account anda</Message>
+                        <Message severity="warn" v-if="this.errorr">Can't login. Please check your username and password</Message>
                     </div>
                         <div class="w-full md:w-10 mx-auto">
-                          <label for="email1" class="block text-900 text-xl font-medium mb-2">Username/Email</label>
+                          <label for="email1" class="block text-900 text-xl font-medium mb-2">Username</label>
                             <InputText 
                                 type="text"
                                 v-model="email"
@@ -25,7 +25,7 @@
                                 placeholder="my.name" 
                             />
                             <small class="p-error" v-if="submitted && !email"
-                                >Username Belum Diisi.
+                                >Username Not Fiiled.
                             </small>
                             <small v-if="errors.email" class="p-error"
                                 > {{ errors.email }} 
@@ -42,7 +42,7 @@
                                 inputStyle="padding:1rem"
                             />
                             <small class="p-error" v-if="submitted && !password"
-                                >Password Belum Diisi.
+                                >Password Not Fiiled.
                             </small>
                             <small v-if="errors.password" class="p-error"
                                 > {{errors.password}}  
@@ -95,8 +95,8 @@ export default {
             this.axios.post('/api/login', data).then((response) => {
               this.$toast.add({
                 severity: "success",
-                summary: "Akun berhasil login!",
-                detail: "Selamat Datang " + response.data.usr_name,
+                summary: "Success login!",
+                detail: "Welcome " + response.data.usr_name + " 👋",
               });
               localStorage.clear();
               localStorage.setItem("loggedIn", "true");

@@ -51,7 +51,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.$toast.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Sesi Login Expired'
+            detail: 'Session login expired'
           });
 
           localStorage.clear();

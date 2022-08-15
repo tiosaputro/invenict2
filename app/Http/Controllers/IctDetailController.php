@@ -400,7 +400,7 @@ class IctDetailController extends Controller
         $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailExportReject($code),'Laporan ICT Request '.$newCreation.'.xlsx');
     }
-    public function cetak_pdf_sedang_dikerjakan($code)
+    public function printout_ictrequest($code)
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('imm.ireq_status as cekstatus','id.ireq_type','imm.ireq_id','imm.ireq_no','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname',

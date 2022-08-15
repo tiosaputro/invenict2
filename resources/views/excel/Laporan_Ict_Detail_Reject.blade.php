@@ -1,54 +1,45 @@
 <table style ="width:100%">
     <thead>
         <tr>
-            <th colspan="7" style="text-align:center; font-weight: bold; font-size: 14px;"> ICT Request Detail</th>
-        </tr>
-        <tr>
-            <th colspan="7" style="text-align:center; font-weight: bold; font-size: 12px;"> {{date('d M Y')}}</th>
-        </tr>
-        <tr>
-            <br>
-        </tr>
-        <tr>
-            <th colspan="2" style="text-align:left; font-weight: bold; font-size: 12px;"> No. request</th>
-            <th colspan="1" style="text-align:left; font-weight: bold; font-size: 12px;"> {{ $detail[0]->ireq_no }} </th>
-            <th colspan="1" style="text-align:left; font-weight: bold; font-size: 12px;"> Requestor</th>
-            <th colspan="2" style="text-align:left; font-weight: bold; font-size: 12px;"> {{$detail[0]->ireq_requestor}}</th>
-        </tr>
-        <tr>
-            <th colspan="2" style="text-align:left; font-weight: bold; font-size: 12px;"> Tgl. Request</th>
-            <th colspan="1" style="text-align:left; font-weight: bold; font-size: 12px;"> {{$detail[0]->ireq_date}}</th>
-            <th colspan="1" style="text-align:left; font-weight: bold; font-size: 12px;"> Bisnis Unit</th>
-            <th colspan="2" style="text-align:left; font-weight: bold;font-size: 12px;"> {{$detail[0]->ireq_bu}}</th>
-        </tr>
-        <tr>
-            <th colspan="2" style="text-align:left; font-weight: bold; font-size: 12px;"> Status</th>
-            <th colspan="1" style="text-align:left; font-weight: bold; font-size: 12px;"> {{$detail[0]->ireqq_status}}</th>
+            <th colspan="13" style="text-align:center; font-weight: bold; font-size: 14px;"> ICT REQUEST STATUS REPORT LIST ON {{date('d M Y')}}</th>
         </tr>
         <tr>
             <br>
         </tr>
     <tr>
-        <th style="text-align:left; font-weight: bold;">No.</th>
-        <th style="text-align:left; font-weight: bold;">Tipe Request</th>
-        <th style="text-align:left; font-weight: bold;">Nama Peripheral</th>
-        <th style="text-align:left; font-weight: bold;">Jumlah(Qty)</th>
-        <th style="text-align:left; font-weight: bold;">Deskripsi</th>
-        <th style="text-align:left; font-weight: bold;">Keterangan</th>
-        <th style="text-align:left; font-weight: bold;">Alasan Ditolak</th>
-    </tr>   
+        <th style="text-align:left; font-weight: bold;">No. Request</th>
+        <th style="text-align:left; font-weight: bold;">No. Detail</th>
+        <th style="text-align:left; font-weight: bold;">Request Type</th>
+        <th style="text-align:left; font-weight: bold;">Peripheral</th>
+        <th style="text-align:left; font-weight: bold;">Qty</th>
+        <th style="text-align:left; font-weight: bold;">Remark</th>
+        <th style="text-align:left; font-weight: bold;">Request Date</th>
+        <th style="text-align:left; font-weight: bold;">Requestor</th>
+        <th style="text-align:left; font-weight: bold;">User</th>
+        <th style="text-align:left; font-weight: bold;">User Division</th>
+        <th style="text-align:left; font-weight: bold;">Business Unit</th>
+        <th style="text-align:left; font-weight: bold;">Personnel ICT</th>
+        <th style="text-align:left; font-weight: bold;">Status</th>
+        <th style="text-align:left; font-weight: bold;">Reason</th>
+    </tr>
     </thead>
     <tbody>
-    @php $no=1 @endphp
-    @foreach($detail as $d)
+    @foreach($Ict as $i)
         <tr>
-            <td style="text-align:left;" width="5"  height="5">{{$no++}}</td>
-            <td style="text-align:left;" width="15" height="15">{{ $d->ireq_type }}</td>
-            <td style="text-align:left;" width="40" height="10">{{ $d->name }}</td>
-            <td style="text-align:left;" width="20" height="15">{{ $d->ireq_qty}}</td>
-            <td style="text-align:left;" width="20" height="15">{{ $d->ireq_desc}}</td>
-            <td style="text-align:left;" width="20" height="15">{{ $d->ireq_remark}}</td>
-            <td style="text-align:left;" width="20" height="15">{{ $d->ireq_reason}}</td>
+            <td style="text-align:left" width="15" height="15">{{ $i->ireq_no }}</td>
+            <td style="text-align:left" width="10" height="15">{{ $i->ireqd_id }}</td>
+            <td style="text-align:left" width="15" height="15">{{ $i->ireq_type}}</td>
+            <td style="text-align:left" width="17" height="15">{{ $i->name }}</td>
+            <td style="text-align:left" width="10" height="10">{{ $i->ireq_qty }}</td>
+            <td style="text-align:left" width="18" height="10">{{ $i->ireq_remark }}</td>
+            <td style="text-align:left" width="15" height="15">{{ $i->ireq_date }}</td>
+            <td style="text-align:left" width="20" height="15">{{ $i->ireq_requestor}}</td>
+            <td style="text-align:left" width="20" height="15">{{ $i->ireq_user}}</td>
+            <td style="text-align:left" width="20" height="15">{{ $i->div_name}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->ireq_bu}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->ireq_assigned_to}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->ireq_status}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->ireq_assigned_to1_reason}}</td>
         </tr>
     @endforeach
     </tbody>

@@ -59,4 +59,17 @@ class DivisiRefsController extends Controller
         $divisi->delete();
         return response()->json('Deleted Successfully');
     }
+    function getDivisionRequest($bisnis){
+
+        $divisi = DB::table('divisi_refs')
+        ->select('div_id as code','div_name as name')
+        ->where(function($query) use($bisnis){
+            return $query
+            ->where(DB::raw('substr(div_code,1,2)'),$bisnis)
+            ->orwhere(DB::raw('substr(div_code,1,2)'),'99');
+        })
+        ->orderBy('div_name','ASC')
+        ->get();
+        return json_encode($divisi);
+    }
 }

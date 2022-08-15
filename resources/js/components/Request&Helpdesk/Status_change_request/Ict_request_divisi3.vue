@@ -52,7 +52,7 @@
                   <Column style="min-width:20rem">
                   <template #body="slotProps">
                     <Button
-                      class="p-button-rounded p-button-info mr-2"
+                      class="p-button-rounded p-button-secondary mr-2"
                       icon="pi pi-info-circle"
                       @click="$router.push({
                             name: 'Ict Request Divisi 3 Detail',
@@ -123,6 +123,10 @@
                     Loading ICT Request data. Please wait.
                   </template>
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+                  <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -132,17 +136,6 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
-                  <Column style="min-width:15rem">
-                  <template #body="slotProps">
-                   <Button
-                      class="p-button-rounded p-button-info mr-2"
-                      icon="pi pi-info-circle"
-                      @click="$router.push({
-                            name: 'Ict Request Divisi 3 Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
-                    />
-                    </template>
-                  </Column>
                   <template #footer>
                     <div class="p-grid p-dir-col">
                       <div class="p-col">
@@ -215,7 +208,7 @@
                   <template #body="slotProps">
                     <Button
                       v-if="slotProps.data.status == 'T'"
-                      class="p-button-rounded p-button-info mr-2"
+                      class="p-button-rounded p-button-secondary mr-2"
                       v-tooltip.bottom="'Click to change status'"
                       icon="pi pi-pencil"
                       @click="edit(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
@@ -711,7 +704,7 @@ export default {
          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
           this.note = [];
           this.code = null;
-          this.dialogRemark = false;
+          this.dialogNote = false;
         });
         this.loading = true;
         this.getData();

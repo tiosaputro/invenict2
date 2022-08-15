@@ -1272,7 +1272,132 @@
 			      </div>
           </div>
         </template>
-        </DataTable>     
+        </DataTable>   
+        <Toolbar class="mb-4" v-if="this.active == 46">
+          <template v-slot:start>
+                <h4>ICT Request (Assignment Request)</h4>
+          </template>
+        </Toolbar>   
+        <DataTable
+          v-if="this.active == 46"
+          :value="assignmentRequest3"
+          :paginator="true"
+          :rows="10"
+          :loading="loading"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Assignment Request)"
+          responsiveLayout="scroll"
+        >
+        <template #header>
+            <div class="table-header text-right">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                </span>
+             </div>
+        </template>
+        <template #empty>
+            Not Found
+        </template>
+        <template #loading>
+            Please wait
+        </template>
+        <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <template #footer>
+            <div class="grid dir-col">
+              <div class="col">
+                <div class="box">
+                  <Button
+                    label="Back"
+                    class="p-button-raised p-button mr-2"
+                    icon="pi pi-chevron-left"
+                    @click="$router.push({
+                    name: 'Dashboard'})"
+                  />
+                </div>
+			      </div>
+          </div>
+        </template>
+        </DataTable>  
+        <Toolbar class="mb-4" v-if="this.active == 47">
+          <template v-slot:start>
+                <h4>ICT Request (Rejected)</h4>
+          </template>
+        </Toolbar>   
+        <DataTable
+          v-if="this.active == 47"
+          :value="rejected3"
+          :paginator="true"
+          :rows="10"
+          :loading="loading"
+          :filters="filters"
+          :rowHover="true"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Rejected)"
+          responsiveLayout="scroll"
+        >
+        <template #header>
+            <div class="table-header text-right">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search" />
+                        <InputText
+                          v-model="filters['global'].value"
+                          placeholder="Search. . ."
+                        />
+                </span>
+             </div>
+        </template>
+        <template #empty>
+            Not Found
+        </template>
+        <template #loading>
+            Please wait
+        </template>
+        <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
+          <template #footer>
+            <div class="grid dir-col">
+              <div class="col">
+                <div class="box">
+                  <Button
+                    label="Back"
+                    class="p-button-raised p-button mr-2"
+                    icon="pi pi-chevron-left"
+                    @click="$router.push({
+                    name: 'Dashboard'})"
+                  />
+                </div>
+			      </div>
+          </div>
+        </template>
+        </DataTable>  
         <Toolbar class="mb-4" v-if="this.active == 17">
           <template v-slot:start>
                 <h4>ICT Request (In Progress)</h4>
@@ -3932,6 +4057,8 @@ export default {
         sudahDikerjakann:[],
         sudahDiassign:[],
         blmDiverifikasi:[],
+        assignmentRequest3:[],
+        rejected3:[],
         sedngDikerjakan:[],
         sudhDikerjakan: [],
         selesaiii: [],
@@ -3993,7 +4120,7 @@ export default {
           else if (this.active > 12 && this.active <=16 || this.active == 37|| this.active == 43){
             this.getIct3();
           }
-          else if (this.active > 16 && this.active <=19){
+          else if (this.active > 16 && this.active <=19 || this.active == 46 || this.active == 47){
             this.getIct4();
           }
           else if (this.active > 19 && this.active <=21 || this.active == 39 || this.active == 42){
@@ -4058,6 +4185,8 @@ export default {
         this.sedngDikerjakan = response.data.ict;
         this.sudhDikerjakan = response.data.ict1;
         this.selesaiii = response.data.ict2;
+        this.assignmentRequest3 = response.data.ict3;
+        this.rejected3 = response.data.ict4;
         this.loading = false;
         });
       },

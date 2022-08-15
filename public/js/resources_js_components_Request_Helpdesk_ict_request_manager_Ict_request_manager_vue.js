@@ -90,7 +90,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.$toast.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Sesi Login Expired'
+            detail: 'Session login expired'
           });
 
           localStorage.clear();
@@ -106,7 +106,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     CetakPdf: function CetakPdf(ireq_id) {
-      window.open('/api/print-out-ict-request/' + ireq_id);
+      var _this2 = this;
+
+      this.loading = true;
+      this.axios.get('api/print-out-ict-request/' + ireq_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this2.loading = false;
+      });
     },
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
@@ -161,7 +173,7 @@ __webpack_require__.r(__webpack_exports__);
       this.reason.remark = null;
     },
     updateReject: function updateReject() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.submitted = true;
 
@@ -171,25 +183,25 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this2.dialogReject = false;
+          _this3.dialogReject = false;
 
-          _this2.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully rejected this request",
             life: 1000
           });
 
-          _this2.cancelReject();
+          _this3.cancelReject();
 
-          _this2.loading = true;
+          _this3.loading = true;
 
-          _this2.getPermohonan();
+          _this3.getPermohonan();
         });
       }
     },
     CetakPdfBlmDiverifikasi: function CetakPdfBlmDiverifikasi() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-manager-permohonan', {
@@ -200,11 +212,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this3.loading = false;
+        _this4.loading = false;
       });
     },
     CetakExcelBlmDiverifikasi: function CetakExcelBlmDiverifikasi() {
-      var _this4 = this;
+      var _this5 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -222,11 +234,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this4.loading = false;
+        _this5.loading = false;
       });
     },
     CetakPdfSudahDiverifikasi: function CetakPdfSudahDiverifikasi() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-manager-verifikasi', {
@@ -237,11 +249,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this5.loading = false;
+        _this6.loading = false;
       });
     },
     CetakExcelSudahDiverifikasi: function CetakExcelSudahDiverifikasi() {
-      var _this6 = this;
+      var _this7 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -259,11 +271,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this6.loading = false;
+        _this7.loading = false;
       });
     },
     CetakPdfDireject: function CetakPdfDireject() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-manager-reject', {
@@ -274,11 +286,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this7.loading = false;
+        _this8.loading = false;
       });
     },
     CetakExcelDireject: function CetakExcelDireject() {
-      var _this8 = this;
+      var _this9 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -296,11 +308,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this8.loading = false;
+        _this9.loading = false;
       });
     },
     CetakPdfAssignmentRequest: function CetakPdfAssignmentRequest() {
-      var _this9 = this;
+      var _this10 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-manager-assignment-request', {
@@ -311,11 +323,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this9.loading = false;
+        _this10.loading = false;
       });
     },
     CetakExcelAssignmentRequest: function CetakExcelAssignmentRequest() {
-      var _this10 = this;
+      var _this11 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -333,11 +345,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this10.loading = false;
+        _this11.loading = false;
       });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
-      var _this11 = this;
+      var _this12 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-manager-sedang-dikerjakan', {
@@ -348,11 +360,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this11.loading = false;
+        _this12.loading = false;
       });
     },
     CetakExcelSedangDikerjakan: function CetakExcelSedangDikerjakan() {
-      var _this12 = this;
+      var _this13 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -370,11 +382,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this12.loading = false;
+        _this13.loading = false;
       });
     },
     CetakPdfSudahDikerjakan: function CetakPdfSudahDikerjakan() {
-      var _this13 = this;
+      var _this14 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-manager-sudah-dikerjakan', {
@@ -385,11 +397,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this13.loading = false;
+        _this14.loading = false;
       });
     },
     CetakExcelSudahDikerjakan: function CetakExcelSudahDikerjakan() {
-      var _this14 = this;
+      var _this15 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -407,11 +419,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this14.loading = false;
+        _this15.loading = false;
       });
     },
     CetakPdfSelesai: function CetakPdfSelesai() {
-      var _this15 = this;
+      var _this16 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-manager-selesai', {
@@ -422,11 +434,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this15.loading = false;
+        _this16.loading = false;
       });
     },
     CetakExcelSelesai: function CetakExcelSelesai() {
-      var _this16 = this;
+      var _this17 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -444,7 +456,7 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this16.loading = false;
+        _this17.loading = false;
       });
     }
   }

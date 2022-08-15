@@ -700,7 +700,7 @@ export default {
       }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
@@ -712,7 +712,13 @@ export default {
         });
     },
     CetakPdf(ireq_id){
-      window.open('/api/print-out-ict-request/' +ireq_id);
+      this.loading = true;
+       this.axios.get('api/print-out-ict-request/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     formatDate(date) {
       return moment(date).format("DD MMM YYYY HH:mm")

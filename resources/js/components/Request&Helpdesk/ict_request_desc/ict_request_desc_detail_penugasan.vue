@@ -9,7 +9,7 @@
 			<h4>ICT Request (Detail) </h4>
           </template>
           <template v-slot:end>
-              <label style="width:140px">No. Request: {{kode.noreq}}</label>
+              <label style="width:200px">No. Request: {{kode.noreq}}</label>
           </template>
         </Toolbar>
         <DataTable
@@ -118,7 +118,7 @@ export default {
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
           });
           localStorage.clear();
           localStorage.setItem('Expired','true')

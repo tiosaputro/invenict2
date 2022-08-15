@@ -1002,7 +1002,7 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
@@ -1263,7 +1263,7 @@ export default {
       this.loading = true;
        this.axios.get('api/report-ict-pdf-reviewer-ict-manager',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
+          var myWindow = window.open("", "response", "resizable=no","target=_blank");
           myWindow.document.write(responseHtml);
           this.loading = false;
        });

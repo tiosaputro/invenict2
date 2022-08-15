@@ -6,7 +6,7 @@
         <ConfirmDialog group="positionDialog"></ConfirmDialog>
         <Toolbar class="p-mb-4">
           <template v-slot:start>
-				        <h4>ICT Request (Verifikasi) </h4>
+				        <h4>ICT Request (Verification) </h4>
           </template>
         </Toolbar>
         <DataTable
@@ -18,7 +18,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Verifikasi)"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Verification)"
           responsiveLayout="scroll"
         >
         
@@ -224,7 +224,7 @@ export default {
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Sesi Login Expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
           });
           localStorage.clear();
           localStorage.setItem('Expired','true')

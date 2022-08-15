@@ -331,9 +331,11 @@ class DashboardController extends Controller
     {
         $fullname = Auth::user()->usr_fullname;
         $grafik = DB::table('ireq_dtl as im')
-        ->select(DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'T' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as belumselesai"),
-                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'D' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as sudahdikerjakan"),
-                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'C' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as sudahselesai"))
+        ->select(DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'NT' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as penugasanrequest"),
+                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'RT' AND ireq_dtl.ireq_assigned_to1 = '$fullname') as rejected"),
+                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'T' AND COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1) = '$fullname') as belumselesai"),
+                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'D' AND COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1) = '$fullname') as sudahdikerjakan"),
+                 DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'C' AND COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1) = '$fullname') as sudahselesai"))
         ->first();
         return response()->json($grafik);
     }

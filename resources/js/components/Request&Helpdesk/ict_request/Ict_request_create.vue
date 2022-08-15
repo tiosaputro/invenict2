@@ -96,6 +96,25 @@
                  </div>
               </div>
               <div class="field grid">
+                <label class="col-fixed w-9rem">User Business Unit</label>
+                 <div class="col-fixed w-9rem">
+                     <Dropdown 
+                        v-model ="bisnis"
+                        :options="bu"
+                        optionLabel="name"
+                        optionValue="code"
+                        :class="{ 'p-invalid': error.bisnis }"
+                        placeholder="Select One"
+                        @change="getDivision()"
+                        :filter="true"
+                        :showClear="true"
+                     />
+                        <small v-if="error.bisnis" class="p-error">
+                          {{error.bisnis}}
+                        </small>
+                </div>
+              </div>
+              <div class="field grid">
                 <label class="col-fixed w-9rem">User Division</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
@@ -110,24 +129,6 @@
                      />
                         <small v-if="error.usr_divisi" class="p-error">
                           {{error.usr_divisi}}
-                        </small>
-                </div>
-              </div>
-              <div class="field grid">
-                <label class="col-fixed w-9rem">Business Unit</label>
-                 <div class="col-fixed w-9rem">
-                     <Dropdown 
-                        v-model ="bisnis"
-                        :options="bu"
-                        optionLabel="name"
-                        optionValue="code"
-                        :class="{ 'p-invalid': error.bisnis }"
-                        placeholder="Select One"
-                        :filter="true"
-                        :showClear="true"
-                     />
-                        <small v-if="error.bisnis" class="p-error">
-                          {{error.bisnis}}
                         </small>
                 </div>
               </div>
@@ -219,19 +220,16 @@ export default {
     //     this.$router.push('/login');
     //   }
     // },
-    // getUser(){
-    //   this.axios.get('api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-    //     this.user = response.data;
-    //     this.usr_name = this.user.usr_name;
-      //   this.bisnis = this.user.usr_bu;
-      //   this.usr_divisi = this.user.div_id
-      // });
-    // },
+    getDivision(){
+      this.axios.get('api/get-division-user/'+this.bisnis, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.divisi = response.data;
+      });
+    },
     getType(){
       this.axios.get('api/getAddReq', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.type = response.data.ref;
         this.bu = response.data.bisnis;
-        this.divisi = response.data.divisi;
+        // this.divisi = response.data.divisi;
         this.level = response.data.prio;
       });
     },

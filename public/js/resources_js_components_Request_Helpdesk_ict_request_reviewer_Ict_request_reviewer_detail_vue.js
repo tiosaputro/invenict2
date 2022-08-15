@@ -190,7 +190,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this5.$toast.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Sesi Login Expired'
+            detail: 'Session login expired'
           });
 
           localStorage.clear();
@@ -276,7 +276,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_5 = {
   style: {
-    "width": "130px"
+    "width": "200px"
   }
 };
 var _hoisted_6 = {

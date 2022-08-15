@@ -570,6 +570,32 @@
 		</div>	
 </div>
 <div class="grid" v-else-if="this.role_name.includes('Personel ICT')">
+	<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="penugasanRequest3()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Request Assignment</span>
+						<div class="text-900 font-medium text-xl">{{count3.penugasanrequest}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 lg:col-6 xl:col-3">
+			<div @click="diReject3()" style="cursor:pointer;" class="card mb-0">
+				<div class="flex justify-content-between mb-3">
+					<div>
+						<span class="block text-500 font-medium mb-3">Rejected</span>
+						<div class="text-900 font-medium text-xl">{{count3.rejected}}</div>
+					</div>
+					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
+						<i class="pi pi-times text-xl" style="color: red;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="blmSelesai3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -872,7 +898,7 @@ export default {
 			opacity: 0.5,
 			zIndex: 999,
 		}, {});
-			this.axios.get('api/cek-role/'+this.id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+			this.axios.get('/api/cek-role/'+this.id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
 				this.role_name = response.data.map((x)=>x.rol_name);
 				if(this.role_name.includes('Manager')){
 					this.getData4();
@@ -908,7 +934,7 @@ export default {
 			});
 		},
       	getData(){
-            this.axios.get('api/getCountUser',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+            this.axios.get('/api/getCountUser',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.count = response.data;
 				this.loader.hide();
             });
@@ -1075,6 +1101,14 @@ export default {
                 this.count3 = response.data;
 				this.loader.hide();
             });
+        },
+        penugasanRequest3(){
+          this.$router.push('/ict-request-desc');
+          localStorage.setItem('active',46)
+        },
+        diReject3(){
+          this.$router.push('/ict-request-desc');
+          localStorage.setItem('active',47)
         },
         blmSelesai3(){
           this.$router.push('/ict-request-desc');

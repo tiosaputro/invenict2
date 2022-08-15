@@ -131,7 +131,7 @@ __webpack_require__.r(__webpack_exports__);
           _this5.$toast.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Sesi Login Expired'
+            detail: 'Session login expired'
           });
 
           localStorage.clear();
@@ -186,7 +186,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_5 = {
   style: {
-    "width": "140px"
+    "width": "200px"
   }
 };
 var _hoisted_6 = {

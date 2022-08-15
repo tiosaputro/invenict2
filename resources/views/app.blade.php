@@ -3,14 +3,13 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"/>
-    <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
  
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
+    <link rel="icon" href="{{asset('/favicon.ico')}}" />
     <title>ICT HELPDESK</title>
     <style>
         .bg-light {
@@ -19,9 +18,7 @@
     </style>
 </head>
 <body>
-    <div id="app">
-        
-    </div>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <div id="app"> </div>
+    <script src="{{asset('js/app.js')}}"></script>
 </body>
-</html>
+</html> 

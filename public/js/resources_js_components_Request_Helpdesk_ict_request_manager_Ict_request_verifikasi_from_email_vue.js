@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.$toast.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Sesi Login Expired'
+            detail: 'Session login expired'
           });
 
           localStorage.clear();
@@ -184,7 +184,7 @@ var _hoisted_3 = {
   "class": "card"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Verifikasi) ", -1
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Verification) ", -1
 /* HOISTED */
 );
 
@@ -295,7 +295,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowHover: true,
     paginatorTemplate: "FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown",
     rowsPerPageOptions: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
-    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request (Verifikasi)",
+    currentPageReportTemplate: "Showing {first} to {last} of {totalRecords} ICT Request (Verification)",
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

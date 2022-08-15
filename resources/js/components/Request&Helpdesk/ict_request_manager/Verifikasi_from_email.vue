@@ -9,7 +9,7 @@
           :loading="loading"
         >
           <template #loading>
-            Link Verification
+            Verifying...
           </template>
         </DataTable>   
       </div>

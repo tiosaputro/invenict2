@@ -15,6 +15,7 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', implode(',', [
         'localhost',
+        'http://localhost',
         'localhost:8000',
     ]))),
 
