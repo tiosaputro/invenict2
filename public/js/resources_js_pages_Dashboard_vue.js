@@ -26,9 +26,7 @@ __webpack_require__.r(__webpack_exports__);
       count3: [],
       count4: [],
       count5: [],
-      usr_name: localStorage.getItem('usr_name'),
-      token: localStorage.getItem('token'),
-      id: localStorage.getItem('id')
+      token: localStorage.getItem('token')
     };
   },
   mounted: function mounted() {
@@ -48,7 +46,7 @@ __webpack_require__.r(__webpack_exports__);
         opacity: 0.5,
         zIndex: 999
       }, {});
-      this.axios.get('/api/cek-role/' + this.id, {
+      this.axios.get('/api/cek-role', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -2327,9 +2325,9 @@ var _hoisted_303 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
     "height": "2.5rem"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "pi pi-check text-xl",
+  "class": "bi bi-hourglass-bottom text-xl",
   style: {
-    "color": "red"
+    "color": "gray"
   }
 })], -1
 /* HOISTED */

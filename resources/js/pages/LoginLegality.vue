@@ -104,6 +104,10 @@ export default {
               localStorage.setItem("id", response.data.id);
               localStorage.setItem("usr_loc", response.data.usr_loc);
               localStorage.setItem("usr_name", response.data.usr_name);
+              localStorage.setItem('active',0);
+              localStorage.setItem('active1',0);
+              localStorage.setItem('active2',0);
+              localStorage.setItem('active3',0);
               if(this.$route.params.status =='requester'){
                 setTimeout( () => this.$router.push('/check-requester/'+this.$route.params.code), 1000);
               }

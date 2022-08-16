@@ -112,6 +112,10 @@ export default {
               localStorage.setItem("token", response.data.token);
               localStorage.setItem("id", response.data.id);
               localStorage.setItem("usr_loc", response.data.usr_loc);
+              localStorage.setItem('active',0);
+              localStorage.setItem('active1',0);
+              localStorage.setItem('active2',0);
+              localStorage.setItem('active3',0);
               localStorage.setItem("usr_name", response.data.usr_name);
               setTimeout( () => this.$router.push('/dashboard'), 1000);
             }).catch(error=> {

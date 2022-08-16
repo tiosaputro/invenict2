@@ -155,7 +155,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/save-usr-role','MngUsrRoleController@save');
     Route::get('/edit-usr-role/{code}','MngUsrRoleController@edit');
     Route::put('/update-usr-role/{code}','MngUsrRoleController@update');
-    Route::get('cek-role/{id}','MngUsrRoleController@cekRole');
+    Route::get('/cek-role','MngUsrRoleController@cekRole');
 
     //Mng_role_menu
     Route::post('/save-role-menu','MngRoleMenuController@save');

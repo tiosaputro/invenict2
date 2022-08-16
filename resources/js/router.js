@@ -259,6 +259,32 @@ const routes = [
         path: '/Edit-ict-request/:code',
         component: ()=> import('./components/Request&Helpdesk/ict_request/Ict_request_edit.vue'),
     },
+    //ict request admin
+    {
+        name: 'Ict Request Admin',
+        path: '/ict-request-admin',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request.vue'),
+    },
+    {
+        name: 'Edit Ict Request Admin',
+        path: '/Edit-ict-request-admin/:code',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request_edit.vue'),
+    },
+    {
+        name: 'Ict Request Admin Detail',
+        path: '/ict-request-admin-detail/:code',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request_detail.vue'),
+    },
+    {
+        name: 'Add Ict Request Admin Detail',
+        path: '/Add-ict-request-admin-detail/:code',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request_detail_create.vue'),
+    },
+    {
+        name: 'Edit Ict Request Admin Detail',
+        path: '/Edit-ict-request-admin-detail/:code/:ireq',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request_detail_edit.vue'),
+    },
     //ict_request_divisi1
     {
         name: 'Ict Request Divisi 1',

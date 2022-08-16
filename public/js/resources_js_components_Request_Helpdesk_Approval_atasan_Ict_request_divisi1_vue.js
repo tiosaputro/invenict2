@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       confirmationVerifikasi: false,
       dialogReject: false,
-      active1: 0,
+      active3: JSON.parse(localStorage.getItem('active3')),
       loading: true,
       permohonan: [],
       penugasan: [],
@@ -51,6 +51,26 @@ __webpack_require__.r(__webpack_exports__);
     this.getPermohonan();
   },
   methods: {
+    detailTabRequest: function detailTabRequest(ireq_id) {
+      localStorage.setItem('active3', 0);
+      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+    },
+    detailTabApproved: function detailTabApproved(ireq_id) {
+      localStorage.setItem('active3', 1);
+      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+    },
+    detailTabRejected: function detailTabRejected(ireq_id) {
+      localStorage.setItem('active3', 2);
+      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+    },
+    detailTabRequestAssignment: function detailTabRequestAssignment(ireq_id) {
+      localStorage.setItem('active3', 4);
+      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+    },
+    detailTabInProgress: function detailTabInProgress(ireq_id) {
+      localStorage.setItem('active3', 5);
+      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+    },
     getPermohonan: function getPermohonan() {
       var _this = this;
 
@@ -66,6 +86,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.sedangDikerjakan = response.data.ict3;
         _this.sudahDikerjakan = response.data.ict4;
         _this.selesai = response.data.ict5;
+        localStorage.setItem('active3', 0);
         _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -721,9 +742,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabView, {
     ref: "tabview1",
-    activeIndex: $data.active1,
+    activeIndex: $data.active3,
     "onUpdate:activeIndex": _cache[21] || (_cache[21] = function ($event) {
-      return $data.active1 = $event;
+      return $data.active3 = $event;
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -843,12 +864,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Divisi 1 Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabRequest(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -998,12 +1014,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Divisi 1 Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabApproved(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1149,12 +1160,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Divisi 1 Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabRejected(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1300,12 +1306,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Divisi 1 Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabRequestAssignment(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1433,12 +1434,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Divisi 1 Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabInProgress(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1612,6 +1608,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
                   /* TEXT, CLASS */
                   )];
+                }),
+                _: 1
+                /* STABLE */
+
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                    label: "Pdf",
+                    "class": "p-button-raised p-button-danger mr-2",
+                    icon: "pi pi-file-pdf",
+                    onClick: function onClick($event) {
+                      return $options.CetakPdf(slotProps.data.ireq_id);
+                    }
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"]), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+                    bottom: true
+                  }]])];
                 }),
                 _: 1
                 /* STABLE */

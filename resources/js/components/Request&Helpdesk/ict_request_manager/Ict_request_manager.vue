@@ -9,7 +9,7 @@
                 <h4>ICT Manager Approval</h4>
               </template>
             </Toolbar>
-            <TabView ref="tabview1">
+            <TabView ref="tabview1" v-model:activeIndex="active2">
               <TabPanel header="Waiting For Verification">
                 <DataTable
                   :value="blmdiverifikasi"
@@ -60,9 +60,7 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.bottom="'Click for request details'"
-                        @click="$router.push({
-                            name: 'Ict Request Manager Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabWaiting(slotProps.data.ireq_id)"
                       />
                       <Button
                         v-if="slotProps.data.status == 'NA2'"
@@ -145,9 +143,7 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.bottom="'Click for request details'"
-                        @click="$router.push({
-                            name: 'Ict Request Manager Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabApproved(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -224,9 +220,7 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.bottom="'Click for request details'"
-                        @click="$router.push({
-                            name: 'Ict Request Manager Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabRejected(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -293,9 +287,9 @@
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
-                  <template #body= "slotProps">
-                    <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                  </template>
+                    <template #body= "slotProps">
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
                   </Column>
                   <Column>
                     <template #body="slotProps">
@@ -303,9 +297,7 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.bottom="'Click for request details'"
-                        @click="$router.push({
-                            name: 'Ict Request Manager Detail Penugasan',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabRequestAssignment(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -382,9 +374,7 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.bottom="'Click for request details'"
-                        @click="$router.push({
-                            name: 'Ict Request Manager Detail Penugasan',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabRequestInProgress(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -459,6 +449,17 @@
                   <template #body= "slotProps">
                     <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                   </template>
+                  </Column>
+                   <Column>
+                    <template #body="slotProps">
+                      <Button
+                        label="Pdf"
+                        class="p-button-raised p-button-danger p-button-sm mr-2"
+                        v-tooltip.bottom="'Click to print out (PDF)'"
+                        icon="pi pi-file-pdf"
+                        @click="CetakPdf(slotProps.data.ireq_id)"
+                      />
+                    </template>
                   </Column>
                   <template #footer>
                     <div class="grid dir-col">
@@ -642,6 +643,7 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+        active2:JSON.parse(localStorage.getItem('active2')),
         dialogReject:false,
         dialogApprove:false,
         ConfirmationVerifikasi:false,
@@ -658,12 +660,10 @@ export default {
         selesai:[],
         sdhdiverifikasi: [],
         reject:[],
-        usr_name : localStorage.getItem('usr_name'),
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
         code:null
     };
   },
@@ -671,22 +671,26 @@ export default {
     this.getPermohonan();
   },
   methods: {
-    // cekUser(){
-    //   if(this.id){
-    //   this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-    //     this.checkto = response.data.map((x)=> x.to)
-    //     this.checkname = response.data.map((x)=> x.name)
-    //     if(this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-manager")){ 
-    //       this.getPermohonan();
-    //     }
-    //     else {
-    //       this.$router.push('/access');
-    //     }
-    //   });
-    //   } else {
-    //     this.$router.push('/login');
-    //   }
-    // },
+    detailTabWaiting(ireq_id){
+      localStorage.setItem('active2',0);
+      this.$router.push('/ict-request-manager-detail/'+ireq_id);
+    },
+    detailTabApproved(ireq_id){
+      localStorage.setItem('active2',1);
+      this.$router.push('/ict-request-manager-detail/'+ireq_id);
+    },
+    detailTabRejected(ireq_id){
+      localStorage.setItem('active2',2);
+      this.$router.push('/ict-request-manager-detail/'+ireq_id);
+    },
+    detailTabRequestAssignment(ireq_id){
+      localStorage.setItem('active2',3);
+      this.$router.push('/ict-request-manager/detail-penugasan/'+ireq_id);
+    },
+    detailTabRequestInProgress(ireq_id){
+      localStorage.setItem('active2',4);
+      this.$router.push('/ict-request-manager/detail-penugasan/'+ireq_id);
+    },
     getPermohonan(){
       this.axios.get('api/get-data-manager',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.blmdiverifikasi = response.data.ict;
@@ -697,6 +701,7 @@ export default {
         this.sudahDikerjakan = response.data.ict4;
         this.selesai = response.data.ict5;
         this.loading = false;
+        localStorage.setItem('active2',0);
       }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
@@ -728,27 +733,16 @@ export default {
       this.ConfirmationVerifikasi = true;
     },
     approve(){
-      // this.$confirm.require({
-      //       message: "Are you sure you approve to this request?",
-      //       header: "Confirmation Approval",
-      //       icon: "pi pi-info-circle",
-      //       acceptClass: "p-button",
-      //       acceptLabel: "Yes",
-      //       rejectLabel: "No",
-      //       accept: () => {
-              this.$toast.add({
-                severity: "info",
-                summary: "Success Message",
-                detail: "Successfully approved this request",
-                life : 1000
-              });
-              this.axios.put('/api/abm/' +this.code,this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
-              this.cancelApprove();
-              this.loading = true;
-              this.getPermohonan();
-        // },
-      //   reject: () => {},
-      // });
+      this.$toast.add({
+        severity: "info",
+        summary: "Success Message",
+        detail: "Successfully approved this request",
+        life : 1000
+      });
+      this.axios.put('/api/abm/' +this.code,this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
+      this.cancelApprove();
+      this.loading = true;
+      this.getPermohonan();
     },
     rejectRequest(){
       this.ConfirmationVerifikasi = false;
@@ -770,10 +764,10 @@ export default {
       this.reason.remark = null;
     },
     updateReject(){
-          this.submitted = true;
-           if(this.reason.ket != null){
-            this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-              this.dialogReject = false;
+      this.submitted = true;
+        if(this.reason.ket != null){
+          this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
                 summary: "Success Message",
@@ -784,7 +778,7 @@ export default {
                this.loading = true;
                this.getPermohonan();
             });
-          }
+        }
     },
     CetakPdfBlmDiverifikasi(){
       this.loading = true;

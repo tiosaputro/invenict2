@@ -9,7 +9,7 @@
                 <h4>Request Status</h4>
               </template>
             </Toolbar> 
-            <TabView ref="tabView2" v-model:activeIndex="active1">
+            <TabView ref="tabView2" v-model:activeIndex="active">
                 <TabPanel header="Request">
                   <DataTable
                     :value="ict"
@@ -55,9 +55,7 @@
                           class="p-button-rounded p-button-secondary mr-2"
                           icon="pi pi-info-circle"
                           v-tooltip.bottom="'Click for request details'"
-                          @click="$router.push({
-                              name: 'Ict Request Detail',
-                              params: { code: slotProps.data.ireq_id }, })"
+                          @click="detailTabRequest(slotProps.data.ireq_id)"
                         />
                         <Button
                           v-if="slotProps.data.ireq_status == null"
@@ -157,9 +155,7 @@
                           class="p-button-rounded p-button-secondary mr-2"
                           icon="pi pi-info-circle"
                           v-tooltip.bottom="'Click for request details'"
-                          @click="$router.push({
-                              name: 'Ict Request Detail',
-                              params: { code: slotProps.data.ireq_id }, })"
+                          @click="detailTabReviewer(slotProps.data.ireq_id)"
                         />
                       </template>
                     </Column>
@@ -235,9 +231,7 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.left="'Click for request details'"
-                        @click="$router.push({
-                            name: 'Ict Request Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabVerified(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -314,9 +308,7 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.left="'Click for request details'"
-                        @click="$router.push({
-                            name: 'Ict Request Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabRejected(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -393,9 +385,7 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.right="'Click for request details'"
-                        @click="$router.push({
-                            name: 'Ict Request Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabRequestAssignment(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -467,9 +457,7 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-tooltip.left="'Click for request details'"
-                        @click="$router.push({
-                            name: 'Ict Request Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabInProgress(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -544,6 +532,17 @@
                   <template #body= "slotProps">
                     <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                   </template>
+                  </Column>
+                  <Column style="min-width:12rem">
+                    <template #body="slotProps">
+                      <Button
+                      label="Pdf"
+                      class="p-button-raised p-button-danger p-button-sm mt-2"
+                      v-tooltip.bottom="'Click to print out (PDF)'"
+                      icon="pi pi-file-pdf"
+                      @click="CetakPdf(slotProps.data.ireq_id)"
+                    />
+                    </template>
                   </Column>
                   <template #footer>
                       <div class="grid dir-col">
@@ -727,7 +726,7 @@ export default {
       sangat_bagus:false,
       dialogEdit:false,
       rating: 0,
-      active1:0,
+      active:JSON.parse(localStorage.getItem('active')),
       loading: true,
       ict: [],
       verif:[],
@@ -749,6 +748,30 @@ export default {
     this.getIct();
   },
   methods: {
+    detailTabRequest(ireq_id){
+      localStorage.setItem('active',0);
+      this.$router.push('/ict-request-detail/'+ireq_id)
+    },
+    detailTabReviewer(ireq_id){
+      localStorage.setItem('active',1);
+      this.$router.push('/ict-request-detail/'+ireq_id)
+    },
+    detailTabVerified(ireq_id){
+      localStorage.setItem('active',2);
+      this.$router.push('/ict-request-detail/'+ireq_id)
+    },
+    detailTabRejected(ireq_id){
+      localStorage.setItem('active',3);
+      this.$router.push('/ict-request-detail/'+ireq_id)
+    },
+    detailTabRequestAssignment(ireq_id){
+      localStorage.setItem('active',4);
+      this.$router.push('/ict-request-detail/'+ireq_id)
+    },
+    detailTabInProgress(ireq_id){
+      localStorage.setItem('active',5);
+      this.$router.push('/ict-request-detail/'+ireq_id)
+    },
     setRating(rating){
       if(rating <= 2){
         this.must = true;
@@ -818,47 +841,6 @@ export default {
       this.reason.ireq_id = ireq_id;
       this.dialogEdit = true;
     },
-    check(rating){
-      if(rating == 1){
-        this.sangat_bagus = false;
-        this.bagus=false;
-        this.baik = false;
-        this.kurang = false;
-        this.sangat_kurang = true;
-        // this.must = true;
-      }
-      if(rating == 2){
-        this.sangat_bagus = false;
-        this.bagus=false;
-        this.baik = false;
-        this.kurang = true;
-        this.sangat_kurang = false;
-        // this.must = true;
-      }
-      if(rating == 3){
-        this.sangat_bagus = false;
-        this.bagus=false;
-        this.baik = true;
-        this.kurang = false;
-        this.sangat_kurang = false;
-      }
-      if(rating == 4){
-        this.sangat_bagus = false;
-        this.bagus=true;
-        this.baik = false;
-        this.kurang = false;
-        this.sangat_kurang = false;
-        // this.must = false;
-      }
-      if(rating == 5){
-        this.sangat_bagus = true;
-        this.bagus=false;
-        this.baik = false;
-        this.kurang = false;
-        this.sangat_kurang = false;
-        // this.must = false;
-      }
-    },
     getIct(){
       this.axios.get('api/get-ict',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.ict = response.data.ict;
@@ -866,10 +848,11 @@ export default {
           this.verif = response.data.ict1;
           this.reject = response.data.ict2
           this.penugasan = response.data.ict8;
-          this.sedangDikerjakan = response.data.ict3
-          this.sudahDikerjakan = response.data.ict4
-          this.selesai = response.data.ict5
-          this.reviewer = response.data.ict6
+          this.sedangDikerjakan = response.data.ict3;
+          this.sudahDikerjakan = response.data.ict4;
+          this.selesai = response.data.ict5;
+          this.reviewer = response.data.ict6;
+          localStorage.setItem('active',0);
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({

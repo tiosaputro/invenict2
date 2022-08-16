@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      active2: JSON.parse(localStorage.getItem('active2')),
       dialogReject: false,
       dialogApprove: false,
       ConfirmationVerifikasi: false,
@@ -35,7 +36,6 @@ __webpack_require__.r(__webpack_exports__);
       selesai: [],
       sdhdiverifikasi: [],
       reject: [],
-      usr_name: localStorage.getItem('usr_name'),
       filters: {
         'global': {
           value: null,
@@ -45,7 +45,6 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id'),
       code: null
     };
   },
@@ -53,22 +52,26 @@ __webpack_require__.r(__webpack_exports__);
     this.getPermohonan();
   },
   methods: {
-    // cekUser(){
-    //   if(this.id){
-    //   this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-    //     this.checkto = response.data.map((x)=> x.to)
-    //     this.checkname = response.data.map((x)=> x.name)
-    //     if(this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-manager")){ 
-    //       this.getPermohonan();
-    //     }
-    //     else {
-    //       this.$router.push('/access');
-    //     }
-    //   });
-    //   } else {
-    //     this.$router.push('/login');
-    //   }
-    // },
+    detailTabWaiting: function detailTabWaiting(ireq_id) {
+      localStorage.setItem('active2', 0);
+      this.$router.push('/ict-request-manager-detail/' + ireq_id);
+    },
+    detailTabApproved: function detailTabApproved(ireq_id) {
+      localStorage.setItem('active2', 1);
+      this.$router.push('/ict-request-manager-detail/' + ireq_id);
+    },
+    detailTabRejected: function detailTabRejected(ireq_id) {
+      localStorage.setItem('active2', 2);
+      this.$router.push('/ict-request-manager-detail/' + ireq_id);
+    },
+    detailTabRequestAssignment: function detailTabRequestAssignment(ireq_id) {
+      localStorage.setItem('active2', 3);
+      this.$router.push('/ict-request-manager/detail-penugasan/' + ireq_id);
+    },
+    detailTabRequestInProgress: function detailTabRequestInProgress(ireq_id) {
+      localStorage.setItem('active2', 4);
+      this.$router.push('/ict-request-manager/detail-penugasan/' + ireq_id);
+    },
     getPermohonan: function getPermohonan() {
       var _this = this;
 
@@ -85,6 +88,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.sudahDikerjakan = response.data.ict4;
         _this.selesai = response.data.ict5;
         _this.loading = false;
+        localStorage.setItem('active2', 0);
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this.$toast.add({
@@ -128,14 +132,6 @@ __webpack_require__.r(__webpack_exports__);
       this.ConfirmationVerifikasi = true;
     },
     approve: function approve() {
-      // this.$confirm.require({
-      //       message: "Are you sure you approve to this request?",
-      //       header: "Confirmation Approval",
-      //       icon: "pi pi-info-circle",
-      //       acceptClass: "p-button",
-      //       acceptLabel: "Yes",
-      //       rejectLabel: "No",
-      //       accept: () => {
       this.$toast.add({
         severity: "info",
         summary: "Success Message",
@@ -149,9 +145,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.cancelApprove();
       this.loading = true;
-      this.getPermohonan(); // },
-      //   reject: () => {},
-      // });
+      this.getPermohonan();
     },
     rejectRequest: function rejectRequest() {
       this.ConfirmationVerifikasi = false;
@@ -756,7 +750,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabView, {
-    ref: "tabview1"
+    ref: "tabview1",
+    activeIndex: $data.active2,
+    "onUpdate:activeIndex": _cache[21] || (_cache[21] = function ($event) {
+      return $data.active2 = $event;
+    })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabPanel, {
@@ -882,12 +880,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Manager Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabWaiting(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1040,12 +1033,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Manager Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabApproved(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1198,12 +1186,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Manager Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabRejected(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1352,12 +1335,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Manager Detail Penugasan',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabRequestAssignment(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1510,12 +1488,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Manager Detail Penugasan',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabRequestInProgress(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1689,6 +1662,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
                   /* TEXT, CLASS */
                   )];
+                }),
+                _: 1
+                /* STABLE */
+
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                    label: "Pdf",
+                    "class": "p-button-raised p-button-danger p-button-sm mr-2",
+                    icon: "pi pi-file-pdf",
+                    onClick: function onClick($event) {
+                      return $options.CetakPdf(slotProps.data.ireq_id);
+                    }
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"]), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+                    bottom: true
+                  }]])];
                 }),
                 _: 1
                 /* STABLE */
@@ -1895,11 +1886,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }, 512
-  /* NEED_PATCH */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+  }, 8
+  /* PROPS */
+  , ["activeIndex"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogReject,
-    "onUpdate:visible": _cache[24] || (_cache[24] = function ($event) {
+    "onUpdate:visible": _cache[25] || (_cache[25] = function ($event) {
       return $data.dialogReject = $event;
     }),
     style: {
@@ -1912,14 +1903,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Yes",
-        onClick: _cache[22] || (_cache[22] = function ($event) {
+        onClick: _cache[23] || (_cache[23] = function ($event) {
           return $options.updateReject();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "No",
-        onClick: _cache[23] || (_cache[23] = function ($event) {
+        onClick: _cache[24] || (_cache[24] = function ($event) {
           return $options.cancelReject();
         }),
         "class": "p-button-text"
@@ -1930,7 +1921,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         autoResize: true,
         type: "text",
         modelValue: $data.reason.ket,
-        "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
+        "onUpdate:modelValue": _cache[22] || (_cache[22] = function ($event) {
           return $data.reason.ket = $event;
         }),
         rows: "5",
@@ -1949,7 +1940,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogApprove,
-    "onUpdate:visible": _cache[28] || (_cache[28] = function ($event) {
+    "onUpdate:visible": _cache[29] || (_cache[29] = function ($event) {
       return $data.dialogApprove = $event;
     }),
     style: {
@@ -1962,14 +1953,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Yes",
-        onClick: _cache[26] || (_cache[26] = function ($event) {
+        onClick: _cache[27] || (_cache[27] = function ($event) {
           return $options.approve();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "No",
-        onClick: _cache[27] || (_cache[27] = function ($event) {
+        onClick: _cache[28] || (_cache[28] = function ($event) {
           return $options.cancelApprove();
         }),
         "class": "p-button-text"
@@ -1980,7 +1971,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         autoResize: true,
         type: "text",
         modelValue: $data.reason.remark,
-        "onUpdate:modelValue": _cache[25] || (_cache[25] = function ($event) {
+        "onUpdate:modelValue": _cache[26] || (_cache[26] = function ($event) {
           return $data.reason.remark = $event;
         }),
         rows: "5",
@@ -1997,7 +1988,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     header: "Confirmation",
     visible: $data.ConfirmationVerifikasi,
-    "onUpdate:visible": _cache[29] || (_cache[29] = function ($event) {
+    "onUpdate:visible": _cache[30] || (_cache[30] = function ($event) {
       return $data.ConfirmationVerifikasi = $event;
     }),
     style: {

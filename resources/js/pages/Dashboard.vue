@@ -777,7 +777,7 @@
 						<div class="text-900 font-medium text-xl">{{count.belumdiverifikasi}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-check text-xl" style="color: red;"></i>
+						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
 					</div>
 				</div>
 			</div>
@@ -878,9 +878,7 @@ export default {
             count3:[],
             count4:[],
             count5:[],
-            usr_name: localStorage.getItem('usr_name'),
             token: localStorage.getItem('token'),
-            id : localStorage.getItem('id'),
         }
     },
     mounted(){
@@ -898,7 +896,7 @@ export default {
 			opacity: 0.5,
 			zIndex: 999,
 		}, {});
-			this.axios.get('/api/cek-role/'+this.id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+			this.axios.get('/api/cek-role',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
 				this.role_name = response.data.map((x)=>x.rol_name);
 				if(this.role_name.includes('Manager')){
 					this.getData4();

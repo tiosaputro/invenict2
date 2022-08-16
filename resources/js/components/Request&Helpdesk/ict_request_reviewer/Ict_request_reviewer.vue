@@ -9,7 +9,7 @@
             <h4>Reviewer</h4>
           </template>
         </Toolbar>
-            <TabView ref="tabView2">
+            <TabView ref="tabView2" v-model:activeIndex="active1">
               <TabPanel header="Request">
                 <DataTable
                   :value="permohonan"
@@ -60,19 +60,15 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status <= 0"
-                        v-tooltip.left="'Detail'"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Detail Permohonan',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        v-tooltip.bottom="'Click for request details'"
+                        @click="detailTabRequestDetailPermohonan(slotProps.data.ireq_id)"
                       />
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status > 0"
-                        v-tooltip.left="'Detail'"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        v-tooltip.bottom="'Click for request details'"
+                        @click="detailTabRequestDetail(slotProps.data.ireq_id)"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
@@ -194,19 +190,15 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status <= 0"
-                        v-tooltip.left="'Detail'"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Detail Permohonan',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        v-tooltip.bottom="'Click for request details'"
+                        @click="detailTabHigherLevelDetailPermohonan(slotProps.data.ireq_id)"
                       />
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status > 0"
-                        v-tooltip.left="'Detail'"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        v-tooltip.bottom="'Click for request details'"
+                        @click="detailTabHigherLevelDetail(slotProps.data.ireq_id)"
                       />
                       <Button
                         class="p-button-raised p-button-text p-button-sm mr-2"
@@ -318,19 +310,15 @@
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status <= 0"
-                        v-tooltip.left="'Detail'"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Detail Permohonan',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        v-tooltip.bottom="'Click for request details'"
+                        @click="detailTabIctManagerDetailPermohonan(slotProps.data.ireq_id)"
                       />
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status > 0"
-                        v-tooltip.left="'Detail'"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        v-tooltip.bottom="'Click for request details'"
+                        @click="detailTabIctManagerDetail(slotProps.data.ireq_id)"
                       />
                       <Button
                         class="p-button-raised p-button-text p-button-sm mr-2"
@@ -431,10 +419,8 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.right="'Detail'"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        v-tooltip.bottom="'Click for request details'"
+                        @click="detailTabRejectedDetail(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -510,10 +496,8 @@
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
                         icon="pi pi-info-circle"
-                        v-tooltip.right="'Detail'"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        v-tooltip.bottom="'Click for request details'"
+                        @click="detailTabRequestAssignmentDetail(slotProps.data.ireq_id)"
                       />
                        <Button
                         v-if="slotProps.data.status == 'RT'"
@@ -599,12 +583,10 @@
                   <Column headerStyle="min-width:6rem">
                     <template #body="slotProps">
                       <Button
-                        v-tooltip.right="' Detail '"
+                        v-tooltip.bottom="'Click for request details'"
                         class="p-button-rounded p-button-secondary"
                         icon="pi pi-info-circle"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Detail Penugasan',
-                            params: { code: slotProps.data.ireq_id }, })"
+                        @click="detailTabInProgressDetail(slotProps.data.ireq_id)"
                       />
                     </template>
                   </Column>
@@ -680,14 +662,22 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <Column>
+                  <Column style="min-width:15rem">
                     <template #body="slotProps">
                      <Button
-                          v-if="slotProps.data.status == 'D'"
-                          class="p-button-raised p-button-text mr-2"
-                          label="Closing"
-                          @click="ClosingPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_id)"
+                      v-if="slotProps.data.status == 'D'"
+                      class="p-button-raised mr-2"
+                      label="Closing"
+                      v-tooltip.bottom="'Click to closing request'"
+                      @click="ClosingPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_id)"
                       />
+                     <Button
+                      label="Pdf"
+                      class="p-button-raised p-button-danger mt-2"
+                      v-tooltip.bottom="'Click to print out (PDF)'"
+                      icon="pi pi-file-pdf"
+                      @click="CetakPdf(slotProps.data.ireq_id)"
+                     />
                     </template>
                   </Column>
                   <template #footer>
@@ -944,6 +934,7 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+        active1:JSON.parse(localStorage.getItem('active1')),
         dialogAssign:false,
         dialogRemark:false,
         remark:{
@@ -988,6 +979,42 @@ export default {
     this.getIct();
   },
   methods: {
+    detailTabRequestDetailPermohonan(ireq_id){
+      localStorage.setItem('active1',0);
+      this.$router.push('/ict-request-reviewer/detail-permohonan/'+ireq_id)
+    },
+    detailTabRequestDetail(ireq_id){
+      localStorage.setItem('active1',0);
+      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
+    },
+    detailTabHigherLevelDetailPermohonan(ireq_id){
+      localStorage.setItem('active1',1);
+      this.$router.push('/ict-request-reviewer/detail-permohonan/'+ireq_id)
+    },
+    detailTabHigherLevelDetail(ireq_id){
+      localStorage.setItem('active1',1);
+      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
+    },
+    detailTabIctManagerDetailPermohonan(ireq_id){
+      localStorage.setItem('active1',2);
+      this.$router.push('/ict-request-reviewer/detail-permohonan/'+ireq_id)
+    },
+    detailTabIctManagerDetail(ireq_id){
+      localStorage.setItem('active1',2);
+      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
+    },
+    detailTabRejectedDetail(ireq_id){
+      localStorage.setItem('active1',3);
+      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
+    },
+    detailTabRequestAssignmentDetail(ireq_id){
+      localStorage.setItem('active1',4);
+      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
+    },
+    detailTabInProgressDetail(ireq_id){
+      localStorage.setItem('active1',5);
+      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
+    },
     getIct(){
       this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.permohonan = response.data.ict;
@@ -996,9 +1023,10 @@ export default {
           this.manager = response.data.ict2;
           this.reject = response.data.ict3;
           this.penugasan = response.data.ict7;
-          this.sedangDikerjakan = response.data.ict4
-          this.sudahDikerjakan = response.data.ict5
+          this.sedangDikerjakan = response.data.ict4;
+          this.sudahDikerjakan = response.data.ict5;
           this.selesai = response.data.ict6;
+          localStorage.setItem('active1',0);
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
@@ -1019,8 +1047,8 @@ export default {
     },
     Submit(ireq_id){
       this.$confirm.require({
-        message: "Apakah Anda Yakin Mensubmit?",
-        header: "ICT Request    ",
+        message: "Are You Sure to Submit?",
+        header: "ICT Request",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Ya",
@@ -1029,7 +1057,7 @@ export default {
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Submit",
+            detail: "Success Submit",
             life: 3000,
           });
           this.axios.get('api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
@@ -1400,10 +1428,3 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
-    // .cheap {
-    //     background-color: #54a90a !important;
-    //     background-image: none !important;
-    //     color: #ffffff !important;
-    // }
-</style>

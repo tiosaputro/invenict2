@@ -20,7 +20,6 @@ class MngUsrRoleController extends Controller
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
     public function getRole($id) {
-        
         $role = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
         $rolemenu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
         $query = DB::table('mng_menus')
@@ -87,8 +86,9 @@ class MngUsrRoleController extends Controller
             ]);
         }
     }
-    public function cekRole($id)
+    public function cekRole()
     {
+        $id = Auth::user()->usr_id;
         $getRole = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
         $cek = Mng_roles::select('rol_id','rol_name')->whereIn('rol_id',$getRole)->get();
         return response()->json($cek);

@@ -2172,15 +2172,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2190,7 +2190,9 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+        <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
@@ -2254,7 +2256,9 @@
         </template>
         <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
         <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-        <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+        <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}

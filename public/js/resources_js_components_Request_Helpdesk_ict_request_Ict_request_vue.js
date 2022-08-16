@@ -33,7 +33,7 @@ __webpack_require__.r(__webpack_exports__);
       sangat_bagus: false,
       dialogEdit: false,
       rating: 0,
-      active1: 0,
+      active: JSON.parse(localStorage.getItem('active')),
       loading: true,
       ict: [],
       verif: [],
@@ -60,6 +60,30 @@ __webpack_require__.r(__webpack_exports__);
     this.getIct();
   },
   methods: {
+    detailTabRequest: function detailTabRequest(ireq_id) {
+      localStorage.setItem('active', 0);
+      this.$router.push('/ict-request-detail/' + ireq_id);
+    },
+    detailTabReviewer: function detailTabReviewer(ireq_id) {
+      localStorage.setItem('active', 1);
+      this.$router.push('/ict-request-detail/' + ireq_id);
+    },
+    detailTabVerified: function detailTabVerified(ireq_id) {
+      localStorage.setItem('active', 2);
+      this.$router.push('/ict-request-detail/' + ireq_id);
+    },
+    detailTabRejected: function detailTabRejected(ireq_id) {
+      localStorage.setItem('active', 3);
+      this.$router.push('/ict-request-detail/' + ireq_id);
+    },
+    detailTabRequestAssignment: function detailTabRequestAssignment(ireq_id) {
+      localStorage.setItem('active', 4);
+      this.$router.push('/ict-request-detail/' + ireq_id);
+    },
+    detailTabInProgress: function detailTabInProgress(ireq_id) {
+      localStorage.setItem('active', 5);
+      this.$router.push('/ict-request-detail/' + ireq_id);
+    },
     setRating: function setRating(rating) {
       if (rating <= 2) {
         this.must = true;
@@ -161,47 +185,6 @@ __webpack_require__.r(__webpack_exports__);
       this.reason.ireq_id = ireq_id;
       this.dialogEdit = true;
     },
-    check: function check(rating) {
-      if (rating == 1) {
-        this.sangat_bagus = false;
-        this.bagus = false;
-        this.baik = false;
-        this.kurang = false;
-        this.sangat_kurang = true; // this.must = true;
-      }
-
-      if (rating == 2) {
-        this.sangat_bagus = false;
-        this.bagus = false;
-        this.baik = false;
-        this.kurang = true;
-        this.sangat_kurang = false; // this.must = true;
-      }
-
-      if (rating == 3) {
-        this.sangat_bagus = false;
-        this.bagus = false;
-        this.baik = true;
-        this.kurang = false;
-        this.sangat_kurang = false;
-      }
-
-      if (rating == 4) {
-        this.sangat_bagus = false;
-        this.bagus = true;
-        this.baik = false;
-        this.kurang = false;
-        this.sangat_kurang = false; // this.must = false;
-      }
-
-      if (rating == 5) {
-        this.sangat_bagus = true;
-        this.bagus = false;
-        this.baik = false;
-        this.kurang = false;
-        this.sangat_kurang = false; // this.must = false;
-      }
-    },
     getIct: function getIct() {
       var _this2 = this;
 
@@ -219,6 +202,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.sudahDikerjakan = response.data.ict4;
         _this2.selesai = response.data.ict5;
         _this2.reviewer = response.data.ict6;
+        localStorage.setItem('active', 0);
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this2.$toast.add({
@@ -929,9 +913,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TabView, {
     ref: "tabView2",
-    activeIndex: $data.active1,
+    activeIndex: $data.active,
     "onUpdate:activeIndex": _cache[24] || (_cache[24] = function ($event) {
-      return $data.active1 = $event;
+      return $data.active = $event;
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1038,12 +1022,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabRequest(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1224,12 +1203,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabReviewer(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1375,12 +1349,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabVerified(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1533,12 +1502,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabRejected(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1691,12 +1655,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabRequestAssignment(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -1831,12 +1790,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                     "class": "p-button-rounded p-button-secondary mr-2",
                     icon: "pi pi-info-circle",
                     onClick: function onClick($event) {
-                      return _ctx.$router.push({
-                        name: 'Ict Request Detail',
-                        params: {
-                          code: slotProps.data.ireq_id
-                        }
-                      });
+                      return $options.detailTabInProgress(slotProps.data.ireq_id);
                     }
                   }, null, 8
                   /* PROPS */
@@ -2010,6 +1964,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
                   /* TEXT, CLASS */
                   )];
+                }),
+                _: 1
+                /* STABLE */
+
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                style: {
+                  "min-width": "12rem"
+                }
+              }, {
+                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                    label: "Pdf",
+                    "class": "p-button-raised p-button-danger p-button-sm mt-2",
+                    icon: "pi pi-file-pdf",
+                    onClick: function onClick($event) {
+                      return $options.CetakPdf(slotProps.data.ireq_id);
+                    }
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"]), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+                    bottom: true
+                  }]])];
                 }),
                 _: 1
                 /* STABLE */
@@ -2269,7 +2245,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "show-rating": true,
         inline: true,
         "star-size": 40,
-        "onHover:rating": $options.check,
+        "onHover:rating": _ctx.check,
         "onUpdate:rating": $options.setRating
       }, null, 8
       /* PROPS */
