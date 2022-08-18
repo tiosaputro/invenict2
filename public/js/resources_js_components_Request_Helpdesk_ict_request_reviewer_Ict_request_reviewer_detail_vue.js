@@ -589,18 +589,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [slotProps.data.cekstatus == 'RT' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+          return [slotProps.data.cekstatus == 'NT' || slotProps.data.cekstatus == 'RT' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
             key: 0,
-            "class": "p-button-raised p-button-text mr-2 mt-2",
-            label: "Assign",
-            icon: "pi pi-user-edit",
-            onClick: function onClick($event) {
-              return $options.AssignPerDetail(slotProps.data.ireqd_id);
-            }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.cekstatus == 'NT' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-            key: 1,
             "class": "p-button-raised p-button-text mr-2 mt-2",
             icon: "pi pi-user-edit",
             label: "Assign",
@@ -610,7 +600,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8
           /* PROPS */
           , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_assigned_to2 && slotProps.data.cekstatus == 'RT' || slotProps.data.ireq_assigned_to2 && slotProps.data.cekstatus == 'NT' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-            key: 2,
+            key: 1,
             "class": "p-button-raised p-button-success p-button-text mr-2 mt-2",
             icon: "pi pi-check",
             label: "Submit",

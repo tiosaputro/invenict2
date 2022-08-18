@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\IctDetail;
 use App\Ict;
 use App\Link;
+use App\Jobs\SendNotifInProgress;
 use App\Exports\IctDetailExport;
 use App\Exports\IctDetailExportReject;
 use App\Exports\IctDetailTabReviewerExport;
@@ -16,6 +17,7 @@ use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Jobs\SendNotifPersonnel;
 
 class IctDetailController extends Controller
 {
@@ -90,7 +92,7 @@ class IctDetailController extends Controller
         ->get();
             return response()->json($dtl);
     }
-    function abp($ireq_id){
+    function abp($ireq_id){ //accept by personnel
         $usr_fullname = Auth::User()->usr_fullname;
         $dtl = DB::table('ireq_dtl')
         ->where('ireq_id',$ireq_id)
@@ -103,9 +105,43 @@ class IctDetailController extends Controller
         ]);
 
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
-        return response()->json('Updated Successfully');
+        $cek = $this->cekStatusPenugasan($code);
+        return json_encode($ireq_id);
     }
-    function rbp(Request $request,$ireq_id){
+    function cekStatusPenugasan($ireq_id){
+        $ict = DB::table('ireq_dtl as id')
+        ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.lookup_code')
+                ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        })
+        ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
+            $join->on('id.ireq_type','lrfs.lookup_code')
+                 ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+        })
+        ->LEFTJOIN('vcompany_refs as vr',function ($join) {
+            $join->on('im.ireq_bu','vr.company_code');
+        })
+        ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
+        ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
+        ->SELECT('loc.loc_email','mu.usr_email','mu.usr_fullname','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+                'im.ireq_status','im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
+        ->WHERE('im.ireq_id',$ireq_id)
+        ->ORDERBY('id.ireqd_id','ASC')
+        ->get();
+            if($ict[0]->ireq_status == 'T'){
+                $mail = $ict[0]->usr_email .= '@emp.id';
+                SendNotifInProgress::dispatchAfterResponse($mail,$ict);
+                $message = 'Success';
+                return $message;
+            }
+            else{
+                $message = 'Success';
+                return $message;
+            }
+    }
+    function rbp(Request $request,$ireq_id){ //reject by personnel
         $usr_fullname = Auth::User()->usr_fullname;
         $dtl = DB::table('ireq_dtl')
         ->where('ireq_id',$ireq_id)
@@ -121,7 +157,7 @@ class IctDetailController extends Controller
         return response()->json('Updated Successfully');
         
     }
-    Public function getNo_req($code)
+    function getNo_req($code)
     {
         $dtl = DB::table('ireq_mst as im')
         ->leftJoin('lookup_refs as lr',function ($join) {
@@ -507,7 +543,6 @@ class IctDetailController extends Controller
             'last_update_date' => $this->newUpdate,
             'last_updated_by' => Auth::user()->usr_name
         ]);
-        
         return response()->json('Updated Successfully');
     }
     public function updateStatusDone(Request $request,$code){
@@ -552,7 +587,7 @@ class IctDetailController extends Controller
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_CLOSING_IREQ_MST($ireq_id); end;");
         return response()->json('Updated Successfully');
     }
-    public function appd($ireqd_id,$code){
+    public function appd($ireqd_id,$code){ 
         $dtl = DB::table('ireq_dtl')
         ->where('ireqd_id',$ireqd_id)
         ->where('ireq_id',$code)
@@ -563,9 +598,14 @@ class IctDetailController extends Controller
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctDetail_appd"
         ]);
-        
+        $personel = IctDetail::select('ireq_assigned_to2')->where('ireq_id',$code)->where('ireqd_id',$ireqd_id)->pluck('ireq_assigned_to2');
+        $ict = Ict::where('ireq_id',$code)->first();
+        $mail = DB::table('mng_users')->SELECT('usr_email')->WHERE('usr_fullname',$personel)->first();
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($code); end;");
-        return response()->json('Updated Successfully');
+        $email = $mail->usr_email .= '@emp.id';
+        SendNotifPersonnel::dispatchAfterResponse($email,$ict);
+        $cek = $this->cekStatusPenugasan($code);
+        return json_encode($cek);
     }
     function submitRating(Request $request){
         if($request->rating <= '2'){

@@ -717,6 +717,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
       'p-invalid': $data.submitted && !$data.user.image
     }, "form-control"]),
+    accept: "image/jpg,image/png,image/jpeg",
     ref: "fileInput",
     onChange: $options.fileImage
   }, null, 8

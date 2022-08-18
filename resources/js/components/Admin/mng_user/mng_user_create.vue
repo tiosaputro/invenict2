@@ -209,7 +209,7 @@
             <div class="field grid">
               <label style="width:155px"></label>
                 <div class="col-10 md-6">
-                  <InputText type="file" name="foto" :class="{ 'p-invalid': submitted && !user.image }" ref="fileInput" class="form-control" @change="fileImage" />
+                  <InputText type="file" name="foto" :class="{ 'p-invalid': submitted && !user.image }" accept="image/jpg,image/png,image/jpeg" ref="fileInput" class="form-control" @change="fileImage" />
                     <small class="p-error" v-if="submitted && !user.image">
                       Foto Belum Disi 
                     </small>

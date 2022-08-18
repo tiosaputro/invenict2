@@ -46,7 +46,6 @@
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true"  style="min-width:10rem"/>
           <Column field="name" header="Peripheral" :sortable="true"  style="min-width:8rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:8rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
@@ -60,14 +59,7 @@
           <Column style="min-width:17rem">
             <template #body="slotProps">
               <Button
-                v-if="slotProps.data.cekstatus == 'RT'"
-                class="p-button-raised p-button-text mr-2 mt-2"
-                label="Assign"
-                icon="pi pi-user-edit"
-                @click="AssignPerDetail(slotProps.data.ireqd_id)"
-              />
-              <Button
-                v-if="slotProps.data.cekstatus == 'NT'"
+                v-if="slotProps.data.cekstatus == 'NT' || slotProps.data.cekstatus == 'RT'"
                 class="p-button-raised p-button-text mr-2 mt-2"
                 icon="pi pi-user-edit"
                 label="Assign"

@@ -123,6 +123,22 @@ const routes = [
         path: '/Edit-referensi-kategori/:code/:type',
         component: ()=> import('./components/Admin/referensi_lookups_kategori/Referensi_lookups_kategori_edit.vue'),
     },
+    //lookup_service
+    {
+        name: 'Referensi Service',
+        path: '/referensi-service',
+        component: () => import('./components/Admin/referensi_lookups_service/Referensi_lookups_service.vue'),
+    },
+    {
+        name: 'Create Referensi Service',
+        path: '/Add-referensi-service',
+        component: () => import('./components/Admin/referensi_lookups_service/Referensi_lookups_service_create.vue'),
+    },
+    {
+        name: 'Edit Referensi Service',
+        path: '/Edit-referensi-service/:code/:type',
+        component: ()=> import('./components/Admin/referensi_lookups_service/Referensi_lookups_service_edit.vue'),
+    },
     //supplier
     {
         name: 'Referensi Supplier',
@@ -600,6 +616,11 @@ const routes = [
         name: 'Ict Request Reviewer Detail Permohonan',
         path: '/ict-request-reviewer/detail-permohonan/:code',
         component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_detail_permohonan.vue'),
+    },
+    {
+        name: 'Ict Request Reviewer Edit Detail Permohonan',
+        path: '/ict-request-reviewer/edit-detail-permohonan/:ireq/:code',
+        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_edit_detail_permohonan.vue'),
     },
     {
         name: 'Ict Request Reviewer Detail',

@@ -228,7 +228,7 @@
             <div class="field grid">
               <label class="col-fixed w-9rem"></label>
                 <div class="col-10 md-6">
-                  <input type="file" :class="{ 'p-invalid': error.foto }" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
+                  <input type="file" :class="{ 'p-invalid': error.foto }" accept="image/jpg,image/png,image/jpeg" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
                     <!-- <small class="p-error" v-if="error.foto">
                       {{ error.foto }}
                     </small> -->
@@ -442,7 +442,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .master-image {
-  height:155pt;
+  height:188pt;
   object-fit:contain;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }

@@ -1013,7 +1013,7 @@ export default {
     },
     detailTabInProgressDetail(ireq_id){
       localStorage.setItem('active1',5);
-      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
+      this.$router.push('/ict-request-reviewer/detail-penugasan/'+ireq_id)
     },
     getIct(){
       this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {

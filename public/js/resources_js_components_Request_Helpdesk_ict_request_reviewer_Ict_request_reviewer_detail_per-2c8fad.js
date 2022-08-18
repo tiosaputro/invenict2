@@ -59,7 +59,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return x.name;
           });
 
-          if (_this.checkname.includes("Reviewer") || _this.checkto.includes("/ict-request/reviewer")) {
+          if (_this.checkname.includes("Reviewer") || _this.checkto.includes("/ict-request-reviewer")) {
             _this.getIctDetail();
 
             _this.getNoreq();
@@ -320,6 +320,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
           /* TEXT, CLASS */
           )];
+        }),
+        _: 1
+        /* STABLE */
+
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        style: {
+          "min-width": "8rem"
+        }
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [slotProps.data.status == 'P' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+            key: 0,
+            "class": "p-button-rounded p-button-info mr-2",
+            icon: "pi pi-pencil",
+            onClick: function onClick($event) {
+              return _ctx.$router.push({
+                name: 'Ict Request Reviewer Edit Detail Permohonan',
+                params: {
+                  code: _this.$route.params.code,
+                  ireq: slotProps.data.ireqd_id
+                }
+              });
+            }
+          }, null, 8
+          /* PROPS */
+          , ["onClick"])), [[_directive_tooltip, 'Click to edit request', void 0, {
+            bottom: true
+          }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
         }),
         _: 1
         /* STABLE */

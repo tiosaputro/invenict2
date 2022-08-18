@@ -54,6 +54,20 @@
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
+          <Column style="min-width:8rem">
+            <template #body= "slotProps">
+              <Button
+                v-if=" slotProps.data.status == 'P'"
+                class="p-button-rounded p-button-info mr-2"
+                icon="pi pi-pencil"
+                v-tooltip.bottom="'Click to edit request'"
+                @click="
+                  $router.push({
+                    name: 'Ict Request Reviewer Edit Detail Permohonan',
+                    params: {code: this.$route.params.code,ireq: slotProps.data.ireqd_id},
+                  })"/>
+            </template>
+          </Column>
           <template #footer>
             <div class="grid dir-col">
 			        <div class="col">
@@ -113,7 +127,7 @@ export default {
       this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request/reviewer")){ 
+        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
            this.getIctDetail();
            this.getNoreq()
         }

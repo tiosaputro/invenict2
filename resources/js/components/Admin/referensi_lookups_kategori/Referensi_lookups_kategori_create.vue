@@ -4,21 +4,11 @@
         <div class="card">
         <Toolbar class="mb-4">
           <template v-slot:start>
-				    <h4>Referensi - Kategori</h4>
+				    <h4>Referensi - Peripheral Catalog</h4>
           </template>
         </Toolbar>
             <div class="card-body">
              <form @submit.prevent="CreateLookup">
-               <!-- <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Tipe</label>
-                 <div class="col-fixed">
-                  <InputText
-                   type="text"
-                   v-model="lookup_type"
-                   disabled
-                  />
-                </div>
-              </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Kode</label>
                  <div class="col-fixed w-9rem">

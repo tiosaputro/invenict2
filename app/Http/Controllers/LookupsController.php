@@ -40,7 +40,14 @@ class LookupsController extends Controller
         ->select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
         ->where('lookup_type','Kat_Peripheral')
         ->get();
-        return response()->json($ref);
+        return json_encode($ref);
+    }
+    function lookupService(){
+        $ref = DB::table('lookup_refs')
+        ->select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
+        ->where('lookup_type','Kat_Service')
+        ->get();
+        return json_encode($ref);
     }
     public function save(Request $request) 
     {

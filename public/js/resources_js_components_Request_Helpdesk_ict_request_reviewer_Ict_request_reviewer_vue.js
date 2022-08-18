@@ -103,7 +103,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     detailTabInProgressDetail: function detailTabInProgressDetail(ireq_id) {
       localStorage.setItem('active1', 5);
-      this.$router.push('/ict-request-reviewer/detail/' + ireq_id);
+      this.$router.push('/ict-request-reviewer/detail-penugasan/' + ireq_id);
     },
     getIct: function getIct() {
       var _this = this;

@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/ref', 'LookupsController@index');
     Route::get('/ref-lookup-brand', 'LookupsController@lookupBrand');
     Route::get('/ref-lookup-kategori', 'LookupsController@lookupKategori');
+    Route::get('/ref-lookup-service', 'LookupsController@lookupService');
     Route::post('/add-ref','LookupsController@save');
     Route::get('/edit-ref/{code}/{type}','LookupsController@edit');
     Route::put('/update-ref/{code}/{type}','LookupsController@update');

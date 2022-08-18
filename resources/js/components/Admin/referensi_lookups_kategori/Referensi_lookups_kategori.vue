@@ -6,7 +6,7 @@
         <ConfirmDialog/> 
         <Toolbar class="mb-4">
           <template v-slot:start>
-				    <h4>Referensi - Kategori</h4>
+				    <h4>Referensi - Peripheral Catalog</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -18,7 +18,7 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5,10,25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Referensi  Kategori"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Peripheral Catalog"
           responsiveLayout="scroll">
        <template #header>
             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
