@@ -26,7 +26,6 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-        
        <template #header>
          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center" v-if="this.status == null">
             <Button
@@ -65,9 +64,19 @@
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
           <Column field="name" header="Peripheral" :sortable="true" style="min-width:12rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+          <Column header="Attachment" style="min-width:10rem">
+            <template #body="slotProps">
+              <p v-if="slotProps.data.ireq_attachment == null"></p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+              </p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              </p>
+            </template>  
+          </Column>
           <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
@@ -155,6 +164,11 @@ export default {
     this.cekUser();
   },
   methods: {
+    getDetail(ireq_attachment){
+       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+         var myWindow = window.open(page, "_blank");
+         myWindow.focus();
+    },
     cekUser(){
       if(this.id){
       this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -219,7 +233,7 @@ export default {
         reject: () => {},
       });
     },
-     SubmitIct(){
+    SubmitIct(){
       this.$confirm.require({
         message: "Are you sure you want to submit this request?",
         header: "Confirmation Submit",
@@ -280,3 +294,9 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.attachment-image {
+    width: 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</style>

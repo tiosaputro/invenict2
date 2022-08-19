@@ -81,9 +81,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this2.type = response.data.ref;
-        _this2.bu = response.data.bisnis; // this.divisi = response.data.divisi;
-
+        _this2.bu = response.data.bisnis;
+        _this2.divisi = response.data.divisi;
         _this2.level = response.data.prio;
+      })["catch"](function (error) {
+        if (response.status == '401') {
+          return _this2.$router.push('/login');
+        }
       });
     },
     CreateIct: function CreateIct() {
@@ -285,7 +289,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.CreateIct && $options.CreateIct.apply($options, arguments);
     }, ["prevent"]))
   }, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\">Tgl. Request</label>\n                 <div class=\"col-fixed w-11rem\">\n                      <DatePicker v-model=\"tgl\" :masks=\"mask\" >\n                        <template v-slot=\"{ inputValue, togglePopover }\">\n                         <div class=\"flex items-center\">\n                          <input\n                            class=\"bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none\"\n                            :value=\"inputValue\"\n                            @click=\"togglePopover\"\n                            placeholder=\"Pilih Tgl. Request\"\n                            readonly\n                          />\n                          <Button icon=\"pi pi-calendar\" v-if=\"!tgl\" @click=\"togglePopover\"/>\n                          <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-else @click=\"tgl = '' \" />\n                         </div>\n                        </template>\n                      </DatePicker>\n                      <small v-if=\"errors.tgl\" class=\"p-error\">\n                        {{ errors.tgl[0] }}\n                      </small>\n                    </div>\n                </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Tipe Request</label>\n                 <div class=\"col-fixed w-9rem\">\n                     <Dropdown \n                        v-model =\"tipereq\"\n                        :options=\"type\"\n                        optionLabel=\"name\"\n                        optionValue=\"code\"\n                        placeholder=\"Pilih Tipe Request\"\n                        :showClear=\"true\"\n                        :class=\"{ 'p-invalid': error.tipereq }\"\n                     />\n                        <small v-if=\"error.tipereq\" class=\"p-error\">\n                          {{error.tipereq}}\n                        </small>\n                </div>\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
@@ -341,9 +345,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       'p-invalid': $data.error.bisnis
     }),
     placeholder: "Select One",
-    onChange: _cache[4] || (_cache[4] = function ($event) {
-      return $options.getDivision();
-    }),
     filter: true,
     showClear: true
   }, null, 8
@@ -352,7 +353,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.usr_divisi,
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.usr_divisi = $event;
     }),
     options: $data.divisi,
@@ -368,7 +369,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "options", "class"]), $data.error.usr_divisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.usr_divisi), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Keterangan</label>\n                 <div class=\"field col-12 md:col-4\">\n                  <Textarea \n                    v-model=\"ket\"\n                    :autoResize=\"true\" \n                    rows=\"5\" \n                    cols=\"20\"\n                    placeholder=\"Masukan Keterangan . . .\"\n                    :class=\"{ 'p-invalid': error.ket }\"\n                  />\n                      <small class=\"p-error\" v-if=\"error.ket\"\n                        >{{error.ket}}\n                      </small>\n                </div>\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Save",
@@ -377,7 +378,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
-    onClick: _cache[6] || (_cache[6] = function ($event) {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
       return _ctx.$router.push('/ict-request');
     })
   })])], 32

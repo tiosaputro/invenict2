@@ -431,6 +431,17 @@
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
+                  <Column header="Attachment" style="min-width:10rem">
+                    <template #body="slotProps">
+                      <p v-if="slotProps.data.ireq_attachment == null"></p>
+                      <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                        <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+                      </p>
+                      <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                        <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+                      </p>
+                    </template>  
+                  </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
@@ -513,6 +524,17 @@
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
+                  </Column>
+                  <Column header="Attachment" style="min-width:10rem">
+                    <template #body="slotProps">
+                      <p v-if="slotProps.data.ireq_attachment == null"></p>
+                      <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                        <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+                      </p>
+                      <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                        <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+                      </p>
+                    </template>  
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
@@ -626,6 +648,11 @@ export default {
     this.getPermohonan();
   },
   methods: {
+    getDetail(ireq_attachment){
+       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+         var myWindow = window.open(page, "_blank");
+         myWindow.focus();
+    },
     detailTabRequest(ireq_id){
       localStorage.setItem('active3',0);
       this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
@@ -902,3 +929,9 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.attachment-image {
+    width: 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</style>

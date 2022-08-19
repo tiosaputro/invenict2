@@ -47,6 +47,13 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
+        
+        'attachment_request' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/attachment_request'),
+            'url' => env('APP_URL').'/attachment_request',
+            'visibility' => 'public',
+        ],
         'master_peripheral' => [
             'driver' => 'local',
             'root' => storage_path('app/public/master_peripheral'),
@@ -91,6 +98,7 @@ return [
 
     'links' => [
         public_path('master_peripheral') => storage_path('app\public\master_peripheral'),
+        public_path('attachment_request') => storage_path('app\public\attachment_request'),
         public_path('profile') => storage_path('app\public\profile'),
     ],
 

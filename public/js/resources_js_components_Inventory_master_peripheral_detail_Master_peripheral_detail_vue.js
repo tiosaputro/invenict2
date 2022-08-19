@@ -79,7 +79,7 @@ __webpack_require__.r(__webpack_exports__);
       this.displayBarcode = false;
     },
     previewBarcode: function previewBarcode(invent_code_dtl) {
-      this.barcode = 'http://localhost:8000/detPeripheral/' + invent_code_dtl;
+      this.barcode = "http://localhost:8000" + '/detPeripheral/' + +invent_code_dtl;
       this.displayBarcode = true;
     },
     detailKode: function detailKode(invent_code) {

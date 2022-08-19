@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\IctDetail;
 use App\Ict;
+use Illuminate\Support\Facades\Storage;
 use App\Link;
 use App\Jobs\SendNotifInProgress;
 use App\Exports\IctDetailExport;
@@ -30,7 +31,7 @@ class IctDetailController extends Controller
     Public function index($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
+        ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_attachment',
          'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
          'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
          'id.ireq_desc', 'id.ireq_qty','lrs.lookup_desc as name','llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
@@ -52,7 +53,7 @@ class IctDetailController extends Controller
     Public function detailPenugasan($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_qty','id.ireq_status as status','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
+        ->select('id.ireq_attachment','id.ireq_qty','id.ireq_status as status','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
             'lr.lookup_desc as ireq_type','llr.lookup_desc as ireq_status','id.ireq_desc','lrs.lookup_desc as name',
             DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
         ->leftJoin('lookup_refs as lrs',function ($join) {
@@ -176,6 +177,18 @@ class IctDetailController extends Controller
     }
     Public function save(Request $request,$code)
     {
+        if($request->file){
+            $file= $request->file;
+            // $extension = explode('/', explode(':', substr($file, 0, strpos($file, ';')))[1])[1];
+            // $replace = substr($file, 0, strpos($file, ',')+1); 
+            // $fotoo = str_replace($replace, '', $file);
+            // $foto= str_replace(' ', '+', $fotoo); 
+            $nama_file = time().'.'.$request->file->getClientOriginalExtension();
+            $request->file->move(public_path('attachment_request'), $nama_file);
+        }
+        else{
+            $nama_file = '';
+        }
         if($request->tipereq == 'P'){
             $message = [
                 'invent_code.required'=>'Peripheral not filled',
@@ -196,6 +209,7 @@ class IctDetailController extends Controller
                 // 'ireq_desc'=> $request->desk,
                 'ireq_qty'=> $request->qty,
                 'ireq_remark'=>$request->ket,
+                'ireq_attachment'=>$nama_file,
                 'creation_date'=>$this->newCreation,
                 'created_by' => Auth::user()->usr_name,
                 'program_name'=>"IctDetail_Save"
@@ -217,6 +231,7 @@ class IctDetailController extends Controller
                 'ireq_type' => $request->tipereq,
                 // 'ireq_desc'=> $request->desk,
                 'ireq_remark'=>$request->ket,
+                'ireq_attachment'=>$nama_file,
                 'creation_date'=>$this->newCreation,
                 'created_by' => Auth::user()->usr_name,
                 'program_name'=>"IctDetail_Save"
@@ -230,7 +245,7 @@ class IctDetailController extends Controller
     Public function edit($ireq,$code)
     {
         $ict = DB::table('ireq_dtl as id')
-        ->select('id.ireqd_id','id.ireq_type','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_photo as photo','imm.ireq_no')
+        ->select('id.ireqd_id','id.ireq_attachment','id.ireq_type','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_photo as photo','imm.ireq_no')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
@@ -240,75 +255,96 @@ class IctDetailController extends Controller
         ->first();
             return response()->json($ict);
     }
-    Public function update(Request $request,$ireq,$code)
+    function update(Request $request,$ireq,$code)
     {
+        $cek = DB::table('ireq_dtl')->where('ireq_id',$code)->where('ireqd_id',$ireq)->first();
+        if($request->image){
+             if($cek->ireq_attachment){
+                 unlink(Storage_path('app/public/attachment_request/'.$cek->ireq_attachment));
+                }
+            // $file= $request->image;
+            // $nama_file = time().'.'.$request->image->getClientOriginalExtension();
+            // $request->image->move(public_path('attachment_request'), $nama_file);
+            $image= $request->image;
+            $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+            $replace = substr($image, 0, strpos($image, ',')+1); 
+            $fotoo = str_replace($replace, '', $image);
+            $foto= str_replace(' ', '+', $fotoo); 
+            $nama_file = time().".".$extension;
+            Storage::disk('attachment_request')->put($nama_file, base64_decode($foto));
+        }
+        else{
+            $nama_file = $cek->ireq_attachment;
+        }
         if($request->ireq_type == 'P'){
-        $message = [
-            'ireq_type.required'=>'Request type not filled',
-            'invent_code.required'=>'Peripheral not filled',
-            'ireq_qty.required'=>'Qty not filled',
-            'ireq_remark.required'=>'Remark not filled'
-        ];
-            $request->validate([
-                'ireq_type' => 'required',
-                'invent_code'=>'required',
-                'ireq_qty'=>'required',
-                'ireq_remark' => 'required'
-            ],$message);
-        
-        $dtl = DB::table('ireq_dtl')
-        ->where('ireqd_id',$ireq)
-        ->where('ireq_id',$code)
-        ->update([
-            'ireq_type'=> $request->ireq_type,
-            'invent_code'=>$request->invent_code,
-            'ireq_desc'=> $request->ireq_desc,
-            'ireq_qty'=>$request->ireq_qty,
-            'ireq_remark'=> $request->ireq_remark,
-            'last_update_date'=> $this->newUpdate,
-            'last_updated_by'=>Auth::user()->usr_name,
-            'program_name'=>"IctDetail_Update"
-        ]);
+            $message = [
+                'ireq_type.required'=>'Request type not filled',
+                'invent_code.required'=>'Peripheral not filled',
+                'ireq_qty.required'=>'Qty not filled',
+                'ireq_remark.required'=>'Remark not filled'
+            ];
+                $request->validate([
+                    'ireq_type' => 'required',
+                    'invent_code'=>'required',
+                    'ireq_qty'=>'required',
+                    'ireq_remark' => 'required'
+                ],$message);
+            
+            $dtl = DB::table('ireq_dtl')
+            ->where('ireqd_id',$ireq)
+            ->where('ireq_id',$code)
+            ->update([
+                'ireq_type'=> $request->ireq_type,
+                'invent_code'=>$request->invent_code,
+                'ireq_qty'=>$request->ireq_qty,
+                'ireq_attachment'=>$nama_file,
+                'ireq_remark'=> $request->ireq_remark,
+                'last_update_date'=> $this->newUpdate,
+                'last_updated_by'=>Auth::user()->usr_name,
+                'program_name'=>"IctDetail_Update"
+            ]);
 
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
-        return response()->json($msg);
-    }
-    else{
-        $message = [
-            'ireq_type.required'=>'Tipe Request Belum Diisi',
-            'ireq_remark.required'=>'Keterangan Belum Diisi'
-        ];
-            $request->validate([
-                'ireq_type' => 'required',
-                'ireq_remark' => 'required'
-            ],$message);
-        
-        $dtl = DB::table('ireq_dtl')
-        ->where('ireqd_id',$ireq)
-        ->where('ireq_id',$code)
-        ->update([
-            'ireq_type'=> $request->ireq_type,
-            'invent_code'=>'',
-            'ireq_desc'=> $request->ireq_desc,
-            'ireq_qty'=>'',
-            'ireq_remark'=> $request->ireq_remark,
-            'last_update_date'=> $this->newUpdate,
-            'last_updated_by'=>Auth::user()->usr_name,
-            'program_name'=>"IctDetail_Update"
-        ]);
+            $msg = [
+                'success' => true,
+                'message' => 'Updated Successfully'
+            ];
+            return response()->json($msg);
+        }
+        else if($request->ireq_type == 'S'){
+            $message = [
+                'ireq_type.required'=>'Request type not filled',
+                'ireq_remark.required'=>'Remark not filled'
+            ];
+                $request->validate([
+                    'ireq_type' => 'required',
+                    'ireq_remark' => 'required'
+                ],$message);
+            
+            $dtl = DB::table('ireq_dtl')
+            ->where('ireqd_id',$ireq)
+            ->where('ireq_id',$code)
+            ->update([
+                'ireq_type'=> $request->ireq_type,
+                'ireq_remark'=> $request->ireq_remark,
+                'ireq_attachment'=>$nama_file,
+                'last_update_date'=> $this->newUpdate,
+                'last_updated_by'=>Auth::user()->usr_name,
+                'program_name'=>"IctDetail_Update"
+            ]);
 
-        $msg = [
-            'success' => true,
-            'message' => $dtl
-        ];
-        return response()->json($msg);
-      }
+            $msg = [
+                'success' => true,
+                'message' => 'Updated Successfully'
+            ];
+            return response()->json($msg);
+        }
     }
     Public function delete($ireqd_id,$code)
     {
+        $cek = DB::table('ireq_dtl')->where('ireq_id',$code)->where('ireqd_id',$ireqd_id)->first();
+        if($cek->ireq_attachment){
+            unlink(Storage_path('app/public/attachment_request/'.$cek->ireq_attachment));
+        }
         $ict = DB::table('ireq_dtl as id')
         ->where('id.ireqd_id',$ireqd_id)
         ->where('id.ireq_id',$code)
@@ -504,7 +540,7 @@ class IctDetailController extends Controller
     }
     public function getDetail($ireqd_id,$ireq_id){
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_assigned_to1','id.ireq_assigned_remark','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 
+        ->select('id.ireq_attachment','id.ireq_assigned_to1','id.ireq_assigned_remark','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 
         'lrs.lookup_desc as name','lr.lookup_desc as ireq_type','id.ireq_qty','id.ireq_remark','id.ireq_assigned_to1_reason')
         ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
         ->leftJoin('lookup_refs as lrs',function ($join) {

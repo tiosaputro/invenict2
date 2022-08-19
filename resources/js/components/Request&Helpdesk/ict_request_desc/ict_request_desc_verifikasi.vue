@@ -40,11 +40,21 @@
       <template #loading>
         Loading ICT Request (Detail) data. Please wait.
       </template>
-          <Column field="ireq_type" header="Tipe Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="name" header="Nama Peripheral" :sortable="true" style="min-width:12rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
+          <Column field="ireq_type" header="Request" :sortable="true" style="min-width:12rem"/>
+          <Column field="name" header="Peripheral" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="keterangan" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+          <Column header="Attachment" style="min-width:10rem">
+            <template #body="slotProps">
+              <p v-if="slotProps.data.ireq_attachment == null"></p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+              </p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              </p>
+            </template>  
+          </Column>
           <template #footer>
             <div class="p-grid p-dir-col">
               <div class="p-col">
@@ -81,7 +91,7 @@
         class="field grid"
       >
         <div class="field grid">
-            <label style="width:100px">Alasan</label>
+            <label style="width:100px">Reason</label>
               <div class="col-3 md-6">
                   <Textarea
                     :autoResize="true"
@@ -129,10 +139,15 @@ export default {
     this.getNoreq();
   },
   methods: {
+    getDetail(ireq_attachment){
+       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+         var myWindow = window.open(page, "_blank");
+         myWindow.focus();
+    },
       Approve(){
       this.$confirm.require({
-        message: "Approval Permohonan Dilanjutkan?",
-        header: "ICT Request    ",
+        message: "Are you sure you approve to this request?",
+        header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Ya",
@@ -140,8 +155,8 @@ export default {
         accept: () => {
           this.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Permohonan Dilanjutkan",
+            summary: "Success Message",
+            detail: "Successfully approved the request",
           });
           this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
           setTimeout( () =>  this.$router.push('/ict-request-desc'),1000);
@@ -157,7 +172,7 @@ export default {
               this.$toast.add({
                 severity: "info",
                 summary: "Confirmed",
-                detail: "Berhasil Direject",
+                detail: "Success Reject",
               });
               setTimeout( () => this.$router.push('/ict-request-desc'),1000);
             });
@@ -194,3 +209,9 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.attachment-image {
+    width: 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</style>

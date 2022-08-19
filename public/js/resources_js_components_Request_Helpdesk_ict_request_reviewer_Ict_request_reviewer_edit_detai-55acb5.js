@@ -17,6 +17,10 @@ __webpack_require__.r(__webpack_exports__);
       errors: [],
       error: [],
       detail: [],
+      preview: '',
+      pdf: false,
+      image: false,
+      foto: '',
       ict: [],
       kodeperi: [],
       kode: '',
@@ -33,6 +37,33 @@ __webpack_require__.r(__webpack_exports__);
     this.cekUser();
   },
   methods: {
+    getAttach: function getAttach(event) {
+      this.foto = event.target.files[0];
+
+      if (this.foto['type'] === 'image/jpeg' || this.foto['type'] === 'image/jpg' || this.foto['type'] === 'image/png') {
+        this.pdf = false;
+        this.image = true;
+        this.preview = URL.createObjectURL(this.foto);
+      }
+
+      if (this.foto['type'] === 'application/pdf') {
+        this.image = false;
+        this.pdf = true;
+        this.preview = URL.createObjectURL(this.foto);
+      }
+
+      this.createFile(this.foto);
+    },
+    createFile: function createFile(foto) {
+      var reader = new FileReader();
+      var vm = this.ict;
+
+      reader.onload = function (e) {
+        vm.image = e.target.result;
+      };
+
+      reader.readAsDataURL(foto);
+    },
     getIreq: function getIreq() {
       this.cekTipeReq = this.ict.ireq_type;
 
@@ -57,7 +88,7 @@ __webpack_require__.r(__webpack_exports__);
             return x.name;
           });
 
-          if (_this.checkname.includes("Reviewer") || _this.checkto.includes("/ict-request-reviewer")) {
+          if (_this.checkname.includes("Request") || _this.checkto.includes("/ict-request")) {
             _this.getIct();
           } else {
             _this.$router.push('/access');
@@ -102,6 +133,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this3.ict = response.data;
+
+        if (_this3.ict.ireq_attachment) {
+          if (_this3.ict.ireq_attachment.split('.').pop() == 'jpeg' || _this3.ict.ireq_attachment.split('.').pop() == 'png' || _this3.ict.ireq_attachment.split('.').pop() == 'jpg') {
+            _this3.image = true;
+          } else {
+            _this3.pdf = true;
+          }
+        }
+
         _this3.cekTipeReq = _this3.ict.ireq_type;
 
         _this3.getKode();
@@ -115,9 +155,16 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.ict.ireq_type == 'P') {
         if (this.ict.ireq_type != null && this.ict.invent_code != null) {
+          var data = new FormData();
+          data.append("file", this.foto);
+          data.append("invent_code", this.ict.invent_code);
+          data.append("ireq_qty", this.ict.ireq_qty);
+          data.append("ireq_remark", this.ict.ireq_remark);
+          data.append("ireq_type", this.ict.ireq_type);
           this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
             headers: {
-              'Authorization': 'Bearer ' + this.token
+              'Authorization': 'Bearer ' + this.token,
+              'content-type': 'multipart/form-data'
             }
           }).then(function () {
             _this4.$toast.add({
@@ -127,7 +174,7 @@ __webpack_require__.r(__webpack_exports__);
             });
 
             setTimeout(function () {
-              return _this4.$router.push('/ict-request-reviewer/detail-permohonan/' + _this4.$route.params.code);
+              return _this4.$router.push('/ict-request-detail/' + _this4.$route.params.code);
             }, 1000);
           })["catch"](function (error) {
             _this4.errors = error.response.data.errors;
@@ -140,9 +187,17 @@ __webpack_require__.r(__webpack_exports__);
           if (this.ict.invent_code == null) {
             this.error.invent_code = "Peripheral not filled";
           }
+
+          if (this.ict.ireq_remark == null) {
+            this.error.ireq_remark = "Remark not filled";
+          }
         }
       } else {
         if (this.ict.ireq_type != null) {
+          // const data = new FormData();
+          // data.append("file", this.foto);
+          // data.append("ireq_remark", this.ict.ireq_remark);
+          // data.append("ireq_type", this.ict.ireq_type);
           this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
             headers: {
               'Authorization': 'Bearer ' + this.token
@@ -155,7 +210,7 @@ __webpack_require__.r(__webpack_exports__);
             });
 
             setTimeout(function () {
-              return _this4.$router.push('/ict-request-reviewer/detail-permohonan/' + _this4.$route.params.code);
+              return _this4.$router.push('/ict-request-detail/' + _this4.$route.params.code);
             }, 1000);
           })["catch"](function (error) {
             _this4.errors = error.response.data.errors;
@@ -163,6 +218,10 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           if (this.ict.ireq_type == null) {
             this.error.ireq_type = "Request Type not filled";
+          }
+
+          if (this.ict.ireq_remark == null) {
+            this.error.ireq_remark = "Remark not filled";
           }
         }
       }
@@ -221,7 +280,7 @@ var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
 });
 
 var _hoisted_7 = {
-  "class": "col"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_8 = {
   "class": "field grid"
@@ -239,7 +298,7 @@ var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
 });
 
 var _hoisted_10 = {
-  "class": "field col-12 md:col-4"
+  "class": "col-fixed w-9rem"
 };
 var _hoisted_11 = {
   key: 0,
@@ -256,6 +315,22 @@ var _hoisted_13 = {
 
 var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed w-9rem"
+  }, "Attachment", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_15 = {
+  "class": "col-8 md-4"
+};
+var _hoisted_16 = {
+  key: 1,
+  "class": "field grid"
+};
+
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem",
     style: {
       "width": "120px"
@@ -265,23 +340,23 @@ var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_15 = {
-  "class": "field col-12 md:col-4"
+var _hoisted_18 = {
+  "class": "col-fixed w-9rem"
 };
-var _hoisted_16 = {
+var _hoisted_19 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_17 = {
+var _hoisted_20 = {
   key: 1,
   "class": "p-error"
 };
-var _hoisted_18 = {
-  key: 1,
+var _hoisted_21 = {
+  key: 2,
   "class": "field grid"
 };
 
-var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem",
     style: {
@@ -292,18 +367,18 @@ var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_20 = {
+var _hoisted_23 = {
   "class": "col-fixed w-9rem"
 };
-var _hoisted_21 = {
+var _hoisted_24 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_22 = {
+var _hoisted_25 = {
   "class": "field grid"
 };
 
-var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem",
     style: {
@@ -314,15 +389,61 @@ var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_24 = {
+var _hoisted_27 = {
   "class": "col-fixed w-9rem"
 };
-var _hoisted_25 = {
+var _hoisted_28 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_26 = {
+var _hoisted_29 = {
   "class": "form-group"
+};
+var _hoisted_30 = {
+  "class": "col-sm-6"
+};
+var _hoisted_31 = {
+  key: 0,
+  "class": "field grid"
+};
+
+var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed w-9rem"
+  }, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_33 = {
+  "class": "col-10 md-6"
+};
+var _hoisted_34 = {
+  "class": "card",
+  style: {
+    "height": "20 rem"
+  }
+};
+var _hoisted_35 = ["src"];
+var _hoisted_36 = ["src"];
+var _hoisted_37 = {
+  key: 1,
+  "class": "field grid"
+};
+
+var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed w-9rem"
+  }, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_39 = {
+  "class": "col-10 md-6"
+};
+var _hoisted_40 = {
+  "class": "card"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
@@ -338,6 +459,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
 
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
+
+  var _component_Pdf = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Pdf");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
@@ -377,14 +500,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     showClear: true,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.error.ireq_type
-    })
+    }),
+    disabled: ""
   }, null, 8
   /* PROPS */
   , ["options", "modelValue", "class"]), $data.errors.ireq_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_type[0]), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.ireq_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.ireq_type), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), this.cekTipeReq == 'P' || this.cekTipeReq == 'S' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+    type: "file",
+    disabled: "",
+    name: "foto",
+    accept: "image/jpg,image/png,image/jpeg,application/pdf",
+    ref: "fileInput",
+    "class": "form-control",
+    onChange: $options.getAttach
+  }, null, 8
+  /* PROPS */
+  , ["onChange"])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.ict.invent_code,
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.ict.invent_code = $event;
@@ -396,14 +530,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     showClear: true,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.invent_code
-    })
+    }),
+    disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.invent_code ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.invent_code[0]), 1
+  , ["modelValue", "options", "class"]), $data.errors.invent_code ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.invent_code[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.invent_code ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.invent_code), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.invent_code ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.invent_code), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Deskripsi</label>\n                 <div class=\"col\">\n                     <InputText\n                        type=\"text\"\n                        v-model=\"ict.ireq_desc\"\n                        placeholder=\"Enter Deskripsi(Optional)\"\n                     />\n                </div>\n              </div> "), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
     modelValue: $data.ict.ireq_qty,
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.ict.ireq_qty = $event;
@@ -411,12 +546,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Enter Qty",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.ireq_qty
-    })
+    }),
+    disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.errors.ireq_qty ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_qty[0]), 1
+  , ["modelValue", "class"]), $data.errors.ireq_qty ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_qty[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
     autoResize: true,
     rows: "5",
     type: "text",
@@ -430,9 +566,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.errors.ireq_remark ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_remark[0]), 1
+  , ["modelValue", "class"]), $data.errors.ireq_remark ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.ireq_remark[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Save",
@@ -446,7 +582,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   })])], 32
   /* HYDRATE_EVENTS */
-  )])])])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [this.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [this.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+    key: 0,
+    src: $data.preview,
+    "class": "ict-image"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_35)) : !this.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+    key: 1,
+    src: '/attachment_request/' + this.ict.ireq_attachment,
+    "class": "ict-image"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_36)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])) : this.pdf ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [this.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Pdf, {
+    key: 0,
+    src: $data.preview,
+    "class": "ict-pdf"
+  }, null, 8
+  /* PROPS */
+  , ["src"])) : !this.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Pdf, {
+    key: 1,
+    src: '/attachment_request/' + this.ict.ireq_attachment,
+    "class": "ict-pdf"
+  }, null, 8
+  /* PROPS */
+  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
 }
 
 /***/ }),
@@ -467,7 +627,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".ict-image[data-v-0453d9fe] {\n  width: 450px;\n  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".ict-image[data-v-0453d9fe] {\n  height: 330pt;\n  -o-object-fit: contain;\n     object-fit: contain;\n  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);\n}\n.ict-pdf[data-v-0453d9fe] {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

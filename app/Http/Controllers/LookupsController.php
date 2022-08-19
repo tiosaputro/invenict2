@@ -206,10 +206,10 @@ class LookupsController extends Controller
 
             $bisnis = DB::table('v_company_refs')->get();
 
-            // $divisi = DB::table('divisi_refs')
-            // ->select('div_id as code',DB::raw("(div_code ||'-'|| div_name) as name"))
-            // ->orderBy('div_name','ASC')
-            // ->get();
+            $divisi = DB::table('divisi_refs')
+            ->select('div_id as code',DB::raw("(div_code ||'-'|| div_name) as name"))
+            ->orderBy('div_name','ASC')
+            ->get();
 
             $priority = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
             ->where('lookup_status','T')
@@ -217,7 +217,7 @@ class LookupsController extends Controller
             ->orderBy('lookup_desc','ASC')
             ->get();
 
-            return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'prio'=>$priority],200);
+            return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'prio'=>$priority,'divisi'=>$divisi],200);
         }else{
             return response(["message"=>"Cannot Access"],403);
         }

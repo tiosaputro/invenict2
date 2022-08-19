@@ -374,6 +374,17 @@
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
@@ -434,27 +445,38 @@
         <template #loading>
             Please wait
         </template>
-          <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
         <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
-            <template #body="slotProps">
-              {{ formatDate(slotProps.data.ireq_date) }}
-            </template>
-          </Column>
-          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
-          <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>    
-          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
-            <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-            </template>
-          </Column>
-          <template #footer>
+        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.ireq_date) }}
+          </template>
+        </Column>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
+        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>    
+        <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+          <template #body= "slotProps">
+            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
+        </Column>
+        <template #footer>
             <div class="grid dir-col">
               <div class="col">
                 <div class="box">
@@ -829,6 +851,17 @@
         <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
@@ -900,6 +933,17 @@
         <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
@@ -1167,6 +1211,17 @@
           <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
@@ -1248,6 +1303,17 @@
           <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
@@ -1378,6 +1444,18 @@
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
+        <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:8rem"/>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
@@ -1443,6 +1521,17 @@
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
+        </Column>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
@@ -1536,6 +1625,17 @@
         <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
@@ -1603,6 +1703,17 @@
         <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
@@ -1674,6 +1785,17 @@
           <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+          <Column header="Attachment" style="min-width:10rem">
+            <template #body="slotProps">
+              <p v-if="slotProps.data.ireq_attachment == null"></p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+              </p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              </p>
+            </template>  
+          </Column>
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
@@ -1748,6 +1870,17 @@
             <template #body="slotProps">
               {{ formatDate(slotProps.data.ireq_date) }}
             </template>
+          </Column>
+          <Column header="Attachment" style="min-width:10rem">
+            <template #body="slotProps">
+              <p v-if="slotProps.data.ireq_attachment == null"></p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+              </p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              </p>
+            </template>  
           </Column>
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
@@ -2198,6 +2331,17 @@
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
         </Column>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
+        </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
@@ -2263,6 +2407,17 @@
           <template #body="slotProps">
             {{ formatDate(slotProps.data.ireq_date) }}
           </template>
+        </Column>
+        <Column header="Attachment" style="min-width:10rem">
+          <template #body="slotProps">
+            <p v-if="slotProps.data.ireq_attachment == null"></p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+            </p>
+            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+            </p>
+          </template>  
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
@@ -4109,6 +4264,11 @@ export default {
     this.getActive();
   },
   methods: {
+    getDetail(ireq_attachment){
+       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+         var myWindow = window.open(page, "_blank");
+         myWindow.focus();
+    },
       formatDate(date) {
         return moment(date).format("DD MMM YYYY HH:mm")
       },
@@ -4595,3 +4755,9 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.attachment-image {
+    width: 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</style>

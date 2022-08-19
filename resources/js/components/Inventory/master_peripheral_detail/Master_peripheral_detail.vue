@@ -361,7 +361,7 @@ export default {
       this.displayBarcode = false;
     },
     previewBarcode(invent_code_dtl){
-        this.barcode = 'http://localhost:8000/detPeripheral/' +invent_code_dtl
+        this.barcode = process.env.MIX_APP_URL+'/detPeripheral/'+ +invent_code_dtl
         this.displayBarcode = true;
     },
     detailKode(invent_code){

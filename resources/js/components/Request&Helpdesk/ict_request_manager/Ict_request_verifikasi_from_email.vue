@@ -6,7 +6,7 @@
         <ConfirmDialog group="positionDialog"></ConfirmDialog>
         <Toolbar class="p-mb-4">
           <template v-slot:start>
-				        <h4>ICT Request (Verification) </h4>
+				    <h4>ICT Request (Verification) </h4>
           </template>
         </Toolbar>
         <DataTable
@@ -43,30 +43,40 @@
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
           <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:12rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+          <Column header="Attachment" style="min-width:10rem">
+            <template #body="slotProps">
+              <p v-if="slotProps.data.ireq_attachment == null"></p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+              </p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              </p>
+            </template>  
+          </Column>
           <template #footer>
             <div class="p-grid p-dir-col">
               <div class="p-col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
-                      name: 'Ict Request Divisi 1'})"
+                      name: 'Ict Request Manager'})"
                   />
                   <Button
                     label="Approve"
-                    v-if="this.kode.ireq_status == 'Permohonan'"
+                    v-if="this.kode.cekStatus == 'P'"
                     class="p-button-raised p-button-success mr-2"
                     icon="pi pi-check-square"
-                    @click="Approve()"
+                    @click="this.dialogReject = true"
                   />
                   <Button 
                     label="Reject"
-                    v-if="this.kode.ireq_status == 'Permohonan'"
+                    v-if="this.kode.cekStatus == 'P'"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-times-circle"
                     @click="this.dialogReject = true" 
@@ -162,6 +172,11 @@ export default {
     this.getNoreq();
   },
   methods: {
+    getDetail(ireq_attachment){
+       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+         var myWindow = window.open(page, "_blank");
+         myWindow.focus();
+    },
       cek(){
           this.status = this.$route.params.status;
           if(this.status == 'approve'){
@@ -216,12 +231,12 @@ export default {
         this.dialogApprove = false;
         this.reason.remark = null;
       },
-    getIctDetail(){
-      this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.verif = response.data;
-        this.loading = false;
-        this.cek();
-      }).catch(error=>{
+      getIctDetail(){
+        this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+          this.verif = response.data;
+          this.loading = false;
+          this.cek();
+        }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
             severity:'error', summary: 'Error', detail:'Session login expired'
@@ -231,13 +246,19 @@ export default {
           setTimeout( () => this.$router.push('/login'),2000);
            }
       });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
-            this.getIctDetail();
-      });
-    },
+      },
+      getNoreq(){
+        this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.kode = response.data;
+              this.getIctDetail();
+        });
+      },
   },
 };
 </script>
+<style lang="scss" scoped>
+.attachment-image {
+    width: 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</style>

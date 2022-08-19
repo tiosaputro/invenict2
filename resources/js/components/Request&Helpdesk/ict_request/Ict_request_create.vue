@@ -105,7 +105,6 @@
                         optionValue="code"
                         :class="{ 'p-invalid': error.bisnis }"
                         placeholder="Select One"
-                        @change="getDivision()"
                         :filter="true"
                         :showClear="true"
                      />
@@ -132,22 +131,6 @@
                         </small>
                 </div>
               </div>
-              <!-- <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Keterangan</label>
-                 <div class="field col-12 md:col-4">
-                  <Textarea 
-                    v-model="ket"
-                    :autoResize="true" 
-                    rows="5" 
-                    cols="20"
-                    placeholder="Masukan Keterangan . . ."
-                    :class="{ 'p-invalid': error.ket }"
-                  />
-                      <small class="p-error" v-if="error.ket"
-                        >{{error.ket}}
-                      </small>
-                </div>
-              </div> -->
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -229,8 +212,12 @@ export default {
       this.axios.get('api/getAddReq', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.type = response.data.ref;
         this.bu = response.data.bisnis;
-        // this.divisi = response.data.divisi;
+        this.divisi = response.data.divisi;
         this.level = response.data.prio;
+      }).catch(error=>{
+        if(response.status == '401'){
+          return this.$router.push('/login')
+        }
       });
     },
     CreateIct() {

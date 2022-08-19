@@ -43,9 +43,19 @@
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
           <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:12rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+          <Column header="Attachment" style="min-width:10rem">
+            <template #body="slotProps">
+              <p v-if="slotProps.data.ireq_attachment == null"></p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+              </p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              </p>
+            </template>  
+          </Column>
           <Column style="min-width:8rem">
            <template #body="slotProps">
             <Button
@@ -62,7 +72,7 @@
               <div class="p-col">
                 <div class="box">
                   <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
@@ -70,14 +80,14 @@
                   />
                   <Button
                     label="Approve"
-                    v-if="this.kode.ireq_status == 'Permohonan'"
+                    v-if="this.kode.cekStatus == 'P'"
                     class="p-button-raised p-button-success mr-2"
                     icon="pi pi-check-square"
                     @click="Approve()"
                   />
                   <Button 
                     label="Reject"
-                    v-if="this.kode.ireq_status == 'Permohonan'"
+                    v-if="this.kode.cekStatus == 'P'"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-times-circle"
                     @click="this.dialogReject = true" 
@@ -88,13 +98,13 @@
         </template>
         </DataTable>   
         <Dialog
-        v-model:visible="dialogReject"
-        :style="{ width: '400px' }"
-        header="Form Dialog Reject"
-        :modal="true"
-        position="top"
-        class="field grid"
-      >
+          v-model:visible="dialogReject"
+          :style="{ width: '400px' }"
+          header="Form Dialog Reject"
+          :modal="true"
+          position="top"
+          class="field grid"
+        >
         <div class="field grid">
             <label style="width:100px">Reason</label>
               <div class="col-3 md-6">
@@ -156,9 +166,9 @@ export default {
     this.getNoreq();
   },
   methods: {
-    VerifikasiRequest(){
-      this.confirmationVerifikasi = true;
-    },
+      VerifikasiRequest(){
+        this.confirmationVerifikasi = true;
+      },
       cek(){
         this.status = this.$route.params.status;
           if(this.status == 'approve'){
@@ -173,7 +183,7 @@ export default {
       this.$confirm.require({
         group: 'positionDialog',
         message: "Are you sure you approve to this request?",
-        header: "ICT Request    ",
+        header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",
@@ -215,23 +225,23 @@ export default {
         this.reason.ket = null;
         this.submitted = false;
       },
-    getIctDetail(){
-      this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.verif = response.data;
-        this.loading = false;
-        this.cek();
-      }).catch(error=>{
-          if (error.response.status == 401) {
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-      });
-    },
-    getNoreq(){
+      getIctDetail(){
+        this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+          this.verif = response.data;
+          this.loading = false;
+          this.cek();
+        }).catch(error=>{
+            if (error.response.status == 401) {
+              this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+            }
+        });
+      },
+      getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
         if(this.kode.cekstatus =='NA1'){

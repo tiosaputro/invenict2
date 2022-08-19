@@ -44,9 +44,19 @@
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
           <Column field="name" header="Peripheral" :sortable="true" style="min-width:12rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+          <Column header="Attachment" style="min-width:10rem">
+            <template #body="slotProps">
+              <p v-if="slotProps.data.ireq_attachment == null"></p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+              </p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              </p>
+            </template>  
+          </Column>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
           <template #footer>
             <div class="p-grid p-dir-col">
@@ -55,6 +65,7 @@
                    <Button
                     label="Back"
                     class="p-button-raised p-button mr-2"
+                    v-tooltip.bottom="'Click to Back'"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Ict Request Divisi 1'})"
@@ -98,6 +109,11 @@ export default {
    this.cekUser();
   },
   methods: {
+    getDetail(ireq_attachment){
+       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+         var myWindow = window.open(page, "_blank");
+         myWindow.focus();
+    },
     cekUser(){
       if(this.id){
       this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -141,27 +157,6 @@ export default {
         this.status = response.data.cekstatus;
       });
     },
-    DeleteIct(ireqd_id){
-       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
-        header: "Delete Confirmation",
-        icon: "pi pi-info-circle",
-        acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
-        accept: () => {
-          this.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Record deleted",
-            life: 3000,
-          });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}});
-        this.getIctDetail();
-        },
-        reject: () => {},
-      });
-    },
     CetakPdf(){
       this.loading = true;
        this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -171,21 +166,12 @@ export default {
           this.loading = false;
        });
     },
-    CetakExcel(){
-      window.open('/api/report-ict-detail-excel/' +this.code);
-    },
-    CetakPdfReject(){
-     window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
-    },
-    CetakExcelReject(){
-      window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
-    },
-    CetakPdfSedangDikerjakan(){
-     window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/'+this.code);
-    },
-    CetakExcelSedangDikerjakan(){
-      window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/'+this.code);
-    }
   },
 };
 </script>
+<style lang="scss" scoped>
+.attachment-image {
+    width: 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</style>

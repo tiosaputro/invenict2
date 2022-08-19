@@ -1,6 +1,6 @@
 <template>
   <div>
-        <Toast />
+      <Toast />
         <div class="card">
         <Toolbar class="mb-4">
           <template v-slot:start>
@@ -10,20 +10,19 @@
           <div class="row">
             <div class="col-sm-6">
              <form @submit.prevent="UpdateIctDetail">
-               <div class="field grid">
+              <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">No. Request</label>
-                 <div class="col">
+                 <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
                     v-model="ict.ireq_no"
                     disabled
                   />
-                </div>
+                 </div>
               </div>
-
-            <div class="field grid">
+              <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Request Type</label>
-                 <div class="field col-12 md:col-4">
+                 <div class="col-fixed w-9rem">
                        <Dropdown
                         :options="type"
                         type="text"
@@ -45,7 +44,7 @@
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
                 <label class="col-fixed w-9rem" style="width:120px">Peripheral</label>
-                 <div class="field col-12 md:col-4">
+                 <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model="ict.invent_code"
                         :options="kodeperi"
@@ -61,19 +60,8 @@
                      <small v-if="error.invent_code" class="p-error">
                       {{ error.invent_code }}
                     </small>
-              </div>
-              </div>
-              <!-- <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Deskripsi</label>
-                 <div class="col">
-                     <InputText
-                        type="text"
-                        v-model="ict.ireq_desc"
-                        placeholder="Enter Deskripsi(Optional)"
-                     />
                 </div>
-              </div> -->
-
+              </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
                 <label class="col-fixed w-9rem" style="width:120px">Qty</label>
                  <div class="col-fixed w-9rem">
@@ -87,7 +75,6 @@
                     </small>
                 </div>
               </div>
-
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Remark</label>
                  <div class="col-fixed w-9rem">
@@ -104,6 +91,13 @@
                     </small>
                 </div>
               </div>
+              <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S'">
+                <label class="col-10 md-4">Attachment (JPEG,PNG,JPG,PDF) MAX SIZE 1MB</label>
+                  <input type="file" name="foto" accept="image/jpg,image/png,image/jpeg,application/pdf" ref="fileInput" class="form-control" @change="getAttach" />
+                    <small v-if="error.foto" class="p-error">
+                      {{ error.foto }}
+                    </small>
+                  </div>
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -120,10 +114,26 @@
               </div>
             </form>
           </div>
-          <!-- <div class="col-6" v-if="this.cekTipeReq =='P'">
-                    <img :src="'/master_peripheral/' + ict.photo" class="ict-image" v-if="this.ict.photo && !this.kode" />
-                    <img :src="'/master_peripheral/' + ict.photo.photo" class="ict-image" v-if="this.kode && this.ict.photo.photo" />
-              </div> -->
+         <div class="col-sm-6" >
+            <div class="field grid" v-if="this.image">
+               <label class="col-fixed w-9rem"></label>
+                <div class="col-10 md-6">
+                  <div class="card" style="height: 20 rem;">
+                    <img :src="preview" class="ict-image" v-if="this.preview"/>
+                    <img :src="'/attachment_request/'+this.ict.ireq_attachment" class="ict-image" v-else-if="!this.preview"/>
+                  </div>
+                </div>
+              </div>
+              <div class="field grid" v-else-if="this.pdf">
+               <label class="col-fixed w-9rem"></label>
+                <div class="col-10 md-6">
+                  <div class="card">
+                    <Pdf :src="preview" class="ict-pdf" v-if="this.preview" />
+                    <Pdf :src="'/attachment_request/'+this.ict.ireq_attachment" class="ict-pdf" v-else-if="!this.preview" />
+                  </div>
+                </div>
+              </div>
+          </div>
           </div>
       </div>
     </div>
@@ -135,6 +145,10 @@ export default {
       errors: [],
       error:[],
       detail: [],
+      preview:'',
+      pdf:false,
+      image:false,
+      foto:'',
       ict:[],
       kodeperi:[],
       kode:'',
@@ -151,6 +165,32 @@ export default {
       this.cekUser();
   },
   methods: {
+    getAttach(event) {
+      this.foto = event.target.files[0];
+      this.error.foto='';
+        if(this.foto.size > 1024 * 1024){
+          this.error.foto = "File too big (> 1MB)";
+        }
+      if(this.foto['type']==='image/jpeg'||this.foto['type']==='image/jpg'||this.foto['type']==='image/png'){
+        this.pdf = false;
+        this.image = true;
+        this.preview = URL.createObjectURL(this.foto);
+      }
+      if(this.foto['type']==='application/pdf'){
+        this.image = false;
+        this.pdf = true;
+        this.preview = URL.createObjectURL(this.foto);
+      }
+      this.createFile(this.foto);
+    },
+    createFile(foto) {
+        var reader = new FileReader();
+        var vm = this.ict;
+        reader.onload = function (e) {
+            vm.image = e.target.result;
+        };
+        reader.readAsDataURL(foto);
+      },
     getIreq(){
       this.cekTipeReq = this.ict.ireq_type;
        if(this.cekTipeReq == 'S'){
@@ -189,20 +229,30 @@ export default {
            }
         });
       },
-      getIct(){
-          this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.ict = response.data;
-              this.cekTipeReq = this.ict.ireq_type;
-              this.getKode();
-          });
+    getIct(){
+        this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.ict = response.data;
+          if(this.ict.ireq_attachment){
+            if(this.ict.ireq_attachment.split('.').pop()=='jpeg'||this.ict.ireq_attachment.split('.').pop()=='png'||this.ict.ireq_attachment.split('.').pop()=='jpg'){
+              this.image = true;
+            }
+            else{
+              this.pdf = true;
+            }
+          }
+          this.cekTipeReq = this.ict.ireq_type;
+          this.getKode();
+        });
       },
     UpdateIctDetail() {
+      if(!this.error.foto){
       this.errors = [];
       this.error = [];
       if(this.ict.ireq_type == 'P'){
        if ( this.ict.ireq_type != null && this.ict.invent_code != null) 
        {
-        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+
+        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token, 'content-type': 'multipart/form-data'}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -219,33 +269,47 @@ export default {
         if(this.ict.invent_code == null){
           this.error.invent_code = "Peripheral not filled"
         }
+        if(this.ict.ireq_remark == null){
+          this.error.ireq_remark = "Remark not filled"
+        }
       }
       }else{
         if ( this.ict.ireq_type != null) 
        {
-        this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-        this.$toast.add({
-          severity: "success",
-          summary: "Success Message",
-          detail: "Success Update",
-        });
-        setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
-        }).catch(error=>{
-          this.errors = error.response.data.errors;
-         });
+
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Update",
+          });
+          setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
+          }).catch(error=>{
+            this.errors = error.response.data.errors;
+          });
       }else{
         if(this.ict.ireq_type == null){
           this.error.ireq_type = "Request Type not filled"
         }
+        if(this.ict.ireq_remark == null){
+          this.error.ireq_remark = "Remark not filled"
+        }
       }
       }
+      } //size foto
       },
   },
 };
 </script>
 <style scoped lang="scss">
 .ict-image {
-  width: 450px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  height:330pt;
+  object-fit:contain;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+}
+.ict-pdf {
+    height:100%;
+    width:100%;
+    object-fit:contain;
 }
 </style>

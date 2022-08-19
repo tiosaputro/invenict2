@@ -30,7 +30,8 @@ class IctDetail extends Model
         'ireq_value',
         'ireq_note',
         'ireq_note_personnel',
-        'ireq_date_closing'
+        'ireq_date_closing',
+        'ireq_attachment'
     ];
     protected $table = 'ireq_dtl';
     protected $primaryKey ='ireqd_id';

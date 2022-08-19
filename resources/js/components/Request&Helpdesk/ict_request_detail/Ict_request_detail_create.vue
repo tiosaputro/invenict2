@@ -2,12 +2,13 @@
   <div>
     <Toast />
       <div class="card">
-      <Toolbar class="mb-4">
-        <template v-slot:start>
-				  <h4>ICT Request (Detail)</h4>
-        </template>
-      </Toolbar>
-          <div class="card-body">
+        <Toolbar class="mb-4">
+          <template v-slot:start>
+            <h4>ICT Request (Detail)</h4>
+          </template>
+        </Toolbar>
+        <div class="row">
+            <div class="col-sm-6">
              <form @submit.prevent="CreateIctDetail">
                <div class="field grid">
                 <label class="col-fixed w-9rem">No. Request</label>
@@ -61,16 +62,6 @@
                   </small>
                 </div>
               </div>
-              <!-- <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S' ">
-                <label class="col-fixed w-9rem">Description</label>
-                 <div class="col-fixed w-9rem">
-                     <InputText
-                        type="text"
-                        v-model="desk"
-                        placeholder="Masukan Deskripsi(Optional)"
-                     />
-                </div>
-              </div> -->
               <div class="field grid" v-if="this.cekTipeReq =='P'">
                 <label class="col-fixed w-9rem">Qty</label>
                  <div class="col-fixed w-9rem">
@@ -84,15 +75,15 @@
                     </small>
                 </div>
               </div>
-              <div class="field grid"  v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S'">
+              <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S'">
                 <label class="col-fixed w-9rem">Remark</label>
                  <div class="col-fixed w-9rem">
                      <Textarea
                         :autoResize="true"
                         type="text"
                         v-model="ket"
-                        rows="6"
-                        cols="40"
+                        rows="8"
+                        cols="30"
                         placeholder="Enter Remark"
                         :class="{ 'p-invalid': errors.ket }"
                         class="inputfield"
@@ -102,6 +93,13 @@
                     </small>
                 </div>
             </div>
+              <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S'">
+                <label class="col-10 md-4">Attachment (JPEG,PNG,JPG,PDF) MAX SIZE 1MB</label>
+                  <input type="file" name="foto" accept="image/jpg,image/png,image/jpeg,application/pdf" ref="fileInput" class="form-control" @change="getAttach" />
+                    <small v-if="error.foto" class="p-error">
+                      {{ error.foto }}
+                    </small>
+              </div>
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -120,15 +118,34 @@
                 <Button
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mt-2"
-                  v-tooltip.bottom="'Click to cancel create data'"
+                  v-tooltip.bottom="'Click to cancel create detail'"
                   icon="pi pi-times"
                   @click="$router.push({
                     name: 'Ict Request Detail',
                     params: { code: this.$route.params.code }, })"
                 />
               </div>
-            </form>
+             </form>
+           </div>
+           <div class="col-sm-6" >
+            <div class="field grid" v-if="this.image">
+               <label class="col-fixed w-9rem"></label>
+                <div class="col-10 md-6">
+                  <div class="card" style="height: 20 rem;">
+                    <img :src="preview" class="ict-image" />
+                  </div>
+                </div>
+              </div>
+              <div class="field grid" v-else-if="this.pdf">
+               <label class="col-fixed w-9rem"></label>
+                <div class="col-10 md-6">
+                  <div class="card">
+                    <Pdf :src="preview" class="ict-pdf" />
+                  </div>
+                </div>
+              </div>
           </div>
+        </div>
       </div>
     </div>
 </template>
@@ -139,7 +156,12 @@ export default {
       errors: [],
       error:[],
       detail: [],
-      kode:'',
+      file:false,
+      pdf:false,
+      foto:'',
+      preview:'',
+      kode:null,
+      image:'',
       desk:'',
       qty:null,
       ket:'',
@@ -158,6 +180,21 @@ export default {
       this.cekUser();
   },
   methods: {
+    getAttach(event) {
+      this.foto = event.target.files[0];
+      this.error.foto = '';
+        this.error.foto = '';
+        if(this.foto['type']==='image/jpeg'||this.foto['type']==='image/jpg'||this.foto['type']==='image/png'){
+          this.pdf = false;
+          this.image = true;
+          this.preview = URL.createObjectURL(this.foto);
+        }
+        if(this.foto['type']==='application/pdf'){
+          this.image = false;
+          this.pdf = true;
+          this.preview = URL.createObjectURL(this.foto);
+        }
+      },
     getIreq(tipereq){
       this.cekTipeReq = tipereq;
       if(this.cekTipeReq == 'S'){
@@ -170,24 +207,29 @@ export default {
     saveclick(){
       this.errors = [];
       this.error = [];
+      if(this.foto){
+        if(this.foto.size > 1024 * 1024){
+        this.error.foto = "File too big (> 1MB)"
+      }
+      else{
       if(this.tipereq == 'P'){
        if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
        {
         const data = new FormData();
+        data.append("file", this.foto);
         data.append("invent_code", this.kode);
-        data.append("desk", this.desk);
         data.append("qty", this.qty);
         data.append("ket", this.ket);
         data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Create",
           life: 500
         });
-        setTimeout( () => this.kode = null,this.desk = '', this.qty = null, this.ket = '',1000);
+        setTimeout( () => this.kode = null,this.desk = '', this.qty = null, this.ket = '', this.preview = '',this.$refs.fileInput.value = '', this.pdf=false,this.image = false,1000);
         }).catch(error=>{
           this.errors = error.response.data.errors;
          });
@@ -206,18 +248,18 @@ export default {
        if (this.tipereq != null && this.tipereq != 'null' ) 
        {
         const data = new FormData();
-        data.append("desk", this.desk);
+        data.append("file", this.foto);
         data.append("ket", this.ket);
         data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token, 'content-type': 'multipart/form-data'}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Create",
           life: 500
         });
-        setTimeout( () => this.desk = '', this.ket = '',1000);
+        setTimeout( () => this.desk = '', this.ket = '',this.preview = '', this.pdf=false, this.image = false, this.$refs.fileInput.value = null,1000);
         }).catch(error=>{
           this.errors = error.response.data.errors;
          });
@@ -228,7 +270,9 @@ export default {
         if(this.tipereq == 'null'){
           this.error.tipereq = "Request Type not filled"
         }
+       }
       }
+     }
      }
     },
     cekUser(){
@@ -273,17 +317,22 @@ export default {
     CreateIctDetail() {
       this.errors = [];
       this.error = [];
+      if(this.foto){
+        if(this.foto.size > 1024 * 1024){
+        this.error.foto = "File too big (> 1MB)"
+      }
+      else{
       if(this.tipereq=='P'){
        if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
        {
         const data = new FormData();
         data.append("invent_code", this.kode);
-        data.append("desk", this.desk);
+        data.append("file", this.foto);
         data.append("qty", this.qty);
         data.append("ket", this.ket);
         data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -308,11 +357,11 @@ export default {
         if (this.tipereq != null && this.tipereq != 'null' ) 
        {
         const data = new FormData();
-        data.append("desk", this.desk);
+        data.append("file", this.foto);
         data.append("ket", this.ket);
         data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -331,13 +380,21 @@ export default {
         }
       }
       }
+      }
+      }
       },
   },
 };
 </script>
 <style scoped lang="scss">
 .ict-image {
-  width: 450px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  height:330pt;
+  object-fit:contain;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+}
+.ict-pdf {
+    height:100%;
+    width:100%;
+    object-fit:contain;
 }
 </style>

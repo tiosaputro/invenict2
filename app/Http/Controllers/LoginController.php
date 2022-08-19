@@ -30,7 +30,7 @@ class LoginController extends Controller
         //             $usr_name = $user->usr_name;
         //              return response([
         //                     "success" => true, 
-        //                         "message" => "You have logged in successfully",'
+        //                         "message" => "You have logged in successfully",
         //                         "token"=>$token,
         //                         "id"=>$id,
         //                         "usr_loc"=>$user->usr_loc,
