@@ -32,8 +32,7 @@ __webpack_require__.r(__webpack_exports__);
       }],
       token: localStorage.getItem('token'),
       checkname: [],
-      checkto: [],
-      id: localStorage.getItem('id')
+      checkto: []
     };
   },
   created: function created() {
@@ -43,28 +42,24 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('/api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Role Menu") || _this.checkto.includes("/mng-role")) {
-            _this.getMenu();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('/api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
+        });
+
+        if (_this.checkname.includes("Role Menu") || _this.checkto.includes("/mng-role")) {
+          _this.getMenu();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     getMenu: function getMenu() {
       var _this2 = this;

@@ -22,7 +22,6 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       statusPerDivisiUser: {},
       nameStatusUser: null,
-      id: localStorage.getItem('id'),
       checkname: [],
       checkto: []
     };
@@ -39,28 +38,24 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-
-          if (_this.checkname.includes("Divisi User Per Status") || _this.checkto.includes("/req-per-divisi-per-status")) {
-            _this.getStatus();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
+        });
+
+        if (_this.checkname.includes("Divisi User Per Status") || _this.checkto.includes("/req-per-divisi-per-status")) {
+          _this.getStatus();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     getStatusDivisiUser: function getStatusDivisiUser() {
       var _this2 = this;

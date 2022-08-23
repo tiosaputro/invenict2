@@ -28,7 +28,6 @@ __webpack_require__.r(__webpack_exports__);
       parent: [],
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id'),
       stat: [{
         nama: "Aktif",
         code: "T"
@@ -53,30 +52,26 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Menu") || _this.checkto.includes("/mng-menu")) {
-            _this.getModul();
-
-            _this.getParent();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
+        });
+
+        if (_this.checkname.includes("Menu") || _this.checkto.includes("/mng-menu")) {
+          _this.getModul();
+
+          _this.getParent();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     getModul: function getModul() {
       var _this2 = this;

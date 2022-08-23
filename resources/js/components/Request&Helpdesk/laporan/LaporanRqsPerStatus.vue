@@ -51,7 +51,6 @@ export default {
          token: localStorage.getItem('token'),
          checkname : [],
          checkto : [],
-         id : localStorage.getItem('id'),
             items: [
                 {
                     label: 'Pdf',
@@ -75,8 +74,7 @@ export default {
   },
   methods: {
     cekUser(){
-      if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Per Status") || this.checkto.includes("/report-per-status")){
@@ -86,9 +84,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getReq(){
       this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {

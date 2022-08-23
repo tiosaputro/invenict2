@@ -280,7 +280,10 @@ class LookupsController extends Controller
         $supp = Supplier::Select('suplier_code as code',DB::raw("(suplier_code ||'-'|| suplier_name) as name"))
         ->orderBy('suplier_code','ASC')
         ->get();
-        return response()->json(['uang'=>$uang,'metode'=>$metode,'supp'=>$supp],200);
+
+        $user = Auth::user()->usr_name;
+        
+        return response()->json(['uang'=>$uang,'metode'=>$metode,'supp'=>$supp,'user'=>$user],200);
     }
     Public function getMataUang()
     {

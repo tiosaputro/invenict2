@@ -93,7 +93,6 @@ export default {
       div:[],
       verif:[],
       token: localStorage.getItem('token'),
-      id : localStorage.getItem('id'),
       checkname : [],
       checkto : [],
     };
@@ -103,8 +102,7 @@ export default {
   },
   methods: {
     cekUser(){
-      if(this.id){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Divisi") || this.checkto.includes("/divisi-refs")){
@@ -114,9 +112,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getDivisi(){
         this.axios.get('/api/edit-divisi/'+ this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

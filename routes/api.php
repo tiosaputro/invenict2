@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/user','LoginController@show')->middleware('auth:sanctum');
-Route::get('/get-rolee/{id}','MngUsrRoleController@getRole');
 Route::get('/cek-verif-id/{code}','IctController@cekVerif');
 Route::post('/login', 'LoginController@index');
 Route::get('/detail-peripherall/{invent_code}','MasterController@detailPeripheral');
@@ -152,7 +151,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/delete-role/{rol_id}','MngRolesController@delete');
 
     //Mng_usr_roles
-    // Route::get('/get-rolee/{id}','MngUsrRoleController@getRole');
+    Route::get('/get-rolee','MngUsrRoleController@getRole');
     Route::post('/save-usr-role','MngUsrRoleController@save');
     Route::get('/edit-usr-role/{code}','MngUsrRoleController@edit');
     Route::put('/update-usr-role/{code}','MngUsrRoleController@update');
@@ -162,7 +161,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/save-role-menu','MngRoleMenuController@save');
     Route::get('/edit-role-menu/{code}','MngRoleMenuController@edit');
     Route::put('/update-role-menu/{code}','MngRoleMenuController@update');
-    Route::get('/cek-user/{id}','MngRoleMenuController@cekUser');
+    Route::get('/cek-user','MngRoleMenuController@cekUser');
 
     //Mng_module
     Route::get('/module','ModuleController@index');

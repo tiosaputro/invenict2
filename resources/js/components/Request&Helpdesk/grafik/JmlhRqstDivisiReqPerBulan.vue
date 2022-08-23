@@ -37,7 +37,6 @@ export default {
             bulan:[], 
             checkname : [],
             checkto : [],
-            id: localStorage.getItem('id')
         };
     },
     watch : {
@@ -50,8 +49,7 @@ export default {
     },
     methods: {
         cekUser(){
-        if(this.id){
-        this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Divisi Requestor Per Bulan") || this.checkto.includes("/req-per-divisi-req-per-bulan")){
@@ -60,10 +58,7 @@ export default {
             else {
             this.$router.push('/access');
             }
-        });
-      } else {
-        this.$router.push('/login');
-      }
+         });
         },
         getTahunRequestor(){
             this.tahunnRequestor = null;

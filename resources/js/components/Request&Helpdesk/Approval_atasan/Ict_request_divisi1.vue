@@ -638,7 +638,6 @@ export default {
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
         code:null,
         reason:{ ket:null },
         submitted:false

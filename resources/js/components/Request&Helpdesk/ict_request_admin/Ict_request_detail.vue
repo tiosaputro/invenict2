@@ -136,7 +136,6 @@ export default {
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
         tes:[],
         ireq:[]
     };
@@ -146,8 +145,7 @@ export default {
   },
   methods: {
     cekUser(){
-      if(this.id){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
@@ -158,9 +156,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getIctDetail(){
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {

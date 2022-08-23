@@ -72,7 +72,6 @@ export default {
   data() {
     return {
       errors: [],
-      id : localStorage.getItem('id'),
       checkname : [],
       checkto : [],
       ref: [],
@@ -89,7 +88,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         if(this.checkto.includes("/referensi-kategori")){
           this.getRef();

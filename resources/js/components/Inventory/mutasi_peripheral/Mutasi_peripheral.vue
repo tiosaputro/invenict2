@@ -259,7 +259,6 @@ export default {
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
         detail:[],
         displayKode : false
     };
@@ -269,8 +268,7 @@ export default {
   },
   methods: {
   cekUser(){
-    if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Mutasi Peripheral") || this.checkto.includes("/mutasi-peripheral")){
@@ -280,9 +278,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getMutasi(){
       this.axios.get('api/mut',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {

@@ -673,7 +673,6 @@ export default {
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
         editDetail:{ ireq_reason :''},
         editStatus:[],
         note:[],

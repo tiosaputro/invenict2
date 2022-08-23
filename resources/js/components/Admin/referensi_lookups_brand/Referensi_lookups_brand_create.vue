@@ -98,7 +98,6 @@ export default {
         { nama: "Tidak Aktif", code: "F" },
       ],
       token: localStorage.getItem('token'),
-      id : localStorage.getItem('id'),
       checkname : [],
       checkto : [],
     };
@@ -108,7 +107,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         if(this.checkto.includes("/referensi-brand")){
         }

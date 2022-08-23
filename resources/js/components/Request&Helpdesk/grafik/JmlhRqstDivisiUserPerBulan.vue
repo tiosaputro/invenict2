@@ -27,7 +27,6 @@ export default {
             nameBulanUser: null,
             tahunn:[],
             bulan:[],
-            id : localStorage.getItem('id'),
             checkname : [],
             checkto : []
         };
@@ -42,8 +41,7 @@ export default {
     },
     methods: {
         cekUser(){
-        if(this.id){
-        this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Divisi User Per Bulan") || this.checkto.includes("/req-per-divisi-user-per-bulan")){
@@ -53,9 +51,6 @@ export default {
             this.$router.push('/access');
             }
         });
-      } else {
-        this.$router.push('/login');
-      }
         },
         getBulan(){
             this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

@@ -17,7 +17,6 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
 export default {
   data() {
     return {
@@ -33,7 +32,6 @@ export default {
   },
   methods: {
     verifId(){
-      localStorage.setItem("loggedIn", "true");
         this.axios.get('/api/cek-verif-id/'+this.$route.params.code).then((res)=>{
             this.verif = res.data;
           if(res.data == null) {

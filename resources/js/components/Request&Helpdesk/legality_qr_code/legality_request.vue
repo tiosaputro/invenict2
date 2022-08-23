@@ -72,8 +72,7 @@ export default {
         });
     },
     cekUser(){
-        var id = localStorage.getItem('id');
-      this.axios.get('/api/cek-user/'+ id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
             if(this.checkname.includes("Scan Legality") || this.checkto.includes("/scan-qr-code")){

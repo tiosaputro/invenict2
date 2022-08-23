@@ -101,9 +101,7 @@ export default {
               localStorage.clear();
               localStorage.setItem("loggedIn", "true");
               localStorage.setItem("token", response.data.token);
-              localStorage.setItem("id", response.data.id);
               localStorage.setItem("usr_loc", response.data.usr_loc);
-              localStorage.setItem("usr_name", response.data.usr_name);
               localStorage.setItem('active',0);
               localStorage.setItem('active1',0);
               localStorage.setItem('active2',0);

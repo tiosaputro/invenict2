@@ -34,7 +34,6 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id'),
       code: null // user:[],
 
     };
@@ -44,23 +43,6 @@ __webpack_require__.r(__webpack_exports__);
     this.getType();
   },
   methods: {
-    // cekUser(){
-    //   if(this.id){
-    //   this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-    //     this.checkto = response.data.map((x)=> x.to)
-    //     this.checkname = response.data.map((x)=> x.name)
-    //     if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-    //       // this.getUser();
-    //       this.getType();
-    //     }
-    //     else {
-    //       this.$router.push('/access');
-    //     }
-    //   });
-    //   } else {
-    //     this.$router.push('/login');
-    //   }
-    // },
     getDivision: function getDivision() {
       var _this = this;
 

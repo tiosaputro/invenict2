@@ -47,30 +47,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('/api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Reviewer") || _this.checkto.includes("/ict-request/reviewer")) {
-            _this.getIctDetail();
-
-            _this.getNoreq();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('/api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
+        });
+
+        if (_this.checkname.includes("Reviewer") || _this.checkto.includes("/ict-request/reviewer")) {
+          _this.getIctDetail();
+
+          _this.getNoreq();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     AssignPerDetail: function AssignPerDetail(ireqd_id) {
       var _this2 = this;

@@ -95,7 +95,6 @@ export default {
         token: localStorage.getItem('token'),
         ref: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        id : localStorage.getItem('id'),
         checkname : [],
         checkto : [],
     };
@@ -105,7 +104,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Lookups") || this.checkto.includes("/referensi-lookups")){

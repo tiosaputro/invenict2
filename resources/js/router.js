@@ -318,11 +318,6 @@ const routes = [
         component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_verifikasi.vue'),
     },
     {
-        name: 'Verifikasi From Email',
-        path: '/ictinv_resp/:code/:status',
-        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Verifikasi_from_email.vue'),
-    },
-    {
         name: 'Ict Request Verifikasi From Email',
         path: '/verifikasi-request/:code/:status',
         component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_verifikasi_from_email.vue'),
@@ -678,19 +673,9 @@ const routes = [
         component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_manager_detail.vue'),
     },
     {
-        name: 'Ict Request Manager Verifikasi',
-        path: '/ict-request-manager-verifikasi/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_manager_verifikasi.vue'),
-    },
-    {
         name: 'Ict Request Manager Detail Penugasan',
         path: '/ict-request-manager/detail-penugasan/:code',
         component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_manager_detail_penugasan.vue'),
-    },
-    {
-        name: 'Verifikasi From Email ICT Manager',
-        path: '/ictinv_resp_mng/:code/:status',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Verifikasi_from_email.vue'),
     },
     {
         name: 'Ict Request Verifikasi From Email ICT Manager',
@@ -698,7 +683,7 @@ const routes = [
         component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_verifikasi_from_email.vue'),
     },
     {
-        path: '/error',
+        path: '/error/:stat',
         name: 'error',
         component: () => import('./pages/Error.vue')
     },
@@ -711,6 +696,11 @@ const routes = [
         path: '/access',
         name: 'access',
         component: () => import('./pages/Access.vue')
+    },
+    {
+        path: '/check-verif/:code/:status',
+        name: 'Check Verif',
+        component: () => import('./pages/checkVerif.vue')
     }
 ];
 

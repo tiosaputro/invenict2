@@ -97,7 +97,6 @@ export default {
         user:[],
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
     };
   },
   created() {
@@ -110,8 +109,7 @@ export default {
          myWindow.focus();
     },
     cekUser(){
-      if(this.id){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Status Change Request") || this.checkto.includes("/ict-request-divisi3")){ 
@@ -121,9 +119,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getUser(){
         this.axios.get('/api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
@@ -142,7 +137,7 @@ export default {
       if(this.editDetail.status != null){
         this.axios.put('/api/update-status-done/'+this.$route.params.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.$toast.add({
-            severity:'success', summary: 'Success', detail:'Status Berhasil Dirubah', life: 3000
+            severity:'success', summary: 'Success Message', detail:'Success Change Status', life: 3000
           });
           this.cancel();
           this.getIctDetail();

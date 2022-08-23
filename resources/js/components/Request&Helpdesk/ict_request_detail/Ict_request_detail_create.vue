@@ -172,7 +172,6 @@ export default {
       token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
-      id : localStorage.getItem('id'),
       cekTipeReq:'',
     };
   },
@@ -212,72 +211,130 @@ export default {
         this.error.foto = "File too big (> 1MB)"
       }
       else{
-      if(this.tipereq == 'P'){
-       if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
-       {
-        const data = new FormData();
-        data.append("file", this.foto);
-        data.append("invent_code", this.kode);
-        data.append("qty", this.qty);
-        data.append("ket", this.ket);
-        data.append("tipereq", this.tipereq);
+       if(this.tipereq == 'P'){
+        if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
+        {
+          const data = new FormData();
+          data.append("file", this.foto);
+          data.append("invent_code", this.kode);
+          data.append("qty", this.qty);
+          data.append("ket", this.ket);
+          data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
-        this.$toast.add({
-          severity: "success",
-          summary: "Success Message",
-          detail: "Success Create",
-          life: 500
-        });
-        setTimeout( () => this.kode = null,this.desk = '', this.qty = null, this.ket = '', this.preview = '',this.$refs.fileInput.value = '', this.pdf=false,this.image = false,1000);
-        }).catch(error=>{
-          this.errors = error.response.data.errors;
-         });
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+            life: 500
+          });
+          setTimeout( () => this.kode = null,this.desk = '', this.qty = null, this.ket = '', this.preview = '',this.$refs.fileInput.value = '', this.pdf=false,this.image = false,1000);
+          }).catch(error=>{
+            this.errors = error.response.data.errors;
+          });
+        }else{
+          if(this.kode == null){
+            this.error.kode = "Peripheral not filled"
+          }
+          if(this.tipereq == null){
+            this.error.tipereq = "Request Type not filled"
+          }
+          if(this.tipereq == 'null'){
+            this.error.tipereq = "Request Type not filled"
+          }
+        }
       }else{
-        if(this.kode == null){
-          this.error.kode = "Peripheral not filled"
-        }
-        if(this.tipereq == null){
-          this.error.tipereq = "Request Type not filled"
-        }
-        if(this.tipereq == 'null'){
-          this.error.tipereq = "Request Type not filled"
-        }
-      }
-     }else{
-       if (this.tipereq != null && this.tipereq != 'null' ) 
-       {
-        const data = new FormData();
-        data.append("file", this.foto);
-        data.append("ket", this.ket);
-        data.append("tipereq", this.tipereq);
+        if (this.tipereq != null && this.tipereq != 'null' ) 
+        {
+          const data = new FormData();
+          data.append("file", this.foto);
+          data.append("ket", this.ket);
+          data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token, 'content-type': 'multipart/form-data'}}).then(()=>{
-        this.$toast.add({
-          severity: "success",
-          summary: "Success Message",
-          detail: "Success Create",
-          life: 500
-        });
-        setTimeout( () => this.desk = '', this.ket = '',this.preview = '', this.pdf=false, this.image = false, this.$refs.fileInput.value = null,1000);
-        }).catch(error=>{
-          this.errors = error.response.data.errors;
-         });
-      }else{
-        if(this.tipereq == null){
-          this.error.tipereq = "Request Type not filled"
-        }
-        if(this.tipereq == 'null'){
-          this.error.tipereq = "Request Type not filled"
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token, 'content-type': 'multipart/form-data'}}).then(()=>{
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+            life: 500
+          });
+          setTimeout( () => this.desk = '', this.ket = '',this.preview = '', this.pdf=false, this.image = false, this.$refs.fileInput.value = null,1000);
+          }).catch(error=>{
+            this.errors = error.response.data.errors;
+          });
+        }else{
+          if(this.tipereq == null){
+            this.error.tipereq = "Request Type not filled"
+          }
+          if(this.tipereq == 'null'){
+            this.error.tipereq = "Request Type not filled"
+          }
         }
        }
       }
-     }
+     }else{
+      if(this.tipereq == 'P'){
+        if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
+        {
+          const data = new FormData();
+          data.append("invent_code", this.kode);
+          data.append("qty", this.qty);
+          data.append("ket", this.ket);
+          data.append("tipereq", this.tipereq);
+
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+            life: 500
+          });
+          setTimeout( () => this.kode = null,this.desk = '', this.qty = null, this.ket = '', this.preview = '',this.$refs.fileInput.value = '', this.pdf=false,this.image = false,1000);
+          }).catch(error=>{
+            this.errors = error.response.data.errors;
+          });
+        }else{
+          if(this.kode == null){
+            this.error.kode = "Peripheral not filled"
+          }
+          if(this.tipereq == null){
+            this.error.tipereq = "Request Type not filled"
+          }
+          if(this.tipereq == 'null'){
+            this.error.tipereq = "Request Type not filled"
+          }
+        }
+      }else{
+        if (this.tipereq != null && this.tipereq != 'null' ) 
+        {
+          const data = new FormData();
+          data.append("ket", this.ket);
+          data.append("tipereq", this.tipereq);
+
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token, 'content-type': 'multipart/form-data'}}).then(()=>{
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+            life: 500
+          });
+          setTimeout( () => this.desk = '', this.ket = '',this.preview = '', this.pdf=false, this.image = false, this.$refs.fileInput.value = null,1000);
+          }).catch(error=>{
+            this.errors = error.response.data.errors;
+          });
+        }else{
+          if(this.tipereq == null){
+            this.error.tipereq = "Request Type not filled"
+          }
+          if(this.tipereq == 'null'){
+            this.error.tipereq = "Request Type not filled"
+          }
+        }
+      }
      }
     },
     cekUser(){
-      if(this.id){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
@@ -287,9 +344,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -322,67 +376,124 @@ export default {
         this.error.foto = "File too big (> 1MB)"
       }
       else{
+        if(this.tipereq=='P'){
+        if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
+        {
+          const data = new FormData();
+          data.append("invent_code", this.kode);
+          data.append("file", this.foto);
+          data.append("qty", this.qty);
+          data.append("ket", this.ket);
+          data.append("tipereq", this.tipereq);
+
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+          });
+          setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
+          }).catch(error=>{
+            this.errors = error.response.data.errors;
+          });
+        }else{
+          if(this.kode == null){
+            this.error.kode = "Peripheral not filled"
+          }
+          if(this.tipereq == null){
+            this.error.tipereq = "Request Type not filled"
+          }
+          if(this.tipereq == 'null'){
+            this.error.tipereq = "Request Type not filled"
+          }
+        }
+        }else{
+          if (this.tipereq != null && this.tipereq != 'null' ) 
+        {
+          const data = new FormData();
+          data.append("file", this.foto);
+          data.append("ket", this.ket);
+          data.append("tipereq", this.tipereq);
+
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+          });
+          setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
+          }).catch(error=>{
+            this.errors = error.response.data.errors;
+          });
+        }else{
+          if(this.tipereq == null){
+            this.error.tipereq = "Request Type not filled"
+          }
+          if(this.tipereq == 'null'){
+            this.error.tipereq = "Request Type not filled"
+          }
+        }
+       }
+      }
+     }else{
       if(this.tipereq=='P'){
-       if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
-       {
-        const data = new FormData();
-        data.append("invent_code", this.kode);
-        data.append("file", this.foto);
-        data.append("qty", this.qty);
-        data.append("ket", this.ket);
-        data.append("tipereq", this.tipereq);
+        if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
+        {
+          const data = new FormData();
+          data.append("invent_code", this.kode);
+          data.append("qty", this.qty);
+          data.append("ket", this.ket);
+          data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
-        this.$toast.add({
-          severity: "success",
-          summary: "Success Message",
-          detail: "Success Create",
-        });
-        setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
-        }).catch(error=>{
-          this.errors = error.response.data.errors;
-         });
-      }else{
-        if(this.kode == null){
-          this.error.kode = "Peripheral not filled"
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+          });
+          setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
+          }).catch(error=>{
+            this.errors = error.response.data.errors;
+          });
+        }else{
+          if(this.kode == null){
+            this.error.kode = "Peripheral not filled"
+          }
+          if(this.tipereq == null){
+            this.error.tipereq = "Request Type not filled"
+          }
+          if(this.tipereq == 'null'){
+            this.error.tipereq = "Request Type not filled"
+          }
         }
-        if(this.tipereq == null){
-          this.error.tipereq = "Request Type not filled"
-        }
-        if(this.tipereq == 'null'){
-          this.error.tipereq = "Request Type not filled"
-        }
-      }
-      }else{
-        if (this.tipereq != null && this.tipereq != 'null' ) 
-       {
-        const data = new FormData();
-        data.append("file", this.foto);
-        data.append("ket", this.ket);
-        data.append("tipereq", this.tipereq);
+        }else{
+          if (this.tipereq != null && this.tipereq != 'null' ) 
+        {
+          const data = new FormData();
+          data.append("ket", this.ket);
+          data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
-        this.$toast.add({
-          severity: "success",
-          summary: "Success Message",
-          detail: "Success Create",
-        });
-        setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
-        }).catch(error=>{
-          this.errors = error.response.data.errors;
-         });
-      }else{
-        if(this.tipereq == null){
-          this.error.tipereq = "Request Type not filled"
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+          });
+          setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
+          }).catch(error=>{
+            this.errors = error.response.data.errors;
+          });
+        }else{
+          if(this.tipereq == null){
+            this.error.tipereq = "Request Type not filled"
+          }
+          if(this.tipereq == 'null'){
+            this.error.tipereq = "Request Type not filled"
+          }
         }
-        if(this.tipereq == 'null'){
-          this.error.tipereq = "Request Type not filled"
-        }
-      }
-      }
-      }
-      }
-      },
+       }
+     }
+    }
   },
 };
 </script>

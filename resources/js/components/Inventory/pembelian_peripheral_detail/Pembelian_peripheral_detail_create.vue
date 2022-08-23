@@ -151,7 +151,6 @@ export default {
       checkname : [],
       checkto : [],
       divisi: [],
-      id : localStorage.getItem('id'),
     };
   },
   created(){
@@ -159,8 +158,7 @@ export default {
   },
   methods: {
     cekUser(){
-      if(this.id){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
          if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){
@@ -170,9 +168,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getValutaCode(){
       this.axios.get('/api/getValuta/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -192,6 +187,15 @@ export default {
           this.locale = 'zh-CN';
           this.currency = 'CNY';
         }
+        }).catch(error=>{
+          if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
       });
     },
     getTotal(){

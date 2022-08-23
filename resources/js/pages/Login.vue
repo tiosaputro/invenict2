@@ -3,7 +3,7 @@
     <div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
         <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
             <div class="col-12 mt-5 xl:mt-0 text-center">
-                <img :src="'assets/layout/images/logo_emp_new.png'" alt="logo" class="mb-5" style="width:250px; ">
+                <img :src="'assets/layout/images/logo_emp_new.png'" alt="Emp logo" class="mb-5" style="width:250px; ">
             </div>
             <div class="co l-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color), rgba(33, 150, 243, 0) 30%);">
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
@@ -49,7 +49,7 @@
                             </small>
                             <div class="text-center">
                                 <Button v-if="!this.loading" label="Sign In" type="submit" class="w-full p-2 text-xl"/>
-                                <img :src="'assets/loading.gif'" v-else height="70" class="mb-3" >
+                                <img :src="'assets/loading6.gif'" v-else height="70" class="mb-3" />
                             </div>
                         </div>
                     </form>
@@ -110,13 +110,11 @@ export default {
               localStorage.clear();
               localStorage.setItem("loggedIn", "true");
               localStorage.setItem("token", response.data.token);
-              localStorage.setItem("id", response.data.id);
               localStorage.setItem("usr_loc", response.data.usr_loc);
               localStorage.setItem('active',0);
               localStorage.setItem('active1',0);
               localStorage.setItem('active2',0);
               localStorage.setItem('active3',0);
-              localStorage.setItem("usr_name", response.data.usr_name);
               setTimeout( () => this.$router.push('/dashboard'), 1000);
             }).catch(error=> {
                 this.submitted = false;

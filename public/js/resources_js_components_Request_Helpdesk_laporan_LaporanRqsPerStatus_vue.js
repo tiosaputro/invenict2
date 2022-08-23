@@ -19,7 +19,6 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id'),
       items: [{
         label: 'Pdf',
         icon: 'bi bi-file-earmark-pdf text-danger',
@@ -42,28 +41,24 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Per Status") || _this.checkto.includes("/report-per-status")) {
-            _this.getReq();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
+        });
+
+        if (_this.checkname.includes("Per Status") || _this.checkto.includes("/report-per-status")) {
+          _this.getReq();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     getReq: function getReq() {
       var _this2 = this;

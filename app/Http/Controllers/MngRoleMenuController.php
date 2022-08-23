@@ -60,9 +60,9 @@ class MngRoleMenuController extends Controller
         }
         return response()->json($menu);
     }
-    function cekUser($id)
+    function cekUser()
     {
-        $role = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
         $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
         $aksesmenu = DB::table('mng_menus')->select('menu_display as name','controller as to')->whereIn('menu_id',$menu)->get();
         return response()->json($aksesmenu);

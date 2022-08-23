@@ -1,10 +1,11 @@
 <template>
     <Login v-if="$route.path === '/login'" />
     <LoginLegality v-else-if="$route.name === 'Login Legality'" />
-    <Error v-else-if="$route.path === '/error'" />
+    <Error v-else-if="$route.name === 'error'" />
     <NotFound v-else-if="$route.path === '/notfound'" />
     <Access v-else-if="$route.path === '/access'" />
     <Detail v-else-if="$route.name === 'Detail Peripheral'" />
+    <CheckVerif v-else-if="$route.name === 'Check Verif'" />
     <App v-else @change-theme="changeTheme" />
 </template>
 
@@ -17,6 +18,7 @@ import NotFound from './NotFound';
 import Access from './Access';
 import Detail from './Master_peripheral_detail_qrcode';
 import LoginLegality from './LoginLegality';
+import CheckVerif from './checkVerif';
 
 
 export default {
@@ -40,7 +42,8 @@ export default {
         NotFound,
         Access,
         Detail,
-        LoginLegality
+        LoginLegality,
+        CheckVerif
     }
 }
 </script>

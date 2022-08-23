@@ -8,6 +8,9 @@
           <template v-slot:start>
 				    <h4>ICT Request (Verification) </h4>
           </template>
+          <template v-slot:end>
+              No. Request: {{kode.noreq}}
+          </template>
         </Toolbar>
         <DataTable
           :value="verif"
@@ -23,8 +26,7 @@
         >
         
        <template #header>
-              <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-               <label style="width:150px">No. Request: {{kode.noreq}}</label>
+              <div class="table-header text-right">
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText
@@ -40,11 +42,11 @@
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
-          <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
+          <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:14rem"/>
           <Column header="Attachment" style="min-width:10rem">
             <template #body="slotProps">
               <p v-if="slotProps.data.ireq_attachment == null"></p>
@@ -69,14 +71,14 @@
                   />
                   <Button
                     label="Approve"
-                    v-if="this.kode.cekStatus == 'P'"
+                    v-if="this.kode.cekstatus == 'NA2'"
                     class="p-button-raised p-button-success mr-2"
                     icon="pi pi-check-square"
-                    @click="this.dialogReject = true"
+                    @click="this.dialogApprove = true"
                   />
                   <Button 
                     label="Reject"
-                    v-if="this.kode.cekStatus == 'P'"
+                    v-if="this.kode.cekstatus == 'NA2'"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-times-circle"
                     @click="this.dialogReject = true" 
@@ -119,7 +121,7 @@
       <Dialog
         v-model:visible="dialogApprove"
         :style="{ width: '400px' }"
-        header="ICT Request"
+        header="Form Dialog Approve"
         :modal="true" 
         class="field"
        >
@@ -250,7 +252,17 @@ export default {
       getNoreq(){
         this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.kode = response.data;
-              this.getIctDetail();
+          if(this.kode.cekstatus =='NA2'){
+          this.getIctDetail();
+        }
+        else{
+          this.$toast.add({
+            severity: "error",
+            summary: "Error Message",
+            detail: "This request has been verified",
+          });
+          setTimeout( () =>  this.$router.push('/ict-request-manager'),2000);
+        }
         });
       },
   },

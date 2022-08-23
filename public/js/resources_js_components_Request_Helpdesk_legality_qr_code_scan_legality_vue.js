@@ -39,9 +39,8 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      var id = localStorage.getItem('id');
       var token = localStorage.getItem('token');
-      this.axios.get('/api/cek-user/' + id, {
+      this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + token
         }

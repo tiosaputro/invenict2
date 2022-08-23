@@ -970,7 +970,7 @@ class IctController extends Controller
         $Date = $this->date->addDays(1);
         $link = Link::create([
             'link_id'=> md5($this->date),
-            'link_action'=> env('APP_VERIF_HIGHER_LEVEL').''.$ireq_id,
+            'link_action'=> 'Ict Request Verifikasi From Email',
             'expired_at'=>Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'usr_id'=>$emailVerifikator->usr_id,
             'ireq_id'=>$ireq_id
@@ -1027,7 +1027,7 @@ class IctController extends Controller
         $Date = $this->date->addDays(1);
         $link = Link::create([
             'link_id'=> md5($this->date),
-            'link_action'=> env('APP_VERIF_ICT_MANAGER').''.$ireq_id,
+            'link_action'=> 'Ict Request Verifikasi From Email ICT Manager',
             'expired_at'=> Carbon::parse($Date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'usr_id'=>$emailVerifikator->usr_id,
             'ireq_id'=>$ireq_id
@@ -1447,7 +1447,7 @@ class IctController extends Controller
                 'im.ireq_requestor','lr.lookup_desc as ireq_status')
                 ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
                 ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-                ->WHERE('dr.div_verificator',$usr_email)
+                // ->WHERE('dr.div_verificator',$usr_email)
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
                 ->WHERE(function($query){
                     return $query
@@ -1464,7 +1464,7 @@ class IctController extends Controller
                 'im.ireq_requestor','lr.lookup_desc as ireq_status')
                 ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
                 ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-                ->WHERE('dr.div_verificator',$usr_email)
+                // ->WHERE('dr.div_verificator',$usr_email)
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
                 ->WHERE(function($query){
                     return $query
@@ -1479,7 +1479,7 @@ class IctController extends Controller
             'im.ireq_requestor','im.ireq_reason','lr.lookup_desc as ireq_status')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-            ->WHERE('dr.div_verificator',$usr_email)
+            // ->WHERE('dr.div_verificator',$usr_email)
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->WHERE(function($query){
                 return $query

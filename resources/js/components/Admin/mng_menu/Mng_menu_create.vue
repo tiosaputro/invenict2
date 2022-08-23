@@ -177,7 +177,6 @@ export default {
       parent:[],
       checkname : [],
       checkto : [],
-      id : localStorage.getItem('id'),
       stat: [
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
@@ -194,8 +193,7 @@ export default {
     },
   methods: {
     cekUser(){
-      if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Menu") || this.checkto.includes("/mng-menu")){
@@ -206,9 +204,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
       getModul(){
           this.axios.get('api/get-module',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

@@ -939,63 +939,63 @@ export default {
         },
         blmDiverifikasiAdmin(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',23);
+          localStorage.setItem('desc',23);
         },
         sdhDiverifikasiAdmin(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',24);
+          localStorage.setItem('desc',24);
         },
         diRejectAdmin(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',25);
+          localStorage.setItem('desc',25);
         },
         sdgDikerjakanAdmin(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',26);
+          localStorage.setItem('desc',26);
         },
         sdhDikerjakanAdmin(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',27);
+          localStorage.setItem('desc',27);
         },
         sdhSelesaiAdmin(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',28);
+          localStorage.setItem('desc',28);
         },
         totalKeseluruhanAdmin(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',29);
+          localStorage.setItem('desc',29);
         },
 		sdgDireview(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',40);
+          localStorage.setItem('desc',40);
 		},
         blmDiverifikasi(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',1);
+          localStorage.setItem('desc',1);
         },
         sdhDiverifikasi(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',2);
+          localStorage.setItem('desc',2);
         },
         diReject(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',3);
+          localStorage.setItem('desc',3);
         },
         sdgDikerjakan(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',4);
+          localStorage.setItem('desc',4);
         },
         sdhDikerjakan(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',5);
+          localStorage.setItem('desc',5);
         },
         sdhSelesai(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',6);
+          localStorage.setItem('desc',6);
         },
         totalKeseluruhan(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',22);
+          localStorage.setItem('desc',22);
         },
         //dashboard approval user
         getData1(){
@@ -1006,39 +1006,39 @@ export default {
         },
 		sdgDireview1(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',41);
+          localStorage.setItem('desc',41);
 		},
         blmDiverifikasi1(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',7);
+          localStorage.setItem('desc',7);
         },
         sdhDiverifikasi1(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',8);
+          localStorage.setItem('desc',8);
         },
         diReject1(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',9);
+          localStorage.setItem('desc',9);
         },
 		penugasanRequest1(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',45);
+          localStorage.setItem('desc',45);
 		},
         sdgDikerjakan1(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',10);
+          localStorage.setItem('desc',10);
         },
         sdhDikerjakan1(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',11);
+          localStorage.setItem('desc',11);
         },
         sdhSelesai1(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',12);
+          localStorage.setItem('desc',12);
         },
 		totalRequest1(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',38);
+          localStorage.setItem('desc',38);
 		},
         getDataBentu(){
             this.axios.get('api/getCountReviewerBentu',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -1060,39 +1060,39 @@ export default {
         },
 		atasanDivisi2(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',30)
+          localStorage.setItem('desc',30)
 		},
 		IctManager2(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',31)
+          localStorage.setItem('desc',31)
 		},
 		direject2(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',32)
+          localStorage.setItem('desc',32)
 		},
         blmDiassign2(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',13)
+          localStorage.setItem('desc',13)
         },
 		penugasanRequest2(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',43)
+          localStorage.setItem('desc',43)
 		},
         sdgDikerjakan2(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',14)
+          localStorage.setItem('desc',14)
         },
         sdhDikerjakan2(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',15)
+          localStorage.setItem('desc',15)
         },
         sdhSelesai2(){
           this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',16)
+          localStorage.setItem('desc',16)
         },
 		totalRequest2(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',37)
+          localStorage.setItem('desc',37)
 		},
         getData3(){
             this.axios.get('api/getCountDivisi3',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -1102,23 +1102,23 @@ export default {
         },
         penugasanRequest3(){
           this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',46)
+          localStorage.setItem('desc',46)
         },
         diReject3(){
           this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',47)
+          localStorage.setItem('desc',47)
         },
         blmSelesai3(){
           this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',17)
+          localStorage.setItem('desc',17)
         },
         sdHDikerjakan3(){
           this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',18)
+          localStorage.setItem('desc',18)
         },
         sdhSelesai3(){
           this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',19)
+          localStorage.setItem('desc',19)
         },
         getData4(){
             this.axios.get('api/getCountDivisi4',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -1128,39 +1128,39 @@ export default {
         },
 		sdgDireview4(){
 		  this.$router.push('/ict-request-desc')
-          localStorage.setItem('active',42);
+          localStorage.setItem('desc',42);
 		},
 		blmDiverifikasi4(){
 		  this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',33)
+          localStorage.setItem('desc',33)
 		},
 		sdhDiverifikasi4(){
 		  this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',34)
+          localStorage.setItem('desc',34)
 		},
 		direject4(){
 		  this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',35);
+          localStorage.setItem('desc',35);
 		},
 		penugasanRequest4(){
 		  this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',44)
+          localStorage.setItem('desc',44)
 		},
 		sdgdikerjakan4(){
  		  this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',36)
+          localStorage.setItem('desc',36)
 		},
         sdHDikerjakan4(){
           this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',20)
+          localStorage.setItem('desc',20)
         },
         sdhSelesai4(){
           this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',21)
+          localStorage.setItem('desc',21)
         },
 		totalRequest4(){
 		  this.$router.push('/ict-request-desc');
-          localStorage.setItem('active',39)
+          localStorage.setItem('desc',39)
 		},
         getData5(){
           this.axios.get('api/getCountAdmin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

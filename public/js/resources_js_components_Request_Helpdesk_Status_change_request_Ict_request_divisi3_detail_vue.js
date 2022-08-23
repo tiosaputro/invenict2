@@ -32,8 +32,7 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       user: [],
       checkname: [],
-      checkto: [],
-      id: localStorage.getItem('id')
+      checkto: []
     };
   },
   created: function created() {
@@ -48,28 +47,24 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('/api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Status Change Request") || _this.checkto.includes("/ict-request-divisi3")) {
-            _this.getUser();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('/api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
+        });
+
+        if (_this.checkname.includes("Status Change Request") || _this.checkto.includes("/ict-request-divisi3")) {
+          _this.getUser();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     getUser: function getUser() {
       var _this2 = this;
@@ -110,8 +105,8 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function () {
           _this4.$toast.add({
             severity: 'success',
-            summary: 'Success',
-            detail: 'Status Berhasil Dirubah',
+            summary: 'Success Message',
+            detail: 'Success Change Status',
             life: 3000
           });
 

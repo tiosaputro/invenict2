@@ -30,8 +30,7 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      divisi: [],
-      id: localStorage.getItem('id')
+      divisi: []
     };
   },
   created: function created() {
@@ -41,28 +40,24 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('/api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
-            _this.getValutaCode();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('/api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
+        });
+
+        if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
+          _this.getValutaCode();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     getValutaCode: function getValutaCode() {
       var _this2 = this;
@@ -89,6 +84,20 @@ __webpack_require__.r(__webpack_exports__);
         if (_this2.valuta.valuta_code == '¥') {
           _this2.locale = 'zh-CN';
           _this2.currency = 'CNY';
+        }
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this2.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this2.$router.push('/login');
+          }, 2000);
         }
       });
     },

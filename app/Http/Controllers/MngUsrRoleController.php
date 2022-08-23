@@ -19,8 +19,9 @@ class MngUsrRoleController extends Controller
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
-    public function getRole($id) {
-        $role = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
+    public function getRole() {
+
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
         $rolemenu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
         $query = DB::table('mng_menus')
                 ->select('menu_display','controller','menu_id','parent_id')

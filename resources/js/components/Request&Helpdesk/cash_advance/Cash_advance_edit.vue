@@ -260,7 +260,6 @@ export default {
         input: 'DD MMM YYYY'
       }, 
       token: localStorage.getItem('token'),
-      id : localStorage.getItem('id'),
       checkname : [],
       checkto : [],
     };
@@ -270,8 +269,7 @@ export default {
   },
   methods: {
     cekUser(){
-    if(this.id){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Cash Advance") || this.checkto.includes("/cash-advance")){
@@ -281,9 +279,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getCash(){
       this.axios.get('/api/edit-cash/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

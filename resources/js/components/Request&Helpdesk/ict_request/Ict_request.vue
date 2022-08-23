@@ -763,7 +763,6 @@ export default {
       usr_name: localStorage.getItem('usr_name'),
       checkname : [],
       checkto : [],
-      id : localStorage.getItem('id'),
     };
   },
   created() {

@@ -35,8 +35,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       checkname: [],
-      checkto: [],
-      id: localStorage.getItem('id')
+      checkto: []
     };
   },
   created: function created() {
@@ -46,28 +45,24 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('/api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Master Peripheral") || _this.checkto.includes("/master-peripheral")) {
-            _this.getMaster();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('/api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
+        });
+
+        if (_this.checkname.includes("Master Peripheral") || _this.checkto.includes("/master-peripheral")) {
+          _this.getMaster();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     downloadBarcodePdf: function downloadBarcodePdf() {
       var doc = new jspdf__WEBPACK_IMPORTED_MODULE_1__["default"]();

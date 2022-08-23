@@ -40,7 +40,7 @@ export default {
 		 }
 		},
 	created(){
-		setTimeout( () => this.getUser(),1000);
+		this.getUser();
 		},
     methods: {
 		getUser(){

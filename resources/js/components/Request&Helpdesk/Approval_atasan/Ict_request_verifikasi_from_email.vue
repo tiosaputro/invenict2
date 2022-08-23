@@ -6,7 +6,10 @@
         <ConfirmDialog group="positionDialog"></ConfirmDialog>
         <Toolbar class="p-mb-4">
           <template v-slot:start>
-				        <h4>ICT Request (Verifikasi) </h4>
+				    <h4>ICT Request (Verification) </h4>
+          </template>
+          <template v-slot:end>
+            No. Request: {{kode.noreq}}
           </template>
         </Toolbar>
         <DataTable
@@ -18,29 +21,27 @@
           :rowHover="true"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Verifikasi)"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Verification)"
           responsiveLayout="scroll"
         >
-        
-       <template #header>
-              <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-               <label style="width:150px">No. Request: {{kode.noreq}}</label>
-              <span class="p-input-icon-left">
+          <template #header>
+              <div class="table-header text-right">
+               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
-                <InputText
-                  v-model="filters['global'].value"
-                  placeholder="Search. . ."
-                />
+                  <InputText
+                    v-model="filters['global'].value"
+                    placeholder="Search. . ."
+                  />
               </span>
             </div>
           </template>
-           <template #empty>
+          <template #empty>
             Not Found
           </template>
           <template #loading>
             Loading ICT Request (Detail) data. Please wait.
           </template>
-          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
+          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
           <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
@@ -62,7 +63,7 @@
               v-if="slotProps.data.ireq_status == 'NA1'"
               class="p-button-rounded p-button-success mr-2"
               icon="pi pi-check-square"
-              v-tooltip.right="'Verifikasi'"
+              v-tooltip.bottom="'Click to verification'"
               @click="VerifikasiRequest(slotProps.data.ireq_id)"
             />
            </template>
@@ -126,8 +127,8 @@
             <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
             <Button label="No" @click="cancelReject()" class="p-button-text" />
         </template>
-      </Dialog>
-      <Dialog header="Confirmation" v-model:visible="confirmationVerifikasi" :style="{width: '350px'}" :modal="true">
+        </Dialog>
+        <Dialog header="Confirmation" v-model:visible="confirmationVerifikasi" :style="{width: '350px'}" :modal="true">
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                 <span>Request Verification</span>
@@ -158,7 +159,6 @@ export default {
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
         token: localStorage.getItem('token'),
-        id : localStorage.getItem('id'),
         status : null,
     };
   },
@@ -166,6 +166,11 @@ export default {
     this.getNoreq();
   },
   methods: {
+      getDetail(ireq_attachment){
+        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+          var myWindow = window.open(page, "_blank");
+          myWindow.focus();
+      },
       VerifikasiRequest(){
         this.confirmationVerifikasi = true;
       },
@@ -260,3 +265,9 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.attachment-image {
+    width: 50px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+</style>

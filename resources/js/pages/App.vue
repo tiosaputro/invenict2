@@ -45,9 +45,8 @@ export default {
             staticMenuInactive: false,
             overlayMenuActive: false,
             mobileMenuActive: false,
-            id: null,
-            token: null,
-            loggedIn : null,
+            token: localStorage.getItem("token"),
+            loggedIn : localStorage.getItem("loggedIn"),
             menuUser:[],
         }
     },
@@ -63,20 +62,15 @@ export default {
     },
     methods: {
         tes(){
-            if (window.location.pathname == '/')
-                {
-                    this.$router.push('/dashboard'); 
-                 }
-            this.loggedIn = localStorage.getItem("loggedIn");
-
+            if (window.location.pathname == '/'){
+                this.$router.push('/dashboard'); 
+            }
             if(!this.loggedIn){
-                this.menuUser = []; 
+                this.$router.push('/login');
             }
             else if(this.loggedIn){
                 if(!this.menuUser.length){
-                this.id = localStorage.getItem("id");
-                this.token = localStorage.getItem("token");
-                this.axios.get('/api/get-rolee/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.axios.get('/api/get-rolee', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                     this.menuUser = response.data
                 });
                 }

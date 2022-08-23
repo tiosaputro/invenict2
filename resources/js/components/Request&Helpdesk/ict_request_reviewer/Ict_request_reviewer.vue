@@ -54,17 +54,17 @@
                     {{slotProps.data.ireq_assigned_to}}
                   </template>
                   </Column>
-                  <Column headerStyle="min-width:60rem">
+                  <Column headerStyle="min-width:25rem">
                     <template #body="slotProps">
                       <Button
-                        class="p-button-rounded p-button-secondary mr-2"
+                        class="p-button-rounded p-button-secondary mr-2 mt-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status <= 0"
                         v-tooltip.bottom="'Click for request details'"
                         @click="detailTabRequestDetailPermohonan(slotProps.data.ireq_id)"
                       />
                       <Button
-                        class="p-button-rounded p-button-secondary mr-2"
+                        class="p-button-rounded p-button-secondary mr-2 mt-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status > 0"
                         v-tooltip.bottom="'Click for request details'"
@@ -72,44 +72,51 @@
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-raised p-button-danger p-button-text mr-2"
+                        class="p-button-rounded p-button-danger mr-2 mt-2"
                         @click="Reject(slotProps.data.ireq_id)"
-                        label="Reject"
+                        v-tooltip.bottom="'Click to reject request'"
+                        icon="bi bi-x-square"
                       />
                       <Button
-                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        icon="bi bi-chat-quote"
+                        class="p-button-rounded p-button mr-2 mt-2"
                         @click="Remark(slotProps.data.ireq_id)"
-                        label="Remark"
+                        v-tooltip.bottom="'Click to add remark'"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-raised p-button-text"
+                        class="p-button-rounded mr-2 mt-2"
                         @click="ApproveAtasan(slotProps.data.ireq_id)"
-                        label="Higher Level Approval"
+                        icon="bi bi-file-earmark-arrow-up"
+                        v-tooltip.bottom="'Click to higher level approval'"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-raised p-button-text"
+                        class="p-button-rounded mr-2 mt-2"
                         @click="ApproveManager(slotProps.data.ireq_id)"
-                        label="ICT Manager Approval"
+                        v-tooltip.bottom="'Click to ICT manager approval'"
+                        icon="bi bi-file-earmark-arrow-up-fill"
                       />
                       <Button
-                        class="p-button-raised p-button-text p-button-sm mt-2"
+                        class="p-button-rounded mr-2 mt-2" 
                         @click="AssignPerRequest(slotProps.data.ireq_id)"
-                        label="Assign Per-Request"
+                        icon="bi bi-person-workspace"
+                        v-tooltip.bottom="'Click to Assign Per Request'"
                       />
                       <Button
-                        class="p-button-raised p-button-text p-button-sm mt-2"
+                        class="p-button-rounded mr-2 mt-2"
                         @click="$router.push({
                             name: 'Ict Request Reviewer Assign Per Detail',
                             params : {code: slotProps.data.ireq_id},})"
-                        label="Assign Per-Detail"
+                        icon="bi bi-people"
+                        v-tooltip.bottom="'Click to Assign Per Detail'"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id"
-                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        class="p-button-rounded p-button-success mr-2 mt-2"
                         @click="Submit(slotProps.data.ireq_id)"
-                        label="Submit"
+                        icon="bi bi-send-check"
+                        v-tooltip.bottom="'Click to submit'"
                       />
                     </template>
                   </Column>
@@ -184,52 +191,57 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <Column headerStyle="min-width:40rem">
+                  <Column headerStyle="min-width:20rem">
                     <template #body="slotProps">
                        <Button
-                        class="p-button-rounded p-button-secondary mr-2"
+                        class="p-button-rounded p-button-secondary mr-2 mt-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status <= 0"
                         v-tooltip.bottom="'Click for request details'"
                         @click="detailTabHigherLevelDetailPermohonan(slotProps.data.ireq_id)"
                       />
                       <Button
-                        class="p-button-rounded p-button-secondary mr-2"
+                        class="p-button-rounded p-button-secondary mr-2 mt-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status > 0"
                         v-tooltip.bottom="'Click for request details'"
                         @click="detailTabHigherLevelDetail(slotProps.data.ireq_id)"
                       />
                       <Button
-                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        icon="bi bi-chat-quote"
+                        class="p-button-rounded p-button mr-2 mt-2"
                         @click="Remark(slotProps.data.ireq_id)"
-                        label="Remark"
+                        v-tooltip.bottom="'Click to add remark'"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.status == 'A1'"
-                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        class="p-button-rounded mr-2 mt-2"
                         @click="ApproveManager(slotProps.data.ireq_id)"
-                        label="ICT Manager Approval"
+                        v-tooltip.bottom="'Click to ICT manager approval'"
+                        icon="bi bi-file-earmark-arrow-up-fill"
                       />
                       <Button
                         v-if="slotProps.data.status == 'A1'"
-                        class="p-button-raised p-button-text p-button-sm mt-2"
+                        class="p-button-rounded mr-2 mt-2"
                         @click="AssignPerRequest(slotProps.data.ireq_id)"
-                        label="Assign Per-Request"
+                        icon="bi bi-person-workspace"
+                        v-tooltip.bottom="'Click to Assign Per Request'"
                       />
                       <Button
                         v-if="slotProps.data.status == 'A1'"
-                        class="p-button-raised p-button-text p-button-sm mt-2"
+                        class="p-button-rounded mr-2 mt-2"
                         @click="$router.push({
                             name: 'Ict Request Reviewer Assign Per Detail',
                             params : {code: slotProps.data.ireq_id},})"
-                        label="Assign Per-Detail"
+                        icon="bi bi-people"
+                        v-tooltip.bottom="'Click to Assign Per Detail'"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.status == 'A1'"
-                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        class="p-button-rounded p-button-success mr-2 mt-2"
                         @click="Submit(slotProps.data.ireq_id)"
-                        label="Submit"
+                        icon="bi bi-send-check"
+                        v-tooltip.bottom="'Click to submit'"
                       />
                     </template>
                   </Column>
@@ -304,46 +316,50 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <Column headerStyle="min-width:35rem">
+                  <Column headerStyle="min-width:15rem">
                     <template #body="slotProps">
                        <Button
-                        class="p-button-rounded p-button-secondary mr-2"
+                        class="p-button-rounded p-button-secondary mr-2 mt-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status <= 0"
                         v-tooltip.bottom="'Click for request details'"
                         @click="detailTabIctManagerDetailPermohonan(slotProps.data.ireq_id)"
                       />
                       <Button
-                        class="p-button-rounded p-button-secondary mr-2"
+                        class="p-button-rounded p-button-secondary mr-2 mt-2"
                         icon="pi pi-info-circle"
                         v-if="slotProps.data.ireq_count_status > 0"
                         v-tooltip.bottom="'Click for request details'"
                         @click="detailTabIctManagerDetail(slotProps.data.ireq_id)"
                       />
                       <Button
-                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        icon="bi bi-chat-quote"
+                        class="p-button-rounded p-button mr-2 mt-2"
                         @click="Remark(slotProps.data.ireq_id)"
-                        label="Remark"
+                        v-tooltip.bottom="'Click to add remark'"
                       />
                       <Button
                         v-if="slotProps.data.status == 'A2'"
-                        class="p-button-raised p-button-text p-button-sm mt-2"
+                        class="p-button-rounded mr-2 mt-2"
                         @click="AssignPerRequest(slotProps.data.ireq_id)"
-                        label="Assign Per-Request"
+                        icon="bi bi-person-workspace"
+                        v-tooltip.bottom="'Click to Assign Per Request'"
                       />
                       <Button
                         v-if="slotProps.data.status == 'A2'"
-                        class="p-button-raised p-button-text p-button-sm mt-2"
+                        class="p-button-rounded mr-2 mt-2"
                         @click="$router.push({
                             name: 'Ict Request Reviewer Assign Per Detail',
                             params : {code: slotProps.data.ireq_id},})"
-                        label="Assign Per-Detail"
+                        icon="bi bi-people"
+                        v-tooltip.bottom="'Click to Assign Per Detail'"
                       />
                       <Button
                         v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.status == 'A2'"
-                        class="p-button-raised p-button-text p-button-sm mr-2"
+                        class="p-button-rounded p-button-success mr-2 mt-2"
                         @click="Submit(slotProps.data.ireq_id)"
-                        label="Submit"
+                        icon="bi bi-send-check"
+                        v-tooltip.bottom="'Click to submit'"
                       />
                     </template>
                   </Column>
@@ -417,7 +433,7 @@
                   <Column headerStyle="min-width:8rem">
                     <template #body="slotProps">
                       <Button
-                        class="p-button-rounded p-button-secondary mr-2"
+                        class="p-button-rounded p-button-secondary mr-2 mt-2"
                         icon="pi pi-info-circle"
                         v-tooltip.bottom="'Click for request details'"
                         @click="detailTabRejectedDetail(slotProps.data.ireq_id)"
@@ -491,7 +507,7 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <Column style="min-width:20rem">
+                  <Column style="min-width:15rem">
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"
@@ -501,15 +517,17 @@
                       />
                        <Button
                         v-if="slotProps.data.status == 'RT'"
-                        class="p-button-raised p-button-text p-button-sm mt-2"
+                        class="p-button-rounded mr-2 mt-2" 
                         @click="AssignPerRequest(slotProps.data.ireq_id)"
-                        label="Assign Per-Request"
+                        icon="bi bi-person-workspace"
+                        v-tooltip.bottom="'Click to Assign Per Request'"
                       />
                       <Button
                         v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.status == 'RT'"
-                        class="p-button-raised p-button-text p-button-sm p-button-success mr-2"
+                        class="p-button-rounded p-button-success mr-2 mt-2"
                         @click="Submit(slotProps.data.ireq_id)"
-                        label="Submit"
+                        icon="bi bi-send-check"
+                        v-tooltip.bottom="'Click to submit'"
                       />
                     </template>
                   </Column>
@@ -1164,9 +1182,10 @@ export default {
             detail: "Success Update Request",
             life:2000
           });
-          this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.loading = true;
-          this.getIct();
+          this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getIct();
+          });
         },
         reject: () => {},
       });
@@ -1186,9 +1205,10 @@ export default {
             detail: "Success Update Request",
             life:2000
           });
-          this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.loading = true;
-          this.getIct();
+          this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getIct();
+          });
         },
         reject: () => {},
       });

@@ -98,63 +98,63 @@ __webpack_require__.r(__webpack_exports__);
     },
     blmDiverifikasiAdmin: function blmDiverifikasiAdmin() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 23);
+      localStorage.setItem('desc', 23);
     },
     sdhDiverifikasiAdmin: function sdhDiverifikasiAdmin() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 24);
+      localStorage.setItem('desc', 24);
     },
     diRejectAdmin: function diRejectAdmin() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 25);
+      localStorage.setItem('desc', 25);
     },
     sdgDikerjakanAdmin: function sdgDikerjakanAdmin() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 26);
+      localStorage.setItem('desc', 26);
     },
     sdhDikerjakanAdmin: function sdhDikerjakanAdmin() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 27);
+      localStorage.setItem('desc', 27);
     },
     sdhSelesaiAdmin: function sdhSelesaiAdmin() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 28);
+      localStorage.setItem('desc', 28);
     },
     totalKeseluruhanAdmin: function totalKeseluruhanAdmin() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 29);
+      localStorage.setItem('desc', 29);
     },
     sdgDireview: function sdgDireview() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 40);
+      localStorage.setItem('desc', 40);
     },
     blmDiverifikasi: function blmDiverifikasi() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 1);
+      localStorage.setItem('desc', 1);
     },
     sdhDiverifikasi: function sdhDiverifikasi() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 2);
+      localStorage.setItem('desc', 2);
     },
     diReject: function diReject() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 3);
+      localStorage.setItem('desc', 3);
     },
     sdgDikerjakan: function sdgDikerjakan() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 4);
+      localStorage.setItem('desc', 4);
     },
     sdhDikerjakan: function sdhDikerjakan() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 5);
+      localStorage.setItem('desc', 5);
     },
     sdhSelesai: function sdhSelesai() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 6);
+      localStorage.setItem('desc', 6);
     },
     totalKeseluruhan: function totalKeseluruhan() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 22);
+      localStorage.setItem('desc', 22);
     },
     //dashboard approval user
     getData1: function getData1() {
@@ -172,39 +172,39 @@ __webpack_require__.r(__webpack_exports__);
     },
     sdgDireview1: function sdgDireview1() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 41);
+      localStorage.setItem('desc', 41);
     },
     blmDiverifikasi1: function blmDiverifikasi1() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 7);
+      localStorage.setItem('desc', 7);
     },
     sdhDiverifikasi1: function sdhDiverifikasi1() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 8);
+      localStorage.setItem('desc', 8);
     },
     diReject1: function diReject1() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 9);
+      localStorage.setItem('desc', 9);
     },
     penugasanRequest1: function penugasanRequest1() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 45);
+      localStorage.setItem('desc', 45);
     },
     sdgDikerjakan1: function sdgDikerjakan1() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 10);
+      localStorage.setItem('desc', 10);
     },
     sdhDikerjakan1: function sdhDikerjakan1() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 11);
+      localStorage.setItem('desc', 11);
     },
     sdhSelesai1: function sdhSelesai1() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 12);
+      localStorage.setItem('desc', 12);
     },
     totalRequest1: function totalRequest1() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 38);
+      localStorage.setItem('desc', 38);
     },
     getDataBentu: function getDataBentu() {
       var _this4 = this;
@@ -247,39 +247,39 @@ __webpack_require__.r(__webpack_exports__);
     },
     atasanDivisi2: function atasanDivisi2() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 30);
+      localStorage.setItem('desc', 30);
     },
     IctManager2: function IctManager2() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 31);
+      localStorage.setItem('desc', 31);
     },
     direject2: function direject2() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 32);
+      localStorage.setItem('desc', 32);
     },
     blmDiassign2: function blmDiassign2() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 13);
+      localStorage.setItem('desc', 13);
     },
     penugasanRequest2: function penugasanRequest2() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 43);
+      localStorage.setItem('desc', 43);
     },
     sdgDikerjakan2: function sdgDikerjakan2() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 14);
+      localStorage.setItem('desc', 14);
     },
     sdhDikerjakan2: function sdhDikerjakan2() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 15);
+      localStorage.setItem('desc', 15);
     },
     sdhSelesai2: function sdhSelesai2() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 16);
+      localStorage.setItem('desc', 16);
     },
     totalRequest2: function totalRequest2() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 37);
+      localStorage.setItem('desc', 37);
     },
     getData3: function getData3() {
       var _this7 = this;
@@ -296,23 +296,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     penugasanRequest3: function penugasanRequest3() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 46);
+      localStorage.setItem('desc', 46);
     },
     diReject3: function diReject3() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 47);
+      localStorage.setItem('desc', 47);
     },
     blmSelesai3: function blmSelesai3() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 17);
+      localStorage.setItem('desc', 17);
     },
     sdHDikerjakan3: function sdHDikerjakan3() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 18);
+      localStorage.setItem('desc', 18);
     },
     sdhSelesai3: function sdhSelesai3() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 19);
+      localStorage.setItem('desc', 19);
     },
     getData4: function getData4() {
       var _this8 = this;
@@ -329,39 +329,39 @@ __webpack_require__.r(__webpack_exports__);
     },
     sdgDireview4: function sdgDireview4() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 42);
+      localStorage.setItem('desc', 42);
     },
     blmDiverifikasi4: function blmDiverifikasi4() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 33);
+      localStorage.setItem('desc', 33);
     },
     sdhDiverifikasi4: function sdhDiverifikasi4() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 34);
+      localStorage.setItem('desc', 34);
     },
     direject4: function direject4() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 35);
+      localStorage.setItem('desc', 35);
     },
     penugasanRequest4: function penugasanRequest4() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 44);
+      localStorage.setItem('desc', 44);
     },
     sdgdikerjakan4: function sdgdikerjakan4() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 36);
+      localStorage.setItem('desc', 36);
     },
     sdHDikerjakan4: function sdHDikerjakan4() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 20);
+      localStorage.setItem('desc', 20);
     },
     sdhSelesai4: function sdhSelesai4() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 21);
+      localStorage.setItem('desc', 21);
     },
     totalRequest4: function totalRequest4() {
       this.$router.push('/ict-request-desc');
-      localStorage.setItem('active', 39);
+      localStorage.setItem('desc', 39);
     },
     getData5: function getData5() {
       var _this9 = this;

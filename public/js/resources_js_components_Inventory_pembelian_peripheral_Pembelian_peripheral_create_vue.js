@@ -20,7 +20,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return _ref = {
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id'),
       errors: [],
       suplier: [],
       code_money: [],
@@ -45,7 +44,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         input: 'DD MMM YYYY'
       },
       token: localStorage.getItem('token')
-    }, _defineProperty(_ref, "checkname", []), _defineProperty(_ref, "ceckto", []), _defineProperty(_ref, "id", localStorage.getItem('id')), _ref;
+    }, _defineProperty(_ref, "checkname", []), _defineProperty(_ref, "ceckto", []), _ref;
   },
   mounted: function mounted() {
     this.cekUser();
@@ -54,29 +53,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.petugas = localStorage.getItem('usr_name');
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
-            _this.getSupplier();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
+        });
+
+        if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
+          _this.getSupplier();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     getSupplier: function getSupplier() {
       var _this2 = this;
@@ -89,6 +83,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.suplier = response.data.supp;
         _this2.methode_pay = response.data.metode;
         _this2.code_money = response.data.uang;
+        _this2.petugas = response.data.user;
       });
     },
     CreatePurch: function CreatePurch() {

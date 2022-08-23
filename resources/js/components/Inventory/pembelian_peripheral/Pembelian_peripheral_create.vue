@@ -156,7 +156,6 @@ export default {
     return {
       checkname : [],
       checkto : [],
-      id : localStorage.getItem('id'),
       errors: [],
       suplier:[],
       code_money:[],
@@ -180,7 +179,6 @@ export default {
       token: localStorage.getItem('token'),
       checkname : [],
       ceckto : [],
-      id : localStorage.getItem('id'),
     };
   },
   mounted(){
@@ -188,9 +186,7 @@ export default {
   },
   methods: {
     cekUser(){
-      if(this.id){
-      this.petugas = localStorage.getItem('usr_name');
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){ 
@@ -200,16 +196,14 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getSupplier(){
-        this.axios.get('api/rsrcsuppo',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.suplier = response.data.supp;
-            this.methode_pay = response.data.metode;
-            this.code_money = response.data.uang;
-        });
+      this.axios.get('api/rsrcsuppo',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.suplier = response.data.supp;
+        this.methode_pay = response.data.metode;
+        this.code_money = response.data.uang;
+        this.petugas = response.data.user;
+      });
     },
     CreatePurch() {
       this.submitted=true;

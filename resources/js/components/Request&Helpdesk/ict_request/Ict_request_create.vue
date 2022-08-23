@@ -174,7 +174,6 @@ export default {
       token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
-      id : localStorage.getItem('id'),
       code: null,
       // user:[],
     };
@@ -186,23 +185,6 @@ export default {
       this.getType();
   },
   methods: {
-    // cekUser(){
-    //   if(this.id){
-    //   this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-    //     this.checkto = response.data.map((x)=> x.to)
-    //     this.checkname = response.data.map((x)=> x.name)
-    //     if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-    //       // this.getUser();
-    //       this.getType();
-    //     }
-    //     else {
-    //       this.$router.push('/access');
-    //     }
-    //   });
-    //   } else {
-    //     this.$router.push('/login');
-    //   }
-    // },
     getDivision(){
       this.axios.get('api/get-division-user/'+this.bisnis, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.divisi = response.data;

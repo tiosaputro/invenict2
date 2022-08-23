@@ -4,13 +4,13 @@
       <div class="card">
         <Toast />
         <ConfirmDialog/> 
-        <Toolbar class="mb-4" v-if="this.active == 1">
+        <Toolbar class="mb-4" v-if="this.desc == 1">
           <template v-slot:start>
                 <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 1"
+          v-if="this.desc == 1"
           :value="ict"
           :paginator="true"
           :rows="10"
@@ -23,15 +23,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -98,13 +98,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 2">
+        <Toolbar class="mb-4" v-if="this.desc == 2">
           <template v-slot:start>
                 <h4>ICT Request (Already verified)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 2"
+          v-if="this.desc == 2"
           :value="sdhDiverifikasi"
           :paginator="true"
           :rows="10"
@@ -117,15 +117,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -174,13 +174,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 3">
+        <Toolbar class="mb-4" v-if="this.desc == 3">
           <template v-slot:start>
                 <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 3"
+          v-if="this.desc == 3"
           :value="diReject"
           :paginator="true"
           :rows="10"
@@ -193,15 +193,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -251,13 +251,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 4">
+        <Toolbar class="mb-4" v-if="this.desc == 4">
           <template v-slot:start>
                 <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 4"
+          v-if="this.desc == 4"
           :value="sdgDikerjakan"
           :paginator="true"
           :rows="10"
@@ -328,13 +328,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 5">
+        <Toolbar class="mb-4" v-if="this.desc == 5">
           <template v-slot:start>
                 <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 5"
+          v-if="this.desc == 5"
           :value="sdhDikerjakan"
           :paginator="true"
           :rows="10"
@@ -347,15 +347,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -410,13 +410,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 6">
+        <Toolbar class="mb-4" v-if="this.desc == 6">
           <template v-slot:start>
 			      <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 6"
+          v-if="this.desc == 6"
           :value="sdhSelesai"
           :paginator="true"
           :rows="10"
@@ -429,15 +429,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -492,13 +492,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 7">
+        <Toolbar class="mb-4" v-if="this.desc == 7">
           <template v-slot:start>
 			      <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 7"
+          v-if="this.desc == 7"
           :value="permohonan"
           :paginator="true"
           :rows="10"
@@ -511,15 +511,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -575,13 +575,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 8">
+        <Toolbar class="mb-4" v-if="this.desc == 8">
           <template v-slot:start>
                 <h4>ICT Request (Already verified)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 8"
+          v-if="this.desc == 8"
           :value="verif"
           :paginator="true"
           :rows="10"
@@ -594,15 +594,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -651,13 +651,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 9">
+        <Toolbar class="mb-4" v-if="this.desc == 9">
           <template v-slot:start>
                 <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 9"
+          v-if="this.desc == 9"
           :value="reject"
           :paginator="true"
           :rows="10"
@@ -670,15 +670,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -728,13 +728,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 10">
+        <Toolbar class="mb-4" v-if="this.desc == 10">
           <template v-slot:start>
                 <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 10"
+          v-if="this.desc == 10"
           :value="sedangDikerjakan"
           :paginator="true"
           :rows="10"
@@ -747,15 +747,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -805,13 +805,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 11">
+        <Toolbar class="mb-4" v-if="this.desc == 11">
           <template v-slot:start>
                 <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 11"
+          v-if="this.desc == 11"
           :value="sudahDikerjakan"
           :paginator="true"
           :rows="10"
@@ -824,15 +824,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -887,13 +887,13 @@
           </div>
         </template>
         </DataTable> 
-        <Toolbar class="mb-4" v-if="this.active == 12">
+        <Toolbar class="mb-4" v-if="this.desc == 12">
           <template v-slot:start>
                 <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 12"
+          v-if="this.desc == 12"
           :value="selesai"
           :paginator="true"
           :rows="10"
@@ -906,15 +906,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -969,13 +969,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 13">
+        <Toolbar class="mb-4" v-if="this.desc == 13">
           <template v-slot:start>
                 <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 13"
+          v-if="this.desc == 13"
           :value="blmDiverifikasi"
           :paginator="true"
           :rows="10"
@@ -988,15 +988,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1018,10 +1018,10 @@
               <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
-          <Column style="min-width:60rem">
+          <Column style="min-width:25rem">
             <template #body="slotProps">
               <Button
-                class="p-button-rounded p-button-sm p-button-secondary mr-2"
+                class="p-button-rounded p-button-secondary mr-2 mt-2"
                 icon="pi pi-info-circle"
                 v-tooltip.bottom="'Click for request details'"
                 @click="$router.push({
@@ -1030,44 +1030,51 @@
               />
               <Button
                 v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                class="p-button-raised p-button-sm p-button-danger p-button-text mr-2"
+                class="p-button-rounded p-button-danger mr-2 mt-2"
                 @click="Reject(slotProps.data.ireq_id)"
-                label="Reject"
+                v-tooltip.bottom="'Click to reject request'"
+                icon="bi bi-x-square"
               />
               <Button
-                class="p-button-raised p-button-text p-button-sm mr-2"
+                v-tooltip.bottom="'Click to add remark'"
                 @click="RemarkReviewer(slotProps.data.ireq_id)"
-                label="Remark"
+                icon="bi bi-chat-quote"
+                class="p-button-rounded p-button mr-2 mt-2"
               />
               <Button
                 v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                class="p-button-raised p-button-sm p-button-text"
+                class="p-button-rounded mr-2 mt-2"
                 @click="ApproveAtasan(slotProps.data.ireq_id)"
-                label="Higher Level Approval"
+                icon="bi bi-file-earmark-arrow-up"
+                v-tooltip.bottom="'Click to higher level approval'"
               />
               <Button
                 v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                class="p-button-raised p-button-sm p-button-text"
+                class="p-button-rounded mr-2 mt-2"
                 @click="ApproveManager(slotProps.data.ireq_id)"
-                label="ICT Manager Approval"
+                v-tooltip.bottom="'Click to ICT manager approval'"
+                icon="bi bi-file-earmark-arrow-up-fill"
               />
               <Button
-                class="p-button-raised p-button-sm p-button-text p-button-sm mt-2"
+                class="p-button-rounded mr-2 mt-2"
                 @click="AssignPerRequest(slotProps.data.ireq_id)"
-                label="Assign Per-Request"
+                icon="bi bi-person-workspace"
+                v-tooltip.bottom="'Click to Assign Per Request'"
               />
               <Button
-                class="p-button-raised p-button-sm p-button-text p-button-sm mt-2"
+                class="p-button-rounded mr-2 mt-2"
                 @click="$router.push({
                   name: 'Ict Request Desc Assign Per Detail',
                   params : {code: slotProps.data.ireq_id},})"
-                label="Assign Per-Detail"
+                icon="bi bi-people"
+                v-tooltip.bottom="'Click to Assign Per Detail'"
               />
               <Button
                 v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id"
-                class="p-button-raised p-button-text p-button-sm p-button-sm mr-2"
+                class="p-button-rounded p-button-success mr-2 mt-2"
                 @click="Submit(slotProps.data.ireq_id)"
-                label="Submit"
+                icon="bi bi-send-check"
+                v-tooltip.bottom="'Click to submit'"
               />
             </template>
           </Column>
@@ -1087,13 +1094,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 14">
+        <Toolbar class="mb-4" v-if="this.desc == 14">
           <template v-slot:start>
                 <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 14"
+          v-if="this.desc == 14"
           :value="sudahDiassign"
           :paginator="true"
           :rows="10"
@@ -1106,15 +1113,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1165,13 +1172,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 15">
+        <Toolbar class="mb-4" v-if="this.desc == 15">
           <template v-slot:start>
                 <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 15"
+          v-if="this.desc == 15"
           :value="sudahDikerjakann"
           :paginator="true"
           :rows="10"
@@ -1184,15 +1191,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1211,17 +1218,17 @@
           <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
-        <Column header="Attachment" style="min-width:10rem">
-          <template #body="slotProps">
-            <p v-if="slotProps.data.ireq_attachment == null"></p>
-            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-              <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
-            </p>
-            <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
-            </p>
-          </template>  
-        </Column>
+          <Column header="Attachment" style="min-width:10rem">
+            <template #body="slotProps">
+              <p v-if="slotProps.data.ireq_attachment == null"></p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+              </p>
+              <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
+                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              </p>
+            </template>  
+          </Column>
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
@@ -1257,13 +1264,13 @@
           </div>
         </template>
         </DataTable> 
-        <Toolbar class="mb-4" v-if="this.active == 16">
+        <Toolbar class="mb-4" v-if="this.desc == 16">
           <template v-slot:start>
                 <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 16"
+          v-if="this.desc == 16"
           :value="sudahslsi"
           :paginator="true"
           :rows="10"
@@ -1339,13 +1346,13 @@
           </div>
         </template>
         </DataTable>   
-        <Toolbar class="mb-4" v-if="this.active == 46">
+        <Toolbar class="mb-4" v-if="this.desc == 46">
           <template v-slot:start>
                 <h4>ICT Request (Assignment Request)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 46"
+          v-if="this.desc == 46"
           :value="assignmentRequest3"
           :paginator="true"
           :rows="10"
@@ -1358,15 +1365,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1399,13 +1406,13 @@
           </div>
         </template>
         </DataTable>  
-        <Toolbar class="mb-4" v-if="this.active == 47">
+        <Toolbar class="mb-4" v-if="this.desc == 47">
           <template v-slot:start>
                 <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 47"
+          v-if="this.desc == 47"
           :value="rejected3"
           :paginator="true"
           :rows="10"
@@ -1418,15 +1425,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1476,13 +1483,13 @@
           </div>
         </template>
         </DataTable>  
-        <Toolbar class="mb-4" v-if="this.active == 17">
+        <Toolbar class="mb-4" v-if="this.desc == 17">
           <template v-slot:start>
                 <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 17"
+          v-if="this.desc == 17"
           :value="sedngDikerjakan"
           :paginator="true"
           :rows="10"
@@ -1495,15 +1502,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1579,13 +1586,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 18">
+        <Toolbar class="mb-4" v-if="this.desc == 18">
           <template v-slot:start>
                 <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 18"
+          v-if="this.desc == 18"
           :value="sudhDikerjakan"
           :paginator="true"
           :rows="10"
@@ -1598,15 +1605,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1657,13 +1664,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 19">
+        <Toolbar class="mb-4" v-if="this.desc == 19">
           <template v-slot:start>
                 <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 19"
+          v-if="this.desc == 19"
           :value="selesaiii"
           :paginator="true"
           :rows="10"
@@ -1676,15 +1683,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1739,13 +1746,13 @@
           </div>
         </template>
         </DataTable>     
-        <Toolbar class="mb-4" v-if="this.active == 20">
+        <Toolbar class="mb-4" v-if="this.desc == 20">
           <template v-slot:start>
                 <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 20"
+          v-if="this.desc == 20"
           :value="sdHDikerjakan4"
           :paginator="true"
           :rows="10"
@@ -1758,15 +1765,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1825,13 +1832,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 21">
+        <Toolbar class="mb-4" v-if="this.desc == 21">
           <template v-slot:start>
                 <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 21"
+          v-if="this.desc == 21"
           :value="selesai4"
           :paginator="true"
           :rows="10"
@@ -1844,15 +1851,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1906,13 +1913,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 22">
+        <Toolbar class="mb-4" v-if="this.desc == 22">
           <template v-slot:start>
                 <h4>ICT Request (Overall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 22"
+          v-if="this.desc == 22"
           :value="total"
           :paginator="true"
           :rows="10"
@@ -1925,15 +1932,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -1982,13 +1989,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 23">
+        <Toolbar class="mb-4" v-if="this.desc == 23">
           <template v-slot:start>
                 <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 23"
+          v-if="this.desc == 23"
           :value="ictAdmin"
           :paginator="true"
           :rows="10"
@@ -2001,15 +2008,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2071,13 +2078,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 24">
+        <Toolbar class="mb-4" v-if="this.desc == 24">
           <template v-slot:start>
                 <h4>ICT Request (Already verified)</h4>
           </template>
         </Toolbar>   
         <DataTable
-          v-if="this.active == 24"
+          v-if="this.desc == 24"
           :value="sdhDiverifikasiAdmin"
           :paginator="true"
           :rows="10"
@@ -2090,15 +2097,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2143,13 +2150,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 25">
+        <Toolbar class="mb-4" v-if="this.desc == 25">
           <template v-slot:start>
                 <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 25"
+          v-if="this.desc == 25"
           :value="diRejectAdmin"
           :paginator="true"
           :rows="10"
@@ -2162,15 +2169,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2215,13 +2222,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 26">
+        <Toolbar class="mb-4" v-if="this.desc == 26">
           <template v-slot:start>
                 <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 26"
+          v-if="this.desc == 26"
           :value="sdgDikerjakanAdmin"
           :paginator="true"
           :rows="10"
@@ -2286,13 +2293,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 27">
+        <Toolbar class="mb-4" v-if="this.desc == 27">
           <template v-slot:start>
                 <h4>ICT Request (Done)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 27"
+          v-if="this.desc == 27"
           :value="sdhDikerjakanAdmin"
           :paginator="true"
           :rows="10"
@@ -2363,13 +2370,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 28">
+        <Toolbar class="mb-4" v-if="this.desc == 28">
           <template v-slot:start>
 			      <h4>ICT Request (Close)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 28"
+          v-if="this.desc == 28"
           :value="sdhSelesaiAdmin"
           :paginator="true"
           :rows="10"
@@ -2382,15 +2389,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
           Not Found
@@ -2440,13 +2447,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 29">
+        <Toolbar class="mb-4" v-if="this.desc == 29">
           <template v-slot:start>
                 <h4>ICT Request (Overall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 29"
+          v-if="this.desc == 29"
           :value="totalAdmin"
           :paginator="true"
           :rows="10"
@@ -2459,15 +2466,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2516,13 +2523,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 30">
+        <Toolbar class="mb-4" v-if="this.desc == 30">
           <template v-slot:start>
                 <h4>ICT Request (Higher Level)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 30"
+          v-if="this.desc == 30"
           :value="atasanDivisi"
           :paginator="true"
           :rows="10"
@@ -2535,15 +2542,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2570,10 +2577,10 @@
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
-          <Column headerStyle="min-width:35rem">
+          <Column headerStyle="min-width:20rem">
           <template #body="slotProps">
             <Button
-              class="p-button-rounded p-button-secondary mr-2"
+              class="p-button-rounded p-button-secondary mr-2 mt-2"
               icon="pi pi-info-circle"
                 v-tooltip.bottom="'Click for request details'"
               @click="$router.push({
@@ -2581,35 +2588,40 @@
                 params: { code: slotProps.data.ireq_id }, })"
             />
             <Button
-                class="p-button-raised p-button-text p-button-sm mr-2"
+                icon="bi bi-chat-quote"
+                class="p-button-rounded p-button mr-2 mt-2"
                 @click="RemarkReviewer(slotProps.data.ireq_id)"
-                label="Remark"
+                v-tooltip.bottom="'Click to add remark'"
               />
             <Button
               v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'Sudah Diapprove Atasan'"
-              class="p-button-raised p-button-text p-button-sm mr-2"
+              class="p-button-rounded mr-2 mt-2"
               @click="ApproveManager(slotProps.data.ireq_id)"
-              label="ICT Manager Approval"
+              v-tooltip.bottom="'Click to ICT manager approval'"
+              icon="bi bi-file-earmark-arrow-up-fill"
             />
             <Button
               v-if="slotProps.data.status == 'A1'"
-              class="p-button-raised p-button-text p-button-sm mt-2"
+              class="p-button-rounded mr-2 mt-2"
               @click="AssignPerRequest(slotProps.data.ireq_id)"
-              label="Assign Per-Request"
+              icon="bi bi-person-workspace"
+              v-tooltip.bottom="'Click to Assign Per Request'"
             />
             <Button
               v-if="slotProps.data.status == 'A1'"
-              class="p-button-raised p-button-text p-button-sm mt-2"
+              class="p-button-rounded mr-2 mt-2"
               @click="$router.push({
                 name: 'Ict Request Desc Assign Per Detail',
                 params : {code: slotProps.data.ireq_id},})"
-              label="Assign Per-Detail"
+              icon="bi bi-people"
+              v-tooltip.bottom="'Click to Assign Per Detail'"
             />
             <Button
               v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.status == 'A1'"
-              class="p-button-raised p-button-text p-button-sm mr-2"
+              class="p-button-rounded p-button-success mr-2 mt-2"
               @click="Submit(slotProps.data.ireq_id)"
-              label="Submit"
+              icon="bi bi-send-check"
+              v-tooltip.bottom="'Click to submit'"
             />
           </template>
         </Column>
@@ -2629,13 +2641,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 31">
+        <Toolbar class="mb-4" v-if="this.desc == 31">
           <template v-slot:start>
                 <h4>ICT Request (ICT Manager)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 31"
+          v-if="this.desc == 31"
           :value="ictManager"
           :paginator="true"
           :rows="10"
@@ -2648,15 +2660,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2694,29 +2706,33 @@
                 params: { code: slotProps.data.ireq_id }, })"
             />
             <Button
-              class="p-button-raised p-button-text p-button-sm mr-2"
+              icon="bi bi-chat-quote"
+              class="p-button-rounded p-button mr-2 mt-2"
               @click="RemarkReviewer(slotProps.data.ireq_id)"
-              label="Remark"
+              v-tooltip.bottom="'Click to add remark'"
             /> 
             <Button
               v-if="slotProps.data.status == 'A2'"
-              class="p-button-raised p-button-text p-button-sm mt-2"
+              class="p-button-rounded mr-2 mt-2"
               @click="AssignPerRequest(slotProps.data.ireq_id)"
-              label="Assign Per-Request"
+              icon="bi bi-person-workspace"
+              v-tooltip.bottom="'Click to Assign Per Request'"
             />
             <Button
               v-if="slotProps.data.ireq_status == 'A2'"
-              class="p-button-raised p-button-text p-button-sm mt-2"
+              class="p-button-rounded mr-2 mt-2"
               @click="$router.push({
                 name: 'Ict Request Desc Assign Per Detail',
                 params : {code: slotProps.data.ireq_id},})"
-              label="Assign Per-Detail"
+              icon="bi bi-people"
+              v-tooltip.bottom="'Click to Assign Per Detail'"
             />
             <Button
               v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.ireq_status == 'A2'"
-              class="p-button-raised p-button-text p-button-sm mr-2"
+              class="p-button-rounded p-button-success mr-2 mt-2"
               @click="Submit(slotProps.data.ireq_id)"
-              label="Submit"
+              icon="bi bi-send-check"
+              v-tooltip.bottom="'Click to submit'"
             />
           </template>
          </Column>
@@ -2736,13 +2752,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 32">
+        <Toolbar class="mb-4" v-if="this.desc == 32">
           <template v-slot:start>
             <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 32"
+          v-if="this.desc == 32"
           :value="direject2"
           :paginator="true"
           :rows="10"
@@ -2813,13 +2829,13 @@
           </div>
         </template>
         </DataTable>
-         <Toolbar class="mb-4" v-if="this.active == 33">
+         <Toolbar class="mb-4" v-if="this.desc == 33">
           <template v-slot:start>
             <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 33"
+          v-if="this.desc == 33"
           :value="blmDiverifikasi4"
           :paginator="true"
           :rows="10"
@@ -2832,15 +2848,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2896,13 +2912,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 34">
+        <Toolbar class="mb-4" v-if="this.desc == 34">
           <template v-slot:start>
                 <h4>ICT Request (Already Verified)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 34"
+          v-if="this.desc == 34"
           :value="sdhDiverifikasi4"
           :paginator="true"
           :rows="10"
@@ -2915,15 +2931,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -2972,13 +2988,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 35">
+        <Toolbar class="mb-4" v-if="this.desc == 35">
           <template v-slot:start>
                 <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 35"
+          v-if="this.desc == 35"
           :value="direject4"
           :paginator="true"
           :rows="10"
@@ -2991,15 +3007,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -3049,13 +3065,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 36">
+        <Toolbar class="mb-4" v-if="this.desc == 36">
           <template v-slot:start>
                 <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 36"
+          v-if="this.desc == 36"
           :value="sdgDikerjakan4"
           :paginator="true"
           :rows="10"
@@ -3068,15 +3084,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -3121,13 +3137,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 37">
+        <Toolbar class="mb-4" v-if="this.desc == 37">
           <template v-slot:start>
                 <h4>ICT Request (Overhall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 37"
+          v-if="this.desc == 37"
           :value="totalRequest2"
           :paginator="true"
           :rows="10"
@@ -3140,15 +3156,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -3198,13 +3214,13 @@
           </div>
         </template>
         </DataTable>
-         <Toolbar class="mb-4" v-if="this.active == 38">
+         <Toolbar class="mb-4" v-if="this.desc == 38">
           <template v-slot:start>
                 <h4>ICT Request (Overhall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 38"
+          v-if="this.desc == 38"
           :value="totalRequest1"
           :paginator="true"
           :rows="10"
@@ -3217,15 +3233,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -3275,13 +3291,13 @@
           </div>
         </template>
         </DataTable>
-         <Toolbar class="mb-4" v-if="this.active == 39">
+         <Toolbar class="mb-4" v-if="this.desc == 39">
           <template v-slot:start>
                 <h4>ICT Request (Overhall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 39"
+          v-if="this.desc == 39"
           :value="totalRequest4"
           :paginator="true"
           :rows="10"
@@ -3294,15 +3310,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -3352,13 +3368,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 40">
+        <Toolbar class="mb-4" v-if="this.desc == 40">
           <template v-slot:start>
                 <h4>ICT Request (Under review)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 40"
+          v-if="this.desc == 40"
           :value="sedangDireview"
           :paginator="true"
           :rows="10"
@@ -3371,15 +3387,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -3428,13 +3444,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 41">
+        <Toolbar class="mb-4" v-if="this.desc == 41">
           <template v-slot:start>
               <h4>ICT Request (Under review)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 41"
+          v-if="this.desc == 41"
           :value="sedangDireview1"
           :paginator="true"
           :rows="10"
@@ -3447,15 +3463,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -3504,13 +3520,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 42">
+        <Toolbar class="mb-4" v-if="this.desc == 42">
           <template v-slot:start>
                 <h4>ICT Request (Under review)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 42"
+          v-if="this.desc == 42"
           :value="sedangDireview2"
           :paginator="true"
           :rows="10"
@@ -3523,15 +3539,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -3581,13 +3597,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 43">
+        <Toolbar class="mb-4" v-if="this.desc == 43">
           <template v-slot:start>
                 <h4>ICT Request (Assignment Request)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 43"
+          v-if="this.desc == 43"
           :value="penugasanRequest2"
           :paginator="true"
           :rows="10"
@@ -3600,15 +3616,15 @@
           responsiveLayout="scroll"
         >
         <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-             </div>
+          <div class="table-header text-right">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
         <template #empty>
             Not Found
@@ -3628,31 +3644,32 @@
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
-              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-            </template>
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+          </template>
         </Column>
-        <Column style="min-width:20rem">
+        <Column style="min-width:12rem">
           <template #body="slotProps">
             <Button
-              class="p-button-rounded p-button-secondary mr-2"
+              class="p-button-rounded mr-2 mt-2"
               icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click for request details'"
-              
+              v-tooltip.bottom="'Click for request details'"
               @click="$router.push({
                 name: 'Ict Request Reviewer Detail',
                 params: { code: slotProps.data.ireq_id }, })"
             />
             <Button
               v-if="slotProps.data.status == 'RT'"
-              class="p-button-raised p-button-text p-button-sm mt-2"
+              icon="bi bi-person-workspace"
+              class="p-button-rounded mr-2 mt-2"
               @click="AssignPerRequest(slotProps.data.ireq_id)"
-              label="Assign Per-Request"
+              v-tooltip.bottom="'Click to Assign Per Request'"
             />
             <Button
               v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.status == 'RT'"
-              class="p-button-raised p-button-text p-button-sm p-button-success mr-2"
+              class="p-button-rounded p-button-success mr-2 mt-2"
               @click="Submit(slotProps.data.ireq_id)"
-              label="Submit"
+              icon="bi bi-send-check"
+              v-tooltip.bottom="'Click to submit'"
             />
           </template>
         </Column>
@@ -3672,13 +3689,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 44">
+        <Toolbar class="mb-4" v-if="this.desc == 44">
           <template v-slot:start>
             <h4>ICT Request (Assignment Request)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 44"
+          v-if="this.desc == 44"
           :value="penugasanRequest4"
           :paginator="true"
           :rows="10"
@@ -3750,13 +3767,13 @@
           </div>
         </template>
         </DataTable>
-        <Toolbar class="mb-4" v-if="this.active == 45">
+        <Toolbar class="mb-4" v-if="this.desc == 45">
           <template v-slot:start>
             <h4>ICT Request (Assignment Request)</h4>
           </template>
         </Toolbar>
         <DataTable
-          v-if="this.active == 45"
+          v-if="this.desc == 45"
           :value="penugasanRequest1"
           :paginator="true"
           :rows="10"
@@ -4190,7 +4207,7 @@ export default {
         penugasanRequest2:[],
         direject2:[],
         dialogReject: false,
-        active : 1,
+        desc : 1,
         loading: true,
         token: localStorage.getItem('token'),
         ict: [],
@@ -4264,42 +4281,42 @@ export default {
     this.getActive();
   },
   methods: {
-    getDetail(ireq_attachment){
-       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
-         var myWindow = window.open(page, "_blank");
-         myWindow.focus();
-    },
+      getDetail(ireq_attachment){
+        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+          var myWindow = window.open(page, "_blank");
+          myWindow.focus();
+      },
       formatDate(date) {
         return moment(date).format("DD MMM YYYY HH:mm")
       },
       getActive(){
-        if(localStorage.getItem('active')){
-          this.active = localStorage.getItem('active');
-          if (this.active <= 6 || this.active == 40){
+        if(localStorage.getItem('desc')){
+          this.desc = localStorage.getItem('desc');
+          if (this.desc <= 6 || this.desc == 40){
               this.getIct();
           }
-          else if (this.active >= 7 && this.active <= 12 || this.active == 38 || this.active == 41 || this.active == 45){
+          else if (this.desc >= 7 && this.desc <= 12 || this.desc == 38 || this.desc == 41 || this.desc == 45){
             this.getIct2();
           } 
-          else if (this.active > 12 && this.active <=16 || this.active == 37|| this.active == 43){
+          else if (this.desc > 12 && this.desc <=16 || this.desc == 37|| this.desc == 43){
             this.getIct3();
           }
-          else if (this.active > 16 && this.active <=19 || this.active == 46 || this.active == 47){
+          else if (this.desc > 16 && this.desc <=19 || this.desc == 46 || this.desc == 47){
             this.getIct4();
           }
-          else if (this.active > 19 && this.active <=21 || this.active == 39 || this.active == 42){
+          else if (this.desc > 19 && this.desc <=21 || this.desc == 39 || this.desc == 42){
             this.getIct5();
           }
-          else if (this.active == 22){
+          else if (this.desc == 22){
             this.getIct6();
           }
-          else if (this.active > 22 && this.active <= 29){
+          else if (this.desc > 22 && this.desc <= 29){
             this.getIct7();
           }
-          else if (this.active > 29 && this.active <= 32){
+          else if (this.desc > 29 && this.desc <= 32){
             this.getIct3();
           }
-          else if (this.active > 32 && this.active <= 36 || this.active == 44){
+          else if (this.desc > 32 && this.desc <= 36 || this.desc == 44){
             this.getIct5();
           }
         }

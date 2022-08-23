@@ -19,7 +19,6 @@ __webpack_require__.r(__webpack_exports__);
       color: '1976D2',
       token: localStorage.getItem('token'),
       perStatus: {},
-      id: localStorage.getItem('id'),
       checkname: [],
       checkto: []
     };
@@ -36,28 +35,24 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-
-          if (_this.checkname.includes("Per Status") || _this.checkto.includes("/req-per-divisi-req-per-status")) {
-            _this.getTahun();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
+        });
+
+        if (_this.checkname.includes("Per Status") || _this.checkto.includes("/req-per-divisi-req-per-status")) {
+          _this.getTahun();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     getTahun: function getTahun() {
       var _this2 = this;

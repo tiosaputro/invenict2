@@ -201,7 +201,6 @@ export default {
         supps:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         displaySupp: false,
-        id : localStorage.getItem('id'),
         checkname : [],
         checkto : [],
     };
@@ -211,8 +210,7 @@ export default {
   },
   methods: {
     cekUser(){
-      if(this.id){
-      this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Suplier") || this.checkto.includes("/referensi-supplier")){
@@ -222,9 +220,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     CetakPdf(){
        window.open("api/report-supplier-pdf");

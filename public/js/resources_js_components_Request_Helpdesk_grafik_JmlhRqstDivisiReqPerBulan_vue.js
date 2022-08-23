@@ -34,8 +34,7 @@ __webpack_require__.r(__webpack_exports__);
       tahunnnn: [],
       bulan: [],
       checkname: [],
-      checkto: [],
-      id: localStorage.getItem('id')
+      checkto: []
     };
   },
   watch: {
@@ -50,28 +49,24 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      if (this.id) {
-        this.axios.get('api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-          _this.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-
-          if (_this.checkname.includes("Divisi Requestor Per Bulan") || _this.checkto.includes("/req-per-divisi-req-per-bulan")) {
-            _this.getBulan();
-          } else {
-            _this.$router.push('/access');
-          }
+      this.axios.get('api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this.checkname = response.data.map(function (x) {
+          return x.name;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this.checkto = response.data.map(function (x) {
+          return x.to;
+        });
+
+        if (_this.checkname.includes("Divisi Requestor Per Bulan") || _this.checkto.includes("/req-per-divisi-req-per-bulan")) {
+          _this.getBulan();
+        } else {
+          _this.$router.push('/access');
+        }
+      });
     },
     getTahunRequestor: function getTahunRequestor() {
       var _this2 = this;

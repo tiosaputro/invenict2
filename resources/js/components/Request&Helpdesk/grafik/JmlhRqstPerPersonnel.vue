@@ -21,7 +21,6 @@ export default {
             token: localStorage.getItem('token'),
             statusPerIctPersonnel:{},
             date: new Date(),
-            id : localStorage.getItem('id'),
             checkname : [],
             checkto : []
         };
@@ -36,8 +35,7 @@ export default {
     },
     methods: {
         cekUser(){
-        if(this.id){
-        this.axios.get('api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Per Personnel") || this.checkto.includes("/req-per-personnel")){
@@ -47,9 +45,6 @@ export default {
             this.$router.push('/access');
             }
         });
-      } else {
-        this.$router.push('/login');
-      }
         },
         getPersonnel(){
             this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

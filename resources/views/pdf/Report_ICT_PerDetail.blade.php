@@ -482,9 +482,10 @@
                         </div>
                 </div>
                 @php 
-                    $linkRequester = "http://172.25.1.125:8000/check-requester/{$link->link_id}"; 
-                    $linkIctManager = "http://172.25.1.125:8000/check-ict-manager/{$link->link_id}"; 
-                    $linkHigherLevel = "http://172.25.1.125:8000/check-higher-level/{$link->link_id}"; 
+                    $appname = env('APP_URL');
+                    $linkRequester = "$appaname/check-requester/{$link->link_id}"; 
+                    $linkIctManager = "$appaname/check-ict-manager/{$link->link_id}"; 
+                    $linkHigherLevel = "$appaname/check-higher-level/{$link->link_id}"; 
                 @endphp
                 <div class="wrap">
                     <div class="cell-wrap left">

@@ -155,7 +155,6 @@ export default {
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
         tes:[],
         ireq:[]
     };
@@ -170,8 +169,7 @@ export default {
          myWindow.focus();
     },
     cekUser(){
-      if(this.id){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
@@ -182,9 +180,6 @@ export default {
           this.$router.push('/access');
         }
       });
-      } else {
-        this.$router.push('/login');
-      }
     },
     getIctDetail(){
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
@@ -228,7 +223,8 @@ export default {
             life: 3000,
           });
           this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code, {headers: {'Authorization': 'Bearer '+this.token}});
-        this.getIctDetail();
+          this.loading = true;
+          this.getIctDetail();
         },
         reject: () => {},
       });
@@ -264,33 +260,6 @@ export default {
           this.loading = false;
        });
     },
-    // CetakExcel(){
-    //   window.open('/api/report-ict-detail-excel/' +this.code);
-    // },
-    // CetakPdfReject(){
-    //   window.open('/api/print-out-ict-request/' +this.code);
-    // },
-    // CetakExcelReject(){
-    //   window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
-    // },
-    // CetakPdfTabReviewer(){
-    //   window.open('/api/report-ict-detail-pdf-tab-reviewer/' +this.code);
-    // },
-    // CetakExcelTabReviewer(){
-    //   window.open('/api/report-ict-detail-excel-tab-reviewer/' +this.code);
-    // },
-    // CetakPdfTabVerifikasi(){
-    //   window.open('/api/report-ict-detail-pdf-tab-verifikasi/' +this.code);
-    // },
-    // CetakExcelTabVerifikasi(){
-    //   window.open('/api/report-ict-detail-excel-tab-verifikasi/' +this.code);
-    // },
-    // CetakPdfTabSedangDikerjakan(){
-    //   window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' +this.code);
-    // },
-    // CetakExcelTabSedangDikerjakan(){
-    //   window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' +this.code);
-    // },
   },
 };
 </script>

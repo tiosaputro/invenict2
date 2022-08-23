@@ -33,7 +33,6 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id'),
       cekTipeReq: ''
     };
   },
@@ -159,33 +158,111 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
         }
+      } else {
+        if (this.tipereq == 'P') {
+          if (this.kode != null && this.tipereq != null && this.tipereq != 'null') {
+            var _data2 = new FormData();
+
+            _data2.append("invent_code", this.kode);
+
+            _data2.append("qty", this.qty);
+
+            _data2.append("ket", this.ket);
+
+            _data2.append("tipereq", this.tipereq);
+
+            this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data2, {
+              headers: {
+                'Authorization': 'Bearer ' + this.token,
+                'content-type': 'multipart/form-data'
+              }
+            }).then(function () {
+              _this.$toast.add({
+                severity: "success",
+                summary: "Success Message",
+                detail: "Success Create",
+                life: 500
+              });
+
+              setTimeout(function () {
+                return _this.kode = null;
+              }, _this.desk = '', _this.qty = null, _this.ket = '', _this.preview = '', _this.$refs.fileInput.value = '', _this.pdf = false, _this.image = false, 1000);
+            })["catch"](function (error) {
+              _this.errors = error.response.data.errors;
+            });
+          } else {
+            if (this.kode == null) {
+              this.error.kode = "Peripheral not filled";
+            }
+
+            if (this.tipereq == null) {
+              this.error.tipereq = "Request Type not filled";
+            }
+
+            if (this.tipereq == 'null') {
+              this.error.tipereq = "Request Type not filled";
+            }
+          }
+        } else {
+          if (this.tipereq != null && this.tipereq != 'null') {
+            var _data3 = new FormData();
+
+            _data3.append("ket", this.ket);
+
+            _data3.append("tipereq", this.tipereq);
+
+            this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data3, {
+              headers: {
+                'Authorization': 'Bearer ' + this.token,
+                'content-type': 'multipart/form-data'
+              }
+            }).then(function () {
+              _this.$toast.add({
+                severity: "success",
+                summary: "Success Message",
+                detail: "Success Create",
+                life: 500
+              });
+
+              setTimeout(function () {
+                return _this.desk = '';
+              }, _this.ket = '', _this.preview = '', _this.pdf = false, _this.image = false, _this.$refs.fileInput.value = null, 1000);
+            })["catch"](function (error) {
+              _this.errors = error.response.data.errors;
+            });
+          } else {
+            if (this.tipereq == null) {
+              this.error.tipereq = "Request Type not filled";
+            }
+
+            if (this.tipereq == 'null') {
+              this.error.tipereq = "Request Type not filled";
+            }
+          }
+        }
       }
     },
     cekUser: function cekUser() {
       var _this2 = this;
 
-      if (this.id) {
-        this.axios.get('/api/cek-user/' + this.id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
-          _this2.checkto = response.data.map(function (x) {
-            return x.to;
-          });
-          _this2.checkname = response.data.map(function (x) {
-            return x.name;
-          });
-
-          if (_this2.checkname.includes("Request") || _this2.checkto.includes("/ict-request")) {
-            _this2.getNoreq();
-          } else {
-            _this2.$router.push('/access');
-          }
+      this.axios.get('/api/cek-user', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this2.checkto = response.data.map(function (x) {
+          return x.to;
         });
-      } else {
-        this.$router.push('/login');
-      }
+        _this2.checkname = response.data.map(function (x) {
+          return x.name;
+        });
+
+        if (_this2.checkname.includes("Request") || _this2.checkto.includes("/ict-request")) {
+          _this2.getNoreq();
+        } else {
+          _this2.$router.push('/access');
+        }
+      });
     },
     getNoreq: function getNoreq() {
       var _this3 = this;
@@ -279,15 +356,15 @@ __webpack_require__.r(__webpack_exports__);
             }
           } else {
             if (this.tipereq != null && this.tipereq != 'null') {
-              var _data2 = new FormData();
+              var _data4 = new FormData();
 
-              _data2.append("file", this.foto);
+              _data4.append("file", this.foto);
 
-              _data2.append("ket", this.ket);
+              _data4.append("ket", this.ket);
 
-              _data2.append("tipereq", this.tipereq);
+              _data4.append("tipereq", this.tipereq);
 
-              this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data2, {
+              this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data4, {
                 headers: {
                   'Authorization': 'Bearer ' + this.token,
                   'content-type': 'multipart/form-data'
@@ -313,6 +390,86 @@ __webpack_require__.r(__webpack_exports__);
               if (this.tipereq == 'null') {
                 this.error.tipereq = "Request Type not filled";
               }
+            }
+          }
+        }
+      } else {
+        if (this.tipereq == 'P') {
+          if (this.kode != null && this.tipereq != null && this.tipereq != 'null') {
+            var _data5 = new FormData();
+
+            _data5.append("invent_code", this.kode);
+
+            _data5.append("qty", this.qty);
+
+            _data5.append("ket", this.ket);
+
+            _data5.append("tipereq", this.tipereq);
+
+            this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data5, {
+              headers: {
+                'Authorization': 'Bearer ' + this.token,
+                'content-type': 'multipart/form-data'
+              }
+            }).then(function () {
+              _this5.$toast.add({
+                severity: "success",
+                summary: "Success Message",
+                detail: "Success Create"
+              });
+
+              setTimeout(function () {
+                return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
+              }, 1000);
+            })["catch"](function (error) {
+              _this5.errors = error.response.data.errors;
+            });
+          } else {
+            if (this.kode == null) {
+              this.error.kode = "Peripheral not filled";
+            }
+
+            if (this.tipereq == null) {
+              this.error.tipereq = "Request Type not filled";
+            }
+
+            if (this.tipereq == 'null') {
+              this.error.tipereq = "Request Type not filled";
+            }
+          }
+        } else {
+          if (this.tipereq != null && this.tipereq != 'null') {
+            var _data6 = new FormData();
+
+            _data6.append("ket", this.ket);
+
+            _data6.append("tipereq", this.tipereq);
+
+            this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data6, {
+              headers: {
+                'Authorization': 'Bearer ' + this.token,
+                'content-type': 'multipart/form-data'
+              }
+            }).then(function () {
+              _this5.$toast.add({
+                severity: "success",
+                summary: "Success Message",
+                detail: "Success Create"
+              });
+
+              setTimeout(function () {
+                return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
+              }, 1000);
+            })["catch"](function (error) {
+              _this5.errors = error.response.data.errors;
+            });
+          } else {
+            if (this.tipereq == null) {
+              this.error.tipereq = "Request Type not filled";
+            }
+
+            if (this.tipereq == 'null') {
+              this.error.tipereq = "Request Type not filled";
             }
           }
         }
