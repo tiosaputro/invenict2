@@ -79,7 +79,7 @@
                  <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
-                    v-model="requestor"
+                    v-model="mutasi.ireq_requestor"
                     disabled
                   />
                  </div>
@@ -189,7 +189,7 @@ export default {
       token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
-      requestor:localStorage.getItem('usr_name'),
+      requestor:'',
     };
   },
   created(){

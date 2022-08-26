@@ -21,13 +21,14 @@ __webpack_require__.r(__webpack_exports__);
       pdf: false,
       foto: '',
       preview: '',
-      kode: null,
+      requestcatalog: [],
+      kode: '',
+      catalog: [],
       image: '',
       desk: '',
       qty: null,
       ket: '',
       tipereq: '',
-      kodeperi: [],
       type: [],
       bu: [],
       token: localStorage.getItem('token'),
@@ -40,6 +41,9 @@ __webpack_require__.r(__webpack_exports__);
     this.cekUser();
   },
   methods: {
+    change: function change() {
+      this.kode = Object.keys(this.requestcatalog);
+    },
     getAttach: function getAttach(event) {
       this.foto = event.target.files[0];
       this.error.foto = '';
@@ -58,7 +62,20 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     getIreq: function getIreq(tipereq) {
+      var _this = this;
+
+      this.requestcatalog = '';
       this.cekTipeReq = tipereq;
+
+      if (tipereq != null) {
+        this.axios.get('/api/get-catalog-request/' + tipereq, {
+          headers: {
+            'Authorization': 'Bearer ' + this.token
+          }
+        }).then(function (res) {
+          _this.catalog = res.data;
+        });
+      }
 
       if (this.cekTipeReq == 'S') {
         this.qty = null;
@@ -69,7 +86,7 @@ __webpack_require__.r(__webpack_exports__);
       this.error = [];
     },
     saveclick: function saveclick() {
-      var _this = this;
+      var _this2 = this;
 
       this.errors = [];
       this.error = [];
@@ -82,7 +99,7 @@ __webpack_require__.r(__webpack_exports__);
             if (this.kode != null && this.tipereq != null && this.tipereq != 'null') {
               var data = new FormData();
               data.append("file", this.foto);
-              data.append("invent_code", this.kode);
+              data.append("catalog", this.kode);
               data.append("qty", this.qty);
               data.append("ket", this.ket);
               data.append("tipereq", this.tipereq);
@@ -92,7 +109,7 @@ __webpack_require__.r(__webpack_exports__);
                   'content-type': 'multipart/form-data'
                 }
               }).then(function () {
-                _this.$toast.add({
+                _this2.$toast.add({
                   severity: "success",
                   summary: "Success Message",
                   detail: "Success Create",
@@ -100,16 +117,12 @@ __webpack_require__.r(__webpack_exports__);
                 });
 
                 setTimeout(function () {
-                  return _this.kode = null;
-                }, _this.desk = '', _this.qty = null, _this.ket = '', _this.preview = '', _this.$refs.fileInput.value = '', _this.pdf = false, _this.image = false, 1000);
+                  return _this2.kode = null;
+                }, _this2.requestcatalog = null, _this2.desk = '', _this2.qty = null, _this2.ket = '', _this2.preview = '', _this2.$refs.fileInput.value = '', _this2.pdf = false, _this2.image = false, 1000);
               })["catch"](function (error) {
-                _this.errors = error.response.data.errors;
+                _this2.errors = error.response.data.errors;
               });
             } else {
-              if (this.kode == null) {
-                this.error.kode = "Peripheral not filled";
-              }
-
               if (this.tipereq == null) {
                 this.error.tipereq = "Request Type not filled";
               }
@@ -124,6 +137,8 @@ __webpack_require__.r(__webpack_exports__);
 
               _data.append("file", this.foto);
 
+              _data.append("catalog", this.kode);
+
               _data.append("ket", this.ket);
 
               _data.append("tipereq", this.tipereq);
@@ -134,7 +149,7 @@ __webpack_require__.r(__webpack_exports__);
                   'content-type': 'multipart/form-data'
                 }
               }).then(function () {
-                _this.$toast.add({
+                _this2.$toast.add({
                   severity: "success",
                   summary: "Success Message",
                   detail: "Success Create",
@@ -142,10 +157,10 @@ __webpack_require__.r(__webpack_exports__);
                 });
 
                 setTimeout(function () {
-                  return _this.desk = '';
-                }, _this.ket = '', _this.preview = '', _this.pdf = false, _this.image = false, _this.$refs.fileInput.value = null, 1000);
+                  return _this2.kode = null;
+                }, _this2.requestcatalog = null, _this2.desk = '', _this2.ket = '', _this2.preview = '', _this2.pdf = false, _this2.image = false, _this2.$refs.fileInput.value = null, 1000);
               })["catch"](function (error) {
-                _this.errors = error.response.data.errors;
+                _this2.errors = error.response.data.errors;
               });
             } else {
               if (this.tipereq == null) {
@@ -159,11 +174,12 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       } else {
+        //if not attachment
         if (this.tipereq == 'P') {
           if (this.kode != null && this.tipereq != null && this.tipereq != 'null') {
             var _data2 = new FormData();
 
-            _data2.append("invent_code", this.kode);
+            _data2.append("catalog", this.kode);
 
             _data2.append("qty", this.qty);
 
@@ -177,7 +193,7 @@ __webpack_require__.r(__webpack_exports__);
                 'content-type': 'multipart/form-data'
               }
             }).then(function () {
-              _this.$toast.add({
+              _this2.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Create",
@@ -185,10 +201,10 @@ __webpack_require__.r(__webpack_exports__);
               });
 
               setTimeout(function () {
-                return _this.kode = null;
-              }, _this.desk = '', _this.qty = null, _this.ket = '', _this.preview = '', _this.$refs.fileInput.value = '', _this.pdf = false, _this.image = false, 1000);
+                return _this2.kode = null;
+              }, _this2.requestcatalog = null, _this2.desk = '', _this2.qty = null, _this2.ket = '', _this2.preview = '', _this2.$refs.fileInput.value = '', _this2.pdf = false, _this2.image = false, 1000);
             })["catch"](function (error) {
-              _this.errors = error.response.data.errors;
+              _this2.errors = error.response.data.errors;
             });
           } else {
             if (this.kode == null) {
@@ -209,6 +225,8 @@ __webpack_require__.r(__webpack_exports__);
 
             _data3.append("ket", this.ket);
 
+            _data3.append("catalog", this.kode);
+
             _data3.append("tipereq", this.tipereq);
 
             this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data3, {
@@ -217,7 +235,7 @@ __webpack_require__.r(__webpack_exports__);
                 'content-type': 'multipart/form-data'
               }
             }).then(function () {
-              _this.$toast.add({
+              _this2.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Create",
@@ -225,10 +243,10 @@ __webpack_require__.r(__webpack_exports__);
               });
 
               setTimeout(function () {
-                return _this.desk = '';
-              }, _this.ket = '', _this.preview = '', _this.pdf = false, _this.image = false, _this.$refs.fileInput.value = null, 1000);
+                return _this2.kode = null;
+              }, _this2.requestcatalog = null, _this2.desk = '', _this2.ket = '', _this2.preview = '', _this2.pdf = false, _this2.image = false, _this2.$refs.fileInput.value = null, 1000);
             })["catch"](function (error) {
-              _this.errors = error.response.data.errors;
+              _this2.errors = error.response.data.errors;
             });
           } else {
             if (this.tipereq == null) {
@@ -243,43 +261,43 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     cekUser: function cekUser() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.checkto = response.data.map(function (x) {
+        _this3.checkto = response.data.map(function (x) {
           return x.to;
         });
-        _this2.checkname = response.data.map(function (x) {
+        _this3.checkname = response.data.map(function (x) {
           return x.name;
         });
 
-        if (_this2.checkname.includes("Request") || _this2.checkto.includes("/ict-request")) {
-          _this2.getNoreq();
+        if (_this3.checkname.includes("Request") || _this3.checkto.includes("/ict-request")) {
+          _this3.getNoreq();
         } else {
-          _this2.$router.push('/access');
+          _this3.$router.push('/access');
         }
       });
     },
     getNoreq: function getNoreq() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.detail = response.data;
-        _this3.tipereq = _this3.detail.ireq_type;
-        _this3.cekTipeReq = _this3.detail.ireq_type;
+        _this4.detail = response.data;
+        _this4.tipereq = _this4.detail.ireq_type;
+        _this4.cekTipeReq = _this4.detail.ireq_type;
 
-        _this3.getType();
+        _this4.getType();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this4.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -288,25 +306,24 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this4.$router.push('/login');
           }, 2000);
         }
       });
     },
     getType: function getType() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.axios.get('/api/getAddDetail', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.type = response.data.ref;
-        _this4.kodeperi = response.data.kode;
+        _this5.type = response.data.ref;
       });
     },
     CreateIctDetail: function CreateIctDetail() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.errors = [];
       this.error = [];
@@ -316,9 +333,9 @@ __webpack_require__.r(__webpack_exports__);
           this.error.foto = "File too big (> 1MB)";
         } else {
           if (this.tipereq == 'P') {
-            if (this.kode != null && this.tipereq != null && this.tipereq != 'null') {
+            if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null') {
               var data = new FormData();
-              data.append("invent_code", this.kode);
+              data.append("catalog", this.kode);
               data.append("file", this.foto);
               data.append("qty", this.qty);
               data.append("ket", this.ket);
@@ -329,23 +346,19 @@ __webpack_require__.r(__webpack_exports__);
                   'content-type': 'multipart/form-data'
                 }
               }).then(function () {
-                _this5.$toast.add({
+                _this6.$toast.add({
                   severity: "success",
                   summary: "Success Message",
                   detail: "Success Create"
                 });
 
                 setTimeout(function () {
-                  return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
+                  return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
                 }, 1000);
               })["catch"](function (error) {
-                _this5.errors = error.response.data.errors;
+                _this6.errors = error.response.data.errors;
               });
             } else {
-              if (this.kode == null) {
-                this.error.kode = "Peripheral not filled";
-              }
-
               if (this.tipereq == null) {
                 this.error.tipereq = "Request Type not filled";
               }
@@ -355,8 +368,10 @@ __webpack_require__.r(__webpack_exports__);
               }
             }
           } else {
-            if (this.tipereq != null && this.tipereq != 'null') {
+            if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null') {
               var _data4 = new FormData();
+
+              _data4.append("catalog", this.kode);
 
               _data4.append("file", this.foto);
 
@@ -370,17 +385,17 @@ __webpack_require__.r(__webpack_exports__);
                   'content-type': 'multipart/form-data'
                 }
               }).then(function () {
-                _this5.$toast.add({
+                _this6.$toast.add({
                   severity: "success",
                   summary: "Success Message",
                   detail: "Success Create"
                 });
 
                 setTimeout(function () {
-                  return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
+                  return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
                 }, 1000);
               })["catch"](function (error) {
-                _this5.errors = error.response.data.errors;
+                _this6.errors = error.response.data.errors;
               });
             } else {
               if (this.tipereq == null) {
@@ -395,10 +410,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       } else {
         if (this.tipereq == 'P') {
-          if (this.kode != null && this.tipereq != null && this.tipereq != 'null') {
+          if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null') {
             var _data5 = new FormData();
 
-            _data5.append("invent_code", this.kode);
+            _data5.append("catalog", this.kode);
 
             _data5.append("qty", this.qty);
 
@@ -412,23 +427,19 @@ __webpack_require__.r(__webpack_exports__);
                 'content-type': 'multipart/form-data'
               }
             }).then(function () {
-              _this5.$toast.add({
+              _this6.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Create"
               });
 
               setTimeout(function () {
-                return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
+                return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
-              _this5.errors = error.response.data.errors;
+              _this6.errors = error.response.data.errors;
             });
           } else {
-            if (this.kode == null) {
-              this.error.kode = "Peripheral not filled";
-            }
-
             if (this.tipereq == null) {
               this.error.tipereq = "Request Type not filled";
             }
@@ -438,8 +449,10 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
         } else {
-          if (this.tipereq != null && this.tipereq != 'null') {
+          if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null') {
             var _data6 = new FormData();
+
+            _data6.append("catalog", this.kode);
 
             _data6.append("ket", this.ket);
 
@@ -451,17 +464,17 @@ __webpack_require__.r(__webpack_exports__);
                 'content-type': 'multipart/form-data'
               }
             }).then(function () {
-              _this5.$toast.add({
+              _this6.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Create"
               });
 
               setTimeout(function () {
-                return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
+                return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
-              _this5.errors = error.response.data.errors;
+              _this6.errors = error.response.data.errors;
             });
           } else {
             if (this.tipereq == null) {
@@ -559,13 +572,13 @@ var _hoisted_13 = {
 var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, " Peripheral", -1
+  }, " Catalog ", -1
   /* HOISTED */
   );
 });
 
 var _hoisted_15 = {
-  "class": "col-fixed w-9rem"
+  "class": "col-4 md-4"
 };
 var _hoisted_16 = {
   key: 0,
@@ -691,6 +704,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
 
+  var _component_TreeSelect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TreeSelect");
+
   var _component_InputNumber = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputNumber");
 
   var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
@@ -711,7 +726,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.CreateIctDetail && $options.CreateIctDetail.apply($options, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
@@ -745,29 +760,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.tipereq ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.tipereq), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
-    modelValue: $data.kode,
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), this.cekTipeReq ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TreeSelect, {
+    modelValue: $data.requestcatalog,
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.kode = $event;
+      return $data.requestcatalog = $event;
     }),
-    options: $data.kodeperi,
-    optionLabel: "name",
-    optionValue: "code",
-    placeholder: "Select One ",
-    showClear: true,
-    filter: true,
+    options: $data.catalog,
+    placeholder: "Select Catalog",
+    display: "chip",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.error.kode
+      'p-invalid': $data.errors.catalog
+    }),
+    onChange: _cache[4] || (_cache[4] = function ($event) {
+      return $options.change($data.requestcatalog);
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.invent_code ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.invent_code[0]), 1
+  , ["modelValue", "options", "class"]), $data.errors.catalog ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.catalog[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.kode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.kode), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.requestcatalog ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.requestcatalog), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
     modelValue: $data.qty,
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.qty = $event;
     }),
     placeholder: "Enter Qty",
@@ -782,7 +797,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     autoResize: true,
     type: "text",
     modelValue: $data.ket,
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.ket = $event;
     }),
     rows: "8",
@@ -801,7 +816,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     accept: "image/jpg,image/png,image/jpeg,application/pdf",
     ref: "fileInput",
     "class": "form-control",
-    onChange: _cache[6] || (_cache[6] = function () {
+    onChange: _cache[7] || (_cache[7] = function () {
       return $options.getAttach && $options.getAttach.apply($options, arguments);
     })
   }, null, 544
@@ -830,7 +845,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
-    onClick: _cache[7] || (_cache[7] = function ($event) {
+    onClick: _cache[8] || (_cache[8] = function ($event) {
       return _ctx.$router.push({
         name: 'Ict Request Detail',
         params: {
@@ -875,7 +890,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".ict-image[data-v-08d79a6f] {\n  height: 330pt;\n  -o-object-fit: contain;\n     object-fit: contain;\n  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);\n}\n.ict-pdf[data-v-08d79a6f] {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".ict-image[data-v-08d79a6f] {\n  height: 330pt;\n  -o-object-fit: contain;\n     object-fit: contain;\n  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);\n}\n.ict-pdf[data-v-08d79a6f] {\n  height: 100%;\n  width: 100%;\n  -o-object-fit: contain;\n     object-fit: contain;\n}\n.p-treeselect[data-v-08d79a6f] {\n  width: 15rem;\n}\n@media screen and (max-width: 640px) {\n.p-treeselect[data-v-08d79a6f] {\n    width: 100%;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

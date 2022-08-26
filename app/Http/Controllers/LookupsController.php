@@ -216,8 +216,9 @@ class LookupsController extends Controller
             ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
             ->orderBy('lookup_desc','ASC')
             ->get();
+            $username = Auth::user()->usr_name;
 
-            return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'prio'=>$priority,'divisi'=>$divisi],200);
+            return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'prio'=>$priority,'divisi'=>$divisi,'username'=>$username],200);
         }else{
             return response(["message"=>"Cannot Access"],403);
         }

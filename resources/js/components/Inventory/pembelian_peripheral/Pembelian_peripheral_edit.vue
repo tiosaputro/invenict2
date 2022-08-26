@@ -169,7 +169,6 @@ export default {
       submitted: false,
       checkname : [],
       checkto : [],
-      id : localStorage.getItem('id'),
       stat: [
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },

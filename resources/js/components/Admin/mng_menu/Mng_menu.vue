@@ -77,7 +77,6 @@ export default {
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
     };
   },
   created() {

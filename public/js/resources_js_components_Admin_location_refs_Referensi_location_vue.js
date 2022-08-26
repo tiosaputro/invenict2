@@ -25,7 +25,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
       },
-      id: localStorage.getItem('id'),
       checkname: [],
       checkto: []
     };

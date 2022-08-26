@@ -20,7 +20,7 @@
                   :rowHover="true"
                   paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                   :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Permohonan Divisi"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request"
                   responsiveLayout="scroll"
                 >
                 <template #header>
@@ -395,7 +395,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Yang Direject"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Rejected"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -472,7 +472,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Penugasan Request"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request Assignment"
                     responsiveLayout="scroll"
                   >
                   <template #header>
@@ -563,7 +563,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Sedang Dikerjakan"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} In Progress"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -640,7 +640,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Sudah Dikerjakan"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Done"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -741,7 +741,7 @@
                     :rowHover="true"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Selesai"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Close"
                     responsiveLayout="scroll"
                  >
                  <template #header>
@@ -1008,10 +1008,8 @@ export default {
         selesai:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         token: localStorage.getItem('token'),
-        usr_name: localStorage.getItem('usr_name'),
         checkname : [],
         checkto : [],
-        id : localStorage.getItem('id'),
         show:false,
     };
   },
@@ -1233,7 +1231,7 @@ export default {
             this.$toast.add({
               severity: "info",
               summary: "Confirmed",
-              detail: "Assignment request successful",
+              detail: "  successful",
               life: 2000,
             });
             this.loading = true;

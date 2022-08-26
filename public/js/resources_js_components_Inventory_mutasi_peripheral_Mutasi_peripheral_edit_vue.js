@@ -37,8 +37,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       token: localStorage.getItem('token'),
       checkname: [],
-      checkto: [],
-      id: localStorage.getItem('id')
+      checkto: []
     };
   },
   mounted: function mounted() {

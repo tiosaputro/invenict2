@@ -24,8 +24,7 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      divisi: [],
-      id: localStorage.getItem('id')
+      divisi: []
     };
   },
   created: function created() {

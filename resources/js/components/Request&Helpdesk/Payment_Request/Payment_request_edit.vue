@@ -260,7 +260,6 @@ export default {
         input: 'DD MMM YYYY'
       }, 
       token: localStorage.getItem('token'),
-      id : localStorage.getItem('id'),
       checkname : [],
       checkto : [],
     };

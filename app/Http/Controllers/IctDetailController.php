@@ -34,10 +34,9 @@ class IctDetailController extends Controller
         ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_attachment',
          'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
          'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
-         'id.ireq_desc', 'id.ireq_qty','lrs.lookup_desc as name','llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+         'id.ireq_desc', 'id.ireq_qty','lrs.catalog_name as name','llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
+        ->leftJoin('catalog_refs as lrs',function ($join) {
+            $join->on('id.invent_code','lrs.catalog_id');
         })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->leftJoin('lookup_refs as llr',function ($join) {
@@ -191,13 +190,13 @@ class IctDetailController extends Controller
         }
         if($request->tipereq == 'P'){
             $message = [
-                'invent_code.required'=>'Peripheral not filled',
+                'catalog.required'=>'Catalog not filled',
                 'qty.required'=>'Qty not filled',
                 'qty.numeric'=>'Qty not filled',
                 'ket.required'=>'Remark not filled'
             ];
                 $request->validate([
-                    'invent_code'=>'required',
+                    'catalog'=>'required',
                     'qty'=>'required|numeric',
                     'ket' => 'required'
                 ],$message);
@@ -205,7 +204,7 @@ class IctDetailController extends Controller
             $dtl = IctDetail::create([
                 'ireq_id' => $code,
                 'ireq_type' => $request->tipereq,
-                'invent_code'=>$request->invent_code,
+                'invent_code'=>$request->catalog,
                 // 'ireq_desc'=> $request->desk,
                 'ireq_qty'=> $request->qty,
                 'ireq_remark'=>$request->ket,
@@ -220,15 +219,18 @@ class IctDetailController extends Controller
             ]);
         } else{
             $message = [
-                'ket.required'=>'Remark not filled'
+                'ket.required'=>'Remark not filled',
+                'catalog.required'=>'Catalog not filled'
             ];
                 $request->validate([
-                    'ket' => 'required'
+                    'ket' => 'required',
+                    'catalog'=>'required',
                 ],$message);
 
             $dtl = IctDetail::create([
                 'ireq_id' => $code,
                 'ireq_type' => $request->tipereq,
+                'invent_code'=>$request->catalog,
                 // 'ireq_desc'=> $request->desk,
                 'ireq_remark'=>$request->ket,
                 'ireq_attachment'=>$nama_file,
@@ -245,7 +247,7 @@ class IctDetailController extends Controller
     Public function edit($ireq,$code)
     {
         $ict = DB::table('ireq_dtl as id')
-        ->select('id.ireqd_id','id.ireq_attachment','id.ireq_type','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','im.invent_photo as photo','imm.ireq_no')
+        ->select('id.ireqd_id','id.ireq_attachment','id.ireq_type','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','imm.ireq_no')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
@@ -281,13 +283,14 @@ class IctDetailController extends Controller
                 'ireq_type.required'=>'Request type not filled',
                 'invent_code.required'=>'Peripheral not filled',
                 'ireq_qty.required'=>'Qty not filled',
-                'ireq_remark.required'=>'Remark not filled'
+                'ireq_remark.required'=>'Remark not filled',
+                'invent_code.required'=>'Catalog not filled'
             ];
                 $request->validate([
                     'ireq_type' => 'required',
                     'invent_code'=>'required',
                     'ireq_qty'=>'required',
-                    'ireq_remark' => 'required'
+                    'ireq_remark' => 'required',
                 ],$message);
             
             $dtl = DB::table('ireq_dtl')
@@ -313,11 +316,13 @@ class IctDetailController extends Controller
         else if($request->ireq_type == 'S'){
             $message = [
                 'ireq_type.required'=>'Request type not filled',
-                'ireq_remark.required'=>'Remark not filled'
+                'ireq_remark.required'=>'Remark not filled',
+                'invent_code.required'=>'Catalog not filled'
             ];
                 $request->validate([
                     'ireq_type' => 'required',
-                    'ireq_remark' => 'required'
+                    'ireq_remark' => 'required',
+                    'invent_code'=>'required',
                 ],$message);
             
             $dtl = DB::table('ireq_dtl')
@@ -325,6 +330,7 @@ class IctDetailController extends Controller
             ->where('ireq_id',$code)
             ->update([
                 'ireq_type'=> $request->ireq_type,
+                'invent_code'=>$request->invent_code,
                 'ireq_remark'=> $request->ireq_remark,
                 'ireq_attachment'=>$nama_file,
                 'last_update_date'=> $this->newUpdate,

@@ -760,7 +760,6 @@ export default {
       selesai:[],
       filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
       token: localStorage.getItem('token'),
-      usr_name: localStorage.getItem('usr_name'),
       checkname : [],
       checkto : [],
     };

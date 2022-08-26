@@ -166,7 +166,6 @@ export default {
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
         token: localStorage.getItem('token'),
-        id : localStorage.getItem('id'),
         status : null,
     };
   },

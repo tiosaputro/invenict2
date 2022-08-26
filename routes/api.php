@@ -170,6 +170,14 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/edit-module/{code}','ModuleController@edit');
     Route::put('/update-module/{code}','ModuleController@update');
     Route::delete('/delete-module/{mod_id}','ModuleController@delete');
+    // catalog
+    Route::get('/get-catalog','CatalogController@index');
+    Route::get('/get-parent-catalog','CatalogController@parentCatalog');
+    Route::get('/get-catalog-request/{tipereq}','CatalogController@CatalogRequest');
+    Route::post('/save-catalog','CatalogController@save');
+    Route::get('/edit-catalog/{code}','CatalogController@edit');
+    Route::put('/update-catalog/{code}','CatalogController@update');
+    Route::delete('/delete-catalog/{catalog_id}','CatalogController@delete');
 
     //Mng_menu
     Route::post('/get-menu-user','MngMenuController@getMenuUser');

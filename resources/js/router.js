@@ -482,6 +482,22 @@ const routes = [
         path: '/edit-divisi-refs/:code',
         component: ()=> import('./components/Admin/divisi_refs/Divisi_refs_edit.vue'),
     },
+    //catalog_refs
+    {
+        name: 'Catalog Refs',
+        path: '/catalog-refs',
+        component: ()=> import('./components/Admin/catalog_ref/Catalog_refs.vue'),
+    },
+    {
+        name: 'Add Catalog Refs',
+        path: '/add-catalog-refs',
+        component: ()=> import('./components/Admin/catalog_ref/Catalog_refs_create.vue'),
+    },
+    {
+        name: 'Edit Catalog Refs',
+        path: '/edit-catalog-refs/:code',
+        component: ()=> import('./components/Admin/catalog_ref/Catalog_refs_edit.vue'),
+    },
     //grafik
     {
         name: 'Statistik Permintaan User Per Status',
@@ -579,27 +595,6 @@ const routes = [
         path: '/report-per-status-per-personnel',
         component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsPerStatusPerPersonnel.vue'),
     },
-    //ict_request_divisi4
-    //  {
-    //     name: 'Ict Request Divisi 4',
-    //     path: '/ict-request-divisi4',
-    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4.vue'),
-    // },
-    // {
-    //     name: 'Ict Request Divisi 4 Detail',
-    //     path: '/ict-request-divisi4-detail/:code',
-    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4_detail.vue'),
-    // },
-    // {
-    //     name: 'Ict Request Divisi 4 Closing Per-Detail',
-    //     path: '/ict-request-divisi4-closing-per-detail/:code',
-    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4_closing_per_detail.vue'),
-    // },
-    // {
-    //     name: 'Ict Request Divisi 4 Detaill',
-    //     path: '/ict-request-divisi4-detaill/:code',
-    //     component: ()=> import('./components/Request&Helpdesk/ict_request_divisi4/Ict_request_divisi4_detail_penugasan.vue'),
-    // },
 
     //ict request reviewer
     {
@@ -698,9 +693,14 @@ const routes = [
         component: () => import('./pages/Access.vue')
     },
     {
-        path: '/check-verif/:code/:status',
+        path: '/ictinv_resp/:code/:status',
         name: 'Check Verif',
         component: () => import('./pages/checkVerif.vue')
+    },
+    {
+        path: '/check/:status/:code',
+        name: 'Check Legality',
+        component: () => import('./pages/CheckLegality.vue')
     }
 ];
 

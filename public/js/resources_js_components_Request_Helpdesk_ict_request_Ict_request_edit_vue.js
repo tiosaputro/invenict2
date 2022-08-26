@@ -27,7 +27,7 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      requestor: localStorage.getItem('usr_name')
+      requestor: ''
     };
   },
   created: function created() {
@@ -326,9 +326,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
-    modelValue: $data.requestor,
+    modelValue: $data.mutasi.ireq_requestor,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-      return $data.requestor = $event;
+      return $data.mutasi.ireq_requestor = $event;
     }),
     disabled: ""
   }, null, 8

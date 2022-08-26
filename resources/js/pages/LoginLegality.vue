@@ -106,7 +106,7 @@ export default {
               localStorage.setItem('active1',0);
               localStorage.setItem('active2',0);
               localStorage.setItem('active3',0);
-              if(this.$route.params.status =='requester'){
+              if(this.$route.params.status =='requestor'){
                 setTimeout( () => this.$router.push('/check-requester/'+this.$route.params.code), 1000);
               }
               else if (this.$route.params.status =='ictmanager'){

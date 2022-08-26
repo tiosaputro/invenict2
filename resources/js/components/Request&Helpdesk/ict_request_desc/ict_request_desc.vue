@@ -4251,7 +4251,6 @@ export default {
         submitted: false,
         dialogAssign: false,
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        usr_name: localStorage.getItem('usr_name'),
         user:[],
         rbr:{ ket:'', id:'' },
         confirmationVerifikasi:false,

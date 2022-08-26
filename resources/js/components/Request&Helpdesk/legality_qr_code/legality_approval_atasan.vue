@@ -54,29 +54,11 @@ export default {
     };
   },
   created() {
-    this.checkLogin();
+    this.cekUser();
   },
   methods: {
     formatDate(date) {
       return moment(date).format("DD MMM YYYY HH:mm")
-    },
-    checkLogin(){
-      this.axios.get('/api/cek-verif-id/'+this.$route.params.code).then((res)=>{
-        this.verif = res.data;
-          if(this.verif) {
-            var loggedIn = localStorage.getItem('loggedIn');
-            if(loggedIn){
-                this.cekUser();
-            }
-            else{
-                var status = 'higherlevel';
-                this.$router.push('/loginn/'+status+'/'+this.$route.params.code)
-            }
-          }
-          else{
-            this.$router.push({ name: 'error', params: { stat: 'notvalid' } }) 
-           }
-        });
     },
     cekUser(){
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -91,7 +73,7 @@ export default {
       });
     },
     getIctDetail(){
-      this.axios.get('/api/detail-norequest/' + this.verif.ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/detail-norequest/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
         this.loading = false;
       });

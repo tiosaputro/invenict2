@@ -48,7 +48,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       token: localStorage.getItem('token'),
-      usr_name: localStorage.getItem('usr_name'),
       checkname: [],
       checkto: []
     };

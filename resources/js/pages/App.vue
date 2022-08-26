@@ -63,10 +63,12 @@ export default {
     methods: {
         tes(){
             if (window.location.pathname == '/'){
-                this.$router.push('/dashboard'); 
+             this.$router.push('/dashboard'); 
             }
             if(!this.loggedIn){
-                this.$router.push('/login');
+                if(!window.location.pathname == 'Check Legality' || !window.location.pathname == 'Check Verif'){
+                    this.$router.push('/login');
+                }
             }
             else if(this.loggedIn){
                 if(!this.menuUser.length){

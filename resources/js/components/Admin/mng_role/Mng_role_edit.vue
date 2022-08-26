@@ -127,7 +127,6 @@ export default {
       token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
-      id : localStorage.getItem('id'),
     };
   },
   created(){

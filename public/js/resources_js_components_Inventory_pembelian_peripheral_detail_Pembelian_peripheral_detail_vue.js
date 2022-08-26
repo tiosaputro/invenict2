@@ -33,8 +33,7 @@ __webpack_require__.r(__webpack_exports__);
       code: this.$route.params.code,
       checkname: [],
       checkto: [],
-      divisi: [],
-      id: localStorage.getItem('id')
+      divisi: []
     };
   },
   created: function created() {

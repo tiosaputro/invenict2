@@ -189,7 +189,6 @@ export default {
       token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
-      requestor:localStorage.getItem('usr_name'),
     };
   },
   created(){

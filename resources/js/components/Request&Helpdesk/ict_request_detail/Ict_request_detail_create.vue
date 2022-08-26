@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-sm-6">
              <form @submit.prevent="CreateIctDetail">
-               <div class="field grid">
+              <div class="field grid">
                 <label class="col-fixed w-9rem">No. Request</label>
                  <div class="col-fixed w-9rem">
                   <InputText
@@ -41,24 +41,22 @@
                   </small>
                 </div>
               </div>
-              <div class="field grid" v-if="this.cekTipeReq =='P'">
-                <label class="col-fixed w-9rem"> Peripheral</label>
-                 <div class="col-fixed w-9rem">
-                     <Dropdown 
-                        v-model="kode"
-                        :options="kodeperi"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Select One "
-                        :showClear="true"
-                        :filter="true"
-                        :class="{ 'p-invalid': error.kode }"
-                     />
-                     <small v-if="errors.invent_code" class="p-error">
-                      {{ errors.invent_code[0] }}
+              <div class="field grid" v-if="this.cekTipeReq">
+                <label class="col-fixed w-9rem"> Catalog </label>
+                 <div class="col-4 md-4">
+                    <TreeSelect 
+                      v-model="requestcatalog" 
+                      :options="catalog"
+                      placeholder="Select Catalog"
+                      display="chip"
+                      :class="{ 'p-invalid': errors.catalog }"
+                      @change="change(requestcatalog)"
+                    /> 
+                     <small v-if="errors.catalog" class="p-error">
+                      {{ errors.catalog[0] }}
                     </small>
-                     <small v-if="error.kode" class="p-error">
-                      {{ error.kode }}
+                     <small v-if="error.requestcatalog" class="p-error">
+                      {{ error.requestcatalog }}
                   </small>
                 </div>
               </div>
@@ -92,7 +90,7 @@
                       {{ errors.ket[0] }}
                     </small>
                 </div>
-            </div>
+              </div>
               <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S'">
                 <label class="col-10 md-4">Attachment (JPEG,PNG,JPG,PDF) MAX SIZE 1MB</label>
                   <input type="file" name="foto" accept="image/jpg,image/png,image/jpeg,application/pdf" ref="fileInput" class="form-control" @change="getAttach" />
@@ -160,13 +158,14 @@ export default {
       pdf:false,
       foto:'',
       preview:'',
-      kode:null,
+      requestcatalog:[],
+      kode:'',
+      catalog:[],
       image:'',
       desk:'',
       qty:null,
       ket:'',
       tipereq: '',
-      kodeperi:[],
       type: [],
       bu: [],
       token: localStorage.getItem('token'),
@@ -179,6 +178,9 @@ export default {
       this.cekUser();
   },
   methods: {
+    change(){
+      this.kode = Object.keys(this.requestcatalog);
+    },
     getAttach(event) {
       this.foto = event.target.files[0];
       this.error.foto = '';
@@ -193,9 +195,15 @@ export default {
           this.pdf = true;
           this.preview = URL.createObjectURL(this.foto);
         }
-      },
+    },
     getIreq(tipereq){
+      this.requestcatalog = '';
       this.cekTipeReq = tipereq;
+      if(tipereq != null){
+        this.axios.get('/api/get-catalog-request/'+tipereq, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+          this.catalog = res.data;
+        });
+      }
       if(this.cekTipeReq == 'S'){
         this.qty = null;
         this.kode = '';
@@ -216,7 +224,7 @@ export default {
         {
           const data = new FormData();
           data.append("file", this.foto);
-          data.append("invent_code", this.kode);
+          data.append("catalog", this.kode);
           data.append("qty", this.qty);
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
@@ -228,14 +236,11 @@ export default {
             detail: "Success Create",
             life: 500
           });
-          setTimeout( () => this.kode = null,this.desk = '', this.qty = null, this.ket = '', this.preview = '',this.$refs.fileInput.value = '', this.pdf=false,this.image = false,1000);
+          setTimeout( () => this.kode = null,this.requestcatalog = null, this.desk = '', this.qty = null, this.ket = '', this.preview = '',this.$refs.fileInput.value = '', this.pdf=false,this.image = false,1000);
           }).catch(error=>{
             this.errors = error.response.data.errors;
           });
         }else{
-          if(this.kode == null){
-            this.error.kode = "Peripheral not filled"
-          }
           if(this.tipereq == null){
             this.error.tipereq = "Request Type not filled"
           }
@@ -248,6 +253,7 @@ export default {
         {
           const data = new FormData();
           data.append("file", this.foto);
+          data.append("catalog", this.kode);
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
 
@@ -258,7 +264,7 @@ export default {
             detail: "Success Create",
             life: 500
           });
-          setTimeout( () => this.desk = '', this.ket = '',this.preview = '', this.pdf=false, this.image = false, this.$refs.fileInput.value = null,1000);
+          setTimeout( () => this.kode = null, this.requestcatalog = null, this.desk = '', this.ket = '',this.preview = '', this.pdf=false, this.image = false, this.$refs.fileInput.value = null,1000);
           }).catch(error=>{
             this.errors = error.response.data.errors;
           });
@@ -272,12 +278,12 @@ export default {
         }
        }
       }
-     }else{
+     }else{ //if not attachment
       if(this.tipereq == 'P'){
         if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
         {
           const data = new FormData();
-          data.append("invent_code", this.kode);
+          data.append("catalog", this.kode);
           data.append("qty", this.qty);
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
@@ -289,7 +295,7 @@ export default {
             detail: "Success Create",
             life: 500
           });
-          setTimeout( () => this.kode = null,this.desk = '', this.qty = null, this.ket = '', this.preview = '',this.$refs.fileInput.value = '', this.pdf=false,this.image = false,1000);
+          setTimeout( () => this.kode = null,this.requestcatalog = null,this.desk = '', this.qty = null, this.ket = '', this.preview = '',this.$refs.fileInput.value = '', this.pdf=false,this.image = false,1000);
           }).catch(error=>{
             this.errors = error.response.data.errors;
           });
@@ -309,6 +315,7 @@ export default {
         {
           const data = new FormData();
           data.append("ket", this.ket);
+          data.append("catalog", this.kode);
           data.append("tipereq", this.tipereq);
 
           this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token, 'content-type': 'multipart/form-data'}}).then(()=>{
@@ -318,7 +325,7 @@ export default {
             detail: "Success Create",
             life: 500
           });
-          setTimeout( () => this.desk = '', this.ket = '',this.preview = '', this.pdf=false, this.image = false, this.$refs.fileInput.value = null,1000);
+          setTimeout( () => this.kode = null,this.requestcatalog = null, this.desk = '', this.ket = '',this.preview = '', this.pdf=false, this.image = false, this.$refs.fileInput.value = null,1000);
           }).catch(error=>{
             this.errors = error.response.data.errors;
           });
@@ -361,13 +368,12 @@ export default {
           setTimeout( () => this.$router.push('/login'),2000);
            }
         });
-      },
-      getType(){
+    },
+    getType(){
         this.axios.get('/api/getAddDetail', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.type = response.data.ref;
-          this.kodeperi = response.data.kode;
           });
-      },
+    },
     CreateIctDetail() {
       this.errors = [];
       this.error = [];
@@ -377,10 +383,10 @@ export default {
       }
       else{
         if(this.tipereq=='P'){
-        if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
+        if ( this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null' ) 
         {
           const data = new FormData();
-          data.append("invent_code", this.kode);
+          data.append("catalog", this.kode);
           data.append("file", this.foto);
           data.append("qty", this.qty);
           data.append("ket", this.ket);
@@ -397,9 +403,6 @@ export default {
             this.errors = error.response.data.errors;
           });
         }else{
-          if(this.kode == null){
-            this.error.kode = "Peripheral not filled"
-          }
           if(this.tipereq == null){
             this.error.tipereq = "Request Type not filled"
           }
@@ -408,9 +411,10 @@ export default {
           }
         }
         }else{
-          if (this.tipereq != null && this.tipereq != 'null' ) 
+          if ( this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null' ) 
         {
           const data = new FormData();
+          data.append("catalog", this.kode);
           data.append("file", this.foto);
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
@@ -437,10 +441,10 @@ export default {
       }
      }else{
       if(this.tipereq=='P'){
-        if ( this.kode != null && this.tipereq != null && this.tipereq != 'null' ) 
+        if ( this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null' ) 
         {
           const data = new FormData();
-          data.append("invent_code", this.kode);
+          data.append("catalog", this.kode);
           data.append("qty", this.qty);
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
@@ -456,9 +460,6 @@ export default {
             this.errors = error.response.data.errors;
           });
         }else{
-          if(this.kode == null){
-            this.error.kode = "Peripheral not filled"
-          }
           if(this.tipereq == null){
             this.error.tipereq = "Request Type not filled"
           }
@@ -467,9 +468,10 @@ export default {
           }
         }
         }else{
-          if (this.tipereq != null && this.tipereq != 'null' ) 
+          if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null' ) 
         {
           const data = new FormData();
+          data.append("catalog", this.kode);
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
 
@@ -507,5 +509,14 @@ export default {
     height:100%;
     width:100%;
     object-fit:contain;
+}
+.p-treeselect {
+    width:15rem;
+}
+
+@media screen and (max-width: 640px) {
+    .p-treeselect {
+        width: 100%;
+    }
 }
 </style>

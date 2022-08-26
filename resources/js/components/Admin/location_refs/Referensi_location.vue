@@ -94,7 +94,6 @@ export default {
         token: localStorage.getItem('token'),
         loc: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        id : localStorage.getItem('id'),
         checkname : [],
         checkto : [],
     };

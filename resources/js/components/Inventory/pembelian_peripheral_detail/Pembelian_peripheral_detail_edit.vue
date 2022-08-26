@@ -136,7 +136,6 @@ export default {
       checkname : [],
       checkto : [],
       divisi: [],
-      id : localStorage.getItem('id'),
     };
   },
   created(){

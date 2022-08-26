@@ -81,7 +81,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
       },
-      usr_name: localStorage.getItem('usr_name'),
       user: [],
       rbr: {
         ket: '',

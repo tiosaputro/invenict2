@@ -24,70 +24,44 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.checkLogin();
+    this.cekUser();
   },
   methods: {
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
-    checkLogin: function checkLogin() {
-      var _this = this;
-
-      this.axios.get('/api/cek-verif-id/' + this.$route.params.code).then(function (res) {
-        _this.verif = res.data;
-
-        if (_this.verif) {
-          var loggedIn = localStorage.getItem('loggedIn');
-
-          if (loggedIn) {
-            _this.cekUser();
-          } else {
-            var status = 'higherlevel';
-
-            _this.$router.push('/loginn/' + status + '/' + _this.$route.params.code);
-          }
-        } else {
-          _this.$router.push({
-            name: 'error',
-            params: {
-              stat: 'notvalid'
-            }
-          });
-        }
-      });
-    },
     cekUser: function cekUser() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.checkto = response.data.map(function (x) {
+        _this.checkto = response.data.map(function (x) {
           return x.to;
         });
-        _this2.checkname = response.data.map(function (x) {
+        _this.checkname = response.data.map(function (x) {
           return x.name;
         });
 
-        if (_this2.checkname.includes("Scan Legality") || _this2.checkto.includes("/scan-qr-code")) {
-          _this2.getIctDetail();
+        if (_this.checkname.includes("Scan Legality") || _this.checkto.includes("/scan-qr-code")) {
+          _this.getIctDetail();
         } else {
-          _this2.$router.push('/access');
+          _this.$router.push('/access');
         }
       });
     },
     getIctDetail: function getIctDetail() {
-      var _this3 = this;
+      var _this2 = this;
 
-      this.axios.get('/api/detail-norequest/' + this.verif.ireq_id, {
+      this.axios.get('/api/detail-norequest/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.detail = response.data;
-        _this3.loading = false;
+        _this2.detail = response.data;
+        _this2.loading = false;
       });
     }
   }

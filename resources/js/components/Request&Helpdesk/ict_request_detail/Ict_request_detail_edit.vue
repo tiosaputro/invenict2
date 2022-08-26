@@ -4,7 +4,7 @@
         <div class="card">
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>ICT Request (Detail)</h4>
+				    <h4>ICT Request (Detail)</h4>
           </template>
         </Toolbar>
           <div class="row">
@@ -30,7 +30,7 @@
                         optionLabel="name"
                         optionValue="code"
                         placeholder="Select One"
-                        @change="getIreq()"
+                        @change="getIreq(ireq_type)"
                         :showClear="true"
                         :class="{ 'p-invalid': error.ireq_type }"
                   />
@@ -42,23 +42,19 @@
                   </small>
                 </div>
               </div>
-              <div class="field grid" v-if="this.cekTipeReq =='P'">
-                <label class="col-fixed w-9rem" style="width:120px">Peripheral</label>
+              <div class="field grid" v-if="this.cekTipeReq">
+                <label class="col-fixed w-9rem" style="width:120px">Catalog</label>
                  <div class="col-fixed w-9rem">
-                     <Dropdown 
-                        v-model="ict.invent_code"
-                        :options="kodeperi"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Select One "
-                        :showClear="true"
-                        :class="{ 'p-invalid': errors.invent_code }"
-                     />
+                     <TreeSelect 
+                      v-model="kode" 
+                      :options="catalog"
+                      placeholder="Select Catalog"
+                      display="chip"
+                      :class="{ 'p-invalid': errors.invent_code }"
+                      @change="change(kode)"
+                    />
                      <small v-if="errors.invent_code" class="p-error">
                       {{ errors.invent_code[0] }}
-                    </small>
-                     <small v-if="error.invent_code" class="p-error">
-                      {{ error.invent_code }}
                     </small>
                 </div>
               </div>
@@ -145,6 +141,7 @@ export default {
       errors: [],
       error:[],
       detail: [],
+      catalog:[],
       preview:'',
       pdf:false,
       image:false,
@@ -160,10 +157,14 @@ export default {
       cekTipeReq:'',
     };
   },
-  created(){
+  mounted(){
       this.cekUser();
   },
   methods: {
+    change(kode){
+      var a =Object.keys(kode);
+      this.ict.invent_code = a.toString();
+    },
     getAttach(event) {
       this.foto = event.target.files[0];
       this.error.foto='';
@@ -191,6 +192,12 @@ export default {
         reader.readAsDataURL(foto);
       },
     getIreq(){
+      this.kode  = '';
+       if(this.ict.ireq_type){
+        this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+          this.catalog = res.data;
+        });
+      }
       this.cekTipeReq = this.ict.ireq_type;
        if(this.cekTipeReq == 'S'){
         this.ict.ireq_qty = null;
@@ -224,6 +231,17 @@ export default {
            }
         });
       },
+    getCatalog(){
+      this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+          this.catalog = res.data;
+        });
+    },
+    getidCatalog(){
+      this.kode ="{"+'"'+this.ict.invent_code +'"'+':'+true+"}";
+      this.kode = JSON.parse(this.kode);
+      this.getKode();
+      this.getCatalog();
+    },
     getIct(){
         this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.ict = response.data;
@@ -236,7 +254,7 @@ export default {
             }
           }
           this.cekTipeReq = this.ict.ireq_type;
-          this.getKode();
+          this.getidCatalog();
         });
       },
     UpdateIctDetail() {

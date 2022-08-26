@@ -483,9 +483,9 @@
                 </div>
                 @php 
                     $appname = env('APP_URL');
-                    $linkRequester = "$appaname/check-requester/{$link->link_id}"; 
-                    $linkIctManager = "$appaname/check-ict-manager/{$link->link_id}"; 
-                    $linkHigherLevel = "$appaname/check-higher-level/{$link->link_id}"; 
+                    $linkRequester = "{$appname}/check/requestor/{$link->link_id}"; 
+                    $linkIctManager = "{$appname}/check/ictmanager/{$link->link_id}"; 
+                    $linkHigherLevel = "{$appname}/check/higherlevel/{$link->link_id}"; 
                 @endphp
                 <div class="wrap">
                     <div class="cell-wrap left">

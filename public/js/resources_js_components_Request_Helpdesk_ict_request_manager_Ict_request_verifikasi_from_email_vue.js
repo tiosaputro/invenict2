@@ -34,7 +34,6 @@ __webpack_require__.r(__webpack_exports__);
       },
       code: this.$route.params.code,
       token: localStorage.getItem('token'),
-      id: localStorage.getItem('id'),
       status: null
     };
   },

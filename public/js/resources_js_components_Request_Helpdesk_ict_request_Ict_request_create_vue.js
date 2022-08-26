@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
       priolev: null,
       usr_name: null,
       usr_divisi: null,
-      requestor: localStorage.getItem('usr_name'),
+      requestor: '',
       ket: null,
       divisi: [],
       bisnis: null,
@@ -66,6 +66,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.bu = response.data.bisnis;
         _this2.divisi = response.data.divisi;
         _this2.level = response.data.prio;
+        _this2.requestor = response.data.username;
       })["catch"](function (error) {
         if (response.status == '401') {
           return _this2.$router.push('/login');

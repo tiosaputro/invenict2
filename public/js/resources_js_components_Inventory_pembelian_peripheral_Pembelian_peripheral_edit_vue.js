@@ -22,7 +22,6 @@ __webpack_require__.r(__webpack_exports__);
       submitted: false,
       checkname: [],
       checkto: [],
-      id: localStorage.getItem('id'),
       stat: [{
         nama: "Aktif",
         code: "T"

@@ -35,8 +35,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       code: this.$route.params.code,
       token: localStorage.getItem('token'),
       checkname: [],
-      checkto: [],
-      id: localStorage.getItem('id')
+      checkto: []
     }, "code", null);
   },
   mounted: function mounted() {

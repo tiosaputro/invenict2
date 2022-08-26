@@ -6,6 +6,7 @@
     <Access v-else-if="$route.path === '/access'" />
     <Detail v-else-if="$route.name === 'Detail Peripheral'" />
     <CheckVerif v-else-if="$route.name === 'Check Verif'" />
+    <CheckLegality v-else-if="$route.name === 'Check Legality'" />
     <App v-else @change-theme="changeTheme" />
 </template>
 
@@ -19,7 +20,7 @@ import Access from './Access';
 import Detail from './Master_peripheral_detail_qrcode';
 import LoginLegality from './LoginLegality';
 import CheckVerif from './checkVerif';
-
+import CheckLegality from './CheckLegality';
 
 export default {
     methods: {
@@ -43,7 +44,8 @@ export default {
         Access,
         Detail,
         LoginLegality,
-        CheckVerif
+        CheckVerif,
+        CheckLegality
     }
 }
 </script>

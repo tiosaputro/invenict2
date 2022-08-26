@@ -2008,7 +2008,7 @@ class IctController extends Controller
     Public function edit($code)
     {
         $ict = DB::table('ireq_mst as im')
-            ->SELECT('im.ireq_id','im.ireq_no','im.ireq_prio_level','im.ireq_type','im.ireq_date','im.ireq_bu','im.ireq_divisi_user','im.ireq_user')
+            ->SELECT('im.ireq_id','im.ireq_requestor','im.ireq_no','im.ireq_prio_level','im.ireq_type','im.ireq_date','im.ireq_bu','im.ireq_divisi_user','im.ireq_user')
             ->LEFTJOIN('lookup_refs as lr',function ($join) {
                 $join->on('im.ireq_type','lr.lookup_code')
                       ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);

@@ -163,7 +163,6 @@ export default {
          cash: [],
          filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
          token: localStorage.getItem('token'),
-         id : localStorage.getItem('id'),
          checkname : [],
          checkto : [],
          tes:[],

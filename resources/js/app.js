@@ -10,7 +10,8 @@ import './assets/themes/vela-blue/theme.css';
 import 'jquery/dist/jquery.min';
 import 'popper.js/dist/popper.min';
 import 'bootstrap/dist/js/bootstrap.min';
-import 'vue-loading-overlay/dist/vue-loading.css';
+import 'vue-loading-overlay/dist/vue-loading.css';  
+
 
 import { createApp, reactive } from 'vue';
 import axios from 'axios';
@@ -55,7 +56,7 @@ import ToastService from 'primevue/toastservice';
 import Toolbar from 'primevue/toolbar';
 import Tooltip from 'primevue/tooltip';
 import ToggleButton from 'primevue/togglebutton';
-import Treeselect from 'vue3-treeselect';
+import TreeSelect from 'primevue/treeselect';
 import VueAxios from 'vue-axios';
 import CodeHighlight from './pages/AppCodeHighlight.js';
 import BlockViewer from './pages/BlockViewer.vue';
@@ -120,6 +121,6 @@ app.component('Textarea', Textarea);
 app.component('Toast', Toast);
 app.component('Toolbar', Toolbar);
 app.component('ToggleButton', ToggleButton);
-app.component('TreeSelect', Treeselect);
+app.component('TreeSelect',TreeSelect);
 
 app.mount('#app');

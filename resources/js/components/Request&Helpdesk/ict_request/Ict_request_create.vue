@@ -162,7 +162,7 @@ export default {
       priolev:null,
       usr_name:null,
       usr_divisi : null,
-      requestor:localStorage.getItem('usr_name'),
+      requestor:'',
       ket:null,
       divisi:[],
       bisnis: null,
@@ -196,6 +196,7 @@ export default {
         this.bu = response.data.bisnis;
         this.divisi = response.data.divisi;
         this.level = response.data.prio;
+        this.requestor = response.data.username; 
       }).catch(error=>{
         if(response.status == '401'){
           return this.$router.push('/login')

@@ -216,9 +216,8 @@ export default {
         input: 'DD MMM YYYY'
       },
       token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
-        id : localStorage.getItem('id'),
+      checkname : [],
+      checkto : [],
     };
   },
   mounted(){
