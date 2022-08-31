@@ -527,14 +527,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "Yes",
+        label: "Approve",
         onClick: _cache[9] || (_cache[9] = function ($event) {
-          return _ctx.approve();
+          return $options.Approve();
         }),
         "class": "p-button",
         autofocus: ""
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        label: "No",
+        label: "Cancel",
         onClick: _cache[10] || (_cache[10] = function ($event) {
           return $options.cancelApprove();
         }),

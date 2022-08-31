@@ -140,8 +140,8 @@
           </div>
         </div>
           <template #footer>
-            <Button label="Yes" @click="approve()" class="p-button" autofocus />
-            <Button label="No" @click="cancelApprove()" class="p-button-text" />
+            <Button label="Approve" @click="Approve()" class="p-button" autofocus />
+            <Button label="Cancel" @click="cancelApprove()" class="p-button-text" />
           </template>
       </Dialog>
       </div>

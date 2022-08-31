@@ -11145,7 +11145,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Enter Remark"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"submitted && !rbr.ket\" class=\"p-error\">\n                            Reason not filled\n                            </small> ")])])])];
+      , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"submitted && !rbr.ket\" class=\"p-error\">\r\n                            Reason not filled\r\n                            </small> ")])])])];
     }),
     _: 1
     /* STABLE */

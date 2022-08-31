@@ -1,18 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
-<!--[if gte mso 9]>
 <xml>
   <o:OfficeDocumentSettings>
     <o:AllowPNG/>
-    <o:PixelsPerInch>96</o:PixelsPerInch>
+    <o:PixelsPerInch></o:PixelsPerInch>
   </o:OfficeDocumentSettings>
 </xml>
-<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="x-apple-disable-message-reformatting">
-  <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title></title>
   
     <style type="text/css">
@@ -103,13 +101,13 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   
   
 
-<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" type="text/css"><!--<![endif]-->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" type="text/css">
 
 </head>
 
 <body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #e7e7e7;color: #000000">
-  <!--[if IE]><div class="ie-container"><![endif]-->
-  <!--[if mso]><div class="mso-container"><![endif]-->
+ <div class="ie-container">
+  <div class="mso-container">
   <table style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #e7e7e7;width:100%" cellpadding="0" cellspacing="0">
   <tbody>
   <tr>
@@ -120,18 +118,18 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   
   <tr style="vertical-align: top">
     <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-    <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #e7e7e7;"><![endif]-->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #e7e7e7;">
     
 
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-100" style="max-width: 320px;min-width: 800px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -147,11 +145,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -161,12 +159,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-100" style="max-width: 320px;min-width: 800px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -188,11 +186,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -202,12 +200,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -223,14 +221,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -246,14 +244,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -269,14 +267,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -292,14 +290,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -315,11 +313,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -329,12 +327,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -350,14 +348,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -373,14 +371,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -396,14 +394,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -419,14 +417,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -442,11 +440,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -456,12 +454,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-100" style="max-width: 320px;min-width: 800px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -483,11 +481,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -497,12 +495,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 1px;background-color: transparent">
   <div class="u-row no-stack" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 1px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 1px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #34708a;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_64" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -518,14 +516,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #34708a;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_65" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -541,14 +539,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #34708a;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_63" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -564,14 +562,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #34708a;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_58" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -587,14 +585,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="background-color: #34708a;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #34708a;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_59" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -610,11 +608,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -624,12 +622,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row no-stack" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #ffffff;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_82" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -645,14 +643,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #ffffff;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_11" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -668,14 +666,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #ffffff;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_12" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -691,14 +689,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #ffffff;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_71" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -714,14 +712,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="160" style="background-color: #ffffff;width: 160px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-20" style="max-width: 320px;min-width: 160px;display: table-cell;vertical-align: top;">
   <div style="background-color: #ffffff;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table id="u_content_heading_72" style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -737,11 +735,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -751,12 +749,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-100" style="max-width: 320px;min-width: 800px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -778,11 +776,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -792,12 +790,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="400" style="width: 400px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="400" style="width: 400px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-50" style="max-width: 320px;min-width: 400px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -805,12 +803,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:9px;font-family:arial,helvetica,sans-serif;" align="left">
         
 <div align="center">
-  <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family:arial,helvetica,sans-serif;"><tr><td style="font-family:arial,helvetica,sans-serif;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:8000/check-verif/{{$link->link_id}}/approve" style="height:34px; v-text-anchor:middle; width:92px;" arcsize="12%" stroke="f" fillcolor="#3AAEE0"><w:anchorlock/><center style="color:#FFFFFF;font-family:arial,helvetica,sans-serif;"><![endif]-->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family:arial,helvetica,sans-serif;"><tr><td style="font-family:arial,helvetica,sans-serif;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:8000/ictinv_resp/{{$link->link_id}}/approve" style="height:34px; v-text-anchor:middle; width:92px;" arcsize="12%" stroke="f" fillcolor="#3AAEE0"><w:anchorlock/><center style="color:#FFFFFF;font-family:arial,helvetica,sans-serif;">
     @php $appname = env('APP_URL'); @endphp
-    <a href="$appname/ictinv_resp/{{$link->link_id}}/approve" target="_blank" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #3AAEE0; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
+    <a href="{{$appname}}/ictinv_resp/{{$link->link_id}}/approve" target="_blank" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #3AAEE0; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
       <span style="display:block;padding:10px 19px 10px 20px;line-height:100%;"><span style="font-size: 14px; line-height: 14px;">Approve</span></span>
     </a>
-  <!--[if mso]></center></v:roundrect></td></tr></table><![endif]-->
+  </center></v:roundrect></td></tr></table>
 </div>
 
       </td>
@@ -818,14 +816,14 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-<!--[if (mso)|(IE)]><td align="center" width="400" style="width: 400px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+</td>
+<td align="center" width="400" style="width: 400px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-50" style="max-width: 320px;min-width: 400px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -833,11 +831,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
 <div align="center">
-  <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family:arial,helvetica,sans-serif;"><tr><td style="font-family:arial,helvetica,sans-serif;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:8000/check-verif/{{$link->link_id}}/reject" style="height:37px; v-text-anchor:middle; width:80px;" arcsize="11%" stroke="f" fillcolor="#e03e2d"><w:anchorlock/><center style="color:#FFFFFF;font-family:arial,helvetica,sans-serif;"><![endif]-->
-    <a href="$appname/ictinv_resp/{{$link->link_id}}/reject" target="_blank" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #e03e2d; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family:arial,helvetica,sans-serif;"><tr><td style="font-family:arial,helvetica,sans-serif;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:8000/ictinv_resp/{{$link->link_id}}/reject" style="height:37px; v-text-anchor:middle; width:80px;" arcsize="11%" stroke="f" fillcolor="#e03e2d"><w:anchorlock/><center style="color:#FFFFFF;font-family:arial,helvetica,sans-serif;">
+    <a href="{{$appname}}/ictinv_resp/{{$link->link_id}}/reject" target="_blank" style="box-sizing: border-box;display: inline-block;font-family:arial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #e03e2d; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
       <span style="display:block;padding:10px 20px;line-height:120%;"><span style="font-size: 14px; line-height: 16.8px;">Reject</span></span>
     </a>
-  <!--[if mso]></center></v:roundrect></td></tr></table><![endif]-->
+  </center></v:roundrect></td></tr></table>
 </div>
 
       </td>
@@ -845,11 +843,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -859,12 +857,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="800" style="width: 800px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-100" style="max-width: 320px;min-width: 800px;display: table-cell;vertical-align: top;">
   <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -886,11 +884,11 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
@@ -900,12 +898,12 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;"><![endif]-->
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:800px;"><tr style="background-color: transparent;">
       
-<!--[if (mso)|(IE)]><td align="center" width="800" style="background-color: #1b1c4a;width: 800px;padding: 27px 0px 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+<td align="center" width="800" style="background-color: #1b1c4a;width: 800px;padding: 27px 0px 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top">
 <div class="u-col u-col-100" style="max-width: 320px;min-width: 800px;display: table-cell;vertical-align: top;">
   <div style="background-color: #1b1c4a;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="padding: 27px 0px 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
+  <div style="padding: 27px 0px 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
   
 <table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
@@ -922,23 +920,23 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
   </tbody>
 </table>
 
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+  </div>
   </div>
 </div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+</td>
+      </tr></table></td></tr></table>
     </div>
   </div>
 </div>
 
 
-    <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+    </td></tr></table>
     </td>
   </tr>
   </tbody>
   </table>
-  <!--[if mso]></div><![endif]-->
-  <!--[if IE]></div><![endif]-->
+  </div>
+ </div>
 </body>
 
 </html>

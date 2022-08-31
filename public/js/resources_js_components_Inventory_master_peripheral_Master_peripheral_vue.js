@@ -587,7 +587,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           /* PROPS */
           , ["onClick"]), [[_directive_tooltip, 'Delete', void 0, {
             top: true
-          }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\n                icon=\"pi pi-qrcode\"\n                class=\"p-button-rounded p-button-success mt-2\"\n                @click=\"previewBarcode(slotProps.data.invent_code)\"\n                v-tooltip.right=\"'Print QR-Code'\"\n              /> ")];
+          }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\r\n                icon=\"pi pi-qrcode\"\r\n                class=\"p-button-rounded p-button-success mt-2\"\r\n                @click=\"previewBarcode(slotProps.data.invent_code)\"\r\n                v-tooltip.right=\"'Print QR-Code'\"\r\n              /> ")];
         }),
         _: 1
         /* STABLE */
@@ -599,7 +599,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Dialog\n          id=\"qrcode\"\n          v-model:visible=\"displayBarcode\"\n          :style=\"{ width: '400px' }\"\n          header=\"Preview QR-Code\"\n          :modal=\"true\"\n          class=\"p-fluid\"\n        >\n        <qrcode-vue :value=\"barcode\" ref=\"qr\" :size=\"300\" level=\"L\" /> \n          <template #footer>\n            <Button label=\"Pdf\" icon=\"pi pi-download\" @click=\"downloadBarcodePdf()\" class=\"p-button-danger\" />\n          </template>\n        </Dialog> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+  , ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Dialog\r\n          id=\"qrcode\"\r\n          v-model:visible=\"displayBarcode\"\r\n          :style=\"{ width: '400px' }\"\r\n          header=\"Preview QR-Code\"\r\n          :modal=\"true\"\r\n          class=\"p-fluid\"\r\n        >\r\n        <qrcode-vue :value=\"barcode\" ref=\"qr\" :size=\"300\" level=\"L\" /> \r\n          <template #footer>\r\n            <Button label=\"Pdf\" icon=\"pi pi-download\" @click=\"downloadBarcodePdf()\" class=\"p-button-danger\" />\r\n          </template>\r\n        </Dialog> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.displayKode,
     "onUpdate:visible": _cache[17] || (_cache[17] = function ($event) {
       return $data.displayKode = $event;

@@ -398,7 +398,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.invent_code ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.invent_code), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Deskripsi</label>\n                 <div class=\"col\">\n                     <InputText\n                        type=\"text\"\n                        v-model=\"ict.ireq_desc\"\n                        placeholder=\"Enter Deskripsi(Optional)\"\n                     />\n                </div>\n              </div> "), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Deskripsi</label>\r\n                 <div class=\"col\">\r\n                     <InputText\r\n                        type=\"text\"\r\n                        v-model=\"ict.ireq_desc\"\r\n                        placeholder=\"Enter Deskripsi(Optional)\"\r\n                     />\r\n                </div>\r\n              </div> "), this.cekTipeReq == 'P' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
     modelValue: $data.ict.ireq_qty,
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.ict.ireq_qty = $event;
@@ -441,7 +441,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   })])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\" v-if=\"this.cekTipeReq =='P'\">\n                    <img :src=\"'/master_peripheral/' + ict.photo\" class=\"ict-image\" v-if=\"this.ict.photo && !this.kode\" />\n                    <img :src=\"'/master_peripheral/' + ict.photo.photo\" class=\"ict-image\" v-if=\"this.kode && this.ict.photo.photo\" />\n              </div> ")])])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\" v-if=\"this.cekTipeReq =='P'\">\r\n                    <img :src=\"'/master_peripheral/' + ict.photo\" class=\"ict-image\" v-if=\"this.ict.photo && !this.kode\" />\r\n                    <img :src=\"'/master_peripheral/' + ict.photo.photo\" class=\"ict-image\" v-if=\"this.kode && this.ict.photo.photo\" />\r\n              </div> ")])])]);
 }
 
 /***/ }),

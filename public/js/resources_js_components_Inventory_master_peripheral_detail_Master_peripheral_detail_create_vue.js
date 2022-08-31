@@ -706,7 +706,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "options", "class"]), $data.errors.invent_kondisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.invent_kondisi[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\n                <label class=\"col-fixed w-9rem\">QR-Code</label>\n                  <div class=\"col-fixed w-9rem\">\n                    <div class=\"p-inputgroup\">\n                      <InputText v-model=\"barcode\" readonly  v-if=\"barcode\"/>\n                      <img :src=\"'assets/loading2.gif'\" height=\"50\" v-if=\"!aktif && !barcode\">\n                        <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"barcode\" @click=\"hapus()\" @v-tooltip=\"'Click to delete'\"/>\n                        <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\n                    </div>\n                      <small v-if=\"errors.barcode\" class=\"p-error\">\n                          {{ errors.barcode[0] }}\n                      </small>\n                  </div>\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                <label class=\"col-fixed w-9rem\">QR-Code</label>\r\n                  <div class=\"col-fixed w-9rem\">\r\n                    <div class=\"p-inputgroup\">\r\n                      <InputText v-model=\"barcode\" readonly  v-if=\"barcode\"/>\r\n                      <img :src=\"'assets/loading2.gif'\" height=\"50\" v-if=\"!aktif && !barcode\">\r\n                        <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"barcode\" @click=\"hapus()\" @v-tooltip=\"'Click to delete'\"/>\r\n                        <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\r\n                    </div>\r\n                      <small v-if=\"errors.barcode\" class=\"p-error\">\r\n                          {{ errors.barcode[0] }}\r\n                      </small>\r\n                  </div>\r\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.detail.invent_bu,
     "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $data.detail.invent_bu = $event;
@@ -733,7 +733,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastloct\" class=\"p-error\">\n                      {{ errors.lastloct[0] }}\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastloct\" class=\"p-error\">\r\n                      {{ errors.lastloct[0] }}\r\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.detail.invent_pengguna_terakhir,
     "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
@@ -742,7 +742,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\n                      {{ errors.lastuser[0] }}\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [_hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\r\n                      {{ errors.lastuser[0] }}\r\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [_hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.detail.invent_divisi_update,
     "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
@@ -751,7 +751,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\n                      {{ errors.lastuser[0] }}\n                    </small> ")])]), _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\r\n                      {{ errors.lastuser[0] }}\r\n                    </small> ")])]), _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.detail.invent_bu_update,
     "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
@@ -760,7 +760,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\n                      {{ errors.lastuser[0] }}\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\r\n                      {{ errors.lastuser[0] }}\r\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -801,7 +801,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 34
   /* CLASS, HYDRATE_EVENTS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"error.foto\">\n                      {{ error.foto }}\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"error.foto\">\r\n                      {{ error.foto }}\r\n                    </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.detail.invent_lokasi_previous,
     "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
@@ -810,7 +810,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevloct\">\n                    {{ errors.prevloct[0] }}\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [_hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevloct\">\r\n                    {{ errors.prevloct[0] }}\r\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [_hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.detail.invent_pengguna_previous,
     "onUpdate:modelValue": _cache[18] || (_cache[18] = function ($event) {
@@ -822,7 +822,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\n                    {{ errors.prevuser[0] }}\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [_hoisted_70, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                    {{ errors.prevuser[0] }}\r\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [_hoisted_70, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.detail.invent_divisi_previous,
     "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
@@ -834,7 +834,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\n                    {{ errors.prevuser[0] }}\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [_hoisted_73, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                    {{ errors.prevuser[0] }}\r\n                  </small> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [_hoisted_73, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.detail.invent_bu_previous,
     "onUpdate:modelValue": _cache[20] || (_cache[20] = function ($event) {
@@ -846,7 +846,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: ""
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\n                    {{ errors.prevuser[0] }}\n                  </small> ")])])])])])]);
+  , ["modelValue", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                    {{ errors.prevuser[0] }}\r\n                  </small> ")])])])])])]);
 }
 
 /***/ }),
