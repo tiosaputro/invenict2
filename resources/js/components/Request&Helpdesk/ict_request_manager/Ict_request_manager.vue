@@ -208,7 +208,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_reason" header="Alasan" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
                     <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -598,18 +598,18 @@
             >
             <div class="field">
               <div class="field grid">
-                <label class="col-fixed w-9rem">Alasan</label>
+                <label class="col-fixed w-9rem">Reason</label>
                   <div class="co-fixed w-9rem">
                     <Textarea
                       :autoResize="true"
                       type="text"
                       v-model="reason.ket"
                       rows="5"
-                      placeholder="Masukan Alasan"
+                      placeholder="Enter Reason"
                       :class="{ 'p-invalid': submitted && !reason.ket }"
                     />
                     <small v-if="submitted && !reason.ket" class="p-error">
-                    Alasan Harus Diisi
+                    Reason Not Filled
                     </small>
                   </div>
                 </div>
@@ -648,7 +648,7 @@
             <Dialog header="Confirmation" v-model:visible="ConfirmationVerifikasi" :style="{width: '350px'}" :modal="true">
                   <div class="confirmation-content">
                       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                      <span>Verifikasi Request</span>
+                      <span>Verification Request</span>
                   </div>
                   <template #footer>
                       <Button label="Reject" icon="pi pi-times" @click="rejectRequest" class="p-button-raised p-button-danger p-button-text"/>

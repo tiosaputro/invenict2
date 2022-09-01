@@ -59,6 +59,9 @@ use App\Jobs\SendNotifWaitingApprovalFromHigherLevel;
 use App\Jobs\SendNotifApprovedFromHigherLevel;
 use App\Jobs\SendNotifWaitingApprovalFromIctManager;
 use App\Jobs\SendNotifApprovedFromIctManager;
+use App\Jobs\SendNotifRejectByIctManager;
+use App\Jobs\SendNotifRejectByHigherLevel;
+use App\Jobs\SendNotifRejectByReviewer;
 use Mail;
 use App\Location;
 use Illuminate\Support\Facades\Hash;
@@ -143,7 +146,29 @@ class IctController extends Controller
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctController_rejectByAtasan",
         ]);
-        
+        $ICT = DB::table('ireq_dtl as id')
+            ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+                $join->on('id.invent_code','lrs.lookup_code')
+                    ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
+            ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
+                $join->on('id.ireq_type','lrfs.lookup_code')
+                     ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->LEFTJOIN('vcompany_refs as vr',function ($join) {
+                $join->on('im.ireq_bu','vr.company_code');
+            })
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
+            ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
+            ->SELECT('im.ireq_reason','loc.loc_email','mu.usr_fullname','mu.usr_email','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+                    'im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
+            ->WHERE('im.ireq_id',$code)
+            ->ORDERBY('id.ireqd_id','ASC')
+            ->get();
+        $email_address = $ICT[0]->usr_email .= '@emp.id';
+        SendNotifRejectByHigherLevel::dispatchAfterResponse($email_address,$ICT);
         return response()->json('Success Update');
     }
     function getDataManager()
@@ -354,7 +379,29 @@ class IctController extends Controller
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctController_rejectByManager",
         ]);
-        
+        $ICT = DB::table('ireq_dtl as id')
+            ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+                $join->on('id.invent_code','lrs.lookup_code')
+                    ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
+            ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
+                $join->on('id.ireq_type','lrfs.lookup_code')
+                     ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->LEFTJOIN('vcompany_refs as vr',function ($join) {
+                $join->on('im.ireq_bu','vr.company_code');
+            })
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
+            ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
+            ->SELECT('im.ireq_reason','loc.loc_email','mu.usr_fullname','mu.usr_email','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+                    'im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
+            ->WHERE('im.ireq_id',$code)
+            ->ORDERBY('id.ireqd_id','ASC')
+            ->get();
+        $email_address = $ICT[0]->usr_email .= '@emp.id';
+        SendNotifRejectByIctManager::dispatchAfterResponse($email_address,$ICT);
         return response()->json('Success Update');
     }
     function getRemarkReviewer($ireq_id)
@@ -967,6 +1014,29 @@ class IctController extends Controller
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctController_rejectReviewer",
         ]);
+        $ICT = DB::table('ireq_dtl as id')
+            ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+                $join->on('id.invent_code','lrs.lookup_code')
+                    ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+            })
+            ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
+                $join->on('id.ireq_type','lrfs.lookup_code')
+                     ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->LEFTJOIN('vcompany_refs as vr',function ($join) {
+                $join->on('im.ireq_bu','vr.company_code');
+            })
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
+            ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
+            ->SELECT('im.ireq_reason','loc.loc_email','mu.usr_fullname','mu.usr_email','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+                    'im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
+            ->WHERE('im.ireq_id',$code)
+            ->ORDERBY('id.ireqd_id','ASC')
+            ->get();
+        $email_address = $ICT[0]->usr_email .= '@emp.id';
+        SendNotifRejectByReviewer::dispatchAfterResponse($email_address,$ICT);
         return response()->json('Success Update Status');
     }
     function needApprovalAtasan($ireq_id)

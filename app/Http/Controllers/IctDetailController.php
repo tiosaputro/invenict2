@@ -34,7 +34,7 @@ class IctDetailController extends Controller
         ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_attachment',
          'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
          'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
-         'id.ireq_desc', 'id.ireq_qty',DB::raw("(lrss.catalog_name ||'-'|| lrs.catalog_name) as name"),'llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
+         'id.ireq_desc', 'id.ireq_qty',DB::raw("(lrss.catalog_name ||' - '|| lrs.catalog_name) as name"),'llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
         ->leftJoin('catalog_refs as lrs',function ($join) {
             $join->on('id.invent_code','lrs.catalog_id');
         })

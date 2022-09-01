@@ -47,6 +47,7 @@
                     <TreeSelect 
                       v-model="requestcatalog" 
                       :options="catalog"
+                      :filter="true"
                       placeholder="Select Catalog"
                       display="chip"
                       :class="{ 'p-invalid': errors.catalog }"
