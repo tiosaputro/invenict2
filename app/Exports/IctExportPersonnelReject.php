@@ -16,12 +16,14 @@ class IctExportPersonnelReject implements FromView
         return view('excel/Laporan_Ict_Detail_Reject', [ 'Ict' =>DB::table('ireq_dtl as id')
         ->SELECT('imm.ireq_no','id.ireq_assigned_to1_reason','imm.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
-            'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date','id.ireq_status as status', 'lrs.lookup_desc as name')
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-            ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
-        })
+            'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date','id.ireq_status as status', DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"))
         ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
         ->LEFTJOIN('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->LEFTJOIN('lookup_refs as llr','id.ireq_status','llr.lookup_code')
         ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')

@@ -6,7 +6,7 @@
           <ConfirmDialog> </ConfirmDialog>
             <Toolbar class="mb-4">
               <template v-slot:start>
-                <h4>Status Change Request</h4>
+                <h4>ICT Request - Status Change Request</h4>
               </template>
             </Toolbar>
             <TabView ref="tabview1">
@@ -125,7 +125,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
@@ -202,7 +202,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
@@ -320,7 +320,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
@@ -410,7 +410,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="invent_code" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">

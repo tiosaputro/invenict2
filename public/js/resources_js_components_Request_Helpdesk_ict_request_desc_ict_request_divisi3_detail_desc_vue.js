@@ -232,7 +232,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "width": "100px"
   }
-}, "Nama Peripheral", -1
+}, "Nama Items", -1
 /* HOISTED */
 );
 
@@ -341,7 +341,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
-        header: "Nama Peripheral",
+        header: "Nama Items",
         sortable: true,
         style: {
           "min-width": "12rem"

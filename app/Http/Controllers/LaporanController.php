@@ -195,12 +195,14 @@ class LaporanController extends Controller
                     $join->on('id.ireq_type','lrs.lookup_code')
                           ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
                 })
-                ->leftJoin('lookup_refs as lrfs',function ($join) {
-                    $join->on('id.invent_code','lrfs.lookup_code')
-                          ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+                ->LEFTJOIN('catalog_refs as cr',function ($join) {
+                    $join->on('id.invent_code','cr.catalog_id');
+                })
+                ->LEFTJOIN('catalog_refs as crs',function ($join) {
+                    $join->on('cr.parent_id','crs.catalog_id');
                 })
                 ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
-                'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+                'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),'im.ireq_date','im.ireq_requestor','im.ireq_user',
                 'dr.div_name','id.ireq_qty')
                 ->where('id.ireq_status',$status)
                 ->whereBetween('im.ireq_date',[$Newstart,$Newend])
@@ -220,12 +222,14 @@ class LaporanController extends Controller
                     $join->on('id.ireq_type','lrs.lookup_code')
                           ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
                 })
-                ->leftJoin('lookup_refs as lrfs',function ($join) {
-                    $join->on('id.invent_code','lrfs.lookup_code')
-                          ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+                ->LEFTJOIN('catalog_refs as cr',function ($join) {
+                    $join->on('id.invent_code','cr.catalog_id');
+                })
+                ->LEFTJOIN('catalog_refs as crs',function ($join) {
+                    $join->on('cr.parent_id','crs.catalog_id');
                 })
                 ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
-                'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+                'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),'im.ireq_date','im.ireq_requestor','im.ireq_user',
                 'dr.div_name','id.ireq_qty')
                 ->whereBetween('im.ireq_date',[$Newstart,$Newend])
                 ->orderBy('im.ireq_date','DESC')
@@ -245,12 +249,14 @@ class LaporanController extends Controller
                     $join->on('id.ireq_type','lrs.lookup_code')
                           ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
                 })
-                ->leftJoin('lookup_refs as lrfs',function ($join) {
-                    $join->on('id.invent_code','lrfs.lookup_code')
-                          ->whereRaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+                ->LEFTJOIN('catalog_refs as cr',function ($join) {
+                    $join->on('id.invent_code','cr.catalog_id');
+                })
+                ->LEFTJOIN('catalog_refs as crs',function ($join) {
+                    $join->on('cr.parent_id','crs.catalog_id');
                 })
                 ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
-                'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as kategori','im.ireq_date','im.ireq_requestor','im.ireq_user',
+                'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),'im.ireq_date','im.ireq_requestor','im.ireq_user',
                 'dr.div_name','id.ireq_qty')
                 ->where('id.ireq_status',$status)
                 ->orderBy('im.ireq_date','DESC')

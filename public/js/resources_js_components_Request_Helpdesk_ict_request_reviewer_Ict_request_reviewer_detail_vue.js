@@ -345,7 +345,7 @@ var _hoisted_23 = {
 
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
-}, "Peripheral", -1
+}, "Items", -1
 /* HOISTED */
 );
 
@@ -518,7 +518,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
-        header: "Peripheral",
+        header: "Items",
         sortable: true,
         style: {
           "min-width": "8rem"

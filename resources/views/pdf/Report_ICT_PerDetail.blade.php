@@ -494,7 +494,7 @@
                             <tr>
                                 <th>{{$detail[0]->ireq_requestor}}</th>
                                 <th>{{$detail[0]->div_name}}</th>
-                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkRequester); !!}<br>{{$detail[0]->date_request}}</th>
+                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkRequester) !!}<br>{{$detail[0]->date_request}}</th>
                             </tr>
                             <tr>
                                 <td>Name</td>
@@ -510,11 +510,11 @@
                                     <th>{{$detail[0]->usr_fullname}}</th>
                                     <th>{{$detail[0]->div_name}} Manager</th>
                                   @if($detail[0]->status == "RA1")
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel); !!}<br><strong>Rejected</strong> on {{$detail[0]->date_approver1}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel) !!}<br><strong>Rejected</strong> on {{$detail[0]->date_approver1}}</th>
                                   @elseif($detail[0]->status == "NA1")
                                     <th rowspan="2" style="font-size:12pt; font-weight:bold;">Waiting Approval</th>
 									@else
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel); !!}<br><strong>Approved</strong> on {{$detail[0]->date_approver1}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel) !!}<br><strong>Approved</strong> on {{$detail[0]->date_approver1}}</th>
                                   @endif
 
                                 </tr>
@@ -546,11 +546,11 @@
                                     <th>Arifin Tahir</th>
                                     <th>ICT Manager</th>
                                     @if($detail[0]->status=='RA2')
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('L')->size(80)->generate($linkIctManager); !!} <br> <strong>Rejected</strong> On {{$detail[0]->date_approver2}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('L')->size(80)->generate($linkIctManager) !!} <br> <strong>Rejected</strong> On {{$detail[0]->date_approver2}}</th>
                                     @elseif($detail[0]->status=='NA2') 
                                     <th rowspan="2" style="font-size:10pt;"> Waiting Approval</th>
 									@else
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkIctManager); !!} <br><strong>Approved</strong> On {{$detail[0]->date_approver2}}</th>                         
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkIctManager) !!} <br><strong>Approved</strong> On {{$detail[0]->date_approver2}}</th>                         
                                     @endif
                                     <th>{{$detail[0]->ireq_approver2_remark}}</th>
                                 </tr>

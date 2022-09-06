@@ -763,7 +763,7 @@ var _hoisted_3 = {
 };
 
 var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Reviewer", -1
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request - Reviewer", -1
   /* HOISTED */
   );
 });
@@ -1275,21 +1275,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                columnKey: "ireq_assigned_to",
+                field: "ireq_assigned_to",
                 header: "Personnel ICT",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
-              }, {
-                body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-                  return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_assigned_to), 1
-                  /* TEXT */
-                  )];
-                }),
-                _: 1
-                /* STABLE */
-
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+                field: "ireq_count_id",
+                header: "Total Detail",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 headerStyle: "min-width:25rem"
               }, {
@@ -2404,7 +2402,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "kategori",
-                header: "Peripheral",
+                header: "Items",
                 style: {
                   "min-width": "8rem"
                 },
@@ -2654,7 +2652,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "kategori",
-                header: "Peripheral",
+                header: "Items",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -2973,7 +2971,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
             field: "kategori",
-            header: "Peripheral",
+            header: "Items",
             sortable: true,
             style: {
               "min-width": "12rem"

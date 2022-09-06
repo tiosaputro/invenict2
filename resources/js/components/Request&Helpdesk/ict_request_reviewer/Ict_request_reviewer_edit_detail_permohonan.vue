@@ -50,7 +50,7 @@
                  </div>
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
-                <label class="col-fixed w-9rem" style="width:120px">Peripheral</label>
+                <label class="col-fixed w-9rem" style="width:120px">Items</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
                         v-model="ict.invent_code"
@@ -265,7 +265,7 @@ export default {
           this.error.ireq_type = "Request Type not filled"
         }
         if(this.ict.invent_code == null){
-          this.error.invent_code = "Peripheral not filled"
+          this.error.invent_code = "Items not filled"
         }
         if(this.ict.ireq_remark == null){
           this.error.ireq_remark = "Remark not filled"

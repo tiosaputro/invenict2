@@ -25,12 +25,14 @@ class IctExportManagerSudahDikerjakan implements FromView
             $join->on('id.ireq_type','lrs.lookup_code')
                   ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
         })
-        ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
-            $join->on('id.invent_code','lrfs.lookup_code')
-                  ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
         })
         ->SELECT('vr.name as ireq_bu','im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
-        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type','lrfs.lookup_desc as name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_requestor','im.ireq_user',
+        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_requestor','im.ireq_user',
         'dr.div_name','id.ireq_qty','id.ireq_status as status')
         ->WHERE('id.ireq_status','D')
         ->ORDERBY('im.ireq_date','DESC')

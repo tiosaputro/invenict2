@@ -41,7 +41,7 @@
         Loading ICT Request (Detail) data. Please wait.
       </template>
           <Column field="ireq_type" header="Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="name" header="Peripheral" :sortable="true" style="min-width:12rem"/>
+          <Column field="name" header="Items" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
           <Column header="Attachment" style="min-width:10rem">

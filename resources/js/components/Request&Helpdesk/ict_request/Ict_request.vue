@@ -6,7 +6,7 @@
           <ConfirmDialog> </ConfirmDialog>
             <Toolbar class="mb-4">
               <template v-slot:start>
-                <h4>Request Status</h4>
+                <h4>ICT Request - Status</h4>
               </template>
             </Toolbar> 
             <TabView ref="tabView2" v-model:activeIndex="active">
@@ -516,7 +516,7 @@
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
@@ -610,7 +610,7 @@
                   <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
@@ -911,8 +911,9 @@ export default {
             detail: "Successfully Submit",
             life: 3000,
           });
-          this.axios.get('api/updateStatusSubmit/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.getIct();
+          this.axios.get('api/updateStatusSubmit/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+            this.getIct();
+          });
         },
         reject: () => {},
       })

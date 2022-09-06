@@ -44,7 +44,7 @@
           </template>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:6rem"/>
-          <Column field="name" header="Peripheral" :sortable="true" style="min-width:4rem"/>
+          <Column field="name" header="Items" :sortable="true" style="min-width:4rem"/>
           <Column header="Attachment" style="min-width:10rem">
             <template #body="slotProps">
               <p v-if="slotProps.data.ireq_attachment == null"></p>

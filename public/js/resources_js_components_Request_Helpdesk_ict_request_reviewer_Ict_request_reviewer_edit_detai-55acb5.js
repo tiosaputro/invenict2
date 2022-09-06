@@ -180,7 +180,7 @@ __webpack_require__.r(__webpack_exports__);
           }
 
           if (this.ict.invent_code == null) {
-            this.error.invent_code = "Peripheral not filled";
+            this.error.invent_code = "Items not filled";
           }
 
           if (this.ict.ireq_remark == null) {
@@ -330,7 +330,7 @@ var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
     style: {
       "width": "120px"
     }
-  }, "Peripheral", -1
+  }, "Items", -1
   /* HOISTED */
   );
 });

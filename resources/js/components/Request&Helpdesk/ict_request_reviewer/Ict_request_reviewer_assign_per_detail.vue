@@ -42,7 +42,7 @@
             Loading data. Please wait.
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:9rem"/>
-          <Column field="name" header="Peripheral" :sortable="true" style="min-width:9rem"/>
+          <Column field="name" header="Items" :sortable="true" style="min-width:9rem"/>
           <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:9rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:9rem"/>
@@ -115,7 +115,7 @@
               </div>
               <div class="p-fluid">
                 <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">Peripheral</label>
+                <label class="col-fixed w-9rem" style="width:100px">Items</label>
                  <div class="col-fixed">
                      <InputText
                         v-model="assign.name"

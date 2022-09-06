@@ -6,7 +6,7 @@
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
-            <h4>Reviewer</h4>
+            <h4>ICT Request - Reviewer</h4>
           </template>
         </Toolbar>
             <TabView ref="tabView2" v-model:activeIndex="active1">
@@ -49,11 +49,8 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
-                  <Column columnKey="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem">
-                  <template #body="slotProps">
-                    {{slotProps.data.ireq_assigned_to}}
-                  </template>
-                  </Column>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_count_id" header="Total Detail" :sortable="true" style="min-width:10rem"/>
                   <Column headerStyle="min-width:25rem">
                     <template #body="slotProps">
                       <Button
@@ -663,7 +660,7 @@
                   <Column field="ireq_no" header="No. Request" style="min-width:10rem" :sortable="true"/>
                   <Column field="ireqd_id" header="No. Detail" style="min-width:10rem" :sortable="true"/>
                   <Column field="ireq_type" header="Request Type" style="min-width:10rem" :sortable="true"/>
-                  <Column field="kategori" header="Peripheral" style="min-width:8rem" :sortable="true"/>
+                  <Column field="kategori" header="Items" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_qty" header="Qty" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_remark" header="Remark" style="min-width:12rem" :sortable="true"/>
                   <Column field="ireq_date" header="Request Date" style="min-width:10rem" :sortable="true">
@@ -769,7 +766,7 @@
                   </Column>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
@@ -928,7 +925,7 @@
                 </template>
                 <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
                 <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
-                <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:12rem"/>
+                <Column field="kategori" header="Items" :sortable="true" style="min-width:12rem"/>
                 <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
                 <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
                 <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>

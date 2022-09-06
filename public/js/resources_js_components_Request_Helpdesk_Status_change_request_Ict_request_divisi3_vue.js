@@ -514,7 +514,7 @@ var _hoisted_3 = {
 };
 
 var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Status Change Request", -1
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request - Status Change Request", -1
   /* HOISTED */
   );
 });
@@ -1159,7 +1159,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "invent_code",
-                header: "Peripheral",
+                header: "Items",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1335,7 +1335,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "invent_code",
-                header: "Peripheral",
+                header: "Items",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1569,7 +1569,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "invent_code",
-                header: "Peripheral",
+                header: "Items",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
@@ -1777,7 +1777,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "invent_code",
-                header: "Peripheral",
+                header: "Items",
                 sortable: true,
                 style: {
                   "min-width": "10rem"

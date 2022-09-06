@@ -44,7 +44,7 @@
           </template>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-          <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+          <Column field="invent_desc" header="Items" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:14rem"/>
           <Column header="Attachment" style="min-width:10rem">

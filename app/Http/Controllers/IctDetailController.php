@@ -6,7 +6,6 @@ use App\IctDetail;
 use App\Ict;
 use Illuminate\Support\Facades\Storage;
 use App\Link;
-use App\Jobs\SendNotifInProgress;
 use App\Exports\IctDetailExport;
 use App\Exports\IctDetailExportReject;
 use App\Exports\IctDetailTabReviewerExport;
@@ -19,6 +18,8 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Jobs\SendNotifPersonnel;
+use App\Jobs\SendNotifInProgress;
+use App\Jobs\SendNotifDone;
 
 class IctDetailController extends Controller
 {
@@ -34,12 +35,12 @@ class IctDetailController extends Controller
         ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_attachment',
          'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
          'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
-         'id.ireq_desc', 'id.ireq_qty',DB::raw("(lrss.catalog_name ||' - '|| lrs.catalog_name) as name"),'llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
-        ->leftJoin('catalog_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.catalog_id');
+         'id.ireq_desc', 'id.ireq_qty',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
+        ->leftJoin('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
         })
-        ->leftJoin('catalog_refs as lrss',function ($join) {
-            $join->on('lrs.parent_id','lrss.catalog_id');
+        ->leftJoin('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
         })
         ->leftJoin('lookup_refs as lr',function ($join) {
             $join->on('id.ireq_type','lr.lookup_code')
@@ -58,14 +59,16 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.ireq_attachment','id.ireq_qty','id.ireq_status as status','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
-            'lr.lookup_desc as ireq_type','llr.lookup_desc as ireq_status','id.ireq_desc','lrs.lookup_desc as name',
+            'lr.lookup_desc as ireq_type','llr.lookup_desc as ireq_status','id.ireq_desc',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),
             DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
         })
-        ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
-        ->leftjoin('lookup_refs as llr','id.ireq_status','llr.lookup_code')
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
+        ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->LEFTJOIN('lookup_refs as llr','id.ireq_status','llr.lookup_code')
         ->where('id.ireq_id',$code)
         ->where(function($query){
             return $query
@@ -83,11 +86,13 @@ class IctDetailController extends Controller
     {
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.ireq_assigned_to1','id.ireqd_id','lr.lookup_desc as ireq_type', 
-                  'lrs.lookup_desc as name','id.ireq_remark','id.ireq_qty','id.ireq_desc')
+                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'id.ireq_remark','id.ireq_qty','id.ireq_desc')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                  ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
         })
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('imm.ireq_id',$code)
@@ -110,15 +115,17 @@ class IctDetailController extends Controller
         ]);
 
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
-        $cek = $this->cekStatusPenugasan($code);
-        return json_encode($ireq_id);
+        $cek = $this->cekStatusPenugasan($ireq_id);
+        return json_encode($cek);
     }
     function cekStatusPenugasan($ireq_id){
         $ict = DB::table('ireq_dtl as id')
         ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
         })
         ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
             $join->on('id.ireq_type','lrfs.lookup_code')
@@ -131,20 +138,18 @@ class IctDetailController extends Controller
         ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
         ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
         ->SELECT('loc.loc_email','mu.usr_email','mu.usr_fullname','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
-                'im.ireq_status','im.ireq_user','lrs.lookup_desc as invent_code','id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
+                'im.ireq_status','im.ireq_user',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
         ->WHERE('im.ireq_id',$ireq_id)
+        ->WHERE('id.ireq_status','T')
         ->ORDERBY('id.ireqd_id','ASC')
         ->get();
-            if($ict[0]->ireq_status == 'T'){
-                $mail = $ict[0]->usr_email .= '@emp.id';
-                SendNotifInProgress::dispatchAfterResponse($mail,$ict);
-                $message = 'Success';
-                return $message;
-            }
-            else{
-                $message = 'Success';
-                return $message;
-            }
+
+        // $mail = $ict[0]->usr_email .= '@emp.id';
+        $mail = 'adhitya.saputro@emp.id';
+        SendNotifInProgress::dispatchAfterResponse($mail,$ict);
+        $message = 'Success';
+        return $message;
+
     }
     function rbp(Request $request,$ireq_id){ //reject by personnel
         $usr_fullname = Auth::User()->usr_fullname;
@@ -365,12 +370,14 @@ class IctDetailController extends Controller
     public function cetak_pdf($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('id.*','lrs.lookup_desc as invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+        ->select('id.*',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_desc"),'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
                 'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
         })
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
@@ -385,12 +392,14 @@ class IctDetailController extends Controller
     public function cetak_pdff($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('id.*','lrs.lookup_desc as name','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+        ->select('id.*',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu','dr.div_name',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as datee"), DB::raw("TO_CHAR(imm.ireq_date,'HH24:MI') as timee"),
                 'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
         })
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
@@ -411,14 +420,16 @@ class IctDetailController extends Controller
     public function cetak_pdf_tab_reviewer($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('id.*','lrs.lookup_desc as name','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+        ->select('id.*',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
                 'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
-        })
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
         ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
         ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
@@ -436,14 +447,16 @@ class IctDetailController extends Controller
     public function cetak_pdf_tab_verifikasi($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('id.ireq_type','id.ireq_desc','id.ireq_qty','id.ireq_remark','lrs.lookup_desc as name','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
+        ->select('id.ireq_type','id.ireq_desc','id.ireq_qty','id.ireq_remark',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
                 'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
-        })
-        ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+       ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+       ->LEFTJOIN('catalog_refs as cr',function ($join) {
+           $join->on('id.invent_code','cr.catalog_id');
+       })
+       ->LEFTJOIN('catalog_refs as crs',function ($join) {
+           $join->on('cr.parent_id','crs.catalog_id');
+       })
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
         ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
         ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
@@ -463,12 +476,14 @@ class IctDetailController extends Controller
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status','lrs.lookup_desc as name')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
-        })
+                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"))
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
         ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
         ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
@@ -492,13 +507,15 @@ class IctDetailController extends Controller
                 DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY HH24:MI') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned"),
                 DB::raw("TO_CHAR(imm.ireq_approver1_date,' dd Mon YYYY HH24:MI') as date_approver1"),'imm.ireq_verificator',
                 DB::raw("COALESCE(imm.ireq_assigned_to2,imm.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireqq_status',
-                DB::raw("TO_CHAR(imm.ireq_approver2_date,' dd Mon YYYY HH24:MI') as date_approver2"),'lrs.lookup_desc as name',
+                DB::raw("TO_CHAR(imm.ireq_approver2_date,' dd Mon YYYY HH24:MI') as date_approver2"),DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),
                 'lr.lookup_desc as ireq_status',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to_detail"),
                 DB::raw("TO_CHAR(id.ireq_assigned_date,' dd Mon YYYY') as date_assigned_detail"),'id.ireq_assigned_remark as assigned_remark_detail','imm.ireq_assigned_remark as assigned_remark_request',
                 'id.ireqd_id', DB::raw("TO_CHAR(id.ireq_date_closing,' dd Mon YYYY') as date_closing_detail"),DB::raw("TO_CHAR(imm.ireq_date_closing,' dd Mon YYYY') as date_closing_request"))
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
         })
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('location_refs as loc_refs','imm.ireq_loc','loc_refs.loc_code')
@@ -537,12 +554,14 @@ class IctDetailController extends Controller
     public function getDetailVerif($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.*','lr.lookup_desc as ireq_type','lrs.lookup_desc as invent_desc')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
-        })
+        ->select('id.*','lr.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_desc"))
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
         ->orderby('id.ireqd_id','ASC')
@@ -552,11 +571,13 @@ class IctDetailController extends Controller
     public function getDetail($ireqd_id,$ireq_id){
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.ireq_attachment','id.ireq_assigned_to1','id.ireq_assigned_remark','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 
-        'lrs.lookup_desc as name','lr.lookup_desc as ireq_type','id.ireq_qty','id.ireq_remark','id.ireq_assigned_to1_reason')
+        DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'lr.lookup_desc as ireq_type','id.ireq_qty','id.ireq_remark','id.ireq_assigned_to1_reason')
         ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
-        ->leftJoin('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                 ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
         })
         ->leftJoin('lookup_refs as lr',function ($join) {
             $join->on('id.ireq_type','lr.lookup_code')
@@ -604,6 +625,34 @@ class IctDetailController extends Controller
         ]);
         
         $result = DB::connection('oracle')->getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
+        $ict = DB::table('ireq_dtl as id')
+        ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
+        ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
+            $join->on('id.ireq_type','lrfs.lookup_code')
+                 ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+        })
+        ->LEFTJOIN('vcompany_refs as vr',function ($join) {
+            $join->on('im.ireq_bu','vr.company_code');
+        })
+        ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
+        ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
+        ->SELECT('loc.loc_email','mu.usr_email','mu.usr_fullname','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+                'im.ireq_status','im.ireq_user',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
+        ->WHERE('im.ireq_id',$code)
+        ->WHERE('id.ireq_status','D')
+        ->ORDERBY('id.ireqd_id','ASC')
+        ->get();
+
+        // $mail = $ict[0]->usr_email .= '@emp.id';
+        $mail = 'adhitya.saputro@emp.id';
+        SendNotifDone::dispatchAfterResponse($mail,$ict);
         return response()->json('Updated Successfully');
     }
     public function updateNote(Request $request,$code){

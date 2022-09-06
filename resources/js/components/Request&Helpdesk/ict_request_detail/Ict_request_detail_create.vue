@@ -302,7 +302,7 @@ export default {
           });
         }else{
           if(this.kode == null){
-            this.error.kode = "Peripheral not filled"
+            this.error.kode = "Catalog not filled"
           }
           if(this.tipereq == null){
             this.error.tipereq = "Request Type not filled"

@@ -554,7 +554,7 @@ table, td { color: #000000; } a { color: #0000ee; text-decoration: none; } @medi
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <h1 class="v-font-size" style="margin: 0px; color: #000000; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 15px;">
-    <strong>Peripheral</strong>
+    <strong>Items</strong>
   </h1>
 
       </td>

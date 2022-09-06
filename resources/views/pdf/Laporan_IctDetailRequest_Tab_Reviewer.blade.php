@@ -51,7 +51,7 @@
 						<thead>
 							<tr>
                                 <th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tipe Request</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Nama Peripheral</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Nama Items</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Deskripsi</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Qty</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Keterangan</th>

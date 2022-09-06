@@ -6,7 +6,7 @@
           <ConfirmDialog> </ConfirmDialog>
             <Toolbar class="p-mb-4">
               <template v-slot:start>
-                <h4>ICT Manager Approval</h4>
+                <h4>ICT Request - ICT Manager Approval</h4>
               </template>
             </Toolbar>
             <TabView ref="tabview1" v-model:activeIndex="active2">
@@ -433,7 +433,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
@@ -527,7 +527,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="kategori" header="Peripheral" :sortable="true" style="min-width:10rem"/>
+                  <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">

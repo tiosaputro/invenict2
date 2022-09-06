@@ -45,7 +45,7 @@
             Loading ICT Request (Detail) data. Please wait.
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true"  style="min-width:10rem"/>
-          <Column field="name" header="Peripheral" :sortable="true"  style="min-width:8rem"/>
+          <Column field="name" header="Items" :sortable="true"  style="min-width:8rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
@@ -134,7 +134,7 @@
               </div>
           </div>
           <div class="field grid">
-            <label class="col-fixed w-9rem">Peripheral</label>
+            <label class="col-fixed w-9rem">Items</label>
               <div class="col-fixed">
                 <InputText
                   v-model="assign.name"

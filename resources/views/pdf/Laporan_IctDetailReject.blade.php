@@ -440,7 +440,7 @@
 								<th>No Request</th>
 								<th>No Detail</th>
 								<th>Request Type</th>
-								<th>Peripheral</th>
+								<th>Items</th>
 								<th>Qty</th>
 								<th>Remark</th>
 								<th>Request Date</th>

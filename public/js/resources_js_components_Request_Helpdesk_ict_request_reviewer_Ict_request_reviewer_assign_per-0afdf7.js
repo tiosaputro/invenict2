@@ -296,7 +296,7 @@ var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
     style: {
       "width": "100px"
     }
-  }, "Peripheral", -1
+  }, "Items", -1
   /* HOISTED */
   );
 });
@@ -436,7 +436,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "name",
-        header: "Peripheral",
+        header: "Items",
         sortable: true,
         style: {
           "min-width": "9rem"

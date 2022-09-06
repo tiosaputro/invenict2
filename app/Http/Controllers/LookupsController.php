@@ -42,13 +42,6 @@ class LookupsController extends Controller
         ->get();
         return json_encode($ref);
     }
-    function lookupService(){
-        $ref = DB::table('lookup_refs')
-        ->select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
-        ->where('lookup_type','Kat_Service')
-        ->get();
-        return json_encode($ref);
-    }
     public function save(Request $request) 
     {
         $message = [
@@ -231,13 +224,7 @@ class LookupsController extends Controller
         ->orderBy('lookup_desc','ASC')
         ->get();
 
-        $kode = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-        ->where('lookup_status','T')
-        ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%'])
-        ->orderBy('lookup_desc','ASC')
-        ->get();
-
-        return response()->json(['ref'=>$ref,'kode'=>$kode],200);
+        return response()->json(['ref'=>$ref],200);
     }
     public function getAddMaster()
     {

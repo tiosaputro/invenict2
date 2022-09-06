@@ -19,12 +19,14 @@ class IctExportReviewerSelesai implements FromView
         ->SELECT('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user','llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            'lrs.lookup_desc as name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
-        })
+            DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
         ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->LEFTJOIN('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
         ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
@@ -42,12 +44,14 @@ class IctExportReviewerSelesai implements FromView
         ->SELECT('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user','llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            'lrs.lookup_desc as name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
-        })
+            DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
         ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->LEFTJOIN('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
         ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
@@ -69,12 +73,14 @@ class IctExportReviewerSelesai implements FromView
         ->SELECT('imm.ireq_no','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user','llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
             'vr.name as ireq_bu','lr.lookup_desc as ireq_type',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),
-            'lrs.lookup_desc as name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('id.invent_code','lrs.lookup_code')
-                ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%']);
-        })
+            DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
         ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
         ->join('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
         ->LEFTJOIN('lookup_refs as llr','imm.ireq_status','llr.lookup_code')
         ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')

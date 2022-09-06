@@ -208,7 +208,7 @@ __webpack_require__.r(__webpack_exports__);
             });
           } else {
             if (this.kode == null) {
-              this.error.kode = "Peripheral not filled";
+              this.error.kode = "Catalog not filled";
             }
 
             if (this.tipereq == null) {

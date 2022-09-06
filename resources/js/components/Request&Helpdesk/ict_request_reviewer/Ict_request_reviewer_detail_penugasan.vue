@@ -43,7 +43,7 @@
             Loading data. Please wait.
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-          <Column field="name" header="Peripheral" :sortable="true" style="min-width:4rem"/>
+          <Column field="name" header="Items" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
           <Column header="Attachment" style="min-width:10rem">
