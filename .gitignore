@@ -5,6 +5,7 @@
 /storage/*.key
 /storage
 /vendor
+/test
 /config/database.php
 .env
 .env.backup
