@@ -26,7 +26,6 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-        
        <template #header>
             <div class="table-header text-right">
               <span class="p-input-icon-left">
@@ -86,17 +85,24 @@
                    <Button
                     label="Back"
                     v-tooltip.bottom="'Click to back'"
-                    class="p-button-raised p-button mr-2"
+                    class="p-button-raised p-button mr-2 mt-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
                     name: 'Ict Request Reviewer'})"
                   />
                    <Button
                     label="Pdf"
-                    class="p-button-raised p-button-danger mt-2"
+                    class="p-button-raised p-button-danger mr-2 mt-2"
                     v-tooltip.bottom="'Click to print out (PDF)'"
                     icon="pi pi-file-pdf"
                     @click="CetakPdf()"
+                  />
+                  <Button
+                    class="p-button-raised p-button-success mr-2 mt-2"
+                    icon="pi pi-calendar"
+                    label="Add Calendar"
+                    @click="AddToCalendar()"
+                    v-tooltip.bottom="'Click to Add Calendar'"
                   />
                 </div>
 			        </div>
@@ -125,13 +131,18 @@ export default {
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        code:null
+        code:null,
+        detailRequest:[],
     };
   },
   mounted() {
     this.cekUser();
   },
   methods: {
+    AddToCalendar(){
+      window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt=20200213T000000Z&enddt=20200214T000000Z&subject=Test+Event&location=Jakarta");
+      // window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt="+this.detailRequest.ireq_date+"+&enddt="+this.detailRequest.ireq_date+"&subject=Request+"+this.detailRequest.ireq_requestor+"+"+this.detailRequest.noreq+"&body="+this.detail.map((x)=>x.ireq_remark)+"");
+    },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
@@ -167,6 +178,7 @@ export default {
     },
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.detailRequest = response.data;
         this.kode = response.data.noreq;
         this.status = response.data.cekstatus;
       });

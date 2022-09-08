@@ -49,7 +49,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_count_id" header="Total Detail" :sortable="true" style="min-width:10rem"/>
                   <Column headerStyle="min-width:25rem">
                     <template #body="slotProps">
@@ -188,6 +188,7 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelAtasanDivisi.some(el=> el > 0)"/>
                   <Column headerStyle="min-width:20rem">
                     <template #body="slotProps">
                        <Button
@@ -313,6 +314,7 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
+                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelmanager.some(el=> el > 0)"/>
                   <Column headerStyle="min-width:15rem">
                     <template #body="slotProps">
                        <Button
@@ -1007,7 +1009,9 @@ export default {
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        show:false,
+        showPersonelPermohonan:[],
+        showPersonelAtasanDivisi:[],
+        showPersonelmanager:[],
     };
   },
   created() {
@@ -1058,9 +1062,12 @@ export default {
     getIct(){
       this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.permohonan = response.data.ict;
+          this.showPersonelPermohonan = this.permohonan.map((x)=>x.ireq_count_status);
           this.loading = false;
           this.atasandivisi = response.data.ict1;
+          this.showPersonelAtasanDivisi = this.atasandivisi.map((x)=>x.ireq_count_status);
           this.manager = response.data.ict2;
+          this.showPersonelmanager = this.manager.map((x)=>x.ireq_count_status);
           this.reject = response.data.ict3;
           this.penugasan = response.data.ict7;
           this.sedangDikerjakan = response.data.ict4;
@@ -1079,8 +1086,7 @@ export default {
           if(error.response.status == 403){
             this.$router.push('/access');
           }
-        });
-        
+        });    
     },  
     formatDate(date) {
       return moment(date).format("DD MMM YYYY HH:mm")

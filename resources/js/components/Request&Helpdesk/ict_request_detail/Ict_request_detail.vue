@@ -38,25 +38,25 @@
                 params: { code: code },
               })"
             />
-              <span class="block mt-2 md:mt-0 p-input-icon-left">
-                <i class="pi pi-search" />
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search" />
                 <InputText
                   v-model="filters['global'].value"
                   placeholder="Search. . ."
                 />
-              </span>
-            </div>
-            <div class="table-header text-right" v-else-if="this.status != null">
-              <span class="p-input-icon-left">
-                <i class="pi pi-search" />
-                  <InputText
-                    v-model="filters['global'].value"
-                    placeholder="Search. . ."
-                  />
-              </span>
-            </div>
-          </template>
-           <template #empty>
+            </span>
+         </div>
+         <div class="table-header text-right" v-else-if="this.status != null">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
+        </template>
+          <template #empty>
             Not Found
           </template>
           <template #loading>
@@ -135,7 +135,7 @@
                 </div>
 			        </div>
             </div>
-           </template>
+          </template>
         </DataTable>   
       </div>
     </div>
@@ -222,9 +222,10 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.loading = true;
-          this.getIctDetail();
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getIctDetail();
+          });
         },
         reject: () => {},
       });

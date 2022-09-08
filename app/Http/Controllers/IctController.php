@@ -60,6 +60,7 @@ use App\Jobs\SendNotifApprovedFromIctManager;
 use App\Jobs\SendNotifRejectByIctManager;
 use App\Jobs\SendNotifRejectByHigherLevel;
 use App\Jobs\SendNotifRejectByReviewer;
+use App\Jobs\SendNotifWaitingRecieveByPersonnel;
 use App\Location;
 
 class IctController extends Controller
@@ -1280,41 +1281,23 @@ class IctController extends Controller
     function submitAssignPerRequest($ireq_id)
     {
         $ict = Ict::where('ireq_id',$ireq_id)->first();
+        $dtll = IctDetail::where('ireq_id',$ireq_id)->get();
         $name = [];
         $email = [];
         if($ict->ireq_status == 'RT'){
-
-            $ict->ireq_status = 'T';
-            $ict->ireq_verificator = Auth::user()->usr_name;
-            $ict->ireq_assigned_date = $this->newUpdate;
-            $ict->last_update_date = $this->newUpdate;    
-            $ict->last_updated_by = Auth::user()->usr_name;
-            $ict->program_name = "IctController_submitAssignPerRequest";
-            $ict->save();
-            
-            $dtl = DB::table('ireq_dtl')
-            ->WHERE('ireq_id',$ireq_id)
-            ->update([
-                'ireq_status' => 'T',
-                'ireq_assigned_date' => $this->newUpdate,
-                'last_update_date' => $this->newUpdate,
-                'last_updated_by' => Auth::user()->usr_name,
-                'program_name' => "IctController_submitAssignPerRequest"
-            ]);
-            $dtll = IctDetail::where('ireq_id',$ireq_id)->get();
+            $status = 'T'; 
             foreach ($dtll as $d) {
                 array_push($name, $d->ireq_assigned_to2);
             }
-            $usr_email = DB::table('mng_users')->SELECT('usr_email')->WHEREIn('usr_fullname',$name)->pluck('usr_email');
-            foreach($usr_email as $s){
-                $emailpush = $s .= '@emp.id';
-                array_push($email,$emailpush);
+         }else{
+            foreach ($dtll as $d) {
+                array_push($name, $d->ireq_assigned_to1);
             }
-            // SendNotifPersonnel::dispatchAfterResponse($email,$ict);
-        }else{
-            $ict->ireq_status = 'NT';
-            $ict->ireq_assigned_date = $this->newUpdate;
+            $status = 'NT';
+         }
+            $ict->ireq_status = $status;
             $ict->ireq_verificator = Auth::user()->usr_name;
+            $ict->ireq_assigned_date = $this->newUpdate;
             $ict->last_update_date = $this->newUpdate;    
             $ict->last_updated_by = Auth::user()->usr_name;
             $ict->program_name = "IctController_submitAssignPerRequest";
@@ -1323,23 +1306,45 @@ class IctController extends Controller
             $dtl = DB::table('ireq_dtl')
             ->WHERE('ireq_id',$ireq_id)
             ->update([
-                'ireq_status' => 'NT',
+                'ireq_status' =>$status,
                 'ireq_assigned_date' => $this->newUpdate,
                 'last_update_date' => $this->newUpdate,
                 'last_updated_by' => Auth::user()->usr_name,
                 'program_name' => "IctController_submitAssignPerRequest"
             ]);
-            $dtll = IctDetail::where('ireq_id',$ireq_id)->get();
-            foreach ($dtll as $d) {
-                array_push($name, $d->ireq_assigned_to1);
-            }
             $usr_email = DB::table('mng_users')->SELECT('usr_email')->WHEREIn('usr_fullname',$name)->pluck('usr_email');
             foreach($usr_email as $s){
                 $emailpush = $s .= '@emp.id';
                 array_push($email,$emailpush);
             }
-            // SendNotifPersonnel::dispatchAfterResponse($email,$ict);
-        }
+            $Ict = DB::table('ireq_dtl as id')
+            ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->LEFTJOIN('catalog_refs as cr',function ($join) {
+                $join->on('id.invent_code','cr.catalog_id');
+            })
+            ->LEFTJOIN('catalog_refs as crs',function ($join) {
+                $join->on('cr.parent_id','crs.catalog_id');
+            })
+            ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
+                $join->on('id.ireq_type','lrfs.lookup_code')
+                     ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->LEFTJOIN('vcompany_refs as vr',function ($join) {
+                $join->on('im.ireq_bu','vr.company_code');
+            })
+            ->LEFTJOIN('location_refs as lr',function ($join) {
+                $join->on('im.ireq_loc','lr.loc_code');
+            })
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
+            ->SELECT('lr.loc_email','im.ireq_no','mu.usr_fullname','mu.usr_email','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+                    'im.ireq_user',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
+            ->WHERE('im.ireq_id',$ireq_id)
+            ->ORDERBY('id.ireqd_id','ASC')
+            ->get();
+            SendNotifPersonnel::dispatchAfterResponse($email,$ict);
+            $email_address = $Ict[0]->usr_email .= '@emp.id';
+            SendNotifWaitingRecieveByPersonnel::dispatchAfterResponse($email_address,$Ict);
         return response()->json('success');
 
     }

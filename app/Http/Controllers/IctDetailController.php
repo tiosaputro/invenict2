@@ -16,7 +16,6 @@ use Excel;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Jobs\SendNotifPersonnel;
 use App\Jobs\SendNotifInProgress;
 use App\Jobs\SendNotifDone;
@@ -36,7 +35,7 @@ class IctDetailController extends Controller
          'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
          'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
          'id.ireq_desc', 'id.ireq_qty',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
-        ->leftJoin('catalog_refs as cr',function ($join) {
+         ->leftJoin('catalog_refs as cr',function ($join){
             $join->on('id.invent_code','cr.catalog_id');
         })
         ->leftJoin('catalog_refs as crs',function ($join) {
@@ -177,7 +176,7 @@ class IctDetailController extends Controller
         ->leftJoin('ireq_dtl as id',function ($join) {
             $join->on('im.ireq_id','id.ireq_id');
         })
-        ->select('im.ireq_no as noreq','im.ireq_type','im.ireq_status as cekStatus',
+        ->select(DB::raw("TO_CHAR(im.ireq_date, 'dd/MM/yyyy') AS ireq_date "),'im.ireq_requestor','im.ireq_no as noreq','im.ireq_type','im.ireq_status as cekStatus',
                 'lr.lookup_desc as ireq_status')
          ->where('im.ireq_id',$code)
          ->first();

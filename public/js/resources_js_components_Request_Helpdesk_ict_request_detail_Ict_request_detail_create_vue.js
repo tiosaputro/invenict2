@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      loading: false,
       errors: [],
       error: [],
       detail: [],
@@ -333,6 +334,8 @@ __webpack_require__.r(__webpack_exports__);
           this.error.foto = "File too big (> 1MB)";
         } else {
           if (this.tipereq == 'P') {
+            this.loading = true;
+
             if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null') {
               var data = new FormData();
               data.append("catalog", this.kode);
@@ -356,9 +359,12 @@ __webpack_require__.r(__webpack_exports__);
                   return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
                 }, 1000);
               })["catch"](function (error) {
+                _this6.loading = false;
                 _this6.errors = error.response.data.errors;
               });
             } else {
+              this.loading = false;
+
               if (this.tipereq == null) {
                 this.error.tipereq = "Request Type not filled";
               }
@@ -368,6 +374,8 @@ __webpack_require__.r(__webpack_exports__);
               }
             }
           } else {
+            this.loading = true;
+
             if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null') {
               var _data4 = new FormData();
 
@@ -395,9 +403,12 @@ __webpack_require__.r(__webpack_exports__);
                   return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
                 }, 1000);
               })["catch"](function (error) {
+                _this6.loading = false;
                 _this6.errors = error.response.data.errors;
               });
             } else {
+              this.loading = false;
+
               if (this.tipereq == null) {
                 this.error.tipereq = "Request Type not filled";
               }
@@ -409,6 +420,8 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       } else {
+        this.loading = true;
+
         if (this.tipereq == 'P') {
           if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null') {
             var _data5 = new FormData();
@@ -437,9 +450,12 @@ __webpack_require__.r(__webpack_exports__);
                 return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
+              _this6.loading = false;
               _this6.errors = error.response.data.errors;
             });
           } else {
+            this.loading = false;
+
             if (this.tipereq == null) {
               this.error.tipereq = "Request Type not filled";
             }
@@ -449,6 +465,8 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
         } else {
+          this.loading = true;
+
           if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null') {
             var _data6 = new FormData();
 
@@ -474,9 +492,12 @@ __webpack_require__.r(__webpack_exports__);
                 return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
+              _this6.loading = false;
               _this6.errors = error.response.data.errors;
             });
           } else {
+            this.loading = false;
+
             if (this.tipereq == null) {
               this.error.tipereq = "Request Type not filled";
             }
@@ -648,15 +669,16 @@ var _hoisted_28 = {
 var _hoisted_29 = {
   "class": "form-group"
 };
-var _hoisted_30 = {
+var _hoisted_30 = ["src"];
+var _hoisted_31 = {
   "class": "col-sm-6"
 };
-var _hoisted_31 = {
+var _hoisted_32 = {
   key: 0,
   "class": "field grid"
 };
 
-var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
   }, null, -1
@@ -664,22 +686,22 @@ var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_33 = {
+var _hoisted_34 = {
   "class": "col-10 md-6"
 };
-var _hoisted_34 = {
+var _hoisted_35 = {
   "class": "card",
   style: {
     "height": "20 rem"
   }
 };
-var _hoisted_35 = ["src"];
-var _hoisted_36 = {
+var _hoisted_36 = ["src"];
+var _hoisted_37 = {
   key: 1,
   "class": "field grid"
 };
 
-var _hoisted_37 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
   }, null, -1
@@ -687,10 +709,10 @@ var _hoisted_37 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_38 = {
+var _hoisted_39 = {
   "class": "col-10 md-6"
 };
-var _hoisted_39 = {
+var _hoisted_40 = {
   "class": "card"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -824,25 +846,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* HYDRATE_EVENTS, NEED_PATCH */
   ), $data.error.foto ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.foto), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [this.loading == false ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 0,
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Save",
     type: "submit"
   }, null, 512
   /* NEED_PATCH */
-  ), [[_directive_tooltip, 'Click to save detail', void 0, {
+  )), [[_directive_tooltip, 'Click to save detail', void 0, {
     bottom: true
-  }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.loading == false ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 1,
     "class": "p-button-rounded p-button-success mr-2 mt-2",
     icon: "pi pi-plus",
     label: "Add Request",
     onClick: $options.saveclick
   }, null, 8
   /* PROPS */
-  , ["onClick"]), [[_directive_tooltip, 'Click to save & add new detail', void 0, {
+  , ["onClick"])), [[_directive_tooltip, 'Click to save & add new detail', void 0, {
     bottom: true
-  }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.loading == false ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 2,
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
@@ -856,16 +881,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[_directive_tooltip, 'Click to cancel create detail', void 0, {
+  )), [[_directive_tooltip, 'Click to cancel create detail', void 0, {
     bottom: true
-  }]])])], 32
+  }]]) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+    key: 3,
+    src: '/assets/loading6.gif',
+    height: "70",
+    "class": "mb-3"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_30))])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [this.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [this.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $data.preview,
     "class": "ict-image"
   }, null, 8
   /* PROPS */
-  , _hoisted_35)])])])) : this.pdf ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Pdf, {
+  , _hoisted_36)])])])) : this.pdf ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Pdf, {
     src: $data.preview,
     "class": "ict-pdf"
   }, null, 8

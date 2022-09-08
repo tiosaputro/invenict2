@@ -42,6 +42,7 @@
         "uninstall": "0.0.0",
         "v-calendar": "^3.0.0-alpha.5",
         "vue": "^3.2.12",
+        "vue-add-to-calendar": "^1.0.7",
         "vue-axios": "^3.3.7",
         "vue-barcode-reader": "git+https://github.com/Zubaj/vue-barcode-reader.git",
         "vue-chartjs-exporter": "^1.0.2",

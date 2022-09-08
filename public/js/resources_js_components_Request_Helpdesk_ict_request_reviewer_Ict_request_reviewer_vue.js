@@ -60,7 +60,9 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      show: false
+      showPersonelPermohonan: [],
+      showPersonelAtasanDivisi: [],
+      showPersonelmanager: []
     };
   },
   created: function created() {
@@ -117,9 +119,18 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.permohonan = response.data.ict;
+        _this.showPersonelPermohonan = _this.permohonan.map(function (x) {
+          return x.ireq_count_status;
+        });
         _this.loading = false;
         _this.atasandivisi = response.data.ict1;
+        _this.showPersonelAtasanDivisi = _this.atasandivisi.map(function (x) {
+          return x.ireq_count_status;
+        });
         _this.manager = response.data.ict2;
+        _this.showPersonelmanager = _this.manager.map(function (x) {
+          return x.ireq_count_status;
+        });
         _this.reject = response.data.ict3;
         _this.penugasan = response.data.ict7;
         _this.sedangDikerjakan = response.data.ict4;
@@ -1274,14 +1285,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "10rem"
                 }
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+              }), _this.showPersonelPermohonan.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 0,
                 field: "ireq_assigned_to",
                 header: "Personnel ICT",
                 sortable: true,
                 style: {
                   "min-width": "10rem"
                 }
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_count_id",
                 header: "Total Detail",
                 sortable: true,
@@ -1534,7 +1548,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 _: 1
                 /* STABLE */
 
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+              }), _this.showPersonelAtasanDivisi.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 0,
+                field: "ireq_assigned_to",
+                header: "Personnel ICT",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 headerStyle: "min-width:20rem"
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1760,7 +1784,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 _: 1
                 /* STABLE */
 
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+              }), _this.showPersonelmanager.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 0,
+                field: "ireq_assigned_to",
+                header: "Personnel ICT",
+                sortable: true,
+                style: {
+                  "min-width": "10rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 headerStyle: "min-width:15rem"
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {

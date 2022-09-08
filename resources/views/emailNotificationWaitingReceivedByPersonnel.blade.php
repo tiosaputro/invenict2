@@ -222,7 +222,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
     <p style="font-size: 14px; line-height: 140%;">Dear Mr/Ms, <strong>{{$ict[0]->usr_fullname}}</strong></p>
-    <p style="font-size: 14px; line-height: 140%;">Your request number {{$ict[0]->ireq_no}} <strong>In Progress</strong>.</p>
+    <p style="font-size: 14px; line-height: 140%;">Your request number {{$ict[0]->ireq_no}} <strong>is waiting to be received by personnel ICT</strong>.</p>
   </div>
 
       </td>

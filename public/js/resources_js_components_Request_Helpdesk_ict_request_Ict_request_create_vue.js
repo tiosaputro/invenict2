@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      loading: false,
       errors: [],
       level: [],
       error: [],
@@ -78,6 +79,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.errors = [];
       this.error = [];
+      this.loading = true;
 
       if ( // this.tipereq != null &&
       this.priolev != null && this.usr_name != null && this.usr_divisi != null && this.bisnis != null) {
@@ -110,9 +112,12 @@ __webpack_require__.r(__webpack_exports__);
             });
           }, 1000);
         })["catch"](function (error) {
+          _this3.loading = false;
           _this3.errors = error.response.data.errors;
         });
       } else {
+        this.loading = false;
+
         if (this.priolev == null) {
           this.error.priolev = "Priority level not filled";
         }
@@ -251,6 +256,7 @@ var _hoisted_23 = {
 var _hoisted_24 = {
   "class": "form-group"
 };
+var _hoisted_25 = ["src"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
@@ -352,19 +358,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "options", "class"]), $data.error.usr_divisi ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.usr_divisi), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 0,
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Save",
     type: "submit"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 1,
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return _ctx.$router.push('/ict-request');
     })
-  })])], 32
+  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+    key: 2,
+    src: 'assets/loading6.gif',
+    height: "70",
+    "class": "mb-3"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_25))])], 32
   /* HYDRATE_EVENTS */
   )])])]);
 }

@@ -101,6 +101,7 @@
               </div>
               <div class="form-group">
                  <Button
+                  v-if="this.loading == false"
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
                   v-tooltip.bottom="'Click to save detail'"
@@ -108,6 +109,7 @@
                   type="submit"
                 />
                 <Button
+                  v-if="this.loading == false"
                   class="p-button-rounded p-button-success mr-2 mt-2"
                   icon="pi pi-plus"
                   v-tooltip.bottom="'Click to save & add new detail'"
@@ -115,6 +117,7 @@
                   @click="saveclick"
                 />
                 <Button
+                  v-if="this.loading == false"
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mt-2"
                   v-tooltip.bottom="'Click to cancel create detail'"
@@ -123,6 +126,7 @@
                     name: 'Ict Request Detail',
                     params: { code: this.$route.params.code }, })"
                 />
+                <img :src="'/assets/loading6.gif'" v-else height="70" class="mb-3" />
               </div>
              </form>
            </div>
@@ -152,6 +156,7 @@
 export default {
   data() {
     return {
+      loading:false,
       errors: [],
       error:[],
       detail: [],
@@ -384,6 +389,7 @@ export default {
       }
       else{
         if(this.tipereq=='P'){
+        this.loading = true;
         if ( this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null' ) 
         {
           const data = new FormData();
@@ -401,9 +407,11 @@ export default {
           });
           setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
           }).catch(error=>{
+            this.loading = false;
             this.errors = error.response.data.errors;
           });
         }else{
+          this.loading = false;
           if(this.tipereq == null){
             this.error.tipereq = "Request Type not filled"
           }
@@ -412,6 +420,7 @@ export default {
           }
         }
         }else{
+          this.loading = true;
           if ( this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null' ) 
         {
           const data = new FormData();
@@ -428,9 +437,11 @@ export default {
           });
           setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
           }).catch(error=>{
+            this.loading = false;
             this.errors = error.response.data.errors;
           });
         }else{
+            this.loading = false;
           if(this.tipereq == null){
             this.error.tipereq = "Request Type not filled"
           }
@@ -441,6 +452,7 @@ export default {
        }
       }
      }else{
+      this.loading = true;
       if(this.tipereq=='P'){
         if ( this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null' ) 
         {
@@ -458,9 +470,11 @@ export default {
           });
           setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
           }).catch(error=>{
+            this.loading = false;
             this.errors = error.response.data.errors;
           });
         }else{
+          this.loading = false;
           if(this.tipereq == null){
             this.error.tipereq = "Request Type not filled"
           }
@@ -469,6 +483,7 @@ export default {
           }
         }
         }else{
+            this.loading = true;
           if (this.requestcatalog != null && this.tipereq != null && this.tipereq != 'null' ) 
         {
           const data = new FormData();
@@ -484,9 +499,11 @@ export default {
           });
           setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
           }).catch(error=>{
+            this.loading = false;
             this.errors = error.response.data.errors;
           });
         }else{
+          this.loading = false;
           if(this.tipereq == null){
             this.error.tipereq = "Request Type not filled"
           }

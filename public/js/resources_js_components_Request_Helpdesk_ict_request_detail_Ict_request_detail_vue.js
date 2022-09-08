@@ -135,11 +135,11 @@ __webpack_require__.r(__webpack_exports__);
             headers: {
               'Authorization': 'Bearer ' + _this4.token
             }
+          }).then(function () {
+            _this4.loading = true;
+
+            _this4.getIctDetail();
           });
-
-          _this4.loading = true;
-
-          _this4.getIctDetail();
         },
         reject: function reject() {}
       });

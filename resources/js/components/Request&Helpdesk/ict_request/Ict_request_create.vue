@@ -133,17 +133,20 @@
               </div>
               <div class="form-group">
                  <Button
+                  v-if="this.loading == false"
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
                   label="Save"
                   type="submit"
                 />
                 <Button
+                  v-if="this.loading == false"
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push('/ict-request')"
                 />
+                <img :src="'assets/loading6.gif'" v-else height="70" class="mb-3" />
               </div>
             </form>
           </div>
@@ -154,6 +157,7 @@
 export default {
   data() {
     return {
+      loading:false,
       errors: [],
       level:[],
       error:[],
@@ -206,6 +210,7 @@ export default {
     CreateIct() {
       this.errors = [];
       this.error = [];
+      this.loading = true;
       if (
         // this.tipereq != null &&
         this.priolev != null &&
@@ -232,9 +237,11 @@ export default {
         this.code = response.data.ireq_id;
         setTimeout( () => this.$router.push({name: 'Add Ict Request Detail', params: { code: this.code }, }),1000);
         }).catch(error=>{
+          this.loading = false;
           this.errors = error.response.data.errors;
          });
       }else{
+        this.loading = false;
         if(this.priolev == null){
           this.error.priolev = "Priority level not filled"
         }

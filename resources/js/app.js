@@ -10,8 +10,7 @@ import './assets/themes/vela-blue/theme.css';
 import 'jquery/dist/jquery.min';
 import 'popper.js/dist/popper.min';
 import 'bootstrap/dist/js/bootstrap.min';
-import 'vue-loading-overlay/dist/vue-loading.css';  
-
+import 'vue-loading-overlay/dist/vue-loading.css'; 
 
 import { createApp, reactive } from 'vue';
 import axios from 'axios';
@@ -86,7 +85,6 @@ app.directive('ripple', Ripple);
 app.directive('code', CodeHighlight);
 app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
-
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);
 app.component('Button', Button);

@@ -17,7 +17,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return _defineProperty({
+    var _ref;
+
+    return _ref = {
       submitted: false,
       dialogAssign: false,
       assign: [],
@@ -36,12 +38,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
-    }, "code", null);
+    }, _defineProperty(_ref, "code", null), _defineProperty(_ref, "detailRequest", []), _ref;
   },
   mounted: function mounted() {
     this.cekUser();
   },
   methods: {
+    AddToCalendar: function AddToCalendar() {
+      window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt=20200213T000000Z&enddt=20200214T000000Z&subject=Test+Event&location=Jakarta"); // window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt="+this.detailRequest.ireq_date+"+&enddt="+this.detailRequest.ireq_date+"&subject=Request+"+this.detailRequest.ireq_requestor+"+"+this.detailRequest.noreq+"&body="+this.detail.map((x)=>x.ireq_remark)+"");
+    },
     getDetail: function getDetail(ireq_attachment) {
       var page = "http://localhost:8000" + '/attachment_request/' + ireq_attachment;
       var myWindow = window.open(page, "_blank");
@@ -105,6 +110,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
+        _this3.detailRequest = response.data;
         _this3.kode = response.data.noreq;
         _this3.status = response.data.cekstatus;
       });
@@ -274,7 +280,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Back",
-        "class": "p-button-raised p-button mr-2",
+        "class": "p-button-raised p-button mr-2 mt-2",
         icon: "pi pi-chevron-left",
         onClick: _cache[1] || (_cache[1] = function ($event) {
           return _ctx.$router.push({
@@ -287,7 +293,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         bottom: true
       }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Pdf",
-        "class": "p-button-raised p-button-danger mt-2",
+        "class": "p-button-raised p-button-danger mr-2 mt-2",
         icon: "pi pi-file-pdf",
         onClick: _cache[2] || (_cache[2] = function ($event) {
           return $options.CetakPdf();
@@ -295,6 +301,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 512
       /* NEED_PATCH */
       ), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+        bottom: true
+      }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        "class": "p-button-raised p-button-success mr-2 mt-2",
+        icon: "pi pi-calendar",
+        label: "Add Calendar",
+        onClick: _cache[3] || (_cache[3] = function ($event) {
+          return $options.AddToCalendar();
+        })
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[_directive_tooltip, 'Click to Add Calendar', void 0, {
         bottom: true
       }]])])])])];
     }),
