@@ -766,10 +766,11 @@ export default {
         detail: "Successfully approved this request",
         life : 1000
       });
-      this.axios.put('/api/abm/' +this.code,this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
-      this.cancelApprove();
-      this.loading = true;
-      this.getPermohonan();
+      this.axios.put('/api/abm/' +this.code,this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.cancelApprove();
+        this.loading = true;
+        this.getPermohonan();
+      });
     },
     rejectRequest(){
       this.ConfirmationVerifikasi = false;

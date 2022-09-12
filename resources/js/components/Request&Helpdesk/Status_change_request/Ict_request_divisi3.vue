@@ -705,9 +705,9 @@ export default {
               detail: "Accept Request Success",
               life : 1000
             });
-            this.axios.get('/api/acceptPersonnel/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
-            
-            this.getData();
+            this.axios.get('/api/acceptPersonnel/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+              this.getData();
+            });
         },
         reject: () => {},
       });

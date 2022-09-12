@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Illuminate\Http\Request;
 
 class BisnisController extends Controller
 {

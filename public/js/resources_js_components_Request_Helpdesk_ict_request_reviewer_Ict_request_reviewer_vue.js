@@ -182,11 +182,11 @@ __webpack_require__.r(__webpack_exports__);
             headers: {
               'Authorization': 'Bearer ' + _this2.token
             }
+          }).then(function () {
+            _this2.loading = true;
+
+            _this2.getIct();
           });
-
-          _this2.loading = true;
-
-          _this2.getIct();
         },
         reject: function reject() {}
       });
@@ -406,11 +406,11 @@ __webpack_require__.r(__webpack_exports__);
             headers: {
               'Authorization': 'Bearer ' + _this9.token
             }
+          }).then(function () {
+            _this9.loading = true;
+
+            _this9.getIct();
           });
-
-          _this9.loading = true;
-
-          _this9.getIct();
         },
         reject: function reject() {}
       });

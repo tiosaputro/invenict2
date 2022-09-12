@@ -16,7 +16,8 @@ class CatalogController extends Controller
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
     function index(){
-        $catalog = Catalog::all();
+        $catalog = Catalog::select('catalog_id','catalog_name','catalog_desc',DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"))
+        ->get();
         return json_encode($catalog);
     }
     function save(Request $request){

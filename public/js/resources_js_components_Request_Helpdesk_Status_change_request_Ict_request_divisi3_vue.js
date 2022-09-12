@@ -81,9 +81,9 @@ __webpack_require__.r(__webpack_exports__);
             headers: {
               'Authorization': 'Bearer ' + _this.token
             }
+          }).then(function () {
+            _this.getData();
           });
-
-          _this.getData();
         },
         reject: function reject() {}
       });

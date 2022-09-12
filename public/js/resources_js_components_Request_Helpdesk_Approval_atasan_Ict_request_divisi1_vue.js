@@ -143,12 +143,12 @@ __webpack_require__.r(__webpack_exports__);
             headers: {
               'Authorization': 'Bearer ' + _this2.token
             }
+          }).then(function () {
+            _this2.code = null;
+            _this2.loading = true;
+
+            _this2.getPermohonan();
           });
-
-          _this2.code = null;
-          _this2.loading = true;
-
-          _this2.getPermohonan();
         },
         reject: function reject() {}
       });

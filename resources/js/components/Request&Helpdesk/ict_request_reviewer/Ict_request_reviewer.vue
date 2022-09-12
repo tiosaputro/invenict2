@@ -1106,9 +1106,10 @@ export default {
             detail: "Success Submit",
             life: 3000,
           });
-          this.axios.get('api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.loading = true;
-          this.getIct();
+          this.axios.get('api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getIct();
+          });
         },
         reject: () => {},
       })
@@ -1264,9 +1265,10 @@ export default {
               detail: "Closing request successful",
               life: 3000,
             });
-            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
-            this.loading = true;
-            this.getIct();
+            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+              this.loading = true;
+              this.getIct();
+            });
           },
           reject: () => {},
         });

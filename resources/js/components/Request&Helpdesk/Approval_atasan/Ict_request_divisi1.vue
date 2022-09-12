@@ -720,10 +720,11 @@ export default {
                 detail: "Successfully approved this request",
                 life : 1000
               });
-              this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
-              this.code = null;
-              this.loading = true;
-              this.getPermohonan();
+              this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{            
+                this.code = null;
+                this.loading = true;
+                this.getPermohonan();
+              });
         },
         reject: () => {},
       });

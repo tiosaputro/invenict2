@@ -7,11 +7,11 @@
         <Toolbar class="mb-4">
           <template v-slot:start>
 						<div class="my-2">
-				        <h4>ICT Request (Detail) </h4>
+				      <h4>ICT Request (Detail) </h4>
             </div>
           </template>
           <template v-slot:end>
-              <label style="width:200px">No. Request: {{this.kode}}</label>
+            <label style="width:200px">No. Request: {{this.kode}}</label>
           </template>
         </Toolbar>
         <DataTable
@@ -26,7 +26,7 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-       <template #header>
+          <template #header>
             <div class="table-header text-right">
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
@@ -45,7 +45,6 @@
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true"  style="min-width:11rem"/>
           <Column field="name" header="Items" :sortable="true"  style="min-width:11rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true"  style="min-width:11rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:11rem"/>
           <Column header="Attachment" style="min-width:10rem">
@@ -102,6 +101,7 @@
                     icon="pi pi-calendar"
                     label="Add Calendar"
                     @click="AddToCalendar()"
+                    v-if="this.status == 'P'"
                     v-tooltip.bottom="'Click to Add Calendar'"
                   />
                 </div>
@@ -140,8 +140,7 @@ export default {
   },
   methods: {
     AddToCalendar(){
-      window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt=20200213T000000Z&enddt=20200214T000000Z&subject=Test+Event&location=Jakarta");
-      // window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt="+this.detailRequest.ireq_date+"+&enddt="+this.detailRequest.ireq_date+"&subject=Request+"+this.detailRequest.ireq_requestor+"+"+this.detailRequest.noreq+"&body="+this.detail.map((x)=>x.ireq_remark)+"");
+      window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt="+this.detailRequest.ireq_date+"+&enddt="+this.detailRequest.ireq_date+"&subject=Request+"+this.detailRequest.ireq_requestor+"+"+this.detailRequest.noreq+"&body="+this.detail.map((x)=>x.ireq_remark)+"");
     },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;

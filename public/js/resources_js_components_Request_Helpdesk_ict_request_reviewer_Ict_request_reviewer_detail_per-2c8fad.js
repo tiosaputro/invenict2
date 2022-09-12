@@ -45,7 +45,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     AddToCalendar: function AddToCalendar() {
-      window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt=20200213T000000Z&enddt=20200214T000000Z&subject=Test+Event&location=Jakarta"); // window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt="+this.detailRequest.ireq_date+"+&enddt="+this.detailRequest.ireq_date+"&subject=Request+"+this.detailRequest.ireq_requestor+"+"+this.detailRequest.noreq+"&body="+this.detail.map((x)=>x.ireq_remark)+"");
+      window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt=" + this.detailRequest.ireq_date + "+&enddt=" + this.detailRequest.ireq_date + "&subject=Request+" + this.detailRequest.ireq_requestor + "+" + this.detailRequest.noreq + "&body=" + this.detail.map(function (x) {
+        return x.ireq_remark;
+      }) + "");
     },
     getDetail: function getDetail(ireq_attachment) {
       var page = "http://localhost:8000" + '/attachment_request/' + ireq_attachment;
@@ -302,7 +304,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* NEED_PATCH */
       ), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
         bottom: true
-      }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+      }]]), _this.status == 'P' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+        key: 0,
         "class": "p-button-raised p-button-success mr-2 mt-2",
         icon: "pi pi-calendar",
         label: "Add Calendar",
@@ -311,9 +314,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 512
       /* NEED_PATCH */
-      ), [[_directive_tooltip, 'Click to Add Calendar', void 0, {
+      )), [[_directive_tooltip, 'Click to Add Calendar', void 0, {
         bottom: true
-      }]])])])])];
+      }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
