@@ -56,7 +56,7 @@
                 icon="pi pi-trash"
                 v-tooltip.right="'Delete'"
                 class="p-button-rounded p-button-danger mr-2"
-                @click="DeleteCatalog(slotProps.data.menu_id)"
+                @click="DeleteCatalog(slotProps.data.catalog_id)"
               />
             </template>
           </Column>
@@ -109,7 +109,7 @@ export default {
            }
         });
     },
-    DeleteCatalog(catalog__id){
+    DeleteCatalog(catalog_id){
        this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
         header: "Delete Confirmation",
@@ -124,7 +124,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-catalog/' +catalog__id ,{headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('api/delete-catalog/' +catalog_id ,{headers: {'Authorization': 'Bearer '+this.token}});
           this.getCatalog();
         },
         reject: () => {},

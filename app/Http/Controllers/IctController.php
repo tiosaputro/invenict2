@@ -3854,11 +3854,12 @@ class IctController extends Controller
         ->LEFTJOIN('catalog_refs as crs',function ($join) {
             $join->on('cr.parent_id','crs.catalog_id');
         })
-        ->SELECT('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+        ->SELECT('im.ireq_no','im.ireq_status as status','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
         'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),'im.ireq_date','im.ireq_requestor','im.ireq_user',
         'dr.div_name','id.ireq_qty')
         ->whereNotNull('im.ireq_status')
         ->ORDERBY('im.ireq_date','DESC')
+        ->ORDERBY('id.ireqd_id','ASC')
         ->get();
         
         return response()->json($ict);

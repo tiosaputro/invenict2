@@ -905,14 +905,14 @@ export default {
         rejectLabel: "No",
         accept: () => {
           this.loading = true;
-          this.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Successfully Submit",
-            life: 3000,
-          });
-          this.axios.get('api/updateStatusSubmit/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+          this.axios.get('api/updateStatusSubmit/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.getIct();
+            this.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Successfully Submit",
+              life: 3000,
+            });
           });
         },
         reject: () => {},
@@ -927,15 +927,16 @@ export default {
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
-          this.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Record deleted",
-            life: 3000,
+          this.axios.delete('api/delete-ict/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Record deleted",
+              life: 3000,
+            });
+            this.loading = true;
+            this.getIct();
           });
-          this.axios.delete('api/delete-ict/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}});
-          this.loading = true;
-          this.getIct();
         },
         reject: () => {},
       });

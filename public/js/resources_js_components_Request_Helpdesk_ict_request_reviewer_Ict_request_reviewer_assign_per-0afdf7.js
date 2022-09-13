@@ -592,6 +592,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         options: $data.petugas,
         optionValue: "name",
         optionLabel: "name",
+        filter: true,
         placeholder: "Pilih Petugas (ICT)",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
           'p-invalid': $data.submitted && !$data.assign.ireq_assigned_to1

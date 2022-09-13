@@ -242,19 +242,19 @@ __webpack_require__.r(__webpack_exports__);
         accept: function accept() {
           _this3.loading = true;
 
-          _this3.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Successfully Submit",
-            life: 3000
-          });
-
           _this3.axios.get('api/updateStatusSubmit/' + ireq_id, {
             headers: {
               'Authorization': 'Bearer ' + _this3.token
             }
-          }).then(function (res) {
+          }).then(function () {
             _this3.getIct();
+
+            _this3.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Successfully Submit",
+              life: 3000
+            });
           });
         },
         reject: function reject() {}
@@ -271,22 +271,22 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this4.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Record deleted",
-            life: 3000
-          });
-
           _this4.axios["delete"]('api/delete-ict/' + ireq_id, {
             headers: {
               'Authorization': 'Bearer ' + _this4.token
             }
+          }).then(function () {
+            _this4.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Record deleted",
+              life: 3000
+            });
+
+            _this4.loading = true;
+
+            _this4.getIct();
           });
-
-          _this4.loading = true;
-
-          _this4.getIct();
         },
         reject: function reject() {}
       });

@@ -144,6 +144,7 @@
                             :options="petugas"
                             optionValue="name"
                             optionLabel="name"
+                            :filter="true"
                             placeholder="Pilih Petugas (ICT)"
                             :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to1 }"
                         />

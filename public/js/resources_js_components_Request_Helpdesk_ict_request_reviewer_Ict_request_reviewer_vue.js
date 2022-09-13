@@ -168,8 +168,8 @@ __webpack_require__.r(__webpack_exports__);
         header: "ICT Request",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this2.$toast.add({
             severity: "info",
@@ -212,24 +212,29 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogRemark = false;
     },
     updateRemark: function updateRemark() {
+      var _this4 = this;
+
       this.dialogRemark = false;
       this.loading = true;
       this.axios.post('api/save-remark-reviewer', this.remark, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
+      }).then(function () {
+        _this4.$toast.add({
+          severity: "info",
+          summary: "Success",
+          detail: "successfully added a remark",
+          life: 2000
+        });
+
+        _this4.remark = {
+          id: '',
+          remark: ''
+        };
+
+        _this4.getIct();
       });
-      this.$toast.add({
-        severity: "info",
-        summary: "Success",
-        detail: "successfully added a remark",
-        life: 2000
-      });
-      this.remark = {
-        id: '',
-        remark: ''
-      };
-      this.getIct();
     },
     Reject: function Reject(ireq_id) {
       this.dialogReject = true;
@@ -241,7 +246,7 @@ __webpack_require__.r(__webpack_exports__);
       this.rbr.ket = null;
     },
     updateReject: function updateReject() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.submitted = true;
 
@@ -250,61 +255,30 @@ __webpack_require__.r(__webpack_exports__);
           headers: {
             'Authorization': 'Bearer ' + this.token
           }
-        }).then(function (res) {
-          _this4.dialogReject = false;
-          _this4.rbr.id = null;
-          _this4.rbr.ket = null;
-          _this4.submitted = false;
+        }).then(function () {
+          _this5.dialogReject = false;
+          _this5.rbr.id = null;
+          _this5.rbr.ket = null;
+          _this5.submitted = false;
 
-          _this4.$toast.add({
+          _this5.$toast.add({
             severity: "info",
             summary: "Success",
             detail: "Successfully rejected the request",
             life: 2000
           });
 
-          _this4.loading = true;
+          _this5.loading = true;
 
-          _this4.getIct();
+          _this5.getIct();
         });
       }
     },
     ApproveAtasan: function ApproveAtasan(ireq_id) {
-      var _this5 = this;
-
-      this.$confirm.require({
-        message: "Are you sure this request need approval from higher level?",
-        header: "ICT Request    ",
-        icon: "pi pi-info-circle",
-        acceptClass: "p-button",
-        acceptLabel: "Yes",
-        rejectLabel: "No",
-        accept: function accept() {
-          _this5.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Success Update Request",
-            life: 2000
-          });
-
-          _this5.axios.get('/api/naa/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this5.token
-            }
-          }).then(function () {
-            _this5.loading = true;
-
-            _this5.getIct();
-          });
-        },
-        reject: function reject() {}
-      });
-    },
-    ApproveManager: function ApproveManager(ireq_id) {
       var _this6 = this;
 
       this.$confirm.require({
-        message: "Are you sure this request need approval from ICT Manager?",
+        message: "Are you sure this request need approval from higher level?",
         header: "ICT Request    ",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
@@ -318,7 +292,7 @@ __webpack_require__.r(__webpack_exports__);
             life: 2000
           });
 
-          _this6.axios.get('/api/nam/' + ireq_id, {
+          _this6.axios.get('/api/naa/' + ireq_id, {
             headers: {
               'Authorization': 'Bearer ' + _this6.token
             }
@@ -331,8 +305,39 @@ __webpack_require__.r(__webpack_exports__);
         reject: function reject() {}
       });
     },
-    AssignPerRequest: function AssignPerRequest(ireq_id) {
+    ApproveManager: function ApproveManager(ireq_id) {
       var _this7 = this;
+
+      this.$confirm.require({
+        message: "Are you sure this request need approval from ICT Manager?",
+        header: "ICT Request    ",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
+        accept: function accept() {
+          _this7.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Success Update Request",
+            life: 2000
+          });
+
+          _this7.axios.get('/api/nam/' + ireq_id, {
+            headers: {
+              'Authorization': 'Bearer ' + _this7.token
+            }
+          }).then(function () {
+            _this7.loading = true;
+
+            _this7.getIct();
+          });
+        },
+        reject: function reject() {}
+      });
+    },
+    AssignPerRequest: function AssignPerRequest(ireq_id) {
+      var _this8 = this;
 
       this.assign.id = ireq_id;
       this.axios.get('api/get-pekerja', {
@@ -340,12 +345,12 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this7.petugas = response.data;
+        _this8.petugas = response.data;
       });
       this.dialogAssign = true;
     },
     updateAssign: function updateAssign() {
-      var _this8 = this;
+      var _this9 = this;
 
       this.submitted = true;
 
@@ -355,23 +360,23 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this8.assign = {
+          _this9.assign = {
             id: null,
             name: null
           };
-          _this8.submitted = false;
-          _this8.dialogAssign = false;
+          _this9.submitted = false;
+          _this9.dialogAssign = false;
 
-          _this8.$toast.add({
+          _this9.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "  successful",
             life: 2000
           });
 
-          _this8.loading = true;
+          _this9.loading = true;
 
-          _this8.getIct();
+          _this9.getIct();
         });
       }
     },
@@ -385,7 +390,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = false;
     },
     ClosingPerDetail: function ClosingPerDetail(ireqd_id, ireq_id) {
-      var _this9 = this;
+      var _this10 = this;
 
       this.$confirm.require({
         message: "Are you sure to close this request?",
@@ -395,28 +400,28 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this9.$toast.add({
+          _this10.$toast.add({
             severity: "info",
             summary: "Success",
             detail: "Closing request successful",
             life: 3000
           });
 
-          _this9.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_id, {
+          _this10.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this9.token
+              'Authorization': 'Bearer ' + _this10.token
             }
           }).then(function () {
-            _this9.loading = true;
+            _this10.loading = true;
 
-            _this9.getIct();
+            _this10.getIct();
           });
         },
         reject: function reject() {}
       });
     },
     detailRequest: function detailRequest(ireq_id) {
-      var _this10 = this;
+      var _this11 = this;
 
       this.displayDetailRequest = true;
       this.loadingDetail = true;
@@ -425,13 +430,13 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this10.detail = response.data;
-        _this10.ireq_no = response.data[0].ireq_no;
-        _this10.loadingDetail = false;
+        _this11.detail = response.data;
+        _this11.ireq_no = response.data[0].ireq_no;
+        _this11.loadingDetail = false;
       });
     },
     CetakPdf: function CetakPdf(ireq_id) {
-      var _this11 = this;
+      var _this12 = this;
 
       this.loading = true;
       this.axios.get('api/print-out-ict-request/' + ireq_id, {
@@ -442,11 +447,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this11.loading = false;
+        _this12.loading = false;
       });
     },
     CetakPdfPermohonan: function CetakPdfPermohonan() {
-      var _this12 = this;
+      var _this13 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-permohonan', {
@@ -457,11 +462,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this12.loading = false;
+        _this13.loading = false;
       });
     },
     CetakExcelPermohonan: function CetakExcelPermohonan() {
-      var _this13 = this;
+      var _this14 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -479,11 +484,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this13.loading = false;
+        _this14.loading = false;
       });
     },
     CetakPdfAtasanDivisi: function CetakPdfAtasanDivisi() {
-      var _this14 = this;
+      var _this15 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi', {
@@ -494,11 +499,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this14.loading = false;
+        _this15.loading = false;
       });
     },
     CetakExcelAtasanDivisi: function CetakExcelAtasanDivisi() {
-      var _this15 = this;
+      var _this16 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -516,11 +521,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this15.loading = false;
+        _this16.loading = false;
       });
     },
     CetakPdfIctManager: function CetakPdfIctManager() {
-      var _this16 = this;
+      var _this17 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-ict-manager', {
@@ -531,11 +536,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=no", "target=_blank");
         myWindow.document.write(responseHtml);
-        _this16.loading = false;
+        _this17.loading = false;
       });
     },
     CetakExcelIctManager: function CetakExcelIctManager() {
-      var _this17 = this;
+      var _this18 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -553,11 +558,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this17.loading = false;
+        _this18.loading = false;
       });
     },
     CetakPdfReject: function CetakPdfReject() {
-      var _this18 = this;
+      var _this19 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-reject', {
@@ -568,11 +573,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this18.loading = false;
+        _this19.loading = false;
       });
     },
     CetakExcelReject: function CetakExcelReject() {
-      var _this19 = this;
+      var _this20 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -590,11 +595,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this19.loading = false;
+        _this20.loading = false;
       });
     },
     CetakPdfAssignmentRequest: function CetakPdfAssignmentRequest() {
-      var _this20 = this;
+      var _this21 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-assignment-request', {
@@ -605,11 +610,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this20.loading = false;
+        _this21.loading = false;
       });
     },
     CetakExcelAssignmentRequest: function CetakExcelAssignmentRequest() {
-      var _this21 = this;
+      var _this22 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -627,11 +632,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this21.loading = false;
+        _this22.loading = false;
       });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
-      var _this22 = this;
+      var _this23 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan', {
@@ -642,11 +647,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this22.loading = false;
+        _this23.loading = false;
       });
     },
     CetakExcelSedangDikerjakan: function CetakExcelSedangDikerjakan() {
-      var _this23 = this;
+      var _this24 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -664,11 +669,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this23.loading = false;
+        _this24.loading = false;
       });
     },
     CetakPdfSudahDikerjakan: function CetakPdfSudahDikerjakan() {
-      var _this24 = this;
+      var _this25 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan', {
@@ -679,11 +684,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this24.loading = false;
+        _this25.loading = false;
       });
     },
     CetakExcelSudahDikerjakan: function CetakExcelSudahDikerjakan() {
-      var _this25 = this;
+      var _this26 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -701,11 +706,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this25.loading = false;
+        _this26.loading = false;
       });
     },
     CetakPdfSelesai: function CetakPdfSelesai() {
-      var _this26 = this;
+      var _this27 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-selesai', {
@@ -716,11 +721,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this26.loading = false;
+        _this27.loading = false;
       });
     },
     CetakExcelSelesai: function CetakExcelSelesai() {
-      var _this27 = this;
+      var _this28 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -738,7 +743,7 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this27.loading = false;
+        _this28.loading = false;
       });
     }
   }
@@ -2925,6 +2930,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         options: $data.petugas,
         optionValue: "name",
+        filter: true,
         optionLabel: "name",
         placeholder: "Choose One",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({

@@ -57,13 +57,17 @@
           <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
           <Column field="div_name" header="Division User" style="min-width:8rem" :sortable="true"/>
           <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:8rem" :sortable="true"/>
-          <Column field="ireq_status" header="Status" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireq_status" header="Status" style="min-width:8rem" :sortable="true">
+            <template #body= "slotProps">
+              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
         </DataTable> 
         <Dialog
           v-model:visible="dialogFilterDate"
           :breakpoints="{'960px': '75vw'}"
-          :style="{ width: '500px' }"
-          header="Filter Data ICT Request"
+          :style="{ width: '600px' }"
+          header="Filter Data"
           :modal="true"
           class="fluid"
         >
@@ -141,7 +145,7 @@ export default {
       this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkto.includes("/report-ict-report")){
+        if(this.checkto.includes("/report-ict-request")){
           this.getIct();
           this.getStatus();
         }

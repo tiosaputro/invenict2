@@ -75,7 +75,7 @@ __webpack_require__.r(__webpack_exports__);
           return x.name;
         });
 
-        if (_this2.checkto.includes("/report-ict-report")) {
+        if (_this2.checkto.includes("/report-ict-request")) {
           _this2.getIct();
 
           _this2.getStatus();
@@ -396,6 +396,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "min-width": "8rem"
         },
         sortable: true
+      }, {
+        body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
       })];
     }),
     _: 1
@@ -412,9 +423,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       '960px': '75vw'
     },
     style: {
-      width: '500px'
+      width: '600px'
     },
-    header: "Filter Data ICT Request",
+    header: "Filter Data",
     modal: true,
     "class": "fluid"
   }, {

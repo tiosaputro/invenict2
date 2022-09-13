@@ -201,12 +201,13 @@ class LaporanController extends Controller
                 ->LEFTJOIN('catalog_refs as crs',function ($join) {
                     $join->on('cr.parent_id','crs.catalog_id');
                 })
-                ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+                ->select('im.ireq_no','id.ireq_status as status','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
                 'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),'im.ireq_date','im.ireq_requestor','im.ireq_user',
                 'dr.div_name','id.ireq_qty')
                 ->where('id.ireq_status',$status)
                 ->whereBetween('im.ireq_date',[$Newstart,$Newend])
                 ->orderBy('im.ireq_date','DESC')
+                ->orderBy('id.ireqd_id','ASC')
                 ->get();
             return response()->json($ict);
             }
@@ -228,11 +229,13 @@ class LaporanController extends Controller
                 ->LEFTJOIN('catalog_refs as crs',function ($join) {
                     $join->on('cr.parent_id','crs.catalog_id');
                 })
-                ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+                ->select('im.ireq_no','id.ireq_status as status','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
                 'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),'im.ireq_date','im.ireq_requestor','im.ireq_user',
                 'dr.div_name','id.ireq_qty')
+                ->whereNotNull('id.ireq_status')
                 ->whereBetween('im.ireq_date',[$Newstart,$Newend])
                 ->orderBy('im.ireq_date','DESC')
+                ->orderBy('id.ireqd_id','ASC')
                 ->get();
                 return response()->json($ict);
             }
@@ -255,11 +258,12 @@ class LaporanController extends Controller
                 ->LEFTJOIN('catalog_refs as crs',function ($join) {
                     $join->on('cr.parent_id','crs.catalog_id');
                 })
-                ->select('im.ireq_no','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+                ->select('im.ireq_no','id.ireq_status as status','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
                 'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),'im.ireq_date','im.ireq_requestor','im.ireq_user',
                 'dr.div_name','id.ireq_qty')
                 ->where('id.ireq_status',$status)
                 ->orderBy('im.ireq_date','DESC')
+                ->orderBy('id.ireqd_id','ASC')
                 ->get();
             return response()->json($ict);
         }
@@ -281,13 +285,8 @@ class LaporanController extends Controller
                 ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
                 ->where('im.ireq_status',$status)
                 ->whereBetween('im.ireq_date',[$Newstart,$Newend])
-                ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-                2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-                im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-                WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-                WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-                im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-                Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+                ->orderBy('im.ireq_date','DESC')
+                ->orderBy('id.ireqd_id','ASC')
                 ->get();
                 return view('pdf/Laporan_Ict_Request',compact('ict'));
                 }
@@ -300,14 +299,9 @@ class LaporanController extends Controller
                     ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
                     ->select('im.ireq_no','dr.div_name',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','lr.lookup_desc as ireq_status')
                     ->whereNotNull('im.ireq_status')
-                    ->whereBetween('im.ireq_date',[$Newstart,$Newend])
-                    ->orderBy(DB::raw("CASE WHEN im.ireq_status = 'P' Then 1 WHEN im.ireq_status = 'NA1' Then
-                    2 WHEN im.ireq_status = 'NA2' Then 3 WHEN
-                    im.ireq_status = 'A1' Then 4 WHEN im.ireq_status = 'A2' Then 5
-                    WHEN im.ireq_status = 'RR' Then 6 WHEN im.ireq_status = 'RA1' Then 7
-                    WHEN im.ireq_status = 'RA2' THEN 8 WHEN im.ireq_status = 'NT' Then 9 WHEN 
-                    im.ireq_status = 'RT' Then 10 WHEN im.ireq_status = 'T' Then 11 WHEN im.ireq_status = 'D' 
-                    Then 12 WHEN im.ireq_status = 'C' Then 13 end "))
+                    ->whereBetween('im.ireq_date',[$Newstart,$Newend])    
+                    ->orderBy('im.ireq_date','DESC')
+                    ->orderBy('id.ireqd_id','ASC')
                     ->get();
                     return view('pdf/Laporan_Ict_Request',compact('ict'));
                 }

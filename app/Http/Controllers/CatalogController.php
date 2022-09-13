@@ -86,7 +86,9 @@ class CatalogController extends Controller
         return response()->json($msg);
     }
     function delete($catalog_id){
-
+        $catalog = Catalog::find($catalog_id);
+        $catalog->delete();
+        return json_encode('Success Deleted');
     }
     function parentCatalog(){
         $catalog = Catalog::select('catalog_name as name','catalog_id as code')->where('catalog_type','N')->get();

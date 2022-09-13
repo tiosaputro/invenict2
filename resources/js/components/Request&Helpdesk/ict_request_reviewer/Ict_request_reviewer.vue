@@ -874,6 +874,7 @@
                             v-model="assign.name"
                             :options="petugas"
                             optionValue="name"
+                            :filter="true"
                             optionLabel="name"
                             placeholder="Choose One"
                             :class="{ 'p-invalid': submitted && !assign.name }"
@@ -1097,8 +1098,8 @@ export default {
         header: "ICT Request",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
@@ -1131,7 +1132,7 @@ export default {
     updateRemark(){
       this.dialogRemark = false;
       this.loading = true;
-      this.axios.post('api/save-remark-reviewer',this.remark, {headers: {'Authorization': 'Bearer '+this.token}});
+      this.axios.post('api/save-remark-reviewer',this.remark, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "info",
           summary: "Success",
@@ -1140,6 +1141,7 @@ export default {
         });
         this.remark = {id:'',remark:''};
         this.getIct();
+      });
     },
     Reject(ireq_id){
         this.dialogReject = true;
@@ -1153,7 +1155,7 @@ export default {
     updateReject(){
         this.submitted = true;
         if(this.rbr.ket != null){
-          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.dialogReject = false;    
             this.rbr.id = null;
             this.rbr.ket = null;

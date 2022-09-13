@@ -552,7 +552,7 @@ const routes = [
     },
     {
         name: 'Laporan ICT Request',
-        path: '/report-ict-report',
+        path: '/report-ict-request',
         component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsBtwnDate.vue'),
     },
     {

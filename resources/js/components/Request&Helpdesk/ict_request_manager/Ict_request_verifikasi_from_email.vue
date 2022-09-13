@@ -188,16 +188,6 @@ export default {
           }
       },
       Approve(){
-      // this.$confirm.require({
-      //   group: 'positionDialog',
-      //   message: "Are you sure you approve to this request?",
-      //   header: "Confirmation Approval",
-      //   icon: "pi pi-info-circle",
-      //   acceptClass: "p-button",
-      //   acceptLabel: "Yes",
-      //   rejectLabel: "No",
-      //   position: 'top',
-      //   accept: () => {
           this.$toast.add({
             severity: "info",
             summary: "Success Message",
@@ -205,9 +195,6 @@ export default {
           });
           this.axios.put('/api/abm/' +this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
           setTimeout( () =>  this.$router.push('/ict-request-manager'),1000);
-      //   },
-      //   reject: () => {},
-      // });
       },
       updateReject(){
           this.submitted = true;

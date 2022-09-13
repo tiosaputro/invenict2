@@ -60,16 +60,6 @@ __webpack_require__.r(__webpack_exports__);
     Approve: function Approve() {
       var _this = this;
 
-      // this.$confirm.require({
-      //   group: 'positionDialog',
-      //   message: "Are you sure you approve to this request?",
-      //   header: "Confirmation Approval",
-      //   icon: "pi pi-info-circle",
-      //   acceptClass: "p-button",
-      //   acceptLabel: "Yes",
-      //   rejectLabel: "No",
-      //   position: 'top',
-      //   accept: () => {
       this.$toast.add({
         severity: "info",
         summary: "Success Message",
@@ -82,9 +72,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       setTimeout(function () {
         return _this.$router.push('/ict-request-manager');
-      }, 1000); //   },
-      //   reject: () => {},
-      // });
+      }, 1000);
     },
     updateReject: function updateReject() {
       var _this2 = this;
