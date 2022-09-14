@@ -279,7 +279,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$confirm.require({
         message: "Are you sure this request need approval from higher level?",
-        header: "ICT Request    ",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",
@@ -310,7 +310,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$confirm.require({
         message: "Are you sure this request need approval from ICT Manager?",
-        header: "ICT Request    ",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",

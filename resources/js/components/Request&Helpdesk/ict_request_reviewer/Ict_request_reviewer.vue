@@ -1174,7 +1174,7 @@ export default {
     ApproveAtasan(ireq_id){
     this.$confirm.require({
         message: "Are you sure this request need approval from higher level?",
-        header: "ICT Request    ",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",
@@ -1197,7 +1197,7 @@ export default {
     ApproveManager(ireq_id){
         this.$confirm.require({
         message: "Are you sure this request need approval from ICT Manager?",
-        header: "ICT Request    ",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",

@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      showPersonelblmDiverifikasi: [],
       sedangDireview: [],
       sedangDireview1: [],
       sedangDireview2: [],
@@ -165,6 +166,20 @@ __webpack_require__.r(__webpack_exports__);
         _this.sdhSelesai = response.data.ict5;
         _this.sedangDireview = response.data.ict7;
         _this.loading = false;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this.$router.push('/login');
+          }, 2000);
+        }
       });
     },
     getIct2: function getIct2() {
@@ -185,6 +200,20 @@ __webpack_require__.r(__webpack_exports__);
         _this2.selesai = response.data.ict5;
         _this2.totalRequest1 = response.data.ict6;
         _this2.loading = false;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this2.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this2.$router.push('/login');
+          }, 2000);
+        }
       });
     },
     getIct3: function getIct3() {
@@ -196,6 +225,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this3.blmDiverifikasi = response.data.ict;
+        _this3.showPersonelblmDiverifikasi = _this3.blmDiverifikasi.map(function (x) {
+          return x.ireq_count_status;
+        });
         _this3.atasanDivisi = response.data.ict1;
         _this3.ictManager = response.data.ict2;
         _this3.direject2 = response.data.ict3;
@@ -205,6 +237,20 @@ __webpack_require__.r(__webpack_exports__);
         _this3.totalRequest2 = response.data.ict8;
         _this3.penugasanRequest2 = response.data.ict7;
         _this3.loading = false;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this3.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this3.$router.push('/login');
+          }, 2000);
+        }
       });
     },
     getIct4: function getIct4() {
@@ -221,6 +267,20 @@ __webpack_require__.r(__webpack_exports__);
         _this4.assignmentRequest3 = response.data.ict3;
         _this4.rejected3 = response.data.ict4;
         _this4.loading = false;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this4.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this4.$router.push('/login');
+          }, 2000);
+        }
       });
     },
     getIct5: function getIct5() {
@@ -241,6 +301,20 @@ __webpack_require__.r(__webpack_exports__);
         _this5.sedangDireview2 = response.data.ict7;
         _this5.penugasanRequest4 = response.data.ict8;
         _this5.loading = false;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this5.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this5.$router.push('/login');
+          }, 2000);
+        }
       });
     },
     getIct6: function getIct6() {
@@ -253,6 +327,20 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this6.total = response.data;
         _this6.loading = false;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this6.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this6.$router.push('/login');
+          }, 2000);
+        }
       });
     },
     getIct7: function getIct7() {
@@ -271,6 +359,20 @@ __webpack_require__.r(__webpack_exports__);
         _this7.sdhSelesaiAdmin = response.data.ict5;
         _this7.totalAdmin = response.data.ict6;
         _this7.loading = false;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this7.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this7.$router.push('/login');
+          }, 2000);
+        }
       });
     },
     AssignPerRequest: function AssignPerRequest(ireq_id) {
@@ -319,27 +421,29 @@ __webpack_require__.r(__webpack_exports__);
       var _this10 = this;
 
       this.$confirm.require({
-        message: "Closing Permohonan Dilanjutkan?",
+        message: "Are you sure to close this request?",
         header: "Closing Per Detail",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this10.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Diclosing",
-            life: 3000
-          });
+          _this10.loading = true;
 
           _this10.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_no, {
             headers: {
               'Authorization': 'Bearer ' + _this10.token
             }
-          });
+          }).then(function () {
+            _this10.getActive();
 
-          _this10.getActive();
+            _this10.$toast.add({
+              severity: "info",
+              summary: "Success",
+              detail: "Closing request successful",
+              life: 3000
+            });
+          });
         },
         reject: function reject() {}
       });
@@ -357,27 +461,29 @@ __webpack_require__.r(__webpack_exports__);
       var _this11 = this;
 
       this.$confirm.require({
-        message: "Apakah Anda Yakin Mensubmit?",
-        header: "ICT Request    ",
+        message: "Are you sure to submit this request?",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this11.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Submit",
-            life: 3000
-          });
+          _this11.loading = true;
 
-          _this11.axios.get('api/sapr/' + ireq_id, {
+          _this11.axios.get('/api/sapr/' + ireq_id, {
             headers: {
               'Authorization': 'Bearer ' + _this11.token
             }
-          });
+          }).then(function () {
+            _this11.$toast.add({
+              severity: "info",
+              summary: "Success Message",
+              detail: "Submitted Success",
+              life: 3000
+            });
 
-          _this11.getActive();
+            _this11.getActive();
+          });
         },
         reject: function reject() {}
       });
@@ -386,27 +492,29 @@ __webpack_require__.r(__webpack_exports__);
       var _this12 = this;
 
       this.$confirm.require({
-        message: "Apakah Anda Yakin?",
-        header: "ICT Request    ",
+        message: "Are you sure this request need approval from higher level?",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this12.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Update",
-            life: 2000
-          });
+          _this12.loading = true;
 
           _this12.axios.get('/api/naa/' + ireq_id, {
             headers: {
               'Authorization': 'Bearer ' + _this12.token
             }
-          });
+          }).then(function () {
+            _this12.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Success Update Request",
+              life: 2000
+            });
 
-          _this12.getActive();
+            _this12.getActive();
+          });
         },
         reject: function reject() {}
       });
@@ -416,26 +524,28 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$confirm.require({
         message: "Apakah Anda Yakin?",
-        header: "ICT Request    ",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this13.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Update",
-            life: 2000
-          });
-
           _this13.axios.get('/api/nam/' + ireq_id, {
             headers: {
               'Authorization': 'Bearer ' + _this13.token
             }
-          });
+          }).then(function () {
+            _this13.loading = true;
 
-          _this13.getActive();
+            _this13.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Success Update Request",
+              life: 2000
+            });
+
+            _this13.getActive();
+          });
         },
         reject: function reject() {}
       });
@@ -498,22 +608,24 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this15.$toast.add({
-            severity: "info",
-            summary: "Success Message",
-            detail: "Successfully approved this request",
-            life: 1000
-          });
+          _this15.loading = true;
 
           _this15.axios.get('/api/updateStatusPermohonan/' + _this15.code, {
             headers: {
               'Authorization': 'Bearer ' + _this15.token
             }
+          }).then(function () {
+            _this15.$toast.add({
+              severity: "info",
+              summary: "Success Message",
+              detail: "Successfully approved this request",
+              life: 1000
+            });
+
+            _this15.code = null;
+
+            _this15.getActive();
           });
-
-          _this15.code = null;
-
-          _this15.getActive();
         },
         reject: function reject() {}
       });
@@ -620,15 +732,9 @@ __webpack_require__.r(__webpack_exports__);
       this.reason.remark = null;
     },
     updateApproveManager: function updateApproveManager() {
-      this.ConfirmationVerifikasiManager = false; // this.$confirm.require({
-      //       message: "Approval Permohonan Dilanjutkan?",
-      //       header: "ICT Request    ",
-      //       icon: "pi pi-info-circle",
-      //       acceptClass: "p-button",
-      //       acceptLabel: "Ya",
-      //       rejectLabel: "Tidak",
-      //       accept: () => {
+      var _this20 = this;
 
+      this.ConfirmationVerifikasiManager = false;
       this.$toast.add({
         severity: "info",
         summary: "Confirmed",
@@ -639,11 +745,11 @@ __webpack_require__.r(__webpack_exports__);
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
+      }).then(function () {
+        _this20.cancelApproveManager();
+
+        _this20.getActive();
       });
-      this.cancelApproveManager();
-      this.getActive(); //   },
-      //   reject: () => {},
-      // });
     },
     rejectManager: function rejectManager() {
       this.ConfirmationVerifikasiManager = false;
@@ -656,7 +762,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = false;
     },
     updateRejectManager: function updateRejectManager() {
-      var _this20 = this;
+      var _this21 = this;
 
       this.submitted = true;
 
@@ -666,21 +772,21 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this20.$toast.add({
+          _this21.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Berhasil Direject",
             life: 1000
           });
 
-          _this20.cancelRejectManager();
+          _this21.cancelRejectManager();
 
-          _this20.getActive();
+          _this21.getActive();
         });
       }
     },
     RemarkReviewer: function RemarkReviewer(ireq_id) {
-      var _this21 = this;
+      var _this22 = this;
 
       this.loading = true;
       this.remarkreviewer.id = ireq_id;
@@ -689,9 +795,9 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (res) {
-        _this21.remarkreviewer.remark = res.data.ireq_verificator_remark;
-        _this21.dialogRemarkReviewer = true;
-        _this21.loading = false;
+        _this22.remarkreviewer.remark = res.data.ireq_verificator_remark;
+        _this22.dialogRemarkReviewer = true;
+        _this22.loading = false;
       });
     },
     cancelRemarkReviewer: function cancelRemarkReviewer() {
@@ -700,91 +806,97 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogRemarkReviewer = false;
     },
     updateRemarkReviewer: function updateRemarkReviewer() {
+      var _this23 = this;
+
       this.dialogRemarkReviewer = false;
-      this.loading = true;
       this.axios.post('api/save-remark-reviewer', this.remarkreviewer, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
+      }).then(function () {
+        _this23.loading = true;
+
+        _this23.$toast.add({
+          severity: "info",
+          summary: "Success",
+          detail: "successfully added a remark",
+          life: 2000
+        });
+
+        _this23.remarkreviewer = {
+          id: '',
+          remark: ''
+        };
+
+        _this23.getActive();
       });
-      this.$toast.add({
-        severity: "info",
-        summary: "Success",
-        detail: "successfully added a remark",
-        life: 2000
-      });
-      this.remarkreviewer = {
-        id: '',
-        remark: ''
-      };
-      this.getActive();
     },
     createRemarkAssigned: function createRemarkAssigned(ireqd_id, ireq_id) {
-      var _this22 = this;
+      var _this24 = this;
 
       this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this22.remarkAssigned = response.data;
-        _this22.dialogRemarkAssigned = true;
+        _this24.remarkAssigned = response.data;
+        _this24.dialogRemarkAssigned = true;
       });
       this.code = ireqd_id;
     },
     createNoteAssigned: function createNoteAssigned(ireqd_id, ireq_id) {
-      var _this23 = this;
+      var _this25 = this;
 
       this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this23.noteAssigned = response.data;
-        _this23.dialogNoteAssigned = true;
+        _this25.noteAssigned = response.data;
+        _this25.dialogNoteAssigned = true;
       });
       this.code = ireqd_id;
     },
     submitRemarkAssigned: function submitRemarkAssigned() {
-      var _this24 = this;
+      var _this26 = this;
 
       this.axios.put('/api/save-remark-assigned/' + this.code, this.remarkAssigned, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this24.$toast.add({
+        _this26.$toast.add({
           severity: 'success',
           summary: 'Success',
           detail: 'Success Update',
           life: 2000
         });
 
-        _this24.noteAssigned = [];
-        _this24.code = null;
-        _this24.dialogRemarkAssigned = false;
+        _this26.noteAssigned = [];
+        _this26.code = null;
+        _this26.dialogRemarkAssigned = false;
       });
       this.loading = true;
       this.getIct4();
     },
     submitNoteAssigned: function submitNoteAssigned() {
-      var _this25 = this;
+      var _this27 = this;
 
       this.axios.put('/api/update-note/' + this.code, this.noteAssigned, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this25.$toast.add({
+        _this27.$toast.add({
           severity: 'success',
           summary: 'Success',
           detail: 'Success Update',
           life: 2000
         });
 
-        _this25.noteAssigned = [];
-        _this25.code = null;
-        _this25.dialogNoteAssigned = false;
+        _this27.noteAssigned = [];
+        _this27.code = null;
+        _this27.dialogNoteAssigned = false;
       });
       this.loading = true;
       this.getIct4();
@@ -2978,6 +3090,8 @@ var _hoisted_552 = {
   "class": "col-fixed w-9rem"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
@@ -5077,7 +5191,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "10rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+      }), _this.showPersonelblmDiverifikasi.some(function (el) {
+        return el > 0;
+      }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+        key: 0,
+        field: "ireq_assigned_to",
+        header: "Personnel ICT",
+        sortable: true,
+        style: {
+          "min-width": "10rem"
+        }
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_status",
         header: "Status",
         sortable: true,

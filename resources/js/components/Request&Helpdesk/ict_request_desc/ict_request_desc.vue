@@ -1013,6 +1013,7 @@
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelblmDiverifikasi.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -4197,6 +4198,7 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+        showPersonelblmDiverifikasi:[],
         sedangDireview:[],
         sedangDireview1:[],
         sedangDireview2:[],
@@ -4330,6 +4332,15 @@ export default {
           this.sdhSelesai = response.data.ict5;
           this.sedangDireview = response.data.ict7;
           this.loading = false;
+        }).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
       },
       getIct2(){
@@ -4344,11 +4355,21 @@ export default {
         this.selesai = response.data.ict5;
         this.totalRequest1 = response.data.ict6;
         this.loading = false;
+        }).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
       },
       getIct3(){
         this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.blmDiverifikasi = response.data.ict;
+          this.showPersonelblmDiverifikasi = this.blmDiverifikasi.map((x)=>x.ireq_count_status);
           this.atasanDivisi = response.data.ict1;
           this.ictManager = response.data.ict2;
           this.direject2 = response.data.ict3;
@@ -4358,6 +4379,15 @@ export default {
           this.totalRequest2 = response.data.ict8;
           this.penugasanRequest2 = response.data.ict7;
           this.loading = false;
+        }).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
       },
       getIct4(){
@@ -4368,6 +4398,15 @@ export default {
         this.assignmentRequest3 = response.data.ict3;
         this.rejected3 = response.data.ict4;
         this.loading = false;
+        }).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
       },
       getIct5(){
@@ -4382,12 +4421,30 @@ export default {
         this.sedangDireview2 = response.data.ict7;
         this.penugasanRequest4 = response.data.ict8;
         this.loading = false;
+        }).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
       },
       getIct6(){
         this.axios.get('api/total-request/'+this.usr_name, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.total = response.data;
           this.loading = false;
+        }).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
       },
       getIct7(){
@@ -4400,6 +4457,15 @@ export default {
           this.sdhSelesaiAdmin = response.data.ict5;
           this.totalAdmin = response.data.ict6;
           this.loading = false;
+        }).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
       },
       AssignPerRequest(ireq_id){
@@ -4431,21 +4497,23 @@ export default {
       },
       ClosingPerDetail(ireqd_id,ireq_no){
         this.$confirm.require({
-          message: "Closing Permohonan Dilanjutkan?",
+          message: "Are you sure to close this request?",
           header: "Closing Per Detail",
           icon: "pi pi-info-circle",
           acceptClass: "p-button",
-          acceptLabel: "Ya",
-          rejectLabel: "Tidak",
+          acceptLabel: "Yes",
+          rejectLabel: "No",
           accept: () => {
-            this.$toast.add({
+            this.loading = true;
+            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_no, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+              this.getActive();
+              this.$toast.add({
               severity: "info",
-              summary: "Confirmed",
-              detail: "Berhasil Diclosing",
+              summary: "Success",
+              detail: "Closing request successful",
               life: 3000,
             });
-            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_no, {headers: {'Authorization': 'Bearer '+this.token}});
-           this.getActive();
+            });
           },
           reject: () => {},
         });
@@ -4462,42 +4530,46 @@ export default {
       }, 
       Submit(ireq_id){
       this.$confirm.require({
-        message: "Apakah Anda Yakin Mensubmit?",
-        header: "ICT Request    ",
+        message: "Are you sure to submit this request?",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
-          this.$toast.add({
+          this.loading = true;
+          this.axios.get('/api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "Berhasil Submit",
+            summary: "Success Message",
+            detail: "Submitted Success",
             life: 3000,
           });
-          this.axios.get('api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
           this.getActive();
+          });
         },
         reject: () => {},
-      })
+       });
       },
       ApproveAtasan(ireq_id){
        this.$confirm.require({
-        message: "Apakah Anda Yakin?",
-        header: "ICT Request    ",
+        message: "Are you sure this request need approval from higher level?",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
+          this.loading = true;
+          this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Update",
+            detail: "Success Update Request",
             life:2000
           });
-          this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
           this.getActive();
+          });
         },
         reject: () => {},
       });
@@ -4505,20 +4577,22 @@ export default {
       ApproveManager(ireq_id){
         this.$confirm.require({
         message: "Apakah Anda Yakin?",
-        header: "ICT Request    ",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
-          this.$toast.add({
+          this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.$toast.add({
             severity: "info",
             summary: "Confirmed",
-            detail: "Berhasil Update",
+            detail: "Success Update Request",
             life:2000
           });
-          this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}});
           this.getActive();
+          });
         },
         reject: () => {},
        });
@@ -4569,15 +4643,17 @@ export default {
             acceptLabel: "Yes",
             rejectLabel: "No",
             accept: () => {
-              this.$toast.add({
-                severity: "info",
-                summary: "Success Message",
-                detail: "Successfully approved this request",
-                life : 1000
-              });
-                this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
+              this.loading = true;
+                this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+                  this.$toast.add({
+                    severity: "info",
+                    summary: "Success Message",
+                    detail: "Successfully approved this request",
+                    life : 1000
+                  });
                 this.code = null;
                 this.getActive();
+                });
           },
           reject: () => {},
         });
@@ -4651,26 +4727,16 @@ export default {
       },
       updateApproveManager(){
         this.ConfirmationVerifikasiManager = false;
-        // this.$confirm.require({
-        //       message: "Approval Permohonan Dilanjutkan?",
-        //       header: "ICT Request    ",
-        //       icon: "pi pi-info-circle",
-        //       acceptClass: "p-button",
-        //       acceptLabel: "Ya",
-        //       rejectLabel: "Tidak",
-        //       accept: () => {
-                this.$toast.add({
-                  severity: "info",
-                  summary: "Confirmed",
-                  detail: "Permohonan Dilanjutkan",
-                  life : 1000
-                });
-                this.axios.put('/api/abm/' +this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
-                this.cancelApproveManager();
-                this.getActive();
-        //   },
-        //   reject: () => {},
-        // });
+        this.$toast.add({
+          severity: "info",
+          summary: "Confirmed",
+          detail: "Permohonan Dilanjutkan",
+          life : 1000
+        });
+        this.axios.put('/api/abm/' +this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.cancelApproveManager();
+          this.getActive();
+        });
       },
       rejectManager(){
         this.ConfirmationVerifikasiManager = false;
@@ -4713,8 +4779,8 @@ export default {
       },
       updateRemarkReviewer(){
         this.dialogRemarkReviewer = false;
-        this.loading = true;
-        this.axios.post('api/save-remark-reviewer',this.remarkreviewer, {headers: {'Authorization': 'Bearer '+this.token}});
+        this.axios.post('api/save-remark-reviewer',this.remarkreviewer, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+         this.loading = true;
           this.$toast.add({
             severity: "info",
             summary: "Success",
@@ -4723,6 +4789,7 @@ export default {
           });
           this.remarkreviewer = {id:'',remark:''};
           this.getActive();
+        });
       },
       createRemarkAssigned(ireqd_id,ireq_id){
         this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

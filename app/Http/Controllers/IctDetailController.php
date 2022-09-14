@@ -593,7 +593,7 @@ class IctDetailController extends Controller
         ->where('ireqd_id',$request->ireqd_id)
         ->where('ireq_id',$code)
         ->update([
-            'ireq_assigned_to1'=>$request->ireq_assigned_to1,
+            'ireq_assigned_to1'=>$request->ireq_assigned_to,
             'last_update_date' =>$this->newUpdate,
             'last_updated_by'=>Auth::user()->usr_name
         ]);
