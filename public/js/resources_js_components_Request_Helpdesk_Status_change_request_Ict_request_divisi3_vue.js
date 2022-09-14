@@ -63,13 +63,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.$confirm.require({
-        message: "Apakah anda yakin?",
-        header: "ICT Request    ",
+        message: "Are you sure to accept this request?",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
+          _this.loading = true;
+
           _this.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -104,6 +106,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = true;
 
       if (this.editDetail.ireq_reason != '') {
+        this.loading = true;
         this.axios.put('/api/rejectPersonnel/' + this.code, this.editDetail, {
           headers: {
             'Authorization': 'Bearer ' + this.token
@@ -226,6 +229,7 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
+        _this8.loading = true;
         _this8.editStatus = [];
         _this8.code = null;
         _this8.status = [];

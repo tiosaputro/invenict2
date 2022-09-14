@@ -692,13 +692,14 @@ export default {
     },
     acceptRequest(ireq_id){
       this.$confirm.require({
-        message: "Apakah anda yakin?",
-        header: "ICT Request    ",
+        message: "Are you sure to accept this request?",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
           accept: () => {
+            this.loading = true;
             this.$toast.add({
               severity: "info",
               summary: "Confirmed",
@@ -725,6 +726,7 @@ export default {
     submitReject(){
       this.submitted = true;
       if(this.editDetail.ireq_reason != ''){
+        this.loading = true;
         this.axios.put('/api/rejectPersonnel/'+this.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.$toast.add({
             severity:'success', summary: 'Success', detail:'Success Update', life: 3000
@@ -789,6 +791,7 @@ export default {
     submitStatus(){
       this.submitted = true;
         this.axios.put('/api/update-status-done/'+this.code,this.editStatus,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.loading = true;
           this.editStatus = [];
           this.code = null;
           this.status=[];

@@ -9,6 +9,7 @@ class IctDetail extends Model
 {
     protected $fillable = [
         'ireqd_id',
+        'ireq_date_done',
         'ireq_id',
         'ireq_type',
         'invent_code',

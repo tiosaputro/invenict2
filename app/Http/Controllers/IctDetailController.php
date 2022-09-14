@@ -620,6 +620,7 @@ class IctDetailController extends Controller
         ->update([
             'ireq_status' => $request->status,
             'last_update_date' => $this->newUpdate,
+            'ireq_date_done' => $this->newUpdate,
             'last_updated_by' => Auth::user()->usr_name
         ]);
         
