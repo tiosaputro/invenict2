@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      loading: false,
       level: [],
       errors: [],
       error: [],
@@ -88,6 +89,7 @@ __webpack_require__.r(__webpack_exports__);
     UpdateIct: function UpdateIct() {
       var _this3 = this;
 
+      this.loading = true;
       this.errors = [];
       this.error = [];
 
@@ -109,8 +111,11 @@ __webpack_require__.r(__webpack_exports__);
           }, 1000);
         })["catch"](function (error) {
           _this3.errors = error.response.data.errors;
+          _this3.loading = false;
         });
       } else {
+        this.loading = false;
+
         if (this.mutasi.ireq_prio_level == null) {
           this.error.ireq_prio_level = "Priority level not filled";
         }
@@ -283,6 +288,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
+  var _component_ProgressSpinner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProgressSpinner");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
@@ -385,19 +392,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.ireq_bu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.ireq_bu), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Keterangan</label>\r\n                 <div class=\"field col-12 md:col-4\">\r\n                  <Textarea \r\n                    v-model=\"mutasi.ireq_remark\"\r\n                    :autoResize=\"true\" \r\n                    rows=\"5\" \r\n                    cols=\"20\"\r\n                    placeholder=\"Masukan Keterangan . . .\"\r\n                    :class=\"{ 'p-invalid': error.ireq_remark }\"\r\n                  />\r\n                      <small class=\"p-error\" v-if=\"error.ireq_remark\"\r\n                        >{{error.ireq_remark}}\r\n                      </small>\r\n                </div>\r\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                <label class=\"col-fixed w-9rem\" style=\"width:120px\">Keterangan</label>\r\n                 <div class=\"field col-12 md:col-4\">\r\n                  <Textarea \r\n                    v-model=\"mutasi.ireq_remark\"\r\n                    :autoResize=\"true\" \r\n                    rows=\"5\" \r\n                    cols=\"20\"\r\n                    placeholder=\"Masukan Keterangan . . .\"\r\n                    :class=\"{ 'p-invalid': error.ireq_remark }\"\r\n                  />\r\n                      <small class=\"p-error\" v-if=\"error.ireq_remark\"\r\n                        >{{error.ireq_remark}}\r\n                      </small>\r\n                </div>\r\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 0,
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Save",
     type: "submit"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 1,
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
     onClick: _cache[6] || (_cache[6] = function ($event) {
       return _ctx.$router.push('/ict-request');
     })
-  })])], 32
+  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ProgressSpinner, {
+    key: 2,
+    style: {
+      "width": "50px",
+      "height": "50px"
+    },
+    strokeWidth: "8",
+    fill: "var(--surface-ground)",
+    animationDuration: ".5s"
+  }))])], 32
   /* HYDRATE_EVENTS */
   )])])]);
 }

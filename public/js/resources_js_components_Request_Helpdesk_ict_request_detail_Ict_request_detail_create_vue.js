@@ -276,7 +276,7 @@ __webpack_require__.r(__webpack_exports__);
           return x.name;
         });
 
-        if (_this3.checkname.includes("Request") || _this3.checkto.includes("/ict-request")) {
+        if (_this3.checkname.includes("Status") || _this3.checkto.includes("/ict-request")) {
           _this3.getNoreq();
         } else {
           _this3.$router.push('/access');
@@ -669,16 +669,15 @@ var _hoisted_28 = {
 var _hoisted_29 = {
   "class": "form-group"
 };
-var _hoisted_30 = ["src"];
-var _hoisted_31 = {
+var _hoisted_30 = {
   "class": "col-sm-6"
 };
-var _hoisted_32 = {
+var _hoisted_31 = {
   key: 0,
   "class": "field grid"
 };
 
-var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
   }, null, -1
@@ -686,22 +685,22 @@ var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_34 = {
+var _hoisted_33 = {
   "class": "col-10 md-6"
 };
-var _hoisted_35 = {
+var _hoisted_34 = {
   "class": "card",
   style: {
     "height": "20 rem"
   }
 };
-var _hoisted_36 = ["src"];
-var _hoisted_37 = {
+var _hoisted_35 = ["src"];
+var _hoisted_36 = {
   key: 1,
   "class": "field grid"
 };
 
-var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_37 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
   }, null, -1
@@ -709,10 +708,10 @@ var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_39 = {
+var _hoisted_38 = {
   "class": "col-10 md-6"
 };
-var _hoisted_40 = {
+var _hoisted_39 = {
   "class": "card"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -733,6 +732,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
 
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
+
+  var _component_ProgressSpinner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProgressSpinner");
 
   var _component_Pdf = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Pdf");
 
@@ -883,21 +884,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   )), [[_directive_tooltip, 'Click to cancel create detail', void 0, {
     bottom: true
-  }]]) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+  }]]) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ProgressSpinner, {
     key: 3,
-    src: '/assets/loading6.gif',
-    height: "70",
-    "class": "mb-3"
-  }, null, 8
-  /* PROPS */
-  , _hoisted_30))])], 32
+    style: {
+      "width": "50px",
+      "height": "50px"
+    },
+    strokeWidth: "8",
+    fill: "var(--surface-ground)",
+    animationDuration: ".5s"
+  }))])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [this.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [this.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $data.preview,
     "class": "ict-image"
   }, null, 8
   /* PROPS */
-  , _hoisted_36)])])])) : this.pdf ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Pdf, {
+  , _hoisted_35)])])])) : this.pdf ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Pdf, {
     src: $data.preview,
     "class": "ict-pdf"
   }, null, 8

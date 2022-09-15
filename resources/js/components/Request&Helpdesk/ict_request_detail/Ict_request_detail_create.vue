@@ -126,7 +126,7 @@
                     name: 'Ict Request Detail',
                     params: { code: this.$route.params.code }, })"
                 />
-                <img :src="'/assets/loading6.gif'" v-else height="70" class="mb-3" />
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" v-else/>
               </div>
              </form>
            </div>
@@ -350,7 +350,7 @@ export default {
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
+        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
            this.getNoreq();
         }
         else {

@@ -274,15 +274,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 'Ict Request Reviewer'
           });
         })
-      }), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
-        key: 0,
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
         label: "Pdf",
         "class": "p-button-raised p-button-danger mr-2",
         icon: "pi pi-file-pdf",
         onClick: _cache[2] || (_cache[2] = function ($event) {
           return $options.CetakPdfSedangDikerjakan();
         })
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\r\n                    v-if=\"this.status == 'T'\" \r\n                    label=\"Excel\"\r\n                    class=\"p-button-raised p-button-success mt-2\"\r\n                    icon=\"pi pi-print\"\r\n                    @click=\"CetakExcelSedangDikerjakan()\" \r\n                  /> ")])])])];
+      })])])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {

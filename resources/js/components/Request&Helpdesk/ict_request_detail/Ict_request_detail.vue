@@ -60,7 +60,7 @@
             Not Found
           </template>
           <template #loading>
-            Loading ICT Request (Detail) data. Please wait.
+            Loading data. Please wait.
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
           <Column field="name" header="Items" :sortable="true" style="min-width:12rem"/>
@@ -77,7 +77,7 @@
               </p>
             </template>  
           </Column>
-          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
+          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem" v-if="this.showPersonnel.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span v-if="slotProps.data.status" :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -155,8 +155,7 @@ export default {
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        tes:[],
-        ireq:[]
+        showPersonnel:[]
     };
   },
   mounted() {
@@ -172,7 +171,7 @@ export default {
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
+        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
            this.getIctDetail();
            this.getNoreq()
         }
@@ -184,11 +183,7 @@ export default {
     getIctDetail(){
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
-        this.tes = response.data.map((x)=>x.ireq_assigned_to);
-        if(this.tes.length > 0 && this.tes[0] != null){
-          this.ireq = this.tes
-        }
-        else{}
+        this.showPersonnel = response.data.map((x)=>x.ireq_count_status);
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {

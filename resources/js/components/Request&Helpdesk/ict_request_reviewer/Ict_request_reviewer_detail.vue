@@ -48,9 +48,9 @@
           <Column field="name" header="Items" :sortable="true"  style="min-width:8rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true"  style="min-width:8rem" v-if="this.show == true"/>
-          <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true"  style="min-width:12rem" v-if="this.show == true"/>
+          <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonnel1.some(el=> el > 0)"/>
+          <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true"  style="min-width:8rem" v-if="this.showReason.some(el=> el > 0)"/>
+          <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true"  style="min-width:12rem" v-if="this.showPersonnel2.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:10rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -207,6 +207,9 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+        showPersonnel1:[],
+        showPersonnel2:[],
+        showReason:[],
         submitted:false,
         dialogAssign:false,
         assign:[],
@@ -288,7 +291,7 @@ export default {
     Submit(ireqd_id){
       this.$confirm.require({
         message: "Are you sure you want to submit this request?",
-        header: "ICT Request    ",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",
@@ -315,6 +318,9 @@ export default {
     getIctDetail(){
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
+        this.showPersonnel1 = response.data.map((x)=>x.ireq_count_status);
+        this.showPersonnel2 = response.data.map((x)=>x.ireq_count_personnel2);
+        this.showReason = response.data.map((x)=>x.ireq_count_reason);
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {

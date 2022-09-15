@@ -55,7 +55,7 @@ __webpack_require__.r(__webpack_exports__);
           return x.name;
         });
 
-        if (_this.checkname.includes("Reviewer") || _this.checkname.includes("Request") || _this.checkname.includes("Approval Manager") || _this.checkto.includes("/ict-request-reviewer")) {
+        if (_this.checkname.includes("Reviewer") || _this.checkname.includes("Status") || _this.checkname.includes("Approval Manager") || _this.checkto.includes("/ict-request-reviewer")) {
           _this.getIctDetail();
 
           _this.getNoreq();

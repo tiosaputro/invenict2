@@ -18,6 +18,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return _defineProperty({
+      showPersonnel1: [],
+      showPersonnel2: [],
+      showReason: [],
       submitted: false,
       dialogAssign: false,
       assign: [],
@@ -141,7 +144,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$confirm.require({
         message: "Are you sure you want to submit this request?",
-        header: "ICT Request    ",
+        header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",
@@ -179,6 +182,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (response) {
         _this5.detail = response.data;
+        _this5.showPersonnel1 = response.data.map(function (x) {
+          return x.ireq_count_status;
+        });
+        _this5.showPersonnel2 = response.data.map(function (x) {
+          return x.ireq_count_personnel2;
+        });
+        _this5.showReason = response.data.map(function (x) {
+          return x.ireq_count_reason;
+        });
         _this5.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -537,23 +549,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "10rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+      }), _this.showPersonnel1.some(function (el) {
+        return el > 0;
+      }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+        key: 0,
         field: "ireq_assigned_to1",
         header: "Personnel ICT",
         sortable: true,
         style: {
           "min-width": "10rem"
         }
-      }), _this.show == true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
-        key: 0,
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.showReason.some(function (el) {
+        return el > 0;
+      }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+        key: 1,
         field: "ireq_assigned_to1_reason",
         header: "Reason",
         sortable: true,
         style: {
           "min-width": "8rem"
         }
-      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.show == true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
-        key: 1,
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.showPersonnel2.some(function (el) {
+        return el > 0;
+      }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+        key: 2,
         field: "ireq_assigned_to2",
         header: "Personnel ICT (2)",
         sortable: true,

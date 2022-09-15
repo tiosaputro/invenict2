@@ -36,7 +36,8 @@ import Menu from 'primevue/menu';
 import Message from 'primevue/message';
 import MultiSelect from 'primevue/multiselect';
 import Password from 'primevue/password';
-import pdf from 'vue3-pdf'
+import ProgressSpinner from 'primevue/progressspinner';
+import pdf from 'vue3-pdf';
 import PrimeVue from 'primevue/config';
 import QrcodeVue from 'qrcode.vue';
 import Rating from 'primevue/rating';
@@ -106,6 +107,7 @@ app.component('Menu', Menu);
 app.component('Message', Message);
 app.component('MultiSelect', MultiSelect);
 app.component('Password', Password);
+app.component('ProgressSpinner', ProgressSpinner);
 app.component('Pdf',pdf);
 app.component('QrcodeVue',QrcodeVue);
 app.component('RadioButton', RadioButton);

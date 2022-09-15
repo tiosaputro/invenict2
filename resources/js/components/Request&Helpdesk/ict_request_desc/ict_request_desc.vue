@@ -1216,7 +1216,7 @@
             </template>
           </Column>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-          <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
+          <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
           <Column header="Attachment" style="min-width:10rem">
@@ -1308,7 +1308,7 @@
             </template>
           </Column>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-          <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
+          <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
         <Column header="Attachment" style="min-width:10rem">

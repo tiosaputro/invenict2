@@ -630,7 +630,7 @@ const routes = [
     {
         name: 'Ict Request Verifikasi Reviewer',
         path: '/ict-request-verifikasi-reviewer/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_verifikasi_mail.vue'),
+        component: ()=> import('./pages/CheckVerifReviewer.vue'),
     },
     
     //legality_qr_code

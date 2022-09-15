@@ -155,7 +155,7 @@ export default {
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
+        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
            this.getIctDetail();
            this.getNoreq()
         }

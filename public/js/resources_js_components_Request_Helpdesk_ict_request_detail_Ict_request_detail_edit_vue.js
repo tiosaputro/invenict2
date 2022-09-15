@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      loading: false,
       errors: [],
       error: [],
       detail: [],
@@ -110,7 +111,7 @@ __webpack_require__.r(__webpack_exports__);
           return x.name;
         });
 
-        if (_this2.checkname.includes("Request") || _this2.checkto.includes("/ict-request")) {
+        if (_this2.checkname.includes("Status") || _this2.checkto.includes("/ict-request")) {
           _this2.getIct();
         } else {
           _this2.$router.push('/access');
@@ -186,6 +187,8 @@ __webpack_require__.r(__webpack_exports__);
     UpdateIctDetail: function UpdateIctDetail() {
       var _this6 = this;
 
+      this.loading = true;
+
       if (!this.error.foto) {
         this.errors = [];
         this.error = [];
@@ -208,9 +211,12 @@ __webpack_require__.r(__webpack_exports__);
                 return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
+              _this6.loading = false;
               _this6.errors = error.response.data.errors;
             });
           } else {
+            this.loading = false;
+
             if (this.ict.ireq_type == null) {
               this.error.ireq_type = "Request Type not filled";
             }
@@ -240,9 +246,12 @@ __webpack_require__.r(__webpack_exports__);
                 return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
+              _this6.loading = false;
               _this6.errors = error.response.data.errors;
             });
           } else {
+            this.loading = false;
+
             if (this.ict.ireq_type == null) {
               this.error.ireq_type = "Request Type not filled";
             }
@@ -488,6 +497,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
+  var _component_ProgressSpinner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProgressSpinner");
+
   var _component_Pdf = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Pdf");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
@@ -595,19 +606,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* HYDRATE_EVENTS, NEED_PATCH */
   ), $data.error.foto ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.foto), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 0,
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Save",
     type: "submit"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 1,
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mt-2",
     icon: "pi pi-times",
     onClick: _cache[8] || (_cache[8] = function ($event) {
       return _ctx.$router.go(-1);
     })
-  })])], 32
+  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ProgressSpinner, {
+    key: 2,
+    style: {
+      "width": "50px",
+      "height": "50px"
+    },
+    strokeWidth: "8",
+    fill: "var(--surface-ground)",
+    animationDuration: ".5s"
+  }))])], 32
   /* HYDRATE_EVENTS */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [this.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [this.preview ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
     key: 0,

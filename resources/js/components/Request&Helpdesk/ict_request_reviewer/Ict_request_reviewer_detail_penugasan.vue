@@ -76,19 +76,11 @@
                     name: 'Ict Request Reviewer'})"
                   />
                   <Button
-                    v-if="this.status == 'T'"  
                     label="Pdf"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-file-pdf"
                     @click="CetakPdfSedangDikerjakan()"
                   />
-                  <!-- <Button
-                    v-if="this.status == 'T'" 
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcelSedangDikerjakan()" 
-                  /> -->
                 </div>
 			        </div>
             </div>

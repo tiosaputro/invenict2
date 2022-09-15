@@ -3798,7 +3798,7 @@ class IctController extends Controller
     }
     public function cekVerif($code)
     {
-        $link = Link::where('link_id',$code)->first();
+        $link = Link::findOrFail($code);
         return json_encode($link);
     }
     function updateStatusPenugasan($ireq_id)

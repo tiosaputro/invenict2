@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
           return x.name;
         });
 
-        if (_this.checkname.includes("Request") || _this.checkto.includes("/ict-request")) {
+        if (_this.checkname.includes("Status") || _this.checkto.includes("/ict-request")) {
           _this.getIctDetail();
 
           _this.getNoreq();

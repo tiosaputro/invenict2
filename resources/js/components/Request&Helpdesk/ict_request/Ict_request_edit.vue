@@ -155,17 +155,21 @@
               </div> -->
               <div class="form-group">
                  <Button
+                  v-if="this.loading == false"
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
                   label="Save"
                   type="submit"
                 />
                 <Button
+                  v-if="this.loading == false"
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.push('/ict-request')"
                 />
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" v-else/>
+                
               </div>
             </form>
           </div>
@@ -176,6 +180,7 @@
 export default {
   data() {
     return {
+      loading:false,
       level:[],
       errors: [],
       error:[],
@@ -227,6 +232,7 @@ export default {
         });
       },
     UpdateIct() {
+      this.loading = true;
       this.errors = [] ;
       this.error = [];
       if(
@@ -246,9 +252,11 @@ export default {
         setTimeout( () => this.$router.push('/ict-request'),1000);
         }).catch(error=>{
           this.errors = error.response.data.errors;
+          this.loading = false;
          });
       }
       else{
+        this.loading = false;
         if(this.mutasi.ireq_prio_level == null){
           this.error.ireq_prio_level = "Priority level not filled"
       }

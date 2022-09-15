@@ -15,7 +15,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       verif: [],
-      ireq_id: null,
       todayyy: null,
       loading: true,
       loggedIn: localStorage.getItem('loggedIn')
@@ -41,7 +40,10 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           if (_this.loggedIn) {
             _this.$router.push({
-              name: 'Ict Request Reviewer'
+              name: _this.verif.link_action,
+              params: {
+                code: _this.verif.ireq_id
+              }
             });
           } else {
             localStorage.clear();
@@ -69,7 +71,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "grid crud-demo"
+  "class": "grid"
 };
 var _hoisted_2 = {
   "class": "col-12"

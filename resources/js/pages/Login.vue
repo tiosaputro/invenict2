@@ -49,7 +49,7 @@
                             </small>
                             <div class="text-center">
                                 <Button v-if="!this.loading" label="Sign In" type="submit" class="w-full p-2 text-xl"/>
-                                <img :src="'assets/loading6.gif'" v-else height="70" class="mb-3" />
+                                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" v-else/>
                             </div>
                         </div>
                     </form>

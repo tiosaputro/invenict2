@@ -96,17 +96,20 @@
                   </div>
               <div class="form-group">
                  <Button
+                  v-if="this.loading == false"
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
                   label="Save"
                   type="submit"
                 />
                 <Button
+                  v-if="this.loading == false"
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mt-2"
                   icon="pi pi-times"
                   @click="$router.go(-1)"
                 />
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" v-else/>
               </div>
             </form>
           </div>
@@ -138,6 +141,7 @@
 export default {
   data() {
     return {
+      loading: false, 
       errors: [],
       error:[],
       detail: [],
@@ -208,7 +212,7 @@ export default {
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
+        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
         this.getIct();
         }
         else {
@@ -258,6 +262,7 @@ export default {
         });
       },
     UpdateIctDetail() {
+      this.loading = true;
       if(!this.error.foto){
       this.errors = [];
       this.error = [];
@@ -273,9 +278,11 @@ export default {
         });
         setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
         }).catch(error=>{
+          this.loading = false;
           this.errors = error.response.data.errors;
          });
       }else{
+        this.loading = false;
         if(this.ict.ireq_type == null){
           this.error.ireq_type = "Request Type not filled"
         }
@@ -298,9 +305,11 @@ export default {
           });
           setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
           }).catch(error=>{
+            this.loading = false;
             this.errors = error.response.data.errors;
           });
       }else{
+        this.loading = false;
         if(this.ict.ireq_type == null){
           this.error.ireq_type = "Request Type not filled"
         }

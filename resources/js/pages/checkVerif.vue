@@ -5,7 +5,7 @@
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                     <div class="grid flex flex-column align-items-center">
                         <div class="flex justify-content-center align-items-center border-circle" style="width:3.2rem; height:3.2rem;">
-                            <img :src="'/assets/loading6.gif'" height="70" class="mb-3" />
+                          <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"/>
                         </div>
                         <h1 class="text-900 font-bold text-4xl lg:text-5xl mb-2">Verification Link</h1>
                         <span class="text-600 text-center">Please wait...</span>
@@ -56,6 +56,9 @@ export default {
                 this.$router.push({ name: 'error', params: { stat: 'expired' } }) 
               });
              });
+            }
+            else if(this.verif.expired_at == null && this.verif.usr_id == null && this.verif.link_action != null){
+              this.$router.push('/dashboard')
             }
            }
         });

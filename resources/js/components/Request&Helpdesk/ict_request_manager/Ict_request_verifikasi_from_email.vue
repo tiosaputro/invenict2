@@ -24,8 +24,7 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Verification)"
           responsiveLayout="scroll"
         >
-        
-       <template #header>
+          <template #header>
               <div class="table-header text-right">
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />

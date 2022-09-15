@@ -146,7 +146,7 @@
                   icon="pi pi-times"
                   @click="$router.push('/ict-request')"
                 />
-                <img :src="'assets/loading6.gif'" v-else height="70" class="mb-3" />
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" v-else/>
               </div>
             </form>
           </div>
