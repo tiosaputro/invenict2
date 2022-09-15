@@ -171,6 +171,8 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
+          _this2.loading = true;
+
           _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -183,8 +185,6 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + _this2.token
             }
           }).then(function () {
-            _this2.loading = true;
-
             _this2.getIct();
           });
         },
@@ -285,6 +285,8 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
+          _this6.loading = true;
+
           _this6.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -297,8 +299,6 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + _this6.token
             }
           }).then(function () {
-            _this6.loading = true;
-
             _this6.getIct();
           });
         },
@@ -316,6 +316,8 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
+          _this7.loading = true;
+
           _this7.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -328,8 +330,6 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + _this7.token
             }
           }).then(function () {
-            _this7.loading = true;
-
             _this7.getIct();
           });
         },
@@ -400,6 +400,8 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
+          _this10.loading = true;
+
           _this10.$toast.add({
             severity: "info",
             summary: "Success",
@@ -412,8 +414,6 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + _this10.token
             }
           }).then(function () {
-            _this10.loading = true;
-
             _this10.getIct();
           });
         },

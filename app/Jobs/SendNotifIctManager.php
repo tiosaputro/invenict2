@@ -8,7 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\NotificationICTManager;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class SendNotifIctManager implements ShouldQueue
 {

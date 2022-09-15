@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -11,7 +11,8 @@ class IctDetailExport implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
-    function __construct($code) {
+    protected $code;
+    public function __construct($code) {
         $this->code = $code;
     }
     public function view(): View

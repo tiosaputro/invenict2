@@ -6,16 +6,19 @@ use App\Exports\MasterExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
-use DB;
 use App\Lookup_Refs;
-use Auth;
-use Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Mng_usr_roles;
 use App\Mng_role_menu;
 
 class MasterController extends Controller
 {
-    function __construct(){
+    protected $newCreation;
+    protected $newUpdate;
+    protected $to;
+    public function __construct(){
         $date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');

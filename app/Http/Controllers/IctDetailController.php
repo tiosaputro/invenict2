@@ -12,9 +12,9 @@ use App\Exports\IctDetailTabReviewerExport;
 use App\Exports\IctDetailTabVerifikasiExport;
 use App\Exports\IctDetailTabSudahDikerjakanExport;
 use Illuminate\Support\Facades\DB;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Jobs\SendNotifPersonnel;
 use App\Jobs\SendNotifInProgress;
@@ -22,7 +22,10 @@ use App\Jobs\SendNotifDone;
 
 class IctDetailController extends Controller
 {
-     function __construct(){
+    protected $date;
+    protected $newCreation;
+    protected $newUpdate;
+     public function __construct(){
         $date = Carbon::now();
         $this->date= Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');

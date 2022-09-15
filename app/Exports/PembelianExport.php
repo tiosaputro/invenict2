@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -11,7 +11,7 @@ class PembelianExport implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function view(): view
+    public function view(): View
     {
         return view('excel/Laporan_Pembelian', [ 'pembelian'=> DB::table('purchase_mst as pm')
         ->Select('pm.*','lr.lookup_desc as valuta_code','sm.suplier_name',

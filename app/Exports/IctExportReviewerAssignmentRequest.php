@@ -2,8 +2,9 @@
 
 namespace App\Exports;
 
-use DB;
-use Auth;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 

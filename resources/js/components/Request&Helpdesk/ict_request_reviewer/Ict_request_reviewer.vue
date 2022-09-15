@@ -1101,6 +1101,7 @@ export default {
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
+          this.loading = true;
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -1108,7 +1109,6 @@ export default {
             life: 3000,
           });
           this.axios.get('api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-            this.loading = true;
             this.getIct();
           });
         },
@@ -1180,6 +1180,7 @@ export default {
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
+          this.loading = true;
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -1187,7 +1188,6 @@ export default {
             life:2000
           });
           this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-            this.loading = true;
             this.getIct();
           });
         },
@@ -1203,6 +1203,7 @@ export default {
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
+          this.loading = true;
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -1210,7 +1211,6 @@ export default {
             life:2000
           });
           this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-            this.loading = true;
             this.getIct();
           });
         },
@@ -1261,6 +1261,7 @@ export default {
           acceptLabel: "Yes",
           rejectLabel: "No",
           accept: () => {
+            this.loading = true;
             this.$toast.add({
               severity: "info",
               summary: "Success",
@@ -1268,7 +1269,6 @@ export default {
               life: 3000,
             });
             this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-              this.loading = true;
               this.getIct();
             });
           },

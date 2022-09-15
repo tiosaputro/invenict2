@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Cash;
-use App\Ict;
 use App\Exports\CashExport;
-use Excel;
-use DB;
+use Maatwebsite\Excel\Facades\Excel;
+
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Mng_usr_roles;
 use App\Mng_role_menu;
@@ -16,7 +16,8 @@ use Illuminate\Validation\Rule;
 
 class CashController extends Controller
 {
-    function __construct(){
+    protected $to;
+    public function __construct(){
         $this->to = "/cash-advance";
     }
     function index()

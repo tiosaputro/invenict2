@@ -8,7 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\NotificationPersonnel;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class SendNotifPersonnel implements ShouldQueue
 {

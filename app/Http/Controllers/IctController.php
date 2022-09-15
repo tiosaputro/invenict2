@@ -44,10 +44,11 @@ use App\Exports\IctExportPersonnelSelesai;
 use App\Mng_usr_roles;
 use App\Mng_roles;
 use App\Mng_role_menu;
-use DB;
-use Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
+use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
-use Auth;
 use Illuminate\Http\Request;
 use App\Jobs\SendNotifApproval;
 use App\Jobs\SendNotifPersonnel;
@@ -65,7 +66,15 @@ use App\Location;
 
 class IctController extends Controller
 {
-    function __construct(){
+    protected $reviewer;
+    protected $personnel;
+    protected $manager;
+    protected $approvalrequestor;
+    protected $requestor;
+    protected $date;
+    protected $newUpdate;
+    protected $newCreation;
+    public function __construct(){
         $this->reviewer = "/ict-request-reviewer";
         $this->personnel = "/ict-request-divisi3";
         $this->manager = "/ict-request-manager";
@@ -435,12 +444,12 @@ class IctController extends Controller
         $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
         $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
         if($aksesmenu->contains($this->reviewer) && Auth::user()->usr_loc == 'OJ'){
-            return \App::call('App\Http\Controllers\\IctController@getDataReviewerJakarta');
+            return App::call('App\Http\Controllers\\IctController@getDataReviewerJakarta');
         }else if($aksesmenu->contains($this->reviewer) && Auth::user()->usr_loc == 'OK' OR Auth::user()->usr_loc == 'FK'){
-            return \App::call('App\Http\Controllers\\IctController@getDataReviewerKurau');
+            return App::call('App\Http\Controllers\\IctController@getDataReviewerKurau');
         }
         else if($aksesmenu->contains($this->reviewer) && Auth::user()->usr_loc == 'OB' OR Auth::user()->usr_loc == 'FB'){
-            return \App::call('App\Http\Controllers\\IctController@getDataReviewerBentu');
+            return App::call('App\Http\Controllers\\IctController@getDataReviewerBentu');
         }
          else{
             return response(["message"=>"Cannot Access"],403);

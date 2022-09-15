@@ -7,16 +7,17 @@ use App\Lookup_Refs;
 use App\Supplier;
 use App\Exports\PembelianExport;
 use Carbon\Carbon;
-use DB;
-use Excel;
-use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Mng_usr_roles;
 use App\Mng_role_menu;
 
 class PembelianController extends Controller
 {
-    function __construct(){
+    protected $to;
+    public function __construct(){
         $this->to = "/pembelian-peripheral";
     }
     public function index()

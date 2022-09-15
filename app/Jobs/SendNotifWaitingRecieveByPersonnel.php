@@ -8,7 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\NotificationRequestWaitingToBeReceivedByPersonnelIct;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class SendNotifWaitingRecieveByPersonnel implements ShouldQueue
 {

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+
+use Illuminate\Support\Facades\DB;
 
 class BisnisController extends Controller
 {

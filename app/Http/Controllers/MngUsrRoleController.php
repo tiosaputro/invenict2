@@ -6,15 +6,16 @@ use Illuminate\Http\Request;
 use App\Mng_usr_roles;
 use App\Mng_role_menu;
 use App\Mng_User;
-use App\Mng_menu;
 use App\Mng_roles;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use carbon\Carbon;
 
 class MngUsrRoleController extends Controller
 {
-    function __construct(){
+    protected $newCreation;
+    protected $newUpdate;
+    public function __construct(){
         $date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');

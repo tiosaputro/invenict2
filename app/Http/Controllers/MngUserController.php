@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Mng_user;
-use Auth;
 use carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class MngUserController extends Controller
 {
-    function __construct(){
+    protected $newCreation;
+    protected $newUpdate;
+    public function __construct(){
         $date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
@@ -64,7 +66,6 @@ class MngUserController extends Controller
             'usr_alamat'=> $request->usr_alamat,
             'usr_stat'=> $request->usr_status,
             'usr_email'=> $request->usr_email,
-            'usr_stat'=>$request->usr_status,
             'usr_bu'=>$request->usr_bu,
             'div_id'=>$request->div,
             'usr_foto'=> $nama_file,

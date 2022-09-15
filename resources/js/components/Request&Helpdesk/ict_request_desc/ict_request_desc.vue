@@ -2573,6 +2573,7 @@
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelatasanDivisi.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -2691,6 +2692,7 @@
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelictManager.some(el=> el > 0)"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
             <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3371,7 +3373,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.desc == 40">
           <template v-slot:start>
-                <h4>ICT Request (Under review)</h4>
+            <h4>ICT Request (Under review)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -4199,6 +4201,8 @@ export default {
   data() {
     return {
         showPersonelblmDiverifikasi:[],
+        showPersonelatasanDivisi:[],
+        showPersonelictManager:[],
         sedangDireview:[],
         sedangDireview1:[],
         sedangDireview2:[],
@@ -4371,7 +4375,9 @@ export default {
           this.blmDiverifikasi = response.data.ict;
           this.showPersonelblmDiverifikasi = this.blmDiverifikasi.map((x)=>x.ireq_count_status);
           this.atasanDivisi = response.data.ict1;
+          this.showPersonelatasanDivisi = this.atasanDivisi.map((x)=>x.ireq_count_status);
           this.ictManager = response.data.ict2;
+          this.showPersonelictManager = this.ictManager.map((x)=>x.ireq_count_status);
           this.direject2 = response.data.ict3;
           this.sudahDiassign = response.data.ict4;
           this.sudahDikerjakann = response.data.ict5;

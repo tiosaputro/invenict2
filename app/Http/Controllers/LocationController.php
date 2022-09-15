@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Location;
 use Carbon\Carbon;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-    function __construct(){
+    protected $date;
+    protected $newCreation;
+    protected $newUpdate;
+    public function __construct(){
         $date = Carbon::now();
         $this->date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
@@ -74,7 +76,7 @@ class LocationController extends Controller
     function delete($loc_code){
         $loc = Location::find($loc_code);
         $loc->delete();
-        return json()->response('Success Deleted');
+        return json_encode('Success Deleted');
     }
     function getLocation(){
         $loc = Location::select('loc_code as code','loc_desc as name')->orderBy('loc_desc','ASC')->get();

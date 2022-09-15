@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Lookup_Refs;
 use App\Supplier;
-use App\Master;
-use DB;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LookupExport;
 use Illuminate\Validation\Rule;
 use App\Mng_usr_roles;
@@ -17,7 +16,10 @@ use App\Mng_role_menu;
 
 class LookupsController extends Controller
 {
-    function __construct(){
+    protected $newCreation;
+    protected $newUpdate;
+    protected $requestor;
+    public function __construct(){
         $date = Carbon::now();
         $this->newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');

@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -14,7 +14,7 @@ class PembelianDetailExport implements FromView
     function __construct($purchase_id) {
         $this->purchase_id = $purchase_id;
     }
-    public function view(): view
+    public function view(): View
     {
         return view('excel/Laporan_Pembelian_Detail', [ 'pembelian'=> DB::table('purchase_mst as pm')
         ->Select('pm.*','pd.*','im.invent_desc','lr.lookup_desc as dpurchase_sat','sm.suplier_name',

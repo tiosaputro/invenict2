@@ -9,10 +9,10 @@ use App\Pembelian;
 use App\Master;
 Use App\Lookup_Refs;
 use App\Exports\PembelianDetailExport;
-use DB;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PembelianDetailController extends Controller

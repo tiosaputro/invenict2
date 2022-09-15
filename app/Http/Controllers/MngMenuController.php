@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 use App\Mng_menu;
-use App\Mng_usr_roles;
-use App\Mng_role_menu;
-use Auth;
 use carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class MngMenuController extends Controller
 {
-    function __construct(){
+    protected $newCreation;
+    protected $newUpdate;
+    public function __construct(){
         $date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');

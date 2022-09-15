@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -11,6 +11,7 @@ class IctExportAtasanSelesai implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
+    protected $usr_email;
     function __construct($usr_email){
         $this->usr_email = $usr_email;
     }

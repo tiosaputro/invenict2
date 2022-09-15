@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Payment_request;
 use App\Mng_usr_roles;
 use App\Mng_role_menu;
-use DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    function __construct(){
+    protected $to;
+    public function __construct(){
         $this->to = "/payment-request";
     }
     function index()

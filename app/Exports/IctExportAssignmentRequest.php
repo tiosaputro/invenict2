@@ -2,12 +2,13 @@
 
 namespace App\Exports;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class IctExportAssignmentRequest implements FromView
 {
+    protected $usr_name;
     function __construct($usr_name){
         $this->usr_name = $usr_name;
     }

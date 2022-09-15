@@ -12,8 +12,8 @@ use App\Exports\LaporanReqPerPersonnel;
 use App\Exports\LaporanReqPerStatusPerPersonnel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Excel;
-use DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {

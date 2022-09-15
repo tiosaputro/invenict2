@@ -6,7 +6,7 @@ use Session;
 use App\Mng_User;
 use App\Mng_roles;
 use App\Mng_usr_roles;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;

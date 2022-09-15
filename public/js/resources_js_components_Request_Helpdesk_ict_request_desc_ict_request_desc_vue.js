@@ -20,6 +20,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       showPersonelblmDiverifikasi: [],
+      showPersonelatasanDivisi: [],
+      showPersonelictManager: [],
       sedangDireview: [],
       sedangDireview1: [],
       sedangDireview2: [],
@@ -229,7 +231,13 @@ __webpack_require__.r(__webpack_exports__);
           return x.ireq_count_status;
         });
         _this3.atasanDivisi = response.data.ict1;
+        _this3.showPersonelatasanDivisi = _this3.atasanDivisi.map(function (x) {
+          return x.ireq_count_status;
+        });
         _this3.ictManager = response.data.ict2;
+        _this3.showPersonelictManager = _this3.ictManager.map(function (x) {
+          return x.ireq_count_status;
+        });
         _this3.direject2 = response.data.ict3;
         _this3.sudahDiassign = response.data.ict4;
         _this3.sudahDikerjakann = response.data.ict5;
@@ -8461,7 +8469,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "10rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+      }), _this.showPersonelatasanDivisi.some(function (el) {
+        return el > 0;
+      }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+        key: 0,
+        field: "ireq_assigned_to",
+        header: "Personnel ICT",
+        sortable: true,
+        style: {
+          "min-width": "10rem"
+        }
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_status",
         header: "Status",
         sortable: true,
@@ -8677,7 +8695,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "10rem"
         }
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+      }), _this.showPersonelictManager.some(function (el) {
+        return el > 0;
+      }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+        key: 0,
+        field: "ireq_assigned_to",
+        header: "Personnel ICT",
+        sortable: true,
+        style: {
+          "min-width": "10rem"
+        }
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "ireq_status",
         header: "Status",
         sortable: true,

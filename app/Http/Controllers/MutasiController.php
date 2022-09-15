@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mutasi;
-use App\Master;
 use App\Exports\MutasiExport;
-use Excel;
-use DB;
-use Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Mng_usr_roles;
@@ -15,7 +14,8 @@ use App\Mng_role_menu;
 
 class MutasiController extends Controller
 {
-    function __construct(){
+    protected $to;
+    public function __construct(){
         $this->to = "/mutasi-peripheral";
     }
     Public Function index()

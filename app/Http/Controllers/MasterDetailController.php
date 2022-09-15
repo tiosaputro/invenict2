@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 use Carbon\Carbon;
-use DB;
 use App\MasterDetail;
-use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class MasterDetailController extends Controller
 {
-    function __construct(){
+    protected $newCreation;
+    protected $newUpdate;
+    protected $to;
+    public function __construct(){
         $date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');

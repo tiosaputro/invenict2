@@ -2,7 +2,8 @@
 
 namespace App\Exports;
 
-use DB;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -11,6 +12,7 @@ class IctDetailTabVerifikasiExport implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
+    protected $code;
     function __construct($code) {
         $this->code = $code;
     }
