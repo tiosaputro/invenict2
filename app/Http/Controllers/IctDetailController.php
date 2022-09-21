@@ -73,8 +73,14 @@ class IctDetailController extends Controller
         ->LEFTJOIN('catalog_refs as crs',function ($join) {
             $join->on('cr.parent_id','crs.catalog_id');
         })
-        ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
-        ->LEFTJOIN('lookup_refs as llr','id.ireq_status','llr.lookup_code')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('id.ireq_type','lr.lookup_code')
+                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+        })
+        ->leftJoin('lookup_refs as llr',function ($join) {
+            $join->on('id.ireq_status','llr.lookup_code')
+                  ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+        })
         ->where('id.ireq_id',$code)
         ->where(function($query){
             return $query
@@ -82,8 +88,6 @@ class IctDetailController extends Controller
             ->Orwhere('id.ireq_status','RT')
             ->Orwhere('id.ireq_status','T');
         })
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
-        ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
         ->orderBy('id.ireqd_id','ASC')
         ->get();
             return response()->json($dtl);
@@ -263,8 +267,8 @@ class IctDetailController extends Controller
     Public function edit($ireq,$code)
     {
         $ict = DB::table('ireq_dtl as id')
-        ->select('id.ireqd_id','id.ireq_attachment','id.ireq_type','id.invent_code','id.ireq_desc','id.ireq_qty','id.ireq_remark','imm.ireq_no')
-        ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->select('id.ireqd_id','id.ireq_attachment','id.ireq_type','id.invent_code','cr.catalog_name as invent_desc','id.ireq_desc','id.ireq_qty','id.ireq_remark','imm.ireq_no')
+        ->leftjoin('catalog_refs as cr','id.invent_code','cr.catalog_id')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->where('id.ireqd_id',$ireq)

@@ -118,7 +118,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.$toast.add({
           severity: "info",
           summary: "Confirmed",
-          detail: "Berhasil Assign",
+          detail: "Successfully Assignment",
           life: 3000
         });
 
@@ -338,7 +338,7 @@ var _hoisted_36 = /*#__PURE__*/_withScopeId(function () {
     style: {
       "width": "100px"
     }
-  }, "Petugas (ICT)", -1
+  }, "Personnel (ICT)", -1
   /* HOISTED */
   );
 });
@@ -593,13 +593,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         optionValue: "name",
         optionLabel: "name",
         filter: true,
-        placeholder: "Pilih Petugas (ICT)",
+        placeholder: "Pilih Personnel (ICT)",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
           'p-invalid': $data.submitted && !$data.assign.ireq_assigned_to1
         })
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.ireq_assigned_to1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_38, " Petugas(ICT) Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      , ["modelValue", "options", "class"]), $data.submitted && !$data.assign.ireq_assigned_to1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_38, " Personnel(ICT) Harus Diisi ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */

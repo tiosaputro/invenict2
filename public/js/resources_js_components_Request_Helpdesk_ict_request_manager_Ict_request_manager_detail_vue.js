@@ -44,7 +44,7 @@ __webpack_require__.r(__webpack_exports__);
     cekUser: function cekUser() {
       var _this = this;
 
-      this.axios.get('/api/cek-user/' + this.id, {
+      this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -107,12 +107,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure you want to delete this record data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this4.$toast.add({
             severity: "info",

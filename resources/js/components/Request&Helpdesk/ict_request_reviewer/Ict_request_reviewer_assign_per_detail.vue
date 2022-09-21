@@ -137,7 +137,7 @@
               </div>
                 <div class="p-fluid">
                 <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:100px">Petugas (ICT)</label>
+                    <label class="col-fixed w-9rem" style="width:100px">Personnel (ICT)</label>
                     <div class="col-fixed">
                         <Dropdown
                             v-model="assign.ireq_assigned_to1"
@@ -145,11 +145,11 @@
                             optionValue="name"
                             optionLabel="name"
                             :filter="true"
-                            placeholder="Pilih Petugas (ICT)"
+                            placeholder="Pilih Personnel (ICT)"
                             :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to1 }"
                         />
                         <small v-if="submitted && !assign.ireq_assigned_to1" class="p-error">
-                            Petugas(ICT) Harus Diisi
+                          Personnel(ICT) Harus Diisi
                         </small>
                     </div>
                 </div>
@@ -233,7 +233,7 @@ export default {
             this.$toast.add({
               severity: "info",
               summary: "Confirmed",
-              detail: "Berhasil Assign",
+              detail: "Successfully Assignment",
               life: 3000,
             });
             this.getIctDetail();

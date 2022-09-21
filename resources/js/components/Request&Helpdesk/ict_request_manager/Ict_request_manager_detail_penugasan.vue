@@ -24,17 +24,16 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-        
         <template #header>
-            <div class="table-header text-right">
-                <span class=" p-input-icon-left">
-                    <i class="pi pi-search" />
-                     <InputText
-                        v-model="filters['global'].value"
-                        placeholder="Search. . ."
-                     />
-                </span>
-            </div>
+          <div class="table-header text-right">
+            <span class=" p-input-icon-left">
+              <i class="pi pi-search" />
+                <InputText
+                  v-model="filters['global'].value"
+                  placeholder="Search. . ."
+                />
+            </span>
+          </div>
         </template>
            <template #empty>
             Not Found
@@ -83,13 +82,6 @@
                     v-tooltip.bottom="'Click to print out (PDF)'"
                     @click="CetakPdf()"
                   />
-                  <!-- <Button
-                    v-if="this.status == 'T'" 
-                    label="Excel"
-                    class="p-button-raised p-button-success mt-2"
-                    icon="pi pi-print"
-                    @click="CetakExcelSedangDikerjakan()" 
-                  /> -->
                 </div>
 			        </div>
             </div>

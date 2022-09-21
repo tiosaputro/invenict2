@@ -31,7 +31,6 @@
                         optionValue="code"
                         placeholder="Select One"
                         @change="getIreq()"
-                        :showClear="true"
                         :class="{ 'p-invalid': error.ireq_type }"
                         disabled
                   />
@@ -43,31 +42,19 @@
                   </small>
                 </div>
               </div>
-              <div class="field grid" v-if="this.cekTipeReq =='P' || this.cekTipeReq =='S'">
-                <label class="col-fixed w-9rem">Attachment</label>
-                 <div class="col-8 md-4">
-                    <InputText type="file" disabled name="foto" accept="image/jpg,image/png,image/jpeg,application/pdf" ref="fileInput" class="form-control" @change="getAttach" />
-                 </div>
-              </div>
-              <div class="field grid" v-if="this.cekTipeReq =='P'">
-                <label class="col-fixed w-9rem" style="width:120px">Items</label>
-                 <div class="col-fixed w-9rem">
-                     <Dropdown 
-                        v-model="ict.invent_code"
-                        :options="kodeperi"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Select One "
-                        :showClear="true"
-                        :class="{ 'p-invalid': errors.invent_code }"
-                        disabled
-                     />
-                     <small v-if="errors.invent_code" class="p-error">
-                      {{ errors.invent_code[0] }}
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> Items </label>
+                 <div class="col-4 md-4">
+                    <InputText 
+                      v-model="ict.invent_desc" 
+                      disabled
+                    />
+                     <small v-if="errors.catalog" class="p-error">
+                      {{ errors.catalog[0] }}
                     </small>
-                     <small v-if="error.invent_code" class="p-error">
-                      {{ error.invent_code }}
-                    </small>
+                     <small v-if="error.requestcatalog" class="p-error">
+                      {{ error.requestcatalog }}
+                  </small>
                 </div>
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
@@ -89,7 +76,8 @@
                  <div class="col-fixed w-9rem">
                      <Textarea
                         :autoResize="true"
-                        rows="5" 
+                        rows="5"
+                        cols="30" 
                         type="text"
                         v-model="ict.ireq_remark"
                         placeholder="Enter Remark"
@@ -256,7 +244,7 @@ export default {
           summary: "Success Message",
           detail: "Success Update",
         });
-        setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
+        setTimeout( () => this.$router.go(-1),1000);
         }).catch(error=>{
           this.errors = error.response.data.errors;
          });
@@ -285,7 +273,7 @@ export default {
             summary: "Success Message",
             detail: "Success Update",
           });
-          setTimeout( () => this.$router.push('/ict-request-detail/' +this.$route.params.code),1000);
+          setTimeout( () => this.$router.go(-1),1000);
           }).catch(error=>{
             this.errors = error.response.data.errors;
           });

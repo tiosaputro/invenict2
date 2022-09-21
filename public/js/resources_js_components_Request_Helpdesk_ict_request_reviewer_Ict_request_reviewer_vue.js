@@ -164,8 +164,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.$confirm.require({
-        message: "Are You Sure to Submit?",
-        header: "ICT Request",
+        message: "Are you sure to submit this request?",
+        header: "Confirmation Submit",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",
@@ -369,8 +369,8 @@ __webpack_require__.r(__webpack_exports__);
 
           _this9.$toast.add({
             severity: "info",
-            summary: "Confirmed",
-            detail: "  successful",
+            summary: "Success Message",
+            detail: "Successfully Assignment",
             life: 2000
           });
 

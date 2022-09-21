@@ -239,7 +239,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["model"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
-    })
+    }),
+    key: "0"
   } : undefined]), 1032
   /* PROPS, DYNAMIC_SLOTS */
   , ["value", "loading"])])])]);

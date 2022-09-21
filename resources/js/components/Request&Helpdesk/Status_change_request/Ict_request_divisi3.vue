@@ -169,7 +169,7 @@
                   </template>
                 </DataTable>   
               </TabPanel>
-              <TabPanel header="On Progress">
+              <TabPanel header="In Progress">
                 <DataTable
                   :value="sedangDikerjakan"
                   :paginator="true"
@@ -179,7 +179,7 @@
                   :rowHover="true"
                   paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                   :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} On Progress"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} In Progress"
                   responsiveLayout="scroll"
                 >
                 <template #header>
@@ -702,7 +702,7 @@ export default {
             this.loading = true;
             this.$toast.add({
               severity: "info",
-              summary: "Confirmed",
+              summary: "Message Succes",
               detail: "Accept Request Success",
               life : 1000
             });
@@ -729,7 +729,7 @@ export default {
         this.loading = true;
         this.axios.put('/api/rejectPersonnel/'+this.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.$toast.add({
-            severity:'success', summary: 'Success', detail:'Success Update', life: 3000
+            severity:'success', summary: 'Success Message', detail:'Successfully rejected request', life: 3000
           });
           this.cancel();
           this.getData();
@@ -797,7 +797,7 @@ export default {
           this.status=[];
           this.dialogChangeStatus = false;
           this.submitted = false;
-          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
+          this.$toast.add({ severity:'success', summary: 'Message Success', detail:'Success Update Status', life: 2000 });
         });
         this.getData();
     },

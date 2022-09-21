@@ -282,7 +282,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* NEED_PATCH */
       ), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
         bottom: true
-      }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\r\n                    v-if=\"this.status == 'T'\" \r\n                    label=\"Excel\"\r\n                    class=\"p-button-raised p-button-success mt-2\"\r\n                    icon=\"pi pi-print\"\r\n                    @click=\"CetakExcelSedangDikerjakan()\" \r\n                  /> ")])])])];
+      }]])])])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {

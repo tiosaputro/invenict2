@@ -1094,8 +1094,8 @@ export default {
     },
     Submit(ireq_id){
       this.$confirm.require({
-        message: "Are You Sure to Submit?",
-        header: "ICT Request",
+        message: "Are you sure to submit this request?",
+        header: "Confirmation Submit",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",
@@ -1236,8 +1236,8 @@ export default {
             this.dialogAssign = false;
             this.$toast.add({
               severity: "info",
-              summary: "Confirmed",
-              detail: "  successful",
+              summary: "Success Message",
+              detail: "Successfully Assignment",
               life: 2000,
             });
             this.loading = true;

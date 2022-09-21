@@ -273,7 +273,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["model"])])])])];
-    })
+    }),
+    key: "0"
   } : undefined]), 1032
   /* PROPS, DYNAMIC_SLOTS */
   , ["value", "loading"])])])]);

@@ -25,7 +25,6 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-        
           <template #header>
             <div class="table-header text-right">
               <span class="p-input-icon-left">

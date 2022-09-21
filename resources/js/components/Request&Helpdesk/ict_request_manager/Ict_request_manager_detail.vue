@@ -6,7 +6,7 @@
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>ICT Request (Detail) </h4>
+				    <h4>ICT Request (Detail) </h4>
           </template>
           <template v-slot:end>
             <label style="width:200px">No. Request: {{kode.noreq}}</label>
@@ -110,14 +110,13 @@ export default {
    this.cekUser();
   },
   methods: {
-    
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
     cekUser(){
-      this.axios.get('/api/cek-user/'+ this.id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-manager")){ 
@@ -152,12 +151,12 @@ export default {
     },
     DeleteIct(ireqd_id){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure you want to delete this record data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
