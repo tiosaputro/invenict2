@@ -24,16 +24,15 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-        
-       <template #header>
-              <div class="table-header text-right">
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText
-                        v-model="filters['global'].value"
-                        placeholder="Search. . ."
-                        />
-                    </span>
+          <template #header>
+            <div class="table-header text-right">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                  <InputText
+                    v-model="filters['global'].value"
+                    placeholder="Search. . ."
+                  />
+              </span>
             </div>
           </template>
            <template #empty>

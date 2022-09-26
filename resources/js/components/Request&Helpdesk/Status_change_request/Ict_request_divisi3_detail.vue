@@ -64,7 +64,7 @@
 			        <div class="p-col">
 				        <div class="box">
                    <Button
-                    label="Kembali"
+                    label="Back"
                     class="p-button-raised p-button p-mr-2 p-mb-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
