@@ -964,7 +964,7 @@ var _hoisted_90 = {
 
 var _hoisted_91 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Atasan Divisi", -1
+}, "Higher Level", -1
 /* HOISTED */
 );
 
@@ -1259,7 +1259,7 @@ var _hoisted_136 = {
 
 var _hoisted_137 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Atasan Divisi", -1
+}, "Higher Level", -1
 /* HOISTED */
 );
 
@@ -1554,7 +1554,7 @@ var _hoisted_182 = {
 
 var _hoisted_183 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "block text-500 font-medium mb-3"
-}, "Atasan Divisi", -1
+}, "Higher Level", -1
 /* HOISTED */
 );
 

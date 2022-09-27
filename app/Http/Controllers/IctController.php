@@ -2176,7 +2176,7 @@ class IctController extends Controller
             ->get();
 
         $ict6 = DB::table('ireq_mst as id')
-            ->SELECT('id.ireq_attachment','id.ireq_id','id.ireq_no','id.ireq_status as status','id.ireq_user','id.ireq_date','dr.div_name','id.ireq_requestor','lr.lookup_desc as ireq_status')
+            ->SELECT('id.ireq_id','id.ireq_no','id.ireq_status as status','id.ireq_user','id.ireq_date','dr.div_name','id.ireq_requestor','lr.lookup_desc as ireq_status')
             ->LEFTJOIN('divisi_refs as dr','id.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('lookup_refs as lr','id.ireq_status','lr.lookup_code')
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
