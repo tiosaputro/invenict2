@@ -1,5 +1,17 @@
-.layout-menu-container {
-    padding-bottom: 120px;
+.layout-sidebar {
+	position: fixed;
+	width: 300px;
+	height: calc(100vh - 9rem);
+	z-index: 999;
+	overflow-y: auto;
+	user-select: none;
+	top: 7rem;
+	left: 2rem;
+	transition: transform $transitionDuration, left $transitionDuration;
+	background-color: var(--surface-overlay);
+	border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0px 3px 5px rgba(0,0,0,.02), 0px 0px 2px rgba(0,0,0,.05), 0px 1px 4px rgba(0,0,0,.08)
 }
 
 .layout-menu {
@@ -8,20 +20,35 @@
     padding: 0;
 
     li {
+        &.layout-menuitem-category {
+            margin-top: .75rem;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+        
+        .layout-menuitem-root-text {
+            text-transform: uppercase;
+            color:var(--surface-900);
+            font-weight: 600;
+            margin-bottom: .5rem;
+            font-size: .875rem;
+        }
+
         a {
             cursor: pointer;
-            position: relative;
             text-decoration: none;
             display: flex;
             align-items: center;
+            color:var(--text-color);
             transition: color $transitionDuration;
-
-            i {
-                font-size: 16px;
-            }
+            border-radius: $borderRadius;
+            padding: .75rem 1rem;
+            transition: background-color .15s;
 
             span {
-                margin-left: 0.5em;
+                margin-left: 0.5rem;
             }
 
             .menuitem-toggle-icon {
@@ -31,29 +58,28 @@
             &:focus {
                 @include focused-inset();
             }
+
+            &:hover {
+                background-color: var(--surface-hover);
+            }
+
+            &.router-link-exact-active {
+                font-weight: 700;
+                color: var(--primary-color);
+            }
+
+            .p-badge {
+                margin-left: auto;
+            }
         }
 
         &.active-menuitem {
             > a {
                 .menuitem-toggle-icon {
-                    @include icon-override('\e933');
+                    &:before {
+                        content: '\e933';
+                    }
                 }
-            }
-        }
-    }
-
-    > li {
-        > a {
-            padding: 1em;
-
-            span {
-                font-size: $fontSize;
-            }
-        }
-
-        &:last-child {
-            > a {
-                border-bottom: 1px solid $menuitemBorderColor;
             }
         }
 
@@ -61,23 +87,6 @@
             list-style-type: none;
             margin: 0;
             padding: 0;
-            padding-left: 1.5em;
-
-            li {
-                a {
-                    cursor: pointer;
-                    padding: 0.75em 1em;
-                    border-top: 0 none;
-
-                    span {
-                        font-size: $submenuFontSize;
-                    }
-                }
-
-                &:last-child {
-                    padding-bottom: 1em;
-                }
-            }
 
             &.layout-submenu-wrapper-enter-from,
             &.layout-submenu-wrapper-leave-to {
@@ -98,91 +107,9 @@
                 overflow: hidden;
                 transition: max-height 1s ease-in-out;
             }
-        }
-    }
-}
-
-.layout-sidebar-light {
-    @include linear-gradient($menuBgColorFirst, $menuBgColorLast);
-
-    .layout-menu {
-        > li {
-            > a {
-                border-top: 1px solid $menuitemBorderColor;
-            }
-
-            &:last-child {
-                > a {
-                    border-bottom: 1px solid $menuitemBorderColor;
-                }
-            }
 
             ul {
-                background-color: $menuitemActiveBgColor;
-            }
-        }
-
-        li {
-            a {
-                color: $menuitemColor;
-
-                &.router-link-active {
-                    color: $menuitemActiveRouteColor;
-                }
-
-                &:hover {
-                    color: $menuitemHoverColor;
-                }
-            }
-
-            &.active-menuitem {
-                > a {
-                    background-color: $menuitemActiveBgColor;
-                    color: $menuitemActiveColor;
-                }
-            }
-        }
-    }
-}
-
-.layout-sidebar-dark {
-    @include linear-gradient($menuDarkBgColorFirst, $menuDarkBgColorLast);
-
-    .layout-menu {
-        > li {
-            > a {
-                border-top: 1px solid $menuitemDarkBorderColor;
-            }
-
-            &:last-child {
-                > a {
-                    border-bottom: 1px solid $menuitemDarkBorderColor;
-                }
-            }
-
-            ul {
-                background-color: $menuitemDarkActiveBgColor;
-            }
-        }
-
-        li {
-            a {
-                color: $menuitemDarkColor;
-
-                &.router-link-active {
-                    color: $menuitemActiveRouteColor;
-                }
-
-                &:hover {
-                    color: $menuitemDarkHoverColor;
-                }
-            }
-
-            &.active-menuitem {
-                > a {
-                    background-color: $menuitemDarkActiveBgColor;
-                    color: $menuitemDarkActiveColor;
-                }
+                padding-left: 1rem;
             }
         }
     }

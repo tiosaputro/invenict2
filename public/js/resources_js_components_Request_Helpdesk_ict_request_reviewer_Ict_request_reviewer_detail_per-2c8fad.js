@@ -45,9 +45,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     AddToCalendar: function AddToCalendar() {
-      window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt=" + this.detailRequest.ireq_date + "+&enddt=" + this.detailRequest.ireq_date + "&subject=Request+" + this.detailRequest.ireq_requestor + "+" + this.detailRequest.noreq + "&body=" + this.detail.map(function (x) {
-        return x.ireq_remark;
-      }) + "");
+      window.open("https://www.addevent.com/dir/?client=aJYxijeSIzbmcOUQFmgU182103&start=" + this.detailRequest.ireq_date + "&end=" + this.detailRequest.ireq_date + "&title=title"); // window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt="+this.detailRequest.ireq_date+"+&enddt="+this.detailRequest.ireq_date+"&subject=Request+"+this.detailRequest.ireq_requestor+"+"+this.detailRequest.noreq+"&body="+this.detail.map((x)=>x.ireq_remark)+"");
     },
     getDetail: function getDetail(ireq_attachment) {
       var page = "http://localhost:8000" + '/attachment_request/' + ireq_attachment;

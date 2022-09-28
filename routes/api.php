@@ -246,7 +246,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/detail-norequest/{code}','IctController@detailNoRequest');
     //divisi 1
     Route::get('/get-permohonan','IctController@getPermohonan');
-    Route::get('/total-request/{usr_name}','IctController@totalRequest');
+    Route::get('/total-request','IctController@totalRequest');
     
     //divisi 2
     Route::get('/get-permohonan-divisi','IctController@getPermohonanDivisi');

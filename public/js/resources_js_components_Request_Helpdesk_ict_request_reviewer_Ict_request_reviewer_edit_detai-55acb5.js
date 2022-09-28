@@ -149,50 +149,7 @@ __webpack_require__.r(__webpack_exports__);
       this.error = [];
 
       if (this.ict.ireq_type == 'P') {
-        if (this.ict.ireq_type != null && this.ict.invent_code != null) {
-          var data = new FormData();
-          data.append("file", this.foto);
-          data.append("invent_code", this.ict.invent_code);
-          data.append("ireq_qty", this.ict.ireq_qty);
-          data.append("ireq_remark", this.ict.ireq_remark);
-          data.append("ireq_type", this.ict.ireq_type);
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token,
-              'content-type': 'multipart/form-data'
-            }
-          }).then(function () {
-            _this4.$toast.add({
-              severity: "success",
-              summary: "Success Message",
-              detail: "Success Update"
-            });
-
-            setTimeout(function () {
-              return _this4.$router.go(-1);
-            }, 1000);
-          })["catch"](function (error) {
-            _this4.errors = error.response.data.errors;
-          });
-        } else {
-          if (this.ict.ireq_type == null) {
-            this.error.ireq_type = "Request Type not filled";
-          }
-
-          if (this.ict.invent_code == null) {
-            this.error.invent_code = "Items not filled";
-          }
-
-          if (this.ict.ireq_remark == null) {
-            this.error.ireq_remark = "Remark not filled";
-          }
-        }
-      } else {
-        if (this.ict.ireq_type != null) {
-          // const data = new FormData();
-          // data.append("file", this.foto);
-          // data.append("ireq_remark", this.ict.ireq_remark);
-          // data.append("ireq_type", this.ict.ireq_type);
+        if (this.ict.ireq_remark != null) {
           this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
             headers: {
               'Authorization': 'Bearer ' + this.token
@@ -211,10 +168,30 @@ __webpack_require__.r(__webpack_exports__);
             _this4.errors = error.response.data.errors;
           });
         } else {
-          if (this.ict.ireq_type == null) {
-            this.error.ireq_type = "Request Type not filled";
+          if (this.ict.ireq_remark == null) {
+            this.error.ireq_remark = "Remark not filled";
           }
+        }
+      } else {
+        if (this.ict.ireq_remark != null) {
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
+            headers: {
+              'Authorization': 'Bearer ' + this.token
+            }
+          }).then(function () {
+            _this4.$toast.add({
+              severity: "success",
+              summary: "Success Message",
+              detail: "Success Update"
+            });
 
+            setTimeout(function () {
+              return _this4.$router.go(-1);
+            }, 1000);
+          })["catch"](function (error) {
+            _this4.errors = error.response.data.errors;
+          });
+        } else {
           if (this.ict.ireq_remark == null) {
             this.error.ireq_remark = "Remark not filled";
           }

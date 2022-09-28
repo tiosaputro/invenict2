@@ -284,9 +284,6 @@ class IctDetailController extends Controller
              if($cek->ireq_attachment){
                  unlink(Storage_path('app/public/attachment_request/'.$cek->ireq_attachment));
                 }
-            // $file= $request->image;
-            // $nama_file = time().'.'.$request->image->getClientOriginalExtension();
-            // $request->image->move(public_path('attachment_request'), $nama_file);
             $image= $request->image;
             $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
             $replace = substr($image, 0, strpos($image, ',')+1); 

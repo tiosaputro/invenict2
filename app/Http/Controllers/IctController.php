@@ -2213,14 +2213,14 @@ class IctController extends Controller
 
         return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8],200);
     }
-    function totalRequest($usr_name)
+    function totalRequest()
     {
         $ict = DB::table('ireq_mst as id')
             ->LEFTJOIN('lookup_refs as lr','id.ireq_status','lr.lookup_code')   
-            ->SELECT('id.ireq_attachment','id.ireq_id','id.ireq_status as status','id.ireq_no','id.ireq_user','id.ireq_date',
+            ->SELECT('id.ireq_id','id.ireq_status as status','id.ireq_no','id.ireq_user','id.ireq_date',
                 'lr.lookup_desc as ireq_status','id.ireq_requestor')
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->WHERE('id.created_by',$usr_name)
+            ->WHERE('id.created_by',Auth::user()->usr_name)
             ->WHERENotNull('id.ireq_status')
             ->ORDERBY('id.ireq_date','DESC')
             ->get();
@@ -3765,7 +3765,7 @@ class IctController extends Controller
         ]);
         $link = Link::create([
             'link_id'=> md5($this->date),
-            'link_action'=> env('APP_VERIF_REVIEWER').''.$ireq_id,
+            'link_action'=> 'Ict Request Reviewer Detail Permohonan',
             'ireq_id'=>$ireq_id
         ]);
         $Ict = DB::table('ireq_dtl as id')

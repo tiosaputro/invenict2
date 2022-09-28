@@ -197,8 +197,7 @@ __webpack_require__.r(__webpack_exports__);
           if (this.ict.ireq_type != null && this.ict.invent_code != null) {
             this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
               headers: {
-                'Authorization': 'Bearer ' + this.token,
-                'content-type': 'multipart/form-data'
+                'Authorization': 'Bearer ' + this.token
               }
             }).then(function () {
               _this6.$toast.add({

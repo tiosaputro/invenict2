@@ -4085,9 +4085,6 @@
                     rows="5" 
                     placeholder="Enter Remark"
                   />
-                            <!-- <small v-if="submitted && !rbr.ket" class="p-error">
-                            Reason not filled
-                            </small> -->
                 </div>
             </div>
           </div>
@@ -4118,8 +4115,8 @@
                 <label class="col-fixed w-9rem"> No Detail </label>
                   <div class="col-fixed">
                     <InputText 
-                    v-model="noteAssigned.ireqd_id"
-                    disabled
+                      v-model="noteAssigned.ireqd_id"
+                      disabled
                     />
                   </div> 
               </div>
@@ -4129,12 +4126,12 @@
                 <label class="col-fixed w-9rem" style="width:100px">Note</label>
                   <div class="col-fixed w-9rem">
                    <Textarea 
-                    v-model="noteAssigned.ireq_reason" 
-                    placeholder="If required"
-                    :autoResize="true" 
-                    rows="5" 
-                    cols="20"
-                  />
+                      v-model="noteAssigned.ireq_reason" 
+                      placeholder="If required"
+                      :autoResize="true" 
+                      rows="5" 
+                      cols="20"
+                    />
                   </div>
                 </div>
             </div>
@@ -4154,8 +4151,8 @@
                 <label class="col-fixed w-9rem"> No Request </label>
                   <div class="col-fixed">
                     <InputText 
-                    v-model="remarkAssigned.ireq_no"
-                    disabled
+                      v-model="remarkAssigned.ireq_no"
+                      disabled
                     />
                   </div>
               </div>
@@ -4176,11 +4173,11 @@
                 <label class="col-fixed w-9rem" style="width:100px">Remark</label>
                   <div class="col-fixed w-9rem">
                    <Textarea 
-                    v-model="remarkAssigned.ireq_assigned_remark" 
-                    placeholder="If required"
-                    :autoResize="true" 
-                    rows="5" 
-                    cols="20"
+                      v-model="remarkAssigned.ireq_assigned_remark" 
+                      placeholder="If required"
+                      :autoResize="true" 
+                      rows="5" 
+                      cols="20"
                   />
                   </div>
                 </div>
@@ -4439,7 +4436,7 @@ export default {
         });
       },
       getIct6(){
-        this.axios.get('api/total-request/'+this.usr_name, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/total-request', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.total = response.data;
           this.loading = false;
         }).catch(error=>{

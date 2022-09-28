@@ -328,7 +328,7 @@ __webpack_require__.r(__webpack_exports__);
     getIct6: function getIct6() {
       var _this6 = this;
 
-      this.axios.get('api/total-request/' + this.usr_name, {
+      this.axios.get('api/total-request', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -11297,7 +11297,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Enter Remark"
       }, null, 8
       /* PROPS */
-      , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"submitted && !rbr.ket\" class=\"p-error\">\r\n                            Reason not filled\r\n                            </small> ")])])])];
+      , ["modelValue"])])])])];
     }),
     _: 1
     /* STABLE */
