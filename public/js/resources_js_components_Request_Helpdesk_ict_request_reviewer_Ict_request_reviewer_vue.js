@@ -62,7 +62,11 @@ __webpack_require__.r(__webpack_exports__);
       checkto: [],
       showPersonelPermohonan: [],
       showPersonelAtasanDivisi: [],
-      showPersonelmanager: []
+      showPersonelmanager: [],
+      showRemarkPermohonan: [],
+      showRemarkAtasanDivisi: [],
+      showRemarkManager: [],
+      showRemarkPenugasan: []
     };
   },
   created: function created() {
@@ -122,17 +126,30 @@ __webpack_require__.r(__webpack_exports__);
         _this.showPersonelPermohonan = _this.permohonan.map(function (x) {
           return x.ireq_count_status;
         });
+        _this.showRemarkPermohonan = _this.permohonan.map(function (x) {
+          return x.count_remark;
+        });
+        console.log(_this.showRemarkPermohonan);
         _this.loading = false;
         _this.atasandivisi = response.data.ict1;
         _this.showPersonelAtasanDivisi = _this.atasandivisi.map(function (x) {
           return x.ireq_count_status;
         });
+        _this.showRemarkAtasanDivisi = _this.atasandivisi.map(function (x) {
+          return x.count_remark;
+        });
         _this.manager = response.data.ict2;
         _this.showPersonelmanager = _this.manager.map(function (x) {
           return x.ireq_count_status;
         });
+        _this.showRemarkManager = _this.manager.map(function (x) {
+          return x.count_remark;
+        });
         _this.reject = response.data.ict3;
         _this.penugasan = response.data.ict7;
+        _this.showRemarkPenugasan = _this.penugasan.map(function (x) {
+          return x.count_remark;
+        });
         _this.sedangDikerjakan = response.data.ict4;
         _this.sudahDikerjakan = response.data.ict5;
         _this.selesai = response.data.ict6;
@@ -1290,10 +1307,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "10rem"
                 }
-              }), _this.showPersonelPermohonan.some(function (el) {
+              }), _this.showRemarkPermohonan.some(function (el) {
                 return el > 0;
               }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
                 key: 0,
+                field: "ireq_verificator_remark",
+                header: "Remark Reviewer",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.showPersonelPermohonan.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 1,
                 field: "ireq_assigned_to",
                 header: "Personnel ICT",
                 sortable: true,
@@ -1563,6 +1590,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "10rem"
                 }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.showRemarkAtasanDivisi.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 1,
+                field: "ireq_verificator_remark",
+                header: "Remark Reviewer",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
               })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 headerStyle: "min-width:20rem"
               }, {
@@ -1798,6 +1835,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 sortable: true,
                 style: {
                   "min-width": "10rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.showRemarkManager.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 1,
+                field: "ireq_verificator_remark",
+                header: "Remark Reviewer",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
                 }
               })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 headerStyle: "min-width:15rem"
@@ -2143,7 +2190,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "10rem"
                 }
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+              }), _this.showRemarkPenugasan.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 0,
+                field: "ireq_verificator_remark",
+                header: "Remark Reviewer",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
                 header: "Status",
                 sortable: true,

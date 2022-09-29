@@ -49,6 +49,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_count_id" header="Total Detail" :sortable="true" style="min-width:10rem"/>
                   <Column headerStyle="min-width:25rem">
@@ -189,6 +190,7 @@
                     </template>
                   </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelAtasanDivisi.some(el=> el > 0)"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkAtasanDivisi.some(el=> el > 0)"/>
                   <Column headerStyle="min-width:20rem">
                     <template #body="slotProps">
                        <Button
@@ -315,6 +317,7 @@
                     </template>
                   </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelmanager.some(el=> el > 0)"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkManager.some(el=> el > 0)"/>
                   <Column headerStyle="min-width:15rem">
                     <template #body="slotProps">
                        <Button
@@ -501,6 +504,7 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPenugasan.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -1013,6 +1017,10 @@ export default {
         showPersonelPermohonan:[],
         showPersonelAtasanDivisi:[],
         showPersonelmanager:[],
+        showRemarkPermohonan:[],
+        showRemarkAtasanDivisi:[],
+        showRemarkManager:[],
+        showRemarkPenugasan:[],
     };
   },
   created() {
@@ -1064,13 +1072,18 @@ export default {
       this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.permohonan = response.data.ict;
           this.showPersonelPermohonan = this.permohonan.map((x)=>x.ireq_count_status);
+          this.showRemarkPermohonan = this.permohonan.map((x)=>x.count_remark);
+          console.log(this.showRemarkPermohonan)
           this.loading = false;
           this.atasandivisi = response.data.ict1;
           this.showPersonelAtasanDivisi = this.atasandivisi.map((x)=>x.ireq_count_status);
+          this.showRemarkAtasanDivisi = this.atasandivisi.map((x)=>x.count_remark);
           this.manager = response.data.ict2;
           this.showPersonelmanager = this.manager.map((x)=>x.ireq_count_status);
+          this.showRemarkManager = this.manager.map((x)=>x.count_remark);
           this.reject = response.data.ict3;
           this.penugasan = response.data.ict7;
+          this.showRemarkPenugasan = this.penugasan.map((x)=>x.count_remark);
           this.sedangDikerjakan = response.data.ict4;
           this.sudahDikerjakan = response.data.ict5;
           this.selesai = response.data.ict6;

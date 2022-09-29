@@ -443,24 +443,181 @@ class IctController extends Controller
         $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
         $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
         $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
-        if($aksesmenu->contains($this->reviewer) && Auth::user()->usr_loc == 'OJ'){
-            return App::call('App\Http\Controllers\\IctController@getDataReviewerJakarta');
-        }else if($aksesmenu->contains($this->reviewer) && Auth::user()->usr_loc == 'OK' OR Auth::user()->usr_loc == 'FK'){
-            return App::call('App\Http\Controllers\\IctController@getDataReviewerKurau');
+        if($aksesmenu->contains($this->reviewer)){
+            if(Auth::user()->usr_loc == "OJ"){
+                $loc = ["OJ"];
+            }
+            if(Auth::user()->usr_loc == "OB" OR Auth::user()->usr_loc == "FB"){
+                $loc = ["OB","FB"];
+            }
+            if(Auth::user()->usr_loc == "OK" OR Auth::user()->usr_loc == "FK" ){
+                $loc = ["OK","FK"];
+            }
+            $ict = DB::table('ireq_mst as im')
+            ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name', 
+                    DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),
+                    DB::raw('count(im.ireq_verificator_remark) as count_remark'),'lr.lookup_desc as ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+            ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->WHERE('im.ireq_status','P')
+            ->WHEREIn('im.ireq_loc',$loc)
+            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('im.ireq_id','im.ireq_verificator_remark','im.ireq_status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->ORDERBY('im.ireq_date','DESC')
+            ->get(); 
+
+            $ict1 = DB::table('ireq_mst as im')
+            ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status','im.ireq_status as status',
+            DB::raw('count(im.ireq_verificator_remark) as count_remark'),DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+            ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->WHERE(function($query){
+                return $query
+                ->WHERE('im.ireq_status','NA1')
+                ->Orwhere('im.ireq_status','A1');
+            })
+            ->WHEREIn('im.ireq_loc',$loc)
+            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('im.ireq_id','im.ireq_verificator_remark',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"),'im.ireq_status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_status')
+            ->ORDERBY('im.ireq_date','DESC')
+            ->get(); 
+
+            $ict2 = DB::table('ireq_mst as im')
+            ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status','im.ireq_status as status',
+            DB::raw('count(im.ireq_verificator_remark) as count_remark'),DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),DB::raw('count(idd.ireq_id) as ireq_count_id'))
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+            ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->WHEREIn('im.ireq_loc',$loc)
+            ->WHERE(function ($query){
+                return $query
+                ->WHERE('im.ireq_status','NA2')
+                ->OrWhere('im.ireq_status','A2');
+            })
+            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('im.ireq_id','im.ireq_verificator_remark',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"),'im.ireq_status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_status')
+            ->ORDERBY('im.ireq_date','DESC')
+            ->get(); 
+
+            $ict3 = DB::table('ireq_mst as im')
+            ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.ireq_reason','lr.lookup_desc as ireq_status',
+                    DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'))
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
+            ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->whereIn('im.ireq_loc',$loc)
+            ->WHERE(function ($query){
+                return $query
+                ->WHERE('im.ireq_status','RR')
+                ->OrWhere('im.ireq_status','RA1')
+                ->OrWhere('im.ireq_status','RA2');
+            })
+            ->groupBy('im.ireq_id','im.ireq_verificator_remark','im.ireq_no','im.ireq_status','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc','im.ireq_reason')
+            ->ORDERBY('im.ireq_date','DESC')
+            ->get(); 
+
+            $ict4 = DB::table('ireq_mst as im')
+            ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->WHERE('im.ireq_status','T')
+            ->WHEREIn('im.ireq_loc',$loc)
+            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('im.ireq_id','im.ireq_verificator_remark','im.ireq_status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->ORDERBY('im.ireq_date','DESC')
+            ->get();
+
+            $ict5 = DB::table('ireq_dtl as id')
+            ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('lookup_refs as lr',function ($join) {
+                $join->on('id.ireq_status','lr.lookup_code')
+                      ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+            })
+            ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+                $join->on('id.ireq_type','lrs.lookup_code')
+                      ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->LEFTJOIN('catalog_refs as cr',function ($join) {
+                $join->on('id.invent_code','cr.catalog_id');
+            })
+            ->LEFTJOIN('catalog_refs as crs',function ($join) {
+                $join->on('cr.parent_id','crs.catalog_id');
+            })
+            ->SELECT('id.ireq_attachment','im.ireq_no','im.ireq_verificator_remark','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+            'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),'im.ireq_date','im.ireq_requestor','im.ireq_user',
+            'dr.div_name','id.ireq_qty','id.ireq_status as status')
+            ->WHERE('id.ireq_status','D')
+            ->WHEREIn('im.ireq_loc',$loc)
+            ->ORDERBY('im.ireq_date','DESC')
+            ->ORDERBY('id.ireqd_id','ASC')
+            ->get();
+
+            $ict6 = DB::table('ireq_dtl as id')
+            ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('lookup_refs as lr',function ($join) {
+                $join->on('id.ireq_status','lr.lookup_code')
+                      ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+            })
+            ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+                $join->on('id.ireq_type','lrs.lookup_code')
+                      ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+            })
+            ->LEFTJOIN('catalog_refs as cr',function ($join) {
+                $join->on('id.invent_code','cr.catalog_id');
+            })
+            ->LEFTJOIN('catalog_refs as crs',function ($join) {
+                $join->on('cr.parent_id','crs.catalog_id');
+            })
+            ->SELECT('id.ireq_attachment','im.ireq_no','im.ireq_verificator_remark','id.ireq_status as status','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
+            'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),'im.ireq_date','im.ireq_requestor','im.ireq_user',
+            'dr.div_name','id.ireq_qty')
+            ->WHERE('id.ireq_status','C')
+            ->WHEREIn('im.ireq_loc',$loc)
+            ->ORDERBY('im.ireq_date','DESC')
+            ->ORDERBY('id.ireqd_id','ASC')
+            ->get();
+            
+            $ict7 = DB::table('ireq_mst as im')
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->SELECT('im.ireq_id',DB::raw('count(im.ireq_verificator_remark) as count_remark'),'im.ireq_verificator_remark','im.ireq_status as status','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->WHERE(function($query){
+                return $query
+                ->OrWhere('im.ireq_status','NT')
+                ->Orwhere('im.ireq_status','RT');
+            })
+            ->WHEREIn('im.ireq_loc',$loc)
+            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('im.ireq_id','im.ireq_verificator_remark','im.ireq_status','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->ORDERBY('im.ireq_date','DESC')
+            ->get();
+
+            $ict8 = DB::table('ireq_mst as im')
+            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+            ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
+            ->whereNotNull('im.ireq_status')
+            ->WHEREIn('im.ireq_loc',$loc)
+            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('im.ireq_id','im.ireq_verificator_remark','im.ireq_status','im.ireq_assigned_to2','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->ORDERBY('im.ireq_date','DESC')
+            ->get();
+
+            return json_encode(['lokasi'=>'jakarta','ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8],200);
         }
-        else if($aksesmenu->contains($this->reviewer) && Auth::user()->usr_loc == 'OB' OR Auth::user()->usr_loc == 'FB'){
-            return App::call('App\Http\Controllers\\IctController@getDataReviewerBentu');
-        }
-         else{
-            return response(["message"=>"Cannot Access"],403);
-         }
+        return json_encode("Cannot Access",403);
     }
     function getDataReviewerJakarta()
     {
         $ict = DB::table('ireq_mst as im')
             ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name', 
                     DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),
-                    'lr.lookup_desc as ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+                    DB::raw('count(im.ireq_verificator_remark) as count_remark'),'lr.lookup_desc as ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
@@ -473,7 +630,7 @@ class IctController extends Controller
 
             $ict1 = DB::table('ireq_mst as im')
             ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status','im.ireq_status as status',
-                    DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+            DB::raw('count(im.ireq_verificator_remark) as count_remark'),DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
@@ -487,7 +644,7 @@ class IctController extends Controller
 
             $ict2 = DB::table('ireq_mst as im')
             ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status','im.ireq_status as status',
-                    DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),DB::raw('count(idd.ireq_id) as ireq_count_id'))
+            DB::raw('count(im.ireq_verificator_remark) as count_remark'),DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),DB::raw('count(idd.ireq_id) as ireq_count_id'))
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')

@@ -242,8 +242,9 @@ __webpack_require__.r(__webpack_exports__);
           detail: 'Success Update Status',
           life: 2000
         });
+
+        _this8.getData();
       });
-      this.getData();
     },
     cancelStatus: function cancelStatus() {
       this.editStatus = [];
@@ -1338,7 +1339,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                field: "invent_code",
+                field: "name",
                 header: "Items",
                 sortable: true,
                 style: {

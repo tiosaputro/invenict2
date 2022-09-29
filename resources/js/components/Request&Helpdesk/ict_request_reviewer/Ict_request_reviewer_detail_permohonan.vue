@@ -115,6 +115,7 @@
 </template>
 <script>
 import {FilterMatchMode} from 'primevue/api';
+import { google, outlook, office365, yahoo, ics } from "calendar-link";
 export default {
   data() {
     return {
@@ -140,8 +141,15 @@ export default {
   },
   methods: {
     AddToCalendar(){
-      window.open("https://www.addevent.com/dir/?client=aJYxijeSIzbmcOUQFmgU182103&start="+this.detailRequest.ireq_date+"&end="+this.detailRequest.ireq_date+"&title=title")
-      // window.open("https://outlook.live.com/owa/?path=/calendar/view/Month&rru=addevent&startdt="+this.detailRequest.ireq_date+"+&enddt="+this.detailRequest.ireq_date+"&subject=Request+"+this.detailRequest.ireq_requestor+"+"+this.detailRequest.noreq+"&body="+this.detail.map((x)=>x.ireq_remark)+"");
+      const remark = this.detail.map((x)=>x.ireq_remark);
+      const event = {
+          title: "Reminder Request A/n "+this.detailRequest.ireq_requestor +" No Request : "+ this.detailRequest.noreq,
+          description: "Detail Request:\n" +remark,
+          start: this.detailRequest.ireq_date,
+          location: this.detailRequest.loc_desc,
+          duration: [3, "hour"],
+        };
+        window.location.assign(ics(event));
     },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;

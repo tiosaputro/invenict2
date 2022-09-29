@@ -202,7 +202,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
+                  <Column field="name" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
@@ -798,8 +798,7 @@ export default {
           this.dialogChangeStatus = false;
           this.submitted = false;
           this.$toast.add({ severity:'success', summary: 'Message Success', detail:'Success Update Status', life: 2000 });
-        });
-        this.getData();
+          this.getData(); });
     },
     cancelStatus(){
       this.editStatus = [];

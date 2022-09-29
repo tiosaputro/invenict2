@@ -1,4 +1,5 @@
 /node_modules
+/app/Http/Contollers/LoginController.php
 /public
 /public/hot
 /public/storage
