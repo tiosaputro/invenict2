@@ -1073,7 +1073,6 @@ export default {
           this.permohonan = response.data.ict;
           this.showPersonelPermohonan = this.permohonan.map((x)=>x.ireq_count_status);
           this.showRemarkPermohonan = this.permohonan.map((x)=>x.count_remark);
-          console.log(this.showRemarkPermohonan)
           this.loading = false;
           this.atasandivisi = response.data.ict1;
           this.showPersonelAtasanDivisi = this.atasandivisi.map((x)=>x.ireq_count_status);

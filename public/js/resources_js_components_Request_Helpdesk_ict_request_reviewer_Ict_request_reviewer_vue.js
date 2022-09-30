@@ -129,7 +129,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.showRemarkPermohonan = _this.permohonan.map(function (x) {
           return x.count_remark;
         });
-        console.log(_this.showRemarkPermohonan);
         _this.loading = false;
         _this.atasandivisi = response.data.ict1;
         _this.showPersonelAtasanDivisi = _this.atasandivisi.map(function (x) {

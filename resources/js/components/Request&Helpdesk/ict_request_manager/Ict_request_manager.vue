@@ -49,6 +49,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkWaiting.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                   <template #body= "slotProps">
                     <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -131,7 +132,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarksdhdiverifikasi.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                   <template #body= "slotProps">
                     <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -660,6 +662,7 @@
   </div>
 </template>
 <script>
+import { isThisTypeAnnotation } from '@babel/types';
 import moment from 'moment';
 import {FilterMatchMode} from 'primevue/api';
 export default {
@@ -686,7 +689,9 @@ export default {
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        code:null
+        code:null,
+        showRemarkWaiting:[],
+        showRemarksdhdiverifikasi:[]
     };
   },
   created() {
@@ -721,7 +726,9 @@ export default {
     getPermohonan(){
       this.axios.get('api/get-data-manager',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.blmdiverifikasi = response.data.ict;
+        this.showRemarkWaiting = this.blmdiverifikasi.map((x)=>x.count_remark);
         this.sdhdiverifikasi = response.data.ict1;
+        this.showRemarksdhdiverifikasi = this.sdhdiverifikasi.map((x)=>x.count_remark);
         this.reject = response.data.ict2;
         this.penugasan = response.data.ict6;
         this.sedangDikerjakan = response.data.ict3;
