@@ -687,14 +687,14 @@ class IctController extends Controller
     function needApprovalAtasan($ireq_id)
     {
         
-        $ICT = Ict::where('ireq_id',$ireq_id)->first();
-        $divisiPengguna = $ICT->ireq_divisi_user;
-        $ICT->ireq_status = 'NA1';
-        $ICT->ireq_verificator = Auth::user()->usr_name;
-        $ICT->last_update_date = $this->newUpdate;
-        $ICT->last_updated_by = Auth::user()->usr_name;
-        $ICT->program_name = "IctController_needApprovalAtasan";
-        $ICT->save();
+        $Ict = Ict::where('ireq_id',$ireq_id)->first();
+        $divisiPengguna = $Ict->ireq_divisi_user;
+        $Ict->ireq_status = 'NA1';
+        $Ict->ireq_verificator = Auth::user()->usr_name;
+        $Ict->last_update_date = $this->newUpdate;
+        $Ict->last_updated_by = Auth::user()->usr_name;
+        $Ict->program_name = "IctController_needApprovalAtasan";
+        $Ict->save();
 
         $dtl = DB::table('ireq_dtl')
         ->WHERE('ireq_id',$ireq_id)

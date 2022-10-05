@@ -272,7 +272,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/ict-detail-penugasan/{code}','IctDetailController@detailPenugasan');
     Route::put('/rejectPersonnel/{ireq_id}','IctDetailController@rbp');
     Route::get('/acceptPersonnel/{ireq_id}','IctDetailController@abp');
-    Route::get('/get-detail-done/{code}/{usr_fullname}','IctDetailController@getDetailDone');
+    Route::get('/get-detail-done/{code}','IctDetailController@getDetailDone');
     Route::post('/add-ict-detail/{code}','IctDetailController@save');
     Route::get('/edit-ict-detail/{ireq}/{code}','IctDetailController@edit');
     Route::put('/update-ict-detail/{ireq}/{code}','IctDetailController@update');

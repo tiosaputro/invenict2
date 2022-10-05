@@ -60,7 +60,9 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         if (_this.checkname.includes("Status Change Request") || _this.checkto.includes("/ict-request-divisi3")) {
-          _this.getUser();
+          _this.getIctDetail();
+
+          _this.getNoreq();
         } else {
           _this.$router.push('/access');
         }
@@ -75,10 +77,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this2.user = response.data;
-
-        _this2.getIctDetail();
-
-        _this2.getNoreq();
       });
     },
     getStatus: function getStatus() {
@@ -119,7 +117,7 @@ __webpack_require__.r(__webpack_exports__);
     getIctDetail: function getIctDetail() {
       var _this5 = this;
 
-      this.axios.get('/api/get-detail-done/' + this.$route.params.code + '/' + this.user.usr_fullname, {
+      this.axios.get('/api/get-detail-done/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }

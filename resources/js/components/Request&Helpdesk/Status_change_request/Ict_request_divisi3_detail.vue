@@ -111,8 +111,9 @@ export default {
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Status Change Request") || this.checkto.includes("/ict-request-divisi3")){ 
-          this.getUser();
+        if(this.checkname.includes("Status Change Request") || this.checkto.includes("/ict-request-divisi3")){   
+          this.getIctDetail();
+          this.getNoreq();
         }
         else {
           this.$router.push('/access');
@@ -122,8 +123,6 @@ export default {
     getUser(){
         this.axios.get('/api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.user = response.data;
-        this.getIctDetail();
-        this.getNoreq();
         });
       },
     getStatus(){
@@ -145,7 +144,7 @@ export default {
       
     },
     getIctDetail(){
-      this.axios.get('/api/get-detail-done/' + this.$route.params.code + '/' + this.user.usr_fullname, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/get-detail-done/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
         this.loading = false;
       }).catch((error)=>{

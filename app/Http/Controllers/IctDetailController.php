@@ -92,10 +92,11 @@ class IctDetailController extends Controller
         ->get();
             return response()->json($dtl);
     }
-    Public function getDetailDone($code,$usr_fullname)
+    Public function getDetailDone($code)
     {
+        $usr_fullname = Auth::user()->usr_fullname;
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_assigned_to1','id.ireqd_id','lr.lookup_desc as ireq_type', 
+        ->select('id.ireq_assigned_to1','id.ireq_attachment','id.ireqd_id','lr.lookup_desc as ireq_type', 
                 DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'id.ireq_remark','id.ireq_qty','id.ireq_desc')
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
         ->LEFTJOIN('catalog_refs as cr',function ($join) {
