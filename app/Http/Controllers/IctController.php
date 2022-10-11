@@ -204,14 +204,14 @@ class IctController extends Controller
             ->get(); 
 
             $ict1 = DB::table('ireq_mst as im')
-            ->SELECT('im.ireq_verificator_remark',DB::raw('count(im.ireq_verificator_remark) as count_remark'),'im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor', 
+            ->SELECT('im.ireq_verificator_remark',DB::raw('count(im.ireq_verificator_remark) as count_remark'), 'im.ireq_approver2_remark',DB::raw('count(im.ireq_approver2_remark) as count_remark_approver2'),'im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor', 
             'dr.div_name','lr.lookup_desc as ireq_status','im.ireq_status as status')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
             ->WHERE('im.ireq_status','A2')
             ->orwhere('im.ireq_status','A1')
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->groupBy('im.ireq_verificator_remark','lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status','im.ireq_requestor','dr.div_name','im.creation_date')
+            ->groupBy('im.ireq_approver2_remark','im.ireq_verificator_remark','lr.lookup_desc','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status','im.ireq_requestor','dr.div_name','im.creation_date')
             ->ORDERBY('im.ireq_date','DESC')
             ->get(); 
 
@@ -486,7 +486,7 @@ class IctController extends Controller
 
             $ict2 = DB::table('ireq_mst as im')
             ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','lr.lookup_desc as ireq_status','im.ireq_status as status',
-            DB::raw('count(im.ireq_verificator_remark) as count_remark'),DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),DB::raw('count(idd.ireq_id) as ireq_count_id'))
+            DB::raw('count(im.ireq_verificator_remark) as count_remark'),DB::raw('count(im.ireq_approver2_remark) as count_remark_approver2'),DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),DB::raw('count(idd.ireq_id) as ireq_count_id'))
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
@@ -1277,7 +1277,7 @@ class IctController extends Controller
                 'im.ireq_requestor','lr.lookup_desc as ireq_status')
                 ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
                 ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-                // ->WHERE('dr.div_verificator',$usr_email)
+                ->WHERE('dr.div_verificator',$usr_email)
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
                 ->WHERE(function($query){
                     return $query
@@ -1294,7 +1294,7 @@ class IctController extends Controller
                 'im.ireq_requestor','lr.lookup_desc as ireq_status')
                 ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
                 ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-                // ->WHERE('dr.div_verificator',$usr_email)
+                ->WHERE('dr.div_verificator',$usr_email)
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
                 ->WHERE(function($query){
                     return $query
@@ -1309,7 +1309,7 @@ class IctController extends Controller
             'im.ireq_requestor','im.ireq_reason','lr.lookup_desc as ireq_status')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
-            // ->WHERE('dr.div_verificator',$usr_email)
+            ->WHERE('dr.div_verificator',$usr_email)
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->WHERE(function($query){
                 return $query
@@ -1572,7 +1572,7 @@ class IctController extends Controller
         $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
         if($aksesmenu->contains($this->personnel)){
          $ict = DB::table('ireq_dtl as id')
-            ->SELECT('id.ireq_attachment','imm.ireq_no','id.ireq_assigned_remark','id.ireq_status as status','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+            ->SELECT(DB::raw('COUNT(imm.ireq_verificator_remark) as countRemarkReviewerInProgress'),'imm.ireq_verificator_remark','id.ireq_attachment','imm.ireq_no','id.ireq_assigned_remark','id.ireq_status as status','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
                 DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
                 'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
                 'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
@@ -1592,12 +1592,17 @@ class IctController extends Controller
             ->WHERE(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),$usr_fullname)
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
             ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->GROUPBY('id.ireq_attachment','imm.ireq_verificator_remark','imm.ireq_no','id.ireq_assigned_remark','id.ireq_status','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+                DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),
+                'imm.ireq_user', 'llr.lookup_desc', 'imm.ireq_requestor',
+                'vr.name','lr.lookup_desc','imm.ireq_date',
+                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"))
             ->ORDERBY('imm.ireq_date','DESC')
             ->ORDERBY('id.ireqd_id','ASC')
          ->get();
 
          $ict1 = DB::table('ireq_dtl as id')
-            ->SELECT('id.ireq_attachment','imm.ireq_no','id.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
+            ->SELECT(DB::Raw('COUNT(imm.ireq_verificator_remark) as countRemarkReviewerDone'),'imm.ireq_verificator_remark','id.ireq_attachment','imm.ireq_no','id.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
                 'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
                 'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
                 DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_status as status')
@@ -1616,12 +1621,16 @@ class IctController extends Controller
             ->WHERE(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),$usr_fullname)
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
             ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->GROUPBY('id.ireq_attachment','imm.ireq_verificator_remark','imm.ireq_no','id.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),
+            'imm.ireq_user', 'llr.lookup_desc', 'imm.ireq_requestor',
+            'vr.name','lr.lookup_desc','imm.ireq_date',
+            DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"),'id.ireq_status')
             ->ORDERBY('imm.ireq_date','DESC')
             ->ORDERBY('id.ireqd_id','ASC')
          ->get();
 
          $ict2 = DB::table('ireq_dtl as id')
-            ->SELECT('id.ireq_attachment','imm.ireq_no','imm.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+            ->SELECT(DB::RAW('COUNT(imm.ireq_verificator_remark) as countRemarkReviewerClose'),'imm.ireq_verificator_remark','id.ireq_attachment','imm.ireq_no','imm.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
                 'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
                 'vr.name as ireq_bu','id.ireq_id','lr.lookup_desc as ireq_type','imm.ireq_date','id.ireq_status as status', DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"))
             ->leftJoin('catalog_refs as cr',function ($join) {
@@ -1639,17 +1648,21 @@ class IctController extends Controller
             ->WHERE(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),$usr_fullname)
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
             ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->GROUPBy('id.ireq_attachment','imm.ireq_no','imm.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
+                'imm.ireq_user','imm.ireq_verificator_remark', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),'llr.lookup_desc', 'imm.ireq_requestor',
+                'vr.name','id.ireq_id','lr.lookup_desc','imm.ireq_date','id.ireq_status', DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"))
             ->ORDERBY('imm.ireq_date','DESC')
             ->ORDERBY('id.ireqd_id','ASC')
          ->get();
 
          $ict3 = DB::table('ireq_mst as im')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->LEFTJOIN('ireq_dtl as id','im.ireq_id','id.ireq_id')
-            ->SELECT('im.ireq_date','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_status as status','im.ireq_id')
-            ->WHERE('id.ireq_status','NT')
+            ->RIGHTJOIN('ireq_dtl as id','im.ireq_id','id.ireq_id')
+            ->SELECT('im.ireq_date',DB::RAW("COUNT(im.ireq_verificator_remark) as countremarkreviewerpenugasan"),'im.ireq_verificator_remark','im.ireq_no','im.ireq_requestor',
+                'im.ireq_user','dr.div_name','im.ireq_status as status','im.ireq_id')
+            ->WHERE('im.ireq_status','NT')
             ->WHERE('id.ireq_assigned_to1',$usr_fullname)
-            ->groupBy('im.ireq_date','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_status','im.ireq_id')
+            ->groupBy('im.ireq_date','im.ireq_verificator_remark','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_status','im.ireq_id')
             ->ORDERBY('im.ireq_date','DESC')
         ->get();
 

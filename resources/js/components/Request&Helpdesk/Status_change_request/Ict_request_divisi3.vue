@@ -49,6 +49,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.countRemarkReviewerPenugasan.some(el=> el > 0)"/>
                   <Column style="min-width:20rem">
                   <template #body="slotProps">
                     <Button
@@ -204,6 +205,7 @@
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
                   <Column field="name" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.countRemarkReviewerInProgress.some(el=> el > 0)"/>
                   <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
@@ -322,6 +324,7 @@
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
                   <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.countRemarkReviewerDone.some(el=> el > 0)"/>
                   <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
@@ -412,6 +415,7 @@
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
                   <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.countRemarkReviewerClose.some(el=> el > 0)"/>
                   <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
@@ -657,6 +661,10 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+        countRemarkReviewerInProgress:[],
+        countRemarkReviewerPenugasan:[],
+        countRemarkReviewerDone:[],
+        countRemarkReviewerClose:[],
         dialogEdit:false,
         dialogNote:false,
         dialogRemark:false,
@@ -809,10 +817,14 @@ export default {
     getData(){
       this.axios.get('api/get-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.penugasan = response.data.ict3;
+        this.countRemarkReviewerPenugasan = this.penugasan.map((x)=>x.countremarkreviewerpenugasan);
         this.reject = response.data.ict4;
         this.sedangDikerjakan = response.data.ict;
+        this.countRemarkReviewerInProgress = this.sedangDikerjakan.map((x)=>x.countremarkreviewerinprogress);
         this.sudahDikerjakan = response.data.ict1;
+        this.countRemarkReviewerDone = this.sudahDikerjakan.map((x)=>x.countremarkreviewerdone);
         this.selesai = response.data.ict2;
+        this.countRemarkReviewerClose = this.selesai.map((x)=>x.countremarkreviewerclose);
         this.loading = false;
       }).catch(error=>{
           if(error.response.status == 403){

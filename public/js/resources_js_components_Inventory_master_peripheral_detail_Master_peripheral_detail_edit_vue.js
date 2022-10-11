@@ -775,6 +775,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     name: "foto",
     ref: "fileInput",
     "class": "form-control",
+    accept: "image/jpg,image/png,image/jpeg",
     onChange: _cache[16] || (_cache[16] = function () {
       return $options.fileImage && $options.fileImage.apply($options, arguments);
     })

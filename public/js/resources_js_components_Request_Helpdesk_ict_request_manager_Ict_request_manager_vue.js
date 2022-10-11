@@ -16101,7 +16101,8 @@ __webpack_require__.r(__webpack_exports__);
       checkto: [],
       code: null,
       showRemarkWaiting: [],
-      showRemarksdhdiverifikasi: []
+      showRemarksdhdiverifikasi: [],
+      showRemarkApproversdhdiverifikasi: []
     };
   },
   created: function created() {
@@ -16148,6 +16149,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.sdhdiverifikasi = response.data.ict1;
         _this.showRemarksdhdiverifikasi = _this.sdhdiverifikasi.map(function (x) {
           return x.count_remark;
+        });
+        _this.showRemarkApproversdhdiverifikasi = _this.sdhdiverifikasi.map(function (x) {
+          return x.count_remark_approver2;
         });
         _this.reject = response.data.ict2;
         _this.penugasan = response.data.ict6;
@@ -17148,6 +17152,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 key: 0,
                 field: "ireq_verificator_remark",
                 header: "Remark Reviewer",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.showRemarkApproversdhdiverifikasi.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 1,
+                field: "ireq_approver2_remark",
+                header: "Remark ICT Manager",
                 sortable: true,
                 style: {
                   "min-width": "12rem"

@@ -48,6 +48,7 @@
                       v-model="detail.invent_sn"
                       placeholder="Masukan S/N"
                       :class="{ 'p-invalid': errors.invent_sn }"
+                      autofocus
                     />
                       <small v-if="errors.invent_sn" class="p-error">
                         {{ errors.invent_sn[0] }}
@@ -107,20 +108,6 @@
                       </small>
                </div>
               </div>
-              <!-- <div class="field grid">
-                <label class="col-fixed w-9rem">QR-Code</label>
-                  <div class="col-fixed w-9rem">
-                    <div class="p-inputgroup">
-                      <InputText v-model="barcode" readonly  v-if="barcode"/>
-                      <img :src="'assets/loading2.gif'" height="50" v-if="!aktif && !barcode">
-                        <Button icon="pi pi-trash" class="p-button-danger" v-if="barcode" @click="hapus()" @v-tooltip="'Click to delete'"/>
-                        <Button icon="bi bi-qr-code-scan" v-if="aktif" class="p-button p-button-info" @click="Scan()" v-tooltip="'Click to scan'" />
-                    </div>
-                      <small v-if="errors.barcode" class="p-error">
-                          {{ errors.barcode[0] }}
-                      </small>
-                  </div>
-              </div>  -->
               <div class="field grid">
                 <label class="col-fixed w-9rem">Bisnis Unit</label>
                   <div class="col-fixed w-9rem">
@@ -147,9 +134,6 @@
                       v-model="detail.invent_lokasi_update"
                       disabled
                     />
-                    <!-- <small v-if="errors.lastloct" class="p-error">
-                      {{ errors.lastloct[0] }}
-                    </small> -->
                   </div>
               </div>
               <div class="field grid">
@@ -160,9 +144,6 @@
                       v-model="detail.invent_pengguna_terakhir"
                       disabled
                     />
-                    <!-- <small v-if="errors.lastuser" class="p-error">
-                      {{ errors.lastuser[0] }}
-                    </small> -->
                   </div>
               </div> 
                <div class="field grid">
@@ -173,9 +154,6 @@
                       v-model="detail.invent_divisi_update"
                       disabled
                     />
-                    <!-- <small v-if="errors.lastuser" class="p-error">
-                      {{ errors.lastuser[0] }}
-                    </small> -->
                   </div>
               </div>  <div class="field grid">
                 <label class="col-fixed w-9rem">Bisnis Unit Terakhir</label>
@@ -185,23 +163,20 @@
                       v-model="detail.invent_bu_update"
                       disabled
                     />
-                    <!-- <small v-if="errors.lastuser" class="p-error">
-                      {{ errors.lastuser[0] }}
-                    </small> -->
                   </div>
               </div> 
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  label="Simpan"
+                  label="Save"
                   type="submit"
                 />
                 <Button
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mr-2"
                   icon="pi pi-times"
-                  @click="$router.push('/master-peripheral')"
+                  @click="$router.push('/master-peripheral-detail/'+this.$route.params.code)"
                 />
               </div>
             </form>
@@ -229,9 +204,6 @@
               <label class="col-fixed w-9rem"></label>
                 <div class="col-10 md-6">
                   <input type="file" :class="{ 'p-invalid': error.foto }" accept="image/jpg,image/png,image/jpeg" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
-                    <!-- <small class="p-error" v-if="error.foto">
-                      {{ error.foto }}
-                    </small> -->
                 </div>
             </div>
             <div class="field grid">
@@ -242,9 +214,6 @@
                     v-model="detail.invent_lokasi_previous"
                     disabled
                   />
-                  <!-- <small class="p-error" v-if="errors.prevloct">
-                    {{ errors.prevloct[0] }}
-                  </small> -->
                 </div>
             </div>
             <div class="field grid">
@@ -256,9 +225,6 @@
                     :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
                     disabled
                   />
-                  <!-- <small class="p-error" v-if="errors.prevuser">
-                    {{ errors.prevuser[0] }}
-                  </small> -->
                 </div>
             </div>
             <div class="field grid">
@@ -270,9 +236,6 @@
                     :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
                     disabled
                   />
-                  <!-- <small class="p-error" v-if="errors.prevuser">
-                    {{ errors.prevuser[0] }}
-                  </small> -->
                 </div>
             </div>
             <div class="field grid">
@@ -284,9 +247,6 @@
                     :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
                     disabled
                   />
-                  <!-- <small class="p-error" v-if="errors.prevuser">
-                    {{ errors.prevuser[0] }}
-                  </small> -->
                 </div>
             </div>
           </div>
@@ -355,23 +315,6 @@ export default {
            }
         });
       },
-    // Scan(){
-    //   this.aktif = false;
-    //   let routeData = this.$router.resolve({name: 'Scan'});
-    //   window.open(routeData.href, '_blank');
-    //   setTimeout( () => this.getBarcode(),2000);
-    // },
-    // getBarcode(){
-    //   this.barcode = localStorage.getItem('barcode');
-    //   if(!this.barcode){
-    //     setTimeout( () => this.getBarcode(),3000);
-    //   }
-    // },
-    // hapus(){
-    //   localStorage.removeItem('barcode');
-    //   this.barcode = null;
-    //   this.aktif = true;
-    // },
     fileImage(event) {
       this.foto = event.target.files[0];
       this.displayImage = true;
@@ -381,7 +324,7 @@ export default {
     createImage(invent_photo) {
       var image = new Image();
       var reader = new FileReader();
-      var vm = this;
+      var vm = this.detail;
       reader.onload = function (e) {
         vm.image = e.target.result;
       };
@@ -390,17 +333,8 @@ export default {
     CreateMaster() {
       this.errors = [];
       this.error = [];
-        if(this.image){
-          const data = new FormData();
-          data.append('code',this.detail.invent_code);
-          data.append("tgl", this.detail.invent_tgl_perolehan);
-          data.append("sn", this.detail.invent_sn);
-          data.append("bu", this.detail.invent_bu);
-          data.append("foto", this.image);
-          data.append("kondisi", this.detail.invent_kondisi);
-          data.append("garansi", this.detail.invent_lama_garansi);
           
-        this.axios.post('/api/save-master-detail',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('/api/save-master-detail',this.detail,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           setTimeout( () => this.$router.push('/master-peripheral-detail/'+this.$route.params.code),1000);
           this.$toast.add({
             severity: "success",
@@ -410,27 +344,6 @@ export default {
         }).catch(error=>{
             this.errors = error.response.data.errors;
         });
-        }
-        else{
-          const data = new FormData();
-          data.append('code',this.detail.invent_code);
-          data.append("tgl", this.detail.invent_tgl_perolehan);
-          data.append("sn", this.detail.invent_sn);
-          data.append("bu", this.detail.invent_bu);
-          data.append("kondisi", this.detail.invent_kondisi);
-          data.append("garansi", this.detail.invent_lama_garansi);
-          
-        this.axios.post('/api/add-master-detail',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-          setTimeout( () => this.$router.push('/master-peripheral-detail/'+this.$route.params.code),1000);
-          this.$toast.add({
-            severity: "success",
-            summary: "Success Message",
-            detail: "Success Create",
-          });
-        }).catch(error=>{
-            this.errors = error.response.data.errors;
-        });
-        }
     }
   },
 };

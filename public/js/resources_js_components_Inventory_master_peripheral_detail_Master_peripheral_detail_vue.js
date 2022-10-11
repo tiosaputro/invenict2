@@ -77,11 +77,11 @@ __webpack_require__.r(__webpack_exports__);
       this.barcode = "http://localhost:8000" + '/detPeripheral/' + +invent_code_dtl;
       this.displayBarcode = true;
     },
-    detailKode: function detailKode(invent_code) {
+    detailKode: function detailKode(invent_code_dtl) {
       var _this2 = this;
 
       this.displayKode = true;
-      this.axios.get('/api/detail-peripheral/' + invent_code, {
+      this.axios.get('/api/detail-peripherall/' + invent_code_dtl, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -223,6 +223,208 @@ var _hoisted_12 = {
 var _hoisted_13 = {
   "class": "box"
 };
+var _hoisted_14 = {
+  "class": "field grid"
+};
+
+var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Kode", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_16 = {
+  "class": "field grid"
+};
+
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Nama", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_18 = {
+  "class": "field grid"
+};
+
+var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Merk", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_20 = {
+  "class": "field grid"
+};
+
+var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Tipe", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_22 = {
+  "class": "field grid"
+};
+
+var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "S/N", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_24 = {
+  "class": "field grid"
+};
+
+var _hoisted_25 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Tgl. Perolehan", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_26 = {
+  "class": "field grid"
+};
+
+var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Kondisi", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_28 = {
+  "class": "field grid"
+};
+
+var _hoisted_29 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Bisnis Unit", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_30 = {
+  "class": "field grid"
+};
+
+var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Lokasi Terakhir", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_32 = {
+  "class": "field grid"
+};
+
+var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Pengguna Terakhir", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_34 = {
+  "class": "field grid"
+};
+
+var _hoisted_35 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Lokasi Sebelumnya", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_36 = {
+  "class": "field grid"
+};
+
+var _hoisted_37 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, "Penguna Sebelumnya", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_38 = {
+  "class": "field grid"
+};
+
+var _hoisted_39 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed",
+    style: {
+      "width": "100px"
+    }
+  }, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_40 = {
+  "class": "card",
+  style: {
+    "height": "16 rem"
+  }
+};
+var _hoisted_41 = ["src"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -321,7 +523,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
             onClick: function onClick($event) {
-              return $options.detailKode(slotProps.data.invent_code);
+              return $options.detailKode(slotProps.data.invent_code_dtl);
             },
             style: {
               "cursor": "pointer"
@@ -439,7 +641,135 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Dialog\r\n          v-model:visible=\"displayKode\"\r\n          :breakpoints=\"{'960px': '75vw'}\"\r\n          :style=\"{ width: '450px' }\"\r\n          :header=\"this.header\"\r\n          :modal=\"true\"\r\n          class=\"fluid\"\r\n        > "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"hidden lg:inline-flex row\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n              <label class=\"col-fixed\" style=\"width:100px\">Kode</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-2\">/ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                    type=\"text\"\r\n                    v-model=\"detail.invent_code\"\r\n                    disabled\r\n                  /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n              <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Nama</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_desc\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> \r\n              <div class=\"field grid\">\r\n                <label class=\"col-fixed\" style=\"width:100px\">Merk</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                      v-model=\"detail.invent_brand\"\r\n                      disabled\r\n                    /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                <div class=\"field grid\">\r\n                  <label class=\"col-fixed\" style=\"width:100px\">Tipe</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                        disabled\r\n                        v-model= \"detail.invent_type\"\r\n                      /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">S/N</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_sn\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Tgl. Perolehan</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_tgl_perolehan\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                    <label style=\"width:155px\">Lama Garansi</label>\r\n                      <div class=\"col-3\">\r\n                        <div class=\"p-inputgroup\">\r\n                          <InputText\r\n                            v-model=\"detail.invent_lama_garansi\"\r\n                            disabled\r\n                          />\r\n                            <span class=\"p-inputgroup-addon\"> Tahun </span> \r\n                        </div>\r\n                    </div>\r\n                  </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Kondisi</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_kondisi\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Bisnis Unit</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          v-model=\"detail.invent_bu\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>/ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Lokasi Terakhir</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          type=\"text\"\r\n                          v-model=\"detail.invent_lokasi_update\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  <div class=\"field grid\">\r\n                    <label class=\"col-fixed\" style=\"width:100px\">Pengguna Terakhir</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                          type=\"text\"\r\n                          v-model=\"detail.invent_pengguna_update\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Lokasi Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_lokasi_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                    <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Penguna Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_pengguna_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Nama</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-4\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_desc\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\"></label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-10 md-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"card\" style=\"height: 16 rem;\">\r\n                            <img :src=\"'/master_peripheral/' +detail.invent_photo\" class=\"master-image\" />\r\n                          </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Lokasi Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_lokasi_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                    <div class=\"field grid\">\r\n                      <label class=\"col-fixed\" style=\"width:100px\">Penguna Sebelumnya</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-6\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <InputText\r\n                            v-model=\"detail.invent_pengguna_previous\"\r\n                            disabled\r\n                          /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <template #footer>\r\n                      <Button label=\"Close\" class=\"p-button-raised p-button-danger mr-2\" icon=\"pi pi-times\" @click=\"this.displayKode = false\" autofocus/>\r\n                    </template>\r\n          </Dialog>   ")])])]);
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.displayKode,
+    "onUpdate:visible": _cache[17] || (_cache[17] = function ($event) {
+      return $data.displayKode = $event;
+    }),
+    breakpoints: {
+      '960px': '75vw'
+    },
+    style: {
+      width: '450px'
+    },
+    header: this.header,
+    modal: true,
+    "class": "fluid"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        type: "text",
+        modelValue: $data.detail.invent_code,
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+          return $data.detail.invent_code = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.detail.invent_desc,
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+          return $data.detail.invent_desc = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.detail.invent_brand,
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+          return $data.detail.invent_brand = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        disabled: "",
+        modelValue: $data.detail.invent_type,
+        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+          return $data.detail.invent_type = $event;
+        })
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.detail.invent_sn,
+        "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+          return $data.detail.invent_sn = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.detail.invent_tgl_perolehan,
+        "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+          return $data.detail.invent_tgl_perolehan = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.detail.invent_kondisi,
+        "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
+          return $data.detail.invent_kondisi = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.detail.invent_bu,
+        "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
+          return $data.detail.invent_bu = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        type: "text",
+        modelValue: $data.detail.invent_lokasi_update,
+        "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
+          return $data.detail.invent_lokasi_update = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        type: "text",
+        modelValue: $data.detail.invent_pengguna_update,
+        "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
+          return $data.detail.invent_pengguna_update = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.detail.invent_lokasi_previous,
+        "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
+          return $data.detail.invent_lokasi_previous = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.detail.invent_pengguna_previous,
+        "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
+          return $data.detail.invent_pengguna_previous = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_this.detail.invent_photo ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+        key: 0,
+        src: '/master_peripheral/' + $data.detail.invent_photo,
+        "class": "master-image"
+      }, null, 8
+      /* PROPS */
+      , _hoisted_41)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible", "header"])])])]);
 }
 
 /***/ }),

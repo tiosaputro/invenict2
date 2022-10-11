@@ -32,12 +32,11 @@ class MasterController extends Controller
 
         if($aksesmenu->contains($this->to)){
             $mas = DB::table('invent_mst as im')
-            ->select('im.invent_code','im.invent_type','lr.lookup_desc as invent_brand','im.invent_desc')
-            // ->leftjoin('vcompany_refs as vf','im.invent_bu','vf.company_code')
+            ->LEFTJOIN('invent_dtl as id','im.invent_code','id.invent_code')
+            ->SELECT('im.invent_code',DB::RAW('COUNT(id.invent_code) as countstok'),'id.invent_code_dtl','im.invent_type','lr.lookup_desc as invent_brand','im.invent_desc')
             ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
-            // ->leftjoin('lookup_refs as lrs','im.invent_desc','lrs.lookup_code')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
-            // ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%'])
+            ->groupBy('im.invent_code','id.invent_code_dtl','im.invent_type','lr.lookup_desc','im.invent_desc')
             ->orderBy('im.invent_code','ASC')
             ->get();
             return response()->json($mas);
@@ -147,7 +146,7 @@ class MasterController extends Controller
         }
     }
     
-    public function detailPeripheral($invent_code_dtl)
+    function detailPeripheral($invent_code_dtl)
     {
         $mas = DB::table('invent_dtl as id')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
@@ -163,7 +162,7 @@ class MasterController extends Controller
             $join->on('id.invent_bu','vr.company_code');
         })
         ->select('im.invent_code','im.invent_type','id.invent_photo','im.invent_desc','lrs.lookup_desc as invent_brand',
-        'id.invent_sn','id.invent_tgl_perolehan','id.invent_lama_garansi','lrfs.lookup_desc as invent_kondisi','vr.name as invent_bu',
+        'id.invent_sn',DB::raw("TO_CHAR(id.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"),'id.invent_lama_garansi','lrfs.lookup_desc as invent_kondisi','vr.name as invent_bu',
         'id.invent_lokasi_previous','id.invent_lokasi_update','id.invent_bu_previous','id.invent_bu_update','id.invent_pengguna_previous',
         'id.invent_pengguna_update')
         ->where('id.invent_code_dtl',$invent_code_dtl)

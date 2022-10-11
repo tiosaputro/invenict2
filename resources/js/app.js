@@ -11,6 +11,8 @@ import 'jquery/dist/jquery.min';
 import 'popper.js/dist/popper.min';
 import 'bootstrap/dist/js/bootstrap.min';
 import 'vue-loading-overlay/dist/vue-loading.css'; 
+import 'v-calendar/dist/style.css';
+
 
 import { createApp, reactive } from 'vue';
 import axios from 'axios';

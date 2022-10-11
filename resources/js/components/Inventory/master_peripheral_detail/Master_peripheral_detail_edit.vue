@@ -229,7 +229,7 @@
             <div class="field grid">
               <label class="col-fixed w-9rem"></label>
                 <div class="col-10 md-6">
-                  <input type="file" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
+                  <input type="file" name="foto" ref="fileInput" class="form-control" accept="image/jpg,image/png,image/jpeg" @change="fileImage" />
                 </div>
             </div>
             <div class="field grid">

@@ -33,7 +33,7 @@ class IctDetailController extends Controller
     }
     Public function index($code)
     {
-        $dtl = DB::table('ireq_dtl as id')
+      $dtl = DB::table('ireq_dtl as id')
         ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_attachment',
          'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
          'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
@@ -60,11 +60,11 @@ class IctDetailController extends Controller
         ->orderBy('id.ireqd_id','ASC')
         ->get();
             return response()->json($dtl);
-    }
+     }
     Public function detailPenugasan($code)
     {
         $dtl = DB::table('ireq_dtl as id')
-        ->select('id.ireq_attachment','id.ireq_qty','id.ireq_status as status','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
+        ->select(DB::raw('COUNT(id.ireq_note_personnel) as count_note'),'id.ireq_attachment','id.ireq_qty','id.ireq_status as status','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
             'lr.lookup_desc as ireq_type','llr.lookup_desc as ireq_status','id.ireq_desc',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),
             DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
         ->LEFTJOIN('catalog_refs as cr',function ($join) {
@@ -88,6 +88,9 @@ class IctDetailController extends Controller
             ->Orwhere('id.ireq_status','RT')
             ->Orwhere('id.ireq_status','T');
         })
+        ->groupBy('id.ireq_attachment','id.ireq_qty','id.ireq_status','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
+        'lr.lookup_desc','llr.lookup_desc','id.ireq_desc',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"),
+        DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"))
         ->orderBy('id.ireqd_id','ASC')
         ->get();
             return response()->json($dtl);

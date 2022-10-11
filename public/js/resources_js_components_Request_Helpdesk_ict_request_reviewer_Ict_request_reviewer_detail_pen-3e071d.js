@@ -29,7 +29,8 @@ __webpack_require__.r(__webpack_exports__);
       token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
-      status: ''
+      status: '',
+      countNote: []
     };
   },
   mounted: function mounted() {
@@ -74,6 +75,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this2.detail = response.data;
+        _this2.countNote = response.data.map(function (x) {
+          return x.count_note;
+        });
         _this2.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -353,10 +357,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         style: {
           "min-width": "4rem"
         }
-      }), _this.status == 'T' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+      }), _this.status == 'T' && _this.countNote.some(function (el) {
+        return el > 0;
+      }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
         key: 0,
         field: "ireq_note_personnel",
-        header: "Reason",
+        header: "Note Personnel",
         sortable: true,
         style: {
           "min-width": "4rem"

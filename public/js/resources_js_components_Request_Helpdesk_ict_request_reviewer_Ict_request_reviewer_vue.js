@@ -66,7 +66,8 @@ __webpack_require__.r(__webpack_exports__);
       showRemarkPermohonan: [],
       showRemarkAtasanDivisi: [],
       showRemarkManager: [],
-      showRemarkPenugasan: []
+      showRemarkPenugasan: [],
+      showRemarkApprover2Manager: []
     };
   },
   created: function created() {
@@ -143,6 +144,9 @@ __webpack_require__.r(__webpack_exports__);
         });
         _this.showRemarkManager = _this.manager.map(function (x) {
           return x.count_remark;
+        });
+        _this.showRemarkApprover2Manager = _this.manager.map(function (x) {
+          return x.count_remark_approver2;
         });
         _this.reject = response.data.ict3;
         _this.penugasan = response.data.ict7;
@@ -1559,7 +1563,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Division User",
                 sortable: true,
                 style: {
-                  "min-width": "8rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
@@ -1841,6 +1845,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 key: 1,
                 field: "ireq_verificator_remark",
                 header: "Remark Reviewer",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.showRemarkApprover2Manager.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 2,
+                field: "ireq_approver2_remark",
+                header: "Remark ICT Manager",
                 sortable: true,
                 style: {
                   "min-width": "12rem"
@@ -2513,7 +2527,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 field: "ireq_remark",
                 header: "Remark",
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "16rem"
                 },
                 sortable: true
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -2764,7 +2778,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Remark",
                 sortable: true,
                 style: {
-                  "min-width": "10rem"
+                  "min-width": "16rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_date",

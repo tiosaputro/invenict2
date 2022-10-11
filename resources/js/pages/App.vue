@@ -65,12 +65,7 @@ export default {
             if (window.location.pathname == '/'){
              this.$router.push('/dashboard'); 
             }
-            if(!this.loggedIn){
-                if(!window.location.pathname == 'Check Legality' || !window.location.pathname == 'Check Verif'){
-                    this.$router.push('/login');
-                }
-            }
-            else if(this.loggedIn){
+            if(this.loggedIn){
                 if(!this.menuUser.length){
                 this.axios.get('/api/get-rolee', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                     this.menuUser = response.data

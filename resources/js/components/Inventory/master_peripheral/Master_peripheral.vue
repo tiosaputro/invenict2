@@ -45,15 +45,11 @@
           <template #loading>
             Loading Master Peripheral data. Please wait.
           </template>
-          <Column field="invent_code" header="Kode" :sortable="true">
-           <template #body="slotProps">
-              <p @click="detailKode(slotProps.data.invent_code)" style="cursor:pointer;"> {{slotProps.data.invent_code}}
-              </p> 
-            </template>
-          </Column>
-          <Column field="invent_desc" header="Nama" :sortable="true"/>
+          <Column field="invent_code" header="Kode" :sortable="true"/>
+          <Column field="invent_desc" header="Peripheral" :sortable="true"/>
           <Column field="invent_brand" header="Merk" :sortable="true"/>
           <Column field="invent_type" header="Type" :sortable="true"/>
+          <Column field="countstok" header="Stok" :sortable="true"/>
           <Column headerStyle="min-width:6rem">
             <template #body="slotProps">
               <Button
@@ -81,12 +77,6 @@
                 @click="DeleteMas(slotProps.data.invent_code)"
                 v-tooltip.top="'Delete'"
               />
-              <!-- <Button
-                icon="pi pi-qrcode"
-                class="p-button-rounded p-button-success mt-2"
-                @click="previewBarcode(slotProps.data.invent_code)"
-                v-tooltip.right="'Print QR-Code'"
-              /> -->
             </template>
           </Column>
           <template #footer>
@@ -347,17 +337,6 @@ export default {
       doc.save('Barcode.pdf');
       this.barcode= '';
       this.displayBarcode = false;
-    },
-    previewBarcode(invent_code){
-      // this.axios.get('api/getBarcode/'+invent_code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-      //   this.barcode = 'Kode Peripheral ' + ': ' + response.data.invent_code +', '+ 'Nama Peripheral ' + ': ' + response.data.invent_desc + ', '+ 'Merk '+': '+ response.data.invent_brand+', '
-      //   + 'Tipe '+': '+ response.data.invent_type+', '+'S/N '+': '+response.data.invent_sn+', '+ 'Bisnis Unit '+': '+response.data.invent_bu +', '+'Lokasi Terakhir '+': '
-      //   +response.data.invent_lokasi_previous+', '+'Pengguna Terakhir '+': '+response.data.invent_pengguna_previous+', '+'Lama Garansi '+': '+response.data.invent_lama_garansi+' Tahun'+', '+'Tanggal Perolehan '+': '+response.data.invent_tgl_perolehan; 
-        
-        
-        this.barcode = 'http://localhost:8000/detPeri/' +invent_code
-        this.displayBarcode = true;
-      // });
     },
     detailKode(invent_code){
       this.displayKode = true;

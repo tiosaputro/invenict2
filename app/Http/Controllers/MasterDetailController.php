@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class MasterDetailController extends Controller
 {
@@ -45,23 +46,24 @@ class MasterDetailController extends Controller
     }
     function saveDetail(Request $request){
         $message = [
-            'sn.required' => 'S/N Belum Diisi',
-            // 'tgl.required' => 'Tanggal Belum Diisi',
-            'kondisi.required'=>'Kondisi Belum Diisi',
-            // 'garansi.required' => 'Garansi Belum Diisi',
-            // 'garansi.numeric' => 'Garansi Belum Diisi',
-            'bu.required' => 'Bisnis Unit Belum Diisi'
+            'invent_sn.required' => 'S/N Belum Diisi',
+            'invent_kondisi.required'=>'Kondisi Belum Diisi',
+            'invent_bu.required' => 'Bisnis Unit Belum Diisi'
         ];
         $request->validate([
-            'sn' => 'required',
-            // 'tgl'=>'required',
-            'kondisi'=>'required',
-            'bu'=> 'required'
+            'invent_sn' => 'required',
+            'invent_kondisi'=>'required',
+            'invent_bu'=> 'required'
         ],$message);
 
-        $newDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgl)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        if($request->foto){
-            $image= $request->foto;
+        if($request->invent_tgl_perolehan == 'null'){
+            $newDate = '';   
+        }
+        else{
+            $newDate = Carbon::parse($request->invent_tgl_perolehan)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+        }
+        if($request->image){
+            $image= $request->image;
             $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
             $replace = substr($image, 0, strpos($image, ',')+1); 
             $fotoo = str_replace($replace, '', $image);
@@ -73,16 +75,16 @@ class MasterDetailController extends Controller
             $nama_file = '';
         }
         $mas = MasterDetail::Create([
-            'invent_code' => $request->code,
-            'invent_sn' => $request->sn,
+            'invent_code' => $request->invent_code,
+            'invent_sn' => $request->invent_sn,
             'invent_tgl_perolehan' => $newDate,
-            'invent_lama_garansi' => $request->garansi,
-            'invent_kondisi' => $request->kondisi,
+            'invent_lama_garansi' => $request->invent_garansi,
+            'invent_kondisi' => $request->invent_kondisi,
             'creation_date' => $this->newCreation,
             'created_by' => Auth::user()->usr_name,
             'program_name' => "MasterDetail_Save",
             'invent_photo' => $nama_file,
-            'invent_bu' => $request->bu,
+            'invent_bu' => $request->invent_bu,
         ]);
         $msg = [
             'success' => true,

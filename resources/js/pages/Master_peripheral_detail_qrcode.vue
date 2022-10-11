@@ -3,8 +3,8 @@
   <Dialog></Dialog>
 <Dialog
           v-model:visible="displayKode"
-          :breakpoints="{'960px': '75vw'}"
-          :style="{ width: '450px' }"
+          :breakpoints="{'1000px': '95vw'}"
+          :style="{ width: '600px' }"
           :header="this.header"
           :modal="true"
           class="fluid"
@@ -158,7 +158,7 @@
                       <label class="col-fixed" style="width:100px"></label>
                         <!-- <div class="col-10 md-6"> -->
                           <div class="card" style="height: 16 rem;">
-                            <img :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
+                            <img v-if="this.detail.invent_photo" :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
                           </div>
                         <!-- </div> -->
                     </div>

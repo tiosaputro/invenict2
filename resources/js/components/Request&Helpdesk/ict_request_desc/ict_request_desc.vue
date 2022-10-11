@@ -49,7 +49,7 @@
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:10rem">
@@ -143,7 +143,7 @@
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:12rem">
@@ -220,7 +220,7 @@
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column>
@@ -297,7 +297,7 @@
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column>
@@ -391,7 +391,7 @@
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
-            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
           </template>
         </Column>
         <template #footer>
@@ -473,7 +473,7 @@
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
-            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
           </template>
         </Column>
         <template #footer>
@@ -537,7 +537,7 @@
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:12rem">
@@ -620,7 +620,7 @@
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:12rem">
@@ -697,7 +697,7 @@
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:12rem">
@@ -774,7 +774,7 @@
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:12rem">
@@ -868,7 +868,7 @@
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
           <template #body= "slotProps">
-            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
           </template>
          </Column>
           <template #footer>
@@ -950,7 +950,7 @@
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
-            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
           </template>
         </Column>
           <template #footer>
@@ -1016,7 +1016,7 @@
           <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelblmDiverifikasi.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:25rem">
@@ -1142,7 +1142,7 @@
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:12rem">
@@ -1236,7 +1236,7 @@
           <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column>
@@ -1328,7 +1328,7 @@
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <template #footer>
@@ -1648,7 +1648,11 @@
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
+          <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -1959,7 +1963,7 @@
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:12rem">
@@ -2032,7 +2036,11 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:10rem">
             <template #body="slotProps">
               <Button
@@ -2122,7 +2130,11 @@
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2153,7 +2165,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.desc == 25">
           <template v-slot:start>
-                <h4>ICT Request (Rejected)</h4>
+            <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -2194,7 +2206,11 @@
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
+            <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <Column style="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -2264,6 +2280,7 @@
                 {{ formatDate(slotProps.data.ireq_date) }}
             </template>
           </Column>
+          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
@@ -2354,7 +2371,11 @@
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
+          <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -2431,7 +2452,11 @@
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem"/>
+        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
+          <template #body= "slotProps">
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            </template>
+          </Column>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -2493,7 +2518,7 @@
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
-              <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
           <Column style="min-width:12rem">
@@ -3296,7 +3321,7 @@
         </DataTable>
          <Toolbar class="mb-4" v-if="this.desc == 39">
           <template v-slot:start>
-                <h4>ICT Request (Overhall Request)</h4>
+            <h4>ICT Request (Overhall Request)</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -3416,7 +3441,7 @@
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
-            <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
           </template>
         </Column>
           <Column style="min-width:12rem">

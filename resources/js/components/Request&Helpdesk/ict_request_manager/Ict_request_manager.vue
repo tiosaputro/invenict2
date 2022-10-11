@@ -134,10 +134,11 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarksdhdiverifikasi.some(el=> el > 0)"/>
+                  <Column field="ireq_approver2_remark" header="Remark ICT Manager" :sortable="true" style="min-width:12rem" v-if="this.showRemarkApproversdhdiverifikasi.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
-                  <template #body= "slotProps">
-                    <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                  </template>
+                    <template #body= "slotProps">
+                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                    </template>
                   </Column>
                   <Column>
                     <template #body="slotProps">
@@ -691,7 +692,8 @@ export default {
         checkto : [],
         code:null,
         showRemarkWaiting:[],
-        showRemarksdhdiverifikasi:[]
+        showRemarksdhdiverifikasi:[],
+        showRemarkApproversdhdiverifikasi:[]
     };
   },
   created() {
@@ -729,6 +731,7 @@ export default {
         this.showRemarkWaiting = this.blmdiverifikasi.map((x)=>x.count_remark);
         this.sdhdiverifikasi = response.data.ict1;
         this.showRemarksdhdiverifikasi = this.sdhdiverifikasi.map((x)=>x.count_remark);
+        this.showRemarkApproversdhdiverifikasi = this.sdhdiverifikasi.map((x)=>x.count_remark_approver2);
         this.reject = response.data.ict2;
         this.penugasan = response.data.ict6;
         this.sedangDikerjakan = response.data.ict3;

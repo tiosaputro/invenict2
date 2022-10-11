@@ -58,7 +58,7 @@
             </template>  
           </Column>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:4rem"/>
-          <Column field="ireq_note_personnel" header="Reason" :sortable="true" style="min-width:4rem" v-if="this.status == 'T'"/>
+          <Column field="ireq_note_personnel" header="Note Personnel" :sortable="true" style="min-width:4rem" v-if="this.status == 'T' && this.countNote.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -103,7 +103,8 @@ export default {
         token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
-        status:''
+        status:'',
+        countNote:[]
     };
   },
   mounted() {
@@ -131,6 +132,7 @@ export default {
     getIctDetail(){
       this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
+        this.countNote = response.data.map((x)=> x.count_note)
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {

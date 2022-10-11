@@ -183,7 +183,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:8rem"/>
+                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:16rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -318,6 +318,7 @@
                   </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelmanager.some(el=> el > 0)"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkManager.some(el=> el > 0)"/>
+                  <Column field="ireq_approver2_remark" header="Remark ICT Manager" :sortable="true" style="min-width:12rem" v-if="this.showRemarkApprover2Manager.some(el=> el > 0)"/>
                   <Column headerStyle="min-width:15rem">
                     <template #body="slotProps">
                        <Button
@@ -668,7 +669,7 @@
                   <Column field="ireq_type" header="Request Type" style="min-width:10rem" :sortable="true"/>
                   <Column field="kategori" header="Items" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_qty" header="Qty" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_remark" header="Remark" style="min-width:12rem" :sortable="true"/>
+                  <Column field="ireq_remark" header="Remark" style="min-width:16rem" :sortable="true"/>
                   <Column field="ireq_date" header="Request Date" style="min-width:10rem" :sortable="true">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -774,7 +775,7 @@
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
                   <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:16rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
                       {{ formatDate(slotProps.data.ireq_date) }}
@@ -1021,6 +1022,7 @@ export default {
         showRemarkAtasanDivisi:[],
         showRemarkManager:[],
         showRemarkPenugasan:[],
+        showRemarkApprover2Manager:[]
     };
   },
   created() {
@@ -1080,6 +1082,7 @@ export default {
           this.manager = response.data.ict2;
           this.showPersonelmanager = this.manager.map((x)=>x.ireq_count_status);
           this.showRemarkManager = this.manager.map((x)=>x.count_remark);
+          this.showRemarkApprover2Manager = this.manager.map((x)=>x.count_remark_approver2);
           this.reject = response.data.ict3;
           this.penugasan = response.data.ict7;
           this.showRemarkPenugasan = this.penugasan.map((x)=>x.count_remark);
