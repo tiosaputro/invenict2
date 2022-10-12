@@ -21,7 +21,7 @@
                   </div>
                 </div>
                 <div class="field grid">
-                  <label class="col-fixed w-9rem">Merk</label>
+                  <label class="col-fixed w-9rem">Brand</label>
                     <div class="col-fixed w-9rem">
                       <InputText
                         type="text"
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="field grid">
-                  <label class="col-fixed w-9rem">Tipe</label>
+                  <label class="col-fixed w-9rem">Type</label>
                     <div class="col-fixed w-9rem">
                      <InputText
                         type="text"
@@ -46,12 +46,8 @@
                     <InputText
                       type ="text"
                       v-model="detail.invent_sn"
-                      placeholder="Masukan S/N"
-                      :class="{ 'p-invalid': errors.invent_sn }"
+                      disabled
                     />
-                      <small v-if="errors.invent_sn" class="p-error">
-                        {{ errors.invent_sn[0] }}
-                      </small>
                  </div>
               </div>
               <div class="field grid">
@@ -107,20 +103,6 @@
                       </small>
                </div>
               </div>
-              <!-- <div class="field grid">
-                <label class="col-fixed w-9rem">QR-Code</label>
-                  <div class="col-fixed w-9rem">
-                    <div class="p-inputgroup">
-                      <InputText v-model="barcode" readonly  v-if="barcode"/>
-                      <img :src="'assets/loading2.gif'" height="50" v-if="!aktif && !barcode">
-                        <Button icon="pi pi-trash" class="p-button-danger" v-if="barcode" @click="hapus()" @v-tooltip="'Click to delete'"/>
-                        <Button icon="bi bi-qr-code-scan" v-if="aktif" class="p-button p-button-info" @click="Scan()" v-tooltip="'Click to scan'" />
-                    </div>
-                      <small v-if="errors.barcode" class="p-error">
-                          {{ errors.barcode[0] }}
-                      </small>
-                  </div>
-              </div>  -->
               <div class="field grid">
                 <label class="col-fixed w-9rem">Bisnis Unit</label>
                   <div class="col-fixed w-9rem">
@@ -139,57 +121,6 @@
                       </small>
                 </div>
               </div>
-              <div class="field grid">
-                <label class="col-fixed w-9rem">Lokasi Terakhir</label>
-                  <div class="col-fixed w-9rem">
-                    <InputText
-                      type="text"
-                      v-model="detail.invent_lokasi_update"
-                      disabled
-                    />
-                    <!-- <small v-if="errors.lastloct" class="p-error">
-                      {{ errors.lastloct[0] }}
-                    </small> -->
-                  </div>
-              </div>
-              <div class="field grid">
-                <label class="col-fixed w-9rem">Pengguna Terakhir</label>
-                  <div class="col-fixed w-9rem">
-                    <InputText
-                      type="text"
-                      v-model="detail.invent_pengguna_update"
-                      disabled
-                    />
-                    <!-- <small v-if="errors.lastuser" class="p-error">
-                      {{ errors.lastuser[0] }}
-                    </small> -->
-                  </div>
-              </div> 
-               <div class="field grid">
-                <label class="col-fixed w-9rem">Divisi Pengguna Terakhir</label>
-                  <div class="col-fixed w-9rem">
-                    <InputText
-                      type="text"
-                      v-model="detail.invent_divisi_update"
-                      disabled
-                    />
-                    <!-- <small v-if="errors.lastuser" class="p-error">
-                      {{ errors.lastuser[0] }}
-                    </small> -->
-                  </div>
-              </div>  <div class="field grid">
-                <label class="col-fixed w-9rem">Bisnis Unit Terakhir</label>
-                  <div class="col-fixed w-9rem">
-                    <InputText
-                      type="text"
-                      v-model="detail.invent_bu_update"
-                      disabled
-                    />
-                    <!-- <small v-if="errors.lastuser" class="p-error">
-                      {{ errors.lastuser[0] }}
-                    </small> -->
-                  </div>
-              </div> 
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -208,7 +139,7 @@
            </div>
            <div class="col-sm-6">
            <div class="field grid">
-              <label class="col-fixed w-9rem">Nama Peripheral</label>
+              <label class="col-fixed w-9rem">Peripheral</label>
                 <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
@@ -230,58 +161,6 @@
               <label class="col-fixed w-9rem"></label>
                 <div class="col-10 md-6">
                   <input type="file" name="foto" ref="fileInput" class="form-control" accept="image/jpg,image/png,image/jpeg" @change="fileImage" />
-                </div>
-            </div>
-            <div class="field grid">
-              <label class="col-fixed w-9rem">Lokasi Sebelumnya</label>
-                <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="detail.invent_lokasi_previous"
-                    disabled
-                  />
-                  <!-- <small class="p-error" v-if="errors.prevloct">
-                    {{ errors.prevloct[0] }}
-                  </small> -->
-                </div>
-            </div>
-            <div class="field grid">
-              <label class="col-fixed w-9rem">Pengguna Sebelumnya</label>
-                <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="detail.invent_pengguna_previous"
-                    disabled
-                  />
-                  <!-- <small class="p-error" v-if="errors.prevuser">
-                    {{ errors.prevuser[0] }}
-                  </small> -->
-                </div>
-            </div>
-            <div class="field grid">
-              <label class="col-fixed w-9rem">Divisi Pengguna Sebelumnya</label>
-                <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="detail.invent_divisi_previous"
-                    disabled
-                  />
-                  <!-- <small class="p-error" v-if="errors.prevuser">
-                    {{ errors.prevuser[0] }}
-                  </small> -->
-                </div>
-            </div>
-            <div class="field grid">
-              <label class="col-fixed w-9rem">Bisnis Unit Sebelumnya</label>
-                <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="detail.invent_bu_previous"
-                    disabled
-                  />
-                  <!-- <small class="p-error" v-if="errors.prevuser">
-                    {{ errors.prevuser[0] }}
-                  </small> -->
                 </div>
             </div>
           </div>
@@ -350,23 +229,6 @@ export default {
            }
         });
       },
-    // Scan(){
-    //   this.aktif = false;
-    //   let routeData = this.$router.resolve({name: 'Scan'});
-    //   window.open(routeData.href, '_blank');
-    //   setTimeout( () => this.getBarcode(),2000);
-    // },
-    // getBarcode(){
-    //   this.barcode = localStorage.getItem('barcode');
-    //   if(!this.barcode){
-    //     setTimeout( () => this.getBarcode(),3000);
-    //   }
-    // },
-    // hapus(){
-    //   localStorage.removeItem('barcode');
-    //   this.barcode = null;
-    //   this.aktif = true;
-    // },
       fileImage(event) {
       this.invent_photo = event.target.files[0];
       this.displayImage = true;

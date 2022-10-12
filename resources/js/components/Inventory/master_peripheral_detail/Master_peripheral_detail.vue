@@ -25,17 +25,17 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Master Peripheral Detail"
           responsiveLayout="scroll"
         >
-       <template #header>
+          <template #header>
             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
               <Button
-              label="Add"
-              class="p-button-raised"
-              icon="bi bi-file-earmark-plus"
-              @click="$router.push({
-                name: 'Add Master Peripheral Detail',
-                params: { code: this.$route.params.code },
-              })"
-            />
+                label="Add"
+                class="p-button-raised"
+                icon="bi bi-file-earmark-plus"
+                @click="$router.push({
+                  name: 'Add Master Peripheral Detail',
+                  params: { code: this.$route.params.code },
+                })"
+              />
               <span class="block mt-2 md:mt-0 p-input-icon-left">
                <i class="pi pi-search" />
                 <InputText
@@ -53,14 +53,15 @@
           </template>
           <Column header="Serial Number" :sortable="true">
            <template #body="slotProps">
-              <p @click="detailKode(slotProps.data.invent_code_dtl)" style="cursor:pointer;"> {{slotProps.data.invent_sn}}
+              <p @click="detailKode(slotProps.data.invent_code_dtl)" style="cursor:pointer;"> 
+                {{slotProps.data.invent_sn}}
               </p> 
             </template>
           </Column>
-          <Column field="invent_lokasi_previous" header="Lokasi Sebelumnya" :sortable="true"/>
-          <Column field="invent_lokasi_update" header="Lokasi Terakhir" :sortable="true"/>
-          <Column field="invent_pengguna_previous" header="Pengguna Sebelumnya" :sortable="true"/>
-          <Column field="invent_pengguna_update" header="Pengguna Terakhir" :sortable="true"/>
+          <Column field="invent_lokasi_previous" header="Previous Location" :sortable="true"/>
+          <Column field="invent_lokasi_update" header="Last Location" :sortable="true"/>
+          <Column field="invent_pengguna_previous" header="Previous User" :sortable="true"/>
+          <Column field="invent_pengguna_update" header="Last User" :sortable="true"/>
           <Column headerStyle="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -99,18 +100,6 @@
                     @click="$router.push({
                     name: 'Master Peripheral'})"
                   />
-                  <!-- <Button
-                    label="Pdf"
-                    class="p-button-raised p-button-danger mr-2"
-                    icon="pi pi-file-pdf"
-                    @click="CetakPdf()"
-                  />
-                  <Button 
-                    label="Excel"
-                    class="p-button-raised p-button-success mr-2"
-                    icon="bi bi-file-earmark-spreadsheet"
-                    @click="CetakExcel()" 
-                  /> -->
                 </div>
 			        </div>
             </div>
@@ -137,8 +126,8 @@
           :modal="true"
           class="fluid"
         >
-            <div class="field grid">
-              <label class="col-fixed" style="width:100px">Kode</label>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Kode</label>
                   <InputText
                     type="text"
                     v-model="detail.invent_code"
@@ -146,90 +135,90 @@
                   />
               </div>
               <div class="field grid">
-                      <label class="col-fixed" style="width:100px">Nama</label>
-                          <InputText
-                            v-model="detail.invent_desc"
-                            disabled
-                          />
-                    </div> 
+                <label class="col-fixed" style="width:100px">Nama</label>
+                  <InputText
+                    v-model="detail.invent_desc"
+                    disabled
+                  />
+              </div> 
               <div class="field grid">
                 <label class="col-fixed" style="width:100px">Merk</label>
                     <InputText
                       v-model="detail.invent_brand"
                       disabled
                     />
-                </div>
-                <div class="field grid">
-                  <label class="col-fixed" style="width:100px">Tipe</label>
-                      <InputText
-                        disabled
-                        v-model= "detail.invent_type"
-                      />
+              </div>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Tipe</label>
+                  <InputText
+                    disabled
+                    v-model= "detail.invent_type"
+                  />
+              </div>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">S/N</label>
+                  <InputText
+                      v-model="detail.invent_sn"
+                      disabled
+                  />
+              </div>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Tgl. Perolehan</label>
+                  <InputText
+                    v-model="detail.invent_tgl_perolehan"
+                    disabled
+                  />
+              </div>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Kondisi</label>
+                  <InputText
+                    v-model="detail.invent_kondisi"
+                    disabled
+                  />
+              </div>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Bisnis Unit</label>
+                  <InputText
+                    v-model="detail.invent_bu"
+                    disabled
+                  />
+              </div>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Lokasi Terakhir</label>
+                  <InputText
+                    type="text"
+                    v-model="detail.invent_lokasi_update"
+                    disabled
+                  />
+              </div>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Pengguna Terakhir</label>
+                  <InputText
+                    type="text"
+                    v-model="detail.invent_pengguna_update"
+                    disabled
+                  />
+              </div> 
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Lokasi Sebelumnya</label>
+                  <InputText
+                    v-model="detail.invent_lokasi_previous"
+                    disabled
+                  />
+              </div>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px">Penguna Sebelumnya</label>
+                  <InputText
+                    v-model="detail.invent_pengguna_previous"
+                    disabled
+                  />
+              </div>
+              <div class="field grid">
+                <label class="col-fixed" style="width:100px"></label>
+                  <div class="card" style="height: 16 rem;">
+                    <img v-if="this.detail.invent_photo" :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
                   </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">S/N</label>
-                        <InputText
-                          v-model="detail.invent_sn"
-                          disabled
-                        />
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Tgl. Perolehan</label>
-                        <InputText
-                          v-model="detail.invent_tgl_perolehan"
-                          disabled
-                        />
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Kondisi</label>
-                        <InputText
-                          v-model="detail.invent_kondisi"
-                          disabled
-                        />
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Bisnis Unit</label>
-                        <InputText
-                          v-model="detail.invent_bu"
-                          disabled
-                        />
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Lokasi Terakhir</label>
-                        <InputText
-                          type="text"
-                          v-model="detail.invent_lokasi_update"
-                          disabled
-                        />
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Pengguna Terakhir</label>
-                        <InputText
-                          type="text"
-                          v-model="detail.invent_pengguna_update"
-                          disabled
-                        />
-                  </div> 
-                  <div class="field grid">
-                      <label class="col-fixed" style="width:100px">Lokasi Sebelumnya</label>
-                          <InputText
-                            v-model="detail.invent_lokasi_previous"
-                            disabled
-                          />
-                    </div>
-                    <div class="field grid">
-                      <label class="col-fixed" style="width:100px">Penguna Sebelumnya</label>
-                          <InputText
-                            v-model="detail.invent_pengguna_previous"
-                            disabled
-                          />
-                    </div>
-                    <div class="field grid">
-                      <label class="col-fixed" style="width:100px"></label>
-                          <div class="card" style="height: 16 rem;">
-                            <img v-if="this.detail.invent_photo" :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
-                          </div>
-                    </div>
+              </div>
           </Dialog>  
       </div>
     </div>
@@ -260,18 +249,6 @@ export default {
     this.getMaster();
   },
   methods: {
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Master Peripheral") || this.checkto.includes("/master-peripheral")){
-          this.getMaster();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     downloadBarcodePdf(){
       const doc = new Jspdf();
       const contentHtml = this.$refs.qr.$el;
@@ -289,7 +266,7 @@ export default {
       this.displayKode = true;
       this.axios.get('/api/detail-peripherall/' +invent_code_dtl, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.detail = response.data;
-        this.header = 'Detail Peripheral '+this.detail.name;
+        this.header = 'Detail Peripheral '+this.detail.invent_code +' '+ this.detail.invent_type;
       });
     },
     getMaster(){

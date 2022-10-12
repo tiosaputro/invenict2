@@ -117,7 +117,6 @@
                         placeholder="Select"
                         :class="{ 'p-invalid': submitted && !mut.imutasi_divisi }"
                       />
-                        
                       <small class="p-error" v-if="submitted && !mut.imutasi_divisi"
                         >Division User not filled.
                       </small>
@@ -139,7 +138,6 @@
                         placeholder="Select"
                         :class="{ 'p-invalid': submitted && !mut.imutasi_bu }"
                       />
-                        
                       <small class="p-error" v-if="submitted && !mut.imutasi_bu"
                         >Business Unit not filled.
                       </small>

@@ -54,7 +54,7 @@
           <Column field="invent_type" header="Type" :sortable="true"/>
           <Column field="invent_sn" header="S/N" :sortable="true"/>
           <Column field="imutasi_pengguna" header="User" :sortable="true"/>
-          <Column field="imutasi_lokasi" header="Lokasi" :sortable="true"/>
+          <Column field="imutasi_lokasi" header="Location" :sortable="true"/>
           <Column field="imutasi_divisi" header="User Division" :sortable="true"/>
           <Column field="imutasi_bu" header="Business Unit" :sortable="true"/>
           <Column headerStyle="min-width:12rem">
@@ -267,17 +267,8 @@ export default {
     this.getMutasi();
   },
   methods: {
-  cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Mutasi Peripheral") || this.checkto.includes("/mutasi-peripheral")){
-          this.getMutasi();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
+    formatDate(date) {
+      return moment(date).format("DD MMM YYYY HH:mm")
     },
     getMutasi(){
       this.axios.get('api/mut',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
@@ -299,12 +290,12 @@ export default {
     },
     DeleteMut(imutasi_id){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
@@ -312,8 +303,9 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-mut/' +imutasi_id,{headers: {'Authorization': 'Bearer '+this.token}});  
-          this.getMutasi();
+          this.axios.delete('api/delete-mut/' +imutasi_id,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.getMutasi();
+          });  
         },
         reject: () => {},
       });
@@ -337,6 +329,7 @@ export default {
 <style scoped lang="scss">
 .master-image {
   height:200pt;
+  object-fit:contain;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }
 </style>

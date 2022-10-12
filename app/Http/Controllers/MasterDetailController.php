@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class MasterDetailController extends Controller
 {
@@ -23,6 +22,7 @@ class MasterDetailController extends Controller
     function index($code){
         $dtl = MasterDetail::select('invent_sn','invent_code_dtl','invent_code','invent_lokasi_previous','invent_lokasi_update','invent_pengguna_previous','invent_pengguna_update')
         ->where('invent_code',$code)
+        ->orderBy('creation_date','DESC')
         ->get();
 
         $mas = DB::table('invent_mst as im')
@@ -47,11 +47,12 @@ class MasterDetailController extends Controller
     function saveDetail(Request $request){
         $message = [
             'invent_sn.required' => 'S/N Belum Diisi',
+            'invent_sn.unique' => 'S/N Sudah Ada',
             'invent_kondisi.required'=>'Kondisi Belum Diisi',
             'invent_bu.required' => 'Bisnis Unit Belum Diisi'
         ];
         $request->validate([
-            'invent_sn' => 'required',
+            'invent_sn' => 'required|unique:invent_dtl,invent_sn',
             'invent_kondisi'=>'required',
             'invent_bu'=> 'required'
         ],$message);

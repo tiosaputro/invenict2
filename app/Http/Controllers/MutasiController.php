@@ -26,7 +26,10 @@ class MutasiController extends Controller
 
         if($aksesmenu->contains($this->to)){
             $mutasi = DB::table('invent_mutasi as im')
-            ->select('im.imutasi_pengguna','im.imutasi_lokasi','im.imutasi_id','id.invent_code','id.invent_sn','imm.invent_type','imm.invent_desc','dr.div_name as imutasi_divisi','vr.name as imutasi_bu')
+            ->select('im.imutasi_pengguna','im.imutasi_tgl_dari','im.imutasi_tgl_sd',
+            'im.imutasi_lokasi','id.invent_code_dtl','im.imutasi_id','id.invent_code',
+            'id.invent_sn','imm.invent_type','imm.invent_desc','dr.div_name as imutasi_divisi',
+            'vr.name as imutasi_bu')
             ->leftjoin('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
             ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
             ->leftjoin('divisi_refs as dr','im.imutasi_divisi','dr.div_id')

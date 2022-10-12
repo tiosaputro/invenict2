@@ -1,5 +1,5 @@
 <template>
-  <div class="grid crud-demo">
+  <div class="grid">
     <div class="col-12">
       <div class="card">
         <Toast />
@@ -7,7 +7,7 @@
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>Master Peripheral</h4>
+				    <h4>Master Peripheral</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -22,14 +22,14 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Master Peripheral"
           responsiveLayout="scroll"
         >
-       <template #header>
+          <template #header>
             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
               <Button
-              label="Add"
-              class="p-button-raised"
-              icon="bi bi-file-earmark-plus"
-              @click="$router.push('/Add-master-peripheral')"
-            />
+                label="Add"
+                class="p-button-raised"
+                icon="bi bi-file-earmark-plus"
+                @click="$router.push('/Add-master-peripheral')"
+              />
               <span class="block mt-2 md:mt-0 p-input-icon-left">
                <i class="pi pi-search" />
                 <InputText
@@ -39,31 +39,31 @@
               </span>
             </div>
           </template>
-           <template #empty>
+          <template #empty>
            Not Found
           </template>
           <template #loading>
             Loading Master Peripheral data. Please wait.
           </template>
-          <Column field="invent_code" header="Kode" :sortable="true"/>
-          <Column field="invent_desc" header="Peripheral" :sortable="true"/>
-          <Column field="invent_brand" header="Merk" :sortable="true"/>
-          <Column field="invent_type" header="Type" :sortable="true"/>
-          <Column field="countstok" header="Stok" :sortable="true"/>
+          <Column field="invent_code" header="Kode Peripheral" :sortable="true" style="min-width:8rem"/>
+          <Column field="invent_desc" header="Items" :sortable="true" style="min-width:8rem"/>
+          <Column field="invent_brand" header="Merk" :sortable="true" style="min-width:8rem"/>
+          <Column field="invent_type" header="Type" :sortable="true" style="min-width:8rem"/>
+          <Column field="countstok" header="Stok" :sortable="true" style="min-width:8rem"/>
           <Column headerStyle="min-width:6rem">
             <template #body="slotProps">
               <Button
-                class="p-button-rounded p-button-secondary mr-2"
+                class="p-button-rounded p-button-secondary mr-2 mt-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Detail'"
+                v-tooltip.left="'Click for detail peripheral'"
                 @click="$router.push({
                   name: 'Master Peripheral Detail',
                   params: { code: slotProps.data.invent_code }, })"
                 />
               <Button
-                class="p-button-rounded p-button-info mr-2"
+                class="p-button-rounded p-button-info mr-2 mt-2"
                 icon="pi pi-pencil"
-                v-tooltip.bottom="'Edit'"
+                v-tooltip.bottom="'Click to edit'"
                 @click="
                   $router.push({
                     name: 'Edit Master Peripheral',
@@ -73,9 +73,9 @@
               />
               <Button
                 icon="pi pi-trash"
-                class="p-button-rounded p-button-danger mr-2"
+                class="p-button-rounded p-button-danger mr-2 mt-2"
                 @click="DeleteMas(slotProps.data.invent_code)"
-                v-tooltip.top="'Delete'"
+                v-tooltip.top="'Click to delete'"
               />
             </template>
           </Column>
@@ -99,252 +99,26 @@
 			        </div>
             </div>
            </template>
-        </DataTable>   
-        <!-- <Dialog
-          id="qrcode"
-          v-model:visible="displayBarcode"
-          :style="{ width: '400px' }"
-          header="Preview QR-Code"
-          :modal="true"
-          class="p-fluid"
-        >
-        <qrcode-vue :value="barcode" ref="qr" :size="300" level="L" /> 
-          <template #footer>
-            <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" class="p-button-danger" />
-          </template>
-        </Dialog> -->
-        <Dialog
-          v-model:visible="displayKode"
-          :breakpoints="{'960px': '75vw'}"
-          :style="{ width: '450px' }"
-          :header="this.header"
-          :modal="true"
-          class="fluid"
-        >
-        <!-- <div class="hidden lg:inline-flex row"> -->
-          <!-- <div class="col-sm-6"> -->
-            <div class="field grid">
-              <label class="col-fixed" style="width:100px">Kode</label>
-                <!-- <div class="col-2">/ -->
-                  <InputText
-                    type="text"
-                    v-model="detail.invent_code"
-                    disabled
-                  />
-                <!-- </div> -->
-              </div>
-              <div class="field grid">
-                      <label class="col-fixed" style="width:100px">Nama</label>
-                        <!-- <div class="col-4"> -->
-                          <InputText
-                            v-model="detail.invent_desc"
-                            disabled
-                          />
-                        <!-- </div> -->
-                    </div> 
-              <div class="field grid">
-                <label class="col-fixed" style="width:100px">Merk</label>
-                  <!-- <div class="col-4"> -->
-                    <InputText
-                      v-model="detail.invent_brand"
-                      disabled
-                    />
-                  <!-- </div> -->
-                </div>
-                <div class="field grid">
-                  <label class="col-fixed" style="width:100px">Tipe</label>
-                    <!-- <div class="col-4"> -->
-                      <InputText
-                        disabled
-                        v-model= "detail.invent_type"
-                      />
-                    <!-- </div> -->
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">S/N</label>
-                      <!-- <div class="col-4"> -->
-                        <InputText
-                          v-model="detail.invent_sn"
-                          disabled
-                        />
-                    <!-- </div> -->
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Tgl. Perolehan</label>
-                      <!-- <div class="col-4"> -->
-                        <InputText
-                          v-model="detail.invent_tgl_perolehan"
-                          disabled
-                        />
-                      <!-- </div> -->
-                  </div>
-                  <!-- <div class="field grid">
-                    <label style="width:155px">Lama Garansi</label>
-                      <div class="col-3">
-                        <div class="p-inputgroup">
-                          <InputText
-                            v-model="detail.invent_lama_garansi"
-                            disabled
-                          />
-                            <span class="p-inputgroup-addon"> Tahun </span> 
-                        </div>
-                    </div>
-                  </div> -->
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Kondisi</label>
-                      <!-- <div class="col-4"> -->
-                        <InputText
-                          v-model="detail.invent_kondisi"
-                          disabled
-                        />
-                      <!-- </div> -->
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Bisnis Unit</label>
-                      <!-- <div class="col-4"> -->
-                        <InputText
-                          v-model="detail.invent_bu"
-                          disabled
-                        />
-                    <!-- </div>/ -->
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Lokasi Terakhir</label>
-                      <!-- <div class="col-6"> -->
-                        <InputText
-                          type="text"
-                          v-model="detail.invent_lokasi_update"
-                          disabled
-                        />
-                      <!-- </div> -->
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed" style="width:100px">Pengguna Terakhir</label>
-                      <!-- <div class="col-6"> -->
-                        <InputText
-                          type="text"
-                          v-model="detail.invent_pengguna_update"
-                          disabled
-                        />
-                      <!-- </div> -->
-                  </div> 
-                  <div class="field grid">
-                      <label class="col-fixed" style="width:100px">Lokasi Sebelumnya</label>
-                        <!-- <div class="col-6"> -->
-                          <InputText
-                            v-model="detail.invent_lokasi_previous"
-                            disabled
-                          />
-                        <!-- </div> -->
-                    </div>
-                    <div class="field grid">
-                      <label class="col-fixed" style="width:100px">Penguna Sebelumnya</label>
-                        <!-- <div class="col-6"> -->
-                          <InputText
-                            v-model="detail.invent_pengguna_previous"
-                            disabled
-                          />
-                        <!-- </div> -->
-                    </div>
-                <!-- </div> -->
-                  <!-- <div class="col-sm-6"> -->
-                    <!-- <div class="field grid">
-                      <label class="col-fixed" style="width:100px">Nama</label> -->
-                        <!-- <div class="col-4"> -->
-                          <!-- <InputText
-                            v-model="detail.invent_desc"
-                            disabled
-                          /> -->
-                        <!-- </div> -->
-                    <!-- </div>  -->
-                    <div class="field grid">
-                      <label class="col-fixed" style="width:100px"></label>
-                        <!-- <div class="col-10 md-6"> -->
-                          <div class="card" style="height: 16 rem;">
-                            <img :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
-                          </div>
-                        <!-- </div> -->
-                    </div>
-                    <!-- <div class="field grid">
-                      <label class="col-fixed" style="width:100px">Lokasi Sebelumnya</label> -->
-                        <!-- <div class="col-6"> -->
-                          <!-- <InputText
-                            v-model="detail.invent_lokasi_previous"
-                            disabled
-                          /> -->
-                        <!-- </div> -->
-                    <!-- </div>
-                    <div class="field grid">
-                      <label class="col-fixed" style="width:100px">Penguna Sebelumnya</label> -->
-                        <!-- <div class="col-6"> -->
-                          <!-- <InputText
-                            v-model="detail.invent_pengguna_previous"
-                            disabled
-                          /> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                  <!-- </div> -->
-                  <!-- </div> -->
-                   <template #footer>
-                      <Button label="Close" class="p-button-raised p-button-danger mr-2" icon="pi pi-times" @click="this.displayKode = false" autofocus/>
-                    </template>
-          </Dialog>  
+        </DataTable>     
       </div>
     </div>
   </div>    
 </template>
 <script>
 import {FilterMatchMode} from 'primevue/api';
-import Jspdf from 'jspdf';
 export default {
   data() {
     return {
-        displayKode: false,
-        header: '',
-        detail:[],
         loading: true,
-        displayBarcode: false,
         token: localStorage.getItem('token'),
         master: [],
-        mas: [],
-        barcode:'',
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        checkname : [],
-        checkto : [],
     };
   },
   created() {
     this.getMaster();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Master Peripheral") || this.checkto.includes("/master-peripheral")){
-          this.getMaster();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
-    downloadBarcodePdf(){
-      const doc = new Jspdf();
-      const contentHtml = this.$refs.qr.$el;
-      const image = contentHtml.toDataURL('image/jpeg', 0.8);
-      doc.addImage(image, 'JPEG', 70, 30);
-      doc.save('Barcode.pdf');
-      this.barcode= '';
-      this.displayBarcode = false;
-    },
-    detailKode(invent_code){
-      this.displayKode = true;
-      this.axios.get('api/detail-peripheral/' +invent_code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.detail = response.data;
-        this.header = 'Detail Peripheral '+this.detail.name;
-      });
-    },
     getMaster(){
       this.axios.get('api/mas',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.master = response.data;
@@ -365,12 +139,12 @@ export default {
     },
     DeleteMas(invent_code){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
@@ -389,9 +163,6 @@ export default {
     },
     CetakExcel(){
       window.open('api/report-master-excel');
-      // ,{ headers: 
-      //  { 'Authorization': 'Bearer '+this.token}, 
-      //  'Accept': 'application/json'});
     },
   },
 };

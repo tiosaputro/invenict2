@@ -36,41 +36,22 @@ __webpack_require__.r(__webpack_exports__);
     this.getMutasi();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-
-        if (_this.checkname.includes("Mutasi Peripheral") || _this.checkto.includes("/mutasi-peripheral")) {
-          _this.getMutasi();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
+    formatDate: function formatDate(date) {
+      return moment(date).format("DD MMM YYYY HH:mm");
     },
     getMutasi: function getMutasi() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('api/mut', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.mutasi = response.data;
-        _this2.loading = false;
+        _this.mutasi = response.data;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -79,40 +60,40 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
         }
 
         if (error.response.status == 403) {
-          _this2.$router.push('/access');
+          _this.$router.push('/access');
         }
       });
     },
     DeleteMut: function DeleteMut(imutasi_id) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
 
-          _this3.axios["delete"]('api/delete-mut/' + imutasi_id, {
+          _this2.axios["delete"]('api/delete-mut/' + imutasi_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this3.token
+              'Authorization': 'Bearer ' + _this2.token
             }
+          }).then(function () {
+            _this2.getMutasi();
           });
-
-          _this3.getMutasi();
         },
         reject: function reject() {}
       });
@@ -128,7 +109,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     detailKode: function detailKode(invent_code) {
-      var _this4 = this;
+      var _this3 = this;
 
       this.displayKode = true;
       this.axios.get('api/detail-peripheral/' + invent_code, {
@@ -136,8 +117,8 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.detail = response.data;
-        _this4.header = 'Detail Peripheral ' + _this4.detail.name;
+        _this3.detail = response.data;
+        _this3.header = 'Detail Peripheral ' + _this3.detail.name;
       });
     }
   }
@@ -562,7 +543,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "imutasi_lokasi",
-        header: "Lokasi",
+        header: "Location",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "imutasi_divisi",
@@ -758,7 +739,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".master-image[data-v-0be719ba] {\n  height: 200pt;\n  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".master-image[data-v-0be719ba] {\n  height: 200pt;\n  -o-object-fit: contain;\n     object-fit: contain;\n  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

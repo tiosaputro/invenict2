@@ -42,28 +42,6 @@ __webpack_require__.r(__webpack_exports__);
     this.getMaster();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-
-        if (_this.checkname.includes("Master Peripheral") || _this.checkto.includes("/master-peripheral")) {
-          _this.getMaster();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     downloadBarcodePdf: function downloadBarcodePdf() {
       var doc = new jspdf__WEBPACK_IMPORTED_MODULE_1__["default"]();
       var contentHtml = this.$refs.qr.$el;
@@ -78,7 +56,7 @@ __webpack_require__.r(__webpack_exports__);
       this.displayBarcode = true;
     },
     detailKode: function detailKode(invent_code_dtl) {
-      var _this2 = this;
+      var _this = this;
 
       this.displayKode = true;
       this.axios.get('/api/detail-peripherall/' + invent_code_dtl, {
@@ -86,24 +64,24 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.detail = response.data;
-        _this2.header = 'Detail Peripheral ' + _this2.detail.name;
+        _this.detail = response.data;
+        _this.header = 'Detail Peripheral ' + _this.detail.invent_code + ' ' + _this.detail.invent_type;
       });
     },
     getMaster: function getMaster() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.axios.get('/api/master-detail/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.master = response.data.dtl;
-        _this3.detailPeripheral = response.data.mas;
-        _this3.loading = false;
+        _this2.master = response.data.dtl;
+        _this2.detailPeripheral = response.data.mas;
+        _this2.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -112,15 +90,15 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this2.$router.push('/login');
           }, 2000);
         } else if (error.response.status == 403) {
-          _this3.$router.push('/access');
+          _this2.$router.push('/access');
         }
       });
     },
     DeleteMas: function DeleteMas(invent_code_dtl) {
-      var _this4 = this;
+      var _this3 = this;
 
       this.$confirm.require({
         message: "Are you sure you want to delete this data?",
@@ -130,20 +108,20 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
 
-          _this4.axios["delete"]('/api/delete-master-detail/' + invent_code_dtl, {
+          _this3.axios["delete"]('/api/delete-master-detail/' + invent_code_dtl, {
             headers: {
-              'Authorization': 'Bearer ' + _this4.token
+              'Authorization': 'Bearer ' + _this3.token
             }
           });
 
-          _this4.getMaster();
+          _this3.getMaster();
         },
         reject: function reject() {}
       });
@@ -513,7 +491,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 'Master Peripheral'
           });
         })
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Button\r\n                    label=\"Pdf\"\r\n                    class=\"p-button-raised p-button-danger mr-2\"\r\n                    icon=\"pi pi-file-pdf\"\r\n                    @click=\"CetakPdf()\"\r\n                  />\r\n                  <Button \r\n                    label=\"Excel\"\r\n                    class=\"p-button-raised p-button-success mr-2\"\r\n                    icon=\"bi bi-file-earmark-spreadsheet\"\r\n                    @click=\"CetakExcel()\" \r\n                  /> ")])])])];
+      })])])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
@@ -537,19 +515,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "invent_lokasi_previous",
-        header: "Lokasi Sebelumnya",
+        header: "Previous Location",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "invent_lokasi_update",
-        header: "Lokasi Terakhir",
+        header: "Last Location",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "invent_pengguna_previous",
-        header: "Pengguna Sebelumnya",
+        header: "Previous User",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "invent_pengguna_update",
-        header: "Pengguna Terakhir",
+        header: "Last User",
         sortable: true
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         headerStyle: "min-width:12rem"

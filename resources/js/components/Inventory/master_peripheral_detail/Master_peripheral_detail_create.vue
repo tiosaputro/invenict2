@@ -126,45 +126,6 @@
                       </small>
                 </div>
               </div>
-              <div class="field grid">
-                <label class="col-fixed w-9rem">Lokasi Terakhir</label>
-                  <div class="col-fixed w-9rem">
-                    <InputText
-                      type="text"
-                      v-model="detail.invent_lokasi_update"
-                      disabled
-                    />
-                  </div>
-              </div>
-              <div class="field grid">
-                <label class="col-fixed w-9rem">Pengguna Terakhir</label>
-                  <div class="col-fixed w-9rem">
-                    <InputText
-                      type="text"
-                      v-model="detail.invent_pengguna_terakhir"
-                      disabled
-                    />
-                  </div>
-              </div> 
-               <div class="field grid">
-                <label class="col-fixed w-9rem">Divisi Pengguna Terakhir</label>
-                  <div class="col-fixed w-9rem">
-                    <InputText
-                      type="text"
-                      v-model="detail.invent_divisi_update"
-                      disabled
-                    />
-                  </div>
-              </div>  <div class="field grid">
-                <label class="col-fixed w-9rem">Bisnis Unit Terakhir</label>
-                  <div class="col-fixed w-9rem">
-                    <InputText
-                      type="text"
-                      v-model="detail.invent_bu_update"
-                      disabled
-                    />
-                  </div>
-              </div> 
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -183,7 +144,7 @@
            </div>
            <div class="col-sm-6">
            <div class="field grid">
-              <label class="col-fixed w-9rem">Nama Peripheral</label>
+              <label class="col-fixed w-9rem">Peripheral</label>
                 <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
@@ -204,49 +165,6 @@
               <label class="col-fixed w-9rem"></label>
                 <div class="col-10 md-6">
                   <input type="file" :class="{ 'p-invalid': error.foto }" accept="image/jpg,image/png,image/jpeg" name="foto" ref="fileInput" class="form-control" @change="fileImage" />
-                </div>
-            </div>
-            <div class="field grid">
-              <label class="col-fixed w-9rem">Lokasi Sebelumnya</label>
-                <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="detail.invent_lokasi_previous"
-                    disabled
-                  />
-                </div>
-            </div>
-            <div class="field grid">
-              <label class="col-fixed w-9rem">Penguna Sebelumnya</label>
-                <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="detail.invent_pengguna_previous"
-                    :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
-                    disabled
-                  />
-                </div>
-            </div>
-            <div class="field grid">
-              <label class="col-fixed w-9rem">Divisi Pengguna Sebelumnya</label>
-                <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="detail.invent_divisi_previous"
-                    :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
-                    disabled
-                  />
-                </div>
-            </div>
-            <div class="field grid">
-              <label class="col-fixed w-9rem">Bisnis Unit Sebelumnya</label>
-                <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="detail.invent_bu_previous"
-                    :class="{ 'p-invalid': errors.invent_pengguna_previous  }"
-                    disabled
-                  />
                 </div>
             </div>
           </div>

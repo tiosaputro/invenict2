@@ -33,10 +33,12 @@ class MasterController extends Controller
         if($aksesmenu->contains($this->to)){
             $mas = DB::table('invent_mst as im')
             ->LEFTJOIN('invent_dtl as id','im.invent_code','id.invent_code')
-            ->SELECT('im.invent_code',DB::RAW('COUNT(id.invent_code) as countstok'),'id.invent_code_dtl','im.invent_type','lr.lookup_desc as invent_brand','im.invent_desc')
             ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
+            ->SELECT('im.invent_code',DB::RAW('COUNT(id.invent_code) as countstok'),
+                'im.invent_type','lr.lookup_desc as invent_brand',
+                'im.invent_desc')
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
-            ->groupBy('im.invent_code','id.invent_code_dtl','im.invent_type','lr.lookup_desc','im.invent_desc')
+            ->groupBy('im.invent_code','im.invent_type','lr.lookup_desc','im.invent_desc')
             ->orderBy('im.invent_code','ASC')
             ->get();
             return response()->json($mas);

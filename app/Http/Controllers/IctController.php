@@ -46,7 +46,6 @@ use App\Mng_roles;
 use App\Mng_role_menu;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\App;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

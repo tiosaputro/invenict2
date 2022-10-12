@@ -10,7 +10,7 @@
           <div class="row">
             <div class="col-sm-6">
              <form @submit.prevent="CreateMaster">
-               <div class="field grid">
+               <!-- <div class="field grid">
                   <label class="col-fixed w-9rem">Kode</label>
                     <div class="col-fixed w-9rem">
                       <InputText
@@ -18,7 +18,7 @@
                         disabled
                       />
                   </div>
-                </div>
+                </div> -->
                 <div class="field grid">
                   <label class="col-fixed w-9rem">Nama Peripheral</label>
                     <div class="col-fixed w-9rem">
@@ -80,138 +80,6 @@
                       </small>
                     </div>
                 </div>
-               <!-- <div class="field grid">
-                  <label style="width:155px">S/N</label>
-                    <div class="col-3 md-6">
-                    <InputText
-                      type ="text"
-                      v-model="sn"
-                      placeholder="Masukan S/N"
-                      :class="{ 'p-invalid': errors.sn }"
-                    />
-                      <small v-if="errors.sn" class="p-error">
-                          {{ errors.sn[0] }}
-                      </small>
-                 </div>
-              </div>
-              <div class="field grid">
-                <label style="width:155px">Tgl. Perolehan</label>
-                  <div class="col-12 md:col-6">
-                    <DatePicker v-model="tgl" :masks="mask" >
-                      <template v-slot="{ inputValue, togglePopover }">
-                        <div class="flex items-center">
-                          <input
-                            class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
-                            :value="inputValue"
-                            @click="togglePopover"
-                            placeholder="Pilih Tanggal"
-                            readonly
-                          />
-                          <Button icon="pi pi-calendar" v-if="!tgl" @click="togglePopover()"/>
-                          <Button icon="pi pi-trash" class="p-button-danger" v-if="tgl" @click="tgl = null" />
-                        </div>
-                       </template>
-                      </DatePicker>
-                      <small v-if="errors.tgl" class="p-error">
-                          {{ errors.tgl[0] }}
-                      </small>
-                  </div>
-              </div>
-               <div class="field grid">
-                  <label style="width:155px">Lama Garansi</label>
-                    <div class="col-12 md:col-6">
-                      <div class="p-inputgroup">
-                      <InputNumber
-                          v-model="garansi"
-                          placeholder="Masukan Garansi"
-                        />
-                        <span class="p-inputgroup-addon"> Tahun </span> 
-                    </div>
-                </div>
-              </div>
-              <div class="field grid">
-                <label style="width:155px">Kondisi</label>
-                 <div class="col-4">
-                  <Dropdown 
-                    v-model="kondisi"
-                    :options="kondi"
-                    :showClear="true"
-                    :filter="true" 
-                    optionLabel="name"
-                    optionValue="code"
-                    placeholder="Pilih Kondisi"
-                    :class="{ 'p-invalid': errors.kondisi }"
-                  />
-                      <small v-if="errors.kondisi" class="p-error">
-                          {{ errors.kondisi[0] }}
-                      </small>
-               </div>
-              </div> -->
-              <!-- <div class="field grid">
-                <label style="width:155px">QR-Code</label>
-                <div class="col-12 md:col-6">
-                <div class="p-inputgroup">
-                  <InputText v-model="barcode" readonly  v-if="barcode"/>
-                  <img :src="'assets/loading2.gif'" height="50" v-if="!aktif && !barcode">
-                  <Button icon="pi pi-trash" class="p-button-danger" v-if="barcode" @click="hapus()" @v-tooltip="'Click to delete'"/>
-                  <Button icon="bi bi-qr-code-scan" v-if="aktif" class="p-button p-button-info" @click="Scan()" v-tooltip="'Click to scan'" />
-                  </div>
-                      <small v-if="errors.barcode" class="p-error">
-                          {{ errors.barcode[0] }}
-                      </small>
-                </div>
-              </div>  -->
-              <!-- <div class="field grid">
-                <label for="notlp2" style="width:155px">Bisnis Unit</label>
-                  <div class="col-4">
-                    <Dropdown 
-                    v-model="bu"
-                    :options="bisnis"
-                    optionLabel="name"
-                    optionValue="code"
-                    :showClear="true"
-                    :filter="true"
-                    placeholder="Pilih Bisnis Unit"
-                    :class="{ 'p-invalid': errors.bu }"
-                  />
-                      <small v-if="errors.bu" class="p-error">
-                          {{ errors.bu[0] }}
-                      </small>
-                      <small v-if="error.bu" class="p-error">
-                          {{ error.bu }}
-                      </small>
-                </div>
-              </div>
-                <div class="field grid">
-                  <label style="width:155px">Lokasi Terakhir</label>
-                    <div class="col-6">
-                      <InputText
-                        type="text"
-                        v-model="lastloct"
-                        :class="{ 'p-invalid': errors.lastloct }"
-                        placeholder="Masukan Lokasi terakhir"
-                        disabled
-                      /> -->
-                      <!-- <small v-if="errors.lastloct" class="p-error">
-                          {{ errors.lastloct[0] }}
-                      </small> -->
-                    <!-- </div>
-                  </div> -->
-                  <!-- <div class="field grid">
-                    <label style="width:155px">Pengguna Terakhir</label>
-                      <div class="col-6">
-                        <InputText
-                          type="text"
-                          v-model="lastuser"
-                          :class="{ 'p-invalid': errors.lastuser }"
-                          placeholder="Masukan Pengguna Terakhir"
-                          disabled
-                        /> -->
-                        <!-- <small v-if="errors.lastuser" class="p-error">
-                            {{ errors.lastuser[0] }}
-                        </small> -->
-                      <!-- </div>
-                    </div>  -->
               <div class="form-group">
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
@@ -228,77 +96,6 @@
               </div>
             </form>
            </div>
-           <!-- <div class="col-sm-6">
-            <div class="field grid">
-              <label style="width:155px">Nama Peripheral</label>
-                <div class="col-4">
-                  <Dropdown
-                    v-model="nama"
-                    :options="kategori"
-                    optionLabel="name"
-                    optionValue="code"
-                    :showClear="true"
-                    :filter="true"
-                    placeholder="Pilih Peripheral"
-                    autofocus
-                    :class="{ 'p-invalid': errors.nama }"
-                  />
-                  <small v-if="errors.nama" class="p-error">
-                    {{ errors.nama[0] }}
-                  </small>
-                    <small v-if="error.nama" class="p-error">
-                      {{ error.nama }}
-                    </small>
-                </div>
-            </div>  -->
-            <!-- <div class="field grid">
-              <label style="width:155px"></label>
-                <div class="col-10 md-6">
-                  <div class="card" style="height: 20 rem;">
-                    <img :src="preview" class="master-image"/>
-                  </div>
-                </div>
-            </div>
-            <div class="field grid">
-              <label style="width:155px"></label>
-                <div class="col-10 md-6">
-                  <input type="file" :class="{ 'p-invalid': error.foto }" name="foto" ref="fileInput" class="form-control" @change="fileImage" /> -->
-                    <!-- <small class="p-error" v-if="error.foto">
-                      {{ error.foto }}
-                    </small> -->
-                <!-- </div>
-            </div> -->
-                <!-- <div class="field grid">
-                  <label style="width:155px">Lokasi Sebelumnya</label>
-                    <div class="col-6">
-                    <InputText
-                        type="text"
-                        v-model="prevloct"
-                        :class="{ 'p-invalid': errors.prevloct }"
-                        placeholder="Masukan Lokasi sebelumnya"
-                        disabled
-                    /> -->
-                      <!-- <small class="p-error" v-if="errors.prevloct">
-                        {{ errors.prevloct[0] }}
-                      </small> -->
-                    <!-- </div>
-                 </div> -->
-                 <!-- <div class="field grid">
-                  <label style="width:155px">Penguna Sebelumnya</label>
-                    <div class="col-6">
-                       <InputText
-                        type="text"
-                        v-model="prevuser"
-                        :class="{ 'p-invalid': errors.prevuser  }"
-                        placeholder="Masukan Pengguna sebelumnya"
-                        disabled
-                    /> -->
-                      <!-- <small class="p-error" v-if="errors.prevuser">
-                        {{ errors.prevuser[0] }}
-                      </small> -->
-                    <!-- </div>
-                 </div> -->
-          <!-- </div> -->
           </div>
       </div>
     </div>

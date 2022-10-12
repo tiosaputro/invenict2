@@ -132,7 +132,7 @@
                             label="Excel"
                             class="p-button-raised p-button-success mr-2"
                             icon="pi pi-print"
-                            @click="CetakExcelPermohonan()" 
+                            @click="CetakExcelPermohonan()"
                           />
                         </div>
                       </div>

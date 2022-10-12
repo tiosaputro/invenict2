@@ -143,7 +143,6 @@
                         placeholder="Select"
                         :class="{ 'p-invalid': submitted && !invent_divisi }"
                       />
-                        
                       <small class="p-error" v-if="submitted && !invent_divisi"
                         >Pengguna Belum Diisi.
                       </small>
@@ -165,7 +164,6 @@
                         placeholder="Select"
                         :class="{ 'p-invalid': submitted && !invent_bu }"
                       />
-                        
                       <small class="p-error" v-if="submitted && !invent_bu"
                         >Business Unit not filled.
                       </small>

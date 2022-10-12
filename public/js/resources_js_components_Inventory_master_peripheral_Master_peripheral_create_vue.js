@@ -262,7 +262,7 @@ var _hoisted_5 = {
 var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Kode", -1
+  }, "Nama Peripheral", -1
   /* HOISTED */
   );
 });
@@ -271,33 +271,18 @@ var _hoisted_7 = {
   "class": "col-fixed w-9rem"
 };
 var _hoisted_8 = {
-  "class": "field grid"
-};
-
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-    "class": "col-fixed w-9rem"
-  }, "Nama Peripheral", -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_10 = {
-  "class": "col-fixed w-9rem"
-};
-var _hoisted_11 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_12 = {
+var _hoisted_9 = {
   key: 1,
   "class": "p-error"
 };
-var _hoisted_13 = {
+var _hoisted_10 = {
   "class": "field grid"
 };
 
-var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
   }, "Merk", -1
@@ -305,22 +290,22 @@ var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_15 = {
+var _hoisted_12 = {
   "class": "col-fixed w-9rem"
 };
-var _hoisted_16 = {
+var _hoisted_13 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_17 = {
+var _hoisted_14 = {
   key: 1,
   "class": "p-error"
 };
-var _hoisted_18 = {
+var _hoisted_15 = {
   "class": "field grid"
 };
 
-var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
   }, "Tipe", -1
@@ -328,18 +313,18 @@ var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_20 = {
+var _hoisted_17 = {
   "class": "col-fixed w-9rem"
 };
-var _hoisted_21 = {
+var _hoisted_18 = {
   key: 0,
   "class": "p-error"
 };
-var _hoisted_22 = {
+var _hoisted_19 = {
   key: 1,
   "class": "p-error"
 };
-var _hoisted_23 = {
+var _hoisted_20 = {
   "class": "form-group"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -347,9 +332,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
 
-  var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
+
+  var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
 
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
@@ -366,10 +351,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.CreateMaster && $options.CreateMaster.apply($options, arguments);
     }, ["prevent"]))
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
-    type: "text",
-    disabled: ""
-  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                  <label class=\"col-fixed w-9rem\">Kode</label>\r\n                    <div class=\"col-fixed w-9rem\">\r\n                      <InputText\r\n                        type=\"text\"\r\n                        disabled\r\n                      />\r\n                  </div>\r\n                </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.nama,
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.nama = $event;
@@ -386,11 +368,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.nama[0]), 1
+  , ["modelValue", "options", "class"]), $data.errors.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.nama[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.nama), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.nama ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.nama), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.merk,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.merk = $event;
@@ -407,11 +389,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.merk ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.merk[0]), 1
+  , ["modelValue", "options", "class"]), $data.errors.merk ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.merk[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.merk ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.merk), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.merk ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.merk), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.type,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
@@ -423,11 +405,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.errors.type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.type[0]), 1
+  , ["modelValue", "class"]), $data.errors.type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.type[0]), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.type), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.error.type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.type), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                  <label style=\"width:155px\">S/N</label>\r\n                    <div class=\"col-3 md-6\">\r\n                    <InputText\r\n                      type =\"text\"\r\n                      v-model=\"sn\"\r\n                      placeholder=\"Masukan S/N\"\r\n                      :class=\"{ 'p-invalid': errors.sn }\"\r\n                    />\r\n                      <small v-if=\"errors.sn\" class=\"p-error\">\r\n                          {{ errors.sn[0] }}\r\n                      </small>\r\n                 </div>\r\n              </div>\r\n              <div class=\"field grid\">\r\n                <label style=\"width:155px\">Tgl. Perolehan</label>\r\n                  <div class=\"col-12 md:col-6\">\r\n                    <DatePicker v-model=\"tgl\" :masks=\"mask\" >\r\n                      <template v-slot=\"{ inputValue, togglePopover }\">\r\n                        <div class=\"flex items-center\">\r\n                          <input\r\n                            class=\"bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none\"\r\n                            :value=\"inputValue\"\r\n                            @click=\"togglePopover\"\r\n                            placeholder=\"Pilih Tanggal\"\r\n                            readonly\r\n                          />\r\n                          <Button icon=\"pi pi-calendar\" v-if=\"!tgl\" @click=\"togglePopover()\"/>\r\n                          <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"tgl\" @click=\"tgl = null\" />\r\n                        </div>\r\n                       </template>\r\n                      </DatePicker>\r\n                      <small v-if=\"errors.tgl\" class=\"p-error\">\r\n                          {{ errors.tgl[0] }}\r\n                      </small>\r\n                  </div>\r\n              </div>\r\n               <div class=\"field grid\">\r\n                  <label style=\"width:155px\">Lama Garansi</label>\r\n                    <div class=\"col-12 md:col-6\">\r\n                      <div class=\"p-inputgroup\">\r\n                      <InputNumber\r\n                          v-model=\"garansi\"\r\n                          placeholder=\"Masukan Garansi\"\r\n                        />\r\n                        <span class=\"p-inputgroup-addon\"> Tahun </span> \r\n                    </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"field grid\">\r\n                <label style=\"width:155px\">Kondisi</label>\r\n                 <div class=\"col-4\">\r\n                  <Dropdown \r\n                    v-model=\"kondisi\"\r\n                    :options=\"kondi\"\r\n                    :showClear=\"true\"\r\n                    :filter=\"true\" \r\n                    optionLabel=\"name\"\r\n                    optionValue=\"code\"\r\n                    placeholder=\"Pilih Kondisi\"\r\n                    :class=\"{ 'p-invalid': errors.kondisi }\"\r\n                  />\r\n                      <small v-if=\"errors.kondisi\" class=\"p-error\">\r\n                          {{ errors.kondisi[0] }}\r\n                      </small>\r\n               </div>\r\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                <label style=\"width:155px\">QR-Code</label>\r\n                <div class=\"col-12 md:col-6\">\r\n                <div class=\"p-inputgroup\">\r\n                  <InputText v-model=\"barcode\" readonly  v-if=\"barcode\"/>\r\n                  <img :src=\"'assets/loading2.gif'\" height=\"50\" v-if=\"!aktif && !barcode\">\r\n                  <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"barcode\" @click=\"hapus()\" @v-tooltip=\"'Click to delete'\"/>\r\n                  <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\r\n                  </div>\r\n                      <small v-if=\"errors.barcode\" class=\"p-error\">\r\n                          {{ errors.barcode[0] }}\r\n                      </small>\r\n                </div>\r\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                <label for=\"notlp2\" style=\"width:155px\">Bisnis Unit</label>\r\n                  <div class=\"col-4\">\r\n                    <Dropdown \r\n                    v-model=\"bu\"\r\n                    :options=\"bisnis\"\r\n                    optionLabel=\"name\"\r\n                    optionValue=\"code\"\r\n                    :showClear=\"true\"\r\n                    :filter=\"true\"\r\n                    placeholder=\"Pilih Bisnis Unit\"\r\n                    :class=\"{ 'p-invalid': errors.bu }\"\r\n                  />\r\n                      <small v-if=\"errors.bu\" class=\"p-error\">\r\n                          {{ errors.bu[0] }}\r\n                      </small>\r\n                      <small v-if=\"error.bu\" class=\"p-error\">\r\n                          {{ error.bu }}\r\n                      </small>\r\n                </div>\r\n              </div>\r\n                <div class=\"field grid\">\r\n                  <label style=\"width:155px\">Lokasi Terakhir</label>\r\n                    <div class=\"col-6\">\r\n                      <InputText\r\n                        type=\"text\"\r\n                        v-model=\"lastloct\"\r\n                        :class=\"{ 'p-invalid': errors.lastloct }\"\r\n                        placeholder=\"Masukan Lokasi terakhir\"\r\n                        disabled\r\n                      /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastloct\" class=\"p-error\">\r\n                          {{ errors.lastloct[0] }}\r\n                      </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                  </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                    <label style=\"width:155px\">Pengguna Terakhir</label>\r\n                      <div class=\"col-6\">\r\n                        <InputText\r\n                          type=\"text\"\r\n                          v-model=\"lastuser\"\r\n                          :class=\"{ 'p-invalid': errors.lastuser }\"\r\n                          placeholder=\"Masukan Pengguna Terakhir\"\r\n                          disabled\r\n                        /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"errors.lastuser\" class=\"p-error\">\r\n                            {{ errors.lastuser[0] }}\r\n                        </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                    </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -441,7 +423,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   })])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\">\r\n            <div class=\"field grid\">\r\n              <label style=\"width:155px\">Nama Peripheral</label>\r\n                <div class=\"col-4\">\r\n                  <Dropdown\r\n                    v-model=\"nama\"\r\n                    :options=\"kategori\"\r\n                    optionLabel=\"name\"\r\n                    optionValue=\"code\"\r\n                    :showClear=\"true\"\r\n                    :filter=\"true\"\r\n                    placeholder=\"Pilih Peripheral\"\r\n                    autofocus\r\n                    :class=\"{ 'p-invalid': errors.nama }\"\r\n                  />\r\n                  <small v-if=\"errors.nama\" class=\"p-error\">\r\n                    {{ errors.nama[0] }}\r\n                  </small>\r\n                    <small v-if=\"error.nama\" class=\"p-error\">\r\n                      {{ error.nama }}\r\n                    </small>\r\n                </div>\r\n            </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n              <label style=\"width:155px\"></label>\r\n                <div class=\"col-10 md-6\">\r\n                  <div class=\"card\" style=\"height: 20 rem;\">\r\n                    <img :src=\"preview\" class=\"master-image\"/>\r\n                  </div>\r\n                </div>\r\n            </div>\r\n            <div class=\"field grid\">\r\n              <label style=\"width:155px\"></label>\r\n                <div class=\"col-10 md-6\">\r\n                  <input type=\"file\" :class=\"{ 'p-invalid': error.foto }\" name=\"foto\" ref=\"fileInput\" class=\"form-control\" @change=\"fileImage\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"error.foto\">\r\n                      {{ error.foto }}\r\n                    </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n            </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                  <label style=\"width:155px\">Lokasi Sebelumnya</label>\r\n                    <div class=\"col-6\">\r\n                    <InputText\r\n                        type=\"text\"\r\n                        v-model=\"prevloct\"\r\n                        :class=\"{ 'p-invalid': errors.prevloct }\"\r\n                        placeholder=\"Masukan Lokasi sebelumnya\"\r\n                        disabled\r\n                    /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevloct\">\r\n                        {{ errors.prevloct[0] }}\r\n                      </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                 </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                  <label style=\"width:155px\">Penguna Sebelumnya</label>\r\n                    <div class=\"col-6\">\r\n                       <InputText\r\n                        type=\"text\"\r\n                        v-model=\"prevuser\"\r\n                        :class=\"{ 'p-invalid': errors.prevuser  }\"\r\n                        placeholder=\"Masukan Pengguna sebelumnya\"\r\n                        disabled\r\n                    /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small class=\"p-error\" v-if=\"errors.prevuser\">\r\n                        {{ errors.prevuser[0] }}\r\n                      </small> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\r\n                 </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div> ")])])]);
+  )])])])]);
 }
 
 /***/ }),
