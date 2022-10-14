@@ -111,10 +111,41 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     CetakPdf: function CetakPdf() {
-      window.open("api/report-lookups-pdf");
+      var _this4 = this;
+
+      this.loading = true;
+      this.axios.get('api/report-lookups-pdf', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        var responseHtml = response.data;
+        var myWindow = window.open("", "response", "resizable=yes");
+        myWindow.document.write(responseHtml);
+        _this4.loading = false;
+      });
     },
     CetakExcel: function CetakExcel() {
-      window.open('api/report-lookups-excel');
+      var _this5 = this;
+
+      var date = new Date();
+      var today = moment(date).format("DD MMM YYYY");
+      this.loading = true;
+      this.axios.get('api/report-lookups-excel', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token,
+          'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        },
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'LOOKUPS REPORT LIST ON ' + today + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        _this5.loading = false;
+      });
     }
   }
 });

@@ -67,7 +67,8 @@ __webpack_require__.r(__webpack_exports__);
       showRemarkAtasanDivisi: [],
       showRemarkManager: [],
       showRemarkPenugasan: [],
-      showRemarkApprover2Manager: []
+      showRemarkApprover2Manager: [],
+      showReasonPersonnel: []
     };
   },
   created: function created() {
@@ -152,6 +153,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.penugasan = response.data.ict7;
         _this.showRemarkPenugasan = _this.penugasan.map(function (x) {
           return x.count_remark;
+        });
+        _this.showReasonPersonnel = _this.penugasan.map(function (x) {
+          return x.countreason;
         });
         _this.sedangDikerjakan = response.data.ict4;
         _this.sudahDikerjakan = response.data.ict5;
@@ -2231,7 +2235,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 _: 1
                 /* STABLE */
 
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+              }), _this.showReasonPersonnel.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 1,
+                field: "ireq_assigned_to1_reason",
+                header: "Rejected Reason",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
                   "min-width": "15rem"
                 }

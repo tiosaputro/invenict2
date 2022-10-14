@@ -128,7 +128,7 @@ class IctDetailController extends Controller
             'program_name' => "IctDetailController_abp",
         ]);
 
-        $result = DB::connection('oracle')->getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
+        $result = DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
         $cek = $this->cekStatusPenugasan($ireq_id);
         return json_encode($cek);
     }
@@ -177,7 +177,7 @@ class IctDetailController extends Controller
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctDetailController_rbp"
         ]);
-        $result = DB::connection('oracle')->getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST($ireq_id); end;");
+        DB::getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST($ireq_id); end;");
         return response()->json('Updated Successfully');
         
     }
@@ -608,11 +608,11 @@ class IctDetailController extends Controller
         ->where('ireqd_id',$request->ireqd_id)
         ->where('ireq_id',$code)
         ->update([
-            'ireq_assigned_to1'=>$request->ireq_assigned_to,
+            'ireq_assigned_to1'=>$request->ireq_assigned_to1,
             'last_update_date' =>$this->newUpdate,
             'last_updated_by'=>Auth::user()->usr_name
         ]);
-        return response()->json('Updated Successfully');
+        return response()->json($dtl);
     }
     public function updateAssignFromReject(Request $request,$code)
     {
@@ -639,7 +639,7 @@ class IctDetailController extends Controller
             'last_updated_by' => Auth::user()->usr_name
         ]);
         
-        $result = DB::connection('oracle')->getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
+        $result = DB::getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
         $ict = DB::table('ireq_dtl as id')
         ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
         ->LEFTJOIN('catalog_refs as cr',function ($join) {
@@ -695,7 +695,7 @@ class IctDetailController extends Controller
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctDetail_updateStatusClosingDetail"
         ]);
-        $result = DB::connection('oracle')->getPdo()->exec("begin SP_CLOSING_IREQ_MST($ireq_id); end;");
+        $result = DB::getPdo()->exec("begin SP_CLOSING_IREQ_MST($ireq_id); end;");
         return response()->json('Updated Successfully');
     }
     public function appd($ireqd_id,$code){ 
@@ -712,7 +712,7 @@ class IctDetailController extends Controller
         $personel = IctDetail::select('ireq_assigned_to2')->where('ireq_id',$code)->where('ireqd_id',$ireqd_id)->pluck('ireq_assigned_to2');
         $ict = Ict::where('ireq_id',$code)->first();
         $mail = DB::table('mng_users')->SELECT('usr_email')->WHERE('usr_fullname',$personel)->first();
-        $result = DB::connection('oracle')->getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($code); end;");
+        $result = DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($code); end;");
         $email = $mail->usr_email .= '@emp.id';
         SendNotifPersonnel::dispatchAfterResponse($email,$ict);
         $cek = $this->cekStatusPenugasan($code);

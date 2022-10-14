@@ -37,17 +37,18 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/edit-ref/{code}/{type}','LookupsController@edit');
     Route::put('/update-ref/{code}/{type}','LookupsController@update');
     Route::delete('/delete-ref/{lookup_code}/{lookup_type}','LookupsController@delete');
-    //Route::get('/report-lookups-pdf','LookupsController@cetak_pdf');
-    //Route::get('/report-lookups-excel','LookupsController@cetak_excel');
-    // Route::get('/getMerk','LookupsController@getMerk');
-    // Route::get('/getKondisi','LookupsController@getKondisi');
-    // Route::get('/getStatus','LookupsController@getStatus');
-    // Route::get('/getType','LookupsController@getType');
-    // Route::get('/getMataUang','LookupsController@getMataUang');
-    // Route::get('/getMethodePurch','LookupsController@getMethodePurch');
-    // Route::get('/getSatuan','LookupsController@getSatuan');
+    Route::get('/report-lookups-pdf','LookupsController@cetak_pdf');
+    Route::get('/report-lookups-excel','LookupsController@cetak_excel');
+    Route::get('/getMerk','LookupsController@getMerk');
+    Route::get('/getStatusIct','LookupsController@getStatusIct');
+    Route::get('/getKondisi','LookupsController@getKondisi');
+    Route::get('/getStatus','LookupsController@getStatus');
+    Route::get('/getType','LookupsController@getType');
+    Route::get('/getMataUang','LookupsController@getMataUang');
+    Route::get('/getMethodePurch','LookupsController@getMethodePurch');
+    Route::get('/getSatuan','LookupsController@getSatuan');
 
-    //supplier
+//supplier
     Route::get('/supp', 'SupplierController@index');
     Route::post('/add-supp', 'SupplierController@save');
     Route::get('/edit-supp/{code}', 'SupplierController@edit');
@@ -151,7 +152,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/delete-role/{rol_id}','MngRolesController@delete');
 
     //Mng_usr_roles
-    Route::get('/get-rolee','MngUsrRoleController@getRole');
+    Route::get('/menu-user','MngUsrRoleController@getRole');
     Route::post('/save-usr-role','MngUsrRoleController@save');
     Route::get('/edit-usr-role/{code}','MngUsrRoleController@edit');
     Route::put('/update-usr-role/{code}','MngUsrRoleController@update');
@@ -290,14 +291,6 @@ Route::middleware('auth:sanctum')->group(function(){
     //Route::get('/report-ict-detail-pdf/{code}','IctDetailController@cetak_pdf');
     //Route::get('/report-ict-detail-excel/{code}','IctDetailController@cetak_excel');
 
-    Route::get('/getMerk','LookupsController@getMerk');
-    Route::get('/getStatusIct','LookupsController@getStatusIct');
-    Route::get('/getKondisi','LookupsController@getKondisi');
-    Route::get('/getStatus','LookupsController@getStatus');
-    Route::get('/getType','LookupsController@getType');
-    Route::get('/getMataUang','LookupsController@getMataUang');
-    Route::get('/getMethodePurch','LookupsController@getMethodePurch');
-    Route::get('/getSatuan','LookupsController@getSatuan');
     Route::get('/get-kode','MasterController@getKode');
     Route::get('/get-kode-peripheral','MasterController@getPeripheral');
     Route::get('/get-sn-peripheral/{kode}','MasterController@getSn');
@@ -343,8 +336,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/report-pem-pdf','PembelianController@cetak_pdf');
     Route::get('/report-supplier-pdf','SupplierController@cetak_pdf');
     Route::get('/report-supplier-excel','SupplierController@cetak_excel');
-    Route::get('/report-lookups-pdf','LookupsController@cetak_pdf');
-    Route::get('/report-lookups-excel','LookupsController@cetak_excel');
     Route::get('/report-ict-excel-reject','IctController@cetak_excel_reject');
     Route::get('/report-ict-pdf-reject','IctController@cetak_pdf_reject');
     Route::get('/report-ict-pdf-assignment-request','IctController@cetak_pdf_assignment_request');

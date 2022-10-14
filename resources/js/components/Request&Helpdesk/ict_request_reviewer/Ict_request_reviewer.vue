@@ -511,6 +511,7 @@
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
+                  <Column field="ireq_assigned_to1_reason" header="Rejected Reason" :sortable="true" style="min-width:12rem" v-if="this.showReasonPersonnel.some(el=> el > 0)"/>
                   <Column style="min-width:15rem">
                     <template #body="slotProps">
                       <Button
@@ -1022,7 +1023,8 @@ export default {
         showRemarkAtasanDivisi:[],
         showRemarkManager:[],
         showRemarkPenugasan:[],
-        showRemarkApprover2Manager:[]
+        showRemarkApprover2Manager:[],
+        showReasonPersonnel:[]
     };
   },
   created() {
@@ -1086,6 +1088,7 @@ export default {
           this.reject = response.data.ict3;
           this.penugasan = response.data.ict7;
           this.showRemarkPenugasan = this.penugasan.map((x)=>x.count_remark);
+          this.showReasonPersonnel = this.penugasan.map((x)=>x.countreason);
           this.sedangDikerjakan = response.data.ict4;
           this.sudahDikerjakan = response.data.ict5;
           this.selesai = response.data.ict6;

@@ -67,7 +67,7 @@ export default {
             }
             if(this.loggedIn){
                 if(!this.menuUser.length){
-                this.axios.get('/api/get-rolee', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.axios.get('/api/menu-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                     this.menuUser = response.data
                 });
                 }
@@ -89,7 +89,6 @@ export default {
 					if(this.mobileMenuActive === true) {
 						this.overlayMenuActive = true;
 					}
-
                     this.overlayMenuActive = !this.overlayMenuActive;
 					this.mobileMenuActive = false;
                 }
@@ -100,7 +99,6 @@ export default {
             else {
                 this.mobileMenuActive = !this.mobileMenuActive;
             }
-
             event.preventDefault();
         },
         onSidebarClick() {
