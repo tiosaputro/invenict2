@@ -6,10 +6,16 @@
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
-			<h4>ICT Request (Detail) </h4>
+			      <h4>ICT Request (Detail) </h4>
           </template>
           <template v-slot:end>
-              <label style="width:200px">No. Request: {{kode.noreq}}</label>
+            <div v-if="this.kode.ireq_date">
+              <label style="width:110px">No. Request </label>
+              <label>: {{this.kode.noreq}} </label>
+              <br>
+              <label style="width:110px">Request Date</label>
+              <label>: {{formatDate(this.kode.ireq_date)}}</label>
+            </div>
           </template>
         </Toolbar>
         <DataTable
@@ -91,6 +97,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment';
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -111,6 +118,9 @@ export default {
     this.cekUser();
   },
   methods: {
+    formatDate(date){
+      return moment(date).format("DD MMM YYYY HH:mm");
+    },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");

@@ -227,17 +227,10 @@ class MasterController extends Controller
     public function cetak_pdf()
     {
         $mass = DB::table('invent_mst as im')
-        ->select('im.invent_code','im.invent_desc','im.invent_brand','im.invent_type','im.invent_sn',
-                'im.invent_lama_garansi','im.invent_barcode','im.invent_lokasi_update','im.invent_pengguna_update','im.invent_photo',
-                'im.invent_lokasi_previous', 'im.invent_pengguna_previous', 'im.invent_bu', 'vcompany_refs.name as invent_bu','lookup_refs.lookup_desc as invent_brand', 'lf.lookup_desc as invent_kondisi',
-        DB::raw("TO_CHAR(im.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"))
-        ->leftjoin('lookup_refs', function($join)
-        {
-            $join->on('im.invent_brand', '=', 'lookup_refs.lookup_code');
-        })
-        ->leftjoin('lookup_refs as lf', function($join)
-        {
-            $join->on('im.invent_kondisi', '=', 'lf.lookup_code');
+        ->select('im.invent_code','im.invent_desc','im.invent_type','lrs.lookup_desc as invent_brand')
+        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+            $join->on('im.invent_brand','lrs.lookup_code')
+                  ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
         })
         ->leftjoin('vcompany_refs', function($join)
         {

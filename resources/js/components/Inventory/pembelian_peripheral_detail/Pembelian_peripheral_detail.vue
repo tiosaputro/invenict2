@@ -10,12 +10,12 @@
           </template>
           <template v-slot:end>
             <div>
-                <label style="width:110px">Suplier </label>
-                <label>: {{details.suplier_code}} </label>
-                <br>
-                <label style="width:110px">Tgl. Pembelian </label>
-                <label>: {{formatDate(details.purchase_date)}}</label>
-                </div>
+              <label style="width:110px">Suplier </label>
+              <label>: {{details.suplier_code}} </label>
+              <br>
+              <label style="width:110px">Tgl. Pembelian </label>
+              <label>: {{formatDate(details.purchase_date)}}</label>
+            </div>
           </template>
         </Toolbar>
         <DataTable
@@ -178,12 +178,12 @@ export default {
     },
     DeleteDetail(dpurchase_id){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this record data?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
@@ -198,10 +198,27 @@ export default {
       });
     },
     CetakPdf(){
-      window.open('/api/report-pem-detail-pdf/' + this.purchase_id,{headers: {'Authorization': 'Bearer '+this.token}});
+      this.loading = true;
+       this.axios.get('api/report-pem-detail-pdf/' + this.purchase_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcel(){
-      window.open('/api/report-pem-detail-excel/' + this.purchase_id,{headers: {'Authorization': 'Bearer '+this.token}});
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-pem-detail-excel/' + this.purchase_id,{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'PURCHASE DETAIL PERIPHERAL REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
   },
 };

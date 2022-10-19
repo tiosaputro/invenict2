@@ -11,7 +11,13 @@
             </div>
           </template>
           <template v-slot:end>
-              <label style="width:200px">No. Request: {{this.kode}}</label>
+            <div v-if="this.kode.ireq_date">
+              <label style="width:110px">No. Request </label>
+              <label>: {{this.kode.noreq}} </label>
+              <br>
+              <label style="width:110px">Request Date</label>
+              <label>: {{formatDate(this.kode.ireq_date)}}</label>
+            </div>
           </template>
         </Toolbar>
         <DataTable
@@ -203,6 +209,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment';
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -231,6 +238,9 @@ export default {
     this.cekUser();
   },
   methods: {
+    formatDate(date){
+      return moment(date).format("DD MMM YYYY HH:mm");
+    },
     cekUser(){
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
@@ -335,7 +345,7 @@ export default {
     },
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data.noreq;
+        this.kode = response.data;
         this.status = response.data.cekstatus;
         if(this.status =='NT' || this.status == 'RT'){ this.show = true}
       });

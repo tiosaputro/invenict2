@@ -51,6 +51,7 @@
             </template>
           </Column>
           <Column field="invent_desc" header="Peripheral" :sortable="true"/>
+          <Column field="invent_merk" header="Merk" :sortable="true"/>
           <Column field="invent_type" header="Type" :sortable="true"/>
           <Column field="invent_sn" header="S/N" :sortable="true"/>
           <Column field="imutasi_pengguna" header="User" :sortable="true"/>
@@ -153,18 +154,6 @@
                     />
                   </div>
               </div>
-              <!-- <div class="field grid">
-                <label style="width:155px">Lama Garansi</label>
-                  <div class="col-3">
-                    <div class="p-inputgroup">
-                      <InputText
-                        v-model="detail.invent_lama_garansi"
-                        disabled
-                      />
-                        <span class="p-inputgroup-addon"> Tahun </span> 
-                    </div>
-                </div>
-              </div> -->
               <div class="field grid">
                 <label style="width:155px">Kondisi</label>
                   <div class="col-4">
@@ -248,6 +237,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment';
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -290,7 +280,7 @@ export default {
     },
     DeleteMut(imutasi_id){
        this.$confirm.require({
-        message: "Are you sure to delete this data?",
+        message: "Are you sure to delete this record?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
@@ -311,10 +301,27 @@ export default {
       });
     },
     CetakPdf(){
-      window.open('api/report-mutasi-pdf');
+      this.loading = true;
+       this.axios.get('api/report-mutasi-pdf',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+         let responseHtml = response.data;
+          var myWindow = window.open("", "response", "resizable=yes");
+          myWindow.document.write(responseHtml);
+          this.loading = false;
+       });
     },
     CetakExcel(){
-      window.open('api/report-mutasi-excel',{headers: {'Authorization': 'Bearer '+this.token}});
+      const date = new Date();
+      const today = moment(date).format("DD MMM YYYY")
+      this.loading = true;
+       this.axios.get('api/report-mutasi-excel',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'MUTASI PERIPHERAL REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.loading = false;
+       });
     },
     detailKode(invent_code){
       this.displayKode = true;

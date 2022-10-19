@@ -31,8 +31,8 @@
 		<div>
 			<div class="row justify-content-center">
 				<div class="col-md-5 text-center mb-5">
-					<h2 style="font-size:30pt; font-weight: bold;">Daftar Mutasi Peripheral ICT </h2>
-					 <h4 style="font-size:20pt; font-weight: bold;">Pada tanggal : {{date('d M Y')}}</h4>
+					<h2 style="font-size:30pt; font-weight: bold;"> Mutasi Peripheral Report </h2>
+					 <h4 style="font-size:20pt; font-weight: bold;">ON : {{date('d M Y')}}</h4>
 				</div>
 			</div>
 			<div class="row">
@@ -43,12 +43,14 @@
 						<thead>
 							<tr>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Kode</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Nama</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Dari Tgl</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Sd Tgl</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Lokasi</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pengguna</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Keterangan</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Peripheral</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Merk</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Type</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">S/N</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">User</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Location</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">From Date</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">To Date</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -56,11 +58,13 @@
 								<tr>
 									<td>{{$m->invent_code}}</td>
 									<td>{{$m->invent_desc}}</td>
+									<td>{{$m->invent_brand}}</td>
+									<td>{{$m->invent_type}}</td>
+									<td>{{$m->invent_sn}}</td>
+									<td>{{$m->imutasi_pengguna}}</td>
+									<td>{{$m->imutasi_lokasi}}</td>
 									<td>{{$m->imutasi_tgl_dari}}</td>
 									<td>{{$m->imutasi_tgl_sd}}</td>
-									<td>{{$m->imutasi_lokasi}}</td>
-									<td>{{$m->imutasi_pengguna}}</td>
-									<td>{{$m->imutasi_keterangan}}</td>
 								</tr>	
 							@endforeach							
 						</tbody>

@@ -71,7 +71,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/getImage/{kode}','MasterController@getImage');
     Route::get('/getBarcode/{invent_code}','MasterController@getBarcode');
     Route::get('/detail-peripheral/{invent_code}','MasterController@detailPeripheral');
-    //Route::get('/report-master-excel','MasterController@cetak_excel');
+    Route::get('/report-master-pdf','MasterController@cetak_pdf');
+    Route::get('/report-master-excel','MasterController@cetak_excel');
     //Route::get('/get-kode','MasterController@getKode');
 
     //master peripheral detail
@@ -89,8 +90,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/edit-mut/{code}','MutasiController@edit');
     Route::put('/update-mut/{code}','MutasiController@update');
     Route::delete('/delete-mut/{imutasi_id}','MutasiController@delete');
-    //Route::get('/report-mutasi-pdf','MutasiController@cetak_pdf');
-    //Route::get('/report-mutasi-excel','MutasiController@cetak_excel');
+    Route::get('/report-mutasi-pdf','MutasiController@cetak_pdf');
+    Route::get('/report-mutasi-excel','MutasiController@cetak_excel');
 
     //pembelian peripheral
     Route::get('/pem','PembelianController@index');
@@ -98,8 +99,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/edit-pem/{code}','PembelianController@edit');
     Route::put('/update-pem/{code}','PembelianController@update');
     Route::delete('/delete-pem/{purchase_id}','PembelianController@delete');
-    //Route::get('/report-pem-pdf','PembelianController@cetak_pdf');
-    //Route::get('/report-pem-excel','PembelianController@cetak_excel');
+    Route::get('/report-pem-pdf','PembelianController@cetak_pdf');
+    Route::get('/report-pem-excel','PembelianController@cetak_excel');
 
     //Detail pembelian peripheral
     Route::get('/detail-pem/{code}','PembelianDetailController@index');
@@ -109,8 +110,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/delete-detail-pem/{code}/{dpurchase_id}','PembelianDetailController@delete');
     Route::get('/getSuppDate/{code}','PembelianDetailController@getSuppDate');
     Route::get('/getValuta/{code}','PembelianDetailController@getValuta');
-    //Route::get('/report-pem-detail-pdf/{purchase_id}','PembelianDetailController@cetak_pdf');
-    //Route::get('/report-pem-detail-excel/{purchase_id}','PembelianDetailController@cetak_excel');
+    Route::get('/report-pem-detail-pdf/{purchase_id}','PembelianDetailController@cetak_pdf');
+    Route::get('/report-pem-detail-excel/{purchase_id}','PembelianDetailController@cetak_excel');
 
     //cash advance
     Route::get('/cash','CashController@index');
@@ -324,16 +325,8 @@ Route::middleware('auth:sanctum')->group(function(){
     
     //bisnis
     Route::get('/get-bisnis','BisnisController@getBisnis');
-    Route::get('/report-master-pdf','MasterController@cetak_pdf');
-    Route::get('/report-master-excel','MasterController@cetak_excel');
-    Route::get('/report-mutasi-excel','MutasiController@cetak_excel');
-    Route::get('/report-mutasi-pdf','MutasiController@cetak_pdf');
     Route::get('/report-cash-pdf','CashController@cetak_pdf');
     Route::get('/report-cash-excel','CashController@cetak_excel');
-    Route::get('/report-pem-detail-pdf/{purchase_id}','PembelianDetailController@cetak_pdf');
-    Route::get('/report-pem-detail-excel/{purchase_id}','PembelianDetailController@cetak_excel');
-    Route::get('/report-pem-excel','PembelianController@cetak_excel');
-    Route::get('/report-pem-pdf','PembelianController@cetak_pdf');
     Route::get('/report-supplier-pdf','SupplierController@cetak_pdf');
     Route::get('/report-supplier-excel','SupplierController@cetak_excel');
     Route::get('/report-ict-excel-reject','IctController@cetak_excel_reject');

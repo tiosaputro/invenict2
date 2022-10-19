@@ -11,7 +11,13 @@
             </div>
           </template>
           <template v-slot:end>
-            <label style="width:200px">No. Request: {{this.kode}}</label>
+            <div v-if="this.detailRequest.request_date">
+              <label style="width:110px">No. Request </label>
+              <label>: {{this.kode}} </label>
+              <br>
+              <label style="width:110px">Request Date</label>
+              <label>: {{formatDate(this.detailRequest.request_date)}}</label>
+            </div>
           </template>
         </Toolbar>
         <DataTable
@@ -115,7 +121,8 @@
 </template>
 <script>
 import {FilterMatchMode} from 'primevue/api';
-import { google, outlook, office365, yahoo, ics } from "calendar-link";
+import { ics } from "calendar-link";
+import moment from 'moment';
 export default {
   data() {
     return {
@@ -140,6 +147,9 @@ export default {
     this.cekUser();
   },
   methods: {
+    formatDate(date){
+      return moment(date).format("DD MMM YYYY HH:mm");
+    },
     AddToCalendar(){
       const remark = this.detail.map((x)=>x.ireq_remark);
       const event = {
@@ -147,7 +157,7 @@ export default {
           description: "Detail Request:\n" +remark,
           start: this.detailRequest.ireq_date,
           location: this.detailRequest.loc_desc,
-          duration: [3, "hour"],
+          duration: [1, "day"],
         };
         window.location.assign(ics(event));
     },

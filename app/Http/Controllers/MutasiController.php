@@ -27,11 +27,15 @@ class MutasiController extends Controller
         if($aksesmenu->contains($this->to)){
             $mutasi = DB::table('invent_mutasi as im')
             ->select('im.imutasi_pengguna','im.imutasi_tgl_dari','im.imutasi_tgl_sd',
-            'im.imutasi_lokasi','id.invent_code_dtl','im.imutasi_id','id.invent_code',
+            'im.imutasi_lokasi','id.invent_code_dtl','lrs.lookup_desc as invent_merk','im.imutasi_id','id.invent_code',
             'id.invent_sn','imm.invent_type','imm.invent_desc','dr.div_name as imutasi_divisi',
             'vr.name as imutasi_bu')
             ->leftjoin('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
             ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
+            ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+                $join->on('imm.invent_brand','lrs.lookup_code')
+                      ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+            })
             ->leftjoin('divisi_refs as dr','im.imutasi_divisi','dr.div_id')
             ->leftjoin('vcompany_refs as vr','im.imutasi_bu','vr.company_code')
             ->orderBy('im.creation_date','DESC')
@@ -48,39 +52,39 @@ class MutasiController extends Controller
         $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $newFromDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->fromdate)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         if ($request->todate){   
-        $newToDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->todate)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $mut = Mutasi::Create([
-            'invent_code_dtl'=> $request->invent_sn,
-            'imutasi_tgl_dari' => $newFromDate,
-            'imutasi_tgl_sd'=>$newToDate,
-            'imutasi_lokasi' => $request->lokasi,
-            'imutasi_pengguna' => $request->user,
-            'imutasi_divisi' => $request->invent_divisi,
-            'imutasi_bu' => $request->invent_bu,
-            'imutasi_keterangan' => $request->ket,
-            'creation_date'=> $newCreation,
-            'created_by' => Auth::user()->usr_name,
-            'program_name'=> "Mutasi_Save"
-        ]);
-    }else{
-    $mut = Mutasi::Create([
-        'invent_code_dtl'=> $request->invent_sn,
-        'imutasi_tgl_dari' => $newFromDate,
-        'imutasi_lokasi' => $request->lokasi,
-        'imutasi_pengguna' => $request->user,
-        'imutasi_divisi' => $request->invent_divisi,
-        'imutasi_bu' => $request->invent_bu,
-        'imutasi_keterangan' => $request->ket,
-        'creation_date'=> $newCreation,
-        'created_by' => Auth::user()->usr_name,
-        'program_name'=> "Mutasi_Save"
-    ]);
-}
-        $msg = [
-            'success' => true,
-            'message' => 'Created Successfully'
-        ];
-        return response()->json($msg);
+            $newToDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->todate)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+            $mut = Mutasi::Create([
+                'invent_code_dtl'=> $request->invent_sn,
+                'imutasi_tgl_dari' => $newFromDate,
+                'imutasi_tgl_sd'=>$newToDate,
+                'imutasi_lokasi' => $request->lokasi,
+                'imutasi_pengguna' => $request->user,
+                'imutasi_divisi' => $request->invent_divisi,
+                'imutasi_bu' => $request->invent_bu,
+                'imutasi_keterangan' => $request->ket,
+                'creation_date'=> $newCreation,
+                'created_by' => Auth::user()->usr_name,
+                'program_name'=> "Mutasi_Save"
+            ]);
+        }else{
+            $mut = Mutasi::Create([
+                'invent_code_dtl'=> $request->invent_sn,
+                'imutasi_tgl_dari' => $newFromDate,
+                'imutasi_lokasi' => $request->lokasi,
+                'imutasi_pengguna' => $request->user,
+                'imutasi_divisi' => $request->invent_divisi,
+                'imutasi_bu' => $request->invent_bu,
+                'imutasi_keterangan' => $request->ket,
+                'creation_date'=> $newCreation,
+                'created_by' => Auth::user()->usr_name,
+                'program_name'=> "Mutasi_Save"
+            ]);
+            }
+            $msg = [
+                'success' => true,
+                'message' => 'Created Successfully'
+            ];
+            return response()->json($msg);
     }
     Public function edit($code)
     {
@@ -161,11 +165,16 @@ class MutasiController extends Controller
     public function cetak_pdf()
     {
         $mut = DB::table('invent_mutasi as im')
-        ->select('im.*','invent_mst.invent_code','invent_mst.invent_desc',
+        ->LEFTJOIN('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
+        ->LEFTJOIN('invent_mst as ivm','id.invent_code','ivm.invent_code')
+        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
+            $join->on('ivm.invent_brand','lrs.lookup_code')
+                  ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+        })
+        ->select('im.imutasi_pengguna','im.imutasi_lokasi','im.imutasi_keterangan','ivm.invent_code','ivm.invent_desc','ivm.invent_type','id.invent_sn','lrs.lookup_desc as invent_brand',
             DB::raw("TO_CHAR(im.imutasi_tgl_dari,' dd Mon YYYY') as imutasi_tgl_dari"),
             DB::raw("TO_CHAR(im.imutasi_tgl_sd,' dd Mon YYYY') as imutasi_tgl_sd"))
-        ->join('invent_mst','im.invent_code','invent_mst.invent_code')
-        ->orderBy('im.creation_date','ASC')
+        ->orderBy('im.creation_date','DESC')
         ->get();
         return view('pdf/Laporan_Mutasi', compact('mut'));
     }

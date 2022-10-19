@@ -10,7 +10,6 @@
     .row {
         margin-left:-5px;
         margin-right:-5px;
-        pad
     }
     .row::after {
         content: "";

@@ -194,7 +194,7 @@ class IctDetailController extends Controller
         ->leftJoin('ireq_dtl as id',function ($join) {
             $join->on('im.ireq_id','id.ireq_id');
         })
-        ->select(DB::raw("TO_CHAR(im.ireq_date, 'yyyy-MM-dd HH24:MI:SS') AS ireq_date "),'im.ireq_requestor','im.ireq_no as noreq','im.ireq_type','im.ireq_status as cekStatus',
+        ->select(DB::raw("TO_CHAR(im.ireq_date, 'yyyy-MM-dd HH24:MI:SS') AS ireq_date "),'im.ireq_date as request_date','im.ireq_requestor','im.ireq_no as noreq','im.ireq_type','im.ireq_status as cekStatus',
                 'lr.lookup_desc as ireq_status','lrs.loc_desc')
          ->where('im.ireq_id',$code)
          ->first();

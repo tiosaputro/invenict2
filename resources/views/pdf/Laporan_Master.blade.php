@@ -43,16 +43,9 @@
 						<thead>
 							<tr>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Kode</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Nama</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Peripheral</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Merk</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tipe</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">S/N</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Tgl. Perolehan</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Lama Garansi(Tahun)</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Kondisi</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Bisnis Unit</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Lokasi Terakhir</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Pengguna Terakhir</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Type</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -62,13 +55,6 @@
 									<td>{{$m->invent_desc}}</td>
 									<td>{{$m->invent_brand}}</td>
 									<td>{{$m->invent_type}}</td>
-									<td>{{$m->invent_sn}}</td>
-									<td>{{$m->invent_tgl_perolehan}}</td>
-									<td>{{$m->invent_lama_garansi}}</td>
-									<td>{{$m->invent_kondisi}}</td>
-									<td>{{$m->invent_bu}}</td>
-									<td>{{$m->invent_lokasi_update}}</td>
-									<td>{{$m->invent_pengguna_update}}</td>
 								</tr>	
 							@endforeach							
 						</tbody>
