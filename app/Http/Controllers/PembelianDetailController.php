@@ -20,13 +20,20 @@ class PembelianDetailController extends Controller
     Public function index($code)
     {
         $dtl = DB::table('purchase_dtl as pd')
-        ->select('pd.*','lr.lookup_desc as dpurchase_sat','im.invent_desc','pm.valuta_code',
+        ->select('pd.*','llr.lookup_desc as invent_brand','im.invent_type','lr.lookup_desc as dpurchase_sat','im.invent_desc','pm.valuta_code',
                 DB::raw("CASE WHEN pd.dpurchase_stat = 'T' Then 'Aktif' WHEN pd.dpurchase_stat = 'F' Then 'Tidak Aktif' end as dpurchase_stat "))
-        ->join('lookup_refs as lr','pd.dpurchase_sat','lr.lookup_code')
-        ->join('purchase_mst as pm','pd.purchase_id','pm.purchase_id')
-        ->join('invent_mst as im','pd.invent_code','im.invent_code')
+        ->leftjoin('purchase_mst as pm','pd.purchase_id','pm.purchase_id')
+        ->leftjoin('invent_mst as im','pd.invent_code','im.invent_code')
+        ->leftJoin('lookup_refs as llr',function ($join) {
+            $join->on('im.invent_brand','llr.lookup_code')
+                ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+        })
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('pd.dpurchase_sat','lr.lookup_code')
+                ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%']);
+        })
         ->where('pd.purchase_id',$code)
-        ->orderBy('pd.creation_date','ASC')
+        ->orderBy('pd.creation_date','DESC')
         ->get();
             return response()->json($dtl);
     }
@@ -121,7 +128,16 @@ class PembelianDetailController extends Controller
     public function getValuta($code)
     {
         $dtl = Pembelian::Select('valuta_code')->where('purchase_id',$code)->first();
-        $mas = Master::Select('invent_code as code',DB::raw("(invent_code ||'-'|| invent_desc) as name"))->get();
+        $mas = DB::table('invent_mst as im')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('im.invent_brand','lr.lookup_code')
+                ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+        })
+        ->select('im.invent_code as code',DB::raw("(im.invent_desc || '-' || lr.lookup_desc || '-' ||  im.invent_type) as name"))
+        ->orderBy('im.invent_desc','ASC')
+        ->orderBy('lr.lookup_desc','ASC')
+        ->orderBy('im.invent_type','ASC')
+        ->get();
         $ref = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
         ->where('lookup_status','T')
         ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%'])

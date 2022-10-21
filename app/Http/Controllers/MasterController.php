@@ -280,7 +280,7 @@ class MasterController extends Controller
             return response()->json($mas);
     }
     function getPeripheral(){
-        $kode = db::table('invent_mst as im')
+        $kode = DB::table('invent_mst as im')
         ->leftJoin('lookup_refs as lr',function ($join) {
             $join->on('im.invent_brand','lr.lookup_code')
                 ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);

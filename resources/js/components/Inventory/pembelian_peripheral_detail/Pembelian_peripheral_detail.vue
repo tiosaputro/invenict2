@@ -58,8 +58,14 @@
             Loading data. Please wait.
           </template>
           <Column field="invent_code" header="Kode" :sortable="true"/>
-          <Column field="invent_desc" header="Nama Peripheral" :sortable="true"/>
-          <Column field="dpurchase_qty" header="Jumlah(Qty)" :sortable="true"/>
+          <Column field="invent_desc" header="Peripheral" :sortable="true"/>
+          <Column field="invent_brand" header="Brand" :sortable="true"/>
+          <Column field="invent_type" header="Type" :sortable="true"/>
+          <Column header="Qty" :sortable="true">
+          <template #body="slotProps">
+          {{slotProps.data.dpurchase_qty}} {{slotProps.data.dpurchase_sat}}
+          </template>  
+          </Column>
           <Column field="dpurchase_prc" header="Total Harga" :sortable="true">
            <template #body="slotProps">
              {{slotProps.data.valuta_code}}{{formatPrice(slotProps.data.dpurchase_prc)}}
