@@ -27,7 +27,7 @@ class NotificationRequestWaitingApprovalFromIctManager extends Mailable implemen
      */
     public function build()
     {
-        return $this->from('icthelpdesk.admin@emp.id')
+        return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Waiting Approval From ICT Manager')
                     ->view('emailNotificationWaitingApprovalIctManager')
                     ->with(['ict' => $this->ict]);

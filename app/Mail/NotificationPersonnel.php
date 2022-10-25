@@ -27,7 +27,7 @@ class NotificationPersonnel extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('icthelpdesk.admin@emp.id')
+        return $this->from('noreply@emp.id','NO REPLY')
                     ->view('emailPersonnel')
                     ->with(['ict' => $this->ict]);
                 }

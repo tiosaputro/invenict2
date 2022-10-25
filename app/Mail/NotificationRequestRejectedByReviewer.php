@@ -27,7 +27,7 @@ class NotificationRequestRejectedByReviewer extends Mailable implements ShouldQu
      */
     public function build()
     {
-        return $this->from('icthelpdesk.admin@emp.id')
+        return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Rejected By Reviewer')
                     ->view('emailNotificationRejectedByReviewer')
                     ->with(['ict' => $this->ict]);

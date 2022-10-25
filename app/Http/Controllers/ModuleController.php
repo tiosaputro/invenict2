@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Mng_modules;
+use App\Model\Mng_modules;
 
 class ModuleController extends Controller
 {

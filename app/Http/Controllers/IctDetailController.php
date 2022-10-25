@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\IctDetail;
-use App\Ict;
+use App\Model\IctDetail;
+use App\Model\Ict;
 use Illuminate\Support\Facades\Storage;
-use App\Link;
+use App\Model\Link;
 use App\Exports\IctDetailExport;
 use App\Exports\IctDetailExportReject;
 use App\Exports\IctDetailTabReviewerExport;

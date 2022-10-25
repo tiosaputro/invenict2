@@ -44,20 +44,27 @@
           <template #loading>
             Loading data. Please wait.
           </template>
-          <Column field="invent_code" header="Kode" :sortable="true">
+          <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:11em">
             <template #body="slotProps">
-              <p @click="detailKode(slotProps.data.invent_code_dtl)" style="cursor:pointer;"> {{slotProps.data.invent_code}}
+              <p @click="detailKode(slotProps.data.invent_code_dtl)" style="cursor:pointer;"> {{slotProps.data.invent_desc}}
               </p> 
             </template>
           </Column>
-          <Column field="invent_desc" header="Peripheral" :sortable="true"/>
-          <Column field="invent_merk" header="Merk" :sortable="true"/>
-          <Column field="invent_type" header="Type" :sortable="true"/>
-          <Column field="invent_sn" header="S/N" :sortable="true"/>
-          <Column field="imutasi_pengguna" header="User" :sortable="true"/>
-          <Column field="imutasi_lokasi" header="Location" :sortable="true"/>
-          <Column field="imutasi_divisi" header="User Division" :sortable="true"/>
-          <Column field="imutasi_bu" header="Business Unit" :sortable="true"/>
+          <Column field="invent_sn" header="S/N" :sortable="true" style="min-width:10rem"/>
+          <Column field="imutasi_tgl_dari" header="From Date" :sortable="true" style="min-width:10rem">
+            <template #body="slotProps">
+              {{formatDate(slotProps.data.imutasi_tgl_dari)}}
+            </template>  
+          </Column>
+          <Column field="imutasi_tgl_sd" header="To Date" :sortable="true" style="min-width:10rem">
+            <template #body="slotProps">
+              <p v-if="slotProps.data.imutasi_tgl_sd">
+                {{formatDate(slotProps.data.imutasi_tgl_sd)}}
+              </p>
+            </template>  
+          </Column>
+          <Column field="imutasi_pengguna" header="User" :sortable="true" style="min-width:10rem"/>
+          <Column field="imutasi_lokasi" header="Location" :sortable="true" style="min-width:10rem"/>
           <Column headerStyle="min-width:12rem">
             <template #body="slotProps">
               <Button
@@ -68,13 +75,13 @@
                     name: 'Edit Mutasi Peripheral',
                     params: { code: slotProps.data.imutasi_id },
                   })"
-                  v-tooltip.left="'Edit'"
+                  v-tooltip.bottom="'Click to edit'"
               />
               <Button
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-danger mr-2"
                 @click="DeleteMut(slotProps.data.imutasi_id)"
-                v-tooltip.Right="'Delete'"
+                v-tooltip.bottom="'Click to delete'"
               />
             </template>
           </Column>
@@ -106,7 +113,7 @@
       :modal="true"
       class="fluid"
     >
-    <div class="row">
+     <div class="row">
       <div class="col-sm-6">
         <div class="field grid">
           <label style="width:155px">Kode</label>
@@ -119,7 +126,7 @@
             </div>
           </div>
           <div class="field grid">
-            <label style="width:155px">Merk</label>
+            <label style="width:155px">Brand</label>
               <div class="col-4">
                 <InputText
                   v-model="detail.invent_brand"
@@ -128,7 +135,7 @@
               </div>
             </div>
             <div class="field grid">
-              <label style="width:155px">Tipe</label>
+              <label style="width:155px">Type</label>
                 <div class="col-4">
                   <InputText
                     disabled
@@ -146,7 +153,7 @@
                  </div>
               </div>
               <div class="field grid">
-                <label style="width:155px">Tgl. Perolehan</label>
+                <label style="width:155px">Date Received</label>
                   <div class="col-4">
                      <InputText
                       v-model="detail.invent_tgl_perolehan"
@@ -155,7 +162,7 @@
                   </div>
               </div>
               <div class="field grid">
-                <label style="width:155px">Kondisi</label>
+                <label style="width:155px">Condition</label>
                   <div class="col-4">
                     <InputText
                       v-model="detail.invent_kondisi"
@@ -164,7 +171,7 @@
                   </div>
               </div>
               <div class="field grid">
-                <label for="notlp2" style="width:155px">Bisnis Unit</label>
+                <label for="notlp2" style="width:155px">Unit Business</label>
                   <div class="col-4">
                     <InputText
                       v-model="detail.invent_bu"
@@ -173,7 +180,7 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:155px">Lokasi Terakhir</label>
+                <label style="width:155px">Last Location</label>
                   <div class="col-6">
                     <InputText
                       type="text"
@@ -183,7 +190,7 @@
                   </div>
               </div>
               <div class="field grid">
-                <label style="width:155px">Pengguna Terakhir</label>
+                <label style="width:155px">Last User</label>
                   <div class="col-6">
                     <InputText
                       type="text"
@@ -195,7 +202,7 @@
             </div>
               <div class="col-sm-6">
                 <div class="field grid">
-                  <label style="width:155px">Nama</label>
+                  <label style="width:155px">Items</label>
                     <div class="col-4">
                       <InputText
                         v-model="detail.invent_desc"
@@ -212,7 +219,7 @@
                     </div>
                  </div>
                 <div class="field grid">
-                  <label style="width:155px">Lokasi Sebelumnya</label>
+                  <label style="width:155px">Previous Location</label>
                     <div class="col-6">
                       <InputText
                         v-model="detail.invent_lokasi_previous"
@@ -221,7 +228,7 @@
                     </div>
                 </div>
                 <div class="field grid">
-                  <label style="width:155px">Penguna Sebelumnya</label>
+                  <label style="width:155px">Previous User</label>
                     <div class="col-6">
                       <InputText
                         v-model="detail.invent_pengguna_previous"
@@ -230,7 +237,7 @@
                     </div>
                 </div>
               </div>
-              </div>
+          </div>
       </Dialog>   
       </div>
     </div>
@@ -258,7 +265,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY HH:mm")
+      return moment(date).format("DD MMM YYYY")
     },
     getMutasi(){
       this.axios.get('api/mut',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
@@ -335,7 +342,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .master-image {
-  height:200pt;
+  height:150pt;
   object-fit:contain;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }

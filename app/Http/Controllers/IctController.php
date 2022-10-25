@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Ict;
-use App\IctDetail;
-use App\Lookup_Refs;
-use App\Link;
+use App\Model\Ict;
+use App\Model\IctDetail;
+use App\Model\Lookup_Refs;
+use App\Model\Link;
 use App\Exports\IctExportPermohonan;
 use App\Exports\IctExportVerifikasi;
 use App\Exports\IctExportReject;
@@ -41,9 +41,9 @@ use App\Exports\IctExportPersonnelReject;
 use App\Exports\IctExportPersonnelSedangDikerjakan;
 use App\Exports\IctExportPersonnelSudahDikerjakan;
 use App\Exports\IctExportPersonnelSelesai;
-use App\Mng_usr_roles;
-use App\Mng_roles;
-use App\Mng_role_menu;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_roles;
+use App\Model\Mng_role_menu;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;

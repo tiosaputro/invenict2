@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Mng_usr_roles;
-use App\Mng_role_menu;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 use App\Mng_User;
-use App\Mng_roles;
+use App\Model\Mng_roles;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use carbon\Carbon;

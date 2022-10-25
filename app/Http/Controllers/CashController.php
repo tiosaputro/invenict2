@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Cash;
+use App\Model\Cash;
 use App\Exports\CashExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Mng_usr_roles;
-use App\Mng_role_menu;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 use Illuminate\Validation\Rule;
 
 class CashController extends Controller
@@ -147,7 +147,7 @@ class CashController extends Controller
             'success' => true,
             'message' => 'Created Successfully'
         ];
-        $result = DB::connection('oracle')->getPdo()->exec("begin SP_CA_IREQ_MST($request->ireq_id); end;");
+        $result = DB::getPdo()->exec("begin SP_CA_IREQ_MST($request->ireq_id); end;");
         return response()->json($msg);
     }
     function edit($code)

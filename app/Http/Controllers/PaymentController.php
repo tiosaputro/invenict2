@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Payment_request;
-use App\Mng_usr_roles;
-use App\Mng_role_menu;
+use App\Model\Payment_request;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
@@ -126,7 +126,7 @@ class PaymentController extends Controller
             'success' => true,
             'message' => 'Created Successfully',
         ];
-        $result = DB::connection('oracle')->getPdo()->exec("begin SP_PR_IREQ_MST($request->ireq_id); end;");
+        $result = DB::getPdo()->exec("begin SP_PR_IREQ_MST($request->ireq_id); end;");
         return response()->json($msg);
     }
 

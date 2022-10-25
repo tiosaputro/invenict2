@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Lookup_Refs;
-use App\Supplier;
+use App\Model\Lookup_Refs;
+use App\Model\Supplier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LookupExport;
 use Illuminate\Validation\Rule;
-use App\Mng_usr_roles;
-use App\Mng_role_menu;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 
 class LookupsController extends Controller
 {

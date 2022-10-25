@@ -29,7 +29,7 @@ class NotificationRequest extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('icthelpdesk.admin@emp.id','HELPDESK TICKETING')
+        return $this->from('noreply@emp.id','HELPDESK TICKETING')
                     ->view('emailRequest')
                     ->with(['ict' => $this->ict,
                             'link'=>$this->LINK]);

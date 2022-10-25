@@ -27,7 +27,7 @@ class NotificationRequestInProgress extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('icthelpdesk.admin@emp.id')
+        return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request In Progress')
                     ->view('emailNotificationRequestInProgress')
                     ->with(['ict' => $this->ict]);

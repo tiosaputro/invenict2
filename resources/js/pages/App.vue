@@ -41,6 +41,7 @@ export default {
     emits: ['change-theme'],
     data() {
         return {
+            scale:"12",
             layoutMode: 'static',
             staticMenuInactive: false,
             overlayMenuActive: false,
@@ -62,6 +63,7 @@ export default {
     },
     methods: {
         tes(){
+            document.documentElement.style.fontSize = this.scale + 'px';
             if (window.location.pathname == '/'){
              this.$router.push('/dashboard'); 
             }

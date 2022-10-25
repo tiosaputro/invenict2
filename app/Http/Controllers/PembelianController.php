@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Pembelian;
-use App\Lookup_Refs;
-use App\Supplier;
+use App\Model\Pembelian;
+use App\Model\Lookup_Refs;
+use App\Model\Supplier;
 use App\Exports\PembelianExport;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Mng_usr_roles;
-use App\Mng_role_menu;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 
 class PembelianController extends Controller
 {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Supplier;
+use App\Model\Supplier;
 use App\Exports\SupplierExport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;

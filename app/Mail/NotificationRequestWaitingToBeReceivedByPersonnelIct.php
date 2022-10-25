@@ -27,7 +27,7 @@ class NotificationRequestWaitingToBeReceivedByPersonnelIct extends Mailable impl
      */
     public function build()
     {
-        return $this->from('icthelpdesk.admin@emp.id')
+        return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Waiting To Be Received By Personnel ICT')
                     ->view('emailNotificationWaitingReceivedByPersonnel')
                     ->with(['ict' => $this->ict]);

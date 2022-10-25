@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mng_user;
+use App\Mng_User;
 use carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;

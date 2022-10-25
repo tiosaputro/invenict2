@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Divisi_refs;
+use App\Model\Divisi_refs;
 Use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;

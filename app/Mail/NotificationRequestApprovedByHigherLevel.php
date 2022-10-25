@@ -27,7 +27,7 @@ class NotificationRequestApprovedByHigherLevel extends Mailable implements Shoul
      */
     public function build()
     {
-        return $this->from('icthelpdesk.admin@emp.id')
+        return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Approved By Higher Level')
                     ->view('emailNotificationApprovedManagerDivision')
                     ->with(['ict' => $this->ict]);

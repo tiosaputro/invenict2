@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Mutasi;
+use App\Model\Mutasi;
 use App\Exports\MutasiExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Mng_usr_roles;
-use App\Mng_role_menu;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 
 class MutasiController extends Controller
 {
@@ -26,9 +26,9 @@ class MutasiController extends Controller
 
         if($aksesmenu->contains($this->to)){
             $mutasi = DB::table('invent_mutasi as im')
-            ->select('im.imutasi_pengguna','im.imutasi_tgl_dari','im.imutasi_tgl_sd',
-            'im.imutasi_lokasi','id.invent_code_dtl','lrs.lookup_desc as invent_merk','im.imutasi_id','id.invent_code',
-            'id.invent_sn','imm.invent_type','imm.invent_desc','dr.div_name as imutasi_divisi',
+            ->select(DB::raw("(imm.invent_desc ||'-'|| lrs.lookup_desc ||'-'|| imm.invent_type ) as invent_desc"),'im.imutasi_pengguna','im.imutasi_tgl_dari','im.imutasi_tgl_sd',
+            'im.imutasi_lokasi','id.invent_code_dtl','im.imutasi_id','id.invent_code',
+            'id.invent_sn','dr.div_name as imutasi_divisi',
             'vr.name as imutasi_bu')
             ->leftjoin('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
             ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
@@ -53,7 +53,11 @@ class MutasiController extends Controller
         $newFromDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->fromdate)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         if ($request->todate){   
             $newToDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->todate)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-            $mut = Mutasi::Create([
+
+        }else{
+            $newToDate = '';
+        }
+            Mutasi::Create([
                 'invent_code_dtl'=> $request->invent_sn,
                 'imutasi_tgl_dari' => $newFromDate,
                 'imutasi_tgl_sd'=>$newToDate,
@@ -66,20 +70,6 @@ class MutasiController extends Controller
                 'created_by' => Auth::user()->usr_name,
                 'program_name'=> "Mutasi_Save"
             ]);
-        }else{
-            $mut = Mutasi::Create([
-                'invent_code_dtl'=> $request->invent_sn,
-                'imutasi_tgl_dari' => $newFromDate,
-                'imutasi_lokasi' => $request->lokasi,
-                'imutasi_pengguna' => $request->user,
-                'imutasi_divisi' => $request->invent_divisi,
-                'imutasi_bu' => $request->invent_bu,
-                'imutasi_keterangan' => $request->ket,
-                'creation_date'=> $newCreation,
-                'created_by' => Auth::user()->usr_name,
-                'program_name'=> "Mutasi_Save"
-            ]);
-            }
             $msg = [
                 'success' => true,
                 'message' => 'Created Successfully'

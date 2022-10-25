@@ -971,7 +971,7 @@
         </DataTable>
         <Toolbar class="mb-4" v-if="this.desc == 13">
           <template v-slot:start>
-                <h4>ICT Request (Waiting for verification)</h4>
+              <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>   
         <DataTable
@@ -1019,6 +1019,7 @@
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
             </template>
           </Column>
+          <Column field="ireq_count_id" header="Total Detail" :sortable="true" style="min-width:10rem"/>
           <Column style="min-width:25rem">
             <template #body="slotProps">
               <Button

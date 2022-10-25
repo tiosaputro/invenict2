@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Validation\Rule;
-use App\PembelianDetail;
-use App\Pembelian;
-use App\Master;
-Use App\Lookup_Refs;
+use App\Model\PembelianDetail;
+use App\Model\Pembelian;
+use App\Model\Master;
+Use App\Model\Lookup_Refs;
 use App\Exports\PembelianDetailExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;

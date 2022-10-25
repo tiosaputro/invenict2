@@ -27,7 +27,7 @@ class NotificationRequestApprovedByIctManager extends Mailable implements Should
      */
     public function build()
     {
-        return $this->from('icthelpdesk.admin@emp.id')
+        return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Approved By Ict Manager')
                     ->view('emailNotificationApprovedIctManager')
                     ->with(['ict' => $this->ict]);

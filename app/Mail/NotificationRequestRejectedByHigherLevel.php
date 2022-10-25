@@ -27,7 +27,7 @@ class NotificationRequestRejectedByHigherLevel extends Mailable implements Shoul
      */
     public function build()
     {
-        return $this->from('icthelpdesk.admin@emp.id')
+        return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Rejected By Higher Level')
                     ->view('emailNotificationRejectedByHigherLevel')
                     ->with(['ict' => $this->ict]);

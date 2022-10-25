@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Mng_User;
-use App\Mng_roles;
-use App\Mng_usr_roles;
+use App\Model\Mng_roles;
+use App\Model\Mng_usr_roles;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
