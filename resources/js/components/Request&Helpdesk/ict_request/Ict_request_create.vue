@@ -9,50 +9,9 @@
         </Toolbar>
             <div class="card-body">
              <form @submit.prevent="CreateIct">
-               <div class="field grid">
+               <!-- <div class="field grid">
                 <label class="col-fixed w-9rem">No. Request</label>
-               </div>
-              <!-- <div class="field grid">
-                <label class="col-fixed w-9rem">Tgl. Request</label>
-                 <div class="col-fixed w-11rem">
-                      <DatePicker v-model="tgl" :masks="mask" >
-                        <template v-slot="{ inputValue, togglePopover }">
-                         <div class="flex items-center">
-                          <input
-                            class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
-                            :value="inputValue"
-                            @click="togglePopover"
-                            placeholder="Pilih Tgl. Request"
-                            readonly
-                          />
-                          <Button icon="pi pi-calendar" v-if="!tgl" @click="togglePopover"/>
-                          <Button icon="pi pi-trash" class="p-button-danger" v-else @click="tgl = '' " />
-                         </div>
-                        </template>
-                      </DatePicker>
-                      <small v-if="errors.tgl" class="p-error">
-                        {{ errors.tgl[0] }}
-                      </small>
-                    </div>
-                </div> -->
-              
-              <!-- <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
-                 <div class="col-fixed w-9rem">
-                     <Dropdown 
-                        v-model ="tipereq"
-                        :options="type"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Pilih Tipe Request"
-                        :showClear="true"
-                        :class="{ 'p-invalid': error.tipereq }"
-                     />
-                        <small v-if="error.tipereq" class="p-error">
-                          {{error.tipereq}}
-                        </small>
-                </div>
-              </div> -->
+               </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem">Priority Level</label>
                  <div class="col-fixed w-9rem">
@@ -212,7 +171,6 @@ export default {
       this.error = [];
       this.loading = true;
       if (
-        // this.tipereq != null &&
         this.priolev != null &&
         this.usr_name != null &&
         this.usr_divisi != null &&
@@ -221,11 +179,9 @@ export default {
       {
         const data = new FormData();
         data.append("tgl", this.tgl);
-        // data.append("tipereq", this.tipereq);
         data.append("bisnis", this.bisnis);
         data.append("user_name", this.usr_name);
         data.append("user_divisi", this.usr_divisi);
-        // data.append("ket", this.ket);
         data.append("priolev", this.priolev);
 
         this.axios.post('api/add-ict', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

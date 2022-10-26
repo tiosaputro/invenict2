@@ -455,14 +455,15 @@ class IctController extends Controller
             $ict = DB::table('ireq_mst as im')
             ->SELECT('im.ireq_id','im.ireq_verificator_remark','im.ireq_status as status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name', 
                     DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), DB::raw('count(idd.ireq_id) as ireq_count_id'),
-                    DB::raw('count(im.ireq_verificator_remark) as count_remark'),'lr.lookup_desc as ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
+                    DB::raw('count(im.ireq_verificator_remark) as count_remark'),'mu.usr_email','lr.lookup_desc as ireq_status',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"))
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('ireq_dtl as idd','im.ireq_id','idd.ireq_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
+            ->LEFTJOIN('mng_users as mu','im.created_by','mu.usr_name')
             ->WHERE('im.ireq_status','P')
             ->WHEREIn('im.ireq_loc',$loc)
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->groupBy('im.ireq_id','im.ireq_verificator_remark','im.ireq_status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
+            ->groupBy('im.ireq_id','im.ireq_verificator_remark','mu.usr_email','im.ireq_status','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_requestor','dr.div_name','im.creation_date','lr.lookup_desc',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1)"))
             ->ORDERBY('im.ireq_date','DESC')
             ->get(); 
 

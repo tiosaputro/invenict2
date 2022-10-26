@@ -75,6 +75,10 @@ __webpack_require__.r(__webpack_exports__);
     this.getIct();
   },
   methods: {
+    SendEmail: function SendEmail(usr_email) {
+      var mail = usr_email + "@emp.id";
+      window.open("mailto:" + mail);
+    },
     getDetail: function getDetail(ireq_attachment) {
       var page = "http://localhost:8000" + '/attachment_request/' + ireq_attachment;
       var myWindow = window.open(page, "_blank");
@@ -1333,7 +1337,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   /* PROPS */
                   , ["onClick"])), [[_directive_tooltip, 'Click for request details', void 0, {
                     bottom: true
-                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+                  }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+                    "class": "p-button-rounded p-button-warning mr-2 mt-2",
+                    onClick: function onClick($event) {
+                      return $options.SendEmail(slotProps.data.usr_email);
+                    },
+                    icon: "bi bi-envelope-check-fill"
+                  }, null, 8
+                  /* PROPS */
+                  , ["onClick"]), [[_directive_tooltip, 'Click to send email to ' + slotProps.data.usr_email + '@emp.id', void 0, {
+                    bottom: true
+                  }]]), slotProps.data.ireq_count_status != slotProps.data.ireq_count_id ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
                     key: 2,
                     "class": "p-button-rounded p-button-danger mr-2 mt-2",
                     onClick: function onClick($event) {

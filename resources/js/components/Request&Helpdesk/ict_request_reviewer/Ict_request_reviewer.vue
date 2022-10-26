@@ -68,6 +68,12 @@
                         v-tooltip.bottom="'Click for request details'"
                         @click="detailTabRequestDetail(slotProps.data.ireq_id)"
                       />
+                      <Button                    
+                        class="p-button-rounded p-button-warning mr-2 mt-2"
+                        @click="SendEmail(slotProps.data.usr_email)"
+                        icon="bi bi-envelope-check-fill"
+                        v-tooltip.bottom="'Click to send email to '+slotProps.data.usr_email+'@emp.id'"
+                      />
                       <Button
                         v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
                         class="p-button-rounded p-button-danger mr-2 mt-2"
@@ -1031,6 +1037,10 @@ export default {
     this.getIct();
   },
   methods: {
+    SendEmail(usr_email){
+      var mail = usr_email + "@emp.id";
+      window.open("mailto:"+mail);
+    },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
