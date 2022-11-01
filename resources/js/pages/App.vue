@@ -41,6 +41,7 @@ export default {
     emits: ['change-theme'],
     data() {
         return {
+            windowHeight: window.innerHeight,
             scale:"12",
             layoutMode: 'static',
             staticMenuInactive: false,
@@ -52,18 +53,27 @@ export default {
         }
     },
     created(){
-        this.tes();
+        this.create();
     },
     watch: {
         $route() {
-            this.tes();
+            this.create();
             this.menuActive = false;
             this.$toast.removeAllGroups();
         }
     },
     methods: {
-        tes(){
-            document.documentElement.style.fontSize = this.scale + 'px';
+        create(){
+            if (this.windowHeight < 600){
+                document.documentElement.style.fontSize = '12px';
+            }
+            if (this.windowHeight >= 610 && this.windowHeight < 1200){
+                document.documentElement.style.fontSize = '20px';
+            }
+            if (this.windowHeight >= 1200){
+                document.documentElement.style.fontSize = '22px';
+            }
+            
             if (window.location.pathname == '/'){
              this.$router.push('/dashboard'); 
             }

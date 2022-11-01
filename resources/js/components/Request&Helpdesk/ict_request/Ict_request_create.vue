@@ -161,7 +161,7 @@ export default {
         this.level = response.data.prio;
         this.requestor = response.data.username; 
       }).catch(error=>{
-        if(response.status == '401'){
+        if(error.response.status == '401'){
           return this.$router.push('/login')
         }
       });

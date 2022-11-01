@@ -197,8 +197,10 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-detail-pem/' +this.$route.params.code + '/' +dpurchase_id, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.getPembelianDetail();
+          this.axios.delete('/api/delete-detail-pem/' +this.$route.params.code + '/' +dpurchase_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getPembelianDetail();
+          });
         },
         reject: () => {},
       });

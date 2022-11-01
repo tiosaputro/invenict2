@@ -73,6 +73,8 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
+          _this2.loading = true;
+
           _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -84,9 +86,11 @@ __webpack_require__.r(__webpack_exports__);
             headers: {
               'Authorization': 'Bearer ' + _this2.token
             }
-          });
+          }).then(function () {
+            _this2.loading = true;
 
-          _this2.getMaster();
+            _this2.getMaster();
+          });
         },
         reject: function reject() {}
       });
@@ -302,7 +306,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "countstok",
-        header: "Stok",
+        header: "Qty",
         sortable: true,
         style: {
           "min-width": "8rem"
@@ -325,7 +329,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8
           /* PROPS */
           , ["onClick"]), [[_directive_tooltip, 'Click for detail peripheral', void 0, {
-            left: true
+            bottom: true
           }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-info mr-2 mt-2",
             icon: "pi pi-pencil",
@@ -350,7 +354,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8
           /* PROPS */
           , ["onClick"]), [[_directive_tooltip, 'Click to delete', void 0, {
-            top: true
+            bottom: true
           }]])];
         }),
         _: 1

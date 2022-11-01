@@ -176,8 +176,10 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-pem/' +purchase_id,{headers: {'Authorization': 'Bearer '+this.token}});
-          this.getPurchase();
+          this.axios.delete('api/delete-pem/' +purchase_id,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getPurchase();
+          });
         },
         reject: () => {},
       });

@@ -119,9 +119,11 @@ __webpack_require__.r(__webpack_exports__);
             headers: {
               'Authorization': 'Bearer ' + _this3.token
             }
-          });
+          }).then(function () {
+            _this3.loading = true;
 
-          _this3.getMaster();
+            _this3.getMaster();
+          });
         },
         reject: function reject() {}
       });
@@ -130,9 +132,7 @@ __webpack_require__.r(__webpack_exports__);
       window.open('api/report-master-pdf');
     },
     CetakExcel: function CetakExcel() {
-      window.open('api/report-master-excel'); // ,{ headers: 
-      //  { 'Authorization': 'Bearer '+this.token}, 
-      //  'Accept': 'application/json'});
+      window.open('api/report-master-excel');
     }
   }
 });
@@ -491,6 +491,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+        field: "invent_sn",
         header: "Serial Number",
         sortable: true
       }, {

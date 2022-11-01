@@ -82,17 +82,20 @@
                 </div>
               <div class="form-group">
                  <Button
+                  v-if="this.loading == false"
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
                   label="Simpan"
                   type="submit"
                 />
                 <Button
+                  v-if="this.loading == false"
                   label="Cancel"
                   class="p-button-rounded p-button-secondary mr-2"
                   icon="pi pi-times"
                   @click="$router.push('/master-peripheral')"
                 />
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" v-else/>
               </div>
             </form>
            </div>
@@ -104,6 +107,7 @@
 export default {
   data() {
     return {
+      loading:false,
       aktif:true,
       displayImage:false,
       preview:'',
@@ -168,92 +172,18 @@ export default {
            }
         });
       },
-    // Scan(){
-    //   this.aktif = false;
-    //   let routeData = this.$router.resolve({name: 'Scan'});
-    //   window.open(routeData.href, '_blank');
-    //   setTimeout( () => this.getBarcode(),2000);
-    // },
-    // getBarcode(){
-    //   this.barcode = localStorage.getItem('barcode');
-    //   if(!this.barcode){
-    //     setTimeout( () => this.getBarcode(),3000);
-    //   }
-    // },
-    // hapus(){
-    //   localStorage.removeItem('barcode');
-    //   this.barcode = null;
-    //   this.aktif = true;
-    // },
-    // fileImage(event) {
-    //   this.foto = event.target.files[0];
-    //   this.displayImage = true;
-    //   this.preview = URL.createObjectURL(event.target.files[0]);
-    //   this.createImage(this.foto);
-    //   },
-    // createImage(invent_photo) {
-    //   var image = new Image();
-    //   var reader = new FileReader();
-    //   var vm = this;
-    //   reader.onload = function (e) {
-    //     vm.image = e.target.result;
-    //   };
-    //   reader.readAsDataURL(invent_photo);
-    // },
     CreateMaster() {
       this.errors = [];
       this.error = [];
       if (
-        // this.bu != null &&
         this.merk != null &&
         this.nama != null
-        // this.foto != null
       ) {
-        // if(this.image){
-          // const data = new FormData();
-          // data.append("nama", this.nama);
-          // data.append("tgl", this.tgl);
-          // data.append("sn", this.sn);
-          // data.append("bu", this.bu);
-          // data.append("merk", this.merk);
-          // data.append("type", this.type);
-          // data.append("lastuser", this.lastuser);
-          // data.append("prevuser", this.prevuser);
-          // data.append("prevloct", this.prevloct);
-          // data.append("lastloct", this.lastloct);
-          // data.append("foto", this.image);
-          // data.append("kondisi", this.kondisi);
-          // data.append("barcode", this.barcode);
-          // data.append("garansi", this.garansi);
-          
-        // this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-        //   setTimeout( () => this.$router.push('/master-peripheral'),1000);
-        //   this.$toast.add({
-        //     severity: "success",
-        //     summary: "Success Message",
-        //     detail: "Success Create",
-        //   });
-        // }).catch(error=>{
-        //     this.errors = error.response.data.errors;
-        // });
-        // }
-        // else{
+          this.loading = true;
           const data = new FormData();
           data.append("nama", this.nama);
-          // data.append("code", this.code);
-          // data.append("tgl", this.tgl);
-          // data.append("sn", this.sn);
-          // data.append("bu", this.bu);
           data.append("merk", this.merk);
           data.append("type", this.type);
-          // data.append("lastuser", this.lastuser);
-          // data.append("prevuser", this.prevuser);
-          // data.append("prevloct", this.prevloct);
-          // data.append("lastloct", this.lastloct);
-          // data.append("foto", this.image);
-          // data.append("kondisi", this.kondisi);
-          // data.append("barcode", this.barcode);
-          // data.append("garansi", this.garansi);
           
         this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           setTimeout( () => this.$router.push('/master-peripheral'),1000);
@@ -263,22 +193,16 @@ export default {
             detail: "Success Create",
           });
         }).catch(error=>{
+            this.loading = false;
             this.errors = error.response.data.errors;
         });
-        // }
       }else{
-        // if(this.bu == null){
-        //   this.error.bu = "Bisnis Unit Belum Diisi"
-        // }
         if(this.merk == null){
           this.error.merk = "Merk Belum Diisi"
         }
         if(this.nama == null){
           this.error.nama = "Nama Peripheral Belum Diisi"
         }
-        // if(this.foto == null){
-        //   this.error.foto = "Foto Belum Diisi"
-        // }
       }
     }
   },

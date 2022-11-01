@@ -849,14 +849,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Requestor",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "User",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
@@ -999,14 +999,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Requestor",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_user",
                 header: "User",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "10rem"
                 }
               }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 field: "ireq_status",
@@ -1318,11 +1318,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 _: 1
                 /* STABLE */
 
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
-                style: {
-                  "min-width": "8rem"
-                }
-              }, {
+              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, null, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                     "class": "p-button-rounded p-button-secondary mr-2",

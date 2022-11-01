@@ -19,6 +19,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      showRemarkPermohonan: [],
+      showRemarkReviewer: [],
+      showRemarkVerified: [],
       reason: {
         id: null,
         ket: null,
@@ -197,14 +200,23 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this2.ict = response.data.ict;
+        _this2.showRemarkPermohonan = _this2.ict.map(function (x) {
+          return x.countremark_reviewer;
+        });
         _this2.loading = false;
         _this2.verif = response.data.ict1;
+        _this2.showRemarkVerified = _this2.verif.map(function (x) {
+          return x.countremark_reviewer;
+        });
         _this2.reject = response.data.ict2;
         _this2.penugasan = response.data.ict8;
         _this2.sedangDikerjakan = response.data.ict3;
         _this2.sudahDikerjakan = response.data.ict4;
         _this2.selesai = response.data.ict5;
         _this2.reviewer = response.data.ict6;
+        _this2.showRemarkReviewer = _this2.reviewer.map(function (x) {
+          return x.countremark_reviewer;
+        });
         localStorage.setItem('active', 0);
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -876,6 +888,8 @@ var _hoisted_67 = {
   "class": "p-error"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
 
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
@@ -1018,7 +1032,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 style: {
                   "min-width": "10rem"
                 }
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+              }), _this.showRemarkPermohonan.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 0,
+                field: "ireq_verificator_remark",
+                header: "Remark Reviewer",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 headerStyle: "min-width:13rem"
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1199,7 +1223,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 _: 1
                 /* STABLE */
 
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+              }), _this.showRemarkReviewer.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 0,
+                field: "ireq_verificator_remark",
+                header: "Remark Reviewer",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 headerStyle: "min-width:10rem"
               }, {
                 body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
@@ -1343,7 +1377,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 _: 1
                 /* STABLE */
 
-              }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
+              }), _this.showRemarkVerified.some(function (el) {
+                return el > 0;
+              }) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Column, {
+                key: 0,
+                field: "ireq_verificator_remark",
+                header: "Remark Reviewer",
+                sortable: true,
+                style: {
+                  "min-width": "12rem"
+                }
+              })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 style: {
                   "min-width": "8rem"
                 }

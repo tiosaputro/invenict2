@@ -70,7 +70,7 @@
                       />
                       <Button                    
                         class="p-button-rounded p-button-warning mr-2 mt-2"
-                        @click="SendEmail(slotProps.data.usr_email)"
+                        @click="SendEmail(slotProps.data.usr_email,slotProps.data.ireq_id)"
                         icon="bi bi-envelope-check-fill"
                         v-tooltip.bottom="'Click to send email to '+slotProps.data.usr_email+'@emp.id'"
                       />
@@ -324,7 +324,7 @@
                   </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelmanager.some(el=> el > 0)"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkManager.some(el=> el > 0)"/>
-                  <Column field="ireq_approver2_remark" header="Remark ICT Manager" :sortable="true" style="min-width:12rem" v-if="this.showRemarkApprover2Manager.some(el=> el > 0)"/>
+                  <Column field="ireq_approver2_remark" header="Remark ICT Manager" :sortable="true" style="min-width:14rem" v-if="this.showRemarkApprover2Manager.some(el=> el > 0)"/>
                   <Column headerStyle="min-width:15rem">
                     <template #body="slotProps">
                        <Button
@@ -976,6 +976,82 @@
                     <Button label="Cancel" @click="cancelRemark()" class="p-button-text" />
                 </template>
             </Dialog>
+            <Dialog v-model:visible="dialogSendMail"
+                :style="{ width: '400px' }"
+                header="Dialog Send Mail"
+                :modal="true"
+                class="fluid grid"
+            >
+              <div class="p-fluid">
+                  <div class="field grid">
+                    <label class="col-fixed w-9rem" style="width:100px">Subjek</label>
+                     <div class="col">
+                          <InputText
+                            type="text"
+                            v-model="mail.subject"
+                            disabled
+                          />
+                     </div>
+                   </div>
+                </div>
+              <div class="p-fluid">
+                  <div class="field grid">
+                    <label class="col-fixed w-9rem" style="width:100px">From Email</label>
+                     <div class="col">
+                          <InputText
+                            type="text"
+                            v-model="mail.from"
+                            disabled
+                          />
+                     </div>
+                   </div>
+                </div>
+                <div class="p-fluid">
+                    <div class="field grid">
+                      <label class="col-fixed w-9rem" style="width:100px">To Email</label>
+                      <div class="col">
+                            <InputText
+                              v-model="mail.to"
+                              disabled
+                            />
+                      </div>
+                    </div>
+                  </div>
+                <div class="p-fluid">
+                  <div class="field grid">
+                    <label class="col-fixed w-9rem" style="width:100px">Body Email</label>
+                     <div class="col">
+                          <Textarea
+                            v-model="mail.body"
+                            rows="5" 
+                            placeholder=""
+                            style="white-space: pre"
+                            :class="{ 'p-invalid': submitted && !mail.body }"
+                          />
+                            <small v-if="submitted && !mail.body" class="p-error">
+                            Reason not filled
+                            </small>
+                     </div>
+                   </div>
+                </div>
+                <div class="p-fluid">
+                  <div class="field grid">
+                    <label class="col-fixed w-9rem" style="width:100px">Footer Mail</label>
+                     <div class="col" style="white-space: pre;">
+                          <Textarea
+                            v-model="mail.footer"
+                            rows="4" 
+                            :autoResize="true"
+                            disabled
+                          />
+                     </div>
+                   </div>
+                </div>
+                <template #footer>
+                    <Button label="Send" icon="bi bi-envelope-check-fill" @click="updateMail()" class="p-button" autofocus />
+                    <Button label="Cancel" @click="cancelMail()" class="p-button-text" />
+                </template>
+            </Dialog>
       </div>
     </div>
   </div>
@@ -986,6 +1062,16 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+        mail:{
+          body:'',
+          footer:'',
+          subject:'',
+          from:'',
+          to:'',
+          noreq:'',
+          ireq_id:''
+        },
+        dialogSendMail:false,
         active1:JSON.parse(localStorage.getItem('active1')),
         dialogAssign:false,
         dialogRemark:false,
@@ -1037,9 +1123,35 @@ export default {
     this.getIct();
   },
   methods: {
-    SendEmail(usr_email){
-      var mail = usr_email + "@emp.id";
-      window.open("mailto:"+mail);
+    SendEmail(usr_email,ireq_id){
+      this.axios.get('/api/detailrequest-tomail/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        // this.dialogSendMail = true;
+        // var frommail = usr_email + "@emp.id";
+        // this.mail.from = res.data.fromemail;
+        // this.mail.to = frommail;
+        // this.mail.ireq_id = ireq_id;
+        // this.mail.subject = res.data.noreq;
+        // this.mail.footer = "Terimakasih, \n\n\n"+res.data.usr_fullname;
+        // this.mail.body = "Dear Mr/Mrs, "+res.data.requestor+"\n\n";
+        window.open("mailto:"+usr_email+"?subject="+res.data.noreq);
+      });
+    },
+    cancelMail(){
+      this.dialogSendMail = false;
+      this.mail = {
+          body:'',
+          footer:'',
+          subject:'',
+          from:'',
+          to:'',
+          noreq:'',
+          ireq_id:''
+      };
+    },
+    updateMail(){
+      this.axios.post('/api/sendMailtoRequestor',this.mail,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.cancelMail();
+      });
     },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
@@ -1509,8 +1621,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.attachment-image {
-    width: 50px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
+  .attachment-image {
+      width: 50px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
 </style>

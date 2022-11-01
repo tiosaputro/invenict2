@@ -51,7 +51,7 @@
           <template #loading>
             Loading Master Peripheral data. Please wait.
           </template>
-          <Column header="Serial Number" :sortable="true">
+          <Column field="invent_sn" header="Serial Number" :sortable="true">
            <template #body="slotProps">
               <p @click="detailKode(slotProps.data.invent_code_dtl)" style="cursor:pointer;"> 
                 {{slotProps.data.invent_sn}}
@@ -303,8 +303,10 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-master-detail/' +invent_code_dtl,{headers: {'Authorization': 'Bearer '+this.token}});
-          this.getMaster();
+          this.axios.delete('/api/delete-master-detail/' +invent_code_dtl,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getMaster();
+          });
         },
         reject: () => {},
       });
@@ -314,9 +316,6 @@ export default {
     },
     CetakExcel(){
       window.open('api/report-master-excel');
-      // ,{ headers: 
-      //  { 'Authorization': 'Bearer '+this.token}, 
-      //  'Accept': 'application/json'});
     },
   },
 };

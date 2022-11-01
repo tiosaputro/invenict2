@@ -1,0 +1,1 @@
+{{$body}} {{$Ict}} {{$footer}}

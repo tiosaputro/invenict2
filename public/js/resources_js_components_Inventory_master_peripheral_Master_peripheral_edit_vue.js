@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      loading: false,
       aktif: false,
       displayImage: false,
       submitted: false,
@@ -57,37 +58,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    // Scan(){
-    //   this.aktif = false;
-    //   let routeData = this.$router.resolve({name: 'Scan'});
-    //   window.open(routeData.href, '_blank');
-    //   setTimeout( () => this.getBarcode(),2000);
-    // },
-    // hapus(){
-    //   this.master.invent_barcode = null;
-    //   this.aktif = true;
-    // },
-    // getBarcode(){
-    //   this.master.invent_barcode = localStorage.getItem("barcode");
-    //   if(!this.master.invent_barcode){
-    //     setTimeout( () => this.getBarcode(),3000);
-    //   }
-    // }, 
-    //   getBisnis(){
-    //     this.axios.get('/api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-    //       this.bisnis = response.data;
-    //     });
-    //   },
-    // getMerk(){
-    //   this.axios.get('/api/getMerk', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-    //       this.merks = response.data;
-    //   });
-    // },
-    // getKondisi(){
-    //   this.axios.get('/api/getKondisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-    //       this.kondi = response.data;
-    //   });
-    // },
     getMaster: function getMaster() {
       var _this2 = this;
 
@@ -119,39 +89,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    //   fileImage(event) {
-    //   this.invent_photo = event.target.files[0];
-    //   this.displayImage = true;
-    //   this.preview = URL.createObjectURL(event.target.files[0]);
-    //   this.createImage(this.invent_photo);
-    //   },
-    //   createImage(invent_photo) {
-    //   var image = new Image();
-    //   var reader = new FileReader();
-    //   var vm = this.master;
-    //   reader.onload = function (e) {
-    //     vm.image = e.target.result;
-    //   };
-    //   reader.readAsDataURL(invent_photo);
-    // },
     UpdateMaster: function UpdateMaster() {
       var _this3 = this;
 
+      this.loading = true;
       this.submitted = true;
 
-      if ( // this.master.invent_desc != null &&
-      // this.master.invent_brand != null &&
-      this.master.invent_type != null // this.master.invent_sn != null &&
-      // this.master.invent_tgl_perolehan != null &&
-      // this.master.invent_lama_garansi != null &&
-      // this.master.invent_kondisi != null &&
-      // this.master.invent_barcode != null &&
-      // this.master.invent_bu != null 
-      // this.master.invent_lokasi_update != null &&
-      // this.master.invent_pengguna_update != null &&
-      // this.master.invent_lokasi_previous != null &&
-      // this.master.invent_pengguna_previous != null  
-      ) {
+      if (this.master.invent_type != null) {
         this.axios.put('/api/update-mas/' + this.$route.params.code, this.master, {
           headers: {
             'Authorization': 'Bearer ' + this.token
@@ -168,6 +112,8 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Success Update"
           });
         })["catch"](function (error) {
+          _this3.loading = false;
+
           if (error.response.status == 422) {
             _this3.submitted = false;
             _this3.errors = error.response.data.errors;
@@ -289,6 +235,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
 
+  var _component_ProgressSpinner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProgressSpinner");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
@@ -342,21 +290,32 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue", "class"]), $data.submitted && !$data.master.invent_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, "Type Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                  <label style=\"width:155px\">S/N</label>\r\n                    <div class=\"col-3 md-6\">\r\n                    <InputText\r\n                      type =\"text\"\r\n                      v-model=\"master.invent_sn\"\r\n                      placeholder=\"Masukan S/N\"\r\n                      :class=\"{ 'p-invalid': submitted && !master.invent_sn }\"\r\n                    />\r\n                    <small class=\"p-error\" v-if=\"submitted && !master.invent_sn\"\r\n                        >S/N Belum Diisi.\r\n                      </small>\r\n                  </div>\r\n              </div>\r\n              <div class=\"field grid\">\r\n                    <label style=\"width:155px\">Tgl. Perolehan</label>\r\n                    <div class=\"col-12 md:col-6\">\r\n                      <DatePicker v-model=\"master.invent_tgl_perolehan\" :masks=\"mask\">\r\n                        <template v-slot=\"{ inputValue, togglePopover }\">\r\n                         <div class=\"flex items-center\"> \r\n                          <input\r\n                            class=\"bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none\"\r\n                            :value=\"inputValue\"\r\n                            @click=\"togglePopover\"\r\n                            placeholder=\"Pilih Tanggal\"\r\n                            readonly\r\n                          />\r\n                      <Button icon=\"pi pi-calendar\" v-if=\"!master.invent_tgl_perolehan\" @click=\"togglePopover\"/>\r\n                      <Button icon=\"pi pi-trash\" v-tooltip=\"'Click to delete'\" class=\"p-button-danger\" v-else @click=\"master.invent_tgl_perolehan = null\" />\r\n                        </div>\r\n                        </template>\r\n                      </DatePicker>\r\n                      <small class=\"p-error\" v-if=\"submitted && !master.invent_tgl_perolehan\"\r\n                        > Belum Diisi.\r\n                      </small>\r\n                  </div>\r\n                </div>\r\n               <div class=\"field grid\">\r\n                  <label style=\"width:155px\">Lama Garansi</label>\r\n                    <div class=\"col-12 md:col-6\">\r\n                      <div class=\"p-inputgroup\">\r\n                      <InputNumber\r\n                          v-model=\"master.invent_lama_garansi\"\r\n                          placeholder=\"Masukan Garansi\"\r\n                        />\r\n                        <span class=\"p-inputgroup-addon\"> Tahun </span>\r\n                    </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"field grid\">\r\n                <label style=\"width:155px\">Kondisi</label>\r\n                 <div class=\"col-4\">\r\n                  <Dropdown \r\n                    v-model=\"master.invent_kondisi\"\r\n                    :options=\"kondi\"\r\n                    :showClear=\"true\"\r\n                    :filter=\"true\"\r\n                    optionLabel=\"name\"\r\n                    optionValue=\"code\"\r\n                    placeholder=\"Pilih Kondisi\"\r\n                    :class=\"{ 'p-invalid': submitted && !master.invent_kondisi }\"\r\n                  />                 \r\n                    <small class=\"p-error\" v-if=\"submitted && !master.invent_kondisi\"\r\n                      >Bisnis Unit Belum Diisi.\r\n                    </small>\r\n               </div>\r\n              </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                <label style=\"width:155px\">QR-Code</label>\r\n                 <div class=\"col-12 md:col-6\">\r\n                <div class=\"p-inputgroup\">\r\n                  <InputText v-model=\"master.invent_barcode\" readonly v-if=\"master.invent_barcode\"/>\r\n                  <img :src=\"'/assets/loading2.gif'\" height=\"50\" class=\"mb-3\" v-if=\"!aktif && !master.invent_barcode\" >\r\n                 <Button icon=\"pi pi-trash\" class=\"p-button-danger\" v-if=\"master.invent_barcode\" @click=\"hapus()\" v-tooltip=\"'Click to delete'\"/>\r\n                  <Button icon=\"bi bi-qr-code-scan\" v-if=\"aktif\" class=\"p-button p-button-info\" @click=\"Scan()\" v-tooltip=\"'Click to scan'\" />\r\n                </div>\r\n                      <small v-if=\"submitted && !master.invent_barcode\" class=\"p-error\">\r\n                          QR-Code Belum Diisi.\r\n                      </small>\r\n                </div>\r\n              </div>  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                <label style=\"width:155px\">Bisnis Unit</label>\r\n                  <div class=\"col-4\">\r\n                    <Dropdown \r\n                    v-model=\"master.invent_bu\"\r\n                    :options=\"bisnis\"\r\n                    optionLabel=\"name\"\r\n                    :showClear=\"true\"\r\n                    :filter=\"true\"\r\n                    optionValue=\"code\"\r\n                    placeholder=\"Pilih Bisnis Unit\"\r\n                    :class=\"{ 'p-invalid': submitted && !master.invent_bu }\"\r\n                    />\r\n                    <small class=\"p-error\" v-if=\"submitted && !master.invent_bu\"\r\n                        >Bisnis Unit Belum Diisi.\r\n                      </small>\r\n                </div>\r\n              </div>\r\n              <div class=\"field grid\">\r\n                <label style=\"width:155px\">Lokasi Terakhir</label>\r\n                    <div class=\"col-3 md-6\">\r\n                      <InputText\r\n                        type=\"text\"\r\n                        v-model=\"master.invent_lokasi_update\"\r\n                        placeholder=\"Masukan Lokasi terakhir\"\r\n                        disabled\r\n                      />\r\n                  </div>\r\n                </div>\r\n                <div class=\"field grid\">\r\n                  <label style=\"width:155px\">Pengguna Terakhir</label>\r\n                    <div class=\"col-3 md-6\">\r\n                      <InputText\r\n                        type=\"text\"\r\n                        v-model=\"master.invent_pengguna_update\"\r\n                        placeholder=\"Masukan Pengguna Terakhir\"\r\n                        disabled\r\n                      />\r\n                    </div>\r\n                </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  , ["modelValue", "class"]), $data.submitted && !$data.master.invent_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, "Type Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 0,
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
     type: "submit"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+    key: 1,
     label: "Cancel",
     "class": "p-button-rounded p-button-secondary mr-2",
     icon: "pi pi-times",
     onClick: _cache[4] || (_cache[4] = function ($event) {
       return _ctx.$router.push('/master-peripheral');
     })
-  })])], 32
+  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ProgressSpinner, {
+    key: 2,
+    style: {
+      "width": "50px",
+      "height": "50px"
+    },
+    strokeWidth: "8",
+    fill: "var(--surface-ground)",
+    animationDuration: ".5s"
+  }))])], 32
   /* HYDRATE_EVENTS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-sm-6\">\r\n            <div class=\"field grid\">\r\n              <label style=\"width:155px\">Nama</label>\r\n                <div class=\"col-12 md:col-4\">\r\n                  <InputText\r\n                    type =\"text\"\r\n                    v-model=\"master.invent_desc\"\r\n                    placeholder=\"Masukan Nama\"\r\n                    disabled\r\n                  />\r\n                </div>\r\n                </div> \r\n                <div class=\"field grid\">\r\n                  <label style=\"width:155px\"></label>\r\n                    <div class=\"col-10 md-6\">\r\n                      <div class=\"card\" style=\"height: 19.5rem;\">\r\n                        <img :src=\"preview\" class=\"master-image\" v-if=\"preview\"/>\r\n                        <img :src=\"'/master_peripheral/' +master.invent_photo\" class=\"master-image\" v-else />\r\n                      </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"field grid\">\r\n                  <label style=\"width:155px\"></label>\r\n                    <div class=\"p-col-10 p-md-6\">\r\n                      <input type=\"file\" name=\"foto\" ref=\"fileInput\" class=\"form-control\" @change=\"fileImage\" />\r\n                    </div>\r\n                </div>\r\n                <div class=\"field grid\">\r\n                  <label style=\"width:155px\">Lokasi Sebelumnya</label>\r\n                    <div class=\"col-12 md:col-4\">\r\n                      <InputText\r\n                          type=\"text\"\r\n                          v-model=\"master.invent_lokasi_previous\"\r\n                          placeholder=\"Masukan Lokasi sebelumnya\"\r\n                          disabled\r\n                      />\r\n                    </div>\r\n                </div>\r\n                <div class=\"field grid\">\r\n                  <label style=\"width:155px\">Penguna Sebelumnya</label>\r\n                    <div class=\"col-12 md:col-4\">\r\n                       <InputText\r\n                        type=\"text\"\r\n                        v-model=\"master.invent_pengguna_previous\"\r\n                        placeholder=\"Masukan Pengguna sebelumnya\"\r\n                        disabled\r\n                    />\r\n                    </div>\r\n                </div>\r\n            </div> ")])])]);
+  )])])])]);
 }
 
 /***/ }),

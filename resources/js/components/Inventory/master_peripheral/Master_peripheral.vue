@@ -49,13 +49,13 @@
           <Column field="invent_desc" header="Items" :sortable="true" style="min-width:8rem"/>
           <Column field="invent_brand" header="Merk" :sortable="true" style="min-width:8rem"/>
           <Column field="invent_type" header="Type" :sortable="true" style="min-width:8rem"/>
-          <Column field="countstok" header="Stok" :sortable="true" style="min-width:8rem"/>
+          <Column field="countstok" header="Qty" :sortable="true" style="min-width:8rem"/>
           <Column headerStyle="min-width:6rem">
             <template #body="slotProps">
               <Button
                 class="p-button-rounded p-button-secondary mr-2 mt-2"
                 icon="pi pi-info-circle"
-                v-tooltip.left="'Click for detail peripheral'"
+                v-tooltip.bottom="'Click for detail peripheral'"
                 @click="$router.push({
                   name: 'Master Peripheral Detail',
                   params: { code: slotProps.data.invent_code }, })"
@@ -75,7 +75,7 @@
                 icon="pi pi-trash"
                 class="p-button-rounded p-button-danger mr-2 mt-2"
                 @click="DeleteMas(slotProps.data.invent_code)"
-                v-tooltip.top="'Click to delete'"
+                v-tooltip.bottom="'Click to delete'"
               />
             </template>
           </Column>
@@ -147,14 +147,17 @@ export default {
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
+          this.loading = true;
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-mas/' +invent_code,{headers: {'Authorization': 'Bearer '+this.token}});
-          this.getMaster();
+          this.axios.delete('api/delete-mas/' +invent_code,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getMaster();
+          });
         },
         reject: () => {},
       });

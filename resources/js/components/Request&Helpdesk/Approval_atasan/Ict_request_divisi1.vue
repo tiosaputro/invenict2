@@ -46,8 +46,8 @@
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
                         <span :class="'user-request status-' + slotProps.data.ireq_statuss.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -128,8 +128,8 @@
                       {{ formatDate(slotProps.data.ireq_date) }}
                     </template>
                   </Column>
-                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
                       <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -287,7 +287,7 @@
                       <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <Column style="min-width:8rem">
+                  <Column>
                     <template #body="slotProps">
                       <Button
                         class="p-button-rounded p-button-secondary mr-2"

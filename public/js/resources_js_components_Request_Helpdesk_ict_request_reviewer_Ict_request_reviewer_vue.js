@@ -19,6 +19,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      mail: {
+        body: '',
+        footer: '',
+        subject: '',
+        from: '',
+        to: '',
+        noreq: '',
+        ireq_id: ''
+      },
+      dialogSendMail: false,
       active1: JSON.parse(localStorage.getItem('active1')),
       dialogAssign: false,
       dialogRemark: false,
@@ -75,9 +85,45 @@ __webpack_require__.r(__webpack_exports__);
     this.getIct();
   },
   methods: {
-    SendEmail: function SendEmail(usr_email) {
-      var mail = usr_email + "@emp.id";
-      window.open("mailto:" + mail);
+    SendEmail: function SendEmail(usr_email, ireq_id) {
+      this.axios.get('/api/detailrequest-tomail/' + ireq_id, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (res) {
+        // this.dialogSendMail = true;
+        // var frommail = usr_email + "@emp.id";
+        // this.mail.from = res.data.fromemail;
+        // this.mail.to = frommail;
+        // this.mail.ireq_id = ireq_id;
+        // this.mail.subject = res.data.noreq;
+        // this.mail.footer = "Terimakasih, \n\n\n"+res.data.usr_fullname;
+        // this.mail.body = "Dear Mr/Mrs, "+res.data.requestor+"\n\n";
+        window.open("mailto:" + usr_email + "?subject=" + res.data.noreq);
+      });
+    },
+    cancelMail: function cancelMail() {
+      this.dialogSendMail = false;
+      this.mail = {
+        body: '',
+        footer: '',
+        subject: '',
+        from: '',
+        to: '',
+        noreq: '',
+        ireq_id: ''
+      };
+    },
+    updateMail: function updateMail() {
+      var _this = this;
+
+      this.axios.post('/api/sendMailtoRequestor', this.mail, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function () {
+        _this.cancelMail();
+      });
     },
     getDetail: function getDetail(ireq_attachment) {
       var page = "http://localhost:8000" + '/attachment_request/' + ireq_attachment;
@@ -121,53 +167,53 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push('/ict-request-reviewer/detail-penugasan/' + ireq_id);
     },
     getIct: function getIct() {
-      var _this = this;
+      var _this2 = this;
 
       this.axios.get('api/get-data-reviewer', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this.permohonan = response.data.ict;
-        _this.showPersonelPermohonan = _this.permohonan.map(function (x) {
+        _this2.permohonan = response.data.ict;
+        _this2.showPersonelPermohonan = _this2.permohonan.map(function (x) {
           return x.ireq_count_status;
         });
-        _this.showRemarkPermohonan = _this.permohonan.map(function (x) {
+        _this2.showRemarkPermohonan = _this2.permohonan.map(function (x) {
           return x.count_remark;
         });
-        _this.loading = false;
-        _this.atasandivisi = response.data.ict1;
-        _this.showPersonelAtasanDivisi = _this.atasandivisi.map(function (x) {
+        _this2.loading = false;
+        _this2.atasandivisi = response.data.ict1;
+        _this2.showPersonelAtasanDivisi = _this2.atasandivisi.map(function (x) {
           return x.ireq_count_status;
         });
-        _this.showRemarkAtasanDivisi = _this.atasandivisi.map(function (x) {
+        _this2.showRemarkAtasanDivisi = _this2.atasandivisi.map(function (x) {
           return x.count_remark;
         });
-        _this.manager = response.data.ict2;
-        _this.showPersonelmanager = _this.manager.map(function (x) {
+        _this2.manager = response.data.ict2;
+        _this2.showPersonelmanager = _this2.manager.map(function (x) {
           return x.ireq_count_status;
         });
-        _this.showRemarkManager = _this.manager.map(function (x) {
+        _this2.showRemarkManager = _this2.manager.map(function (x) {
           return x.count_remark;
         });
-        _this.showRemarkApprover2Manager = _this.manager.map(function (x) {
+        _this2.showRemarkApprover2Manager = _this2.manager.map(function (x) {
           return x.count_remark_approver2;
         });
-        _this.reject = response.data.ict3;
-        _this.penugasan = response.data.ict7;
-        _this.showRemarkPenugasan = _this.penugasan.map(function (x) {
+        _this2.reject = response.data.ict3;
+        _this2.penugasan = response.data.ict7;
+        _this2.showRemarkPenugasan = _this2.penugasan.map(function (x) {
           return x.count_remark;
         });
-        _this.showReasonPersonnel = _this.penugasan.map(function (x) {
+        _this2.showReasonPersonnel = _this2.penugasan.map(function (x) {
           return x.countreason;
         });
-        _this.sedangDikerjakan = response.data.ict4;
-        _this.sudahDikerjakan = response.data.ict5;
-        _this.selesai = response.data.ict6;
+        _this2.sedangDikerjakan = response.data.ict4;
+        _this2.sudahDikerjakan = response.data.ict5;
+        _this2.selesai = response.data.ict6;
         localStorage.setItem('active1', 0);
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this.$toast.add({
+          _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -176,12 +222,12 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this.$router.push('/login');
+            return _this2.$router.push('/login');
           }, 2000);
         }
 
         if (error.response.status == 403) {
-          _this.$router.push('/access');
+          _this2.$router.push('/access');
         }
       });
     },
@@ -189,7 +235,7 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
     Submit: function Submit(ireq_id) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$confirm.require({
         message: "Are you sure to submit this request?",
@@ -199,28 +245,28 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this2.loading = true;
+          _this3.loading = true;
 
-          _this2.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Success Submit",
             life: 3000
           });
 
-          _this2.axios.get('api/sapr/' + ireq_id, {
+          _this3.axios.get('api/sapr/' + ireq_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this2.token
+              'Authorization': 'Bearer ' + _this3.token
             }
           }).then(function () {
-            _this2.getIct();
+            _this3.getIct();
           });
         },
         reject: function reject() {}
       });
     },
     Remark: function Remark(ireq_id) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.loading = true;
       this.remark.id = ireq_id;
@@ -229,9 +275,9 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (res) {
-        _this3.remark.remark = res.data.ireq_verificator_remark;
-        _this3.dialogRemark = true;
-        _this3.loading = false;
+        _this4.remark.remark = res.data.ireq_verificator_remark;
+        _this4.dialogRemark = true;
+        _this4.loading = false;
       });
     },
     cancelRemark: function cancelRemark() {
@@ -240,7 +286,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogRemark = false;
     },
     updateRemark: function updateRemark() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.dialogRemark = false;
       this.loading = true;
@@ -249,19 +295,19 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this4.$toast.add({
+        _this5.$toast.add({
           severity: "info",
           summary: "Success",
           detail: "successfully added a remark",
           life: 2000
         });
 
-        _this4.remark = {
+        _this5.remark = {
           id: '',
           remark: ''
         };
 
-        _this4.getIct();
+        _this5.getIct();
       });
     },
     Reject: function Reject(ireq_id) {
@@ -274,7 +320,7 @@ __webpack_require__.r(__webpack_exports__);
       this.rbr.ket = null;
     },
     updateReject: function updateReject() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.submitted = true;
 
@@ -284,60 +330,29 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this5.dialogReject = false;
-          _this5.rbr.id = null;
-          _this5.rbr.ket = null;
-          _this5.submitted = false;
+          _this6.dialogReject = false;
+          _this6.rbr.id = null;
+          _this6.rbr.ket = null;
+          _this6.submitted = false;
 
-          _this5.$toast.add({
+          _this6.$toast.add({
             severity: "info",
             summary: "Success",
             detail: "Successfully rejected the request",
             life: 2000
           });
 
-          _this5.loading = true;
+          _this6.loading = true;
 
-          _this5.getIct();
+          _this6.getIct();
         });
       }
     },
     ApproveAtasan: function ApproveAtasan(ireq_id) {
-      var _this6 = this;
-
-      this.$confirm.require({
-        message: "Are you sure this request need approval from higher level?",
-        header: "Confirmation",
-        icon: "pi pi-info-circle",
-        acceptClass: "p-button",
-        acceptLabel: "Yes",
-        rejectLabel: "No",
-        accept: function accept() {
-          _this6.loading = true;
-
-          _this6.$toast.add({
-            severity: "info",
-            summary: "Confirmed",
-            detail: "Success Update Request",
-            life: 2000
-          });
-
-          _this6.axios.get('/api/naa/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this6.token
-            }
-          }).then(function () {
-            _this6.getIct();
-          });
-        },
-        reject: function reject() {}
-      });
-    },
-    ApproveManager: function ApproveManager(ireq_id) {
       var _this7 = this;
 
       this.$confirm.require({
-        message: "Are you sure this request need approval from ICT Manager?",
+        message: "Are you sure this request need approval from higher level?",
         header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
@@ -353,7 +368,7 @@ __webpack_require__.r(__webpack_exports__);
             life: 2000
           });
 
-          _this7.axios.get('/api/nam/' + ireq_id, {
+          _this7.axios.get('/api/naa/' + ireq_id, {
             headers: {
               'Authorization': 'Bearer ' + _this7.token
             }
@@ -364,8 +379,39 @@ __webpack_require__.r(__webpack_exports__);
         reject: function reject() {}
       });
     },
-    AssignPerRequest: function AssignPerRequest(ireq_id) {
+    ApproveManager: function ApproveManager(ireq_id) {
       var _this8 = this;
+
+      this.$confirm.require({
+        message: "Are you sure this request need approval from ICT Manager?",
+        header: "Confirmation",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
+        accept: function accept() {
+          _this8.loading = true;
+
+          _this8.$toast.add({
+            severity: "info",
+            summary: "Confirmed",
+            detail: "Success Update Request",
+            life: 2000
+          });
+
+          _this8.axios.get('/api/nam/' + ireq_id, {
+            headers: {
+              'Authorization': 'Bearer ' + _this8.token
+            }
+          }).then(function () {
+            _this8.getIct();
+          });
+        },
+        reject: function reject() {}
+      });
+    },
+    AssignPerRequest: function AssignPerRequest(ireq_id) {
+      var _this9 = this;
 
       this.assign.id = ireq_id;
       this.axios.get('api/get-pekerja', {
@@ -373,12 +419,12 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this8.petugas = response.data;
+        _this9.petugas = response.data;
       });
       this.dialogAssign = true;
     },
     updateAssign: function updateAssign() {
-      var _this9 = this;
+      var _this10 = this;
 
       this.submitted = true;
 
@@ -388,23 +434,23 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this9.assign = {
+          _this10.assign = {
             id: null,
             name: null
           };
-          _this9.submitted = false;
-          _this9.dialogAssign = false;
+          _this10.submitted = false;
+          _this10.dialogAssign = false;
 
-          _this9.$toast.add({
+          _this10.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully Assignment",
             life: 2000
           });
 
-          _this9.loading = true;
+          _this10.loading = true;
 
-          _this9.getIct();
+          _this10.getIct();
         });
       }
     },
@@ -418,7 +464,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = false;
     },
     ClosingPerDetail: function ClosingPerDetail(ireqd_id, ireq_id) {
-      var _this10 = this;
+      var _this11 = this;
 
       this.$confirm.require({
         message: "Are you sure to close this request?",
@@ -428,28 +474,28 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this10.loading = true;
+          _this11.loading = true;
 
-          _this10.$toast.add({
+          _this11.$toast.add({
             severity: "info",
             summary: "Success",
             detail: "Closing request successful",
             life: 3000
           });
 
-          _this10.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_id, {
+          _this11.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this10.token
+              'Authorization': 'Bearer ' + _this11.token
             }
           }).then(function () {
-            _this10.getIct();
+            _this11.getIct();
           });
         },
         reject: function reject() {}
       });
     },
     detailRequest: function detailRequest(ireq_id) {
-      var _this11 = this;
+      var _this12 = this;
 
       this.displayDetailRequest = true;
       this.loadingDetail = true;
@@ -458,13 +504,13 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this11.detail = response.data;
-        _this11.ireq_no = response.data[0].ireq_no;
-        _this11.loadingDetail = false;
+        _this12.detail = response.data;
+        _this12.ireq_no = response.data[0].ireq_no;
+        _this12.loadingDetail = false;
       });
     },
     CetakPdf: function CetakPdf(ireq_id) {
-      var _this12 = this;
+      var _this13 = this;
 
       this.loading = true;
       this.axios.get('api/print-out-ict-request/' + ireq_id, {
@@ -475,11 +521,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this12.loading = false;
+        _this13.loading = false;
       });
     },
     CetakPdfPermohonan: function CetakPdfPermohonan() {
-      var _this13 = this;
+      var _this14 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-permohonan', {
@@ -490,11 +536,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this13.loading = false;
+        _this14.loading = false;
       });
     },
     CetakExcelPermohonan: function CetakExcelPermohonan() {
-      var _this14 = this;
+      var _this15 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -512,11 +558,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this14.loading = false;
+        _this15.loading = false;
       });
     },
     CetakPdfAtasanDivisi: function CetakPdfAtasanDivisi() {
-      var _this15 = this;
+      var _this16 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi', {
@@ -527,11 +573,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this15.loading = false;
+        _this16.loading = false;
       });
     },
     CetakExcelAtasanDivisi: function CetakExcelAtasanDivisi() {
-      var _this16 = this;
+      var _this17 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -549,11 +595,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this16.loading = false;
+        _this17.loading = false;
       });
     },
     CetakPdfIctManager: function CetakPdfIctManager() {
-      var _this17 = this;
+      var _this18 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-ict-manager', {
@@ -564,11 +610,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=no", "target=_blank");
         myWindow.document.write(responseHtml);
-        _this17.loading = false;
+        _this18.loading = false;
       });
     },
     CetakExcelIctManager: function CetakExcelIctManager() {
-      var _this18 = this;
+      var _this19 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -586,11 +632,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this18.loading = false;
+        _this19.loading = false;
       });
     },
     CetakPdfReject: function CetakPdfReject() {
-      var _this19 = this;
+      var _this20 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-reject', {
@@ -601,11 +647,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this19.loading = false;
+        _this20.loading = false;
       });
     },
     CetakExcelReject: function CetakExcelReject() {
-      var _this20 = this;
+      var _this21 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -623,11 +669,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this20.loading = false;
+        _this21.loading = false;
       });
     },
     CetakPdfAssignmentRequest: function CetakPdfAssignmentRequest() {
-      var _this21 = this;
+      var _this22 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-assignment-request', {
@@ -638,11 +684,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this21.loading = false;
+        _this22.loading = false;
       });
     },
     CetakExcelAssignmentRequest: function CetakExcelAssignmentRequest() {
-      var _this22 = this;
+      var _this23 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -660,11 +706,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this22.loading = false;
+        _this23.loading = false;
       });
     },
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
-      var _this23 = this;
+      var _this24 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan', {
@@ -675,11 +721,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this23.loading = false;
+        _this24.loading = false;
       });
     },
     CetakExcelSedangDikerjakan: function CetakExcelSedangDikerjakan() {
-      var _this24 = this;
+      var _this25 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -697,11 +743,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this24.loading = false;
+        _this25.loading = false;
       });
     },
     CetakPdfSudahDikerjakan: function CetakPdfSudahDikerjakan() {
-      var _this25 = this;
+      var _this26 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan', {
@@ -712,11 +758,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this25.loading = false;
+        _this26.loading = false;
       });
     },
     CetakExcelSudahDikerjakan: function CetakExcelSudahDikerjakan() {
-      var _this26 = this;
+      var _this27 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -734,11 +780,11 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this26.loading = false;
+        _this27.loading = false;
       });
     },
     CetakPdfSelesai: function CetakPdfSelesai() {
-      var _this27 = this;
+      var _this28 = this;
 
       this.loading = true;
       this.axios.get('api/report-ict-pdf-reviewer-selesai', {
@@ -749,11 +795,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this27.loading = false;
+        _this28.loading = false;
       });
     },
     CetakExcelSelesai: function CetakExcelSelesai() {
-      var _this28 = this;
+      var _this29 = this;
 
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
@@ -771,7 +817,7 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this28.loading = false;
+        _this29.loading = false;
       });
     }
   }
@@ -1141,6 +1187,118 @@ var _hoisted_82 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_83 = {
   "class": "col"
 };
+var _hoisted_84 = {
+  "class": "p-fluid"
+};
+var _hoisted_85 = {
+  "class": "field grid"
+};
+
+var _hoisted_86 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed w-9rem",
+    style: {
+      "width": "100px"
+    }
+  }, "Subjek", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_87 = {
+  "class": "col"
+};
+var _hoisted_88 = {
+  "class": "p-fluid"
+};
+var _hoisted_89 = {
+  "class": "field grid"
+};
+
+var _hoisted_90 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed w-9rem",
+    style: {
+      "width": "100px"
+    }
+  }, "From Email", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_91 = {
+  "class": "col"
+};
+var _hoisted_92 = {
+  "class": "p-fluid"
+};
+var _hoisted_93 = {
+  "class": "field grid"
+};
+
+var _hoisted_94 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed w-9rem",
+    style: {
+      "width": "100px"
+    }
+  }, "To Email", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_95 = {
+  "class": "col"
+};
+var _hoisted_96 = {
+  "class": "p-fluid"
+};
+var _hoisted_97 = {
+  "class": "field grid"
+};
+
+var _hoisted_98 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed w-9rem",
+    style: {
+      "width": "100px"
+    }
+  }, "Body Email", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_99 = {
+  "class": "col"
+};
+var _hoisted_100 = {
+  key: 0,
+  "class": "p-error"
+};
+var _hoisted_101 = {
+  "class": "p-fluid"
+};
+var _hoisted_102 = {
+  "class": "field grid"
+};
+
+var _hoisted_103 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": "col-fixed w-9rem",
+    style: {
+      "width": "100px"
+    }
+  }, "Footer Mail", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_104 = {
+  "class": "col",
+  style: {
+    "white-space": "pre"
+  }
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -1340,7 +1498,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
                     "class": "p-button-rounded p-button-warning mr-2 mt-2",
                     onClick: function onClick($event) {
-                      return $options.SendEmail(slotProps.data.usr_email);
+                      return $options.SendEmail(slotProps.data.usr_email, slotProps.data.ireq_id);
                     },
                     icon: "bi bi-envelope-check-fill"
                   }, null, 8
@@ -1841,7 +1999,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 header: "Remark ICT Manager",
                 sortable: true,
                 style: {
-                  "min-width": "12rem"
+                  "min-width": "14rem"
                 }
               })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
                 headerStyle: "min-width:15rem"
@@ -3163,6 +3321,94 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <small v-if=\"submitted && !rbr.ket\" class=\"p-error\">\r\n                            Reason not filled\r\n                            </small> ")])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["visible"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    visible: $data.dialogSendMail,
+    "onUpdate:visible": _cache[46] || (_cache[46] = function ($event) {
+      return $data.dialogSendMail = $event;
+    }),
+    style: {
+      width: '400px'
+    },
+    header: "Dialog Send Mail",
+    modal: true,
+    "class": "fluid grid"
+  }, {
+    footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Send",
+        icon: "bi bi-envelope-check-fill",
+        onClick: _cache[44] || (_cache[44] = function ($event) {
+          return $options.updateMail();
+        }),
+        "class": "p-button",
+        autofocus: ""
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+        label: "Cancel",
+        onClick: _cache[45] || (_cache[45] = function ($event) {
+          return $options.cancelMail();
+        }),
+        "class": "p-button-text"
+      })];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [_hoisted_86, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_87, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        type: "text",
+        modelValue: $data.mail.subject,
+        "onUpdate:modelValue": _cache[39] || (_cache[39] = function ($event) {
+          return $data.mail.subject = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_89, [_hoisted_90, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_91, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        type: "text",
+        modelValue: $data.mail.from,
+        "onUpdate:modelValue": _cache[40] || (_cache[40] = function ($event) {
+          return $data.mail.from = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_92, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_93, [_hoisted_94, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_95, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+        modelValue: $data.mail.to,
+        "onUpdate:modelValue": _cache[41] || (_cache[41] = function ($event) {
+          return $data.mail.to = $event;
+        }),
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_97, [_hoisted_98, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_99, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        modelValue: $data.mail.body,
+        "onUpdate:modelValue": _cache[42] || (_cache[42] = function ($event) {
+          return $data.mail.body = $event;
+        }),
+        rows: "5",
+        placeholder: "",
+        style: {
+          "white-space": "pre"
+        },
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+          'p-invalid': $data.submitted && !$data.mail.body
+        })
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "class"]), $data.submitted && !$data.mail.body ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_100, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_101, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_102, [_hoisted_103, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_104, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+        modelValue: $data.mail.footer,
+        "onUpdate:modelValue": _cache[43] || (_cache[43] = function ($event) {
+          return $data.mail.footer = $event;
+        }),
+        rows: "4",
+        autoResize: true,
+        disabled: ""
+      }, null, 8
+      /* PROPS */
+      , ["modelValue"])])])])];
     }),
     _: 1
     /* STABLE */

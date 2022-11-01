@@ -229,6 +229,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/detail-request-reviewer/{code}','IctController@detailRequestReviewer');
     Route::get('/get-remark-reviewer/{ireq_id}','IctController@getRemarkReviewer');
     Route::post('/save-remark-reviewer','IctController@SaveRemarkReviewer');
+    Route::get('/detailrequest-tomail/{ireq_id}','IctController@detailRequestToMail');
+    Route::post('/sendMailtoRequestor','IctController@sendMailtoRequestor');
 
     //ict request manager
     Route::get('/get-data-manager','IctController@getDataManager');

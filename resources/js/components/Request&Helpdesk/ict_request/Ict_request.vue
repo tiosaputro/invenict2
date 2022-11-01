@@ -49,6 +49,7 @@
                     <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:10rem"/>
                     <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
                     <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                    <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" v-if="this.showRemarkPermohonan.some(el=> el > 0)" style="min-width:12rem"/>
                     <Column headerStyle="min-width:13rem">
                       <template #body="slotProps">
                         <Button
@@ -149,6 +150,7 @@
                         <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                       </template>
                     </Column>
+                    <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" v-if="this.showRemarkReviewer.some(el=> el > 0)" style="min-width:12rem"/>
                     <Column headerStyle="min-width:10rem">
                       <template #body="slotProps">
                         <Button
@@ -225,6 +227,7 @@
                     <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                   </template>
                   </Column>
+                  <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" v-if="this.showRemarkVerified.some(el=> el > 0)" style="min-width:12rem"/>
                   <Column style="min-width:8rem">
                     <template #body="slotProps">
                       <Button
@@ -738,6 +741,9 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+      showRemarkPermohonan:[],
+      showRemarkReviewer:[],
+      showRemarkVerified:[],
       reason:{ id :null, ket:null,ireq_id:null},
       must:false,
       submitted:false,
@@ -869,14 +875,17 @@ export default {
     getIct(){
       this.axios.get('api/get-ict',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.ict = response.data.ict;
+          this.showRemarkPermohonan = this.ict.map((x)=>x.countremark_reviewer);
           this.loading = false;
           this.verif = response.data.ict1;
+          this.showRemarkVerified = this.verif.map((x)=>x.countremark_reviewer);
           this.reject = response.data.ict2
           this.penugasan = response.data.ict8;
           this.sedangDikerjakan = response.data.ict3;
           this.sudahDikerjakan = response.data.ict4;
           this.selesai = response.data.ict5;
           this.reviewer = response.data.ict6;
+          this.showRemarkReviewer = this.reviewer.map((x)=>x.countremark_reviewer);
           localStorage.setItem('active',0);
         }).catch(error=>{
           if (error.response.status == 401){

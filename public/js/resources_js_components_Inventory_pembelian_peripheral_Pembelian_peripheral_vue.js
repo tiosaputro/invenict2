@@ -97,9 +97,11 @@ __webpack_require__.r(__webpack_exports__);
             headers: {
               'Authorization': 'Bearer ' + _this2.token
             }
-          });
+          }).then(function () {
+            _this2.loading = true;
 
-          _this2.getPurchase();
+            _this2.getPurchase();
+          });
         },
         reject: function reject() {}
       });

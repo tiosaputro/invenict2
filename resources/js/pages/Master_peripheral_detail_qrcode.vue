@@ -8,6 +8,7 @@
           :header="this.header"
           :modal="true"
           class="fluid"
+          :closable=false
         >
         <!-- <div class="hidden lg:inline-flex row"> -->
           <!-- <div class="col-sm-6"> -->

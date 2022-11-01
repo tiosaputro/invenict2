@@ -11,7 +11,7 @@
                         <span class="text-600 text-center">You do not have the necesary permisions. Please contact admins.</span>
                         <img src="layout/images/asset-access.svg" alt="Access denied" class="mt-5" width="80%"/>
                         <div class="col-12 mt-5 text-center">
-                            <Button icon="bi bi-arrow-left" class="p-button-raised p-button-text"  @click="$router.push('/dashboard')" label="Go to Dashboard"></Button>
+                            <Button icon="bi bi-arrow-left" class="p-button-raised p-button-text"  @click="this.router.push('/dashboard')" label="Go to Dashboard"></Button>
                         </div>
                     </div>
                 </div>
