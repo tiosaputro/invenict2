@@ -75,25 +75,12 @@ export default {
         token: localStorage.getItem('token'),
         ref: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        checkname : [],
-        checkto : [],
     };
   },
   created() {
-    this.cekUser();
+    this.getRef();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        if(this.checkto.includes("/referensi-brand")){
-          this.getRef();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getRef(){
       this.axios.get('api/ref-lookup-brand', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.ref = response.data;
@@ -107,25 +94,30 @@ export default {
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
            }
+           else if (error.response.status == 403){
+            this.$router.push('/access');
+           }
       });
     },
     DeleteRef(lookup_code,lookup_type){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this record?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
+          this.loading = true;
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-ref/' +lookup_code + "/" + lookup_type, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.getRef();
+          this.axios.delete('api/delete-ref/' +lookup_code + "/" + lookup_type, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{  
+            this.getRef();
+          });
         },
         reject: () => {},
       });

@@ -92,14 +92,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         // this.dialogSendMail = true;
-        // var frommail = usr_email + "@emp.id";
-        // this.mail.from = res.data.fromemail;
+        var frommail = usr_email + "@emp.id"; // this.mail.from = res.data.fromemail;
         // this.mail.to = frommail;
         // this.mail.ireq_id = ireq_id;
         // this.mail.subject = res.data.noreq;
         // this.mail.footer = "Terimakasih, \n\n\n"+res.data.usr_fullname;
         // this.mail.body = "Dear Mr/Mrs, "+res.data.requestor+"\n\n";
-        window.open("mailto:" + usr_email + "?subject=" + res.data.noreq);
+
+        window.open("mailto:" + frommail + "?subject=" + res.data.noreq);
       });
     },
     cancelMail: function cancelMail() {

@@ -95,7 +95,7 @@ export default {
             this.axios.post('/api/login', data).then((response) => {
               this.$toast.add({
                 severity: "success",
-                summary: "Success login!",
+                summary: "Login Success!",
                 detail: "Welcome " + response.data.usr_name + " 👋",
               });
               localStorage.clear();

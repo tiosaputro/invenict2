@@ -33,13 +33,9 @@ __webpack_require__.r(__webpack_exports__);
         input: 'DD MMM YYYY'
       },
       token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
-      code: null // user:[],
-
+      code: null
     };
   },
-  watch: {},
   mounted: function mounted() {
     this.getType();
   },
@@ -67,7 +63,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.bu = response.data.bisnis;
         _this2.divisi = response.data.divisi;
         _this2.level = response.data.prio;
-        _this2.requestor = response.data.username;
+        _this2.requestor = response.data.fullname;
       })["catch"](function (error) {
         if (error.response.status == '401') {
           return _this2.$router.push('/login');

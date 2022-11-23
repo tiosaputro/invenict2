@@ -32,11 +32,9 @@ class LoginController extends Controller
         //                     "success" => true, 
         //                         "message" => "You have logged in successfully",
         //                         "token"=>$token,
-        //                         "id"=>$id,
-        //                         "usr_loc"=>$user->usr_loc,
-        //                         "usr_name"=>$usr_name],200);
+        //                         "usr_loc"=>$user->usr_loc],200);
         //              }else{
-        //                     return response(["success" => false, "email" => "Username belum terdaftar"],422);
+        //                     return response(["success" => false, "email" => "Username not registered"],422);
         //                   }
         //                 }else{
         //                     $email2 = $request->email."@emp-one.com";
@@ -51,14 +49,12 @@ class LoginController extends Controller
         //                                 "success" => true, 
                                             // "message" => "You have logged in successfully",
                                             // "token"=>$token,
-                                            // "id"=>$id,
-        //                                  "usr_loc"=>$user->usr_loc,
-                                            // "usr_name"=>$usr_name],200);
+        //                                  "usr_loc"=>$user->usr_loc],200);
         //                         }else{
-        //                             return response(["success" => false, "email" => "Username belum terdaftar"],422);
+        //                             return response(["success" => false, "email" => "Username not registered"],422);
         //                             }
         //                 }else{
-        //                         return response(["success" => false, "password" => "Login gagal, silahkan cek kembali domain account anda."],404);
+        //                         return response(["success" => false, "password" => "Can't login. Please check your password."],404);
         //                     }
         //                 }
     
@@ -75,17 +71,15 @@ class LoginController extends Controller
                     $response = [
                         'success'   => true,
                         'token'     => $token,
-                        'id'        => $id,
-                        'usr_name'  => $user->usr_name,
                         'usr_loc'   => $user->usr_loc
 
                     ];
                     return json_encode($response, 200);
                 }else{
-                    return response(["password" => "Login gagal, silahkan cek kembali password anda"],422);
+                    return response(["password" => "Can't login. Please check your password"],422);
                     }
                  }else{
-                    return response(["email" => "Username belum terdaftar."],422);
+                    return response(["email" => "Username not registered."],422);
                 }
     } 
 

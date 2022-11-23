@@ -18,8 +18,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loading: true,
       token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
       divisi: [],
       filters: {
         'global': {
@@ -30,44 +28,22 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getDivisi();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-
-        if (_this.checkname.includes("Divisi") || _this.checkto.includes("/divisi-refs")) {
-          _this.getDivisi();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getDivisi: function getDivisi() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('api/divisi', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.divisi = response.data;
-        _this2.loading = false;
+        _this.divisi = response.data;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -76,36 +52,40 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        } else if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     DeleteDivisi: function DeleteDivisi(div_id) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this record?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
 
-          _this3.axios["delete"]('api/delete-divisi/' + div_id, {
+          _this2.axios["delete"]('api/delete-divisi/' + div_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this3.token
+              'Authorization': 'Bearer ' + _this2.token
             }
-          });
+          }).then(function () {
+            _this2.loading = true;
 
-          _this3.getDivisi();
+            _this2.getDivisi();
+          });
         },
         reject: function reject() {}
       });

@@ -24,50 +24,26 @@ __webpack_require__.r(__webpack_exports__);
           value: null,
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
-      },
-      checkname: [],
-      checkto: []
+      }
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getRef();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-
-        if (_this.checkname.includes("Lookups") || _this.checkto.includes("/referensi-lookups")) {
-          _this.getRef();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getRef: function getRef() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('api/ref', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.ref = response.data;
-        _this2.loading = false;
+        _this.ref = response.data;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -76,42 +52,46 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        } else if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     DeleteRef: function DeleteRef(lookup_code, lookup_type) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this record?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
 
-          _this3.axios["delete"]('api/delete-ref/' + lookup_code + "/" + lookup_type, {
+          _this2.axios["delete"]('api/delete-ref/' + lookup_code + "/" + lookup_type, {
             headers: {
-              'Authorization': 'Bearer ' + _this3.token
+              'Authorization': 'Bearer ' + _this2.token
             }
-          });
+          }).then(function () {
+            _this2.loading = true;
 
-          _this3.getRef();
+            _this2.getRef();
+          });
         },
         reject: function reject() {}
       });
     },
     CetakPdf: function CetakPdf() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.loading = true;
       this.axios.get('api/report-lookups-pdf', {
@@ -122,11 +102,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this4.loading = false;
+        _this3.loading = false;
       });
     },
     CetakExcel: function CetakExcel() {
-      var _this5 = this;
+      var _this4 = this;
 
       var date = new Date();
       var today = moment(date).format("DD MMM YYYY");
@@ -144,7 +124,7 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'LOOKUPS REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this5.loading = false;
+        _this4.loading = false;
       });
     }
   }

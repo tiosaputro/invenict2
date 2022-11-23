@@ -94,26 +94,12 @@ export default {
         token: localStorage.getItem('token'),
         loc: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        checkname : [],
-        checkto : [],
     };
   },
   created() {
-    this.cekUser();
+    this.getLoc();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Location") || this.checkto.includes("/referensi-location")){
-          this.getLoc();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getLoc(){
       this.axios.get('api/loc', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.loc = response.data;
@@ -121,22 +107,27 @@ export default {
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
+              severity:'error', 
+              summary: 'Error', 
+              detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
+           else if (error.response.status == 403){
+            this.$router.push('/access');
            }
       });
     },
     DeleteLoc(loc_code){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this record?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
@@ -144,8 +135,10 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-loc/' +loc_code, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.getLoc();
+          this.axios.delete('api/delete-loc/' +loc_code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getLoc();
+          });
         },
         reject: () => {},
       });

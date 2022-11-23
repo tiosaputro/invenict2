@@ -27,37 +27,13 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
       },
-      displaySupp: false,
-      checkname: [],
-      checkto: []
+      displaySupp: false
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getSupp();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-
-        if (_this.checkname.includes("Suplier") || _this.checkto.includes("/referensi-supplier")) {
-          _this.getSupp();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     CetakPdf: function CetakPdf() {
       window.open("api/report-supplier-pdf");
     },
@@ -65,7 +41,7 @@ __webpack_require__.r(__webpack_exports__);
       window.open("api/report-supplier-excel");
     },
     detailSupp: function detailSupp(suplier_code) {
-      var _this2 = this;
+      var _this = this;
 
       this.displaySupp = true;
       this.axios.get('api/show-supp/' + suplier_code, {
@@ -73,23 +49,23 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.supps = response.data;
-        _this2.header = 'Detail Suplier ' + _this2.supps.suplier_name;
+        _this.supps = response.data;
+        _this.header = 'Detail Suplier ' + _this.supps.suplier_name;
       });
     },
     getSupp: function getSupp() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.axios.get('api/supp', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.supp = response.data;
-        _this3.loading = false;
+        _this2.supp = response.data;
+        _this2.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -98,36 +74,40 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this2.$router.push('/login');
           }, 2000);
+        } else if (error.response.status == 403) {
+          _this2.$router.push('/access');
         }
       });
     },
     DeleteSupp: function DeleteSupp(suplier_code) {
-      var _this4 = this;
+      var _this3 = this;
 
       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this record?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
 
-          _this4.axios["delete"]('api/delete-supp/' + suplier_code, {
+          _this3.axios["delete"]('api/delete-supp/' + suplier_code, {
             headers: {
-              'Authorization': 'Bearer ' + _this4.token
+              'Authorization': 'Bearer ' + _this3.token
             }
-          });
+          }).then(function () {
+            _this3.loading = true;
 
-          _this4.getSupp();
+            _this3.getSupp();
+          });
         },
         reject: function reject() {}
       });

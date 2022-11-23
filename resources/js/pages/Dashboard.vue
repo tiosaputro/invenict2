@@ -886,16 +886,17 @@ export default {
     },
     methods:{
 		CekUser(){
-			this.loader = this.$loading.show({
-			container: this.$refs.loadingContainer,
-			color: '#2772d9',
-			loader: 'spinner',
-			width: 64,
-			height: 64,
-			backgroundColor: '#1f2d40',
-			opacity: 0.5,
-			zIndex: 999,
-		}, {});
+			this.loader = this.$loading.show
+			({
+				container: this.$refs.loadingContainer,
+				color: '#2772d9',
+				loader: 'spinner',
+				width: 64,
+				height: 64,
+				backgroundColor: '#1f2d40',
+				opacity: 0.5,
+				zIndex: 999,
+			}, {});
 			this.axios.get('/api/cek-role',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
 				this.role_name = response.data.map((x)=>x.rol_name);
 				if(this.role_name.includes('Manager')){

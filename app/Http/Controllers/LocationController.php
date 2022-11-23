@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Model\Location;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 
 class LocationController extends Controller
 {
@@ -13,14 +17,22 @@ class LocationController extends Controller
     protected $newCreation;
     protected $newUpdate;
     public function __construct(){
+        $this->location = "/referensi-location";
         $date = Carbon::now();
         $this->date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
     function index(){
-        $loc = Location::Select('loc_code','loc_desc','loc_email')->orderBy('loc_desc','ASC')->get();
-        return json_encode($loc);
+        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->location)){
+            $loc = Location::Select('loc_code','loc_desc','loc_email')->orderBy('loc_desc','ASC')->get();
+            return json_encode($loc);
+        }else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     function save(Request $request){
         $message = [

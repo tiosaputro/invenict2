@@ -6,25 +6,37 @@ Use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-// use Appstract\Opcache\OpcacheFacade as OPcache;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 
 class DivisiRefsController extends Controller
 {
-    public function index()
-    {
-        $divisi = Divisi_refs::select('div_id','div_code','div_name','div_verificator')->orderBy('div_name','ASC')->get();
-        return response()->json($divisi);
+    public function __construct(){
+        $this->divisi = "/divisi-refs";
     }
-    public function getDivisi(){
+    function index()
+    {
+        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->divisi)){
+            $divisi = Divisi_refs::select('div_id','div_code','div_name','div_verificator')->orderBy('div_name','ASC')->get();
+            return response()->json($divisi);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
+    }
+    function getDivisi(){
         $divisi = DB::table('divisi_refs')->select('div_id as code',DB::raw("(div_code ||'-'|| div_name) as name"))->orderBy('div_name','ASC')->get();
         return response()->json($divisi);
     }
-    public function edit($code)
+    function edit($code)
     {
         $divisi = Divisi_refs::select('div_id','div_code','div_name','div_verificator')->where('div_id',$code)->first();
         return response()->json($divisi);
     }
-    public function update(Request $request,$code)
+    function update(Request $request,$code)
     {
         $message = [
             'div_code.required'=>'Divisi Code Belum Diisi',

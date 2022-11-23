@@ -95,26 +95,12 @@ export default {
         token: localStorage.getItem('token'),
         ref: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        checkname : [],
-        checkto : [],
     };
   },
   created() {
-    this.cekUser();
+    this.getRef();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Lookups") || this.checkto.includes("/referensi-lookups")){
-          this.getRef();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getRef(){
       this.axios.get('api/ref', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.ref = response.data;
@@ -122,22 +108,27 @@ export default {
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
+              severity:'error', 
+              summary: 'Error', 
+              detail:'Session login expired'
+            });
           localStorage.clear();
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
+           }
+           else if (error.response.status == 403){
+            this.$router.push('/access');
            }
       });
     },
     DeleteRef(lookup_code,lookup_type){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this record?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
@@ -145,8 +136,10 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-ref/' +lookup_code + "/" + lookup_type, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.getRef();
+          this.axios.delete('api/delete-ref/' +lookup_code + "/" + lookup_type, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getRef();
+          });
         },
         reject: () => {},
       });

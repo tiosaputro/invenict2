@@ -6,26 +6,36 @@ use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 
 class MngMenuController extends Controller
 {
     protected $newCreation;
     protected $newUpdate;
     public function __construct(){
+        $this->menu = "/mng-menu";
         $date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
-    Public function index()
+    function index()
     {
-        $menu = DB::table('mng_menus as mm')
-            ->select('mm.menu_id','mmm.mod_name','mm.menu_name','mm.menu_desc','mm.menu_desc','mm.menu_display')
-            ->leftjoin('mng_modules as mmm','mm.mod_id','mmm.mod_id')
-            ->where('mm.menu_stat','T')
-            ->orderBy('mm.menu_id','ASC')
-            ->get();
-        // $menu = Mng_menu::All();
+        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->menu)){
+            $menu = DB::table('mng_menus as mm')
+                ->select('mm.menu_id','mmm.mod_name','mm.menu_name','mm.menu_desc','mm.menu_desc','mm.menu_display')
+                ->leftjoin('mng_modules as mmm','mm.mod_id','mmm.mod_id')
+                ->where('mm.menu_stat','T')
+                ->orderBy('mm.menu_id','ASC')
+                ->get();
          return response()->json($menu);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     Public function getParent()
     {

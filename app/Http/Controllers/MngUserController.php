@@ -10,20 +10,31 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 
 class MngUserController extends Controller
 {
     protected $newCreation;
     protected $newUpdate;
     public function __construct(){
+        $this->user = "/mng-user";
         $date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
     public function index()
     {
-        $user = DB::table('v_mng_users')->get();
-        return response()->json($user);
+        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->user)){
+            $user = DB::table('v_mng_users')->get();
+            return response()->json($user);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     public function save(Request $request)
     {

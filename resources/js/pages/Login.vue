@@ -37,7 +37,6 @@
                                 class="w-full mb-3"
                                 :toggleMask="true"
                                 :class="{ 'p-invalid': submitted && !password }" 
-                                :feedback="false"
                                 inputClass="w-full" 
                                 inputStyle="padding:1rem"
                             />
@@ -104,7 +103,7 @@ export default {
             this.axios.post('api/login', data).then((response) => {
               this.$toast.add({
                 severity: "success",
-                summary: "Success Login!",
+                summary: "Login Success!",
                 detail: "Welcome " + response.data.usr_name + " 👋",
               });
               localStorage.clear();

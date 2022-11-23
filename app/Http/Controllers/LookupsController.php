@@ -20,6 +20,9 @@ class LookupsController extends Controller
     protected $newUpdate;
     protected $requestor;
     public function __construct(){
+        $this->brand = "/referensi-brand";
+        $this->lookup = "/referensi-lookups";
+        $this->kategori = "/referensi-kategori";
         $date = Carbon::now();
         $this->newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
@@ -27,22 +30,44 @@ class LookupsController extends Controller
     }
     public function index()
     {
-        $ref = DB::Table('v_lookup_refs')->get();
-        return response()->json($ref);
+        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->lookup)){
+            $ref = DB::Table('v_lookup_refs')->get();
+            return response()->json($ref);
+        }else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     function lookupBrand(){
-        $ref = DB::table('lookup_refs')
-        ->select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
-        ->where('lookup_type','Merk')
-        ->get();
-        return response()->json($ref);
+        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->brand)){
+            $ref = DB::table('lookup_refs')
+            ->select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
+            ->where('lookup_type','Merk')
+            ->get();
+            return response()->json($ref);
+        }else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     function lookupKategori(){
-        $ref = DB::table('lookup_refs')
-        ->select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
-        ->where('lookup_type','Kat_Peripheral')
-        ->get();
-        return json_encode($ref);
+        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
+        if($aksesmenu->contains($this->kategori)){
+            $ref = DB::table('lookup_refs')
+            ->select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
+            ->where('lookup_type','Kat_Peripheral')
+            ->get();
+            return json_encode($ref);
+        }
+        else{
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     public function save(Request $request) 
     {
@@ -211,9 +236,9 @@ class LookupsController extends Controller
             ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
             ->orderBy('lookup_desc','ASC')
             ->get();
-            $username = Auth::user()->usr_name;
+            $fullname = Auth::user()->usr_fullname;
 
-            return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'prio'=>$priority,'divisi'=>$divisi,'username'=>$username],200);
+            return response()->json(['ref'=>$ref,'bisnis'=>$bisnis,'prio'=>$priority,'divisi'=>$divisi,'fullname'=>$fullname],200);
         }else{
             return response(["message"=>"Cannot Access"],403);
         }

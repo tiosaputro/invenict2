@@ -24,50 +24,26 @@ __webpack_require__.r(__webpack_exports__);
           value: null,
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
-      },
-      checkname: [],
-      checkto: []
+      }
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getMenu();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-
-        if (_this.checkname.includes("Menu") || _this.checkto.includes("/mng-menu")) {
-          _this.getMenu();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getMenu: function getMenu() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.get('api/menu', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.menu = response.data;
-        _this2.loading = false;
+        _this.menu = response.data;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -76,36 +52,40 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        } else if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     DeleteMenu: function DeleteMenu(menu_id) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this record?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
 
-          _this3.axios["delete"]('api/delete-menu/' + menu_id, {
+          _this2.axios["delete"]('api/delete-menu/' + menu_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this3.token
+              'Authorization': 'Bearer ' + _this2.token
             }
-          });
+          }).then(function () {
+            _this2.loading = true;
 
-          _this3.getMenu();
+            _this2.getMenu();
+          });
         },
         reject: function reject() {}
       });

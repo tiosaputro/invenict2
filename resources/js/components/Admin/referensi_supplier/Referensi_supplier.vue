@@ -7,7 +7,7 @@
         <ConfirmDialog/>
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>Suplier</h4>
+				    <h4>Suplier</h4>
           </template>
         </Toolbar>
         <DataTable
@@ -201,26 +201,12 @@ export default {
         supps:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         displaySupp: false,
-        checkname : [],
-        checkto : [],
     };
   },
   created() {
-    this.cekUser();
+    this.getSupp();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Suplier") || this.checkto.includes("/referensi-supplier")){
-          this.getSupp();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     CetakPdf(){
        window.open("api/report-supplier-pdf");
     },
@@ -247,16 +233,19 @@ export default {
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
            }
+           else if (error.response.status == 403){
+            this.$router.push('/access');
+           }
         });
     },
     DeleteSupp(suplier_code){
        this.$confirm.require({
-        message: "Data ini benar-benar akan dihapus?",
+        message: "Are you sure to delete this record?",
         header: "Delete Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button-danger",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
@@ -264,8 +253,10 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-supp/' + suplier_code, {headers: {'Authorization': 'Bearer '+this.token}});
-          this.getSupp();
+          this.axios.delete('api/delete-supp/' + suplier_code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.loading = true;
+            this.getSupp();
+          });
         },
         reject: () => {},
       });

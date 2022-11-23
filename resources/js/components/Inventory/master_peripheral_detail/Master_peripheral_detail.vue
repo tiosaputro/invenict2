@@ -115,7 +115,7 @@
         >
         <qrcode-vue :value="barcode" ref="qr" :size="300" level="L" /> 
           <template #footer>
-            <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" class="p-button-danger" />
+            <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" autofocus class="p-button-danger" />
           </template>
         </Dialog>
         <Dialog

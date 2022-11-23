@@ -1126,14 +1126,14 @@ export default {
     SendEmail(usr_email,ireq_id){
       this.axios.get('/api/detailrequest-tomail/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
         // this.dialogSendMail = true;
-        // var frommail = usr_email + "@emp.id";
+        var frommail = usr_email + "@emp.id";
         // this.mail.from = res.data.fromemail;
         // this.mail.to = frommail;
         // this.mail.ireq_id = ireq_id;
         // this.mail.subject = res.data.noreq;
         // this.mail.footer = "Terimakasih, \n\n\n"+res.data.usr_fullname;
         // this.mail.body = "Dear Mr/Mrs, "+res.data.requestor+"\n\n";
-        window.open("mailto:"+usr_email+"?subject="+res.data.noreq);
+        window.open("mailto:"+frommail+"?subject="+res.data.noreq);
       });
     },
     cancelMail(){

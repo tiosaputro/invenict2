@@ -135,14 +135,8 @@ export default {
         input: 'DD MMM YYYY'
       },
       token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
       code: null,
-      // user:[],
     };
-  },
-  watch:{
-    
   },
   mounted(){
       this.getType();
@@ -159,7 +153,7 @@ export default {
         this.bu = response.data.bisnis;
         this.divisi = response.data.divisi;
         this.level = response.data.prio;
-        this.requestor = response.data.username; 
+        this.requestor = response.data.fullname; 
       }).catch(error=>{
         if(error.response.status == '401'){
           return this.$router.push('/login')

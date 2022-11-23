@@ -62,7 +62,7 @@ use App\Jobs\SendNotifRejectByHigherLevel;
 use App\Jobs\SendNotifRejectByReviewer;
 use App\Jobs\SendNotifWaitingRecieveByPersonnel;
 use App\Jobs\SendNotifToRequestor;
-use App\Location;
+// use App\Model\Location;
 
 class IctController extends Controller
 {

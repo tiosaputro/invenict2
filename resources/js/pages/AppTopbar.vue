@@ -16,7 +16,7 @@
 			<li> 
 				<button class="p-link layout-profile-link" @click="onClick" style="object-fit:contain;">
 				  <img :src="'/profile/' + user.usr_foto" class="mr-2" width="30" height="30" v-if="this.user.usr_foto"/>
-					<span style="color: white;">Hi, {{user.usr_name}}</span>
+					<span style="color: white;">Hi, {{ toUpper(user.usr_fullname)}}</span>
 				</button>
 				<transition name="layout-submenu-wrapper layout-topbar-button">
             		<ul v-show="expanded">
@@ -43,6 +43,15 @@ export default {
 		this.getUser();
 		},
     methods: {
+	toUpper(str) {
+		return str
+			.toLowerCase()
+			.split(' ')
+			.map(function(word) {
+				return word[0].toUpperCase() + word.substr(1);
+			})
+			.join(' ');
+		},
 		getUser(){
           this.token =localStorage.getItem('token');
 		  if(this.token){

@@ -2,7 +2,7 @@
 	<div :class="containerClass" @click="onWrapperClick" v-if="loggedIn">
         <AppTopBar @menu-toggle="onMenuToggle" />
         <div class="layout-sidebar" @click="onSidebarClick">
-            <AppMenu :model="menuUser" @menuitem-click="onMenuItemClick" />
+                <AppMenu :model="menuUser" @menuitem-click="onMenuItemClick" />
         </div>
 
         <div class="layout-main-container">
@@ -68,10 +68,10 @@ export default {
                 document.documentElement.style.fontSize = '12px';
             }
             if (this.windowHeight >= 610 && this.windowHeight < 1200){
-                document.documentElement.style.fontSize = '20px';
+                document.documentElement.style.fontSize = '16px';
             }
             if (this.windowHeight >= 1200){
-                document.documentElement.style.fontSize = '22px';
+                document.documentElement.style.fontSize = '18px';
             }
             
             if (window.location.pathname == '/'){
@@ -184,6 +184,21 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../App.scss';
+::v-deep(.custom-scrolltop) {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+
+    &:hover {
+		background-color: var(--primary-color);
+	}
+
+    .p-scrolltop-icon {
+        font-size: 1rem;
+        color: var(--primary-color-text);
+    }
+}
 </style>

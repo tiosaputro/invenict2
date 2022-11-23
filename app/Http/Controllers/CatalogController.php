@@ -7,20 +7,31 @@ use App\Model\Catalog;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
 
 class CatalogController extends Controller
 {
     protected $newCreation;
     protected $newUpdate;
     public function __construct(){
+        $this->catalog = "/catalog-refs";
         $date = Carbon::now();
         $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
     function index(){
-        $catalog = Catalog::select('catalog_id','catalog_name','catalog_desc',DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"))
-        ->get();
-        return json_encode($catalog);
+        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
+            if($aksesmenu->contains($this->catalog)){
+            $catalog = Catalog::select('catalog_id','catalog_name','catalog_desc',DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"))
+            ->get();
+            return json_encode($catalog);
+            
+        }else {
+            return response(["message"=>"Cannot Access"],403);
+        }
     }
     function save(Request $request){
         $message = [

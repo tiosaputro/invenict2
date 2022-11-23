@@ -598,6 +598,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onClick: _cache[3] || (_cache[3] = function ($event) {
           return $options.downloadBarcodePdf();
         }),
+        autofocus: "",
         "class": "p-button-danger"
       })];
     }),
