@@ -106,22 +106,39 @@
           </template>
         </DataTable>   
         <Dialog
-          id="qrcode"
           v-model:visible="displayBarcode"
-          :style="{ width: '400px' }"
+          :style="{ width: '600px' }"
           header="Preview QR-Code"
           :modal="true"
+          ref="qrcode"
           class="p-fluid"
         >
-        <qrcode-vue :value="barcode" ref="qr" :size="300" level="L" /> 
+        <!-- <qrcode-vue :value="barcode" ref="qr" :size="300" level="L" /> 
           <template #footer>
             <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" autofocus class="p-button-danger" />
-          </template>
+          </template> -->
+          <QRCodeVue3
+            :width="500"
+            ref="qr"
+            image="/assets/layout/images/logo_emp_new.png"
+            :height="500"
+            :value="barcode"
+            :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'L' }"
+            :imageOptions="{ hideBackgroundDots: false, imageSize: 1, margin: 0, crossOrigin : 'Anonymous' }"
+            :dotsOptions="{ type: 'square',color:'#000000'}"
+            :backgroundOptions="{ color: '#ffffff' }"
+            :cornersSquareOptions="{ type: 'square', color: '#000000' }"
+            :cornersDotOptions="{ type: 'square', color: '#000000' }"
+          />
+          {{this.text}}
+          <!-- <template #footer>
+            <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" autofocus class="p-button-danger" />
+          </template> -->
         </Dialog>
         <Dialog
           v-model:visible="displayKode"
           :breakpoints="{'960px': '75vw'}"
-          :style="{ width: '450px' }"
+          :style="{ width: '600px' }"
           :header="this.header"
           :modal="true"
           class="fluid"
@@ -215,7 +232,7 @@
               </div>
               <div class="field grid">
                 <label class="col-fixed" style="width:100px"></label>
-                  <div class="card" style="height: 16 rem;">
+                  <div class="card">
                     <img v-if="this.detail.invent_photo" :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
                   </div>
               </div>
@@ -227,6 +244,7 @@
 <script>
 import {FilterMatchMode} from 'primevue/api';
 import Jspdf from 'jspdf';
+import { extension } from 'mime';
 export default {
   data() {
     return {
@@ -243,6 +261,7 @@ export default {
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         checkname : [],
         checkto : [],
+        text:'',
     };
   },
   created() {
@@ -251,7 +270,7 @@ export default {
   methods: {
     downloadBarcodePdf(){
       const doc = new Jspdf();
-      const contentHtml = this.$refs.qr.$el;
+      const contentHtml = this.$refs.qr;
       const image = contentHtml.toDataURL('image/jpeg', 0.8);
       doc.addImage(image, 'JPEG', 70, 30);
       doc.save('Barcode.pdf');
@@ -259,6 +278,9 @@ export default {
       this.displayBarcode = false;
     },
     previewBarcode(invent_code_dtl){
+      this.axios.get('/api/detail-peripherall/' +invent_code_dtl, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.text = response.data.invent_bu+" - ICT";
+      });
         this.barcode = process.env.MIX_APP_URL+'/detPeripheral/'+ +invent_code_dtl
         this.displayBarcode = true;
     },

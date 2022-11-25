@@ -789,6 +789,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.requestcatalog = $event;
     }),
     options: $data.catalog,
+    selectionMode: "single",
     filter: true,
     placeholder: "Select Catalog",
     display: "chip",

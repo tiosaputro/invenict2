@@ -64,6 +64,7 @@ import CodeHighlight from './pages/AppCodeHighlight.js';
 import BlockViewer from './pages/BlockViewer.vue';
 import StarRating from 'vue-star-rating';
 import VueLoading from 'vue-loading-overlay';
+import QRCodeVue3 from "qrcode-vue3";
 
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
@@ -89,6 +90,7 @@ app.directive('code', CodeHighlight);
 app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
 
+app.component('QRCodeVue3',QRCodeVue3);
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);
 app.component('Button', Button);

@@ -47,6 +47,7 @@
                     <TreeSelect 
                       v-model="requestcatalog" 
                       :options="catalog"
+                      selectionMode="single"
                       :filter="true"
                       placeholder="Select Catalog"
                       display="chip"
