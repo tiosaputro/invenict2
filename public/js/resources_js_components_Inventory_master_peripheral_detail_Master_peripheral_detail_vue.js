@@ -176,6 +176,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.judul = response.data.invent_bu + " - ICT";
       var value = "http://localhost:8000" + '/detPeripheral/' + +invent_code_dtl;
       var title = _this.judul;
+      var subtitle = response.data.invent_tgl_perolehan;
       var options = {
         width: 256,
         height: 256,
@@ -184,7 +185,7 @@ __webpack_require__.r(__webpack_exports__);
         correctLevel: easyqrcodejs__WEBPACK_IMPORTED_MODULE_0__.CorrectLevel.L,
         text: value,
         title: title,
-        titleFont: "normal normal bold 18px Arial",
+        titleFont: "normal normal bold 16px Arial",
         //font. default is "bold 16px Arial"
         titleColor: "#000",
         // color. default is "#000"
@@ -192,15 +193,28 @@ __webpack_require__.r(__webpack_exports__);
         // background color. default is "#fff"
         titleHeight: 40,
         // height, including subTitle. default is 0
-        titleTop: 20,
+        titleTop: 15,
         // draws y coordinates. default is 30
-        logo: '/assets/layout/images/logo_emp_new.png',
-        logoWidth: 100,
-        // fixed logo width. default is `width/3.5`
-        logoHeight: 100,
-        // fixed logo height. default is `heigth/3.5`
-        logoBackgroundTransparent: true,
-        quietZone: 10,
+        // logo: '/assets/layout/images/logo_emp_new.png', 
+        // logoWidth: 100, // fixed logo width. default is `width/3.5`
+        // logoHeight: 100, // fixed logo height. default is `heigth/3.5`
+        // logoBackgroundTransparent:true,
+        backgroundImage: '/assets/image-1.png',
+        // Background Image
+        backgroundImageAlpha: 1,
+        // Background image transparency, value between 0 and 1. default is 1. 
+        // autoColor: false, // Automatic color adjustment(for data block)
+        // autoColorDark: "rgba(0, 0, 0, .6)", // Automatic color: dark CSS color
+        // autoColorLight: "rgba(255, 255, 255, .7)", // Automatic color: light CSS color
+        subTitle: subtitle,
+        // content
+        subTitleFont: "normal normal normal 13px Arial",
+        // font. default is "14px Arial"
+        subTitleColor: "#000",
+        // color. default is "4F4F4F"
+        subTitleTop: 35,
+        // draws y coordinates. default is 0
+        quietZone: 14,
         quietZoneColor: "rgba(0,0,0,0)",
         dotScaleTiming_H: 1,
         // For horizontal timing block, must be greater than 0, less than or equal to 1. default is 1
