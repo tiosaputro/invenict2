@@ -29,7 +29,6 @@
 		</ul>
 	</div>
 </template>
-
 <script>
 export default {
 	data() {
@@ -43,14 +42,14 @@ export default {
 		this.getUser();
 		},
     methods: {
-	toUpper(str) {
-		return str
-			.toLowerCase()
-			.split(' ')
-			.map(function(word) {
-				return word[0].toUpperCase() + word.substr(1);
-			})
-			.join(' ');
+		toUpper(str) {
+			return str
+				.toLowerCase()
+				.split(' ')
+				.map(function(word) {
+					return word[0].toUpperCase() + word.substr(1);
+				})
+				.join(' ');
 		},
 		getUser(){
           this.token =localStorage.getItem('token');

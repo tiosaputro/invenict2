@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/user','LoginController@show')->middleware('auth:sanctum');
 Route::get('/cek-verif-id/{code}','IctController@cekVerif');
 Route::post('/login', 'LoginController@index');
 Route::get('/detail-peripherall/{invent_code}','MasterController@detailPeripheral');
 Route::post('/login-approval', 'LoginController@loginFromEmail');
 Route::get('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/user','LoginController@show');
 //referensi_location
     Route::get('/loc', 'LocationController@index');
     Route::post('/add-loc','LocationController@save');

@@ -11,7 +11,7 @@
                     <div class="text-center mb-5">
                         <div class="text-900 text-3xl font-medium mb-3">Welcome to</div>
                         <span class="text-600 font-medium">System ICT Helpdesk 👋</span>
-                        <Message severity="warn" v-if="this.error">Periksa kembali koneksi sophos atau wifi anda</Message>
+                        <Message severity="warn" v-if="this.error">Can't login. Please check your connection</Message>
                         <Message severity="warn" v-if="this.errorr">Can't login. Please check your username and password</Message>
                     </div>
                         <div class="w-full md:w-10 mx-auto">
@@ -69,7 +69,7 @@ export default {
             error:false,
             errorr:false,
             submitted: false,
-            loggedIn: null
+            loggedIn: null,
         }
     },
      mounted(){
@@ -82,12 +82,12 @@ export default {
         }
     },
     methods:{
-     cekStatus(){
+    cekStatus(){
         this.loggedIn = localStorage.getItem("loggedIn");
             if(this.loggedIn){
                 this.$router.push('/dashboard')
             }
-      },
+    },
     Login() {
       this.errors = [];
       this.submitted = true;
@@ -98,7 +98,6 @@ export default {
             const data = new FormData();
             data.append("email", this.email.toLowerCase());
             data.append("password", this.password);
-
             this.axios.get('/sanctum/csrf-cookie').then(() => {
             this.axios.post('api/login', data).then((response) => {
               this.$toast.add({

@@ -13,6 +13,7 @@ import 'bootstrap/dist/js/bootstrap.min';
 import 'vue-loading-overlay/dist/vue-loading.css'; 
 import 'v-calendar/dist/style.css';
 
+// import QRCode from 'easyqrcodejs' ;  
 
 import { createApp, reactive } from 'vue';
 import axios from 'axios';
@@ -32,6 +33,8 @@ import ConfirmationService from 'primevue/confirmationservice';
 import DataTable from 'primevue/datatable';
 import { DatePicker } from 'v-calendar';
 import Dialog from 'primevue/dialog';
+import DialogService from 'primevue/dialogservice';
+import DynamicDialog from 'primevue/dynamicdialog';
 import Dropdown from 'primevue/dropdown';
 import InlineMessage from 'primevue/inlinemessage';
 import InputNumber from 'primevue/inputnumber';
@@ -76,6 +79,7 @@ const app = createApp(AppWrapper);
 app.config.globalProperties.$appState = reactive({ theme: 'vela-blue'});
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
 app.use(ConfirmationService);
+app.use(DialogService);
 app.use(ToastService);
 app.use(VueAxios,axios);
 app.use(router);
@@ -90,6 +94,7 @@ app.directive('code', CodeHighlight);
 app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
 
+// app.component('QRCode',QRCode);
 
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);
@@ -103,6 +108,7 @@ app.component('ConfirmPopup', ConfirmPopup);
 app.component('DataTable', DataTable);
 app.component('DatePicker',DatePicker);
 app.component('Dialog', Dialog);
+app.component('DynamicDialog',DynamicDialog);
 app.component('Dropdown', Dropdown);
 app.component('InlineMessage', InlineMessage);
 app.component('InputNumber', InputNumber);

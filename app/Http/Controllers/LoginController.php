@@ -26,12 +26,11 @@ class LoginController extends Controller
         //           if (!is_null ($user)) {
         //             $token = $user->createToken('ApiToken')->plainTextToken;
         //             $authuser = Auth::user();
-        //             $id = $user->usr_id;
-        //             $usr_name = $user->usr_name;
         //              return response([
-        //                     "success" => true, 
+        //                         "success" => true, 
         //                         "message" => "You have logged in successfully",
         //                         "token"=>$token,
+        //                         "usr_name"  => $user->usr_fullname,
         //                         "usr_loc"=>$user->usr_loc],200);
         //              }else{
         //                     return response(["success" => false, "email" => "Username not registered"],422);
@@ -43,13 +42,11 @@ class LoginController extends Controller
         //                         if (!is_null ($user)) {
         //                             $token = $user->createToken('ApiToken')->plainTextToken;
         //                             $authuser = Auth::user();
-        //                             $id = $user->usr_id;
-        //                             $usr_name = $user->usr_name;
         //                         return response([
-        //                                 "success" => true, 
-                                            // "message" => "You have logged in successfully",
-                                            // "token"=>$token,
-        //                                  "usr_loc"=>$user->usr_loc],200);
+        //                                 'success'   => true,
+        //                                  'token'     => $token,
+        //                                  'usr_name'  => $user->usr_fullname,
+        //                                  'usr_loc'   => $user->usr_loc
         //                         }else{
         //                             return response(["success" => false, "email" => "Username not registered"],422);
         //                             }
@@ -64,17 +61,15 @@ class LoginController extends Controller
         if (!is_null ($user)) {
             if(Hash::check($request->password, $user->usr_passwd)) {
                 $token = $user->createToken('ApiToken')->plainTextToken;
-                $id = $user->usr_id;
-                Session::put('id', $user->usr_id);
-                $roleid = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
-                $role = Mng_roles::select('rol_name')->whereIn('rol_id',$roleid)->pluck('rol_name');
+                $username = ucwords(strtolower($user->usr_fullname));
                     $response = [
                         'success'   => true,
                         'token'     => $token,
+                        'usr_name'  => $username,
                         'usr_loc'   => $user->usr_loc
 
                     ];
-                    return json_encode($response, 200);
+                    return json_encode($response, 400);
                 }else{
                     return response(["password" => "Can't login. Please check your password"],422);
                     }
@@ -88,18 +83,15 @@ class LoginController extends Controller
         $user= Mng_User::where('usr_id',$request->usr_id)->first();
         
         $token = $user->createToken('ApiToken')->plainTextToken;
-        $id = $user->usr_id;
             $response = [
                 'success'   => true,
-                'user'      => $user,
                 'token'     => $token,
-                'id'        => $id,
-                'usr_loc'   => $user->usr_loc,
-                'usr_name'  => $user->usr_name
+                'usr_name'  => $user->usr_fullname,
+                'usr_loc'   => $user->usr_loc
             ];
         return json_encode($response, 200);
     }
-    public function logout(Request $request)
+    public function logout()
     {
         $user = Auth::user();
         $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();

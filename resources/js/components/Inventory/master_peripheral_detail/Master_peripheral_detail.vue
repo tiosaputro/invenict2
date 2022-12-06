@@ -5,6 +5,7 @@
         <Toast />
         <Dialog></Dialog>
         <ConfirmDialog> </ConfirmDialog>
+        <DynamicDialog />
         <Toolbar class="mb-4">
           <template v-slot:start>
 			      <h4>Master Peripheral (Detail) </h4>
@@ -106,36 +107,6 @@
           </template>
         </DataTable>   
         <Dialog
-          v-model:visible="displayBarcode"
-          :style="{ width: '600px' }"
-          header="Preview QR-Code"
-          :modal="true"
-          ref="qrcode"
-          class="p-fluid"
-        >
-        <!-- <qrcode-vue :value="barcode" ref="qr" :size="300" level="L" /> 
-          <template #footer>
-            <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" autofocus class="p-button-danger" />
-          </template> -->
-          <QRCodeVue3
-            :width="500"
-            ref="qr"
-            image="/assets/layout/images/logo_emp_new.png"
-            :height="500"
-            :value="barcode"
-            :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'L' }"
-            :imageOptions="{ hideBackgroundDots: false, imageSize: 1, margin: 0, crossOrigin : 'Anonymous' }"
-            :dotsOptions="{ type: 'square',color:'#000000'}"
-            :backgroundOptions="{ color: '#ffffff' }"
-            :cornersSquareOptions="{ type: 'square', color: '#000000' }"
-            :cornersDotOptions="{ type: 'square', color: '#000000' }"
-          />
-          {{this.text}}
-          <!-- <template #footer>
-            <Button label="Pdf" icon="pi pi-download" @click="downloadBarcodePdf()" autofocus class="p-button-danger" />
-          </template> -->
-        </Dialog>
-        <Dialog
           v-model:visible="displayKode"
           :breakpoints="{'960px': '75vw'}"
           :style="{ width: '600px' }"
@@ -236,15 +207,14 @@
                     <img v-if="this.detail.invent_photo" :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
                   </div>
               </div>
-          </Dialog>  
+        </Dialog>  
       </div>
     </div>
   </div>    
 </template>
 <script>
 import {FilterMatchMode} from 'primevue/api';
-import Jspdf from 'jspdf';
-import { extension } from 'mime';
+import qrcode from './QRCode'; 
 export default {
   data() {
     return {
@@ -268,21 +238,21 @@ export default {
     this.getMaster();
   },
   methods: {
-    downloadBarcodePdf(){
-      const doc = new Jspdf();
-      const contentHtml = this.$refs.qr;
-      const image = contentHtml.toDataURL('image/jpeg', 0.8);
-      doc.addImage(image, 'JPEG', 70, 30);
-      doc.save('Barcode.pdf');
-      this.barcode= '';
-      this.displayBarcode = false;
-    },
     previewBarcode(invent_code_dtl){
-      this.axios.get('/api/detail-peripherall/' +invent_code_dtl, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-       this.text = response.data.invent_bu+" - ICT";
+      localStorage.setItem('code',invent_code_dtl);
+      const dialogRef = this.$dialog.open(qrcode, {
+      props: {
+          header: 'Preview Barcode',
+          style: {
+                  width: '25vw',
+                },
+          breakpoints: {
+                        '760px': '75vw',
+                        '440px': '90vw'
+                      },
+          modal: true
+          },
       });
-        this.barcode = process.env.MIX_APP_URL+'/detPeripheral/'+ +invent_code_dtl
-        this.displayBarcode = true;
     },
     detailKode(invent_code_dtl){
       this.displayKode = true;
