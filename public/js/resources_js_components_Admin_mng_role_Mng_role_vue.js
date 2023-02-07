@@ -35,7 +35,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -47,7 +46,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-
         if (_this.checkname.includes("Role Menu") || _this.checkto.includes("/mng-role")) {
           _this.getRole();
         } else {
@@ -57,7 +55,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getRole: function getRole() {
       var _this2 = this;
-
       this.axios.get('api/role', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -72,7 +69,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
@@ -83,7 +79,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     DeleteRole: function DeleteRole(rol_id) {
       var _this3 = this;
-
       this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
         header: "Delete Confirmation",
@@ -98,13 +93,11 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-
           _this3.axios["delete"]('api/delete-role/' + rol_id, {
             headers: {
               'Authorization': 'Bearer ' + _this3.token
             }
           });
-
           _this3.getRole();
         },
         reject: function reject() {}
@@ -142,50 +135,33 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "card"
 };
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Role menu", -1
-/* HOISTED */
-);
-
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Role menu", -1 /* HOISTED */);
 var _hoisted_5 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_6 = {
   "class": "block mt-2 md:mt-0 p-input-icon-left"
 };
-
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "pi pi-search"
-}, null, -1
-/* HOISTED */
-);
+}, null, -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
-
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-
   var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_4];
     }),
-    _: 1
-    /* STABLE */
-
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     value: $data.role,
     paginator: true,
@@ -215,9 +191,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data.filters['global'].value = $event;
         }),
         placeholder: "Search. . ."
-      }, null, 8
-      /* PROPS */
-      , ["modelValue"])])])];
+      }, null, 8 /* PROPS */, ["modelValue"])])])];
     }),
     empty: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Not Found ")];
@@ -271,9 +245,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               });
             }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Edit', void 0, {
+          }, null, 8 /* PROPS */, ["onClick"]), [[_directive_tooltip, 'Edit', void 0, {
             left: true
           }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             icon: "pi pi-trash",
@@ -281,23 +253,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             onClick: function onClick($event) {
               return $options.DeleteRole(slotProps.data.rol_id);
             }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Delete', void 0, {
+          }, null, 8 /* PROPS */, ["onClick"]), [[_directive_tooltip, 'Delete', void 0, {
             right: true
           }]])];
         }),
-        _: 1
-        /* STABLE */
-
+        _: 1 /* STABLE */
       })];
     }),
-    _: 1
-    /* STABLE */
 
-  }, 8
-  /* PROPS */
-  , ["value", "filters", "loading"])])])]);
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["value", "filters", "loading"])])])]);
 }
 
 /***/ }),

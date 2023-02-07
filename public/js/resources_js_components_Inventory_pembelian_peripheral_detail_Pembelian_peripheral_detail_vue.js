@@ -42,7 +42,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -54,10 +53,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-
         if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
           _this.getPembelianDetail();
-
           _this.getDetails();
         } else {
           _this.$router.push('/access');
@@ -73,7 +70,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPembelianDetail: function getPembelianDetail() {
       var _this2 = this;
-
       this.axios.get('/api/detail-pem/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -84,7 +80,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDetails: function getDetails() {
       var _this3 = this;
-
       this.axios.get('/api/getSuppDate/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -99,7 +94,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
@@ -110,7 +104,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     DeleteDetail: function DeleteDetail(dpurchase_id) {
       var _this4 = this;
-
       this.$confirm.require({
         message: "Are you sure to delete this record data?",
         header: "Delete Confirmation",
@@ -125,14 +118,12 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-
           _this4.axios["delete"]('/api/delete-detail-pem/' + _this4.$route.params.code + '/' + dpurchase_id, {
             headers: {
               'Authorization': 'Bearer ' + _this4.token
             }
           }).then(function () {
             _this4.loading = true;
-
             _this4.getPembelianDetail();
           });
         },
@@ -141,7 +132,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     CetakPdf: function CetakPdf() {
       var _this5 = this;
-
       this.loading = true;
       this.axios.get('api/report-pem-detail-pdf/' + this.purchase_id, {
         headers: {
@@ -156,7 +146,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     CetakExcel: function CetakExcel() {
       var _this6 = this;
-
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
       this.loading = true;
@@ -202,44 +191,27 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "card"
 };
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Pembelian Peripheral(Detail) ", -1
-/* HOISTED */
-);
-
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Pembelian Peripheral(Detail) ", -1 /* HOISTED */);
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "110px"
   }
-}, "Suplier ", -1
-/* HOISTED */
-);
-
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
-/* HOISTED */
-);
-
+}, "Suplier ", -1 /* HOISTED */);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "110px"
   }
-}, "Tgl. Pembelian ", -1
-/* HOISTED */
-);
-
+}, "Tgl. Pembelian ", -1 /* HOISTED */);
 var _hoisted_8 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_9 = {
   "class": "block mt-2 md:mt-0 p-input-icon-left"
 };
-
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "pi pi-search"
-}, null, -1
-/* HOISTED */
-);
-
+}, null, -1 /* HOISTED */);
 var _hoisted_11 = {
   "class": "p-grid p-dir-col"
 };
@@ -251,19 +223,12 @@ var _hoisted_13 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
-
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
@@ -271,15 +236,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_4];
     }),
     end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.details.suplier_code), 1
-      /* TEXT */
-      ), _hoisted_6, _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate($data.details.purchase_date)), 1
-      /* TEXT */
-      )])];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.details.suplier_code), 1 /* TEXT */), _hoisted_6, _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate($data.details.purchase_date)), 1 /* TEXT */)])];
     }),
-    _: 1
-    /* STABLE */
 
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     value: $data.detail,
     paginator: true,
@@ -311,9 +271,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data.filters['global'].value = $event;
         }),
         placeholder: "Search. . ."
-      }, null, 8
-      /* PROPS */
-      , ["modelValue"])])])];
+      }, null, 8 /* PROPS */, ["modelValue"])])])];
     }),
     empty: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Not Found ")];
@@ -369,26 +327,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         sortable: true
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.dpurchase_qty) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.dpurchase_sat), 1
-          /* TEXT */
-          )];
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.dpurchase_qty) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.dpurchase_sat), 1 /* TEXT */)];
         }),
-        _: 1
-        /* STABLE */
 
+        _: 1 /* STABLE */
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         field: "dpurchase_prc",
         header: "Total Harga",
         sortable: true
       }, {
         body: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.valuta_code) + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice(slotProps.data.dpurchase_prc)), 1
-          /* TEXT */
-          )];
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.valuta_code) + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatPrice(slotProps.data.dpurchase_prc)), 1 /* TEXT */)];
         }),
-        _: 1
-        /* STABLE */
 
+        _: 1 /* STABLE */
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         headerStyle: "min-width:12rem"
       }, {
@@ -404,29 +356,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               });
             }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+          }, null, 8 /* PROPS */, ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             icon: "pi pi-trash",
             "class": "p-button-rounded p-button-danger mt-2",
             onClick: function onClick($event) {
               return $options.DeleteDetail(slotProps.data.dpurchase_id);
             }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"])];
+          }, null, 8 /* PROPS */, ["onClick"])];
         }),
-        _: 1
-        /* STABLE */
-
+        _: 1 /* STABLE */
       })];
     }),
-    _: 1
-    /* STABLE */
 
-  }, 8
-  /* PROPS */
-  , ["value", "loading", "filters"])])])]);
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["value", "loading", "filters"])])])]);
 }
 
 /***/ }),

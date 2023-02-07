@@ -38,7 +38,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -50,12 +49,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-
         if (_this.checkname.includes("Role Menu") || _this.checkto.includes("/mng-role")) {
           _this.getRole();
-
           _this.getMenus();
-
           _this.getMenu();
         } else {
           _this.$router.push('/access');
@@ -64,7 +60,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getMenus: function getMenus() {
       var _this2 = this;
-
       this.axios.get('/api/get-menu', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -75,7 +70,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getRole: function getRole() {
       var _this3 = this;
-
       this.axios.get('/api/edit-role/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -89,7 +83,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
@@ -100,7 +93,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getMenu: function getMenu() {
       var _this4 = this;
-
       this.axios.get('/api/edit-role-menu/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -111,7 +103,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     UpdateRole: function UpdateRole() {
       var _this5 = this;
-
       this.errors = [];
       this.axios.put('/api/update-role/' + this.$route.params.code, this.role, {
         headers: {
@@ -123,13 +114,11 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + _this5.token
           }
         });
-
         _this5.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Update"
         });
-
         setTimeout(function () {
           return _this5.$router.push('/mng-role');
         }, 1000);
@@ -160,11 +149,7 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "card"
 };
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Role Menu", -1
-/* HOISTED */
-);
-
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Role Menu", -1 /* HOISTED */);
 var _hoisted_4 = {
   "class": "row"
 };
@@ -177,30 +162,22 @@ var _hoisted_6 = {
 var _hoisted_7 = {
   "class": "field grid"
 };
-
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
-}, "Role ID", -1
-/* HOISTED */
-);
-
+}, "Role ID", -1 /* HOISTED */);
 var _hoisted_9 = {
   "class": "col-3 md-6"
 };
 var _hoisted_10 = {
   "class": "field grid"
 };
-
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
-}, "Role Name", -1
-/* HOISTED */
-);
-
+}, "Role Name", -1 /* HOISTED */);
 var _hoisted_12 = {
   "class": "col-6"
 };
@@ -211,15 +188,11 @@ var _hoisted_13 = {
 var _hoisted_14 = {
   "class": "field grid"
 };
-
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
-}, "Role Deskripsi", -1
-/* HOISTED */
-);
-
+}, "Role Deskripsi", -1 /* HOISTED */);
 var _hoisted_16 = {
   "class": "col-6"
 };
@@ -230,15 +203,11 @@ var _hoisted_17 = {
 var _hoisted_18 = {
   "class": "field grid"
 };
-
 var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
-}, "Role Status", -1
-/* HOISTED */
-);
-
+}, "Role Status", -1 /* HOISTED */);
 var _hoisted_20 = {
   "class": "col-6"
 };
@@ -258,15 +227,11 @@ var _hoisted_23 = {
 var _hoisted_24 = {
   "class": "field grid"
 };
-
 var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
-}, "Menu", -1
-/* HOISTED */
-);
-
+}, "Menu", -1 /* HOISTED */);
 var _hoisted_26 = {
   "class": "col-8"
 };
@@ -279,26 +244,18 @@ var _hoisted_28 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
-
   var _component_MultiSelect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MultiSelect");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_3];
     }),
-    _: 1
-    /* STABLE */
-
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.UpdateRole && $options.UpdateRole.apply($options, arguments);
@@ -309,9 +266,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.role.rol_id = $event;
     }),
     disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  }, null, 8 /* PROPS */, ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     modelValue: $data.role.rol_name,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.role.rol_name = $event;
@@ -321,11 +276,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       'p-invalid': $data.errors.rol_name
     }),
     autofocus: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), $data.errors.rol_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.rol_name[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  }, null, 8 /* PROPS */, ["modelValue", "class"]), $data.errors.rol_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.rol_name[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     modelValue: $data.role.rol_desc,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.role.rol_desc = $event;
@@ -334,11 +285,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.rol_desc
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), $data.errors.rol_desc ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.rol_desc[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  }, null, 8 /* PROPS */, ["modelValue", "class"]), $data.errors.rol_desc ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.rol_desc[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.role.rol_stat,
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.role.rol_stat = $event;
@@ -351,11 +298,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.rol_stat
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.rol_stat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.rol_stat[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MultiSelect, {
+  }, null, 8 /* PROPS */, ["modelValue", "options", "class"]), $data.errors.rol_stat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.rol_stat[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MultiSelect, {
     modelValue: $data.menuss.menu,
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.menuss.menu = $event;
@@ -369,11 +312,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.menu
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.menu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.menu[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  }, null, 8 /* PROPS */, ["modelValue", "options", "class"]), $data.errors.menu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.menu[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -385,9 +324,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[5] || (_cache[5] = function ($event) {
       return _ctx.$router.push('/mng-role');
     })
-  })])], 32
-  /* HYDRATE_EVENTS */
-  )])])]);
+  })])], 32 /* HYDRATE_EVENTS */)])])]);
 }
 
 /***/ }),

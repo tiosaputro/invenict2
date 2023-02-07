@@ -36,7 +36,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getMaster: function getMaster() {
       var _this = this;
-
       this.axios.get('api/mas', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -51,7 +50,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
@@ -64,7 +62,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     DeleteMas: function DeleteMas(invent_code) {
       var _this2 = this;
-
       this.$confirm.require({
         message: "Are you sure to delete this data?",
         header: "Delete Confirmation",
@@ -74,21 +71,18 @@ __webpack_require__.r(__webpack_exports__);
         rejectLabel: "No",
         accept: function accept() {
           _this2.loading = true;
-
           _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
-
           _this2.axios["delete"]('api/delete-mas/' + invent_code, {
             headers: {
               'Authorization': 'Bearer ' + _this2.token
             }
           }).then(function () {
             _this2.loading = true;
-
             _this2.getMaster();
           });
         },
@@ -97,7 +91,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     CetakPdf: function CetakPdf() {
       var _this3 = this;
-
       this.loading = true;
       this.axios.get('api/report-master-pdf', {
         headers: {
@@ -112,7 +105,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     CetakExcel: function CetakExcel() {
       var _this4 = this;
-
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
       this.loading = true;
@@ -149,11 +141,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-
 var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-af7f6a96"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
-
 var _hoisted_1 = {
   "class": "grid"
 };
@@ -163,28 +153,20 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "card"
 };
-
 var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Master Peripheral", -1
-  /* HOISTED */
-  );
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Master Peripheral", -1 /* HOISTED */);
 });
-
 var _hoisted_5 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
 var _hoisted_6 = {
   "class": "block mt-2 md:mt-0 p-input-icon-left"
 };
-
 var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "pi pi-search"
-  }, null, -1
-  /* HOISTED */
-  );
+  }, null, -1 /* HOISTED */);
 });
-
 var _hoisted_8 = {
   "class": "p-grid p-dir-col"
 };
@@ -196,32 +178,21 @@ var _hoisted_10 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
-
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
-
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-
   var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_4];
     }),
-    _: 1
-    /* STABLE */
-
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     value: $data.master,
     paginator: true,
@@ -248,9 +219,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data.filters['global'].value = $event;
         }),
         placeholder: "Search. . ."
-      }, null, 8
-      /* PROPS */
-      , ["modelValue"])])])];
+      }, null, 8 /* PROPS */, ["modelValue"])])])];
     }),
     empty: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Not Found ")];
@@ -326,9 +295,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               });
             }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click for detail peripheral', void 0, {
+          }, null, 8 /* PROPS */, ["onClick"]), [[_directive_tooltip, 'Click for detail peripheral', void 0, {
             bottom: true
           }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             "class": "p-button-rounded p-button-info mr-2 mt-2",
@@ -341,9 +308,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               });
             }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to edit', void 0, {
+          }, null, 8 /* PROPS */, ["onClick"]), [[_directive_tooltip, 'Click to edit', void 0, {
             bottom: true
           }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             icon: "pi pi-trash",
@@ -351,23 +316,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             onClick: function onClick($event) {
               return $options.DeleteMas(slotProps.data.invent_code);
             }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to delete', void 0, {
+          }, null, 8 /* PROPS */, ["onClick"]), [[_directive_tooltip, 'Click to delete', void 0, {
             bottom: true
           }]])];
         }),
-        _: 1
-        /* STABLE */
-
+        _: 1 /* STABLE */
       })];
     }),
-    _: 1
-    /* STABLE */
 
-  }, 8
-  /* PROPS */
-  , ["value", "loading", "filters"])])])]);
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["value", "loading", "filters"])])])]);
 }
 
 /***/ }),

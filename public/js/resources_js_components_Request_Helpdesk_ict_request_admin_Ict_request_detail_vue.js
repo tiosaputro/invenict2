@@ -40,7 +40,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -52,10 +51,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-
         if (_this.checkname.includes("Request") || _this.checkto.includes("/ict-request")) {
           _this.getIctDetail();
-
           _this.getNoreq();
         } else {
           _this.$router.push('/access');
@@ -64,7 +61,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this2 = this;
-
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -74,11 +70,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.tes = response.data.map(function (x) {
           return x.ireq_assigned_to;
         });
-
         if (_this2.tes.length > 0 && _this2.tes[0] != null) {
           _this2.ireq = _this2.tes;
         } else {}
-
         _this2.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -87,7 +81,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
@@ -98,7 +91,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this3 = this;
-
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -110,7 +102,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     DeleteIct: function DeleteIct(ireqd_id, code) {
       var _this4 = this;
-
       this.$confirm.require({
         message: "Are you sure you want to delete this record data?",
         header: "Delete Confirmation",
@@ -125,13 +116,11 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-
           _this4.axios["delete"]('/api/delete-ict-detail/' + ireqd_id + '/' + code, {
             headers: {
               'Authorization': 'Bearer ' + _this4.token
             }
           });
-
           _this4.getIctDetail();
         },
         reject: function reject() {}
@@ -139,7 +128,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     SubmitIct: function SubmitIct() {
       var _this5 = this;
-
       this.$confirm.require({
         message: "Are you sure you want to submit this request?",
         header: "Confirmation Submit",
@@ -154,15 +142,12 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Successfully Submit",
             life: 3000
           });
-
           _this5.loading = true;
-
           _this5.axios.get('/api/updateStatusSubmit/' + _this5.code, {
             headers: {
               'Authorization': 'Bearer ' + _this5.token
             }
           });
-
           setTimeout(function () {
             return _this5.$router.push('/ict-request-admin');
           }, 1000);
@@ -172,7 +157,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     CetakPdf: function CetakPdf() {
       var _this6 = this;
-
       this.loading = true;
       this.axios.get('/api/print-out-ict-request/' + this.code, {
         headers: {
@@ -211,7 +195,6 @@ __webpack_require__.r(__webpack_exports__);
     // CetakExcelTabSedangDikerjakan(){
     //   window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' +this.code);
     // },
-
   }
 });
 
@@ -238,13 +221,9 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "card"
 };
-
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "my-2"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Detail) ")], -1
-/* HOISTED */
-);
-
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Detail) ")], -1 /* HOISTED */);
 var _hoisted_5 = {
   style: {
     "width": "200px"
@@ -256,13 +235,9 @@ var _hoisted_6 = {
 var _hoisted_7 = {
   "class": "block mt-2 md:mt-0 p-input-icon-left"
 };
-
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "pi pi-search"
-}, null, -1
-/* HOISTED */
-);
-
+}, null, -1 /* HOISTED */);
 var _hoisted_9 = {
   "class": "grid dir-col"
 };
@@ -274,23 +249,14 @@ var _hoisted_11 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
-
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
-
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-
   var _directive_tooltip = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDirective)("tooltip");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
@@ -298,13 +264,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_4];
     }),
     end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_5, "No. Request : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.kode), 1
-      /* TEXT */
-      )];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_5, "No. Request : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.kode), 1 /* TEXT */)];
     }),
-    _: 1
-    /* STABLE */
 
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     value: $data.detail,
     paginator: true,
@@ -330,9 +293,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }
           });
         })
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[_directive_tooltip, 'Click to add new detail', void 0, {
+      }, null, 512 /* NEED_PATCH */), [[_directive_tooltip, 'Click to add new detail', void 0, {
         right: true
       }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.filters['global'].value,
@@ -340,9 +301,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data.filters['global'].value = $event;
         }),
         placeholder: "Search. . ."
-      }, null, 8
-      /* PROPS */
-      , ["modelValue"])])])];
+      }, null, 8 /* PROPS */, ["modelValue"])])])];
     }),
     empty: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Not Found ")];
@@ -360,9 +319,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             name: 'Ict Request Admin'
           });
         })
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[_directive_tooltip, 'Click to back', void 0, {
+      }, null, 512 /* NEED_PATCH */), [[_directive_tooltip, 'Click to back', void 0, {
         bottom: true
       }]]), _this.status != null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 0,
@@ -372,9 +329,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onClick: _cache[3] || (_cache[3] = function ($event) {
           return $options.CetakPdf();
         })
-      }, null, 512
-      /* NEED_PATCH */
-      )), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
+      }, null, 512 /* NEED_PATCH */)), [[_directive_tooltip, 'Click to print out (PDF)', void 0, {
         bottom: true
       }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _this.detail.length && _this.status == null ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
         key: 1,
@@ -384,9 +339,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onClick: _cache[4] || (_cache[4] = function ($event) {
           return $options.SubmitIct();
         })
-      }, null, 512
-      /* NEED_PATCH */
-      )), [[_directive_tooltip, 'Click to submit request', void 0, {
+      }, null, 512 /* NEED_PATCH */)), [[_directive_tooltip, 'Click to submit request', void 0, {
         bottom: true
       }]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
@@ -446,13 +399,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return [slotProps.data.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
             key: 0,
             "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('user-request status-' + slotProps.data.status.toLowerCase())
-          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3
-          /* TEXT, CLASS */
-          )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(slotProps.data.ireq_status), 3 /* TEXT, CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
         }),
-        _: 1
-        /* STABLE */
-
+        _: 1 /* STABLE */
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Column, {
         style: {
           "min-width": "12rem"
@@ -471,9 +420,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 }
               });
             }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to edit request', void 0, {
+          }, null, 8 /* PROPS */, ["onClick"]), [[_directive_tooltip, 'Click to edit request', void 0, {
             bottom: true
           }]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
             icon: "pi pi-trash",
@@ -481,23 +428,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             onClick: function onClick($event) {
               return $options.DeleteIct(slotProps.data.ireqd_id, _this.code);
             }
-          }, null, 8
-          /* PROPS */
-          , ["onClick"]), [[_directive_tooltip, 'Click to delete request', void 0, {
+          }, null, 8 /* PROPS */, ["onClick"]), [[_directive_tooltip, 'Click to delete request', void 0, {
             bottom: true
           }]])];
         }),
-        _: 1
-        /* STABLE */
-
+        _: 1 /* STABLE */
       })];
     }),
-    _: 1
-    /* STABLE */
 
-  }, 8
-  /* PROPS */
-  , ["value", "loading", "filters"])])])]);
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["value", "loading", "filters"])])])]);
 }
 
 /***/ }),

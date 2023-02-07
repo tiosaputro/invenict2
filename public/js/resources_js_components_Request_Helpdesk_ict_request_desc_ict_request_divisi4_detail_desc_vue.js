@@ -36,7 +36,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -48,10 +47,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-
         if (_this.checkname.includes("Closing Request") || _this.checkto.includes("/ict-request-divisi4")) {
           _this.getIctDetail();
-
           _this.getNoreq();
         } else {
           _this.$router.push('/access');
@@ -60,7 +57,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this2 = this;
-
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -75,7 +71,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
@@ -86,7 +81,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this3 = this;
-
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -121,11 +115,7 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "card"
 };
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Detail) ", -1
-/* HOISTED */
-);
-
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Detail) ", -1 /* HOISTED */);
 var _hoisted_5 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
@@ -137,13 +127,9 @@ var _hoisted_6 = {
 var _hoisted_7 = {
   "class": "p-input-icon-left"
 };
-
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "pi pi-search"
-}, null, -1
-/* HOISTED */
-);
-
+}, null, -1 /* HOISTED */);
 var _hoisted_9 = {
   "class": "grid dir-col"
 };
@@ -155,28 +141,19 @@ var _hoisted_11 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
     left: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_4];
     }),
-    _: 1
-    /* STABLE */
-
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     value: $data.detail,
     paginator: true,
@@ -190,17 +167,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_6, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.kode.noreq), 1
-      /* TEXT */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_6, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.kode.noreq), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.filters['global'].value,
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $data.filters['global'].value = $event;
         }),
         placeholder: "Search. . ."
-      }, null, 8
-      /* PROPS */
-      , ["modelValue"])])])];
+      }, null, 8 /* PROPS */, ["modelValue"])])])];
     }),
     empty: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Not Found ")];
@@ -251,12 +224,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       })];
     }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["value", "loading", "filters"])])])]);
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["value", "loading", "filters"])])])]);
 }
 
 /***/ }),

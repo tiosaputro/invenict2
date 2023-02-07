@@ -38,7 +38,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -50,7 +49,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-
         if (_this.checkname.includes("Master Peripheral") || _this.checkto.includes("/master-peripheral")) {
           _this.getMaster();
         } else {
@@ -60,7 +58,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getMaster: function getMaster() {
       var _this2 = this;
-
       this.axios.get('/api/edit-mas/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -76,14 +73,12 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
             return _this2.$router.push('/login');
           }, 2000);
         }
-
         if (error.response.status == 403) {
           _this2.$router.push('/access');
         }
@@ -91,10 +86,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     UpdateMaster: function UpdateMaster() {
       var _this3 = this;
-
       this.loading = true;
       this.submitted = true;
-
       if (this.master.invent_type != null) {
         this.axios.put('/api/update-mas/' + this.$route.params.code, this.master, {
           headers: {
@@ -105,7 +98,6 @@ __webpack_require__.r(__webpack_exports__);
           setTimeout(function () {
             return _this3.$router.push('/master-peripheral');
           }, 1000);
-
           _this3.$toast.add({
             severity: "success",
             summary: "Success Message",
@@ -113,7 +105,6 @@ __webpack_require__.r(__webpack_exports__);
           });
         })["catch"](function (error) {
           _this3.loading = false;
-
           if (error.response.status == 422) {
             _this3.submitted = false;
             _this3.errors = error.response.data.errors;
@@ -138,21 +129,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-
 var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-00632f04"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
-
 var _hoisted_1 = {
   "class": "card"
 };
-
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Master Peripheral", -1
-  /* HOISTED */
-  );
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Master Peripheral", -1 /* HOISTED */);
 });
-
 var _hoisted_3 = {
   "class": "row"
 };
@@ -162,60 +147,44 @@ var _hoisted_4 = {
 var _hoisted_5 = {
   "class": "field grid"
 };
-
 var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Kode", -1
-  /* HOISTED */
-  );
+  }, "Kode", -1 /* HOISTED */);
 });
-
 var _hoisted_7 = {
   "class": "col-fixed w-9rem"
 };
 var _hoisted_8 = {
   "class": "field grid"
 };
-
 var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Nama Peripheral", -1
-  /* HOISTED */
-  );
+  }, "Nama Peripheral", -1 /* HOISTED */);
 });
-
 var _hoisted_10 = {
   "class": "col-fixed w-9rem"
 };
 var _hoisted_11 = {
   "class": "field grid"
 };
-
 var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Merk", -1
-  /* HOISTED */
-  );
+  }, "Merk", -1 /* HOISTED */);
 });
-
 var _hoisted_13 = {
   "class": "col-fixed w-9rem"
 };
 var _hoisted_14 = {
   "class": "field grid"
 };
-
 var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Tipe", -1
-  /* HOISTED */
-  );
+  }, "Tipe", -1 /* HOISTED */);
 });
-
 var _hoisted_16 = {
   "class": "col-fixed w-9rem"
 };
@@ -228,24 +197,17 @@ var _hoisted_18 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_ProgressSpinner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProgressSpinner");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_2];
     }),
-    _: 1
-    /* STABLE */
-
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.UpdateMaster && $options.UpdateMaster.apply($options, arguments);
@@ -257,9 +219,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.master.invent_code = $event;
     }),
     disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  }, null, 8 /* PROPS */, ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.master.invent_desc,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
@@ -267,18 +227,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     placeholder: "Masukan Nama",
     disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  }, null, 8 /* PROPS */, ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.master.lookup_desc,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.master.lookup_desc = $event;
     }),
     disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  }, null, 8 /* PROPS */, ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     type: "text",
     modelValue: $data.master.invent_type,
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
@@ -288,9 +244,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.submitted && !$data.master.invent_type
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), $data.submitted && !$data.master.invent_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, "Type Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
+  }, null, 8 /* PROPS */, ["modelValue", "class"]), $data.submitted && !$data.master.invent_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, "Type Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
     key: 0,
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
@@ -313,9 +267,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     strokeWidth: "8",
     fill: "var(--surface-ground)",
     animationDuration: ".5s"
-  }))])], 32
-  /* HYDRATE_EVENTS */
-  )])])])]);
+  }))])], 32 /* HYDRATE_EVENTS */)])])])]);
 }
 
 /***/ }),

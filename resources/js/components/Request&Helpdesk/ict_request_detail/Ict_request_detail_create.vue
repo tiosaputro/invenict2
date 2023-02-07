@@ -144,7 +144,7 @@
                <label class="col-fixed w-9rem"></label>
                 <div class="col-10 md-6">
                   <div class="card">
-                    <Pdf :src="preview" class="ict-pdf" />
+                    <Pdf :src="preview" :page="1" style="cursor:pointer;" class="ict-pdf" />
                   </div>
                 </div>
               </div>

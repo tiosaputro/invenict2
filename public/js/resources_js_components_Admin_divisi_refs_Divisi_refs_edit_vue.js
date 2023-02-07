@@ -28,7 +28,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -40,7 +39,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-
         if (_this.checkname.includes("Divisi") || _this.checkto.includes("/divisi-refs")) {
           _this.getDivisi();
         } else {
@@ -50,14 +48,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDivisi: function getDivisi() {
       var _this2 = this;
-
       this.axios.get('/api/edit-divisi/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
         _this2.div = response.data;
-
         _this2.getVerificator();
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -66,7 +62,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
@@ -77,7 +72,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getVerificator: function getVerificator() {
       var _this3 = this;
-
       this.axios.get('/api/get-verificator/' + this.div.div_id, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -88,7 +82,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     UpdateDivisi: function UpdateDivisi() {
       var _this4 = this;
-
       this.errors = [];
       this.axios.put('/api/update-divisi/' + this.$route.params.code, this.div, {
         headers: {
@@ -100,7 +93,6 @@ __webpack_require__.r(__webpack_exports__);
           summary: "Success Message",
           detail: "Success Update"
         });
-
         setTimeout(function () {
           return _this4.$router.push('/divisi-refs');
         }, 1000);
@@ -128,11 +120,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "card"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Divisi Refs", -1
-/* HOISTED */
-);
-
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Divisi Refs", -1 /* HOISTED */);
 var _hoisted_3 = {
   "class": "row"
 };
@@ -145,30 +133,22 @@ var _hoisted_5 = {
 var _hoisted_6 = {
   "class": "field grid"
 };
-
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
-}, "Divisi ID", -1
-/* HOISTED */
-);
-
+}, "Divisi ID", -1 /* HOISTED */);
 var _hoisted_8 = {
   "class": "col-3 md-6"
 };
 var _hoisted_9 = {
   "class": "field grid"
 };
-
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
-}, "Divisi Code", -1
-/* HOISTED */
-);
-
+}, "Divisi Code", -1 /* HOISTED */);
 var _hoisted_11 = {
   "class": "col-3 md-6"
 };
@@ -179,15 +159,11 @@ var _hoisted_12 = {
 var _hoisted_13 = {
   "class": "field grid"
 };
-
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
-}, "Divisi Name", -1
-/* HOISTED */
-);
-
+}, "Divisi Name", -1 /* HOISTED */);
 var _hoisted_15 = {
   "class": "col-3 md-6"
 };
@@ -198,15 +174,11 @@ var _hoisted_16 = {
 var _hoisted_17 = {
   "class": "field grid"
 };
-
 var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "120px"
   }
-}, "Divisi Verificator", -1
-/* HOISTED */
-);
-
+}, "Divisi Verificator", -1 /* HOISTED */);
 var _hoisted_19 = {
   "class": "col-3 md-6"
 };
@@ -219,24 +191,17 @@ var _hoisted_21 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_2];
     }),
-    _: 1
-    /* STABLE */
-
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [this.div ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
     key: 0,
     onSubmit: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
@@ -248,9 +213,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.div.div_id = $event;
     }),
     disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  }, null, 8 /* PROPS */, ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     modelValue: $data.div.div_code,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.div.div_code = $event;
@@ -260,11 +223,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       'p-invalid': $data.errors.div_code
     }),
     autofocus: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), $data.errors.div_code ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.div_code[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+  }, null, 8 /* PROPS */, ["modelValue", "class"]), $data.errors.div_code ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.div_code[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
     modelValue: $data.div.div_name,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.div.div_name = $event;
@@ -273,11 +232,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.div_name
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), $data.errors.div_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.div_name[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  }, null, 8 /* PROPS */, ["modelValue", "class"]), $data.errors.div_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.div_name[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.div.div_verificator,
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.div.div_verificator = $event;
@@ -290,11 +245,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.div_verificator
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.errors.div_verificator ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.div_verificator[0]), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  }, null, 8 /* PROPS */, ["modelValue", "options", "class"]), $data.errors.div_verificator ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.div_verificator[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -306,9 +257,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[4] || (_cache[4] = function ($event) {
       return _ctx.$router.push('/divisi-refs');
     })
-  })])], 32
-  /* HYDRATE_EVENTS */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
+  })])], 32 /* HYDRATE_EVENTS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
 }
 
 /***/ }),

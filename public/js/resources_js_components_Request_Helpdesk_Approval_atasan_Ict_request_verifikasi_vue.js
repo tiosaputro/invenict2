@@ -42,7 +42,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -54,10 +53,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-
         if (_this.checkname.includes("Atasan Requestor Divisi") || _this.checkto.includes("/ict-request-divisi1")) {
           _this.getIctDetail();
-
           _this.getNoreq();
         } else {
           _this.$router.push('/access');
@@ -66,7 +63,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     Approve: function Approve() {
       var _this2 = this;
-
       this.$confirm.require({
         message: "Are you sure you agree to this request?",
         header: "Confirmation Approval",
@@ -80,13 +76,11 @@ __webpack_require__.r(__webpack_exports__);
             summary: "Success Message",
             detail: "Successfully approved this request"
           });
-
           _this2.axios.get('/api/updateStatusPermohonan/' + _this2.$route.params.code, {
             headers: {
               'Authorization': 'Bearer ' + _this2.token
             }
           });
-
           setTimeout(function () {
             return _this2.$router.push('/ict-request-divisi1');
           }, 1000);
@@ -96,9 +90,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateReject: function updateReject() {
       var _this3 = this;
-
       this.submitted = true;
-
       if (this.reason.ket != null) {
         this.axios.put('/api/updateStatusReject/' + this.$route.params.code, this.reason, {
           headers: {
@@ -106,13 +98,11 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function () {
           _this3.dialogReject = false;
-
           _this3.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully rejected this request"
           });
-
           setTimeout(function () {
             return _this3.$router.push('/ict-request-divisi1');
           }, 1000);
@@ -126,7 +116,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this4 = this;
-
       this.axios.get('/api/get-verif/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -140,7 +129,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
@@ -151,7 +139,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this5 = this;
-
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -163,7 +150,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     DeleteIct: function DeleteIct(ireqd_id) {
       var _this6 = this;
-
       this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
         header: "Delete Confirmation",
@@ -178,13 +164,11 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-
           _this6.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
             headers: {
               'Authorization': 'Bearer ' + _this6.token
             }
           });
-
           _this6.getIctDetail();
         },
         reject: function reject() {}
@@ -222,11 +206,7 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "card"
 };
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Verification) ", -1
-/* HOISTED */
-);
-
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "ICT Request (Verification) ", -1 /* HOISTED */);
 var _hoisted_5 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
@@ -238,13 +218,9 @@ var _hoisted_6 = {
 var _hoisted_7 = {
   "class": "p-input-icon-left"
 };
-
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "pi pi-search"
-}, null, -1
-/* HOISTED */
-);
-
+}, null, -1 /* HOISTED */);
 var _hoisted_9 = {
   "class": "grid p-dir-col"
 };
@@ -260,13 +236,9 @@ var _hoisted_12 = {
 var _hoisted_13 = {
   "class": "field grid"
 };
-
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem"
-}, "Reason", -1
-/* HOISTED */
-);
-
+}, "Reason", -1 /* HOISTED */);
 var _hoisted_15 = {
   "class": "col-fixed w-9rem"
 };
@@ -276,34 +248,22 @@ var _hoisted_16 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
-
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_ConfirmDialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ConfirmDialog");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
-
   var _component_Column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Column");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-
   var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
-
   var _component_Dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dialog");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ConfirmDialog), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "p-mb-4"
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_4];
     }),
-    _: 1
-    /* STABLE */
-
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     value: $data.verif,
     paginator: true,
@@ -317,17 +277,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     responsiveLayout: "scroll"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_6, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.kode.noreq), 1
-      /* TEXT */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_6, "No. Request: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.kode.noreq), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputText, {
         modelValue: $data.filters['global'].value,
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $data.filters['global'].value = $event;
         }),
         placeholder: "Search. . ."
-      }, null, 8
-      /* PROPS */
-      , ["modelValue"])])])];
+      }, null, 8 /* PROPS */, ["modelValue"])])])];
     }),
     empty: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Not Found ")];
@@ -392,12 +348,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       })];
     }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["value", "loading", "filters"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dialog, {
     visible: $data.dialogReject,
     "onUpdate:visible": _cache[7] || (_cache[7] = function ($event) {
       return $data.dialogReject = $event;
@@ -438,16 +390,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
           'p-invalid': $data.submitted && !$data.reason.ket
         })
-      }, null, 8
-      /* PROPS */
-      , ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
+      }, null, 8 /* PROPS */, ["modelValue", "class"]), $data.submitted && !$data.reason.ket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_16, " Reason not filled ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["visible"])])])]);
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["visible"])])])]);
 }
 
 /***/ }),

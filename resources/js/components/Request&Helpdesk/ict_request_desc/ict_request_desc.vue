@@ -381,7 +381,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -463,7 +466,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -858,7 +864,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -940,7 +949,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -1227,7 +1239,10 @@
                 <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
               </p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+                <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
               </p>
             </template>  
           </Column>
@@ -1319,7 +1334,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -1461,7 +1479,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -1538,7 +1559,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -1641,7 +1665,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -1723,7 +1750,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -1805,7 +1835,10 @@
                 <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
               </p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+                <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
               </p>
             </template>  
           </Column>
@@ -1891,7 +1924,10 @@
                 <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
               </p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+                <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
               </p>
             </template>  
           </Column>
@@ -2364,7 +2400,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -2445,7 +2484,10 @@
               <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
             </p>
             <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-              <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+              <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+              </Button>
             </p>
           </template>  
         </Column>
@@ -4871,5 +4913,17 @@ export default {
 .attachment-image {
     width: 50px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.p-button.youtube {
+    cursor:pointer;
+    background: linear-gradient(to left, var(--pink-600) 50%, var(--pink-700) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    color: #fff;
+    border-color: var(--pink-700);
+}
+.p-button.youtube:hover {
+    background-position: left bottom;
 }
 </style>

@@ -33,7 +33,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('/api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -45,7 +44,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-
         if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
           _this.getDetail();
         } else {
@@ -58,7 +56,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDetail: function getDetail() {
       var _this2 = this;
-
       this.axios.get('/api/edit-detail-pem/' + this.$route.params.purchase, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -68,7 +65,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.valuta = response.data.valuta;
         _this2.sat = response.data.ref;
         _this2.kodeperi = response.data.mas;
-
         _this2.getValutaCode();
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -77,7 +73,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
@@ -91,12 +86,10 @@ __webpack_require__.r(__webpack_exports__);
         this.locale = 'en-US';
         this.currency = 'USD';
       }
-
       if (this.valuta.valuta_code == 'Rp') {
         this.locale = 'id-ID';
         this.currency = 'IDR';
       }
-
       if (this.valuta.valuta_code == '¥') {
         this.locale = 'zh-CN';
         this.currency = 'CNY';
@@ -104,9 +97,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     UpdateDetail: function UpdateDetail() {
       var _this3 = this;
-
       this.submitted = true;
-
       if (this.detail.dpurchase_qty != null && this.detail.dpurchase_sat != null && this.detail.dpurchase_prc_sat != null && this.detail.dpurchase_prc != null && this.detail.dpurchase_remark != null && this.detail.invent_code != null) {
         this.axios.put('/api/update-detail-pem/' + this.$route.params.code + '/' + this.$route.params.purchase, this.detail, {
           headers: {
@@ -116,7 +107,6 @@ __webpack_require__.r(__webpack_exports__);
           setTimeout(function () {
             return _this3.$router.push('/pembelian-peripheral-detail/' + _this3.$route.params.code);
           }, 1000);
-
           _this3.$toast.add({
             severity: "success",
             summary: "Success Message",
@@ -148,43 +138,31 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "card"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Pembelian Peripheral(Detail)", -1
-/* HOISTED */
-);
-
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Pembelian Peripheral(Detail)", -1 /* HOISTED */);
 var _hoisted_3 = {
   "class": "card-body"
 };
 var _hoisted_4 = {
   "class": "field grid"
 };
-
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "145px"
   }
-}, "Kode Peripheral", -1
-/* HOISTED */
-);
-
+}, "Kode Peripheral", -1 /* HOISTED */);
 var _hoisted_6 = {
   "class": "col-fixed w-9rem"
 };
 var _hoisted_7 = {
   "class": "field grid"
 };
-
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "145px"
   }
-}, "Jumlah (Qty)", -1
-/* HOISTED */
-);
-
+}, "Jumlah (Qty)", -1 /* HOISTED */);
 var _hoisted_9 = {
   "class": "col-fixed w-9rem"
 };
@@ -195,16 +173,12 @@ var _hoisted_10 = {
 var _hoisted_11 = {
   "class": "field grid"
 };
-
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "145px"
   }
-}, "Satuan", -1
-/* HOISTED */
-);
-
+}, "Satuan", -1 /* HOISTED */);
 var _hoisted_13 = {
   "class": "col-fixed w-9rem"
 };
@@ -215,16 +189,12 @@ var _hoisted_14 = {
 var _hoisted_15 = {
   "class": "field grid"
 };
-
 var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "145px"
   }
-}, "Harga Satuan", -1
-/* HOISTED */
-);
-
+}, "Harga Satuan", -1 /* HOISTED */);
 var _hoisted_17 = {
   "class": "col-fixed w-9rem"
 };
@@ -235,16 +205,12 @@ var _hoisted_18 = {
 var _hoisted_19 = {
   "class": "field grid"
 };
-
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "145px"
   }
-}, "Total Harga", -1
-/* HOISTED */
-);
-
+}, "Total Harga", -1 /* HOISTED */);
 var _hoisted_21 = {
   "class": "col-fixed w-9rem"
 };
@@ -255,16 +221,12 @@ var _hoisted_22 = {
 var _hoisted_23 = {
   "class": "field grid"
 };
-
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "col-fixed w-9rem",
   style: {
     "width": "145px"
   }
-}, "Keterangan", -1
-/* HOISTED */
-);
-
+}, "Keterangan", -1 /* HOISTED */);
 var _hoisted_25 = {
   "class": "col-fixed w-9rem"
 };
@@ -277,26 +239,18 @@ var _hoisted_27 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
-
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
-
   var _component_InputNumber = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputNumber");
-
   var _component_Textarea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Textarea");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
   }, {
     start: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_2];
     }),
-    _: 1
-    /* STABLE */
-
+    _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.UpdateDetail && $options.UpdateDetail.apply($options, arguments);
@@ -310,9 +264,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     optionLabel: "name",
     optionValue: "code",
     disabled: ""
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
+  }, null, 8 /* PROPS */, ["modelValue", "options"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
     modelValue: $data.detail.dpurchase_qty,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.detail.dpurchase_qty = $event;
@@ -322,9 +274,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.submitted && !$data.detail.dpurchase_qty
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "change", "class"]), $data.submitted && !$data.detail.dpurchase_qty ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_10, "Jumlah (Qty) Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  }, null, 8 /* PROPS */, ["modelValue", "change", "class"]), $data.submitted && !$data.detail.dpurchase_qty ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_10, "Jumlah (Qty) Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.detail.dpurchase_sat,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.detail.dpurchase_sat = $event;
@@ -337,9 +287,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.submitted && !$data.detail.dpurchase_sat
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options", "class"]), $data.submitted && !$data.detail.dpurchase_sat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_14, "Satuan Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
+  }, null, 8 /* PROPS */, ["modelValue", "options", "class"]), $data.submitted && !$data.detail.dpurchase_sat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_14, "Satuan Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
     mode: "currency",
     locale: $data.locale,
     currency: $data.currency,
@@ -352,9 +300,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.submitted && !$data.detail.dpurchase_prc_sat
     })
-  }, null, 8
-  /* PROPS */
-  , ["locale", "currency", "change", "modelValue", "class"]), $data.submitted && !$data.detail.dpurchase_prc_sat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_18, "Harga Satuan Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
+  }, null, 8 /* PROPS */, ["locale", "currency", "change", "modelValue", "class"]), $data.submitted && !$data.detail.dpurchase_prc_sat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_18, "Harga Satuan Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_InputNumber, {
     mode: "currency",
     locale: $data.locale,
     currency: $data.currency,
@@ -367,9 +313,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       'p-invalid': $data.submitted && !$data.detail.dpurchase_prc
     }),
     readonly: ""
-  }, null, 8
-  /* PROPS */
-  , ["locale", "currency", "modelValue", "class"]), $data.submitted && !$data.detail.dpurchase_prc ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_22, "Total Harga Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
+  }, null, 8 /* PROPS */, ["locale", "currency", "modelValue", "class"]), $data.submitted && !$data.detail.dpurchase_prc ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_22, "Total Harga Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Textarea, {
     modelValue: $data.detail.dpurchase_remark,
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.detail.dpurchase_remark = $event;
@@ -381,9 +325,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.submitted && !$data.detail.dpurchase_remark
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "class"]), $data.submitted && !$data.detail.dpurchase_remark ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_26, "Keterangan Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+  }, null, 8 /* PROPS */, ["modelValue", "class"]), $data.submitted && !$data.detail.dpurchase_remark ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_26, "Keterangan Belum Diisi. ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
     label: "Simpan",
@@ -395,9 +337,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[6] || (_cache[6] = function ($event) {
       return _ctx.$router.go(-1);
     })
-  })])], 32
-  /* HYDRATE_EVENTS */
-  )])])]);
+  })])], 32 /* HYDRATE_EVENTS */)])])]);
 }
 
 /***/ }),

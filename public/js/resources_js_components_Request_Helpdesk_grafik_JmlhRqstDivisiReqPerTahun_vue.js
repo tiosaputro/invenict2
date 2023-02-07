@@ -36,7 +36,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -48,7 +47,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkto = response.data.map(function (x) {
           return x.to;
         });
-
         if (_this.checkname.includes("Divisi Requestor Per Tahun") || _this.checkto.includes("/req-per-divisi-req-per-tahun")) {
           _this.getTahun();
         } else {
@@ -58,7 +56,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getTahun: function getTahun() {
       var _this2 = this;
-
       this.axios.get('api/get-tahun', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -72,7 +69,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
@@ -83,7 +79,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPerDivisiRequestorTahun: function getPerDivisiRequestorTahun() {
       var _this3 = this;
-
       if (this.tahunRequestor != null) {
         this.axios.get('api/count-per-divreq-tahun/' + this.tahunRequestor, {
           headers: {
@@ -107,7 +102,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     printperDivisiRequestorTahun: function printperDivisiRequestorTahun() {
       var _this4 = this;
-
       var bar = document.getElementById("perDivisiRequestorTahun");
       var exp = new vue_chartjs_exporter__WEBPACK_IMPORTED_MODULE_0__["default"]([bar]);
       exp.export_pdf().then(function (pdf) {
@@ -141,27 +135,19 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "text-center"
 };
-
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
   style: {
     "font-size": "20pt",
     "font-weight": "bold"
   }
-}, "Statistik Request Divisi Requestor Per Tahun", -1
-/* HOISTED */
-);
+}, "Statistik Request Divisi Requestor Per Tahun", -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_ColorPicker = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ColorPicker");
-
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
-
   var _component_Chart = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Chart");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [this.tahunRequestor ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
     key: 0,
     "class": "p-button-lg p-button-rounded p-button-danger",
@@ -176,9 +162,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.color = $event;
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  }, null, 8 /* PROPS */, ["modelValue"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     onChange: _cache[2] || (_cache[2] = function ($event) {
       return $options.getPerDivisiRequestorTahun();
     }),
@@ -191,18 +175,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     optionValue: "tahun",
     optionLabel: "tahun",
     placeholder: "Pilih Tahun"
-  }, null, 8
-  /* PROPS */
-  , ["modelValue", "options"]), this.tahunRequestor ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Chart, {
+  }, null, 8 /* PROPS */, ["modelValue", "options"]), this.tahunRequestor ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Chart, {
     key: 0,
     type: "bar",
     data: $data.perDivisiRequestorTahun,
     id: "perDivisiRequestorTahun"
-  }, null, 8
-  /* PROPS */
-  , ["data"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])], 64
-  /* STABLE_FRAGMENT */
-  );
+  }, null, 8 /* PROPS */, ["data"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),

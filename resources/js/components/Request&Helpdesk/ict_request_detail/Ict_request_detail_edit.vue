@@ -127,8 +127,8 @@
                <label class="col-fixed w-9rem"></label>
                 <div class="col-10 md-6">
                   <div class="card">
-                    <Pdf :src="preview" class="ict-pdf" v-if="this.preview" />
-                    <Pdf :src="'/attachment_request/'+this.ict.ireq_attachment" class="ict-pdf" v-else-if="!this.preview" />
+                    <Pdf :src="preview" class="ict-pdf" :page="1" v-if="this.preview" />
+                    <Pdf :src="'/attachment_request/'+this.ict.ireq_attachment" :page="1" class="ict-pdf" v-else-if="!this.preview" />
                   </div>
                 </div>
               </div>

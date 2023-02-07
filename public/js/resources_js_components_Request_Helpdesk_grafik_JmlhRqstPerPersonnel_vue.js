@@ -38,7 +38,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-
       this.axios.get('api/cek-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -50,7 +49,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkto = response.data.map(function (x) {
           return x.to;
         });
-
         if (_this.checkname.includes("Per Personnel") || _this.checkto.includes("/req-per-personnel")) {
           _this.getPersonnel();
         } else {
@@ -60,7 +58,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPersonnel: function getPersonnel() {
       var _this2 = this;
-
       this.axios.get('api/get-tahun', {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -85,7 +82,6 @@ __webpack_require__.r(__webpack_exports__);
             summary: 'Error',
             detail: 'Session login expired'
           });
-
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
@@ -130,25 +126,18 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "text-center"
 };
-
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
   style: {
     "font-size": "20pt",
     "font-weight": "bold"
   }
-}, "Statistik Request Per ICT-Personnel", -1
-/* HOISTED */
-);
+}, "Statistik Request Per ICT-Personnel", -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toast = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toast");
-
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
-
   var _component_ColorPicker = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ColorPicker");
-
   var _component_Chart = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Chart");
-
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-lg p-button-rounded p-button-danger",
     onClick: _cache[0] || (_cache[0] = function ($event) {
@@ -161,17 +150,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.color = $event;
     })
-  }, null, 8
-  /* PROPS */
-  , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart, {
+  }, null, 8 /* PROPS */, ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart, {
     type: "bar",
     data: $data.statusPerIctPersonnel,
     id: "statusPerIctPersonnel"
-  }, null, 8
-  /* PROPS */
-  , ["data"])])])], 64
-  /* STABLE_FRAGMENT */
-  );
+  }, null, 8 /* PROPS */, ["data"])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
