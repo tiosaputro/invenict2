@@ -16,6 +16,7 @@
 			<li> 
 				<button class="p-link layout-profile-link" @click="onClick" style="object-fit:contain;">
 				  <img :src="'/profile/' + user.usr_foto" class="mr-2" width="30" height="30" v-if="this.user.usr_foto"/>
+				  <img :src="'/images/default-profile.png'" class="mr-2" width="30" height="30" v-else/>
 					<span style="color: white;">Hi, {{ toUpper(user.usr_fullname)}}</span>
 				</button>
 				<transition name="layout-submenu-wrapper layout-topbar-button">

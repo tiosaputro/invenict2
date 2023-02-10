@@ -64,10 +64,10 @@ export default {
     },
     methods: {
         create(){
-            if (this.windowHeight < 600){
+            if (this.windowHeight < 650){
                 document.documentElement.style.fontSize = '12px';
             }
-            if (this.windowHeight >= 610 && this.windowHeight < 1200){
+            if (this.windowHeight > 650 && this.windowHeight < 1200){
                 document.documentElement.style.fontSize = '16px';
             }
             if (this.windowHeight >= 1200){

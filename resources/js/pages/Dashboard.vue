@@ -755,7 +755,7 @@
 			</div>
     </div>
 </div>
-<div class="grid" v-else-if="this.role_name.includes('Requestor Divisi')">
+<div class="grid" v-else-if="this.role_name.includes('Requestor Divisi') || this.role_name.includes('Default Role')">
 		<div class="col-12 lg:col-6 xl:col-3" >
 			<div @click="sdgDireview()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
@@ -917,7 +917,7 @@ export default {
 				else if(this.role_name.includes('Atasan Requestor Divisi')){
 					this.getData1();
 				}
-				else if(this.role_name.includes('Requestor Divisi')){
+				else if(this.role_name.includes('Requestor Divisi') || this.role_name.includes('Default Role')){
 					this.getData();
 				}
 				else if(this.role_name.includes('Admin')){

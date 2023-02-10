@@ -118,13 +118,13 @@ export default {
                 this.submitted = false;
                 this.loading = false;
                if (error.response.status == 422) {
-                   this.errors = error.response.data;
+                   this.$toast.add({severity:'error', summary: 'Error Message', detail: error.response.data, life: 3000});
                    };
                 if (error.response.status == 500){
-                    this.error = true;
+                    this.$toast.add({severity:'error', summary: 'Error Message', detail:'Please check your connection', life: 3000});
                 }
                 if (error.response.status == 404){
-                    this.errorr = true;
+                    this.$toast.add({severity:'error', summary: 'Error Message', detail:'Please check your username and password', life: 3000});
                 }
                   });
                 });
