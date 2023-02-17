@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 const routes = [
     {
         name: 'Checking Token SSO',
-        path: '/sso/check/:token',
+        path: '/sso/:token',
         component: () => import('./pages/CheckingToken.vue'),
     },
     {

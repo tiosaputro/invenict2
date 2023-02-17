@@ -157,9 +157,11 @@ class IctDetailController extends Controller
         ->WHERE('id.ireq_status','T')
         ->ORDERBY('id.ireqd_id','ASC')
         ->get();
-
-        // $mail = $ict[0]->usr_email .= '@emp.id';
-        $mail = 'adhitya.saputro@emp.id';
+        if(env('APP_ENV') != 'local'){
+            $mail = $ict[0]->usr_email .= '@emp.id';
+        } else {
+            $mail = 'adhitya.saputro@emp.id';
+        }
         SendNotifInProgress::dispatchAfterResponse($mail,$ict);
         $message = 'Success';
         return $message;
@@ -665,8 +667,11 @@ class IctDetailController extends Controller
         ->ORDERBY('id.ireqd_id','ASC')
         ->get();
 
-        // $mail = $ict[0]->usr_email .= '@emp.id';
-        $mail = 'adhitya.saputro@emp.id';
+        if(env('APP_ENV') != 'local'){
+            $mail = $ict[0]->usr_email .= '@emp.id';
+        } else {
+            $mail = 'adhitya.saputro@emp.id';
+        }
         SendNotifDone::dispatchAfterResponse($mail,$ict);
         return response()->json('Updated Successfully');
     }

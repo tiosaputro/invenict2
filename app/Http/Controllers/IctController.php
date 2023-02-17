@@ -62,7 +62,7 @@ use App\Jobs\SendNotifRejectByHigherLevel;
 use App\Jobs\SendNotifRejectByReviewer;
 use App\Jobs\SendNotifWaitingRecieveByPersonnel;
 use App\Jobs\SendNotifToRequestor;
-// use App\Model\Location;
+use App\Model\Location;
 
 class IctController extends Controller
 {
@@ -798,9 +798,12 @@ class IctController extends Controller
         ]);
         
         $LINK = Link::where('ireq_id',$ireq_id)->WHERE('usr_id',$emailVerifikator->usr_id)->first();
-        // $send_mail = $emailVerifikator->usr_email .= '@emp.id';
         $email_address = $ICT[0]->usr_email .= '@emp.id';
-        $send_mail = 'adhitya.saputro@emp.id';
+        if(env('APP_ENV') != 'local'){
+            $send_mail = $emailVerifikator->usr_email .= '@emp.id';
+        } else {
+            $send_mail = 'adhitya.saputro@emp.id';
+        }
         SendNotifApproval::dispatchAfterResponse($send_mail,$ict,$LINK);
         SendNotifWaitingApprovalFromHigherLevel::dispatchAfterResponse($email_address,$ICT);
         return response()->json('success send notification');
@@ -3445,8 +3448,12 @@ class IctController extends Controller
             ->ORDERBY('id.ireqd_id','ASC')
             ->get();
         $LINK = Link::where('ireq_id',$ireq_id)->first();
-        // $send_mail = Location::select('loc_email')->WHERE('loc_code',Auth::user()->usr_loc)->pluck('loc_email');
-        $send_mail ='adhitya.saputro@emp.id';
+        if(env('APP_ENV') != 'local'){
+            $send_mail = Location::select('loc_email')->WHERE('loc_code',Auth::user()->usr_loc)->pluck('loc_email');
+       
+        } else {
+            $send_mail = 'adhitya.saputro@emp.id';
+        }
         SendNotifRequest::dispatchAfterResponse($send_mail,$Ict,$LINK);
         return response()->json('Success Update Status');
     }
