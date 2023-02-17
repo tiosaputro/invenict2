@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/cek-verif-id/{code}','IctController@cekVerif');
 Route::post('/login', 'LoginController@index');
+Route::post('/login-intranet', 'LoginController@loginFromIntranet');
 Route::get('/detail-peripherall/{invent_code}','MasterController@detailPeripheral');
 Route::post('/login-approval', 'LoginController@loginFromEmail');
 Route::get('/logout', 'LoginController@logout')->middleware('auth:sanctum');

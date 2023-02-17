@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
     {
+        name: 'Checking Token SSO',
+        path: '/sso/check/:token',
+        component: () => import('./pages/CheckingToken.vue'),
+    },
+    {
         name: 'Dashboard',
         path: '/dashboard',
         component: () => import('./pages/Dashboard.vue'),

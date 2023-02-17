@@ -13,8 +13,7 @@ class LoginController extends Controller
 {
     public function index(Request $request)
     {
-     if (env('APP_ENV') != 'local')
-     {
+     if (env('APP_ENV') != 'local'){ //use ldap
         $ldap = new ldap_connection();
         $userlogin = str_contains($request->email, '@');
             if (!$userlogin) {
@@ -29,13 +28,13 @@ class LoginController extends Controller
             if (!empty($check)){
               $checkUser = Mng_User::where('usr_email', $mailUser)->first();
                if(empty($checkUser)){
-                $createUser = Mng_user::createUser($check['streetaddress'],$check['division'],$request->password,$check['company'],$check['physicaldeliveryofficename'],$check['samaccountname'],$check['displayname'],$mailUser);
+                $createUser = Mng_user::createUser($check['streetaddress'],$check['division'],$request->password,$check['company'],$check['physicaldeliveryofficename'],$check['displayname'],$check['samaccountname'],$mailUser);
                 $dataUser = Mng_user::where('usr_id',$createUser->usr_id)->first();
                 $token = $dataUser->createToken('ApiToken')->plainTextToken;
                 return response([
                     "success" => true, 
                     "message" => "You have logged in successfully",
-                    "token"=>$token,
+                    "token"=> $token,
                     "usr_name"  => ucwords(strtolower($dataUser->usr_fullname)),
                     "usr_loc"=>$dataUser->usr_loc],200);
                } else { // if exists
@@ -43,7 +42,7 @@ class LoginController extends Controller
                 return response([
                     "success" => true, 
                     "message" => "You have logged in successfully",
-                    "token"=>$token,
+                    "token"=> $token,
                     "usr_name"  => ucwords(strtolower($checkUser->usr_fullname)),
                     "usr_loc"=>$checkUser->usr_loc],200);
                } 
@@ -71,7 +70,32 @@ class LoginController extends Controller
                     }
         }
     }
-                           
+    public function loginFromIntranet(Request $request){
+        $emailUser = str_replace('"','',$request->samaccountname);
+        $cekUser = Mng_user::where('usr_email','like',$emailUser)->first();
+        if(!empty($cekUser)){
+            $token = $cekUser->createToken('ApiToken')->plainTextToken;
+            $response = [
+                'success'   => true,
+                "message" => "You have logged in successfully",
+                'token'     => $token,
+                'usr_name'  => $cekUser->usr_fullname,
+                'usr_loc'   => $cekUser->usr_loc
+            ];
+        return json_encode($response, 200);
+        } else {
+            $password = 'P@ssw0rd27';
+            $createUser = Mng_user::createUser($request->streetaddress,$request->division,$password,$request->company,$request->physicaldeliveryofficename,$request->displayname,$request->samaccountname,$emailUser);
+            $dataUser = Mng_user::where('usr_id',$createUser->usr_id)->first();
+                $token = $dataUser->createToken('ApiToken')->plainTextToken;
+                return response([
+                    "success" => true, 
+                    "message" => "You have logged in successfully",
+                    "token"=> $token,
+                    "usr_name"  => ucwords(strtolower($dataUser->usr_fullname)),
+                    "usr_loc"=>$dataUser->usr_loc],200);
+        }
+    }                     
     public function loginFromEmail(Request $request)
     {
         $user= Mng_User::where('usr_id',$request->usr_id)->first();
@@ -79,6 +103,7 @@ class LoginController extends Controller
         $token = $user->createToken('ApiToken')->plainTextToken;
             $response = [
                 'success'   => true,
+                "message" => "You have logged in successfully",
                 'token'     => $token,
                 'usr_name'  => $user->usr_fullname,
                 'usr_loc'   => $user->usr_loc

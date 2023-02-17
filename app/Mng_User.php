@@ -54,7 +54,7 @@ class Mng_User extends Authenticatable
     public $incrementing = false;
     public $timestamps = false;
 
-    public static function createUser($address,$division, $password,$company,$location,$fullname,$usr_name,$mail){
+    public static function createUser($address,$division,$password,$company,$location,$fullname,$usr_name,$mail){
         $division = str_replace('"','',$division);
         $address = str_replace('"','',$address);
         $password = str_replace('"','',$password);
@@ -91,5 +91,9 @@ class Mng_User extends Authenticatable
                 'program_name'=>'Mng_user'
         ]);
         return $id;
+    }
+    public static function findUser($email){
+        $user = Mng_user::where('usr_fullname','like',$email)->first();
+        return $user;
     }
 }

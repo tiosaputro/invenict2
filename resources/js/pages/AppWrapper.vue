@@ -7,6 +7,7 @@
     <Detail v-else-if="$route.name === 'Detail Peripheral'" />
     <CheckVerif v-else-if="$route.name === 'Check Verif'" />
     <CheckLegality v-else-if="$route.name === 'Check Legality'" />
+    <CheckSso v-else-if="$route.name === 'Checking Token SSO'" />
     <CheckReviewer v-else-if="$route.name === 'Ict Request Verifikasi Reviewer'" />
     <App v-else @change-theme="changeTheme" />
 </template>
@@ -23,6 +24,7 @@ import LoginLegality from './LoginLegality';
 import CheckVerif from './checkVerif';
 import CheckLegality from './CheckLegality';
 import CheckReviewer from './CheckVerifReviewer';
+import CheckSso from './CheckingToken';
 
 export default {
     methods: {
@@ -48,7 +50,8 @@ export default {
         LoginLegality,
         CheckVerif,
         CheckLegality,
-        CheckReviewer
+        CheckReviewer,
+        CheckSso,
     }
 }
 </script>
