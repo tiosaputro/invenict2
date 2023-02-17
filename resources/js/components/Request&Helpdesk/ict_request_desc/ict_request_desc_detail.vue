@@ -52,7 +52,10 @@
             <template #body="slotProps">
               <p v-if="slotProps.data.ireq_attachment == null"></p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+                <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
+                  <i class="pi pi-images px-2"></i>
+                   <span class="px-3">IMAGE</span>
+                </Button>
               </p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
                 <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
@@ -216,5 +219,21 @@ export default {
 }
 .p-button.youtube:hover {
     background-position: left bottom;
+}.template .p-button.twitter {
+    background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    color: #fff;
+    border-color: var(--blue-500);
+}
+.template .p-button.twitter:hover {
+    background-position: left bottom;
+}
+.template .p-button.twitter i {
+    background-color: var(--blue-500);
+}
+.template .p-button.twitter:focus {
+    box-shadow: 0 0 0 1px var(--blue-200);
 }
 </style>

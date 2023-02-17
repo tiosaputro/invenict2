@@ -686,10 +686,16 @@
                     <template #body="slotProps">
                       <p v-if="slotProps.data.ireq_attachment == null"></p>
                       <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                        <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+                        <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
+                          <i class="pi pi-images px-2"></i>
+                           <span class="px-3">IMAGE</span>
+                        </Button>
                       </p>
                       <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                        <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+                        <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                         <i class="pi pi-file-pdf px-2"></i>
+                          <span class="px-4">PDF</span>
+                        </Button>
                       </p>
                     </template>  
                   </Column>
@@ -792,10 +798,16 @@
                     <template #body="slotProps">
                       <p v-if="slotProps.data.ireq_attachment == null"></p>
                       <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                        <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+                        <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
+                          <i class="pi pi-images px-2"></i>
+                           <span class="px-3">IMAGE</span>
+                        </Button>
                       </p>
                       <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                        <Pdf :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+                        <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                          <i class="pi pi-file-pdf px-2"></i>
+                           <span class="px-4">PDF</span>
+                        </Button>
                       </p>
                     </template>  
                   </Column>
@@ -1625,4 +1637,33 @@ export default {
       width: 50px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
+  .p-button.youtube {
+    cursor:pointer;
+    background: linear-gradient(to left, var(--pink-600) 50%, var(--pink-700) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    color: #fff;
+    border-color: var(--pink-700);
+}
+.p-button.youtube:hover {
+    background-position: left bottom;
+}
+.template .p-button.twitter {
+    background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    color: #fff;
+    border-color: var(--blue-500);
+}
+.template .p-button.twitter:hover {
+    background-position: left bottom;
+}
+.template .p-button.twitter i {
+    background-color: var(--blue-500);
+}
+.template .p-button.twitter:focus {
+    box-shadow: 0 0 0 1px var(--blue-200);
+}
 </style>
