@@ -139,22 +139,9 @@ export default {
     };
   },
   created() {
-    this.cekUser();
+    this.getPembelianDetail();
   },
   methods: {
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-         if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){
-          this.getPembelianDetail();
-          this.getDetails();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     formatDate(date) {
       return moment(date).format("DD MMM YYYY")
     },
@@ -165,21 +152,25 @@ export default {
     getPembelianDetail(){
       this.axios.get('/api/detail-pem/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
-      });
+        this.getDetails();
+      }).catch(error=>{
+          if (error.response.status == 401){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
+        });
     },
     getDetails(){
         this.axios.get('/api/getSuppDate/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.details = response.data;
             this.loading = false;
-        }).catch(error=>{
-         if (error.response.status == 401){
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
         });
     },
     DeleteDetail(dpurchase_id){

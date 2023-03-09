@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Carbon\Carbon;
+use App\Mng_User;
 use App\Model\MasterDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -11,9 +12,19 @@ use App\Helpers\ResponseFormatter;
 
 class MasterDetailController extends Controller
 {
+    protected $userMenu;
     protected $to;
-    public function __construct(){ 
+    public function __construct(){
+        $this->middleware('auth:sanctum');
         $this->to = "/master-peripheral-detail";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
     }
     function index($code){
         $dtl = MasterDetail::select('invent_sn','invent_code_dtl','invent_code','invent_lokasi_previous','invent_lokasi_update','invent_pengguna_previous','invent_pengguna_update')

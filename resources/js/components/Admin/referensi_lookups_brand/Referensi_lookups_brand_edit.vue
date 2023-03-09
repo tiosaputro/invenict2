@@ -94,22 +94,11 @@ export default {
     };
   },
   created(){
-    this.cekUser();
+    this.getRef();
   },
   methods: {
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        if(this.checkto.includes("/referensi-brand")){
-          this.getRef();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
       getRef(){
-        this.axios.get('/api/edit-ref/' + this.$route.params.code + '/' + this.$route.params.type, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response)=> {
+        this.axios.get('/api/edit-brand/' + this.$route.params.code + '/' + this.$route.params.type, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response)=> {
             this.ref = response.data;
         }).catch(error=>{
           if ((error.response.status == 401)){
@@ -120,11 +109,14 @@ export default {
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
            }
+          if(error.response.status == 403){
+            this.router.push('/access');
+          }
         });
       },
     UpdateLookup(){
         this.errors = [];   
-        this.axios.put('/api/update-ref/' + this.$route.params.code + '/' + this.$route.params.type, this.ref, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response) => {
+        this.axios.put('/api/update-brand/' + this.$route.params.code + '/' + this.$route.params.type, this.ref, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response) => {
            this.$toast.add({
             severity: "success",
             summary: "Success Message",

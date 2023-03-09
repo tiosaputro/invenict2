@@ -74,7 +74,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this2.axios["delete"]('api/delete-ref/' + lookup_code + "/" + lookup_type, {
+          _this2.axios["delete"]('api/delete-brand/' + lookup_code + "/" + lookup_type, {
             headers: {
               'Authorization': 'Bearer ' + _this2.token
             }

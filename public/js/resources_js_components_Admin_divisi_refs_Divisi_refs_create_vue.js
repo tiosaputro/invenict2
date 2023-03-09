@@ -35,62 +35,57 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getMenu();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Divisi") || _this.checkto.includes("/divisi-refs")) {
-          _this.getMenu();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getMenu: function getMenu() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('api/get-menu', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.menus = response.data;
+        _this.menus = response.data;
+      })["catch"](function (error) {
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
+        } else if (error.response.status == 401) {
+          _this.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired", "true");
+          setTimeout(function () {
+            return _this.$router.push('/login');
+          }, 2000);
+        }
       });
     },
     CreateRole: function CreateRole() {
-      var _this3 = this;
+      var _this2 = this;
       this.errors = [];
       this.axios.post('api/save-role', this.role, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this3.axios.post('api/save-role-menu', _this3.role, {
+        _this2.axios.post('api/save-role-menu', _this2.role, {
           headers: {
-            'Authorization': 'Bearer ' + _this3.token
+            'Authorization': 'Bearer ' + _this2.token
           }
         });
-        _this3.$toast.add({
+        _this2.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Create"
         });
         setTimeout(function () {
-          return _this3.$router.push('/mng-role');
+          return _this2.$router.push('/mng-role');
         }, 1000);
       })["catch"](function (error) {
-        _this3.errors = error.response.data.errors;
+        _this2.errors = error.response.data.errors;
       });
     }
   }

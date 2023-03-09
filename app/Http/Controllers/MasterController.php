@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 use App\Model\Master;
 use App\Exports\MasterExport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Helpers\ResponseFormatter;
 use Carbon\Carbon;
-use App\Lookup_Refs;
+use App\Model\Lookup_Refs;
+use App\Mng_User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,17 +16,22 @@ use App\Model\Mng_role_menu;
 
 class MasterController extends Controller
 {
+    protected $userMenu;
     protected $to;
     public function __construct(){
+        $this->middleware('auth:sanctum');
         $this->to = "/master-peripheral";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
     }
     public function index()
         {
-        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
-
-        if($aksesmenu->contains($this->to)){
             $mas = DB::table('invent_mst as im')
             ->LEFTJOIN('invent_dtl as id','im.invent_code','id.invent_code')
             ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
@@ -39,105 +44,46 @@ class MasterController extends Controller
             ->get();
             return response()->json($mas);
         }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-          }
-        }
+    public function getAddMaster()
+    {
+        $merk = Lookup_Refs::Merk();
+        $kondisi = Lookup_Refs::Kondisi();
+        $nama = Lookup_Refs::Kategori_peripheral();
+        $bisnis = DB::table('v_company_refs')->get();
+            
+        return response()->json(['merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis,'nama'=>$nama],200);
+    }
     public function save(Request $request)
     {
         $message = [
             'nama.required' => 'Nama Peripheral Belum Diisi',
             'merk.required' => 'Merk Belum Diisi',
             'type.required' => 'Tipe Belum Diisi',
-            // 'sn.required' => 'S/N Belum Diisi',
-            // 'tgl.required' => 'Tanggal Belum Diisi',
-            // 'kondisi.required'=>'Kondisi Belum Diisi',
-            // 'garansi.required' => 'Garansi Belum Diisi',
-            // 'garansi.numeric' => 'Garansi Belum Diisi',
-            // 'barcode.required' => 'Barcode Belum Diisi',
-            // 'lastloct.required' => 'Lokasi Terakhir Belum Diisi',
-            // 'lastuser.required' => 'Pengguna Terakhir Belum Diisi',
-            // 'prevloct.required' => 'Lokasi Sebelumnya Belum Diisi',
-            // 'prevuser.required' => 'User Sebelumnya Belum Diisi',
-            // 'bu.required' => 'Bisnis Unit Belum Diisi'
         ];
         $request->validate([
             'nama' => 'required',
             'merk' => 'required',
             'type' => 'required',
-            // 'sn' => 'required',
-            // 'tgl'=>'required',
-            // 'kondisi'=>'required',
-            // 'garansi'=>'required|numeric',
-            // 'barcode'=>'required',
-            // 'lastloct'=>'required',
-            // 'lastuser' => 'required',
-            // 'prevloct'=> 'required',
-            // 'prevuser'=> 'required',
-            // 'bu'=> 'required'
         ],$message);
-
-        // $newDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgl)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        // if($request->foto){
-        //     $image= $request->foto;
-        //     $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-        //     $replace = substr($image, 0, strpos($image, ',')+1); 
-        //     $fotoo = str_replace($replace, '', $image);
-        //     $foto= str_replace(' ', '+', $fotoo); 
-        //     $nama_file = time().".".$extension;
-        //     Storage::disk('master_peripheral')->put($nama_file, base64_decode($foto));
-        // }
-        // else{
-        //     $nama_file = '';
-        // }
         $createMas = Master::Create([
-            // 'invent_code' => $request->code,
             'invent_desc' => $request->nama,
             'invent_brand' => $request->merk,
             'invent_type' => $request->type,
-            // 'invent_sn' => $request->sn,
-            // 'invent_tgl_perolehan' => $newDate,
-            // 'invent_lama_garansi' => $request->garansi,
-            // 'invent_kondisi' => $request->kondisi,
             'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by' => Auth::user()->usr_name,
             'program_name' => "Master_Save",
-            // 'invent_barcode' => $request->barcode,
-            // 'invent_lokasi_update' => $request->lastloct,
-            // 'invent_pengguna_update' => $request->lastuser,
-            // 'invent_photo' => $nama_file,
-            // 'invent_lokasi_previous' => $request->prevloct,
-            // 'invent_pengguna_previous' => $request->prevuser,
-            // 'invent_bu' => $request->bu,
         ]);
         return ResponseFormatter::success($createMas,'Successfully Created Data Master');
     }
     public function edit($code)
     {
-        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
-
-        if($aksesmenu->contains($this->to)){
-            // $kondisi = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-            // ->where('lookup_status','T')
-            // ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('kondisi')).'%'])
-            // ->orderBy('lookup_desc','ASC')
-            // ->get();
-            // $bisnis = DB::table('v_company_refs')->get();
-            $mas = DB::table('invent_mst as im')
-            // ->leftjoin('lookup_refs as lrs','im.invent_desc','lrs.lookup_code')
+        $mas = DB::table('invent_mst as im')
             ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
             ->select('im.invent_code','im.invent_desc','lr.lookup_desc','im.invent_type')
             ->where('im.invent_code',$code)
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
-            // ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('kat_peripheral')).'%'])
             ->first();
-            return response()->json(['mas'=>$mas],200);
-        }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-        }
+        return response()->json(['mas'=>$mas],200);
     }
     
     function detailPeripheral($invent_code_dtl)
@@ -166,41 +112,12 @@ class MasterController extends Controller
     public function update(Request $request, $code)
     {
         $mas = Master::find($code);
-        // if($request->image) {
-        //     if($mas->invent_photo){
-        //         unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
-        //     }
-        //     $image= $request->image;
-        //     $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-        //     $replace = substr($image, 0, strpos($image, ',')+1); 
-        //     $fotoo = str_replace($replace, '', $image);
-        //     $foto= str_replace(' ', '+', $fotoo); 
-        //     $nama_file = time().".".$extension;
-        //     Storage::disk('master_peripheral')->put($nama_file, base64_decode($foto));
-        // }else{
-        //     $nama_file = $mas->invent_photo;
-        // }
-            // $mas->invent_desc = $request->invent_desc;
-            // $mas->invent_brand = $request->invent_brand;
-            $mas->invent_type = $request->invent_type;
-            // $mas->invent_sn =$request->invent_sn;
-            // $mas->invent_tgl_perolehan =$newDate;
-            // $mas->invent_lama_garansi = $request->invent_lama_garansi;
-            // $mas->invent_kondisi = $request->invent_kondisi;
-            $mas->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-            $mas->last_updated_by = Auth::user()->usr_name;
-            $mas->program_name = "Master_Update";
-            // $mas->invent_barcode = $request->invent_barcode;
-            // $mas->invent_lokasi_update =$request->invent_lokasi_update;
-            // $mas->invent_pengguna_update=  $request->invent_pengguna_update;
-            // $mas->invent_lokasi_previous = $request-> invent_lokasi_previous;
-            // $mas->invent_pengguna_previous = $request-> invent_pengguna_previous;
-            // $mas->invent_bu = $request->invent_bu;
-            // $mas->invent_photo = $nama_file;
-            $mas->save();
-        
-        
-            return ResponseFormatter::success($mas,'Successfully Updated Data Master');
+        $mas->invent_type = $request->invent_type;
+        $mas->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $mas->last_updated_by = Auth::user()->usr_name;
+        $mas->program_name = "Master_Update";
+        $mas->save();
+        return ResponseFormatter::success($mas,'Successfully Updated Data Master');
     }
     public function delete($invent_code)
     {
@@ -239,12 +156,13 @@ class MasterController extends Controller
     }
     public function getKodeIct($code)
     {
-        $mas = DB::table('invent_mst as im')->select('im.invent_code as code', DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
+        $mas = DB::table('invent_mst as im')
+        ->select('im.invent_code as code', DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
         ->whereNotExists(function($query) use($code)
         {
             $query->select(DB::raw(1))
             ->from('ireq_dtl')
-            ->join('ireq.dtl.invent_code','=','im.invent_code')
+            ->join('ireq.dtl.invent_code','im.invent_code')
             ->whereRaw('ireq_dtl.ireq_id',$code);
         })->get();
         return response()->json($mas);

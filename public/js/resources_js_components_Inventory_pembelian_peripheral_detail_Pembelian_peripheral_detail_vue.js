@@ -37,30 +37,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getPembelianDetail();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
-          _this.getPembelianDetail();
-          _this.getDetails();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
     },
@@ -69,27 +48,17 @@ __webpack_require__.r(__webpack_exports__);
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     getPembelianDetail: function getPembelianDetail() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/detail-pem/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.detail = response.data;
-      });
-    },
-    getDetails: function getDetails() {
-      var _this3 = this;
-      this.axios.get('/api/getSuppDate/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.details = response.data;
-        _this3.loading = false;
+        _this.detail = response.data;
+        _this.getDetails();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -97,13 +66,27 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
+    getDetails: function getDetails() {
+      var _this2 = this;
+      this.axios.get('/api/getSuppDate/' + this.$route.params.code, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this2.details = response.data;
+        _this2.loading = false;
+      });
+    },
     DeleteDetail: function DeleteDetail(dpurchase_id) {
-      var _this4 = this;
+      var _this3 = this;
       this.$confirm.require({
         message: "Are you sure to delete this record data?",
         header: "Delete Confirmation",
@@ -112,26 +95,26 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
-          _this4.axios["delete"]('/api/delete-detail-pem/' + _this4.$route.params.code + '/' + dpurchase_id, {
+          _this3.axios["delete"]('/api/delete-detail-pem/' + _this3.$route.params.code + '/' + dpurchase_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this4.token
+              'Authorization': 'Bearer ' + _this3.token
             }
           }).then(function () {
-            _this4.loading = true;
-            _this4.getPembelianDetail();
+            _this3.loading = true;
+            _this3.getPembelianDetail();
           });
         },
         reject: function reject() {}
       });
     },
     CetakPdf: function CetakPdf() {
-      var _this5 = this;
+      var _this4 = this;
       this.loading = true;
       this.axios.get('api/report-pem-detail-pdf/' + this.purchase_id, {
         headers: {
@@ -141,11 +124,11 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this5.loading = false;
+        _this4.loading = false;
       });
     },
     CetakExcel: function CetakExcel() {
-      var _this6 = this;
+      var _this5 = this;
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
       this.loading = true;
@@ -162,7 +145,7 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'PURCHASE DETAIL PERIPHERAL REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this6.loading = false;
+        _this5.loading = false;
       });
     }
   }

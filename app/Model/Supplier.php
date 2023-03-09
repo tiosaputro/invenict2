@@ -3,6 +3,7 @@
 namespace App\Model;;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Supplier extends Model
 {
@@ -29,4 +30,11 @@ class Supplier extends Model
     protected $table = 'suplier_mst';
     public $incrementing = false;
     public $timestamps = false;
+    
+    public static function ListSupplier(){
+        $supplier = Supplier::Select('suplier_code as code',DB::raw("(suplier_code ||'-'|| suplier_name) as name"))
+        ->orderBy('suplier_code','ASC')
+        ->get();
+        return $supplier;
+    }
 }

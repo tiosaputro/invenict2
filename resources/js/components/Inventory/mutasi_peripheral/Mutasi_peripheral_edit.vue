@@ -219,42 +219,33 @@ export default {
     };
   },
   mounted(){
-    this.cekUser();
+    this.getMutasi();
   },
   methods: {
-  cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Mutasi Peripheral") || this.checkto.includes("/mutasi-peripheral")){
-          this.getMutasi();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getMutasi(){
       this.axios.get('/api/edit-mut/'+this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.mut = response.data;
         this.getKode();
-      });
+      }).catch(error=>{
+          if (error.response.status == 401){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
+        });
     }, 
     getKode(){
       this.axios.get('/api/get-kode-peripheral', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kodeperi = response.data.kode;
         this.divisi = response.data.divisi;
         this.bu = response.data.bu;
-      }).catch(error=>{
-          if (error.response.status == 401){
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-        });
+      });
     },
     UpdateMutasi() {
       this.$confirm.require({

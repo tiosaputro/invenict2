@@ -104,32 +104,20 @@ export default {
       this.getMaster();
   },
   methods: {
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Master Peripheral") || this.checkto.includes("/master-peripheral")){
-          this.getMaster();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
       getMaster(){
           this.axios.get('/api/edit-mas/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
               this.master = response.data.mas;
               this.bisnis = response.data.bisnis;
               this.kondi = response.data.kondisi;
           }).catch(error=>{
-         if (error.response.status == 401) {
+          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
           if (error.response.status == 403) {
             this.$router.push('/access');
           }

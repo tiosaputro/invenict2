@@ -140,21 +140,9 @@ export default {
     };
   },
   created(){
-      this.cekUser();
+      this.getMerk();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Master Peripheral") || this.checkto.includes("/master-peripheral")){
-          this.getMerk();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
       getMerk(){
         this.axios.get('api/rsrcsupp',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.merks = response.data.merk;
@@ -170,6 +158,9 @@ export default {
           localStorage.setItem("Expired","true")
           setTimeout( () => this.$router.push('/login'),2000);
            }
+          if (error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
       },
     CreateMaster() {

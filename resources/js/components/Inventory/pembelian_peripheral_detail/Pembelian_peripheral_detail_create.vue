@@ -154,21 +154,9 @@ export default {
     };
   },
   created(){
-    this.cekUser();
+    this.getValutaCode();
   },
   methods: {
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-         if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){
-          this.getValutaCode();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getValutaCode(){
       this.axios.get('/api/getValuta/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.valuta = response.data.dtl;
@@ -195,6 +183,9 @@ export default {
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
+           }
+           if(error.response.status == 403){
+             this.$router.push('/access');
            }
       });
     },

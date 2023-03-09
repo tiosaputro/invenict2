@@ -47,40 +47,36 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.detailRequest();
   },
   methods: {
-    cekUser: function cekUser() {
+    detailRequest: function detailRequest() {
       var _this = this;
-      this.axios.get('api/cek-user', {
+      this.axios.get('api/detail-add-request-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("User") || _this.checkto.includes("/mng-user")) {
-          _this.getRoles();
-          _this.getDivisi();
-          _this.getBisnis();
-          _this.getLocation();
-        } else {
+        _this.bu = response.data.bisnis;
+        _this.divisi = response.data.divisi;
+        _this.roles = response.data.roles;
+        _this.loc = response.data.location;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired", "true");
+          setTimeout(function () {
+            return _this.$router.push('/login');
+          }, 2000);
+        }
+        if (error.response.status == 403) {
           _this.$router.push('/access');
         }
-      });
-    },
-    getBisnis: function getBisnis() {
-      var _this2 = this;
-      this.axios.get('api/get-bisnis', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.bu = response.data;
       });
     },
     fileImage: function fileImage(event) {
@@ -98,51 +94,8 @@ __webpack_require__.r(__webpack_exports__);
       };
       reader.readAsDataURL(foto);
     },
-    getDivisi: function getDivisi() {
-      var _this3 = this;
-      this.axios.get('api/get-divisi', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.divisi = response.data;
-      });
-    },
-    getLocation: function getLocation() {
-      var _this4 = this;
-      this.axios.get('api/ref-loc', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.loc = response.data;
-      });
-    },
-    getRoles: function getRoles() {
-      var _this5 = this;
-      this.axios.get('api/get-role', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this5.roles = response.data;
-      })["catch"](function (error) {
-        if (error.response.status == 401) {
-          _this5.$toast.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired", "true");
-          setTimeout(function () {
-            return _this5.$router.push('/login');
-          }, 2000);
-        }
-      });
-    },
     CreateUser: function CreateUser() {
-      var _this6 = this;
+      var _this2 = this;
       this.submitted = true;
       this.errors = [];
       if (this.user.image != '' && this.user.usr_roles != '') {
@@ -151,21 +104,21 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this6.axios.post('api/save-usr-role', _this6.user, {
+          _this2.axios.post('api/save-usr-role', _this2.user, {
             headers: {
-              'Authorization': 'Bearer ' + _this6.token
+              'Authorization': 'Bearer ' + _this2.token
             }
           });
-          _this6.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
           setTimeout(function () {
-            return _this6.$router.push('/mng-user');
+            return _this2.$router.push('/mng-user');
           }, 1000);
         })["catch"](function (error) {
-          _this6.errors = error.response.data.errors;
+          _this2.errors = error.response.data.errors;
         });
       }
     }

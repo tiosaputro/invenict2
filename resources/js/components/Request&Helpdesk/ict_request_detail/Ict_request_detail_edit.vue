@@ -162,7 +162,7 @@ export default {
     };
   },
   mounted(){
-      this.cekUser();
+      this.getIct();
   },
   methods: {
     change(kode){
@@ -208,18 +208,6 @@ export default {
         this.ict.invent_code = '';
       }
     },
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
-        this.getIct();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getKode(){
         this.axios.get('/api/getAddDetail',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.type = response.data.ref;
@@ -259,6 +247,18 @@ export default {
           }
           this.cekTipeReq = this.ict.ireq_type;
           this.getidCatalog();
+        }).catch(error=>{
+          if (error.response.status == 401) {
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if (error.response.status == 403) {
+            this.$router.push('/access');
+          }
         });
       },
     UpdateIctDetail() {

@@ -19,12 +19,21 @@ class Link extends Model
     public $timestamps = false;
 
     public static function createLink($usr_id,$ireq_id){
-        Link::create([
+       $save = Link::create([
             'link_id'=> md5(Carbon::now()),
             'link_action'=> 'Ict Request Verifikasi From Email',
             'expired_at'=>Carbon::parse(Carbon::now()->addDays(1))->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'usr_id'=>$usr_id,
             'ireq_id'=>$ireq_id
         ]);
+        return $save;
+    }
+    public static function createLinkReviewer($ireq_id){
+       $save = Link::create([
+            'link_id'=> md5(Carbon::now()),
+            'link_action'=> 'Ict Request Reviewer Detail Permohonan',
+            'ireq_id'=>$ireq_id
+        ]);
+        return $save;
     }
 }

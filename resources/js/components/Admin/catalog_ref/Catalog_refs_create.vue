@@ -158,24 +158,24 @@ export default {
     };
   },
   created(){
-      this.cekUser();
+      this.getParent();
     },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Catalog Request") || this.checkto.includes("/catalog-refs")){
-          this.getParent();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
       getParent(){
           this.axios.get('api/get-parent-catalog',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
               this.parent = response.data;
+          }).catch(error=>{
+            if(error.response.status == 401){
+              this.$toast.add({
+                severity:'error', summary: 'Error', detail:'Session login expired'
+              });
+              localStorage.clear();
+              localStorage.setItem("Expired","true")
+              setTimeout( () => this.$router.push('/login'),2000);
+            }
+            if(error.response.status == 403){
+              this.$router.push('/access');
+            }
           });
       },
     CreateCatalog() {

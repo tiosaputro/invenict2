@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Cash;
+use App\Mng_User;
 use App\Exports\CashExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Helpers\ResponseFormatter;
@@ -17,21 +18,23 @@ use Illuminate\Validation\Rule;
 class CashController extends Controller
 {
     protected $to;
+    protected $userMenu;
     public function __construct(){
+        $this->middleware('auth:sanctum');
         $this->to = "/cash-advance";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
     }
     function index()
     {
-        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
-        if($aksesmenu->contains($this->to)){
-            $cash = DB::table('v_cash_advance')->get();
-            return response()->json($cash);
-        }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-        }
+        $cash = DB::table('v_cash_advance')->get();
+        return response()->json($cash);
     }
     function detail($ca_idd){
         $dtl = DB::table('ireq_dtl as id')
@@ -141,20 +144,11 @@ class CashController extends Controller
             'created_by' => Auth::user()->usr_name,
             'program_name'=>"Cash_Save",
         ]);
-        $msg = [
-            'success' => true,
-            'message' => 'Created Successfully'
-        ];
         DB::getPdo()->exec("begin SP_CA_IREQ_MST($request->ireq_id); end;");
         return ResponseFormatter::success($cash,'Successfully Create CA');
     }
     function edit($code)
     {
-        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
-        
-        if($aksesmenu->contains($this->to)){
         $cash = DB::table('ca_mst as cm')
             ->select('im.ireq_no as ca_idd','im.ireq_requestor as req', 'vr.name as bu','cm.ca_pic_name','cm.ireqd_id','im.ireq_user',
                     DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
@@ -169,10 +163,6 @@ class CashController extends Controller
             ->where('cm.ca_id',$code)
             ->first();
             return response()->json($cash);
-        }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-        }
     }
     function update(Request $request,$code)
     {

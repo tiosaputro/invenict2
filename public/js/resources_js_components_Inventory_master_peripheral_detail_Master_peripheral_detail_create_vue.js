@@ -33,54 +33,34 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getMerk();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Master Peripheral") || _this.checkto.includes("/master-peripheral")) {
-          _this.getDetail();
-          _this.getMerk();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getDetail: function getDetail() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/add-master-detail/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.detail = response.data;
+        _this.detail = response.data;
       });
     },
     getMerk: function getMerk() {
-      var _this3 = this;
+      var _this2 = this;
       this.axios.get('/api/rsrcsupp', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
         // this.merks = response.data.merk;
-        _this3.bisnis = response.data.bisnis;
-        _this3.kondi = response.data.kondisi;
+        _this2.bisnis = response.data.bisnis;
+        _this2.kondi = response.data.kondisi;
         // this.kategori = response.data.nama;
+        _this2.getDetail();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -88,8 +68,11 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this2.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this2.$router.push('/access');
         }
       });
     },
@@ -109,7 +92,7 @@ __webpack_require__.r(__webpack_exports__);
       reader.readAsDataURL(invent_photo);
     },
     CreateMaster: function CreateMaster() {
-      var _this4 = this;
+      var _this3 = this;
       this.errors = [];
       this.error = [];
       this.axios.post('/api/save-master-detail', this.detail, {
@@ -118,15 +101,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function () {
         setTimeout(function () {
-          return _this4.$router.push('/master-peripheral-detail/' + _this4.$route.params.code);
+          return _this3.$router.push('/master-peripheral-detail/' + _this3.$route.params.code);
         }, 1000);
-        _this4.$toast.add({
+        _this3.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Create"
         });
       })["catch"](function (error) {
-        _this4.errors = error.response.data.errors;
+        _this3.errors = error.response.data.errors;
       });
     }
   }

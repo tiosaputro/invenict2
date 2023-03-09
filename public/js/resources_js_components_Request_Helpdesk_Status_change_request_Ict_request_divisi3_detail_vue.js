@@ -63,7 +63,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-        if (_this.checkname.includes("Status Change Request") || _this.checkto.includes("/ict-request-divisi3")) {
+        if (_this.checkname.includes("Status Change Request") || _this.checkto.includes("/ict-request-personnel")) {
           _this.getIctDetail();
           _this.getNoreq();
         } else {

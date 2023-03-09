@@ -209,21 +209,7 @@ export default {
       checkto : [],
     };
   },
-  mounted(){
-    this.cekUser();
-  },
   methods: {
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Suplier") || this.checkto.includes("/referensi-supplier")){
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     CreateSupplier() {
       this.errors = [];
         const data = new FormData();
@@ -250,6 +236,17 @@ export default {
         }).catch(error=>{
           if (error.response.status == 422) {
             this.errors = error.response.data.errors;
+          }
+          if(error.response.status == 403){
+            this.router.push('/access');
+          }
+          if (error.response.status == 401){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
           }
         });
     }

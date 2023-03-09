@@ -23,40 +23,20 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getLoc();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Location") || _this.checkto.includes("/referensi-location")) {
-          _this.getLoc();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getLoc: function getLoc() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/edit-loc/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.loc = response.data;
+        _this.loc = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -64,29 +44,32 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     UpdateLocation: function UpdateLocation() {
-      var _this3 = this;
+      var _this2 = this;
       this.errors = [];
       this.axios.put('/api/update-loc/' + this.$route.params.code, this.loc, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.$toast.add({
+        _this2.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Update"
         });
         setTimeout(function () {
-          return _this3.$router.push('/referensi-location');
+          return _this2.$router.push('/referensi-location');
         }, 1000);
       })["catch"](function (error) {
-        _this3.errors = error.response.data.errors;
+        _this2.errors = error.response.data.errors;
       });
     }
   }

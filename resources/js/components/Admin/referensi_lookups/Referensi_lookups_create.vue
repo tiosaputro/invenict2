@@ -106,30 +106,7 @@ export default {
       checkto : [],
     };
   },
-  created(){
-      this.cekUser();
-  },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Lookups") || this.checkto.includes("/referensi-lookups")){
-        }
-        else {
-          this.$router.push('/access');
-        }
-      }).catch(error=>{
-          if (error.response.status == 401){
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-        });
-    },
     CreateLookup() {
         this.errors = [];
 
@@ -148,6 +125,17 @@ export default {
         setTimeout( () => this.$router.push('/referensi-lookups'),1000);
         }).catch(error => {
           this.errors = error.response.data.errors;
+          if (error.response.status == 401){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+           this.$router.push('/access');
+          }
          });
       },
   },

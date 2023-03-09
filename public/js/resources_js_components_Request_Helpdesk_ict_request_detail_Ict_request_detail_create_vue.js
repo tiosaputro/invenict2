@@ -39,7 +39,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getNoreq();
   },
   methods: {
     change: function change() {
@@ -230,40 +230,20 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    cekUser: function cekUser() {
-      var _this3 = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this3.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this3.checkname.includes("Status") || _this3.checkto.includes("/ict-request")) {
-          _this3.getNoreq();
-        } else {
-          _this3.$router.push('/access');
-        }
-      });
-    },
     getNoreq: function getNoreq() {
-      var _this4 = this;
+      var _this3 = this;
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.detail = response.data;
-        _this4.tipereq = _this4.detail.ireq_type;
-        _this4.cekTipeReq = _this4.detail.ireq_type;
-        _this4.getType();
+        _this3.detail = response.data;
+        _this3.tipereq = _this3.detail.ireq_type;
+        _this3.cekTipeReq = _this3.detail.ireq_type;
+        _this3.getType();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -271,23 +251,26 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this4.$router.push('/login');
+            return _this3.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this3.$route.push('/access');
         }
       });
     },
     getType: function getType() {
-      var _this5 = this;
+      var _this4 = this;
       this.axios.get('/api/getAddDetail', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this5.type = response.data.ref;
+        _this4.type = response.data.ref;
       });
     },
     CreateIctDetail: function CreateIctDetail() {
-      var _this6 = this;
+      var _this5 = this;
       this.errors = [];
       this.error = [];
       if (this.foto) {
@@ -309,17 +292,17 @@ __webpack_require__.r(__webpack_exports__);
                   'content-type': 'multipart/form-data'
                 }
               }).then(function () {
-                _this6.$toast.add({
+                _this5.$toast.add({
                   severity: "success",
                   summary: "Success Message",
                   detail: "Success Create"
                 });
                 setTimeout(function () {
-                  return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
+                  return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
                 }, 1000);
               })["catch"](function (error) {
-                _this6.loading = false;
-                _this6.errors = error.response.data.errors;
+                _this5.loading = false;
+                _this5.errors = error.response.data.errors;
               });
             } else {
               this.loading = false;
@@ -344,17 +327,17 @@ __webpack_require__.r(__webpack_exports__);
                   'content-type': 'multipart/form-data'
                 }
               }).then(function () {
-                _this6.$toast.add({
+                _this5.$toast.add({
                   severity: "success",
                   summary: "Success Message",
                   detail: "Success Create"
                 });
                 setTimeout(function () {
-                  return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
+                  return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
                 }, 1000);
               })["catch"](function (error) {
-                _this6.loading = false;
-                _this6.errors = error.response.data.errors;
+                _this5.loading = false;
+                _this5.errors = error.response.data.errors;
               });
             } else {
               this.loading = false;
@@ -382,17 +365,17 @@ __webpack_require__.r(__webpack_exports__);
                 'content-type': 'multipart/form-data'
               }
             }).then(function () {
-              _this6.$toast.add({
+              _this5.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Create"
               });
               setTimeout(function () {
-                return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
+                return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
-              _this6.loading = false;
-              _this6.errors = error.response.data.errors;
+              _this5.loading = false;
+              _this5.errors = error.response.data.errors;
             });
           } else {
             this.loading = false;
@@ -416,17 +399,17 @@ __webpack_require__.r(__webpack_exports__);
                 'content-type': 'multipart/form-data'
               }
             }).then(function () {
-              _this6.$toast.add({
+              _this5.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Create"
               });
               setTimeout(function () {
-                return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
+                return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
-              _this6.loading = false;
-              _this6.errors = error.response.data.errors;
+              _this5.loading = false;
+              _this5.errors = error.response.data.errors;
             });
           } else {
             this.loading = false;

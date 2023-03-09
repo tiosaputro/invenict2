@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getIct();
   },
   methods: {
     change: function change(kode) {
@@ -86,38 +86,18 @@ __webpack_require__.r(__webpack_exports__);
         this.ict.invent_code = '';
       }
     },
-    cekUser: function cekUser() {
-      var _this2 = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this2.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this2.checkname.includes("Status") || _this2.checkto.includes("/ict-request")) {
-          _this2.getIct();
-        } else {
-          _this2.$router.push('/access');
-        }
-      });
-    },
     getKode: function getKode() {
-      var _this3 = this;
+      var _this2 = this;
       this.axios.get('/api/getAddDetail', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.type = response.data.ref;
-        _this3.kodeperi = response.data.kode;
+        _this2.type = response.data.ref;
+        _this2.kodeperi = response.data.kode;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -125,19 +105,19 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this2.$router.push('/login');
           }, 2000);
         }
       });
     },
     getCatalog: function getCatalog() {
-      var _this4 = this;
+      var _this3 = this;
       this.axios.get('/api/get-catalog-request/' + this.ict.ireq_type, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (res) {
-        _this4.catalog = res.data;
+        _this3.catalog = res.data;
       });
     },
     getidCatalog: function getidCatalog() {
@@ -147,26 +127,42 @@ __webpack_require__.r(__webpack_exports__);
       this.getCatalog();
     },
     getIct: function getIct() {
-      var _this5 = this;
+      var _this4 = this;
       this.axios.get('/api/edit-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this5.ict = response.data;
-        if (_this5.ict.ireq_attachment) {
-          if (_this5.ict.ireq_attachment.split('.').pop() == 'jpeg' || _this5.ict.ireq_attachment.split('.').pop() == 'png' || _this5.ict.ireq_attachment.split('.').pop() == 'jpg') {
-            _this5.image = true;
+        _this4.ict = response.data;
+        if (_this4.ict.ireq_attachment) {
+          if (_this4.ict.ireq_attachment.split('.').pop() == 'jpeg' || _this4.ict.ireq_attachment.split('.').pop() == 'png' || _this4.ict.ireq_attachment.split('.').pop() == 'jpg') {
+            _this4.image = true;
           } else {
-            _this5.pdf = true;
+            _this4.pdf = true;
           }
         }
-        _this5.cekTipeReq = _this5.ict.ireq_type;
-        _this5.getidCatalog();
+        _this4.cekTipeReq = _this4.ict.ireq_type;
+        _this4.getidCatalog();
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this4.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this4.$router.push('/login');
+          }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this4.$router.push('/access');
+        }
       });
     },
     UpdateIctDetail: function UpdateIctDetail() {
-      var _this6 = this;
+      var _this5 = this;
       this.loading = true;
       if (!this.error.foto) {
         this.errors = [];
@@ -178,17 +174,17 @@ __webpack_require__.r(__webpack_exports__);
                 'Authorization': 'Bearer ' + this.token
               }
             }).then(function () {
-              _this6.$toast.add({
+              _this5.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Update"
               });
               setTimeout(function () {
-                return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
+                return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
-              _this6.loading = false;
-              _this6.errors = error.response.data.errors;
+              _this5.loading = false;
+              _this5.errors = error.response.data.errors;
             });
           } else {
             this.loading = false;
@@ -209,17 +205,17 @@ __webpack_require__.r(__webpack_exports__);
                 'Authorization': 'Bearer ' + this.token
               }
             }).then(function () {
-              _this6.$toast.add({
+              _this5.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Update"
               });
               setTimeout(function () {
-                return _this6.$router.push('/ict-request-detail/' + _this6.$route.params.code);
+                return _this5.$router.push('/ict-request-detail/' + _this5.$route.params.code);
               }, 1000);
             })["catch"](function (error) {
-              _this6.loading = false;
-              _this6.errors = error.response.data.errors;
+              _this5.loading = false;
+              _this5.errors = error.response.data.errors;
             });
           } else {
             this.loading = false;

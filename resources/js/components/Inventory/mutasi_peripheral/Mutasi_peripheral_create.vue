@@ -244,21 +244,9 @@ export default {
     };
   },
   mounted(){
-    this.cekUser();
+    this.getKode();
   },
   methods: {
-  cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Mutasi Peripheral") || this.checkto.includes("/mutasi-peripheral")){
-          this.getKode();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getImage(){
       if(this.invent_sn){
       this.axios.get('api/getImage/'+this.invent_sn, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -281,12 +269,15 @@ export default {
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
     },
     CreateMutasi() {

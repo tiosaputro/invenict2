@@ -36,39 +36,19 @@ __webpack_require__.r(__webpack_exports__);
     this.getMaster();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Master Peripheral") || _this.checkto.includes("/master-peripheral")) {
-          _this.getMaster();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getMaster: function getMaster() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/edit-mas/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.master = response.data.mas;
-        _this2.bisnis = response.data.bisnis;
-        _this2.kondi = response.data.kondisi;
+        _this.master = response.data.mas;
+        _this.bisnis = response.data.bisnis;
+        _this.kondi = response.data.kondisi;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -76,16 +56,16 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
         }
         if (error.response.status == 403) {
-          _this2.$router.push('/access');
+          _this.$router.push('/access');
         }
       });
     },
     UpdateMaster: function UpdateMaster() {
-      var _this3 = this;
+      var _this2 = this;
       this.loading = true;
       this.submitted = true;
       if (this.master.invent_type != null) {
@@ -96,18 +76,18 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           localStorage.removeItem("barcode");
           setTimeout(function () {
-            return _this3.$router.push('/master-peripheral');
+            return _this2.$router.push('/master-peripheral');
           }, 1000);
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Update"
           });
         })["catch"](function (error) {
-          _this3.loading = false;
+          _this2.loading = false;
           if (error.response.status == 422) {
-            _this3.submitted = false;
-            _this3.errors = error.response.data.errors;
+            _this2.submitted = false;
+            _this2.errors = error.response.data.errors;
           }
         });
       }

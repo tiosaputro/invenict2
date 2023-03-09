@@ -242,72 +242,43 @@ export default {
     };
   },
   created(){
-      this.cekUser();
+      this.detailRequest();
   },
   methods: {
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("User") || this.checkto.includes("/mng-user")){ 
-          this.getUser();
-          this.getRole();
-          this.getRoles();
-          this.getDivisi();
-          this.getBisnis();
-          this.getLocation();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
-    getBisnis(){
-      this.axios.get('/api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.bu = response.data;
-        });
-    },
-    getRole(){
-      this.axios.get('/api/edit-usr-role/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.role.role = response.data;
-      });
-    },
-    getDivisi(){
-      this.axios.get('/api/get-divisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.divisi = response.data;
-      });
-    },
-    getLocation(){
-      this.axios.get('/api/ref-loc', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.loc = response.data;
-      });
+    detailRequest(){
+      this.axios.get('/api/detail-add-request-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.bu = response.data.bisnis;
+        this.divisi = response.data.divisi;
+        this.roles= response.data.roles;
+        this.loc = response.data.location;
+        this.getUser();
+      }).catch(error=>{
+        if ((error.response.status == 401)){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if (error.response.status == 403){
+            this.$router.push('/access');
+          }
+         });
     },
     getUser(){
       this.axios.get('/api/edit-user/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.user = response.data
+        this.user = response.data.user;
+        this.role.role = response.data.role;
       })
-      },
-      getRoles(){
-        this.axios.get('/api/get-role', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.roles = response.data;
-            }).catch(error=>{
-               if ((error.response.status == 401)){
-                    this.$toast.add({
-                    severity:'error', summary: 'Error', detail:'Session login expired'
-                });
-                localStorage.clear();
-                localStorage.setItem("Expired","true")
-                setTimeout( () => this.$router.push('/login'),2000);
-                }
-            });
-        },
-      fileImage(event) {
+    },
+    fileImage(event) {
         this.foto = event.target.files[0];
         this.displayImage = true;
         this.preview = URL.createObjectURL(event.target.files[0]);
         this.createImage(this.foto);
-      },
-      createImage(foto) {
+    },
+    createImage(foto) {
         var image = new Image();
         var reader = new FileReader();
         var vm = this.user;
@@ -315,8 +286,8 @@ export default {
             vm.image = e.target.result;
         };
         reader.readAsDataURL(foto);
-      },
-      UpdateUser() {
+    },
+    UpdateUser() {
         this.errors = [];
         this.error = [];
         if(this.role.role != ''){
@@ -334,7 +305,7 @@ export default {
         }else{
           this.error.role = "Roles Belum Diisi"
         }
-      },
+    },
   },
 };
 </script>

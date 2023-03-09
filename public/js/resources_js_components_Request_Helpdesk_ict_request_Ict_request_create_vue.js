@@ -40,36 +40,38 @@ __webpack_require__.r(__webpack_exports__);
     this.getType();
   },
   methods: {
-    getDivision: function getDivision() {
-      var _this = this;
-      this.axios.get('api/get-division-user/' + this.bisnis, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.divisi = response.data;
-      });
-    },
     getType: function getType() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('api/getAddReq', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.type = response.data.ref;
-        _this2.bu = response.data.bisnis;
-        _this2.divisi = response.data.divisi;
-        _this2.level = response.data.prio;
-        _this2.requestor = response.data.fullname;
+        _this.type = response.data.ref;
+        _this.bu = response.data.bisnis;
+        _this.divisi = response.data.divisi;
+        _this.level = response.data.prio;
+        _this.requestor = response.data.fullname;
       })["catch"](function (error) {
-        if (error.response.status == '401') {
-          return _this2.$router.push('/login');
+        if (error.response.status == 401) {
+          _this.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired", "true");
+          setTimeout(function () {
+            return _this.$router.push('/login');
+          }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     CreateIct: function CreateIct() {
-      var _this3 = this;
+      var _this2 = this;
       this.errors = [];
       this.error = [];
       this.loading = true;
@@ -85,13 +87,13 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (response) {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
           setTimeout(function () {
-            return _this3.$router.push({
+            return _this2.$router.push({
               name: 'Add Ict Request Detail',
               params: {
                 code: response.data.data.ireq_id
@@ -99,8 +101,8 @@ __webpack_require__.r(__webpack_exports__);
             });
           }, 1000);
         })["catch"](function (error) {
-          _this3.loading = false;
-          _this3.errors = error.response.data.errors;
+          _this2.loading = false;
+          _this2.errors = error.response.data.errors;
         });
       } else {
         this.loading = false;

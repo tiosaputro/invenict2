@@ -38,6 +38,22 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.modul = response.data;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired", "true");
+          setTimeout(function () {
+            return _this.$router.push('/login');
+          }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
+        }
       });
     },
     UpdateModule: function UpdateModule() {

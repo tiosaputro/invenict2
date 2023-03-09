@@ -41,53 +41,21 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getMutasi();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Mutasi Peripheral") || _this.checkto.includes("/mutasi-peripheral")) {
-          _this.getMutasi();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getMutasi: function getMutasi() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/edit-mut/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.mut = response.data;
-        _this2.getKode();
-      });
-    },
-    getKode: function getKode() {
-      var _this3 = this;
-      this.axios.get('/api/get-kode-peripheral', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.kodeperi = response.data.kode;
-        _this3.divisi = response.data.divisi;
-        _this3.bu = response.data.bu;
+        _this.mut = response.data;
+        _this.getKode();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -95,13 +63,28 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
+    getKode: function getKode() {
+      var _this2 = this;
+      this.axios.get('/api/get-kode-peripheral', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this2.kodeperi = response.data.kode;
+        _this2.divisi = response.data.divisi;
+        _this2.bu = response.data.bu;
+      });
+    },
     UpdateMutasi: function UpdateMutasi() {
-      var _this4 = this;
+      var _this3 = this;
       this.$confirm.require({
         message: "Are you sure to update this data?",
         header: "Confirmation",
@@ -110,24 +93,24 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this4.submitted = true;
-          if (_this4.mut.imutasi_tgl_dari != null && _this4.mut.imutasi_keterangan != null && _this4.mut.imutasi_pengguna != null && _this4.mut.imutasi_divisi != null && _this4.mut.imutasi_bu != null && _this4.mut.imutasi_lokasi != null) {
-            _this4.axios.put('/api/update-mut/' + _this4.$route.params.code, _this4.mut, {
+          _this3.submitted = true;
+          if (_this3.mut.imutasi_tgl_dari != null && _this3.mut.imutasi_keterangan != null && _this3.mut.imutasi_pengguna != null && _this3.mut.imutasi_divisi != null && _this3.mut.imutasi_bu != null && _this3.mut.imutasi_lokasi != null) {
+            _this3.axios.put('/api/update-mut/' + _this3.$route.params.code, _this3.mut, {
               headers: {
-                'Authorization': 'Bearer ' + _this4.token
+                'Authorization': 'Bearer ' + _this3.token
               }
             }).then(function () {
               setTimeout(function () {
-                return _this4.$router.push('/mutasi-peripheral');
+                return _this3.$router.push('/mutasi-peripheral');
               }, 1000);
-              _this4.$toast.add({
+              _this3.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Update"
               });
             })["catch"](function (error) {
-              _this4.errors = error.response.data.errors;
-              _this4.submitted = false;
+              _this3.errors = error.response.data.errors;
+              _this3.submitted = false;
             });
           }
         },

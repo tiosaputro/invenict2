@@ -264,6 +264,18 @@ __webpack_require__.r(__webpack_exports__);
         });
         _this9.loading = false;
       })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this9.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired", "true");
+          setTimeout(function () {
+            return _this9.$router.push('/login');
+          }, 2000);
+        }
         if (error.response.status == 403) {
           _this9.$router.push('/access');
         }

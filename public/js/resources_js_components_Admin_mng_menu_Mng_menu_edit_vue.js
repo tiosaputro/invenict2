@@ -38,52 +38,32 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getModul();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Menu") || _this.checkto.includes("/mng-menu")) {
-          _this.getModul();
-          _this.getParent();
-          _this.getMenu();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getMenu: function getMenu() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/edit-menu/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.menu = response.data;
+        _this.menu = response.data;
       });
     },
     getModul: function getModul() {
-      var _this3 = this;
+      var _this2 = this;
       this.axios.get('/api/get-module', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.modul = response.data;
+        _this2.modul = response.data;
+        _this2.getParent();
+        _this2.getMenu();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -91,40 +71,43 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this2.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this2.$router.push('/access');
         }
       });
     },
     getParent: function getParent() {
-      var _this4 = this;
+      var _this3 = this;
       this.axios.get('/api/get-parent', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.parent = response.data;
+        _this3.parent = response.data;
       });
     },
     UpdateMenu: function UpdateMenu() {
-      var _this5 = this;
+      var _this4 = this;
       this.errors = [];
       this.axios.put('/api/update-menu/' + this.$route.params.code, this.menu, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this5.$toast.add({
+        _this4.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Update"
         });
         setTimeout(function () {
-          return _this5.$router.push('/mng-menu');
+          return _this4.$router.push('/mng-menu');
         }, 1000);
       })["catch"](function (error) {
         if (error.response.status == 422) {
-          _this5.errors = error.response.data.errors;
+          _this4.errors = error.response.data.errors;
         }
         ;
       });

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Model\IctDetail;
 use App\Model\Ict;
+use App\Mng_User;
 use Illuminate\Support\Facades\Storage;
 use App\Model\Link;
+use App\Model\Lookup_Refs;
+use App\Model\Catalog;
 use App\Exports\IctDetailExport;
 use App\Exports\IctDetailExportReject;
 use App\Exports\IctDetailTabReviewerExport;
@@ -23,6 +26,20 @@ use App\Jobs\SendNotifDone;
 
 class IctDetailController extends Controller
 {
+    protected $userMenu;
+    protected $to;
+    public function __construct(){
+        $this->middleware('auth:sanctum')->only('index','getNo_req','save','edit','update','delete','submitRating');
+        $this->to = "/ict-request";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
+    }
     Public function index($code)
     {
       $dtl = DB::table('ireq_dtl as id')
@@ -87,6 +104,37 @@ class IctDetailController extends Controller
         ->get();
             return response()->json($dtl);
     }
+    function getAddDetail() //  for form add request detail
+    {
+        $ref = Lookup_Refs::Type();
+
+        return response()->json(['ref'=>$ref],200);
+    }
+
+    function CatalogRequest($tipereq){
+        $catalog = Catalog::select('parent_id','catalog_id','catalog_name',
+            DB::raw("CASE WHEN catalog_type = 'N' Then 'false' WHEN catalog_type = 'L' Then 'true' end as catalog_type"))
+        ->where('catalog_request_type',$tipereq)
+        ->where('catalog_stat','T')
+        ->get();
+        $tree = $this->parseTreeCatalogRequest($catalog);
+        return json_encode($tree);
+    }
+    function parseTreeCatalogRequest($tree, $root = 0){
+        $return = array();
+          foreach($tree as $child => $parent) {
+            if($parent->parent_id == $root) {
+              unset($tree[$child]);
+                $return[] = array(
+                    'key'=> $parent->catalog_id,
+                    'label'     => $parent->catalog_name,
+                    'selectable'  => filter_var($parent->catalog_type, FILTER_VALIDATE_BOOLEAN),
+                    'children'     => $this->parseTreeCatalogRequest($tree, $parent->catalog_id)
+                );
+            }
+        }
+        return empty($return) ? null : $return;    
+    }
     Public function getDetailDone($code)
     {
         $usr_fullname = Auth::user()->usr_fullname;
@@ -111,8 +159,8 @@ class IctDetailController extends Controller
     function abp($ireq_id){ //accept by personnel
         $save = IctDetail::AcceptByPersonnel($ireq_id);
         DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
-        $cek = $this->cekStatusPenugasan($ireq_id);
-        return ResponseFormatter::success($cek,'Successfully accepted by personnel');
+        $this->cekStatusPenugasan($ireq_id);
+        return ResponseFormatter::success($save,'Successfully accepted by personnel');
     }
     function cekStatusPenugasan($ireq_id){
         $ict = DB::table('ireq_dtl as id')
@@ -669,11 +717,11 @@ class IctDetailController extends Controller
         $personel = IctDetail::select('ireq_assigned_to2')->where('ireq_id',$code)->where('ireqd_id',$ireqd_id)->pluck('ireq_assigned_to2');
         $ict = Ict::where('ireq_id',$code)->first();
         $mail = DB::table('mng_users')->SELECT('usr_email')->WHERE('usr_fullname',$personel)->first();
-        $result = DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($code); end;");
+        DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($code); end;");
         $email = $mail->usr_email .= '@emp.id';
         SendNotifPersonnel::dispatchAfterResponse($email,$ict);
-        $cek = $this->cekStatusPenugasan($code);
-        return json_encode($cek);
+        $this->cekStatusPenugasan($code);
+        return ResponseFormatter::success($dtl,'Successfully');
     }
     function submitRating(Request $request){
         if($request->rating <= '2'){
@@ -685,7 +733,7 @@ class IctDetailController extends Controller
                 'ireq_note' => $request->ket
             ]);
             
-            return response()->json('Updated Successfully');
+            return ResponseFormatter::success($dtl,'Successfully Submitted Rating');
         }
         else{
             $dtl = DB::table('ireq_dtl')
@@ -694,8 +742,7 @@ class IctDetailController extends Controller
             ->update([
                 'ireq_value' => $request->rating
             ]);
-            
-            return response()->json('Updated Successfully');
+            return ResponseFormatter::success($dtl,'Successfully Submitted Rating');
         }
     }
     function saveRemark(Request $request,$code){
@@ -707,7 +754,7 @@ class IctDetailController extends Controller
             'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by' => Auth::user()->usr_name
         ]);
+        return ResponseFormatter::success($dtl,'Successfully Added Remark');
 
-        return response()->json(['message'=>'Updated Successfully'],200);
     }
 }

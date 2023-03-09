@@ -180,19 +180,27 @@ export default {
     };
   },
   created(){
-    this.getPurch();
+    this.getDetailFormRequest();
   },
   methods: {
-      getPurch(){
-          this.axios.get('/api/edit-pem/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.purch = response.data.pem;
-              this.suplier = response.data.supp;
-              this.methode_pay = response.data.metode;
-              this.code_money = response.data.uang;
+    getDetailFormRequest(){
+      this.axios.get('/api/edit-pem/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.purch = response.data.pem;
+        this.suplier = response.data.supp;
+        this.methode_pay = response.data.metode;
+        this.code_money = response.data.uang;
         }).catch(error=>{
+          if (error.response.status == 401){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
           if(error.response.status == 403){
-             this.$router.push('/access');
-           }
+            this.$router.push('/access');
+          }
         });
       },
     CreatePurch() {

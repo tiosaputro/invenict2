@@ -102,29 +102,7 @@ export default {
       checkto : [],
     };
   },
-  created(){
-      this.cekUser();
-  },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        if(this.checkto.includes("/referensi-brand")){
-        }
-        else {
-          this.$router.push('/access');
-        }
-      }).catch(error=>{
-          if (error.response.status == 401){
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-        });
-    },
     CreateLookup() {
         this.errors = [];
 
@@ -134,7 +112,7 @@ export default {
         data.append("lookup_desc", this.lookup_desc);
         data.append("lookup_status", this.lookup_status);
 
-        this.axios.post('api/add-ref', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((resoonse)=>{
+        this.axios.post('api/add-brand', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((resoonse)=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -143,6 +121,17 @@ export default {
         setTimeout( () => this.$router.push('/referensi-brand'),1000);
         }).catch(error => {
           this.errors = error.response.data.errors;
+          if (error.response.status == 401){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.router.push('/access');
+          }
          });
       },
   },

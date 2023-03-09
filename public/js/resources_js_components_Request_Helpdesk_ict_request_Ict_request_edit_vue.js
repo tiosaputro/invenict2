@@ -35,41 +35,21 @@ __webpack_require__.r(__webpack_exports__);
     this.cekUser();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Request") || _this.checkto.includes("/ict-request")) {
-          _this.getIct();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getIct: function getIct() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/edit-ict/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.mutasi = response.data.ict;
-        _this2.divisi = response.data.divisi;
-        _this2.type = response.data.ref;
-        _this2.bu = response.data.bisnis;
-        _this2.level = response.data.prio;
+        _this.mutasi = response.data.ict;
+        _this.divisi = response.data.divisi;
+        _this.type = response.data.ref;
+        _this.bu = response.data.bisnis;
+        _this.level = response.data.prio;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -77,13 +57,16 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     UpdateIct: function UpdateIct() {
-      var _this3 = this;
+      var _this2 = this;
       this.loading = true;
       this.errors = [];
       this.error = [];
@@ -95,17 +78,17 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Update"
           });
           setTimeout(function () {
-            return _this3.$router.push('/ict-request');
+            return _this2.$router.push('/ict-request');
           }, 1000);
         })["catch"](function (error) {
-          _this3.errors = error.response.data.errors;
-          _this3.loading = false;
+          _this2.errors = error.response.data.errors;
+          _this2.loading = false;
         });
       } else {
         this.loading = false;

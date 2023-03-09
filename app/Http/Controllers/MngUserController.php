@@ -3,35 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Mng_User;
+use App\Model\Mng_roles;
+use App\Model\Divisi_refs;
 use carbon\Carbon;
+use App\Model\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use App\Model\Mng_usr_roles;
 use App\Helpers\ResponseFormatter;
-use App\Model\Mng_role_menu;
+use App\Model\Mng_usr_roles;
 
 class MngUserController extends Controller
 {
-    protected $user;
+    protected $userMenu;
+    protected $to;
     public function __construct(){
-        $this->user = "/mng-user";
-     }
+        $this->middleware('auth:sanctum');
+        $this->to = "/mng-user";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
+    }
     public function index()
     {
-        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
-        if($aksesmenu->contains($this->user)){
-            $user = DB::table('v_mng_users')->get();
-            return response()->json($user);
-        }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-        }
+        $user = DB::table('v_mng_users')->get();
+        return response()->json($user);
+    }
+    
+    function getLocation(){
+        $loc = Location::select('loc_code as code','loc_desc as name')->orderBy('loc_desc','ASC')->get();
+        return json_encode($loc);
     }
     public function save(Request $request)
     {
@@ -87,12 +96,9 @@ class MngUserController extends Controller
     }
     public function edit($code)
     {
-        $user = DB::table('mng_users as mu')
-        ->select('mu.usr_id','mu.usr_name','mu.usr_loc','mu.usr_bu','mu.usr_stat','mu.div_id','mu.usr_fullname', 'mu.usr_email','mu.usr_alamat','mu.usr_foto','mg.rol_id')
-        ->leftjoin('mng_usr_roles as mg','mu.usr_id','mg.usr_id')
-        ->where('mu.usr_id',$code)
-        ->first();
-        return response()->json($user);
+        $user = Mng_User::find($code);
+        $role = Mng_usr_roles::getRole($code);
+        return response()->json(['user'=>$user,'role'=>$role],200);
     }
     public function update(Request $request,$code)
     {
@@ -199,13 +205,18 @@ class MngUserController extends Controller
     public function delete($usr_id)
     {
         $user = Mng_user::find($usr_id);
-        unlink(Storage_path('app/public/profile/'.$user->usr_foto));
+        if($user->usr_foto){
+            unlink(Storage_path('app/public/profile/'.$user->usr_foto));
+        }
         $user->delete();
         return ResponseFormatter::success($user,'Successfully Deleted Role');
     }
-    public function getVerif($div_id)
-    {
-        $user = Mng_user::select('usr_email as name')->where('div_id',$div_id)->get();
-        return response()->json($user);
+    function detailAddRequest(){
+        $bisnis = DB::table('v_company_refs')->get();
+        $roles =  Mng_roles::select('rol_id as code','rol_name as name')->where('rol_stat','T')->orderBy('rol_id','ASC')->get();
+        $divisi = Divisi_refs::ListDivision();
+        $location = Location::listLocation();
+        return json_encode(['bisnis'=>$bisnis,'roles'=>$roles,'divisi'=>$divisi,'location'=>$location],200);
     }
+   
 }

@@ -109,6 +109,17 @@ export default {
         setTimeout( () => this.$router.push('/mng-module'),1000);
         }).catch(error=>{
           this.errors = error.response.data.errors;
+          if (error.response.status == 401){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
          });
       },
   },

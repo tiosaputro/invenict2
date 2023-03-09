@@ -8,31 +8,31 @@ Use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Model\Mng_usr_roles;
-use App\Model\Mng_role_menu;
+use App\Mng_User;
 
 class DivisiRefsController extends Controller
 {
-    protected $divisi;
-
+    protected $to;
+    protected $userMenu;
     public function __construct(){
-        $this->divisi = "/divisi-refs";
+        $this->middleware('auth:sanctum');
+        $this->to = "/divisi-refs";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
     }
     function index()
     {
-        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
-        if($aksesmenu->contains($this->divisi)){
-            $divisi = Divisi_refs::select('div_id','div_code','div_name','div_verificator')->orderBy('div_name','ASC')->get();
-            return response()->json($divisi);
-        }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-        }
+        $divisi = Divisi_refs::Divisi();
+        return response()->json($divisi);
     }
     function getDivisi(){
-        $divisi = DB::table('divisi_refs')->select('div_id as code',DB::raw("(div_code ||'-'|| div_name) as name"))->orderBy('div_name','ASC')->get();
+        $divisi = Divisi_refs::ListDivision();
         return response()->json($divisi);
     }
     function edit($code)
@@ -69,17 +69,9 @@ class DivisiRefsController extends Controller
         $divisi = Divisi_refs::find($div_id)->delete();
         return ResponseFormatter::success($divisi,'Successfully Deleted Division');
     }
-    function getDivisionRequest($bisnis){
-
-        $divisi = DB::table('divisi_refs')
-        ->select('div_id as code','div_name as name')
-        ->where(function($query) use($bisnis){
-            return $query
-            ->where(DB::raw('substr(div_code,1,2)'),$bisnis)
-            ->orwhere(DB::raw('substr(div_code,1,2)'),'99');
-        })
-        ->orderBy('div_name','ASC')
-        ->get();
-        return json_encode($divisi);
+    function getVerif($div_id)
+    {
+        $user = Mng_user::findVerificatorDivision($div_id);
+        return response()->json($user);
     }
 }

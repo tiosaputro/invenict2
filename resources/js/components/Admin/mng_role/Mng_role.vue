@@ -82,21 +82,9 @@ export default {
     };
   },
   created() {
-    this.cekUser();
+    this.getRole();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Role Menu") || this.checkto.includes("/mng-role")){
-          this.getRole();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getRole(){
       this.axios.get('api/role', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.role = response.data;
@@ -104,12 +92,15 @@ export default {
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if (error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
     },
     DeleteRole(rol_id){

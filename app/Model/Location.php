@@ -21,4 +21,9 @@ class Location extends Model
     protected $primaryKey ='loc_code';
     public $incrementing = false;
     public $timestamps = false;
+
+    public static function listLocation(){
+        $loc = Location::select('loc_code as code','loc_desc as name')->orderBy('loc_desc','ASC')->get();
+        return $loc;
+    }
 }

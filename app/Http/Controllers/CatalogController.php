@@ -9,26 +9,30 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Mng_usr_roles;
+use App\Mng_User;
 use App\Model\Mng_role_menu;
 
 class CatalogController extends Controller
 {
-    protected $catalog;
+    protected $to;
+    protected $userMenu;
     public function __construct(){
-        $this->catalog = "/catalog-refs";
+        $this->middleware('auth:sanctum');
+        $this->to = "/catalog-refs";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
     }
     function index(){
-        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
-            if($aksesmenu->contains($this->catalog)){
-            $catalog = Catalog::select('catalog_id','catalog_name','catalog_desc',DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"))
-            ->get();
-            return json_encode($catalog);
-            
-        }else {
-            return response(["message"=>"Cannot Access"],403);
-        }
+        $catalog = Catalog::select('catalog_id','catalog_name','catalog_desc',DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"))
+        ->get();
+        return json_encode($catalog);
+
     }
     function save(Request $request){
         $message = [
@@ -95,30 +99,6 @@ class CatalogController extends Controller
     function parentCatalog(){
         $catalog = Catalog::select('catalog_name as name','catalog_id as code')->where('catalog_type','N')->get();
         return json_encode($catalog);
-    }
-    function CatalogRequest($tipereq){
-        $catalog = Catalog::select('parent_id','catalog_id','catalog_name',
-            DB::raw("CASE WHEN catalog_type = 'N' Then 'false' WHEN catalog_type = 'L' Then 'true' end as catalog_type"))
-        ->where('catalog_request_type',$tipereq)
-        ->where('catalog_stat','T')
-        ->get();
-        $tree = $this->parseTree($catalog);
-        return json_encode($tree);
-    }
-    function parseTree($tree, $root = 0){
-        $return = array();
-          foreach($tree as $child => $parent) {
-            if($parent->parent_id == $root) {
-              unset($tree[$child]);
-                $return[] = array(
-                    'key'=> $parent->catalog_id,
-                    'label'     => $parent->catalog_name,
-                    'selectable'  => filter_var($parent->catalog_type, FILTER_VALIDATE_BOOLEAN),
-                    'children'     => $this->parseTree($tree, $parent->catalog_id)
-                );
-            }
-        }
-        return empty($return) ? null : $return;    
     }
 
 }

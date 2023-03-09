@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Model\Divisi_refs;
 use App\Model\Mng_roles;
 use carbon\Carbon;
+use App\Model\Mng_menu;
 
 
 class Mng_User extends Authenticatable
@@ -95,5 +96,16 @@ class Mng_User extends Authenticatable
     public static function findUser($email){
         $user = Mng_user::where('usr_fullname','like',$email)->first();
         return $user;
+    }
+
+    public static function menu(){
+        return Mng_menu::getMenu();
+    }
+    public static function roles(){
+        return Mng_usr_roles::getRoles();
+    }
+    public static function findVerificatorDivision($div_id){
+        $data = Mng_user::select('usr_email as name')->where('div_id',$div_id)->get();
+        return $data;
     }
 }

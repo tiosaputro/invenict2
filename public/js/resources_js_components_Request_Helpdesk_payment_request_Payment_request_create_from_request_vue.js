@@ -32,37 +32,44 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getDataPayment();
   },
   methods: {
-    cekUser: function cekUser() {
+    getDataPayment: function getDataPayment() {
       var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Status Change Request") || _this.checkto.includes("/ict-request-divisi3")) {
-          _this.get();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
-    get: function get() {
-      var _this2 = this;
       this.axios.get('/api/getNameBu/' + this.$route.params.code + '/' + this.$route.params.dtl, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.pr = response.data;
+        _this.pr = response.data;
+        _this.getNoreq();
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired', 'true');
+          setTimeout(function () {
+            return _this.$router.push('/login');
+          }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
+        }
+      });
+    },
+    getNoreq: function getNoreq() {
+      var _this2 = this;
+      this.axios.get('/api/getNoreq', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this2.req = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this2.$toast.add({
@@ -78,31 +85,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getNoreq: function getNoreq() {
-      var _this3 = this;
-      this.axios.get('/api/getNoreq', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.req = response.data;
-      })["catch"](function (error) {
-        if (error.response.status == 401) {
-          _this3.$toast.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired', 'true');
-          setTimeout(function () {
-            return _this3.$router.push('/login');
-          }, 2000);
-        }
-      });
-    },
     CreatePayment: function CreatePayment() {
-      var _this4 = this;
+      var _this3 = this;
       this.errors = [];
       var data = new FormData();
       data.append("ireq_id", this.pr.ireq_id);
@@ -119,15 +103,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         setTimeout(function () {
-          return _this4.$router.push('/payment-request');
+          return _this3.$router.push('/payment-request');
         }, 1000);
-        _this4.$toast.add({
+        _this3.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Create"
         });
       })["catch"](function (error) {
-        _this4.errors = error.response.data.errors;
+        _this3.errors = error.response.data.errors;
       });
     }
   }

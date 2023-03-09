@@ -142,11 +142,6 @@ export default {
       this.getType();
   },
   methods: {
-    getDivision(){
-      this.axios.get('api/get-division-user/'+this.bisnis, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.divisi = response.data;
-      });
-    },
     getType(){
       this.axios.get('api/getAddReq', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.type = response.data.ref;
@@ -155,9 +150,17 @@ export default {
         this.level = response.data.prio;
         this.requestor = response.data.fullname; 
       }).catch(error=>{
-        if(error.response.status == '401'){
-          return this.$router.push('/login')
-        }
+        if ((error.response.status == 401)){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
       });
     },
     CreateIct() {

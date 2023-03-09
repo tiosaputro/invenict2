@@ -57,23 +57,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     detailTabRequest: function detailTabRequest(ireq_id) {
       localStorage.setItem('active3', 0);
-      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/' + ireq_id);
     },
     detailTabApproved: function detailTabApproved(ireq_id) {
       localStorage.setItem('active3', 1);
-      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/' + ireq_id);
     },
     detailTabRejected: function detailTabRejected(ireq_id) {
       localStorage.setItem('active3', 2);
-      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/' + ireq_id);
     },
     detailTabRequestAssignment: function detailTabRequestAssignment(ireq_id) {
       localStorage.setItem('active3', 4);
-      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/' + ireq_id);
     },
     detailTabInProgress: function detailTabInProgress(ireq_id) {
       localStorage.setItem('active3', 5);
-      this.$router.push('/ict-request-divisi1-detail/' + ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/' + ireq_id);
     },
     getPermohonan: function getPermohonan() {
       var _this = this;

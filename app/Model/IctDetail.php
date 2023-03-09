@@ -158,7 +158,7 @@ class IctDetail extends Model
     }
 
     public static function AcceptByPersonnel($ireq_id){
-        DB::table('ireq_dtl')
+        $dtl = DB::table('ireq_dtl')
         ->where('ireq_id',$ireq_id)
         ->where('ireq_assigned_to1',Auth::user()->usr_fullname)
         ->update([
@@ -167,10 +167,11 @@ class IctDetail extends Model
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctDetailController_abp",
         ]);
+        return $dtl;
     }
 
     public static function rejectedByPersonnel($request, $ireq_id){
-        DB::table('ireq_dtl')
+        $dtl = DB::table('ireq_dtl')
         ->where('ireq_id',$ireq_id)
         ->where('ireq_assigned_to1',Auth::user()->usr_fullname)
         ->update([
@@ -180,5 +181,6 @@ class IctDetail extends Model
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctDetailController_rbp"
         ]);
+        return $dtl;
     }
 }

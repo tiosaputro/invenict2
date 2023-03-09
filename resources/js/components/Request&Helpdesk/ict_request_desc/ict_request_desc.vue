@@ -4404,7 +4404,7 @@ export default {
       getActive(){
         if(localStorage.getItem('desc')){
           this.desc = localStorage.getItem('desc');
-          if (this.desc <= 6 || this.desc == 40){
+          if (this.desc <= 6 || this.desc == 22 ||this.desc == 40){
               this.getIct();
           }
           else if (this.desc >= 7 && this.desc <= 12 || this.desc == 38 || this.desc == 41 || this.desc == 45){
@@ -4418,9 +4418,6 @@ export default {
           }
           else if (this.desc > 19 && this.desc <=21 || this.desc == 39 || this.desc == 42){
             this.getIct5();
-          }
-          else if (this.desc == 22){
-            this.getIct6();
           }
           else if (this.desc > 22 && this.desc <= 29){
             this.getIct7();
@@ -4442,6 +4439,7 @@ export default {
           this.sdhDikerjakan = response.data.ict4;
           this.sdhSelesai = response.data.ict5;
           this.sedangDireview = response.data.ict7;
+          this.total = response.data.ict10;
           this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {
@@ -4534,21 +4532,6 @@ export default {
         this.sedangDireview2 = response.data.ict7;
         this.penugasanRequest4 = response.data.ict8;
         this.loading = false;
-        }).catch(error=>{
-         if (error.response.status == 401) {
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-           }
-        });
-      },
-      getIct6(){
-        this.axios.get('api/total-request', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.total = response.data;
-          this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({

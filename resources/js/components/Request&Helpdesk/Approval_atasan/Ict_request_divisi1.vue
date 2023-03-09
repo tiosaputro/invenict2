@@ -666,23 +666,23 @@ export default {
     },
     detailTabRequest(ireq_id){
       localStorage.setItem('active3',0);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     detailTabApproved(ireq_id){
       localStorage.setItem('active3',1);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     detailTabRejected(ireq_id){
       localStorage.setItem('active3',2);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     detailTabRequestAssignment(ireq_id){
       localStorage.setItem('active3',4);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     detailTabInProgress(ireq_id){
       localStorage.setItem('active3',5);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     getPermohonan(){
       this.axios.get('api/get-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {

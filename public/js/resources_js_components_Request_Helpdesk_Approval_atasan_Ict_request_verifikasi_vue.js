@@ -53,7 +53,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-        if (_this.checkname.includes("Atasan Requestor Divisi") || _this.checkto.includes("/ict-request-divisi1")) {
+        if (_this.checkname.includes("Atasan Requestor Divisi") || _this.checkto.includes("/ict-request-higher-level")) {
           _this.getIctDetail();
           _this.getNoreq();
         } else {
@@ -82,7 +82,7 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
           setTimeout(function () {
-            return _this2.$router.push('/ict-request-divisi1');
+            return _this2.$router.push('/ict-request-higher-level');
           }, 1000);
         },
         reject: function reject() {}
@@ -104,7 +104,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Successfully rejected this request"
           });
           setTimeout(function () {
-            return _this3.$router.push('/ict-request-divisi1');
+            return _this3.$router.push('/ict-request-higher-level');
           }, 1000);
         });
       }

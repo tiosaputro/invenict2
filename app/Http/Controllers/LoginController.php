@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mng_User;
+use App\Model\Mng_usr_roles;
+use App\Model\Mng_role_menu;
+use Illuminate\Support\Facades\DB;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -120,5 +123,13 @@ class LoginController extends Controller
     {
         $user = Auth::user();
         return json_encode($user);
+    }
+    
+    function cekUser()
+    {
+        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
+        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
+        $aksesmenu = DB::table('mng_menus')->select('menu_display as name','controller as to')->whereIn('menu_id',$menu)->get();
+        return response()->json($aksesmenu);
     }
 }

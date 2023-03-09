@@ -39,95 +39,24 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.detailRequest();
   },
   methods: {
-    cekUser: function cekUser() {
+    detailRequest: function detailRequest() {
       var _this = this;
-      this.axios.get('/api/cek-user', {
+      this.axios.get('/api/detail-add-request-user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("User") || _this.checkto.includes("/mng-user")) {
-          _this.getUser();
-          _this.getRole();
-          _this.getRoles();
-          _this.getDivisi();
-          _this.getBisnis();
-          _this.getLocation();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
-    getBisnis: function getBisnis() {
-      var _this2 = this;
-      this.axios.get('/api/get-bisnis', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.bu = response.data;
-      });
-    },
-    getRole: function getRole() {
-      var _this3 = this;
-      this.axios.get('/api/edit-usr-role/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.role.role = response.data;
-      });
-    },
-    getDivisi: function getDivisi() {
-      var _this4 = this;
-      this.axios.get('/api/get-divisi', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.divisi = response.data;
-      });
-    },
-    getLocation: function getLocation() {
-      var _this5 = this;
-      this.axios.get('/api/ref-loc', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this5.loc = response.data;
-      });
-    },
-    getUser: function getUser() {
-      var _this6 = this;
-      this.axios.get('/api/edit-user/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this6.user = response.data;
-      });
-    },
-    getRoles: function getRoles() {
-      var _this7 = this;
-      this.axios.get('/api/get-role', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this7.roles = response.data;
+        _this.bu = response.data.bisnis;
+        _this.divisi = response.data.divisi;
+        _this.roles = response.data.roles;
+        _this.loc = response.data.location;
+        _this.getUser();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this7.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -135,9 +64,23 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this7.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
         }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
+        }
+      });
+    },
+    getUser: function getUser() {
+      var _this2 = this;
+      this.axios.get('/api/edit-user/' + this.$route.params.code, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this2.user = response.data.user;
+        _this2.role.role = response.data.role;
       });
     },
     fileImage: function fileImage(event) {
@@ -156,7 +99,7 @@ __webpack_require__.r(__webpack_exports__);
       reader.readAsDataURL(foto);
     },
     UpdateUser: function UpdateUser() {
-      var _this8 = this;
+      var _this3 = this;
       this.errors = [];
       this.error = [];
       if (this.role.role != '') {
@@ -165,21 +108,21 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this8.axios.put('/api/update-usr-role/' + _this8.$route.params.code, _this8.role, {
+          _this3.axios.put('/api/update-usr-role/' + _this3.$route.params.code, _this3.role, {
             headers: {
-              'Authorization': 'Bearer ' + _this8.token
+              'Authorization': 'Bearer ' + _this3.token
             }
           });
-          _this8.$toast.add({
+          _this3.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Update"
           });
           setTimeout(function () {
-            return _this8.$router.push('/mng-user');
+            return _this3.$router.push('/mng-user');
           }, 1000);
         })["catch"](function (error) {
-          _this8.errors = error.response.data.errors;
+          _this3.errors = error.response.data.errors;
         });
       } else {
         this.error.role = "Roles Belum Diisi";

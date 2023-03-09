@@ -31,24 +31,35 @@ __webpack_require__.r(__webpack_exports__);
       checkto: []
     };
   },
-  created: function created() {
-    this.cekUser();
-  },
   methods: {
-    cekUser: function cekUser() {
+    CreateLookup: function CreateLookup() {
       var _this = this;
-      this.axios.get('api/cek-user', {
+      this.errors = [];
+      var data = new FormData();
+      data.append("lookup_type", this.lookup_type);
+      data.append("lookup_code", this.lookup_code);
+      data.append("lookup_desc", this.lookup_desc);
+      data.append("lookup_status", this.lookup_status);
+      this.axios.post('api/add-kategori', data, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
+      }).then(function (resoonse) {
+        _this.$toast.add({
+          severity: "success",
+          summary: "Success Message",
+          detail: "Success Create"
         });
-        if (_this.checkto.includes("/referensi-kategori")) {} else {
-          _this.$router.push('/access');
-        }
+        setTimeout(function () {
+          return _this.$router.push('/referensi-kategori');
+        }, 1000);
       })["catch"](function (error) {
+        if (error.response.status == 422) {
+          _this.errors = error.response.data.errors;
+        }
+        if (error.response.status == 403) {
+          _this.router.push('/access');
+        }
         if (error.response.status == 401) {
           _this.$toast.add({
             severity: 'error',
@@ -61,31 +72,6 @@ __webpack_require__.r(__webpack_exports__);
             return _this.$router.push('/login');
           }, 2000);
         }
-      });
-    },
-    CreateLookup: function CreateLookup() {
-      var _this2 = this;
-      this.errors = [];
-      var data = new FormData();
-      data.append("lookup_type", this.lookup_type);
-      data.append("lookup_code", this.lookup_code);
-      data.append("lookup_desc", this.lookup_desc);
-      data.append("lookup_status", this.lookup_status);
-      this.axios.post('api/add-ref', data, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (resoonse) {
-        _this2.$toast.add({
-          severity: "success",
-          summary: "Success Message",
-          detail: "Success Create"
-        });
-        setTimeout(function () {
-          return _this2.$router.push('/referensi-kategori');
-        }, 1000);
-      })["catch"](function (error) {
-        _this2.errors = error.response.data.errors;
       });
     }
   }

@@ -48,44 +48,40 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }, _defineProperty(_ref, "checkname", []), _defineProperty(_ref, "ceckto", []), _ref;
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getDetailFormRequest();
   },
   methods: {
-    cekUser: function cekUser() {
+    getDetailFormRequest: function getDetailFormRequest() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
-          _this.getSupplier();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
-    getSupplier: function getSupplier() {
-      var _this2 = this;
       this.axios.get('api/rsrcsuppo', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.suplier = response.data.supp;
-        _this2.methode_pay = response.data.metode;
-        _this2.code_money = response.data.uang;
-        _this2.petugas = response.data.user;
+        _this.suplier = response.data.supp;
+        _this.methode_pay = response.data.metode;
+        _this.code_money = response.data.uang;
+        _this.petugas = response.data.user;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired", "true");
+          setTimeout(function () {
+            return _this.$router.push('/login');
+          }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
+        }
       });
     },
     CreatePurch: function CreatePurch() {
-      var _this3 = this;
+      var _this2 = this;
       this.submitted = true;
       if (this.supp != null && this.purch_date != null && this.pay != null && this.petugas != null && this.money != null && this.ket != null) {
         var data = new FormData();
@@ -103,16 +99,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           }
         }).then(function (response) {
           setTimeout(function () {
-            return _this3.$router.push('/pembelian-peripheral');
+            return _this2.$router.push('/pembelian-peripheral');
           }, 1000);
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
         })["catch"](function (error) {
-          _this3.submitted = false;
-          _this3.errors = error.response.data.errors;
+          _this2.submitted = false;
+          _this2.errors = error.response.data.errors;
         });
       }
     }

@@ -34,54 +34,34 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getValutaCode();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
-          _this.getValutaCode();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getValutaCode: function getValutaCode() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/getValuta/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.valuta = response.data.dtl;
-        _this2.sat = response.data.ref;
-        _this2.kodeperi = response.data.mas;
-        if (_this2.valuta.valuta_code == '$') {
-          _this2.locale = 'en-US';
-          _this2.currency = 'USD';
+        _this.valuta = response.data.dtl;
+        _this.sat = response.data.ref;
+        _this.kodeperi = response.data.mas;
+        if (_this.valuta.valuta_code == '$') {
+          _this.locale = 'en-US';
+          _this.currency = 'USD';
         }
-        if (_this2.valuta.valuta_code == 'Rp') {
-          _this2.locale = 'id-ID';
-          _this2.currency = 'IDR';
+        if (_this.valuta.valuta_code == 'Rp') {
+          _this.locale = 'id-ID';
+          _this.currency = 'IDR';
         }
-        if (_this2.valuta.valuta_code == '¥') {
-          _this2.locale = 'zh-CN';
-          _this2.currency = 'CNY';
+        if (_this.valuta.valuta_code == '¥') {
+          _this.locale = 'zh-CN';
+          _this.currency = 'CNY';
         }
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -89,8 +69,11 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
@@ -100,7 +83,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     CreateDetail: function CreateDetail() {
-      var _this3 = this;
+      var _this2 = this;
       this.submitted = true;
       this.errors = [];
       if (this.kode != null && this.satuan != null && this.ket != null && this.pricetotal != null && this.hrgsatuan != null && this.qty != null) {
@@ -117,16 +100,16 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (response) {
           setTimeout(function () {
-            return _this3.$router.push('/pembelian-peripheral-detail/' + _this3.$route.params.code);
+            return _this2.$router.push('/pembelian-peripheral-detail/' + _this2.$route.params.code);
           }, 1000);
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
         })["catch"](function (error) {
-          _this3.errors = error.response.data.errors;
-          _this3.submitted = false;
+          _this2.errors = error.response.data.errors;
+          _this2.submitted = false;
         });
       }
     }

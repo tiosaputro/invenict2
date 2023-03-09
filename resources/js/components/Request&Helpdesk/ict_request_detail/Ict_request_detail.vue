@@ -165,7 +165,7 @@ export default {
     };
   },
   mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     getDetail(ireq_attachment){
@@ -173,23 +173,11 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
-           this.getIctDetail();
-           this.getNoreq()
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getIctDetail(){
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
         this.showPersonnel = response.data.map((x)=>x.ireq_count_status);
+        this.getNoreq();
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -200,6 +188,10 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
+           if (error.response.status == 403) {
+            this.$router.push('/access');
+           }
+
       });
     },
     getNoreq(){

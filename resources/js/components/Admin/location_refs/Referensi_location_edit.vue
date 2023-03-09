@@ -77,33 +77,24 @@ export default {
     };
   },
   created(){
-    this.cekUser();
+    this.getLoc();
   },
   methods: {
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Location") || this.checkto.includes("/referensi-location")){
-          this.getLoc();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
       getLoc(){
         this.axios.get('/api/edit-loc/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response)=> {
             this.loc = response.data;
         }).catch(error=>{
           if ((error.response.status == 401)){
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
       },
     UpdateLocation(){

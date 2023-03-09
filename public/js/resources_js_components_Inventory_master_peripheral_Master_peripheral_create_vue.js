@@ -47,43 +47,23 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getMerk();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Master Peripheral") || _this.checkto.includes("/master-peripheral")) {
-          _this.getMerk();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getMerk: function getMerk() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('api/rsrcsupp', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.merks = response.data.merk;
-        _this2.bisnis = response.data.bisnis;
-        _this2.kondi = response.data.kondisi;
-        _this2.kategori = response.data.nama;
+        _this.merks = response.data.merk;
+        _this.bisnis = response.data.bisnis;
+        _this.kondi = response.data.kondisi;
+        _this.kategori = response.data.nama;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -91,13 +71,16 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     CreateMaster: function CreateMaster() {
-      var _this3 = this;
+      var _this2 = this;
       this.errors = [];
       this.error = [];
       if (this.merk != null && this.nama != null) {
@@ -112,16 +95,16 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function () {
           setTimeout(function () {
-            return _this3.$router.push('/master-peripheral');
+            return _this2.$router.push('/master-peripheral');
           }, 1000);
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
         })["catch"](function (error) {
-          _this3.loading = false;
-          _this3.errors = error.response.data.errors;
+          _this2.loading = false;
+          _this2.errors = error.response.data.errors;
         });
       } else {
         if (this.merk == null) {

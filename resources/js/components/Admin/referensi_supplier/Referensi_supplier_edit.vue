@@ -184,33 +184,24 @@ export default {
     };
   },
   created() {
-    this.cekUser();
+    this.getSupp();
   },
   methods: { 
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Suplier") || this.checkto.includes("/referensi-supplier")){
-          this.getSupp();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getSupp() {
       this.axios.get('/api/edit-supp/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.supp = response.data;
       }).catch(error=>{
          if (error.response.status == 401){
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.router.push('/access');
+          }
         });
     },
     UpdateSupplier(){

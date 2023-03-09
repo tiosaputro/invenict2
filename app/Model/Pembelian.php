@@ -37,7 +37,6 @@ class Pembelian extends Model
             'suplier_code'=>$request->supp,
             'purchase_pay_methode'=>$request->pay,
             'valuta_code'=> $request->money,
-            // 'purchase_status'=>$request->status,
             'purchase_remark'=>$request->ket,
             'creation_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by'=> Auth::user()->usr_name,

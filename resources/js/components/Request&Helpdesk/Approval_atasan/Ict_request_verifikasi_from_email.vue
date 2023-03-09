@@ -207,14 +207,14 @@ export default {
             detail: "Successfully approved the request",
           });
           this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
-          setTimeout( () =>  this.$router.push('/ict-request-divisi1'),1000);
+          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),1000);
         },
         reject: () => {},
       });
       },
       rejectRequest(){
-      this.confirmationVerifikasi = false;
-      this.dialogReject = true;
+        this.confirmationVerifikasi = false;
+        this.dialogReject = true;
       },
       updateReject(){
       this.confirmationVerifikasi = false;
@@ -227,7 +227,7 @@ export default {
                 summary: "Success Message",
                 detail: "Successfully rejected the request",
               });
-              setTimeout( () => this.$router.push('/ict-request-divisi1'),1000);
+              setTimeout( () => this.$router.push('/ict-request-higher-level'),1000);
             });
           }
       },
@@ -264,7 +264,7 @@ export default {
             summary: "Error Message",
             detail: "This request has been verified",
           });
-          setTimeout( () =>  this.$router.push('/ict-request-divisi1'),2000);
+          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),2000);
         }
       });
     },

@@ -40,66 +40,46 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getKode();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Mutasi Peripheral") || _this.checkto.includes("/mutasi-peripheral")) {
-          _this.getKode();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getImage: function getImage() {
-      var _this2 = this;
+      var _this = this;
       if (this.invent_sn) {
         this.axios.get('api/getImage/' + this.invent_sn, {
           headers: {
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (response) {
-          _this2.detail = response.data;
+          _this.detail = response.data;
         });
       }
     },
     getSn: function getSn() {
-      var _this3 = this;
+      var _this2 = this;
       if (this.kode) {
         this.axios.get('/api/get-sn-peripheral/' + this.kode, {
           headers: {
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (response) {
-          _this3.sn = response.data;
+          _this2.sn = response.data;
         });
       }
     },
     getKode: function getKode() {
-      var _this4 = this;
+      var _this3 = this;
       this.axios.get('api/get-kode-peripheral', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.kodeperi = response.data.kode;
-        _this4.divisi = response.data.divisi;
-        _this4.bu = response.data.bu;
+        _this3.kodeperi = response.data.kode;
+        _this3.divisi = response.data.divisi;
+        _this3.bu = response.data.bu;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -107,13 +87,16 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this4.$router.push('/login');
+            return _this3.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this3.$router.push('/access');
         }
       });
     },
     CreateMutasi: function CreateMutasi() {
-      var _this5 = this;
+      var _this4 = this;
       this.$confirm.require({
         message: "Are you sure to save this data?",
         header: "Confirmation",
@@ -122,34 +105,34 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this5.submitted = true;
-          if (_this5.kode != null && _this5.invent_sn != null && _this5.fromdate != null && _this5.ket != null && _this5.user != null && _this5.invent_divisi != null && _this5.invent_bu != null && _this5.lokasi != null) {
+          _this4.submitted = true;
+          if (_this4.kode != null && _this4.invent_sn != null && _this4.fromdate != null && _this4.ket != null && _this4.user != null && _this4.invent_divisi != null && _this4.invent_bu != null && _this4.lokasi != null) {
             var data = new FormData();
-            data.append("kode", _this5.kode);
-            data.append("fromdate", _this5.fromdate);
-            data.append("ket", _this5.ket);
-            data.append("todate", _this5.todate);
-            data.append("user", _this5.user);
-            data.append("lokasi", _this5.lokasi);
-            data.append("invent_bu", _this5.invent_bu);
-            data.append("invent_divisi", _this5.invent_divisi);
-            data.append("invent_sn", _this5.invent_sn);
-            _this5.axios.post('api/add-mut', data, {
+            data.append("kode", _this4.kode);
+            data.append("fromdate", _this4.fromdate);
+            data.append("ket", _this4.ket);
+            data.append("todate", _this4.todate);
+            data.append("user", _this4.user);
+            data.append("lokasi", _this4.lokasi);
+            data.append("invent_bu", _this4.invent_bu);
+            data.append("invent_divisi", _this4.invent_divisi);
+            data.append("invent_sn", _this4.invent_sn);
+            _this4.axios.post('api/add-mut', data, {
               headers: {
-                'Authorization': 'Bearer ' + _this5.token
+                'Authorization': 'Bearer ' + _this4.token
               }
             }).then(function () {
               setTimeout(function () {
-                return _this5.$router.push('/mutasi-peripheral');
+                return _this4.$router.push('/mutasi-peripheral');
               }, 1000);
-              _this5.$toast.add({
+              _this4.$toast.add({
                 severity: "success",
                 summary: "Success Message",
                 detail: "Success Create"
               });
             })["catch"](function (error) {
-              _this5.errors = error.response.data.errors;
-              _this5.submitted = false;
+              _this4.errors = error.response.data.errors;
+              _this4.submitted = false;
             });
           }
         },

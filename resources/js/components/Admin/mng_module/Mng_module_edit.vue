@@ -108,6 +108,18 @@ export default {
     getModule(){
         this.axios.get('/api/edit-module/' + this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.modul = response.data;
+        }).catch(error=>{
+          if (error.response.status == 401){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
     },
     UpdateModule() {

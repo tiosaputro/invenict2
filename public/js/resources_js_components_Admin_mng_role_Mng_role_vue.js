@@ -30,41 +30,21 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getRole();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Role Menu") || _this.checkto.includes("/mng-role")) {
-          _this.getRole();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getRole: function getRole() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('api/role', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.role = response.data;
-        _this2.loading = false;
+        _this.role = response.data;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -72,13 +52,16 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     DeleteRole: function DeleteRole(rol_id) {
-      var _this3 = this;
+      var _this2 = this;
       this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
         header: "Delete Confirmation",
@@ -87,18 +70,18 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Ya",
         rejectLabel: "Tidak",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
-          _this3.axios["delete"]('api/delete-role/' + rol_id, {
+          _this2.axios["delete"]('api/delete-role/' + rol_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this3.token
+              'Authorization': 'Bearer ' + _this2.token
             }
           });
-          _this3.getRole();
+          _this2.getRole();
         },
         reject: function reject() {}
       });

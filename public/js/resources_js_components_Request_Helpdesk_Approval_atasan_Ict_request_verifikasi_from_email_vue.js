@@ -81,7 +81,7 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
           setTimeout(function () {
-            return _this.$router.push('/ict-request-divisi1');
+            return _this.$router.push('/ict-request-higher-level');
           }, 1000);
         },
         reject: function reject() {}
@@ -108,7 +108,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Successfully rejected the request"
           });
           setTimeout(function () {
-            return _this2.$router.push('/ict-request-divisi1');
+            return _this2.$router.push('/ict-request-higher-level');
           }, 1000);
         });
       }
@@ -160,7 +160,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "This request has been verified"
           });
           setTimeout(function () {
-            return _this4.$router.push('/ict-request-divisi1');
+            return _this4.$router.push('/ict-request-higher-level');
           }, 2000);
         }
       });

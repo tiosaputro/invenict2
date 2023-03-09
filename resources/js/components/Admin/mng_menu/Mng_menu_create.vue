@@ -189,34 +189,25 @@ export default {
     };
   },
   created(){
-      this.cekUser();
+      this.getModul();
     },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Menu") || this.checkto.includes("/mng-menu")){
-          this.getModul();
-          this.getParent();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
       getModul(){
           this.axios.get('api/get-module',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
               this.modul = response.data;
+              this.getParent();
           }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
       },
       getParent(){

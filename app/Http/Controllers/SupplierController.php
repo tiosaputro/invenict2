@@ -4,35 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Supplier;
+use App\Mng_User;
 use App\Exports\SupplierExport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Model\Mng_usr_roles;
 use App\Helpers\ResponseFormatter;
-use App\Model\Mng_role_menu;
 
 class SupplierController extends Controller
 {
-    protected $supplier;
+    protected $to;
+    protected $userMenu;
     public function __construct(){
-        $this->supplier = "/referensi-supplier";
+        $this->middleware('auth:sanctum');
+        $this->to = "/referensi-supplier";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
     }
     public function index()
     {
-        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
-        if($aksesmenu->contains($this->supplier)){
-            $supp = Supplier::select('suplier_code','suplier_name','suplier_contact','suplier_fax')
-            ->orderBy('creation_date','ASC')
-            ->get();
-            return response()->json($supp);
-        }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-        }
+        $supp = Supplier::select('suplier_code','suplier_name','suplier_contact','suplier_fax')
+        ->orderBy('creation_date','ASC')
+        ->get();
+        return response()->json($supp);
+
     }
     public function save(Request $request)
     {
@@ -209,12 +211,5 @@ class SupplierController extends Controller
     public function cetak_excel()
     {
         return Excel::download(new SupplierExport,'Laporan_Supplier.xlsx');
-    }
-    Public function getSupp()
-    {
-        $supp = Supplier::Select('suplier_code as code',DB::raw("(suplier_code ||'-'|| suplier_name) as name"))
-                ->orderBy('suplier_code','ASC')
-                ->get();    
-        return response()->json($supp);
     }
 }

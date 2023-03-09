@@ -112,13 +112,13 @@ export default {
               summary: 'Error', 
               detail:'Session login expired'
             });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-           else if (error.response.status == 403){
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          else if (error.response.status == 403){
             this.$router.push('/access');
-           }
+          }
       });
     },
     DeleteRef(lookup_code,lookup_type){

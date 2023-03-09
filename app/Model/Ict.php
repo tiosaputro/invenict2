@@ -134,6 +134,7 @@ class Ict extends Model
         ->get();
         $email_address = $ICT[0]->usr_email .= '@emp.id';
         SendNotifApprovedFromHigherLevel::dispatchAfterResponse($email_address,$ICT);
+        return $ict;
     }
 
     public static function RejectedByAtasan($request, $code){
@@ -283,6 +284,8 @@ class Ict extends Model
         $footer = $request->footer;
         $body = $request->body;
         SendNotifToRequestor::dispatchAfterResponse($Ict,$to,$footer,$body);
+        
+        return $Ict;
     }
 
     public static function RejectedByReviewer($request, $code){
@@ -525,7 +528,7 @@ class Ict extends Model
         $dtll = IctDetail::where('ireq_id',$ireq_id)->get();
         $name = [];
         $email = [];
-        if($ict->ireq_status == 'RT'){
+         if($ict->ireq_status == 'RT'){
             foreach ($dtll as $d) {
                 array_push($name, $d->ireq_assigned_to2);
             }
@@ -535,7 +538,7 @@ class Ict extends Model
                 array_push($name, $d->ireq_assigned_to1);
             }
             $status = 'NT';
-        }
+         }
             $ict->ireq_status = $status;
             $ict->ireq_verificator = Auth::user()->usr_name;
             $ict->ireq_assigned_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
@@ -593,5 +596,7 @@ class Ict extends Model
             }
             SendNotifPersonnel::dispatchAfterResponse($email,$ict);
             SendNotifWaitingRecieveByPersonnel::dispatchAfterResponse($email_address,$Ict);
+            
+        return $ict;
     }
 }

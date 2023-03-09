@@ -13,13 +13,14 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/cek-verif-id/{code}','IctController@cekVerif');
+Route::get('/cek-verif-id/{code}','LinkController@cekVerif');
 Route::post('/login', 'LoginController@index');
 Route::post('/login-intranet', 'LoginController@loginFromIntranet');
 Route::get('/detail-peripherall/{invent_code}','MasterController@detailPeripheral');
 Route::post('/login-approval', 'LoginController@loginFromEmail');
 Route::get('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/cek-user','LoginController@cekUser');
     Route::get('/user','LoginController@show');
 //referensi_location
     Route::get('/loc', 'LocationController@index');
@@ -40,14 +41,19 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/delete-ref/{lookup_code}/{lookup_type}','LookupsController@delete');
     Route::get('/report-lookups-pdf','LookupsController@cetak_pdf');
     Route::get('/report-lookups-excel','LookupsController@cetak_excel');
-    Route::get('/getMerk','LookupsController@getMerk');
-    Route::get('/getStatusIct','LookupsController@getStatusIct');
-    Route::get('/getKondisi','LookupsController@getKondisi');
-    Route::get('/getStatus','LookupsController@getStatus');
-    Route::get('/getType','LookupsController@getType');
-    Route::get('/getMataUang','LookupsController@getMataUang');
-    Route::get('/getMethodePurch','LookupsController@getMethodePurch');
-    Route::get('/getSatuan','LookupsController@getSatuan');
+
+//lookup kategori
+    Route::get('/ref-lookup-kategori', 'LookupsKategoriController@lookupKategori');
+    Route::post('/add-kategori','LookupsKategoriController@saveKategori');
+    Route::get('/edit-kategori/{code}/{type}','LookupsKategoriController@editKategori');
+    Route::put('/update-kategori/{code}/{type}','LookupsKategoriController@updateKategori');
+    Route::delete('/delete-kategori/{lookup_code}/{lookup_type}','LookupsKategoriController@deleteKategori');
+//lookup brand
+    Route::get('/ref-lookup-brand', 'LookupsBrandController@lookupBrand');
+    Route::post('/add-brand','LookupsBrandController@saveBrand');
+    Route::get('/edit-brand/{code}/{type}','LookupsBrandController@editBrand');
+    Route::put('/update-brand/{code}/{type}','LookupsBrandController@updateBrand');
+    Route::delete('/delete-brand/{lookup_code}/{lookup_type}','LookupsBrandController@deleteBrand');
 
 //supplier
     Route::get('/supp', 'SupplierController@index');
@@ -56,9 +62,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/show-supp/{suplier_code}', 'SupplierController@show');
     Route::put('/update-supp/{code}', 'SupplierController@update');
     Route::delete('/delete-supp/{suplier_code}', 'SupplierController@delete');
-    Route::get('/get-supp','SupplierController@getSupp');
-    //Route::get('/report-supplier-pdf','SupplierController@cetak_pdf');
-    //Route::get('/report-supplier-excel','SupplierController@cetak_excel');
 
     //pekerja
     Route::get('/get-pekerja','PekerjaController@getPekerja');
@@ -69,6 +72,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/edit-mas/{code}','MasterController@edit');
     Route::put('/update-mas/{code}','MasterController@update');
     Route::delete('/delete-mas/{invent_code}','MasterController@delete');
+    Route::get('/get-kode','MasterController@getKode');
+    Route::get('/get-kode-peripheral','MasterController@getPeripheral');
+    Route::get('/get-sn-peripheral/{kode}','MasterController@getSn');
+    Route::get('/get-kode-ict/{code}','MasterController@getKodeIct');
+    Route::get('/rsrcsupp','MasterController@getAddMaster');
     Route::get('/getImage/{kode}','MasterController@getImage');
     Route::get('/getBarcode/{invent_code}','MasterController@getBarcode');
     Route::get('/detail-peripheral/{invent_code}','MasterController@detailPeripheral');
@@ -84,7 +92,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/update-master-detail/{code}','MasterDetailController@updateDetail');
     Route::delete('/delete-master-detail/{invent_code_dtl}','MasterDetailController@deleteDetail');
 
-
     //mutasi peripheral
     Route::get('/mut','MutasiController@index');
     Route::post('/add-mut','MutasiController@save');
@@ -96,6 +103,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //pembelian peripheral
     Route::get('/pem','PembelianController@index');
+    Route::get('/rsrcsuppo','PembelianController@getAddPemb');
     Route::post('/add-pem','PembelianController@save');
     Route::get('/edit-pem/{code}','PembelianController@edit');
     Route::put('/update-pem/{code}','PembelianController@update');
@@ -134,16 +142,16 @@ Route::middleware('auth:sanctum')->group(function(){
     //mng_user
     Route::get('/get-user','MngUserController@index');
     Route::post('/add-user','MngUserController@save');
+    Route::get('/detail-add-request-user','MngUserController@detailAddRequest');
     Route::get('/edit-user/{code}','MngUserController@edit');
     Route::put('/update-user/{code}','MngUserController@update');
     Route::delete('/delete-user/{usr_id}','MngUserController@delete');
-    Route::get('/get-verificator/{div_id}','MngUserController@getVerif');
     //divisi_refs
     Route::get('/divisi','DivisiRefsController@index');
     Route::get('/get-divisi','DivisiRefsController@getDivisi');
+    Route::get('/get-verificator/{div_id}','DivisiRefsController@getVerif');
     Route::get('/edit-divisi/{code}','DivisiRefsController@edit');
     Route::put('/update-divisi/{code}','DivisiRefsController@update');
-    Route::get('/get-division-user/{bisnis}','DivisiRefsController@getDivisionRequest');
     Route::delete('/delete-divisi/{div_id}','DivisiRefsController@delete');
     //mng_roles
     Route::get('/role','MngRolesController@index');
@@ -162,9 +170,9 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //Mng_role_menu
     Route::post('/save-role-menu','MngRoleMenuController@save');
+    Route::get('/get-menu','MngRoleMenuController@getMenu');
     Route::get('/edit-role-menu/{code}','MngRoleMenuController@edit');
     Route::put('/update-role-menu/{code}','MngRoleMenuController@update');
-    Route::get('/cek-user','MngRoleMenuController@cekUser');
 
     //Mng_module
     Route::get('/module','ModuleController@index');
@@ -176,7 +184,6 @@ Route::middleware('auth:sanctum')->group(function(){
     // catalog
     Route::get('/get-catalog','CatalogController@index');
     Route::get('/get-parent-catalog','CatalogController@parentCatalog');
-    Route::get('/get-catalog-request/{tipereq}','CatalogController@CatalogRequest');
     Route::post('/save-catalog','CatalogController@save');
     Route::get('/edit-catalog/{code}','CatalogController@edit');
     Route::put('/update-catalog/{code}','CatalogController@update');
@@ -186,7 +193,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/get-menu-user','MngMenuController@getMenuUser');
     Route::get('/menu','MngMenuController@index');
     Route::get('/get-parent','MngMenuController@getParent');
-    Route::get('/get-menu','MngMenuController@getMenu');
     Route::get('/edit-menu/{code}','MngMenuController@edit');
     Route::post('/save-menu','MngMenuController@save');
     Route::put('/update-menu/{code}','MngMenuController@update');
@@ -219,60 +225,129 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/count-per-status-ict/{ictPersonnel}','DashboardController@countPerStatusIct');
 
     //ict request reviewer
-    Route::get('/get-data-reviewer','IctController@getDataReviewer');
-    Route::put('/reject-by-reviewer/{code}','IctController@rejectReviewer');
-    Route::get('/naa/{ireq_id}','IctController@needApprovalAtasan');
-    Route::get('/nam/{ireq_id}','IctController@needApprovalManager');
-    Route::post('/aprr','IctController@asignPerRequestReviewer');
-    Route::get('/sapr/{ireq_id}','IctController@submitAssignPerRequest');
-    Route::get('/dataIct','IctController@getDataIct');
-    Route::get('/getdataIctByStatus/{statuss}','IctController@getdataIctByStatus');
-    Route::get('/detail-request-reviewer/{code}','IctController@detailRequestReviewer');
-    Route::get('/get-remark-reviewer/{ireq_id}','IctController@getRemarkReviewer');
-    Route::post('/save-remark-reviewer','IctController@SaveRemarkReviewer');
-    Route::get('/detailrequest-tomail/{ireq_id}','IctController@detailRequestToMail');
-    Route::post('/sendMailtoRequestor','IctController@sendMailtoRequestor');
+    Route::get('/get-data-reviewer','IctRequestReviewerController@getDataReviewer');  
+    Route::post('/updateAssign','IctRequestReviewerController@updateAssign');
+    Route::get('/updateStatusPenugasan/{ireq_id}','IctRequestReviewerController@updateStatusPenugasan');
+    Route::get('/updateStatusClosing/{ireq_id}','IctRequestReviewerController@updateStatusClosing');
+    Route::put('/reject-by-reviewer/{code}','IctRequestReviewerController@rejectReviewer');
+    Route::get('/naa/{ireq_id}','IctRequestReviewerController@needApprovalAtasan');
+    Route::get('/nam/{ireq_id}','IctRequestReviewerController@needApprovalManager');
+    Route::post('/aprr','IctRequestReviewerController@asignPerRequestReviewer');
+    Route::get('/sapr/{ireq_id}','IctRequestReviewerController@submitAssignPerRequest');
+    Route::get('/dataIct','IctRequestReviewerController@getDataIct');
+    Route::get('/getdataIctByStatus/{statuss}','IctRequestReviewerController@getdataIctByStatus');
+    Route::get('/detail-request-reviewer/{code}','IctRequestReviewerController@detailRequestReviewer');
+    Route::get('/get-remark-reviewer/{ireq_id}','IctRequestReviewerController@getRemarkReviewer');
+    Route::post('/save-remark-reviewer','IctRequestReviewerController@SaveRemarkReviewer');
+    Route::get('/detailrequest-tomail/{ireq_id}','IctRequestReviewerController@detailRequestToMail');
+    Route::post('/sendMailtoRequestor','IctRequestReviewerController@sendMailtoRequestor');
+    Route::get('/report-ict-excel-reviewer-permohonan','IctRequestReviewerController@cetak_excel_reviewer_permohonan');
+    Route::get('/report-ict-pdf-reviewer-permohonan','IctRequestReviewerController@cetak_pdf_reviewer_permohonan');
+    Route::get('/report-ict-excel-reviewer-atasan-divisi','IctRequestReviewerController@cetak_excel_reviewer_atasan_divisi');
+    Route::get('/report-ict-pdf-reviewer-atasan-divisi','IctRequestReviewerController@cetak_pdf_reviewer_atasan_divisi');
+    Route::get('/report-ict-excel-reviewer-ict-manager','IctRequestReviewerController@cetak_excel_reviewer_ict_manager');
+    Route::get('/report-ict-pdf-reviewer-ict-manager','IctRequestReviewerController@cetak_pdf_reviewer_ict_manager');
+    Route::get('/report-ict-excel-reviewer-reject','IctRequestReviewerController@cetak_excel_reviewer_reject');
+    Route::get('/report-ict-pdf-reviewer-reject','IctRequestReviewerController@cetak_pdf_reviewer_reject');
+    Route::get('/report-ict-excel-reviewer-assignment-request','IctRequestReviewerController@cetak_excel_reviewer_assignment_request');
+    Route::get('/report-ict-pdf-reviewer-assignment-request','IctRequestReviewerController@cetak_pdf_reviewer_assignment_request');
+    Route::get('/report-ict-excel-reviewer-sedang-dikerjakan','IctRequestReviewerController@cetak_excel_reviewer_sedang_dikerjakan');
+    Route::get('/report-ict-pdf-reviewer-sedang-dikerjakan','IctRequestReviewerController@cetak_pdf_reviewer_sedang_dikerjakan');
+    Route::get('/report-ict-excel-reviewer-sudah-dikerjakan','IctRequestReviewerController@cetak_excel_reviewer_sudah_dikerjakan');
+    Route::get('/report-ict-pdf-reviewer-sudah-dikerjakan','IctRequestReviewerController@cetak_pdf_reviewer_sudah_dikerjakan');
+    Route::get('/report-ict-excel-reviewer-selesai','IctRequestReviewerController@cetak_excel_reviewer_selesai');
+    Route::get('/report-ict-pdf-reviewer-selesai','IctRequestReviewerController@cetak_pdf_reviewer_selesai');
 
     //ict request manager
-    Route::get('/get-data-manager','IctController@getDataManager');
-    Route::get('/get-data-manager-verifikasi/{code}','IctController@getDataManagerVerifikasi');
-    Route::put('/abm/{code}','IctController@approveByManager');
-    Route::put('/rbm/{code}','IctController@rejectByManager');
+    Route::get('/get-data-manager','IctRequestManagerController@getDataManager');
+    Route::get('/get-data-manager-verifikasi/{code}','IctRequestManagerController@getDataManagerVerifikasi');
+    Route::put('/abm/{code}','IctRequestManagerController@approveByManager');
+    Route::put('/rbm/{code}','IctRequestManagerController@rejectByManager');
+    Route::get('/report-ict-excel-manager-permohonan','IctRequestManagerController@cetak_excel_manager_permohonan');
+    Route::get('/report-ict-pdf-manager-permohonan','IctRequestManagerController@cetak_pdf_manager_permohonan');
+    Route::get('/report-ict-excel-manager-verifikasi','IctRequestManagerController@cetak_excel_manager_verifikasi');
+    Route::get('/report-ict-pdf-manager-verifikasi','IctRequestManagerController@cetak_pdf_manager_verifikasi');
+    Route::get('/report-ict-excel-manager-reject','IctRequestManagerController@cetak_excel_manager_reject');
+    Route::get('/report-ict-pdf-manager-reject','IctRequestManagerController@cetak_pdf_manager_reject');
+    Route::get('/report-ict-excel-manager-assignment-request','IctRequestManagerController@cetak_excel_manager_assignment_request');
+    Route::get('/report-ict-pdf-manager-assignment-request','IctRequestManagerController@cetak_pdf_manager_assignment_request');
+    Route::get('/report-ict-excel-manager-sedang-dikerjakan','IctRequestManagerController@cetak_excel_manager_sedang_dikerjakan');
+    Route::get('/report-ict-pdf-manager-sedang-dikerjakan','IctRequestManagerController@cetak_pdf_manager_sedang_dikerjakan');
+    Route::get('/report-ict-excel-manager-sudah-dikerjakan','IctRequestManagerController@cetak_excel_manager_sudah_dikerjakan');
+    Route::get('/report-ict-pdf-manager-sudah-dikerjakan','IctRequestManagerController@cetak_pdf_manager_sudah_dikerjakan');
+    Route::get('/report-ict-excel-manager-selesai','IctRequestManagerController@cetak_excel_manager_selesai');
+    Route::get('/report-ict-pdf-manager-selesai','IctRequestManagerController@cetak_pdf_manager_selesai');
 
-    //ict request
-    Route::get('/get-ict','IctController@getIct');
-    Route::post('/add-ict','IctController@save');
-    Route::get('/edit-ict/{code}','IctController@edit');
-    Route::put('/update-ict/{code}','IctController@update');
-    Route::delete('/delete-ict/{ireq_id}','IctController@delete');
-    Route::get('/getNoreq','IctController@getNoreq');
-    Route::get('/getDetail/{noreq}','IctController@getDetail');
-    Route::get('/getNameBu/{noreq}/{dtl}','IctController@getNameBu');
-    Route::get('/detail-norequest/{code}','IctController@detailNoRequest');
-    //divisi 1
-    Route::get('/get-permohonan','IctController@getPermohonan');
-    Route::get('/total-request','IctController@totalRequest');
+    //ict request requestor
+    Route::get('/get-ict','IctRequestRequestorController@getIct');
+    Route::post('/add-ict','IctRequestRequestorController@save');
+    Route::get('/updateStatusSubmit/{ireq_id}','IctRequestRequestorController@updateStatusSubmit');
+    Route::get('/edit-ict/{code}','IctRequestRequestorController@edit');
+    Route::put('/update-ict/{code}','IctRequestRequestorController@update');
+    Route::delete('/delete-ict/{ireq_id}','IctRequestRequestorController@delete');
+    Route::get('/getAddReq','IctRequestRequestorController@getAddReq');
+    Route::get('/getNoreq','IctRequestRequestorController@getNoreq');
+    Route::get('/getDetail/{noreq}','IctRequestRequestorController@getDetail');
+    Route::get('/getNameBu/{noreq}/{dtl}','IctRequestRequestorController@getNameBu');
+    Route::get('/detail-norequest/{code}','IctRequestRequestorController@detailNoRequest');
+    Route::get('/report-ict-excel-permohonan','IctRequestRequestorController@cetak_excel_permohonan');
+    Route::get('/report-ict-pdf-permohonan','IctRequestRequestorController@cetak_pdf_permohonan');
+    Route::get('/report-ict-pdf-tab-reviewer','IctRequestRequestorController@cetak_pdf_tab_reviewer');
+    Route::get('/report-ict-excel-tab-reviewer','IctRequestRequestorController@cetak_excel_tab_reviewer');
+    Route::get('/report-ict-excel-verifikasi','IctRequestRequestorController@cetak_excel_verifikasi');
+    Route::get('/report-ict-pdf-verifikasi','IctRequestRequestorController@cetak_pdf_verifikasi');
+    Route::get('/report-ict-excel-reject','IctRequestRequestorController@cetak_excel_reject');
+    Route::get('/report-ict-pdf-reject','IctRequestRequestorController@cetak_pdf_reject');
+    Route::get('/report-ict-pdf-assignment-request','IctRequestRequestorController@cetak_pdf_assignment_request');
+    Route::get('/report-ict-excel-assignment-request','IctRequestRequestorController@cetak_excel_assignment_request');
+    Route::get('/report-ict-excel-sedang-dikerjakan','IctRequestRequestorController@cetak_excel_sedang_dikerjakan');
+    Route::get('/report-ict-pdf-sedang-dikerjakan','IctRequestRequestorController@cetak_pdf_sedang_dikerjakan');
+    Route::get('/report-ict-excel-tab-sudah-dikerjakan','IctRequestRequestorController@cetak_excel_sudah_dikerjakan');
+    Route::get('/report-ict-pdf-tab-sudah-dikerjakan','IctRequestRequestorController@cetak_pdf_sudah_dikerjakan');
+    Route::get('/report-ict-excel-selesai','IctRequestRequestorController@cetak_excel_selesai');
+    Route::get('/report-ict-pdf-selesai','IctRequestRequestorController@cetak_pdf_selesai');
+
+
+    //ict request personnel 
+    Route::get('/get-sedang-dikerjakan','IctRequestPersonnelController@getDataPersonnel');
+    Route::get('/report-ict-excel-personnel-assignment-request','IctRequestPersonnelController@cetak_excel_personnel_assignment_request');
+    Route::get('/report-ict-pdf-personnel-assignment-request','IctRequestPersonnelController@cetak_pdf_personnel_assignment_request');
+    Route::get('/report-ict-excel-personnel-reject','IctRequestPersonnelController@cetak_excel_personnel_reject');
+    Route::get('/report-ict-pdf-personnel-reject','IctRequestPersonnelController@cetak_pdf_personnel_reject');
+    Route::get('/report-ict-excel-personnel-sedang-dikerjakan','IctRequestPersonnelController@cetak_excel_personnel_sedang_dikerjakan');
+    Route::get('/report-ict-pdf-personnel-sedang-dikerjakan','IctRequestPersonnelController@cetak_pdf_personnel_sedang_dikerjakan');
+    Route::get('/report-ict-excel-personnel-sudah-dikerjakan','IctRequestPersonnelController@cetak_excel_personnel_sudah_dikerjakan');
+    Route::get('/report-ict-pdf-personnel-sudah-dikerjakan','IctRequestPersonnelController@cetak_pdf_personnel_sudah_dikerjakan');
+    Route::get('/report-ict-excel-personnel-selesai','IctRequestPersonnelController@cetak_excel_personnel_selesai');
+    Route::get('/report-ict-pdf-personnel-selesai','IctRequestPersonnelController@cetak_pdf_personnel_selesai');
     
-    //divisi 2
-    Route::get('/get-permohonan-divisi','IctController@getPermohonanDivisi');
-    //divisi 3
-    Route::get('/get-sedang-dikerjakan','IctController@getSedangDikerjakan');
-    Route::put('/save-remark-assigned/{code}','IctDetailController@saveRemark');
-    //divisi 4
-    Route::get('/get-divisi-4','IctController@ictDivisi4');
-    //admin
-    Route::get('/get-ict-admin','IctController@getIctAdmin');
+    //ict request admin
+    Route::get('/get-ict-admin','IctRequestAdminController@getDataIct');
 
-    Route::post('/updateAssign','IctController@updateAssign');
-    Route::get('/updateStatusPermohonan/{code}','IctController@approveByAtasan');
-    Route::get('/updateStatusPenugasan/{ireq_id}','IctController@updateStatusPenugasan');
-    Route::put('/updateStatusReject/{code}','IctController@rejectByAtasan');
-    Route::get('/updateStatusSubmit/{ireq_id}','IctController@updateStatusSubmit');
-    Route::get('/updateStatusClosing/{ireq_id}','IctController@updateStatusClosing');
-    //Route::get('/report-ict-excel','IctController@cetak_excel');
-    //Route::get('/report-ict-pdf','IctController@cetak_pdf');
+    //ict request higher level
+    Route::get('/updateStatusPermohonan/{code}','IctRequestHigherLevelController@approveByAtasan');
+    Route::put('/updateStatusReject/{code}','IctRequestHigherLevelController@rejectByAtasan');
+    Route::get('/get-permohonan','IctRequestHigherLevelController@getPermohonan');   
+    Route::get('/report-ict-excel-atasan-permohonan','IctRequestHigherLevelController@cetak_excel_atasan_permohonan');
+    Route::get('/report-ict-pdf-atasan-permohonan','IctRequestHigherLevelController@cetak_pdf_atasan_permohonan');
+    Route::get('/report-ict-excel-atasan-verifikasi','IctRequestHigherLevelController@cetak_excel_atasan_verifikasi');
+    Route::get('/report-ict-pdf-atasan-verifikasi','IctRequestHigherLevelController@cetak_pdf_atasan_verifikasi');
+    Route::get('/report-ict-excel-atasan-reject','IctRequestHigherLevelController@cetak_excel_atasan_reject');
+    Route::get('/report-ict-pdf-atasan-reject','IctRequestHigherLevelController@cetak_pdf_atasan_reject');
+    Route::get('/report-ict-excel-atasan-assignment-request','IctRequestHigherLevelController@cetak_excel_atasan_assignment_request');
+    Route::get('/report-ict-pdf-atasan-assignment-request','IctRequestHigherLevelController@cetak_pdf_atasan_assignment_request');
+    Route::get('/report-ict-excel-atasan-sedang-dikerjakan','IctRequestHigherLevelController@cetak_excel_atasan_sedang_dikerjakan');
+    Route::get('/report-ict-pdf-atasan-sedang-dikerjakan','IctRequestHigherLevelController@cetak_pdf_atasan_sedang_dikerjakan');
+    Route::get('/report-ict-excel-atasan-sudah-dikerjakan','IctRequestHigherLevelController@cetak_excel_atasan_sudah_dikerjakan');
+    Route::get('/report-ict-pdf-atasan-sudah-dikerjakan','IctRequestHigherLevelController@cetak_pdf_atasan_sudah_dikerjakan');
+    Route::get('/report-ict-atasan-excel-selesai','IctRequestHigherLevelController@cetak_excel_atasan_selesai');
+    Route::get('/report-ict-atasan-pdf-selesai','IctRequestHigherLevelController@cetak_pdf_atasan_selesai');
+
 
     //ict request (detail)
+    Route::get('/getAddDetail','IctDetailController@getAddDetail');
+    Route::get('/get-catalog-request/{tipereq}','IctDetailController@CatalogRequest');
+    Route::put('/save-remark-assigned/{code}','IctDetailController@saveRemark');
     Route::get('/ict-detail/{code}','IctDetailController@index');
     Route::get('/ict-detail-penugasan/{code}','IctDetailController@detailPenugasan');
     Route::put('/rejectPersonnel/{ireq_id}','IctDetailController@rbp');
@@ -292,17 +367,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/updateAssignPerDetailFromReject/{code}','IctDetailController@updateAssignFromReject');
     Route::get('/updateStatusClosingDetail/{ireqd_id}/{ireq_no}','IctDetailController@updateStatusClosingDetail');
     Route::post('/submit-rating','IctDetailController@submitRating');
-    //Route::get('/report-ict-detail-pdf/{code}','IctDetailController@cetak_pdf');
-    //Route::get('/report-ict-detail-excel/{code}','IctDetailController@cetak_excel');
-
-    Route::get('/get-kode','MasterController@getKode');
-    Route::get('/get-kode-peripheral','MasterController@getPeripheral');
-    Route::get('/get-sn-peripheral/{kode}','MasterController@getSn');
-    Route::get('/get-kode-ict/{code}','MasterController@getKodeIct');
-    Route::get('/getAddReq','LookupsController@getAddReq');
-    Route::get('/getAddDetail','LookupsController@getAddDetail');
-    Route::get('/rsrcsupp','LookupsController@getAddMaster');
-    Route::get('/rsrcsuppo','LookupsController@getAddPemb');
     
     //laporan
     // Route::get('/req-per-status-excel','LaporanController@cetak_excel_per_status');
@@ -332,24 +396,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/report-cash-excel','CashController@cetak_excel');
     Route::get('/report-supplier-pdf','SupplierController@cetak_pdf');
     Route::get('/report-supplier-excel','SupplierController@cetak_excel');
-    Route::get('/report-ict-excel-reject','IctController@cetak_excel_reject');
-    Route::get('/report-ict-pdf-reject','IctController@cetak_pdf_reject');
-    Route::get('/report-ict-pdf-assignment-request','IctController@cetak_pdf_assignment_request');
-    Route::get('/report-ict-excel-assignment-request','IctController@cetak_excel_assignment_request');
-    Route::get('/report-ict-excel-tab-sudah-dikerjakan','IctController@cetak_excel_sudah_dikerjakan');
-    Route::get('/report-ict-pdf-tab-sudah-dikerjakan','IctController@cetak_pdf_sudah_dikerjakan');
-    Route::get('/report-ict-excel-selesai','IctController@cetak_excel_selesai');
-    Route::get('/report-ict-pdf-selesai','IctController@cetak_pdf_selesai');
-
     //report request (requestor)
-    Route::get('/report-ict-excel-permohonan','IctController@cetak_excel_permohonan');
-    Route::get('/report-ict-pdf-permohonan','IctController@cetak_pdf_permohonan');
-    Route::get('/report-ict-pdf-tab-reviewer','IctController@cetak_pdf_tab_reviewer');
-    Route::get('/report-ict-excel-tab-reviewer','IctController@cetak_excel_tab_reviewer');
-    Route::get('/report-ict-excel-verifikasi','IctController@cetak_excel_verifikasi');
-    Route::get('/report-ict-pdf-verifikasi','IctController@cetak_pdf_verifikasi');
-    Route::get('/report-ict-excel-sedang-dikerjakan','IctController@cetak_excel_sedang_dikerjakan');
-    Route::get('/report-ict-pdf-sedang-dikerjakan','IctController@cetak_pdf_sedang_dikerjakan');
+   
 
     //report detail request (requestor)
     Route::get('/report-ict-detail-pdf/{code}','IctDetailController@cetak_pdf');
@@ -365,67 +413,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/print-out-ict-request/{code}','IctDetailController@printout_ictrequest');
     Route::get('/report-ict-detail-excel-tab-sedang-dikerjakan/{code}','IctDetailController@cetak_excel_sedang_dikerjakan');
 
-    //report atasan requestor
-    Route::get('/report-ict-excel-atasan-permohonan','IctController@cetak_excel_atasan_permohonan');
-    Route::get('/report-ict-pdf-atasan-permohonan','IctController@cetak_pdf_atasan_permohonan');
-    Route::get('/report-ict-excel-atasan-verifikasi','IctController@cetak_excel_atasan_verifikasi');
-    Route::get('/report-ict-pdf-atasan-verifikasi','IctController@cetak_pdf_atasan_verifikasi');
-    Route::get('/report-ict-excel-atasan-reject','IctController@cetak_excel_atasan_reject');
-    Route::get('/report-ict-pdf-atasan-reject','IctController@cetak_pdf_atasan_reject');
-    Route::get('/report-ict-excel-atasan-assignment-request','IctController@cetak_excel_atasan_assignment_request');
-    Route::get('/report-ict-pdf-atasan-assignment-request','IctController@cetak_pdf_atasan_assignment_request');
-    Route::get('/report-ict-excel-atasan-sedang-dikerjakan','IctController@cetak_excel_atasan_sedang_dikerjakan');
-    Route::get('/report-ict-pdf-atasan-sedang-dikerjakan','IctController@cetak_pdf_atasan_sedang_dikerjakan');
-    Route::get('/report-ict-excel-atasan-sudah-dikerjakan','IctController@cetak_excel_atasan_sudah_dikerjakan');
-    Route::get('/report-ict-pdf-atasan-sudah-dikerjakan','IctController@cetak_pdf_atasan_sudah_dikerjakan');
-    Route::get('/report-ict-atasan-excel-selesai','IctController@cetak_excel_atasan_selesai');
-    Route::get('/report-ict-atasan-pdf-selesai','IctController@cetak_pdf_atasan_selesai');
-
-    //report reviewer
-    Route::get('/report-ict-excel-reviewer-permohonan','IctController@cetak_excel_reviewer_permohonan');
-    Route::get('/report-ict-pdf-reviewer-permohonan','IctController@cetak_pdf_reviewer_permohonan');
-    Route::get('/report-ict-excel-reviewer-atasan-divisi','IctController@cetak_excel_reviewer_atasan_divisi');
-    Route::get('/report-ict-pdf-reviewer-atasan-divisi','IctController@cetak_pdf_reviewer_atasan_divisi');
-    Route::get('/report-ict-excel-reviewer-ict-manager','IctController@cetak_excel_reviewer_ict_manager');
-    Route::get('/report-ict-pdf-reviewer-ict-manager','IctController@cetak_pdf_reviewer_ict_manager');
-    Route::get('/report-ict-excel-reviewer-reject','IctController@cetak_excel_reviewer_reject');
-    Route::get('/report-ict-pdf-reviewer-reject','IctController@cetak_pdf_reviewer_reject');
-    Route::get('/report-ict-excel-reviewer-assignment-request','IctController@cetak_excel_reviewer_assignment_request');
-    Route::get('/report-ict-pdf-reviewer-assignment-request','IctController@cetak_pdf_reviewer_assignment_request');
-    Route::get('/report-ict-excel-reviewer-sedang-dikerjakan','IctController@cetak_excel_reviewer_sedang_dikerjakan');
-    Route::get('/report-ict-pdf-reviewer-sedang-dikerjakan','IctController@cetak_pdf_reviewer_sedang_dikerjakan');
-    Route::get('/report-ict-excel-reviewer-sudah-dikerjakan','IctController@cetak_excel_reviewer_sudah_dikerjakan');
-    Route::get('/report-ict-pdf-reviewer-sudah-dikerjakan','IctController@cetak_pdf_reviewer_sudah_dikerjakan');
-    Route::get('/report-ict-excel-reviewer-selesai','IctController@cetak_excel_reviewer_selesai');
-    Route::get('/report-ict-pdf-reviewer-selesai','IctController@cetak_pdf_reviewer_selesai');
-
-    //report manager
-    Route::get('/report-ict-excel-manager-permohonan','IctController@cetak_excel_manager_permohonan');
-    Route::get('/report-ict-pdf-manager-permohonan','IctController@cetak_pdf_manager_permohonan');
-    Route::get('/report-ict-excel-manager-verifikasi','IctController@cetak_excel_manager_verifikasi');
-    Route::get('/report-ict-pdf-manager-verifikasi','IctController@cetak_pdf_manager_verifikasi');
-    Route::get('/report-ict-excel-manager-reject','IctController@cetak_excel_manager_reject');
-    Route::get('/report-ict-pdf-manager-reject','IctController@cetak_pdf_manager_reject');
-    Route::get('/report-ict-excel-manager-assignment-request','IctController@cetak_excel_manager_assignment_request');
-    Route::get('/report-ict-pdf-manager-assignment-request','IctController@cetak_pdf_manager_assignment_request');
-    Route::get('/report-ict-excel-manager-sedang-dikerjakan','IctController@cetak_excel_manager_sedang_dikerjakan');
-    Route::get('/report-ict-pdf-manager-sedang-dikerjakan','IctController@cetak_pdf_manager_sedang_dikerjakan');
-    Route::get('/report-ict-excel-manager-sudah-dikerjakan','IctController@cetak_excel_manager_sudah_dikerjakan');
-    Route::get('/report-ict-pdf-manager-sudah-dikerjakan','IctController@cetak_pdf_manager_sudah_dikerjakan');
-    Route::get('/report-ict-excel-manager-selesai','IctController@cetak_excel_manager_selesai');
-    Route::get('/report-ict-pdf-manager-selesai','IctController@cetak_pdf_manager_selesai');
-
-    //report status change request
-    Route::get('/report-ict-excel-personnel-assignment-request','IctController@cetak_excel_personnel_assignment_request');
-    Route::get('/report-ict-pdf-personnel-assignment-request','IctController@cetak_pdf_personnel_assignment_request');
-    Route::get('/report-ict-excel-personnel-reject','IctController@cetak_excel_personnel_reject');
-    Route::get('/report-ict-pdf-personnel-reject','IctController@cetak_pdf_personnel_reject');
-    Route::get('/report-ict-excel-personnel-sedang-dikerjakan','IctController@cetak_excel_personnel_sedang_dikerjakan');
-    Route::get('/report-ict-pdf-personnel-sedang-dikerjakan','IctController@cetak_pdf_personnel_sedang_dikerjakan');
-    Route::get('/report-ict-excel-personnel-sudah-dikerjakan','IctController@cetak_excel_personnel_sudah_dikerjakan');
-    Route::get('/report-ict-pdf-personnel-sudah-dikerjakan','IctController@cetak_pdf_personnel_sudah_dikerjakan');
-    Route::get('/report-ict-excel-personnel-selesai','IctController@cetak_excel_personnel_selesai');
-    Route::get('/report-ict-pdf-personnel-selesai','IctController@cetak_pdf_personnel_selesai'); 
+ 
 });
     Route::get('/req-per-status-excel','LaporanController@cetak_excel_per_status');
     Route::get('/req-per-status-pdf','LaporanController@cetak_pdf_per_status');

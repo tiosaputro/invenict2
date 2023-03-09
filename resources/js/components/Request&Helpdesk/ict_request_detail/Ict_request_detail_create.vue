@@ -182,7 +182,7 @@ export default {
     };
   },
   mounted(){
-      this.cekUser();
+      this.getNoreq();
   },
   methods: {
     change(){
@@ -347,18 +347,6 @@ export default {
       }
      }
     },
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
-           this.getNoreq();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
       this.detail = response.data;
@@ -374,6 +362,9 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
+          if(error.response.status == 403){
+            this.$route.push('/access');
+          }
         });
     },
     getType(){

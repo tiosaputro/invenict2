@@ -33,52 +33,32 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getRole();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Role Menu") || _this.checkto.includes("/mng-role")) {
-          _this.getRole();
-          _this.getMenus();
-          _this.getMenu();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getMenus: function getMenus() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/get-menu', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.menus = response.data;
+        _this.menus = response.data;
       });
     },
     getRole: function getRole() {
-      var _this3 = this;
+      var _this2 = this;
       this.axios.get('/api/edit-role/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.role = response.data;
+        _this2.role = response.data;
+        _this2.getMenus();
+        _this2.getMenu();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -86,44 +66,47 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this3.$router.push('/login');
+            return _this2.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this2.$router.push('/access');
         }
       });
     },
     getMenu: function getMenu() {
-      var _this4 = this;
+      var _this3 = this;
       this.axios.get('/api/edit-role-menu/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.menuss.menu = response.data;
+        _this3.menuss.menu = response.data;
       });
     },
     UpdateRole: function UpdateRole() {
-      var _this5 = this;
+      var _this4 = this;
       this.errors = [];
       this.axios.put('/api/update-role/' + this.$route.params.code, this.role, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this5.axios.put('/api/update-role-menu/' + _this5.$route.params.code, _this5.menuss, {
+        _this4.axios.put('/api/update-role-menu/' + _this4.$route.params.code, _this4.menuss, {
           headers: {
-            'Authorization': 'Bearer ' + _this5.token
+            'Authorization': 'Bearer ' + _this4.token
           }
         });
-        _this5.$toast.add({
+        _this4.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Update"
         });
         setTimeout(function () {
-          return _this5.$router.push('/mng-role');
+          return _this4.$router.push('/mng-role');
         }, 1000);
       })["catch"](function (error) {
-        _this5.errors = error.response.data.errors;
+        _this4.errors = error.response.data.errors;
       });
     }
   }

@@ -46,41 +46,21 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getModul();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Menu") || _this.checkto.includes("/mng-menu")) {
-          _this.getModul();
-          _this.getParent();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getModul: function getModul() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('api/get-module', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.modul = response.data;
+        _this.modul = response.data;
+        _this.getParent();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -88,23 +68,26 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     getParent: function getParent() {
-      var _this3 = this;
+      var _this2 = this;
       this.axios.get('api/get-parent', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.parent = response.data;
+        _this2.parent = response.data;
       });
     },
     CreateMenu: function CreateMenu() {
-      var _this4 = this;
+      var _this3 = this;
       this.errors = [];
       var data = new FormData();
       data.append("mod_id", this.mod_id);
@@ -121,16 +104,16 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this4.$toast.add({
+        _this3.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Create"
         });
         setTimeout(function () {
-          return _this4.$router.push('/mng-menu');
+          return _this3.$router.push('/mng-menu');
         }, 1000);
       })["catch"](function (error) {
-        _this4.errors = error.response.data.errors;
+        _this3.errors = error.response.data.errors;
       });
     }
   }

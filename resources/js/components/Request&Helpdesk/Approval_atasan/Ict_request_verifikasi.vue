@@ -135,7 +135,7 @@ export default {
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Atasan Requestor Divisi") || this.checkto.includes("/ict-request-divisi1")){ 
+        if(this.checkname.includes("Atasan Requestor Divisi") || this.checkto.includes("/ict-request-higher-level")){ 
           this.getIctDetail();
           this.getNoreq();
         }
@@ -159,7 +159,7 @@ export default {
             detail: "Successfully approved this request",
           });
           this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
-          setTimeout( () =>  this.$router.push('/ict-request-divisi1'),1000);
+          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),1000);
         },
         reject: () => {},
       });
@@ -174,7 +174,7 @@ export default {
                 summary: "Success Message",
                 detail: "Successfully rejected this request",
               });
-              setTimeout( () => this.$router.push('/ict-request-divisi1'),1000);
+              setTimeout( () => this.$router.push('/ict-request-higher-level'),1000);
             });
           }
       },

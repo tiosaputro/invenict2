@@ -201,18 +201,6 @@ export default {
       this.cekUser();
   },
   methods: {
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-          this.getIct();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
       getIct(){
           this.axios.get('/api/edit-ict/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
             this.mutasi = response.data.ict;
@@ -220,16 +208,19 @@ export default {
             this.type = response.data.ref;
             this.bu = response.data.bisnis;
             this.level = response.data.prio;
-        }).catch(error=>{
-          if (error.response.status == 401){
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
+          }).catch(error=>{
+            if ((error.response.status == 401)){
+              this.$toast.add({
+                severity:'error', summary: 'Error', detail:'Session login expired'
+              });
+              localStorage.clear();
+              localStorage.setItem("Expired","true")
+              setTimeout( () => this.$router.push('/login'),2000);
+            }
+            if(error.response.status == 403){
+              this.$router.push('/access');
+            }
           });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-        });
       },
     UpdateIct() {
       this.loading = true;

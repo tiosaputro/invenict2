@@ -182,28 +182,28 @@ export default {
     };
   },
   mounted(){
-      this.cekUser();
+      this.getDetailFormRequest();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){ 
-          this.getSupplier();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
-    getSupplier(){
+    getDetailFormRequest(){
       this.axios.get('api/rsrcsuppo',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.suplier = response.data.supp;
         this.methode_pay = response.data.metode;
         this.code_money = response.data.uang;
         this.petugas = response.data.user;
-      });
+      }).catch(error=>{
+          if (error.response.status == 401){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
+        });
     },
     CreatePurch() {
       this.submitted=true;

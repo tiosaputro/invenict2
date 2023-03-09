@@ -7,7 +7,10 @@ use Illuminate\Validation\Rule;
 use App\Model\PembelianDetail;
 use App\Model\Pembelian;
 use App\Model\Master;
+use App\Mng_User;
 Use App\Model\Lookup_Refs;
+use App\Model\Supplier;
+use App\Helpers\ResponseFormatter;
 use App\Exports\PembelianDetailExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
@@ -17,6 +20,20 @@ use Illuminate\Http\Request;
 
 class PembelianDetailController extends Controller
 {
+    protected $to;
+    protected $userMenu;
+    public function __construct(){
+        $this->middleware('auth:sanctum');
+        $this->to = "/pembelian-peripheral";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
+    }
     Public function index($code)
     {
         $dtl = DB::table('purchase_dtl as pd')
@@ -37,6 +54,7 @@ class PembelianDetailController extends Controller
         ->get();
             return response()->json($dtl);
     }
+    
     Public function getSuppDate($code)
     {
         $dtl = DB::table('purchase_mst as pm')
@@ -60,26 +78,20 @@ class PembelianDetailController extends Controller
             }),
             ],
         ],$message);
-        $date = Carbon::now();
-        $newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $dtl = PembelianDetail::Create([
+        $save = PembelianDetail::Create([
             'purchase_id'=>$code,
             'invent_code'=>$request->invent_code,
             'dpurchase_qty'=>$request->qty,
             'dpurchase_sat'=>$request->satuan,
             'dpurchase_prc_sat'=>$request->hrgsatuan,
             'dpurchase_prc'=>$request->pricetotal,
-            // 'dpurchase_stat'=>'',
             'dpurchase_remark'=>$request->ket,
-            'creation_date'=> $newCreation,
+            'creation_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by '=> Auth::user()->usr_name,
             'program_name'=> "PembelianDetail_Save"
         ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Created Successfully'
-        ]);
+        return ResponseFormatter::success($save,'Successfully Created Data');
     }
     Public function edit($purchase)
     {
@@ -98,32 +110,25 @@ class PembelianDetailController extends Controller
     }
     Public function update(Request $request,$code,$purchase)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $dtl = PembelianDetail::find($purchase);
+       $dtl = PembelianDetail::find($purchase);
 
         $dtl->dpurchase_qty = $request->dpurchase_qty;
         $dtl->dpurchase_sat = $request->dpurchase_sat;
         $dtl->dpurchase_prc_sat = $request->dpurchase_prc_sat;
         $dtl->dpurchase_prc = $request->dpurchase_prc;
-        // $dtl->dpurchase_stat = $request->dpurchase_stat;
         $dtl->dpurchase_remark = $request->dpurchase_remark;
         $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->last_update_date = $newUpdate;
+        $dtl->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $dtl->program_name = "PembelianDetail_Update";
         $dtl->save();
            
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
-        return response()->json($msg);
+        return ResponseFormatter::success($dtl,'Successfully Updated Data');
     }
     Public function delete($code,$dpurchase_id)
     {
         $dtl = PembelianDetail::Where('dpurchase_id',$dpurchase_id)->first();
           $dtl->delete();
-           return response()->json('Deleted Successfully');
+          return ResponseFormatter::success($dtl,'Successfully Deleted Data');
     }
     public function getValuta($code)
     {

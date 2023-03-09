@@ -9,24 +9,28 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Model\Mng_usr_roles;
-use App\Model\Mng_role_menu;
+use App\Mng_User;
 use App\Helpers\ResponseFormatter;
 
 class MutasiController extends Controller
 {
     protected $to;
+    protected $userMenu;
     public function __construct(){
+        $this->middleware('auth:sanctum');
         $this->to = "/mutasi-peripheral";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
     }
     Public Function index()
     {
-        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
-
-        if($aksesmenu->contains($this->to)){
-            $mutasi = DB::table('invent_mutasi as im')
+        $mutasi = DB::table('invent_mutasi as im')
             ->select(DB::raw("(imm.invent_desc ||'-'|| lrs.lookup_desc ||'-'|| imm.invent_type ) as invent_desc"),'im.imutasi_pengguna','im.imutasi_tgl_dari','im.imutasi_tgl_sd',
             'im.imutasi_lokasi','id.invent_code_dtl','im.imutasi_id','id.invent_code',
             'id.invent_sn','dr.div_name as imutasi_divisi',
@@ -41,11 +45,7 @@ class MutasiController extends Controller
             ->leftjoin('vcompany_refs as vr','im.imutasi_bu','vr.company_code')
             ->orderBy('im.creation_date','DESC')
             ->get();
-            return response()->json($mutasi);
-        }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-        }
+        return response()->json($mutasi);
     }
     Public function save(Request $request)
     {
@@ -72,29 +72,20 @@ class MutasiController extends Controller
     }
     Public function edit($code)
     {
-        $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->select('controller')->whereIn('menu_id',$menu)->pluck('controller');
-
-        if($aksesmenu->contains($this->to)){
-            $mut = DB::table('invent_mutasi as im')
-                ->Select(DB::raw("(imm.invent_desc || '-' || lr.lookup_desc || '-' ||  imm.invent_type) as invent_code"),'id.invent_sn',
+        $mut = DB::table('invent_mutasi as im')
+            ->Select(DB::raw("(imm.invent_desc || '-' || lr.lookup_desc || '-' ||  imm.invent_type) as invent_code"),'id.invent_sn',
                 'im.imutasi_lokasi','im.imutasi_pengguna','im.imutasi_keterangan','id.invent_photo','im.imutasi_divisi','im.imutasi_bu',
-                        DB::raw("TO_CHAR(im.imutasi_tgl_dari,' dd Mon YYYY') as imutasi_tgl_dari"),
-                        DB::raw("TO_CHAR(im.imutasi_tgl_sd,' dd Mon YYYY') as imutasi_tgl_sd"))
-                ->leftjoin('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
-                ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
-                ->leftJoin('lookup_refs as lr',function ($join) {
-                    $join->on('imm.invent_brand','lr.lookup_code')
-                        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+                    DB::raw("TO_CHAR(im.imutasi_tgl_dari,' dd Mon YYYY') as imutasi_tgl_dari"),
+                    DB::raw("TO_CHAR(im.imutasi_tgl_sd,' dd Mon YYYY') as imutasi_tgl_sd"))
+            ->leftjoin('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
+            ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
+            ->leftJoin('lookup_refs as lr',function ($join) {
+                $join->on('imm.invent_brand','lr.lookup_code')
+                     ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
                 })
-                ->Where('im.imutasi_id',$code)
-                ->first();
-                return response()->json($mut);
-        }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-        }
+            ->Where('im.imutasi_id',$code)
+            ->first();
+        return response()->json($mut);
     }
     Public function update(Request $request, $code)
     {

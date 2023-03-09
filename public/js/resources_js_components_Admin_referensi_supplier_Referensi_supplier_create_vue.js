@@ -31,30 +31,9 @@ __webpack_require__.r(__webpack_exports__);
       checkto: []
     };
   },
-  mounted: function mounted() {
-    this.cekUser();
-  },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Suplier") || _this.checkto.includes("/referensi-supplier")) {} else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     CreateSupplier: function CreateSupplier() {
-      var _this2 = this;
+      var _this = this;
       this.errors = [];
       var data = new FormData();
       data.append("nama", this.nama);
@@ -75,16 +54,31 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function () {
         setTimeout(function () {
-          return _this2.$router.push('/referensi-supplier');
+          return _this.$router.push('/referensi-supplier');
         }, 1000);
-        _this2.$toast.add({
+        _this.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Create"
         });
       })["catch"](function (error) {
         if (error.response.status == 422) {
-          _this2.errors = error.response.data.errors;
+          _this.errors = error.response.data.errors;
+        }
+        if (error.response.status == 403) {
+          _this.router.push('/access');
+        }
+        if (error.response.status == 401) {
+          _this.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired", "true");
+          setTimeout(function () {
+            return _this.$router.push('/login');
+          }, 2000);
         }
       });
     }

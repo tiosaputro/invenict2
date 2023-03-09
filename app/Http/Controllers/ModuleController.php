@@ -7,10 +7,25 @@ use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Mng_modules;
+use App\Mng_User;
 use App\Helpers\ResponseFormatter;
 
 class ModuleController extends Controller
 {
+    protected $to;
+    protected $userMenu;
+    public function __construct(){
+        $this->middleware('auth:sanctum');
+        $this->to = "/mng-module";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
+    }
     public function index()
     {
         $module = DB::table('v_mng_modules')->get();

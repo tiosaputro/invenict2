@@ -115,7 +115,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-ref/' +lookup_code + "/" + lookup_type, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{  
+          this.axios.delete('api/delete-brand/' +lookup_code + "/" + lookup_type, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{  
             this.getRef();
           });
         },

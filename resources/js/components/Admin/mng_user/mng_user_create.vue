@@ -255,28 +255,28 @@ export default {
     };
   },
   created(){
-      this.cekUser();
+      this.detailRequest();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("User") || this.checkto.includes("/mng-user")){ 
-          this.getRoles();
-          this.getDivisi();
-          this.getBisnis();
-          this.getLocation();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
-    getBisnis(){
-      this.axios.get('api/get-bisnis', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.bu = response.data;
-        });
+    detailRequest(){
+      this.axios.get('api/detail-add-request-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.bu = response.data.bisnis;
+        this.divisi = response.data.divisi;
+        this.roles = response.data.roles;
+        this.loc = response.data.location
+      }).catch(error=>{
+        if ((error.response.status == 401)){
+            this.$toast.add({
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem("Expired","true")
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if (error.response.status == 403){
+            this.$router.push('/access');
+          }
+         });
     },
     fileImage(event) {
       this.foto = event.target.files[0];
@@ -292,30 +292,6 @@ export default {
         vm.image = e.target.result;
       };
       reader.readAsDataURL(foto);
-    },
-    getDivisi(){
-      this.axios.get('api/get-divisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.divisi = response.data;
-      });
-    },
-    getLocation(){
-      this.axios.get('api/ref-loc', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.loc = response.data;
-      });
-    },
-    getRoles(){
-     this.axios.get('api/get-role', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-         this.roles = response.data;
-      }).catch(error=>{
-        if ((error.response.status == 401)){
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-         });
     },
     CreateUser() {
         this.submitted = true;

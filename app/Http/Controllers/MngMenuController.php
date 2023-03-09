@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Model\Mng_menu;
+use App\Mng_User;
 use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -12,38 +13,32 @@ use App\Helpers\ResponseFormatter;
 
 class MngMenuController extends Controller
 {
-    protected $menu;
+    protected $userMenu;
+    protected $to;
     public function __construct(){
-        $this->menu = "/mng-menu";
+        $this->middleware('auth:sanctum');
+        $this->to = "/mng-menu";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
     }
     function index()
     {
-        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
-        if($aksesmenu->contains($this->menu)){
-            $data = Mng_menu::getData();
-            return response()->json($data);
-        }
-        else{
-            return response(["message"=>"Cannot Access"],403);
-        }
+         $data = Mng_menu::getData();
+        return response()->json($data);
+ 
     }
-    Public function getParent()
+    function getParent()
     {
         $data = Mng_menu::getParent();
         return response()->json($data);
     }
-    Public function getMenu()
-    {
-        $menu = DB::table('mng_menus as mm')
-        ->rightjoin('mng_menus as m','mm.menu_id','m.parent_id')
-        ->Select('m.menu_id as code', DB::raw("(mm.menu_name ||'-'|| m.menu_name) as name"))
-        ->orderBy('mm.menu_name')
-        ->get();
-        return response()->json($menu);
-    }
-    Public function save(Request $request)
+    function save(Request $request)
     {
         $message = [
             'mod_id.required'=>'Module Name Belum Diisi',
@@ -78,12 +73,12 @@ class MngMenuController extends Controller
         ]);
         return ResponseFormatter::success($createMenu,'Successfully Created data menu');
     }
-    Public function edit($code)
+    function edit($code)
     {
-        $module = Mng_menu::find($code);
-        return response()->json($module);
+        $menu = Mng_menu::find($code);
+        return response()->json($menu);
     }
-    Public function update(Request $request, $code)
+    function update(Request $request, $code)
     {
         $message = [
             'mod_id.required'=>'Module Name Belum Diisi',
@@ -119,10 +114,9 @@ class MngMenuController extends Controller
         
         return ResponseFormatter::success($menu,'Successfully Updated data menu');
     }
-    Public function delete($menu_id)
+    function delete($menu_id)
     {
-        $menu = Mng_menu::find($menu_id);
-        $menu->delete();
+        $menu = Mng_menu::find($menu_id)->delete();
         
         return ResponseFormatter::success($menu,'Successfully Deleted data menu');
 

@@ -3,30 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Model\Location;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
-use App\Model\Mng_usr_roles;
-use App\Model\Mng_role_menu;
+use App\Mng_User;
 
 class LocationController extends Controller
 {
-    protected $location;
+    protected $to;
+    protected $userMenu;
     public function __construct(){
-        $this->location = "/referensi-location";
+        $this->middleware('auth:sanctum');
+        $this->to = "/referensi-location";
+        $this->middleware(function ($request, $next) {
+          $this->userMenu = Mng_User::menu();
+            if($this->userMenu->contains($this->to)){    
+                return $next($request);
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
     }
     function index(){
-        $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
-        $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
-        $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
-        if($aksesmenu->contains($this->location)){
             $loc = Location::Select('loc_code','loc_desc','loc_email')->orderBy('loc_desc','ASC')->get();
             return json_encode($loc);
-        }else{
-            return response(["message"=>"Cannot Access"],403);
-        }
     }
     function save(Request $request){
         $message = [
@@ -77,9 +78,5 @@ class LocationController extends Controller
     function delete($loc_code){
         $loc = Location::find($loc_code)->delete();
         return ResponseFormatter::success($loc,'Successfully Deleted Location');
-    }
-    function getLocation(){
-        $loc = Location::select('loc_code as code','loc_desc as name')->orderBy('loc_desc','ASC')->get();
-        return json_encode($loc);
     }
 }

@@ -49,6 +49,9 @@ __webpack_require__.r(__webpack_exports__);
             return _this.$router.push('/login');
           }, 2000);
         }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
+        }
       });
     },
     UpdatePayment: function UpdatePayment() {

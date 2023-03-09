@@ -56,7 +56,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
-        if (_this.checkname.includes("Approval Atasan") || _this.checkto.includes("/ict-request-divisi1")) {
+        if (_this.checkname.includes("Approval Atasan") || _this.checkto.includes("/ict-request-higher-level")) {
           _this.getIctDetail();
           _this.getNoreq();
         } else {

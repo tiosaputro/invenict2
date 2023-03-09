@@ -23,27 +23,29 @@ __webpack_require__.r(__webpack_exports__);
       checkto: []
     };
   },
-  created: function created() {
-    this.cekUser();
-  },
   methods: {
-    cekUser: function cekUser() {
+    CreateLocation: function CreateLocation() {
       var _this = this;
-      this.axios.get('api/cek-user', {
+      this.errors = [];
+      var data = new FormData();
+      data.append("loc_code", this.loc_code);
+      data.append("loc_desc", this.loc_desc);
+      data.append("loc_email", this.loc_email);
+      this.axios.post('api/add-loc', data, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
+      }).then(function (resoonse) {
+        _this.$toast.add({
+          severity: "success",
+          summary: "Success Message",
+          detail: "Success Create"
         });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Location") || _this.checkto.includes("/referensi-location")) {} else {
-          _this.$router.push('/access');
-        }
+        setTimeout(function () {
+          return _this.$router.push('/referensi-location');
+        }, 1000);
       })["catch"](function (error) {
+        _this.errors = error.response.data.errors;
         if (error.response.status == 401) {
           _this.$toast.add({
             severity: 'error',
@@ -56,30 +58,9 @@ __webpack_require__.r(__webpack_exports__);
             return _this.$router.push('/login');
           }, 2000);
         }
-      });
-    },
-    CreateLocation: function CreateLocation() {
-      var _this2 = this;
-      this.errors = [];
-      var data = new FormData();
-      data.append("loc_code", this.loc_code);
-      data.append("loc_desc", this.loc_desc);
-      data.append("loc_email", this.loc_email);
-      this.axios.post('api/add-loc', data, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
-      }).then(function (resoonse) {
-        _this2.$toast.add({
-          severity: "success",
-          summary: "Success Message",
-          detail: "Success Create"
-        });
-        setTimeout(function () {
-          return _this2.$router.push('/referensi-location');
-        }, 1000);
-      })["catch"](function (error) {
-        _this2.errors = error.response.data.errors;
       });
     }
   }

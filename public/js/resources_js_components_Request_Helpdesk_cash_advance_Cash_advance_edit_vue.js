@@ -28,37 +28,17 @@ __webpack_require__.r(__webpack_exports__);
     this.getCash();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Cash Advance") || _this.checkto.includes("/cash-advance")) {
-          _this.getCash();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getCash: function getCash() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/edit-cash/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.ca = response.data;
+        _this.ca = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -66,13 +46,16 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem("Expired", "true");
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     UpdateCash: function UpdateCash() {
-      var _this3 = this;
+      var _this2 = this;
       this.errors = [];
       this.axios.put('/api/update-cash/' + this.$route.params.code, this.ca, {
         headers: {
@@ -80,15 +63,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         setTimeout(function () {
-          return _this3.$router.push('/cash-advance');
+          return _this2.$router.push('/cash-advance');
         }, 1000);
-        _this3.$toast.add({
+        _this2.$toast.add({
           severity: "success",
           summary: "Success Message",
           detail: "Success Update"
         });
       })["catch"](function (error) {
-        _this3.errors = error.response.data.errors;
+        _this2.errors = error.response.data.errors;
       });
     }
   }

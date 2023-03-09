@@ -28,47 +28,27 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getDetail();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Pembelian Peripheral") || _this.checkto.includes("/pembelian-peripheral")) {
-          _this.getDetail();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getTotal: function getTotal() {
       this.detail.dpurchase_prc = this.detail.dpurchase_qty * this.detail.dpurchase_prc_sat;
     },
     getDetail: function getDetail() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/edit-detail-pem/' + this.$route.params.purchase, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.detail = response.data.dtl;
-        _this2.valuta = response.data.valuta;
-        _this2.sat = response.data.ref;
-        _this2.kodeperi = response.data.mas;
-        _this2.getValutaCode();
+        _this.detail = response.data.dtl;
+        _this.valuta = response.data.valuta;
+        _this.sat = response.data.ref;
+        _this.kodeperi = response.data.mas;
+        _this.getValutaCode();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -76,8 +56,11 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
@@ -96,7 +79,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     UpdateDetail: function UpdateDetail() {
-      var _this3 = this;
+      var _this2 = this;
       this.submitted = true;
       if (this.detail.dpurchase_qty != null && this.detail.dpurchase_sat != null && this.detail.dpurchase_prc_sat != null && this.detail.dpurchase_prc != null && this.detail.dpurchase_remark != null && this.detail.invent_code != null) {
         this.axios.put('/api/update-detail-pem/' + this.$route.params.code + '/' + this.$route.params.purchase, this.detail, {
@@ -105,16 +88,16 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (response) {
           setTimeout(function () {
-            return _this3.$router.push('/pembelian-peripheral-detail/' + _this3.$route.params.code);
+            return _this2.$router.push('/pembelian-peripheral-detail/' + _this2.$route.params.code);
           }, 1000);
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Update"
           });
         })["catch"](function (error) {
-          _this3.errors = error.response.data.errors;
-          _this3.submitted = false;
+          _this2.errors = error.response.data.errors;
+          _this2.submitted = false;
         });
       }
     }
