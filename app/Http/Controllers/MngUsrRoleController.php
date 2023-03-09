@@ -7,6 +7,7 @@ use App\Model\Mng_usr_roles;
 use App\Model\Mng_role_menu;
 use App\Mng_User;
 use App\Model\Mng_roles;
+use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use carbon\Carbon;
@@ -24,7 +25,7 @@ class MngUsrRoleController extends Controller
                 ->orderBy('menu_display','ASC')
                 ->get();
         $tree = $this->parseTree($query);
-        return response()->Json($tree);
+        return ResponseFormatter::success($tree,'Successfully Get Data Menu');
     }
      
     public function parseTree($tree, $root = 0) {
@@ -67,7 +68,7 @@ class MngUsrRoleController extends Controller
         $roles = Mng_usr_roles::where('usr_id',$code)->first();
         $createday = $roles->creation_date;
         $created_by = $roles->created_by;
-        $rr = Mng_usr_roles::where('usr_id',$code)->delete();
+        Mng_usr_roles::where('usr_id',$code)->delete();
         foreach ($role as $r){
             $roless = Mng_usr_roles::create([
                 'usr_id' => $code,

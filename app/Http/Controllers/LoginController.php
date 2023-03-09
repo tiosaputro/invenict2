@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mng_User;;
+use App\Mng_User;
+use App\Helpers\ResponseFormatter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\ldap_connection;
@@ -113,10 +114,7 @@ class LoginController extends Controller
     public function logout()
     {
         $user = Auth::user()->tokens()->where('id', Auth::user()->currentAccessToken()->id)->delete();
-        return json_encode([
-            'success'    => true,
-            'message'    => $user,
-        ], 200);
+        return ResponseFormatter::success($user,'Successfully Logout');
     }
     public function show()
     {

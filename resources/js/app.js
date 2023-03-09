@@ -70,7 +70,6 @@ import ToggleButton from 'primevue/togglebutton';
 import TreeSelect from 'primevue/treeselect';
 import VueAxios from 'vue-axios';
 import VueLoading from 'vue-loading-overlay';
-import VueCookies from 'vue-cookies';
 
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
@@ -87,7 +86,6 @@ app.use(ToastService);
 app.use(VueAxios,axios);
 app.use(router);
 app.use(VueLoading);
-app.use(VueCookies);
 app.config.devtools = false;
 app.config.debug = false;
 app.config.silent = true;

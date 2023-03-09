@@ -11,8 +11,6 @@
                     <div class="text-center mb-5">
                         <div class="text-900 text-3xl font-medium mb-3">Welcome to</div>
                         <span class="text-600 font-medium">System ICT Helpdesk 👋</span>
-                        <Message severity="warn" v-if="this.error">Can't login. Please check your connection</Message>
-                        <Message severity="warn" v-if="this.errorr">Can't login. Please check your username and password</Message>
                     </div>
                         <div class="w-full md:w-10 mx-auto">
                           <label for="email1" class="block text-900 text-xl font-medium mb-2">Username</label>
@@ -106,13 +104,6 @@ export default {
                 detail: "Welcome " + response.data.usr_name + " 👋",
               });
               localStorage.clear();
-              this.$cookies.set("loggedIn", "true","1d");
-              this.$cookies.set("token", response.data.token,"1d");
-              this.$cookies.set("usr_loc", response.data.usr_loc,"1d");
-              this.$cookies.set('active',0,"1d");
-              this.$cookies.set('active1',0,"1d");
-              this.$cookies.set('active2',0,"1d");
-              this.$cookies.set('active3',0,"1d");
               localStorage.setItem("loggedIn", "true");
               localStorage.setItem("token", response.data.token);
               localStorage.setItem("usr_loc", response.data.usr_loc);
@@ -120,7 +111,6 @@ export default {
               localStorage.setItem('active1',0);
               localStorage.setItem('active2',0);
               localStorage.setItem('active3',0);
-              console.log(this.$cookies.get('token'));
               setTimeout( () => this.$router.push('/dashboard'), 1000);
             }).catch(error=> {
                 this.submitted = false;

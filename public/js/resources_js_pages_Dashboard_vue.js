@@ -86,8 +86,86 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.count = response.data;
+        _this2.count = response.data.data;
         _this2.loader.hide();
+      });
+    },
+    //dashboard approval user
+    getData1: function getData1() {
+      var _this3 = this;
+      this.axios.get('api/getCountDivisi1', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this3.count1 = response.data.data;
+        _this3.loader.hide();
+      });
+    },
+    getDataBentu: function getDataBentu() {
+      var _this4 = this;
+      this.axios.get('api/getCountReviewerBentu', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this4.countBentu = response.data;
+        _this4.loader.hide();
+      });
+    },
+    getDataKurau: function getDataKurau() {
+      var _this5 = this;
+      this.axios.get('api/getCountReviewerKurau', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this5.countKurau = response.data;
+        _this5.loader.hide();
+      });
+    },
+    getDataJakarta: function getDataJakarta() {
+      var _this6 = this;
+      this.axios.get('api/getCountReviewerJakarta', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this6.countJakarta = response.data;
+        _this6.loader.hide();
+      });
+    },
+    getData3: function getData3() {
+      var _this7 = this;
+      this.axios.get('api/getCountDivisi3', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this7.count3 = response.data.data;
+        _this7.loader.hide();
+      });
+    },
+    getData4: function getData4() {
+      var _this8 = this;
+      this.axios.get('api/getCountDivisi4', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this8.count4 = response.data.data;
+        _this8.loader.hide();
+      });
+    },
+    getData5: function getData5() {
+      var _this9 = this;
+      this.axios.get('api/getCountAdmin', {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this9.count5 = response.data.data;
+        _this9.loader.hide();
       });
     },
     blmDiverifikasiAdmin: function blmDiverifikasiAdmin() {
@@ -150,18 +228,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push('/ict-request-desc');
       localStorage.setItem('desc', 22);
     },
-    //dashboard approval user
-    getData1: function getData1() {
-      var _this3 = this;
-      this.axios.get('api/getCountDivisi1', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.count1 = response.data;
-        _this3.loader.hide();
-      });
-    },
     sdgDireview1: function sdgDireview1() {
       this.$router.push('/ict-request-desc');
       localStorage.setItem('desc', 41);
@@ -197,39 +263,6 @@ __webpack_require__.r(__webpack_exports__);
     totalRequest1: function totalRequest1() {
       this.$router.push('/ict-request-desc');
       localStorage.setItem('desc', 38);
-    },
-    getDataBentu: function getDataBentu() {
-      var _this4 = this;
-      this.axios.get('api/getCountReviewerBentu', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.countBentu = response.data;
-        _this4.loader.hide();
-      });
-    },
-    getDataKurau: function getDataKurau() {
-      var _this5 = this;
-      this.axios.get('api/getCountReviewerKurau', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this5.countKurau = response.data;
-        _this5.loader.hide();
-      });
-    },
-    getDataJakarta: function getDataJakarta() {
-      var _this6 = this;
-      this.axios.get('api/getCountReviewerJakarta', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this6.countJakarta = response.data;
-        _this6.loader.hide();
-      });
     },
     atasanDivisi2: function atasanDivisi2() {
       this.$router.push('/ict-request-desc');
@@ -267,17 +300,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push('/ict-request-desc');
       localStorage.setItem('desc', 37);
     },
-    getData3: function getData3() {
-      var _this7 = this;
-      this.axios.get('api/getCountDivisi3', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this7.count3 = response.data;
-        _this7.loader.hide();
-      });
-    },
     penugasanRequest3: function penugasanRequest3() {
       this.$router.push('/ict-request-desc');
       localStorage.setItem('desc', 46);
@@ -297,17 +319,6 @@ __webpack_require__.r(__webpack_exports__);
     sdhSelesai3: function sdhSelesai3() {
       this.$router.push('/ict-request-desc');
       localStorage.setItem('desc', 19);
-    },
-    getData4: function getData4() {
-      var _this8 = this;
-      this.axios.get('api/getCountDivisi4', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this8.count4 = response.data;
-        _this8.loader.hide();
-      });
     },
     sdgDireview4: function sdgDireview4() {
       this.$router.push('/ict-request-desc');
@@ -344,17 +355,6 @@ __webpack_require__.r(__webpack_exports__);
     totalRequest4: function totalRequest4() {
       this.$router.push('/ict-request-desc');
       localStorage.setItem('desc', 39);
-    },
-    getData5: function getData5() {
-      var _this9 = this;
-      this.axios.get('api/getCountAdmin', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this9.count5 = response.data;
-        _this9.loader.hide();
-      });
     }
   }
 });

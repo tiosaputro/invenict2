@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class DashboardController extends Controller
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'C' AND ireq_mst.created_by = '$usr_name') as sudahselesai"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IS NOT NULL AND ireq_mst.created_by = '$usr_name') as countrequest"))
         ->first();
-        return response()->json($grafik);
+        return ResponseFormatter::success($grafik,'Successfully Get Data Dashboard');
     }
     public function countDivisi1()
     {
@@ -35,7 +36,7 @@ class DashboardController extends Controller
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status = 'C' AND divisi_refs.div_verificator = '$usr_email') as sudahselesai"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst LEFT JOIN divisi_refs ON ireq_mst.ireq_divisi_user = divisi_refs.div_id WHERE ireq_mst.ireq_status IS NOT NULL AND divisi_refs.div_verificator = '$usr_email') as total"))
         ->first();
-        return response()->json($grafik);
+        return ResponseFormatter::success($grafik,'Successfully Get Data Dashboard');
     }
     public function countReviewerJakarta()
     {
@@ -335,7 +336,8 @@ class DashboardController extends Controller
                  DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'D' AND COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1) = '$fullname') as sudahdikerjakan"),
                  DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'C' AND COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1) = '$fullname') as sudahselesai"))
         ->first();
-        return response()->json($grafik);
+        
+        return ResponseFormatter::success($grafik,'Successfully Get Data Dashboard');
     }
     function countDivisi4()
     {  
@@ -350,7 +352,8 @@ class DashboardController extends Controller
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status = 'C') as sudahselesai"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IS NOT NULL) as totalrequest"))
         ->first();
-        return response()->json($grafik);
+        
+        return ResponseFormatter::success($grafik,'Successfully Get Data Dashboard');
     }
     function countAdmin()
     {
@@ -363,7 +366,7 @@ class DashboardController extends Controller
                  DB::raw("(SELECT COUNT(ireqd_id) FROM ireq_dtl WHERE ireq_dtl.ireq_status = 'C') as sudahselesai"),
                  DB::raw("(SELECT COUNT(ireq_id) FROM ireq_mst WHERE ireq_mst.ireq_status IS NOT NULL) as countrequest"))
         ->first();
-        return response()->json($grafik);
+        return ResponseFormatter::success($grafik,'Successfully Get Data Dashboard');
     }
     public function getTahun()
     {
@@ -490,22 +493,22 @@ class DashboardController extends Controller
     public function countPerStatusIct($ictPersonnel)
     {
         $grafik = DB::table('ireq_dtl as id')
-        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
-        ->select(DB::raw("count(id.ireq_id) as jumlah"),'lr.lookup_desc as status')
-        ->where(DB::raw("COALESCE(id.ireq_assigned_to2, id.ireq_assigned_to1)"),$ictPersonnel)
-        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->groupBy('lr.lookup_desc',DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then 2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
-         id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
-         WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
-         WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'NT' Then 9 WHEN 
-         id.ireq_status = 'RT' Then 10 WHEN id.ireq_status = 'T' Then 11 WHEN id.ireq_status = 'D' 
-         Then 12 WHEN id.ireq_status = 'C' Then 13 end "))
-        ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then 2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
-         id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
-         WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
-         WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'NT' Then 9 WHEN 
-         id.ireq_status = 'RT' Then 10 WHEN id.ireq_status = 'T' Then 11 WHEN id.ireq_status = 'D' 
-         Then 12 WHEN id.ireq_status = 'C' Then 13 end "))
+            ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+            ->select(DB::raw("count(id.ireq_id) as jumlah"),'lr.lookup_desc as status')
+            ->where(DB::raw("COALESCE(id.ireq_assigned_to2, id.ireq_assigned_to1)"),$ictPersonnel)
+            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+            ->groupBy('lr.lookup_desc',DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then 2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
+            id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
+            WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
+            WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'NT' Then 9 WHEN 
+            id.ireq_status = 'RT' Then 10 WHEN id.ireq_status = 'T' Then 11 WHEN id.ireq_status = 'D' 
+            Then 12 WHEN id.ireq_status = 'C' Then 13 end "))
+            ->orderBy(DB::raw("CASE WHEN id.ireq_status = 'P' Then 1 WHEN id.ireq_status = 'NA1' Then 2 WHEN id.ireq_status = 'NA2' Then 3 WHEN
+            id.ireq_status = 'A1' Then 4 WHEN id.ireq_status = 'A2' Then 5
+            WHEN id.ireq_status = 'RR' Then 6 WHEN id.ireq_status = 'RA1' Then 7
+            WHEN id.ireq_status = 'RA2' THEN 8 WHEN id.ireq_status = 'NT' Then 9 WHEN 
+            id.ireq_status = 'RT' Then 10 WHEN id.ireq_status = 'T' Then 11 WHEN id.ireq_status = 'D' 
+            Then 12 WHEN id.ireq_status = 'C' Then 13 end "))
         ->get();
         return response()->json($grafik);
     }

@@ -934,9 +934,52 @@ export default {
 		},
       	getData(){
             this.axios.get('/api/getCountUser',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.count = response.data;
+                this.count = response.data.data;
 				this.loader.hide();
             });
+        },
+        //dashboard approval user
+        getData1(){
+            this.axios.get('api/getCountDivisi1',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.count1 = response.data.data;
+				this.loader.hide();
+            });
+        },
+        getDataBentu(){
+            this.axios.get('api/getCountReviewerBentu',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.countBentu = response.data;
+				this.loader.hide();
+            });
+        },
+		getDataKurau(){
+            this.axios.get('api/getCountReviewerKurau',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.countKurau = response.data;
+				this.loader.hide();
+            });
+        },
+		getDataJakarta(){
+            this.axios.get('api/getCountReviewerJakarta',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.countJakarta = response.data;
+				this.loader.hide();
+            });
+        },
+        getData3(){
+            this.axios.get('api/getCountDivisi3',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.count3 = response.data.data;
+				this.loader.hide();
+            });
+        },
+        getData4(){
+            this.axios.get('api/getCountDivisi4',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.count4 = response.data.data;
+				this.loader.hide();
+            });
+        },
+        getData5(){
+          this.axios.get('api/getCountAdmin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+            this.count5 = response.data.data;
+				this.loader.hide();
+          });
         },
         blmDiverifikasiAdmin(){
           this.$router.push('/ict-request-desc')
@@ -998,13 +1041,6 @@ export default {
           this.$router.push('/ict-request-desc')
           localStorage.setItem('desc',22);
         },
-        //dashboard approval user
-        getData1(){
-            this.axios.get('api/getCountDivisi1',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.count1 = response.data;
-				this.loader.hide();
-            });
-        },
 		sdgDireview1(){
 		  this.$router.push('/ict-request-desc')
           localStorage.setItem('desc',41);
@@ -1041,24 +1077,6 @@ export default {
 		  this.$router.push('/ict-request-desc')
           localStorage.setItem('desc',38);
 		},
-        getDataBentu(){
-            this.axios.get('api/getCountReviewerBentu',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.countBentu = response.data;
-				this.loader.hide();
-            });
-        },
-		getDataKurau(){
-            this.axios.get('api/getCountReviewerKurau',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.countKurau = response.data;
-				this.loader.hide();
-            });
-        },
-		getDataJakarta(){
-            this.axios.get('api/getCountReviewerJakarta',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.countJakarta = response.data;
-				this.loader.hide();
-            });
-        },
 		atasanDivisi2(){
 		  this.$router.push('/ict-request-desc')
           localStorage.setItem('desc',30)
@@ -1095,12 +1113,6 @@ export default {
 		  this.$router.push('/ict-request-desc')
           localStorage.setItem('desc',37)
 		},
-        getData3(){
-            this.axios.get('api/getCountDivisi3',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.count3 = response.data;
-				this.loader.hide();
-            });
-        },
         penugasanRequest3(){
           this.$router.push('/ict-request-desc');
           localStorage.setItem('desc',46)
@@ -1120,12 +1132,6 @@ export default {
         sdhSelesai3(){
           this.$router.push('/ict-request-desc');
           localStorage.setItem('desc',19)
-        },
-        getData4(){
-            this.axios.get('api/getCountDivisi4',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.count4 = response.data;
-				this.loader.hide();
-            });
         },
 		sdgDireview4(){
 		  this.$router.push('/ict-request-desc')
@@ -1163,12 +1169,6 @@ export default {
 		  this.$router.push('/ict-request-desc');
           localStorage.setItem('desc',39)
 		},
-        getData5(){
-          this.axios.get('api/getCountAdmin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.count5 = response.data;
-				this.loader.hide();
-          });
-        },
     }
 }
 </script>

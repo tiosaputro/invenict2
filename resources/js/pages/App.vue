@@ -80,7 +80,7 @@ export default {
             if(this.loggedIn){
                 if(!this.menuUser.length){
                 this.axios.get('/api/menu-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                    this.menuUser = response.data
+                    this.menuUser = response.data.data;
                 });
                 }
             }
