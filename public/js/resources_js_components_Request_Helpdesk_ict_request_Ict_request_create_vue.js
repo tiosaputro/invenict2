@@ -90,12 +90,11 @@ __webpack_require__.r(__webpack_exports__);
             summary: "Success Message",
             detail: "Success Create"
           });
-          _this3.code = response.data.ireq_id;
           setTimeout(function () {
             return _this3.$router.push({
               name: 'Add Ict Request Detail',
               params: {
-                code: _this3.code
+                code: response.data.data.ireq_id
               }
             });
           }, 1000);

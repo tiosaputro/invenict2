@@ -8,16 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Model\Mng_usr_roles;
 use App\Model\Mng_role_menu;
+use App\Helpers\ResponseFormatter;
 
 class MngMenuController extends Controller
 {
-    protected $newCreation;
-    protected $newUpdate;
+    protected $menu;
     public function __construct(){
         $this->menu = "/mng-menu";
-        $date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
     function index()
     {
@@ -25,13 +22,8 @@ class MngMenuController extends Controller
         $menu = Mng_role_menu::select('menu_id')->WHEREIn('rol_id',$role)->pluck('menu_id');
         $aksesmenu = DB::table('mng_menus')->SELECT('controller')->WHEREIn('menu_id',$menu)->pluck('controller');
         if($aksesmenu->contains($this->menu)){
-            $menu = DB::table('mng_menus as mm')
-                ->select('mm.menu_id','mmm.mod_name','mm.menu_name','mm.menu_desc','mm.menu_desc','mm.menu_display')
-                ->leftjoin('mng_modules as mmm','mm.mod_id','mmm.mod_id')
-                ->where('mm.menu_stat','T')
-                ->orderBy('mm.menu_id','ASC')
-                ->get();
-         return response()->json($menu);
+            $data = Mng_menu::getData();
+            return response()->json($data);
         }
         else{
             return response(["message"=>"Cannot Access"],403);
@@ -39,10 +31,8 @@ class MngMenuController extends Controller
     }
     Public function getParent()
     {
-        $module = Mng_menu::select('menu_id as code','menu_name as name')
-        ->where('menu_type','N')
-        ->get();
-        return response()->json($module);
+        $data = Mng_menu::getParent();
+        return response()->json($data);
     }
     Public function getMenu()
     {
@@ -72,7 +62,7 @@ class MngMenuController extends Controller
             'menu_stat'=>'required',
         ],$message);
 
-        $menu = Mng_menu::create([
+        $createMenu = Mng_menu::create([
             'mod_id'=>$request->mod_id,
             'menu_name'=>$request->menu_name,
             'menu_desc'=>$request->menu_desc,
@@ -82,15 +72,11 @@ class MngMenuController extends Controller
             'controller'=>$request->controller,
             'action'=>$request->action,
             'parent_id'=>$request->parent_id,
-            'creation_date'=>$this->newCreation,
+            'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by'=> Auth::user()->usr_name,
             'program_name'=> 'MngMenuController_Save'
         ]);
-        $msg = [
-            'success' => true,
-            'message' => 'Created Successfully'
-        ];
-        return response()->json($msg);
+        return ResponseFormatter::success($createMenu,'Successfully Created data menu');
     }
     Public function edit($code)
     {
@@ -127,24 +113,18 @@ class MngMenuController extends Controller
         $menu->action = $request->action;
         $menu->parent_id = $request->parent_id;
         $menu->last_updated_by = Auth::user()->usr_name;
-        $menu->last_update_date = $this->newUpdate;
+        $menu->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $menu->program_name = "MngMenuController@update";
         $menu->save();
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
-        return response()->json($msg);
+        
+        return ResponseFormatter::success($menu,'Successfully Updated data menu');
     }
     Public function delete($menu_id)
     {
         $menu = Mng_menu::find($menu_id);
         $menu->delete();
-        $msg = [
-            'success' => true,
-            'message' => 'Deleted Successfully'
-        ];
-        return response()->json($msg);
+        
+        return ResponseFormatter::success($menu,'Successfully Deleted data menu');
 
     }
 }

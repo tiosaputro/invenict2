@@ -19,6 +19,130 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      products: [{
+        "id": "1000",
+        "code": "f230fh0g3",
+        "name": "Bamboo Watch",
+        "description": "Product Description",
+        "image": "bamboo-watch.jpg",
+        "price": 65,
+        "category": "Accessories",
+        "quantity": 24,
+        "inventoryStatus": "INSTOCK",
+        "rating": 5
+      }, {
+        "id": "1001",
+        "code": "nvklal433",
+        "name": "Black Watch",
+        "description": "Product Description",
+        "image": "black-watch.jpg",
+        "price": 72,
+        "category": "Accessories",
+        "quantity": 61,
+        "inventoryStatus": "INSTOCK",
+        "rating": 4
+      }, {
+        "id": "1002",
+        "code": "zz21cz3c1",
+        "name": "Blue Band",
+        "description": "Product Description",
+        "image": "blue-band.jpg",
+        "price": 79,
+        "category": "Fitness",
+        "quantity": 2,
+        "inventoryStatus": "LOWSTOCK",
+        "rating": 3
+      }, {
+        "id": "1003",
+        "code": "244wgerg2",
+        "name": "Blue T-Shirt",
+        "description": "Product Description",
+        "image": "blue-t-shirt.jpg",
+        "price": 29,
+        "category": "Clothing",
+        "quantity": 25,
+        "inventoryStatus": "INSTOCK",
+        "rating": 5
+      }, {
+        "id": "1004",
+        "code": "h456wer53",
+        "name": "Bracelet",
+        "description": "Product Description",
+        "image": "bracelet.jpg",
+        "price": 15,
+        "category": "Accessories",
+        "quantity": 73,
+        "inventoryStatus": "INSTOCK",
+        "rating": 4
+      }, {
+        "id": "1005",
+        "code": "av2231fwg",
+        "name": "Brown Purse",
+        "description": "Product Description",
+        "image": "brown-purse.jpg",
+        "price": 120,
+        "category": "Accessories",
+        "quantity": 0,
+        "inventoryStatus": "OUTOFSTOCK",
+        "rating": 4
+      }, {
+        "id": "1006",
+        "code": "bib36pfvm",
+        "name": "Chakra Bracelet",
+        "description": "Product Description",
+        "image": "chakra-bracelet.jpg",
+        "price": 32,
+        "category": "Accessories",
+        "quantity": 5,
+        "inventoryStatus": "LOWSTOCK",
+        "rating": 3
+      }, {
+        "id": "1007",
+        "code": "mbvjkgip5",
+        "name": "Galaxy Earrings",
+        "description": "Product Description",
+        "image": "galaxy-earrings.jpg",
+        "price": 34,
+        "category": "Accessories",
+        "quantity": 23,
+        "inventoryStatus": "INSTOCK",
+        "rating": 5
+      }, {
+        "id": "1008",
+        "code": "vbb124btr",
+        "name": "Game Controller",
+        "description": "Product Description",
+        "image": "game-controller.jpg",
+        "price": 99,
+        "category": "Electronics",
+        "quantity": 2,
+        "inventoryStatus": "LOWSTOCK",
+        "rating": 4
+      }, {
+        "id": "1009",
+        "code": "cm230f032",
+        "name": "Gaming Set",
+        "description": "Product Description",
+        "image": "gaming-set.jpg",
+        "price": 299,
+        "category": "Electronics",
+        "quantity": 63,
+        "inventoryStatus": "INSTOCK",
+        "rating": 3
+      }],
+      responsiveOptions: [{
+        breakpoint: '1024px',
+        numVisible: 3,
+        numScroll: 3
+      }, {
+        breakpoint: '600px',
+        numVisible: 2,
+        numScroll: 2
+      }, {
+        breakpoint: '480px',
+        numVisible: 1,
+        numScroll: 1
+      }],
       mail: {
         body: '',
         footer: '',
@@ -1248,7 +1372,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         header: "Request"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Carousel :value=\"permohonan\" :numVisible=\"2\" :numScroll=\"1\" :responsiveOptions=\"responsiveOptions\" class=\"custom-carousel\" :circular=\"true\" :autoplayInterval=\"3000\">\r\n                <template #item=\"slotProps\">\r\n                  <Card style=\"width: 25rem; margin-bottom: 2em;\">\r\n                      <template #title>\r\n                          {{slotProps.data.ireq_no}}\r\n                      </template>\r\n                      <template #content>\r\n                        <h6 class=\"mt-0 mb-3\">{{slotProps.data.ireq_requestor}}</h6>\r\n                        <h7 class=\"mb-1\">{{ formatDate(slotProps.data.ireq_date) }}</h7>\r\n                      </template>\r\n                      <template #footer>\r\n                        <Button\r\n                        class=\"p-button-rounded p-button-secondary mr-2 mt-2\"\r\n                        icon=\"pi pi-info-circle\"\r\n                        v-if=\"slotProps.data.ireq_count_status <= 0\"\r\n                        v-tooltip.bottom=\"'Click for request details'\"\r\n                        @click=\"detailTabRequestDetailPermohonan(slotProps.data.ireq_id)\"\r\n                      />\r\n                      <Button\r\n                        class=\"p-button-sm p-button-rounded p-button-secondary mr-2 mt-2\"\r\n                        icon=\"pi pi-info-circle\"\r\n                        v-if=\"slotProps.data.ireq_count_status > 0\"\r\n                        v-tooltip.bottom=\"'Click for request details'\"\r\n                        @click=\"detailTabRequestDetail(slotProps.data.ireq_id)\"\r\n                      />\r\n                      <Button                    \r\n                        class=\"p-button-sm p-button-rounded p-button-warning mr-2 mt-2\"\r\n                        @click=\"SendEmail(slotProps.data.usr_email,slotProps.data.ireq_id)\"\r\n                        icon=\"bi bi-envelope-check-fill\"\r\n                        v-tooltip.bottom=\"'Click to send email to '+slotProps.data.usr_email+'@emp.id'\"\r\n                      />\r\n                      <Button\r\n                        v-if=\"slotProps.data.ireq_count_status != slotProps.data.ireq_count_id\"\r\n                        class=\"p-button-sm p-button-rounded p-button-danger mr-2 mt-2\"\r\n                        @click=\"Reject(slotProps.data.ireq_id)\"\r\n                        v-tooltip.bottom=\"'Click to reject request'\"\r\n                        icon=\"bi bi-x-square\"\r\n                      />\r\n                      <Button\r\n                        icon=\"bi bi-chat-quote\"\r\n                        class=\"p-button-sm p-button-rounded p-button mr-2 mt-2\"\r\n                        @click=\"Remark(slotProps.data.ireq_id)\"\r\n                        v-tooltip.bottom=\"'Click to add remark'\"\r\n                      />\r\n                      <Button\r\n                        v-if=\"slotProps.data.ireq_count_status != slotProps.data.ireq_count_id\"\r\n                        class=\"p-button-rounded mr-2 mt-2\"\r\n                        @click=\"ApproveAtasan(slotProps.data.ireq_id)\"\r\n                        icon=\"bi bi-file-earmark-arrow-up\"\r\n                        v-tooltip.bottom=\"'Click to higher level approval'\"\r\n                      />\r\n                      <Button\r\n                        v-if=\"slotProps.data.ireq_count_status != slotProps.data.ireq_count_id\"\r\n                        class=\"p-button-rounded mr-2 mt-2\"\r\n                        @click=\"ApproveManager(slotProps.data.ireq_id)\"\r\n                        v-tooltip.bottom=\"'Click to ICT manager approval'\"\r\n                        icon=\"bi bi-file-earmark-arrow-up-fill\"\r\n                      />\r\n                      <Button\r\n                        class=\"p-button-rounded mr-2 mt-2\" \r\n                        @click=\"AssignPerRequest(slotProps.data.ireq_id)\"\r\n                        icon=\"bi bi-person-workspace\"\r\n                        v-tooltip.bottom=\"'Click to Assign Per Request'\"\r\n                      />\r\n                      <Button\r\n                        class=\"p-button-rounded mr-2 mt-2\"\r\n                        @click=\"$router.push({\r\n                            name: 'Ict Request Reviewer Assign Per Detail',\r\n                            params : {code: slotProps.data.ireq_id},})\"\r\n                        icon=\"bi bi-people\"\r\n                        v-tooltip.bottom=\"'Click to Assign Per Detail'\"\r\n                      />\r\n                      <Button\r\n                        v-if=\"slotProps.data.ireq_count_status == slotProps.data.ireq_count_id\"\r\n                        class=\"p-button-rounded p-button-success mr-2 mt-2\"\r\n                        @click=\"Submit(slotProps.data.ireq_id)\"\r\n                        icon=\"bi bi-send-check\"\r\n                        v-tooltip.bottom=\"'Click to submit'\"\r\n                      />\r\n                      </template>\r\n                  </Card>\r\n                </template>\r\n            </Carousel> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Carousel :value=\"permohonan\" :numVisible=\"3\" :numScroll=\"1\" orientation=\"vertical\" verticalViewPortHeight=\"430px\"\r\n                        style=\"max-width: 400px; margin-top: 2em\">\r\n                <template #header>\r\n                </template>\r\n                <template #item=\"slotProps\">\r\n                    <div class=\"product-item\">\r\n                        <div class=\"product-item-content\">\r\n                            <div class=\"mb-3\">\r\n                                <img src=\"https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png\" :alt=\"slotProps.data.name\" class=\"product-image\" />\r\n                            </div>\r\n                            <div>\r\n                                <h4 class=\"mb-1\">{{slotProps.data.ireq_no}}</h4>\r\n                                <h6 class=\"mt-0 mb-3\">${{slotProps.data.ireq_requestor}}</h6>\r\n                                <h7 class=\"mb-1\">{{ formatDate(slotProps.data.ireq_date) }}</h7>\r\n\r\n                                <div class=\"car-buttons mt-5\">\r\n                                    <Button icon=\"pi pi-search\" class=\"p-button p-button-rounded mr-2\" />\r\n                                    <Button icon=\"pi pi-star-fill\" class=\"p-button-success p-button-rounded mr-2\" />\r\n                                    <Button icon=\"pi pi-cog\" class=\"p-button-help p-button-rounded\" />\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </template>\r\n            </Carousel> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
             value: $data.permohonan,
             paginator: true,
             rows: 10,
@@ -3096,7 +3220,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".attachment-image[data-v-0ad882c8] {\n  width: 50px;\n  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);\n}\n.p-button.youtube[data-v-0ad882c8] {\n  cursor: pointer;\n  background: linear-gradient(to left, var(--pink-600) 50%, var(--pink-700) 50%);\n  background-size: 200% 100%;\n  background-position: right bottom;\n  transition: background-position 0.5s ease-out;\n  color: #fff;\n  border-color: var(--pink-700);\n}\n.p-button.youtube[data-v-0ad882c8]:hover {\n  background-position: left bottom;\n}\n.template .p-button.twitter[data-v-0ad882c8] {\n  background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);\n  background-size: 200% 100%;\n  background-position: right bottom;\n  transition: background-position 0.5s ease-out;\n  color: #fff;\n  border-color: var(--blue-500);\n}\n.template .p-button.twitter[data-v-0ad882c8]:hover {\n  background-position: left bottom;\n}\n.template .p-button.twitter i[data-v-0ad882c8] {\n  background-color: var(--blue-500);\n}\n.template .p-button.twitter[data-v-0ad882c8]:focus {\n  box-shadow: 0 0 0 1px var(--blue-200);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".attachment-image[data-v-0ad882c8] {\n  width: 50px;\n  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);\n}\n.p-button.youtube[data-v-0ad882c8] {\n  cursor: pointer;\n  background: linear-gradient(to left, var(--pink-600) 50%, var(--pink-700) 50%);\n  background-size: 200% 100%;\n  background-position: right bottom;\n  transition: background-position 0.5s ease-out;\n  color: #fff;\n  border-color: var(--pink-700);\n}\n.p-button.youtube[data-v-0ad882c8]:hover {\n  background-position: left bottom;\n}\n.template .p-button.twitter[data-v-0ad882c8] {\n  background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);\n  background-size: 200% 100%;\n  background-position: right bottom;\n  transition: background-position 0.5s ease-out;\n  color: #fff;\n  border-color: var(--blue-500);\n}\n.template .p-button.twitter[data-v-0ad882c8]:hover {\n  background-position: left bottom;\n}\n.template .p-button.twitter i[data-v-0ad882c8] {\n  background-color: var(--blue-500);\n}\n.template .p-button.twitter[data-v-0ad882c8]:focus {\n  box-shadow: 0 0 0 1px var(--blue-200);\n}\n.request-image[data-v-0ad882c8] {\n  width: 50%;\n  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

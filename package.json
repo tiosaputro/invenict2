@@ -52,6 +52,7 @@
         "vue-barcode-reader": "git+https://github.com/Zubaj/vue-barcode-reader.git",
         "vue-chartjs-exporter": "^1.0.2",
         "vue-class-component": "^8.0.0-rc.1",
+        "vue-cookies": "^1.8.2",
         "vue-loader": "^16.8.3",
         "vue-loading-overlay": "^5.0.3",
         "vue-router": "^4.1.6",

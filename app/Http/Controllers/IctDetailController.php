@@ -14,6 +14,7 @@ use App\Exports\IctDetailTabSudahDikerjakanExport;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
+use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Jobs\SendNotifPersonnel;
@@ -22,15 +23,6 @@ use App\Jobs\SendNotifDone;
 
 class IctDetailController extends Controller
 {
-    protected $date;
-    protected $newCreation;
-    protected $newUpdate;
-     public function __construct(){
-        $date = Carbon::now();
-        $this->date= Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-    }
     Public function index($code)
     {
       $dtl = DB::table('ireq_dtl as id')
@@ -117,20 +109,10 @@ class IctDetailController extends Controller
             return response()->json($dtl);
     }
     function abp($ireq_id){ //accept by personnel
-        $usr_fullname = Auth::User()->usr_fullname;
-        $dtl = DB::table('ireq_dtl')
-        ->where('ireq_id',$ireq_id)
-        ->where('ireq_assigned_to1',$usr_fullname)
-        ->update([
-            'ireq_status' => 'T',
-            'last_update_date' => $this->newUpdate,
-            'last_updated_by' => Auth::user()->usr_name,
-            'program_name' => "IctDetailController_abp",
-        ]);
-
-        $result = DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
+        $save = IctDetail::AcceptByPersonnel($ireq_id);
+        DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
         $cek = $this->cekStatusPenugasan($ireq_id);
-        return json_encode($cek);
+        return ResponseFormatter::success($cek,'Successfully accepted by personnel');
     }
     function cekStatusPenugasan($ireq_id){
         $ict = DB::table('ireq_dtl as id')
@@ -168,19 +150,9 @@ class IctDetailController extends Controller
 
     }
     function rbp(Request $request,$ireq_id){ //reject by personnel
-        $usr_fullname = Auth::User()->usr_fullname;
-        $dtl = DB::table('ireq_dtl')
-        ->where('ireq_id',$ireq_id)
-        ->where('ireq_assigned_to1',$usr_fullname)
-        ->update([
-            'ireq_status' => 'RT',
-            'ireq_assigned_to1_reason' => $request->ireq_reason,
-            'last_update_date' => $this->newUpdate,
-            'last_updated_by' => Auth::user()->usr_name,
-            'program_name' => "IctDetailController_rbp"
-        ]);
+        $saveDtl = IctDetail::rejectedByPersonnel($request,$ireq_id); 
         DB::getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST($ireq_id); end;");
-        return response()->json('Updated Successfully');
+        return ResponseFormatter::success($saveDtl,'Successfully rejected by personnel');
         
     }
     function getNo_req($code)
@@ -206,11 +178,6 @@ class IctDetailController extends Controller
     Public function save(Request $request,$code)
     {
         if($request->file){
-            $file= $request->file;
-            // $extension = explode('/', explode(':', substr($file, 0, strpos($file, ';')))[1])[1];
-            // $replace = substr($file, 0, strpos($file, ',')+1); 
-            // $fotoo = str_replace($replace, '', $file);
-            // $foto= str_replace(' ', '+', $fotoo); 
             $nama_file = time().'.'.$request->file->getClientOriginalExtension();
             $request->file->move(public_path('attachment_request'), $nama_file);
         }
@@ -238,14 +205,11 @@ class IctDetailController extends Controller
                 'ireq_qty'=> $request->qty,
                 'ireq_remark'=>$request->ket,
                 'ireq_attachment'=>$nama_file,
-                'creation_date'=>$this->newCreation,
+                'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 'created_by' => Auth::user()->usr_name,
                 'program_name'=>"IctDetail_Save"
             ]);
-            return response()->json([
-                'success' => true,
-                'message' => 'Created Successfully '
-            ]);
+            return ResponseFormatter::success($dtl,'Successfully Created request');
         } else{
             $message = [
                 'ket.required'=>'Remark not filled',
@@ -263,14 +227,11 @@ class IctDetailController extends Controller
                 // 'ireq_desc'=> $request->desk,
                 'ireq_remark'=>$request->ket,
                 'ireq_attachment'=>$nama_file,
-                'creation_date'=>$this->newCreation,
+                'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 'created_by' => Auth::user()->usr_name,
                 'program_name'=>"IctDetail_Save"
             ]);
-            return response()->json([
-                'success' => true,
-                'message' => 'Created Successfully '
-            ]);
+            return ResponseFormatter::success($dtl,'Successfully Created detail request');
         }
     }
     Public function edit($ireq,$code)
@@ -319,7 +280,7 @@ class IctDetailController extends Controller
                     'ireq_remark' => 'required',
                 ],$message);
             
-            $dtl = DB::table('ireq_dtl')
+            $saveDtl = DB::table('ireq_dtl')
             ->where('ireqd_id',$ireq)
             ->where('ireq_id',$code)
             ->update([
@@ -328,16 +289,12 @@ class IctDetailController extends Controller
                 'ireq_qty'=>$request->ireq_qty,
                 'ireq_attachment'=>$nama_file,
                 'ireq_remark'=> $request->ireq_remark,
-                'last_update_date'=> $this->newUpdate,
+                'last_update_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 'last_updated_by'=>Auth::user()->usr_name,
                 'program_name'=>"IctDetail_Update"
             ]);
 
-            $msg = [
-                'success' => true,
-                'message' => 'Updated Successfully'
-            ];
-            return response()->json($msg);
+            return ResponseFormatter::success($saveDtl,'Successfully Updated detail request');
         }
         else if($request->ireq_type == 'S'){
             $message = [
@@ -351,7 +308,7 @@ class IctDetailController extends Controller
                     'invent_code'=>'required',
                 ],$message);
             
-            $dtl = DB::table('ireq_dtl')
+            $saveDtl = DB::table('ireq_dtl')
             ->where('ireqd_id',$ireq)
             ->where('ireq_id',$code)
             ->update([
@@ -359,16 +316,11 @@ class IctDetailController extends Controller
                 'invent_code'=>$request->invent_code,
                 'ireq_remark'=> $request->ireq_remark,
                 'ireq_attachment'=>$nama_file,
-                'last_update_date'=> $this->newUpdate,
+                'last_update_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 'last_updated_by'=>Auth::user()->usr_name,
                 'program_name'=>"IctDetail_Update"
             ]);
-
-            $msg = [
-                'success' => true,
-                'message' => 'Updated Successfully'
-            ];
-            return response()->json($msg);
+            return ResponseFormatter::success($saveDtl,'Successfully Updated detail request');
         }
     }
     Public function delete($ireqd_id,$code)
@@ -377,11 +329,11 @@ class IctDetailController extends Controller
         if($cek->ireq_attachment){
             unlink(Storage_path('app/public/attachment_request/'.$cek->ireq_attachment));
         }
-        $ict = DB::table('ireq_dtl as id')
+        $deletedDtl = DB::table('ireq_dtl as id')
         ->where('id.ireqd_id',$ireqd_id)
         ->where('id.ireq_id',$code)
         ->delete();
-          return response()->json('Deleted Successfully');
+        return ResponseFormatter::success($deletedDtl,'Successfully Deleted detail request');
     }
     public function cetak_pdf($code)
     {
@@ -430,7 +382,7 @@ class IctDetailController extends Controller
     }
     public function cetak_excel($code)
     {
-        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailExport($code),'Laporan ICT request '.$newCreation.'.xlsx');
     }
     public function cetak_pdf_tab_reviewer($code)
@@ -457,7 +409,7 @@ class IctDetailController extends Controller
     }
     public function cetak_excel_tab_reviewer($code)
     {
-        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailTabReviewerExport($code),'Laporan Ict request (Detail Reviewer) '.$newCreation.'.xlsx');
     }
     public function cetak_pdf_tab_verifikasi($code)
@@ -484,7 +436,7 @@ class IctDetailController extends Controller
     }
     public function cetak_excel_tab_verifikasi($code)
     {
-        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailTabVerifikasiExport($code),'Laporan Ict request (Detail Terverifikasi) '.$newCreation.'.xlsx');
     }
     public function cetak_pdf_reject($code)
@@ -511,7 +463,7 @@ class IctDetailController extends Controller
     }
     public function cetak_excel_reject($code)
     {
-        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailExportReject($code),'Laporan ICT Request '.$newCreation.'.xlsx');
     }
     public function printout_ictrequest($code)
@@ -564,7 +516,7 @@ class IctDetailController extends Controller
     }
     public function cetak_excel_sedang_dikerjakan($code)
     {
-        $newCreation = Carbon::parse($this->date)->copy()->tz('Asia/Jakarta')->format('d M Y');
+        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailTabSudahDikerjakanExport($code),'Laporan Ict Request '.$newCreation.'.xlsx');
     }
     public function getDetailVerif($code)
@@ -611,7 +563,7 @@ class IctDetailController extends Controller
         ->where('ireq_id',$code)
         ->update([
             'ireq_assigned_to1'=>$request->ireq_assigned_to1,
-            'last_update_date' =>$this->newUpdate,
+            'last_update_date' =>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by'=>Auth::user()->usr_name
         ]);
         return response()->json($dtl);
@@ -624,7 +576,7 @@ class IctDetailController extends Controller
         ->update([
             'ireq_assigned_to1_reason'=>$request->ireq_assigned_to1_reason,
             'ireq_assigned_to2' => $request->ireq_assigned_to1,
-            'last_update_date' => $this->newUpdate,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by' => Auth::user()->usr_name
         ]);
         return response()->json('Updated Successfully');
@@ -636,8 +588,8 @@ class IctDetailController extends Controller
         ->where('ireq_id',$code)
         ->update([
             'ireq_status' => $request->status,
-            'last_update_date' => $this->newUpdate,
-            'ireq_date_done' => $this->newUpdate,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'ireq_date_done' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by' => Auth::user()->usr_name
         ]);
         
@@ -682,7 +634,7 @@ class IctDetailController extends Controller
         ->where('ireq_id',$request->ireq_id)
         ->update([
             'ireq_note_personnel' => $request->ireq_reason,
-            'last_update_date' => $this->newUpdate,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by' => Auth::user()->usr_name
         ]);
 
@@ -695,8 +647,8 @@ class IctDetailController extends Controller
         ->where('ireq_id',$ireq_id)
         ->update([
             'ireq_status' => 'C',
-            'ireq_date_closing'=> $this->newUpdate,
-            'last_update_date' => $this->newUpdate,
+            'ireq_date_closing'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctDetail_updateStatusClosingDetail"
         ]);
@@ -709,8 +661,8 @@ class IctDetailController extends Controller
         ->where('ireq_id',$code)
         ->update([
             'ireq_status' => 'T',
-            'last_update_date' => $this->newUpdate,
-            'ireq_assigned_date' => $this->newUpdate,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'ireq_assigned_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "IctDetail_appd"
         ]);
@@ -752,7 +704,7 @@ class IctDetailController extends Controller
         ->where('ireq_id',$request->ireq_id)
         ->update([
             'ireq_assigned_remark' => $request->ireq_assigned_remark,
-            'last_update_date' => $this->newUpdate,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by' => Auth::user()->usr_name
         ]);
 

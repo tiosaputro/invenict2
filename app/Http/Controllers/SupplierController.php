@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Model\Mng_usr_roles;
+use App\Helpers\ResponseFormatter;
 use App\Model\Mng_role_menu;
 
 class SupplierController extends Controller
 {
+    protected $supplier;
     public function __construct(){
         $this->supplier = "/referensi-supplier";
     }
@@ -74,8 +76,6 @@ class SupplierController extends Controller
             'notlp1' => 'required|numeric',
             'contact'=> 'required|alpha'
         ],$message);
-        $date = Carbon::now();
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $supp = Supplier::Create([
             'suplier_code' => $request->code,
             'suplier_name' => $request->nama,
@@ -89,14 +89,11 @@ class SupplierController extends Controller
             'suplier_tlp1' => $request->notlp1,
             'suplier_tlp2' => $request->notlp2,
             'suplier_status' => "T",
-            'creation_date' => $newCreation,
+            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by' => Auth::user()->usr_name,
             'program_name' => "Supplier_Save",
         ]);
-        return response()->json([
-            'success' => true,
-            'message' => $supp
-        ]);
+        return ResponseFormatter::success($supp,'Successfully Created Supplier');
     }
     public function edit($code)
     {
@@ -170,8 +167,6 @@ class SupplierController extends Controller
         'suplier_fax' => 'required|numeric',
         'suplier_tlp1' => 'required|numeric'
     ],$message);
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
 
         $supp = Supplier::find($code);
         $supp->suplier_name = $request->suplier_name;
@@ -184,21 +179,17 @@ class SupplierController extends Controller
         $supp->suplier_fax = $request->suplier_fax;
         $supp->suplier_tlp1 = $request->suplier_tlp1;
         $supp->suplier_tlp2 = $request->suplier_tlp2;
-        $supp->last_update_date = $newUpdate;
+        $supp->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $supp->last_updated_by = Auth::user()->usr_name;
         $supp->program_name = "Supplier_Update";
         $supp->save();
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
-        return response()->json($msg);
+        
+        return ResponseFormatter::success($supp,'Successfully Updated Supplier');
     }
     public function delete($suplier_code)
     {
-        $supp = Supplier::find($suplier_code);
-        $supp->delete();
-        return response()->json('Successfully deleted');
+        $supp = Supplier::find($suplier_code)->delete();
+        return ResponseFormatter::success($supp,'Successfully Deleted Supplier');
     }
     public function cetak_pdf()
     {

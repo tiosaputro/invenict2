@@ -13,13 +13,6 @@ use carbon\Carbon;
 
 class MngUsrRoleController extends Controller
 {
-    protected $newCreation;
-    protected $newUpdate;
-    public function __construct(){
-        $date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-    }
     public function getRole() {
 
         $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
@@ -57,7 +50,7 @@ class MngUsrRoleController extends Controller
                 'usr_id' => $user->usr_id,
                 'rol_id' => $r,
                 'urol_stat' => 'T',
-                'creation_date' => $this->newCreation,
+                'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 'created_by'=> Auth::user()->usr_name,
                 'program_name'=>'MngUsrRoleController_SAVE'
             ]);
@@ -83,16 +76,16 @@ class MngUsrRoleController extends Controller
                 'creation_date' => $createday,
                 'created_by'=> $created_by,
                 'last_updated_by'=> Auth::user()->usr_name,
-                'last_updated_date'=>$this->newUpdate,
+                'last_updated_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 'program_name'=>'MngUsrRoleController_UPDATE'
             ]);
         }
     }
     public function cekRole()
     {
-        $id = Auth::user()->usr_id;
-        $getRole = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
-        $cek = Mng_roles::select('rol_id','rol_name')->whereIn('rol_id',$getRole)->get();
-        return response()->json($cek);
+            $id = Auth::user()->usr_id;
+            $getRole = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');
+            $cek = Mng_roles::select('rol_id','rol_name')->whereIn('rol_id',$getRole)->get();
+            return response()->json($cek);
     }
 }

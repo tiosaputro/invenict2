@@ -3,6 +3,7 @@
 namespace App\Model;;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Mng_menu extends Model
 {
@@ -31,5 +32,22 @@ class Mng_menu extends Model
     public $timestamps = false;
     public function childs() {
         return $this->hasMany('App\Mng_menu','parent_id','menu_id') ;
+    }
+
+    public static function getData(){
+        $menu = DB::table('mng_menus as mm')
+        ->select('mm.menu_id','mmm.mod_name','mm.menu_name','mm.menu_desc','mm.menu_desc','mm.menu_display')
+        ->leftjoin('mng_modules as mmm','mm.mod_id','mmm.mod_id')
+        ->where('mm.menu_stat','T')
+        ->orderBy('mm.menu_id','ASC')
+        ->get();
+
+        return $menu;
+    }
+    public static function getParent(){
+        $data = Mng_menu::select('menu_id as code','menu_name as name')
+        ->where('menu_type','N')
+        ->get();
+        return $data;
     }
 }

@@ -10,6 +10,7 @@ use App\Model\Mng_usr_roles;
 use App\Model\Mng_role_menu;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseFormatter;
 
 class PaymentController extends Controller
 {
@@ -74,10 +75,7 @@ class PaymentController extends Controller
                 // 'tglclosing' => 'required'
             ],$message);
 
-        $date = Carbon::now();
 
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $newTglSub = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglsub)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
 
         if($request->tglrecvunit){
             $newTglRecUnit = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglrecvunit)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
@@ -108,26 +106,23 @@ class PaymentController extends Controller
             $newTglClosing = '';
         }
 
-        $pr = Payment_request::create([
+        $createPr = Payment_request::create([
             'ireq_id' =>$request->ireq_id,
             'ireqd_id'=>$request->ireqd_id,
             'pr_pic_name'=>$request->jum,
-            'pr_submit_date'=>$newTglSub,
+            'pr_submit_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'pr_recv_cash_date'=>$newTglRecCash,
             'pr_purchase_date'=>$newTglbuy,
             'pr_recv_item_date' => $newTglRecUnit,
             'pr_hand_over_date'=> $newTglToUser,
             'pr_settlement_date' => $newTglClosing,
-            'creation_date' => $newCreation,
+            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by' => Auth::user()->usr_name,
             'program_name'=>"PaymentController_Save",
         ]);
-        $msg = [
-            'success' => true,
-            'message' => 'Created Successfully',
-        ];
-        $result = DB::getPdo()->exec("begin SP_PR_IREQ_MST($request->ireq_id); end;");
-        return response()->json($msg);
+        DB::getPdo()->exec("begin SP_PR_IREQ_MST($request->ireq_id); end;");
+        
+        return ResponseFormatter::success($createPr,'Successfully Created Data');
     }
 
     function edit($code)
@@ -206,31 +201,23 @@ class PaymentController extends Controller
             $newTglClosing = '';
         }
 
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $newTglSub = Carbon::parse($request->pr_submit_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-
         $pr = Payment_request::find($code);
         $pr->pr_pic_name = $request->pr_pic_name;
-        $pr->pr_submit_date = $newTglSub;
+        $pr->pr_submit_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $pr->pr_recv_cash_date = $newTglRecCash;
         $pr->pr_purchase_date = $newTglbuy;
         $pr->pr_recv_item_date = $newTglRecUnit;
         $pr->pr_hand_over_date = $newTglToUser;
         $pr->pr_settlement_date = $newTglClosing;
-        $pr->last_update_date = $newUpdate;
+        $pr->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $pr->last_updated_by = Auth::user()->usr_name;
         $pr->program_name = "PaymentController_update";
         $pr->save();
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
-        return response()->json($msg);
+        return ResponseFormatter::success($pr,'Successfully Updated Data');
     }
     function delete($pr_id)
     {
-        $pr = Payment_request::find($pr_id);
-        $pr->delete();
-            return response()->json('Successfully deleted');
+        $pr = Payment_request::find($pr_id)->delete();
+        return ResponseFormatter::success($pr,'Successfully Deleted Data');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Cash;
 use App\Exports\CashExport;
 use Maatwebsite\Excel\Facades\Excel;
-
+use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -95,9 +95,7 @@ class CashController extends Controller
                 // 'tglclosing' => 'required'
             ],$message);
 
-        $date = Carbon::now();
-
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $newTglSub = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglsub)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
 
         if($request->tglrecvunit){
@@ -147,8 +145,8 @@ class CashController extends Controller
             'success' => true,
             'message' => 'Created Successfully'
         ];
-        $result = DB::getPdo()->exec("begin SP_CA_IREQ_MST($request->ireq_id); end;");
-        return response()->json($msg);
+        DB::getPdo()->exec("begin SP_CA_IREQ_MST($request->ireq_id); end;");
+        return ResponseFormatter::success($cash,'Successfully Create CA');
     }
     function edit($code)
     {
@@ -196,7 +194,6 @@ class CashController extends Controller
                 'ca_pic_name' => 'required',
                 // 'ca_settlement_date'=>'required'
             ],$message);
-        $date = Carbon::now();
         if($request->ca_recv_item_date){
             $newTglRecUnit = Carbon::parse($request->ca_recv_item_date)->tz('Asia/Jakarta')->format('Y-m-d');
         }
@@ -226,7 +223,7 @@ class CashController extends Controller
             $newTglClosing = '';
         }
 
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newUpdate = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $newTglSub = Carbon::parse($request->ca_submit_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
 
         $cash = Cash::find($code);
@@ -241,17 +238,14 @@ class CashController extends Controller
         $cash->last_updated_by = Auth::user()->usr_name;
         $cash->program_name = "Cash_Update";
         $cash->save();
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
-        return response()->json($msg);
+
+        return ResponseFormatter::success($cash,'Successfully Update CA');
     }
     function delete($ca_id)
     {
-        $cash = Cash::find($ca_id);
-        $cash->delete();
-            return response()->json('Successfully deleted');
+        $cash = Cash::find($ca_id)->delete();
+        
+        return ResponseFormatter::success($cash,'Successfully Deleted CA');
     }
     function cetak_pdf()
     {

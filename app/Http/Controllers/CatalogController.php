@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\ResponseFormatter;
 use App\Model\Catalog;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -12,13 +13,9 @@ use App\Model\Mng_role_menu;
 
 class CatalogController extends Controller
 {
-    protected $newCreation;
-    protected $newUpdate;
+    protected $catalog;
     public function __construct(){
         $this->catalog = "/catalog-refs";
-        $date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
     function index(){
         $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
@@ -54,14 +51,10 @@ class CatalogController extends Controller
             'catalog_request_type'=>$request->catalog_request_type,
             'parent_id'=>$request->parent_id,
             'created_by'=>Auth::user()->usr_name,
-            'creation_date'=>$this->newCreation,
+            'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'program_name'=>'catalogController@save'
         ]);
-        $msg = [
-            'success' => true,
-            'message' => 'Created Successfully'
-        ];
-        return response()->json($msg);
+        return ResponseFormatter::success($catalog,'Successfully Create Catalog');
     }
     function edit($code){
         $catalog = Catalog::find($code);
@@ -89,19 +82,15 @@ class CatalogController extends Controller
         $cat->catalog_request_type=$request->catalog_request_type;
         $cat->parent_id=$request->parent_id;
         $cat->created_by=Auth::user()->usr_name;
-        $cat->creation_date=$this->newCreation;
+        $cat->creation_date=Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $cat->program_name='catalogController@save';
         $cat->save();
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
-        return response()->json($msg);
+        
+        return ResponseFormatter::success($cat,'Successfully Updated Catalog');
     }
     function delete($catalog_id){
-        $catalog = Catalog::find($catalog_id);
-        $catalog->delete();
-        return json_encode('Success Deleted');
+        $catalog = Catalog::find($catalog_id)->delete();
+        return ResponseFormatter::success($catalog,'Successfully Deleted Catalog');
     }
     function parentCatalog(){
         $catalog = Catalog::select('catalog_name as name','catalog_id as code')->where('catalog_type','N')->get();

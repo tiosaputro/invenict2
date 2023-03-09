@@ -7,16 +7,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseFormatter;
 
 class MasterDetailController extends Controller
 {
-    protected $newCreation;
-    protected $newUpdate;
     protected $to;
-    public function __construct(){
-        $date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+    public function __construct(){ 
         $this->to = "/master-peripheral-detail";
     }
     function index($code){
@@ -75,23 +71,19 @@ class MasterDetailController extends Controller
         else{
             $nama_file = '';
         }
-        $mas = MasterDetail::Create([
+        $saveDtl = MasterDetail::Create([
             'invent_code' => $request->invent_code,
             'invent_sn' => $request->invent_sn,
             'invent_tgl_perolehan' => $newDate,
             'invent_lama_garansi' => $request->invent_garansi,
             'invent_kondisi' => $request->invent_kondisi,
-            'creation_date' => $this->newCreation,
+            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by' => Auth::user()->usr_name,
             'program_name' => "MasterDetail_Save",
             'invent_photo' => $nama_file,
             'invent_bu' => $request->invent_bu,
         ]);
-        $msg = [
-            'success' => true,
-            'message' => 'Created Successfully'
-        ];
-        return response()->json($msg);
+        return ResponseFormatter::success($saveDtl,'Successfully Created detail master');
     }
     function editDetail($code){
         $mas = DB::table('invent_dtl as id')
@@ -141,19 +133,15 @@ class MasterDetailController extends Controller
             $mas->invent_tgl_perolehan =$newDate;
             $mas->invent_lama_garansi = $request->invent_lama_garansi;
             $mas->invent_kondisi = $request->invent_kondisi;
-            $mas->last_update_date = $this->newUpdate;
+            $mas->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
             $mas->last_updated_by = Auth::user()->usr_name;
             $mas->program_name = "MasterDetail_Update";
             $mas->invent_bu = $request->invent_bu;
             $mas->invent_photo = $nama_file;
             $mas->save();
         
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
- 
-        return response()->json($msg);
+        
+            return ResponseFormatter::success($mas,'Successfully Updated detail master');
     }
     function deleteDetail($invent_code_dtl){
         $mas = MasterDetail::find($invent_code_dtl);
@@ -161,7 +149,8 @@ class MasterDetailController extends Controller
             unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
         }
         $mas->delete();
-            return response()->json('Successfully deleted');
+            
+        return ResponseFormatter::success($mas,'Successfully Deleted detail master');
     }
     
 }

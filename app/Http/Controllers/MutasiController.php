@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Model\Mng_usr_roles;
 use App\Model\Mng_role_menu;
+use App\Helpers\ResponseFormatter;
 
 class MutasiController extends Controller
 {
@@ -48,33 +49,26 @@ class MutasiController extends Controller
     }
     Public function save(Request $request)
     {
-        $date = Carbon::now();
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $newFromDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->fromdate)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        if ($request->todate){   
+      if ($request->todate){   
             $newToDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->todate)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
 
         }else{
             $newToDate = '';
         }
-            Mutasi::Create([
+            $saveMutasi = Mutasi::Create([
                 'invent_code_dtl'=> $request->invent_sn,
-                'imutasi_tgl_dari' => $newFromDate,
+                'imutasi_tgl_dari' => Carbon::createFromFormat('D M d Y H:i:s e+',$request->fromdate)->copy()->tz('Asia/Jakarta')->format('Y-m-d'),
                 'imutasi_tgl_sd'=>$newToDate,
                 'imutasi_lokasi' => $request->lokasi,
                 'imutasi_pengguna' => $request->user,
                 'imutasi_divisi' => $request->invent_divisi,
                 'imutasi_bu' => $request->invent_bu,
                 'imutasi_keterangan' => $request->ket,
-                'creation_date'=> $newCreation,
+                'creation_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 'created_by' => Auth::user()->usr_name,
                 'program_name'=> "Mutasi_Save"
             ]);
-            $msg = [
-                'success' => true,
-                'message' => 'Created Successfully'
-            ];
-            return response()->json($msg);
+            return ResponseFormatter::success($saveMutasi,'Successfully Created Mutasi');
     }
     Public function edit($code)
     {
@@ -104,8 +98,6 @@ class MutasiController extends Controller
     }
     Public function update(Request $request, $code)
     {
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $newFromDate = Carbon::parse($request->imutasi_tgl_dari)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         
         if ($request->imutasi_tgl_sd){
@@ -118,7 +110,7 @@ class MutasiController extends Controller
             $mut->imutasi_divisi = $request->imutasi_divisi;
             $mut->imutasi_bu = $request->imutasi_bu;
             $mut->imutasi_keterangan = $request->imutasi_keterangan;
-            $mut->last_update_date = $newUpdate;
+            $mut->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
             $mut->last_updated_by = Auth::user()->usr_name;
             $mut->program_name = "Mutasi_Update";
             $mut->save();
@@ -131,22 +123,18 @@ class MutasiController extends Controller
             $mut->imutasi_divisi = $request->imutasi_divisi;
             $mut->imutasi_bu = $request->imutasi_bu;
             $mut->imutasi_keterangan = $request->imutasi_keterangan;
-            $mut->last_update_date = $newUpdate;
+            $mut->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
             $mut->last_updated_by = Auth::user()->usr_name;
             $mut->program_name = "Mutasi_Update";
             $mut->save();
         }
-        $msg = [
-                'success' => true,
-                'message' => 'Updated Successfully'
-            ];
-        return response()->json($msg);
+        
+        return ResponseFormatter::success($mut,'Successfully Updated Mutasi');
     }
     Public function delete($imutasi_id)
     {
-        $mut = Mutasi::find($imutasi_id);
-        $mut->delete();
-        return response()->json('Successfully deleted');
+        $mut = Mutasi::find($imutasi_id)->delete();
+        return ResponseFormatter::success($mut,'Successfully Deleted Mutasi');
     }
     public function cetak_excel()
     {

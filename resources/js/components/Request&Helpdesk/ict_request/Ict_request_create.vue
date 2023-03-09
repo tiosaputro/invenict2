@@ -179,13 +179,12 @@ export default {
         data.append("priolev", this.priolev);
 
         this.axios.post('api/add-ict', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.$toast.add({
-          severity: "success",
-          summary: "Success Message",
-          detail: "Success Create",
-        });
-        this.code = response.data.ireq_id;
-        setTimeout( () => this.$router.push({name: 'Add Ict Request Detail', params: { code: this.code }, }),1000);
+          this.$toast.add({
+            severity: "success",
+            summary: "Success Message",
+            detail: "Success Create",
+          });
+          setTimeout( () => this.$router.push({name: 'Add Ict Request Detail', params: { code: response.data.data.ireq_id }, }),1000);
         }).catch(error=>{
           this.loading = false;
           this.errors = error.response.data.errors;

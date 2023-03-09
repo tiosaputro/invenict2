@@ -5,6 +5,7 @@ use App\Model\Master;
 use App\Exports\MasterExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Helpers\ResponseFormatter;
 use Carbon\Carbon;
 use App\Lookup_Refs;
 use Illuminate\Support\Facades\DB;
@@ -15,13 +16,8 @@ use App\Model\Mng_role_menu;
 
 class MasterController extends Controller
 {
-    protected $newCreation;
-    protected $newUpdate;
     protected $to;
     public function __construct(){
-        $date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->to = "/master-peripheral";
     }
     public function index()
@@ -94,7 +90,7 @@ class MasterController extends Controller
         // else{
         //     $nama_file = '';
         // }
-        $mas = Master::Create([
+        $createMas = Master::Create([
             // 'invent_code' => $request->code,
             'invent_desc' => $request->nama,
             'invent_brand' => $request->merk,
@@ -103,7 +99,7 @@ class MasterController extends Controller
             // 'invent_tgl_perolehan' => $newDate,
             // 'invent_lama_garansi' => $request->garansi,
             // 'invent_kondisi' => $request->kondisi,
-            'creation_date' => $this->newCreation,
+            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by' => Auth::user()->usr_name,
             'program_name' => "Master_Save",
             // 'invent_barcode' => $request->barcode,
@@ -114,11 +110,7 @@ class MasterController extends Controller
             // 'invent_pengguna_previous' => $request->prevuser,
             // 'invent_bu' => $request->bu,
         ]);
-        $msg = [
-            'success' => true,
-            'message' => 'Created Successfully'
-        ];
-        return response()->json($msg);
+        return ResponseFormatter::success($createMas,'Successfully Created Data Master');
     }
     public function edit($code)
     {
@@ -173,7 +165,6 @@ class MasterController extends Controller
     }
     public function update(Request $request, $code)
     {
-        // $newDate = Carbon::parse($request->invent_tgl_perolehan)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         $mas = Master::find($code);
         // if($request->image) {
         //     if($mas->invent_photo){
@@ -196,7 +187,7 @@ class MasterController extends Controller
             // $mas->invent_tgl_perolehan =$newDate;
             // $mas->invent_lama_garansi = $request->invent_lama_garansi;
             // $mas->invent_kondisi = $request->invent_kondisi;
-            $mas->last_update_date = $this->newUpdate;
+            $mas->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
             $mas->last_updated_by = Auth::user()->usr_name;
             $mas->program_name = "Master_Update";
             // $mas->invent_barcode = $request->invent_barcode;
@@ -208,12 +199,8 @@ class MasterController extends Controller
             // $mas->invent_photo = $nama_file;
             $mas->save();
         
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
- 
-        return response()->json($msg);
+        
+            return ResponseFormatter::success($mas,'Successfully Updated Data Master');
     }
     public function delete($invent_code)
     {
@@ -222,7 +209,8 @@ class MasterController extends Controller
             unlink(Storage_path('app/public/master_peripheral/'.$mas->invent_photo));
         }
         $mas->delete();
-            return response()->json('Successfully deleted');
+            
+        return ResponseFormatter::success($mas,'Successfully Deleted Data Master');
     }
     public function cetak_pdf()
     {

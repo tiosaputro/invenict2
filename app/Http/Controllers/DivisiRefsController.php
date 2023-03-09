@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Helpers\ResponseFormatter;
 use App\Model\Divisi_refs;
 Use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +13,8 @@ use App\Model\Mng_role_menu;
 
 class DivisiRefsController extends Controller
 {
+    protected $divisi;
+
     public function __construct(){
         $this->divisi = "/divisi-refs";
     }
@@ -49,8 +53,7 @@ class DivisiRefsController extends Controller
                 'div_verificator'=>'required',
             ],$message);
 
-        $date = Carbon::now();
-        $newUpdate =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newUpdate = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $div = Divisi_refs::find($code);
         $div->div_name = $request->div_name;
         $div->div_code = $request->div_code;
@@ -59,13 +62,12 @@ class DivisiRefsController extends Controller
         $div->last_update_date = $newUpdate;
         $div->program_name = "DivisiRefs_Update";
         $div->save();
-        return response()->json('Updated Successfully');
+        return ResponseFormatter::success($div,'Successfully Updated Division');
     }
     public function delete($div_id)
     {
-        $divisi = Divisi_refs::find($div_id);
-        $divisi->delete();
-        return response()->json('Deleted Successfully');
+        $divisi = Divisi_refs::find($div_id)->delete();
+        return ResponseFormatter::success($divisi,'Successfully Deleted Division');
     }
     function getDivisionRequest($bisnis){
 

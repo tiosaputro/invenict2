@@ -7,6 +7,7 @@ use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Model\Mng_modules;
+use App\Helpers\ResponseFormatter;
 
 class ModuleController extends Controller
 {
@@ -36,9 +37,9 @@ class ModuleController extends Controller
             'mod_stat'=>'required'
         ],$message);
 
-        $date = Carbon::now();
-        $newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $role = Mng_modules::create([
+        
+        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $module = Mng_modules::create([
             'mod_name'=>$request->mod_name,
             'mod_desc'=>$request->mod_desc,
             'mod_stat'=>$request->mod_stat,
@@ -46,6 +47,7 @@ class ModuleController extends Controller
             'creation_date'=>$newCreation,
             'program_name'=>'ModuleController_SAVE'
         ]);
+        return ResponseFormatter::success($module,'Successfully Created Module');
     }
     public function edit($code)
     {
@@ -65,8 +67,7 @@ class ModuleController extends Controller
             'mod_stat'=>'required'
         ],$message);
 
-        $date = Carbon::now();
-        $newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newUpdate = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $mod = Mng_modules::find($code);
         $mod->mod_name = $request->mod_name;
         $mod->mod_desc = $request->mod_desc;
@@ -74,12 +75,12 @@ class ModuleController extends Controller
         $mod->last_updated_by = Auth::user()->usr_name;
         $mod->last_update_date = $newUpdate;
         $mod->save();
-        return response()->json('Successfully Updated');
+        
+        return ResponseFormatter::success($mod,'Successfully Updated Module');
     }
     Public function delete($mod_id)
     {
-        $module = Mng_modules::find($mod_id);
-        $module->delete();
-        return response()->json('Successfully deleted');
+        $module = Mng_modules::find($mod_id)->delete();
+        return ResponseFormatter::success($module,'Successfully Deleted Module');
     }
 }

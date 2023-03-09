@@ -7,33 +7,17 @@ use App\Model\Mng_role_menu;
 use App\Model\Mng_usr_roles;
 use App\Model\Mng_roles;
 Use carbon\Carbon;
+use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class MngRoleMenuController extends Controller
 {
-    protected $newCreation;
-    protected $newUpdate;
-    public function __construct(){
-        $date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-    }
     function save(Request $request)
     {
         $role = Mng_roles::select('rol_id')->where('rol_name',$request->rol_name)->first();
-        $menus = $request->menu;
-        foreach($menus as $m){
-            $menu = Mng_role_menu::create([
-                'menu_id' => $m,
-                'rol_id' => $role->rol_id,
-                'rolm_stat' => 'T',
-                'creation_date' => $this->newCreation,
-                'created_by'=> Auth::user()->usr_name,
-                'program_name'=>'MngRoleMenuController_SAVE'
-            ]);
-      }
-      return response()->json('SUCCESS');
+        $saveRoleMenu = Mng_role_menu::saveRoleMenu($request,$role);
+      return ResponseFormatter::success($saveRoleMenu,'Successfully Created');
     }
     function edit($code)
     {
@@ -55,11 +39,11 @@ class MngRoleMenuController extends Controller
                 'creation_date' => $createday,
                 'created_by'=> $createdby,
                 'last_updated_by'=> Auth::user()->usr_name,
-                'last_update_date'=> $this->newUpdate,
+                'last_update_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 'program_name'=>'MngRoleMenuController_UPDATE'
             ]);
         }
-        return response()->json($menu);
+      return ResponseFormatter::success($menu,'Successfully Updated');
     }
     function cekUser()
     {

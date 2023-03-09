@@ -3,6 +3,8 @@
 namespace App\Model;;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class Mng_role_menu extends Model
 {
@@ -23,4 +25,19 @@ class Mng_role_menu extends Model
     protected $primaryKey = 'rolm_id';
     public $incrementing = false;
     public $timestamps = false;
+
+    public static function saveRoleMenu($request,$role){
+        $menus = $request->menu;
+        foreach($menus as $m){
+            $menu = Mng_role_menu::create([
+                'menu_id' => $m,
+                'rol_id' => $role->rol_id,
+                'rolm_stat' => 'T',
+                'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                'created_by'=> Auth::user()->usr_name,
+                'program_name'=>'MngRoleMenuController_SAVE'
+            ]);
+      } 
+      return $menu;
+    }
 }

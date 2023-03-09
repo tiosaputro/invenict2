@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseFormatter;
 use App\Model\Mng_usr_roles;
 use App\Model\Mng_role_menu;
 
@@ -40,26 +41,8 @@ class PembelianController extends Controller
     }
     Public function save(Request $request)
     {
-        $date = Carbon::now();
-        $newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $newDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->purch_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        $pemb = Pembelian::create([
-            'purchase_date'=>$newDate,
-            'purchase_petugas'=>$request->petugas,
-            'suplier_code'=>$request->supp,
-            'purchase_pay_methode'=>$request->pay,
-            'valuta_code'=> $request->money,
-            // 'purchase_status'=>$request->status,
-            'purchase_remark'=>$request->ket,
-            'creation_date'=> $newCreation,
-            'created_by'=> Auth::user()->usr_name,
-            'program_name'=> "Pembelian_Save"
-        ]);
-        $msg = [
-            'success' => true,
-            'message' => 'Created Successfully'
-        ];
-        return response()->json($msg);
+        $saveData = Pembelian::createDataPembelian($request);
+        return ResponseFormatter::success($saveData,'Successfully Created Data');
     }
     Public function edit($code)
     {
@@ -116,19 +99,15 @@ class PembelianController extends Controller
         $pem->last_updated_by = Auth::user()->usr_name;
         $pem->program_name = "Pembelian_Update";
         $pem->save();
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
- 
-        return response()->json($msg);
+        
+        return ResponseFormatter::success($pem,'Successfully Updated Data');
     }
 
     Public function delete($purchase_id)
     {
-        $pem = Pembelian::find($purchase_id);
-        $pem->delete();
-            return response()->json('Successfully deleted');
+        $pem = Pembelian::find($purchase_id)->delete();
+
+        return ResponseFormatter::success($pem,'Successfully Deleted Data');
     }
     public function cetak_pdf()
     {

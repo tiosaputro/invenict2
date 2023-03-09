@@ -106,6 +106,13 @@ export default {
                 detail: "Welcome " + response.data.usr_name + " 👋",
               });
               localStorage.clear();
+              this.$cookies.set("loggedIn", "true","1d");
+              this.$cookies.set("token", response.data.token,"1d");
+              this.$cookies.set("usr_loc", response.data.usr_loc,"1d");
+              this.$cookies.set('active',0,"1d");
+              this.$cookies.set('active1',0,"1d");
+              this.$cookies.set('active2',0,"1d");
+              this.$cookies.set('active3',0,"1d");
               localStorage.setItem("loggedIn", "true");
               localStorage.setItem("token", response.data.token);
               localStorage.setItem("usr_loc", response.data.usr_loc);
@@ -113,6 +120,7 @@ export default {
               localStorage.setItem('active1',0);
               localStorage.setItem('active2',0);
               localStorage.setItem('active3',0);
+              console.log(this.$cookies.get('token'));
               setTimeout( () => this.$router.push('/dashboard'), 1000);
             }).catch(error=> {
                 this.submitted = false;

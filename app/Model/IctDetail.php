@@ -4,6 +4,9 @@ namespace App\Model;;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class IctDetail extends Model
 {
@@ -53,7 +56,6 @@ class IctDetail extends Model
         return $query;
     }
 
-    
     protected function getKeyForSaveQuery($keyName = null)
     {
         if(is_null($keyName)){
@@ -67,4 +69,116 @@ class IctDetail extends Model
         return $this->getAttribute($keyName);
     }
 
+    public static function ApprovedByAtasan($code){
+        $dtl = DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'A1',
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_approveByAtasan",
+        ]);
+        return $dtl;
+    }
+    
+    public static function RejectedByAtasan($request, $code){
+        $dtl = DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'A2',
+            'ireq_reason' => $request->ket,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_rejectByManager",
+        ]);
+        return $dtl;
+    }
+
+    public static function ApprovedByIctManager($code){
+        $dtl = DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'A2',
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_approveByManager",
+        ]);
+        return $dtl;
+    }
+     
+    public static function RejectedByIctManager($request, $code){
+        $dtl = DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'RA2',
+            'ireq_reason' => $request->ket,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_rejectIctManager",
+        ]);
+        
+        return $dtl;
+    }
+
+    public static function RejectedByReviewer($request, $code){
+        $dtl = DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'RR',
+            'ireq_reason' => $request->ket,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_rejectReviewer",
+        ]);
+        
+        return $dtl;
+    }
+
+    public static function needApprovalByHigherLevel($ireq_id){
+        DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$ireq_id)
+        ->update([
+            'ireq_status' => 'NA1',
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_needApprovalAtasan",
+        ]);
+    }
+
+    public static function needApprovalByIctManager($ireq_id){
+        $dtl = DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$ireq_id)
+        ->update([
+            'ireq_status' => 'NA2',
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctController_needApprovalManager",
+        ]);
+        return $dtl;
+    }
+
+    public static function AcceptByPersonnel($ireq_id){
+        DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->where('ireq_assigned_to1',Auth::user()->usr_fullname)
+        ->update([
+            'ireq_status' => 'T',
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctDetailController_abp",
+        ]);
+    }
+
+    public static function rejectedByPersonnel($request, $ireq_id){
+        DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->where('ireq_assigned_to1',Auth::user()->usr_fullname)
+        ->update([
+            'ireq_status' => 'RT',
+            'ireq_assigned_to1_reason' => $request->ireq_reason,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name,
+            'program_name' => "IctDetailController_rbp"
+        ]);
+    }
 }

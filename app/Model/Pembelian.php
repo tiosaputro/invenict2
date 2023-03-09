@@ -4,6 +4,8 @@ namespace App\Model;;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 class Pembelian extends Model
 {
     protected $fillable = [
@@ -27,4 +29,20 @@ class Pembelian extends Model
     protected $table='purchase_mst';
     protected $primaryKey='purchase_id';
     public $timestamps = false;
+
+    public static function createDataPembelian($request){
+        $createData = Pembelian::create([
+            'purchase_date'=>Carbon::createFromFormat('D M d Y H:i:s e+',$request->purch_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d'),
+            'purchase_petugas'=>$request->petugas,
+            'suplier_code'=>$request->supp,
+            'purchase_pay_methode'=>$request->pay,
+            'valuta_code'=> $request->money,
+            // 'purchase_status'=>$request->status,
+            'purchase_remark'=>$request->ket,
+            'creation_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'created_by'=> Auth::user()->usr_name,
+            'program_name'=> "Pembelian_Save"
+        ]);
+        return $createData;
+    }
 }

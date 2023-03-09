@@ -13,19 +13,18 @@ use App\Exports\LookupExport;
 use Illuminate\Validation\Rule;
 use App\Model\Mng_usr_roles;
 use App\Model\Mng_role_menu;
+use App\Helpers\ResponseFormatter;
 
 class LookupsController extends Controller
 {
-    protected $newCreation;
-    protected $newUpdate;
+    protected $kategori;
+    protected $lookup;
     protected $requestor;
+    protected $brand;
     public function __construct(){
         $this->brand = "/referensi-brand";
         $this->lookup = "/referensi-lookups";
         $this->kategori = "/referensi-kategori";
-        $date = Carbon::now();
-        $this->newCreation = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $this->requestor='/ict-request';
     }
     public function index()
@@ -100,19 +99,16 @@ class LookupsController extends Controller
             'lookup_status'=>'required',
         ],$message);
         
-        $lookup = Lookup_Refs::Create([
+        $createLookup = Lookup_Refs::Create([
             'lookup_code' => $request->lookup_code,
             'lookup_type' => $request->lookup_type,
             'lookup_desc' => $request->lookup_desc,
             'lookup_status' => $request->lookup_status,
-            'creation_date' => $this->newCreation,
+            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by' => Auth::user()->usr_name,
             'program_name' => "Lookups_Save",
         ]);
-        return response()->json([
-            'success' => true,
-            'message' => $lookup
-        ]);
+        return ResponseFormatter::success($createLookup,'Successfully Created Lookup');
     }
     public function edit($code,$type)
     {
@@ -135,19 +131,17 @@ class LookupsController extends Controller
         ->update([
             'lookup_desc' => $request->lookup_desc,
             'lookup_status' => $request->lookup_status,
-            'last_update_date' => $this->newUpdate,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by' => Auth::user()->usr_name,
             'program_name' => "Lookups_Update",
         ]);
-        return response()->json([
-            'success' => true,
-            'message' => $ref,
-        ]);
+        return ResponseFormatter::success($ref,'Successfully Updated Lookup');
     }
     public function delete($lookup_code,$lookup_type)
     {
         $ref = Lookup_Refs::where('lookup_code',$lookup_code)->where('lookup_type',$lookup_type)->delete();
-        return response()->json('Successfully deleted');
+        
+        return ResponseFormatter::success($ref,'Successfully Deleted Lookup');
     }
     public function cetak_pdf()
     {

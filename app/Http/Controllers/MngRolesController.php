@@ -5,18 +5,11 @@ use App\Model\Mng_roles;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use carbon\Carbon;
+use App\Helpers\ResponseFormatter;
 use Illuminate\Http\Request;
 
 class MngRolesController extends Controller
 {
-    
-    protected $newCreation;
-    protected $newUpdate;
-    public function __construct(){
-        $date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-    }
     function index()
     {
        $roles = DB::table('mng_roles as mr')
@@ -49,7 +42,7 @@ class MngRolesController extends Controller
                 'rol_desc'=>$request->rol_desc,
                 'rol_stat'=>$request->rol_stat,
                 'created_by'=> Auth::user()->usr_name,
-                'creation_date'=>$this->newCreation,
+                'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
                 'program_name'=>'MngRoles_SAVE'
             ]);
     }
@@ -78,25 +71,15 @@ class MngRolesController extends Controller
         $role->rol_desc = $request->rol_desc;
         $role->rol_stat = $request->rol_stat;
         $role->last_updated_by = Auth::user()->usr_name;
-        $role->last_update_date = $this->newUpdate;
+        $role->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $role->program_name = 'MngRolesController_UUPDATE';
         $role->save();
 
-       $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
- 
-        return response()->json($msg);
+        return ResponseFormatter::success($role,'Successfully Updated Role');
     }
     function delete($rol_id)
     {
-        $role = Mng_roles::find($rol_id);
-        $role->delete();
-        $msg = [
-            'success' => true,
-            'message' => 'Successfully deleted'
-        ];
-        return response()->json($msg);
+        $role = Mng_roles::find($rol_id)->delete();
+        return ResponseFormatter::success($role,'Successfully Deleted Role');
     }
 }

@@ -7,21 +7,15 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use App\Helpers\ResponseFormatter;
 use App\Model\Mng_usr_roles;
 use App\Model\Mng_role_menu;
 
 class LocationController extends Controller
 {
-    protected $date;
-    protected $newCreation;
-    protected $newUpdate;
+    protected $location;
     public function __construct(){
         $this->location = "/referensi-location";
-        $date = Carbon::now();
-        $this->date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
     }
     function index(){
         $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
@@ -51,14 +45,11 @@ class LocationController extends Controller
             'loc_code' => $request->loc_code,
             'loc_desc' => $request->loc_desc,
             'loc_email' => $request->loc_email,
-            'creation_date' => $this->newCreation,
+            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'created_by' => Auth::user()->usr_name,
             'program_name' => "Location_Save",
         ]);
-        return response()->json([
-            'success' => true,
-            'message' => 'Succes Created'
-        ]);
+        return ResponseFormatter::success($loc,'Successfully Created Location');
     }
     function edit($code){
         $loc = Location::find($code);
@@ -77,18 +68,15 @@ class LocationController extends Controller
         $loc->loc_desc = $request->loc_desc;
         $loc->loc_email = $request->loc_email;
         $loc->last_updated_by = Auth::user()->usr_name;
-        $loc->last_update_date = $this->newUpdate;
+        $loc->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $loc->program_name = "LocationController@update";
         $loc->save();
-        return response()->json([
-            'success' => true,
-            'message' => 'Success Updated',
-        ]);
+        
+        return ResponseFormatter::success($loc,'Successfully Updated Location');
     }
     function delete($loc_code){
-        $loc = Location::find($loc_code);
-        $loc->delete();
-        return json_encode('Success Deleted');
+        $loc = Location::find($loc_code)->delete();
+        return ResponseFormatter::success($loc,'Successfully Deleted Location');
     }
     function getLocation(){
         $loc = Location::select('loc_code as code','loc_desc as name')->orderBy('loc_desc','ASC')->get();

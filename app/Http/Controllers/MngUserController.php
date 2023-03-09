@@ -11,18 +11,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Model\Mng_usr_roles;
+use App\Helpers\ResponseFormatter;
 use App\Model\Mng_role_menu;
 
 class MngUserController extends Controller
 {
-    protected $newCreation;
-    protected $newUpdate;
+    protected $user;
     public function __construct(){
         $this->user = "/mng-user";
-        $date = Carbon::now();
-        $this->newCreation =Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $this->newUpdate = Carbon::parse($date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-    }
+     }
     public function index()
     {
         $role = Mng_usr_roles::select('rol_id')->WHERE('usr_id',Auth::user()->usr_id)->pluck('rol_id');
@@ -81,15 +78,12 @@ class MngUserController extends Controller
             'div_id'=>$request->div,
             'usr_foto'=> $nama_file,
             'created_by'=> Auth::user()->usr_name,
-            'creation_date'=> $this->newCreation,
+            'creation_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'usr_loc'=>$request->usr_loc,
             'program_name'=>'MngUser_SAVE'
         ]);
        
-        return response()->json([
-            'success' => true,
-            'message' => $user
-        ]);
+        return ResponseFormatter::success($user,'Successfully Created User');
     }
     public function edit($code)
     {
@@ -145,7 +139,7 @@ class MngUserController extends Controller
                     $user->usr_bu = $request->usr_bu;
                     $user->usr_foto = $nama_file;
                     $user->usr_loc = $request->usr_loc;
-                    $user->last_update_date = $this->newUpdate;
+                    $user->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
                     $user->last_updated_by = Auth::user()->usr_name;
                     $user->program_name = 'MngUserController_UPDATE';
                     $user->save();
@@ -166,7 +160,7 @@ class MngUserController extends Controller
                     $user->usr_loc = $request->usr_loc;
                     $user->usr_bu = $request->usr_bu;
                     $user->usr_foto = $nama_file;
-                    $user->last_update_date = $this->newUpdate;
+                    $user->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
                     $user->last_updated_by = Auth::user()->usr_name;
                     $user->program_name = 'MngUserController_UPDATE';
                     $user->save();
@@ -181,7 +175,7 @@ class MngUserController extends Controller
                 $user->div_id = $request->div_id;
                 $user->usr_loc = $request->usr_loc;
                 $user->usr_bu = $request->usr_bu;
-                $user->last_update_date = $this->newUpdate;
+                $user->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
                 $user->last_updated_by = Auth::user()->usr_name;
                 $user->program_name = 'MngUserController_UPDATE';
                 $user->save();
@@ -194,25 +188,20 @@ class MngUserController extends Controller
             $user->div_id = $request->div_id;
             $user->usr_loc = $request->usr_loc;
             $user->usr_bu = $request->usr_bu;
-            $user->last_update_date = $this->newUpdate;
+            $user->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
             $user->last_updated_by = Auth::user()->usr_name;
             $user->program_name = 'MngUserController_UPDATE';
             $user->save();
         }
     }
-        $msg = [
-            'success' => true,
-            'message' => 'Updated Successfully'
-        ];
- 
-        return response()->json($msg);
+    return ResponseFormatter::success($user,'Successfully Updated User');
     }
     public function delete($usr_id)
     {
         $user = Mng_user::find($usr_id);
         unlink(Storage_path('app/public/profile/'.$user->usr_foto));
         $user->delete();
-            return response()->json('Successfully deleted');
+        return ResponseFormatter::success($user,'Successfully Deleted Role');
     }
     public function getVerif($div_id)
     {
