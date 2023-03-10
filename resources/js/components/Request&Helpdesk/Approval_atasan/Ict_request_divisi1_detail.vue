@@ -110,7 +110,7 @@ export default {
     };
   },
   mounted() {
-   this.cekUser();
+   this.getIctDetail();
   },
   methods: {
     getDetail(ireq_attachment){
@@ -118,37 +118,28 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Approval Atasan") || this.checkto.includes("/ict-request-higher-level")){ 
-          this.getIctDetail();
-          this.getNoreq();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
-        this.tes = response.data.map((x)=>x.ireq_assigned_to);
+      this.axios.get('/api/ict-detail-higher-level/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data.data;
+        this.getNoreq();
+        this.tes = response.data.data.map((x)=>x.ireq_assigned_to);
         if(this.tes.length > 0 && this.tes[0] != null){
           this.ireq = this.tes
         }
         else{}
         this.loading = false;
-      }).catch(error=>{
-        if (error.response.status == 401) {
+        }).catch(error=>{
+          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
       });
     },
     getNoreq(){

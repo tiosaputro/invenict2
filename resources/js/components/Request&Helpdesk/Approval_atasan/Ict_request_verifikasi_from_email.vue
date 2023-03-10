@@ -237,18 +237,21 @@ export default {
         this.submitted = false;
       },
       getIctDetail(){
-        this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.verif = response.data;
           this.loading = false;
           this.cek();
         }).catch(error=>{
             if (error.response.status == 401) {
               this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
+                severity:'error', summary: 'Error', detail:'Session login expired'
+              });
+              localStorage.clear();
+              localStorage.setItem('Expired','true')
+              setTimeout( () => this.$router.push('/login'),2000);
+            }
+            if(error.response.status == 403){
+              this.$router.push('/access');
             }
         });
       },

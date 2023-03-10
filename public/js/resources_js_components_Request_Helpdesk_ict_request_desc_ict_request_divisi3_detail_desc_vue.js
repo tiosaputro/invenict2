@@ -34,13 +34,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.create();
+    this.getIctDetail();
   },
   methods: {
-    create: function create() {
-      this.getIctDetail();
-      this.getNoreq();
-    },
     edit: function edit(ireqd_id) {
       var _this = this;
       this.dialogEdit = true;
@@ -97,6 +93,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this4.detail = response.data;
+        _this4.getNoreq();
         _this4.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 403) {

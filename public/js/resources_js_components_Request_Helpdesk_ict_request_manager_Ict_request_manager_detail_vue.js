@@ -36,7 +36,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     formatDate: function formatDate(date) {
@@ -47,39 +47,19 @@ __webpack_require__.r(__webpack_exports__);
       var myWindow = window.open(page, "_blank");
       myWindow.focus();
     },
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Approval Manager") || _this.checkto.includes("/ict-request-manager")) {
-          _this.getIctDetail();
-          _this.getNoreq();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getIctDetail: function getIctDetail() {
-      var _this2 = this;
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {
+      var _this = this;
+      this.axios.get('/api/ict-detail-manager/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.detail = response.data;
-        _this2.loading = false;
+        _this.detail = response.data.data;
+        _this.getNoreq();
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -87,24 +67,27 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$route.push('/access');
         }
       });
     },
     getNoreq: function getNoreq() {
-      var _this3 = this;
+      var _this2 = this;
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.kode = response.data;
-        _this3.status = response.data.cekstatus;
+        _this2.kode = response.data;
+        _this2.status = response.data.cekstatus;
       });
     },
     DeleteIct: function DeleteIct(ireqd_id) {
-      var _this4 = this;
+      var _this3 = this;
       this.$confirm.require({
         message: "Are you sure you want to delete this record data?",
         header: "Delete Confirmation",
@@ -113,24 +96,24 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
-          _this4.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
+          _this3.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this4.token
+              'Authorization': 'Bearer ' + _this3.token
             }
           });
-          _this4.getIctDetail();
+          _this3.getIctDetail();
         },
         reject: function reject() {}
       });
     },
     CetakPdf: function CetakPdf() {
-      var _this5 = this;
+      var _this4 = this;
       this.loading = true;
       this.axios.get('/api/print-out-ict-request/' + this.code, {
         headers: {
@@ -140,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this5.loading = false;
+        _this4.loading = false;
       });
     }
   }

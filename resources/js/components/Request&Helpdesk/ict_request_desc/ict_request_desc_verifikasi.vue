@@ -142,7 +142,6 @@ export default {
   },
   mounted() {
     this.getIctDetail();
-    this.getNoreq();
   },
   methods: {
     getDetail(ireq_attachment){
@@ -156,8 +155,8 @@ export default {
         header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: () => {
           this.$toast.add({
             severity: "info",
@@ -190,8 +189,9 @@ export default {
         this.submitted = false;
       },
     getIctDetail(){
-      this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.verif = response.data;
+        this.getNoreq();
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 403) {

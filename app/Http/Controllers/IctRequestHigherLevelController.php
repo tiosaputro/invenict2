@@ -218,6 +218,15 @@ class IctRequestHigherLevelController extends Controller
 
             return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6,'ict7'=>$ict7,'ict8'=>$ict8,'ict9'=>$ict9]);
     }
+    function detailRequest($code){
+        $data = IctDetail::getDataDetailRequest($code);
+        return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
+    }
+    function getDetailVerif($code)
+    {
+        $data = IctDetail::detailVerification($code);
+        return response()->json($data);
+    }
     function cetak_pdf_atasan_permohonan()
     {
         $ict =  DB::table('ireq_mst as im')

@@ -33,7 +33,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getIct();
   },
   methods: {
     getAttach: function getAttach(event) {
@@ -65,35 +65,47 @@ __webpack_require__.r(__webpack_exports__);
         this.ict.invent_code = '';
       }
     },
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Request") || _this.checkto.includes("/ict-request")) {
-          _this.getIct();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getKode: function getKode() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/getAddDetail', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.type = response.data.ref;
-        _this2.kodeperi = response.data.kode;
+        _this.type = response.data.ref;
+        _this.kodeperi = response.data.kode;
+      })["catch"](function (error) {
+        if (error.response.status == 401) {
+          _this.$toast.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired", "true");
+          setTimeout(function () {
+            return _this.$router.push('/login');
+          }, 2000);
+        }
+      });
+    },
+    getIct: function getIct() {
+      var _this2 = this;
+      this.axios.get('/api/edit-ict-detail-reviewer/' + this.$route.params.ireq + '/' + this.$route.params.code, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      }).then(function (response) {
+        _this2.ict = response.data;
+        if (_this2.ict.ireq_attachment) {
+          if (_this2.ict.ireq_attachment.split('.').pop() == 'jpeg' || _this2.ict.ireq_attachment.split('.').pop() == 'png' || _this2.ict.ireq_attachment.split('.').pop() == 'jpg') {
+            _this2.image = true;
+          } else {
+            _this2.pdf = true;
+          }
+        }
+        _this2.cekTipeReq = _this2.ict.ireq_type;
+        _this2.getKode();
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this2.$toast.add({
@@ -102,34 +114,18 @@ __webpack_require__.r(__webpack_exports__);
             detail: 'Session login expired'
           });
           localStorage.clear();
-          localStorage.setItem("Expired", "true");
+          localStorage.setItem('Expired', 'true');
           setTimeout(function () {
             return _this2.$router.push('/login');
           }, 2000);
         }
-      });
-    },
-    getIct: function getIct() {
-      var _this3 = this;
-      this.axios.get('/api/edit-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
+        if (error.response.status == 403) {
+          _this2.$router.push('/access');
         }
-      }).then(function (response) {
-        _this3.ict = response.data;
-        if (_this3.ict.ireq_attachment) {
-          if (_this3.ict.ireq_attachment.split('.').pop() == 'jpeg' || _this3.ict.ireq_attachment.split('.').pop() == 'png' || _this3.ict.ireq_attachment.split('.').pop() == 'jpg') {
-            _this3.image = true;
-          } else {
-            _this3.pdf = true;
-          }
-        }
-        _this3.cekTipeReq = _this3.ict.ireq_type;
-        _this3.getKode();
       });
     },
     UpdateIctDetail: function UpdateIctDetail() {
-      var _this4 = this;
+      var _this3 = this;
       this.errors = [];
       this.error = [];
       if (this.ict.ireq_type == 'P') {
@@ -139,16 +135,16 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + this.token
             }
           }).then(function () {
-            _this4.$toast.add({
+            _this3.$toast.add({
               severity: "success",
               summary: "Success Message",
               detail: "Success Update"
             });
             setTimeout(function () {
-              return _this4.$router.go(-1);
+              return _this3.$router.go(-1);
             }, 1000);
           })["catch"](function (error) {
-            _this4.errors = error.response.data.errors;
+            _this3.errors = error.response.data.errors;
           });
         } else {
           if (this.ict.ireq_remark == null) {
@@ -162,16 +158,16 @@ __webpack_require__.r(__webpack_exports__);
               'Authorization': 'Bearer ' + this.token
             }
           }).then(function () {
-            _this4.$toast.add({
+            _this3.$toast.add({
               severity: "success",
               summary: "Success Message",
               detail: "Success Update"
             });
             setTimeout(function () {
-              return _this4.$router.go(-1);
+              return _this3.$router.go(-1);
             }, 1000);
           })["catch"](function (error) {
-            _this4.errors = error.response.data.errors;
+            _this3.errors = error.response.data.errors;
           });
         } else {
           if (this.ict.ireq_remark == null) {

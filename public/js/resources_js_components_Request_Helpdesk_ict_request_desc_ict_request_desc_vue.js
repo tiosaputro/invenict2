@@ -178,6 +178,9 @@ __webpack_require__.r(__webpack_exports__);
             return _this.$router.push('/login');
           }, 2000);
         }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
+        }
       });
     },
     getIct2: function getIct2() {
@@ -209,6 +212,9 @@ __webpack_require__.r(__webpack_exports__);
           setTimeout(function () {
             return _this2.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this2.$router.push('/access');
         }
       });
     },
@@ -251,6 +257,9 @@ __webpack_require__.r(__webpack_exports__);
             return _this3.$router.push('/login');
           }, 2000);
         }
+        if (error.response.status == 403) {
+          _this3.$router.push('/access');
+        }
       });
     },
     getIct4: function getIct4() {
@@ -278,6 +287,9 @@ __webpack_require__.r(__webpack_exports__);
           setTimeout(function () {
             return _this4.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this4.$router.push('/access');
         }
       });
     },
@@ -311,6 +323,9 @@ __webpack_require__.r(__webpack_exports__);
             return _this5.$router.push('/login');
           }, 2000);
         }
+        if (error.response.status == 403) {
+          _this5.$router.push('/access');
+        }
       });
     },
     getIct7: function getIct7() {
@@ -340,6 +355,9 @@ __webpack_require__.r(__webpack_exports__);
           setTimeout(function () {
             return _this6.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this6.$router.push('/access');
         }
       });
     },

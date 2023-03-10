@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     getDetail: function getDetail(ireq_attachment) {
@@ -43,45 +43,25 @@ __webpack_require__.r(__webpack_exports__);
       var myWindow = window.open(page, "_blank");
       myWindow.focus();
     },
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Status") || _this.checkto.includes("/ict-request")) {
-          _this.getIctDetail();
-          _this.getNoreq();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getIctDetail: function getIctDetail() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.detail = response.data;
-        _this2.tes = response.data.map(function (x) {
+        _this.detail = response.data;
+        _this.getNoreq();
+        _this.tes = response.data.map(function (x) {
           return x.ireq_assigned_to;
         });
-        if (_this2.tes.length > 0 && _this2.tes[0] != null) {
-          _this2.ireq = _this2.tes;
+        if (_this.tes.length > 0 && _this.tes[0] != null) {
+          _this.ireq = _this.tes;
         } else {}
-        _this2.loading = false;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -89,24 +69,27 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this2.$router.push('/login');
+            return _this.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this.$router.push('/access');
         }
       });
     },
     getNoreq: function getNoreq() {
-      var _this3 = this;
+      var _this2 = this;
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.kode = response.data.noreq;
-        _this3.status = response.data.ireq_status;
+        _this2.kode = response.data.noreq;
+        _this2.status = response.data.ireq_status;
       });
     },
     DeleteIct: function DeleteIct(ireqd_id) {
-      var _this4 = this;
+      var _this3 = this;
       this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
         header: "Delete Confirmation",
@@ -115,18 +98,18 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Ya",
         rejectLabel: "Tidak",
         accept: function accept() {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
-          _this4.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
+          _this3.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this4.token
+              'Authorization': 'Bearer ' + _this3.token
             }
           });
-          _this4.getIctDetail();
+          _this3.getIctDetail();
         },
         reject: function reject() {}
       });

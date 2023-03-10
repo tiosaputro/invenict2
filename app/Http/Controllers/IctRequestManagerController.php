@@ -159,6 +159,18 @@ class IctRequestManagerController extends Controller
 
             return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
     }
+
+    function detailRequest($code){
+        $data = IctDetail::getDataDetailRequest($code);
+        return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
+    }
+
+    function getDetailVerif($code)
+    {
+        $data = IctDetail::detailVerification($code);
+        return response()->json($data);
+    }
+
     function getDataManagerVerifikasi($code)
     {
         $dtl = DB::table('ireq_dtl as id')
@@ -176,6 +188,7 @@ class IctRequestManagerController extends Controller
         ->get();
             return response()->json($dtl);
     }
+
     function approveByManager(Request $request,$code)
     { 
         $save =  Ict::approvedByIctManager($request,$code);
@@ -183,6 +196,7 @@ class IctRequestManagerController extends Controller
 
         return ResponseFormatter::success($save,'Successfully approved Request');
     }
+
     function rejectByManager(Request $request,$code)
     {
         
@@ -190,6 +204,12 @@ class IctRequestManagerController extends Controller
         IctDetail::RejectedByIctManager($request,$code);
 
         return ResponseFormatter::success($save,'Successfully rejected Request');
+    }
+
+    function detailPenugasan($code)
+    {
+        $data = IctDetail::detailRequestForAssignment($code);
+        return json_encode($data);
     }
     function cetak_pdf_manager_permohonan()
     {
@@ -211,11 +231,13 @@ class IctRequestManagerController extends Controller
         ->get();
         return view('pdf/Laporan_IctRequest_Permohonan', compact('ict'));
     }
+
     function cetak_excel_manager_permohonan()
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportManagerPermohonan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
+
     function cetak_pdf_manager_verifikasi()
     {
         $ict =  DB::table('ireq_mst as im')
@@ -239,6 +261,7 @@ class IctRequestManagerController extends Controller
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportVerifikasiManager(),'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
+
     function cetak_pdf_manager_reject()
     {
         $ict =  DB::table('ireq_mst as im')
@@ -262,11 +285,13 @@ class IctRequestManagerController extends Controller
         ->get();
         return view('pdf/Laporan_IctRequest_Reject', compact('ict'));
     }
+
     function cetak_excel_manager_reject()
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportRejectManager,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
+
     function cetak_pdf_manager_assignment_request()
     {
         $ict =  DB::table('ireq_mst as im')
@@ -285,11 +310,13 @@ class IctRequestManagerController extends Controller
         ->get();
         return view('pdf/Laporan_IctRequest_Sedang_Dikerjakan', compact('ict'));
     }
+
     function cetak_excel_manager_assignment_request()
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportManagerAssignmentRequest,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
+
     function cetak_pdf_manager_sedang_dikerjakan()
     {
         $ict =  DB::table('ireq_mst as im')
@@ -304,11 +331,13 @@ class IctRequestManagerController extends Controller
         ->get();
         return view('pdf/Laporan_IctRequest_Sedang_Dikerjakan', compact('ict'));
     }
+
     function cetak_excel_manager_sedang_dikerjakan()
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportManagerSedangDikerjakan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
+
     function cetak_pdf_manager_sudah_dikerjakan()
     {
         $ict =  DB::table('ireq_dtl as id')
@@ -332,11 +361,13 @@ class IctRequestManagerController extends Controller
         ->get();
         return view('pdf/Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'));
     }
+
     function cetak_excel_manager_sudah_dikerjakan()
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportManagerSudahDikerjakan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
+
     function cetak_pdf_manager_selesai()
     {
         $ict =  DB::table('ireq_dtl as id')
@@ -365,6 +396,7 @@ class IctRequestManagerController extends Controller
         ->get();
         return view('pdf/Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'));
     }
+    
     function cetak_excel_manager_selesai()
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');

@@ -37,32 +37,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Atasan Requestor Divisi") || _this.checkto.includes("/ict-request-higher-level")) {
-          _this.getIctDetail();
-          _this.getNoreq();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     Approve: function Approve() {
-      var _this2 = this;
+      var _this = this;
       this.$confirm.require({
         message: "Are you sure you agree to this request?",
         header: "Confirmation Approval",
@@ -71,25 +50,25 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this2.$toast.add({
+          _this.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully approved this request"
           });
-          _this2.axios.get('/api/updateStatusPermohonan/' + _this2.$route.params.code, {
+          _this.axios.get('/api/updateStatusPermohonan/' + _this.$route.params.code, {
             headers: {
-              'Authorization': 'Bearer ' + _this2.token
+              'Authorization': 'Bearer ' + _this.token
             }
           });
           setTimeout(function () {
-            return _this2.$router.push('/ict-request-higher-level');
+            return _this.$router.push('/ict-request-higher-level');
           }, 1000);
         },
         reject: function reject() {}
       });
     },
     updateReject: function updateReject() {
-      var _this3 = this;
+      var _this2 = this;
       this.submitted = true;
       if (this.reason.ket != null) {
         this.axios.put('/api/updateStatusReject/' + this.$route.params.code, this.reason, {
@@ -97,14 +76,14 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this3.dialogReject = false;
-          _this3.$toast.add({
+          _this2.dialogReject = false;
+          _this2.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully rejected this request"
           });
           setTimeout(function () {
-            return _this3.$router.push('/ict-request-higher-level');
+            return _this2.$router.push('/ict-request-higher-level');
           }, 1000);
         });
       }
@@ -115,16 +94,17 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = false;
     },
     getIctDetail: function getIctDetail() {
-      var _this4 = this;
-      this.axios.get('/api/get-verif/' + this.$route.params.code, {
+      var _this3 = this;
+      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.verif = response.data;
+        _this3.verif = response.data;
+        _this3.getNoreq();
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -132,24 +112,27 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this4.$router.push('/login');
+            return _this3.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this3.$router.push('/access');
         }
       });
     },
     getNoreq: function getNoreq() {
-      var _this5 = this;
+      var _this4 = this;
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this5.kode = response.data;
-        _this5.loading = false;
+        _this4.kode = response.data;
+        _this4.loading = false;
       });
     },
     DeleteIct: function DeleteIct(ireqd_id) {
-      var _this6 = this;
+      var _this5 = this;
       this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
         header: "Delete Confirmation",
@@ -158,18 +141,18 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Ya",
         rejectLabel: "Tidak",
         accept: function accept() {
-          _this6.$toast.add({
+          _this5.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
-          _this6.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
+          _this5.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
             headers: {
-              'Authorization': 'Bearer ' + _this6.token
+              'Authorization': 'Bearer ' + _this5.token
             }
           });
-          _this6.getIctDetail();
+          _this5.getIctDetail();
         },
         reject: function reject() {}
       });

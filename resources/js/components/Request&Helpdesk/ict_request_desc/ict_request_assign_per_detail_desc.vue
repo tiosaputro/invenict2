@@ -160,7 +160,6 @@ export default {
   },
   mounted() {
     this.getIctDetail();
-    this.getNoreq();
   },
   methods: {
     getDetail(ireq_attachment){
@@ -205,8 +204,9 @@ export default {
         }
       },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data.data;
+        this.getNoreq();
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 403) {
@@ -214,12 +214,15 @@ export default {
           }
            else if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$route.push('/access');
+          }
       });
     },
     getNoreq(){

@@ -48,53 +48,32 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }, "code", null);
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY HH:mm");
     },
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Reviewer") || _this.checkto.includes("/ict-request/reviewer")) {
-          _this.getIctDetail();
-          _this.getNoreq();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     AssignPerDetail: function AssignPerDetail(ireqd_id) {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/detail/' + ireqd_id + '/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.assign = response.data;
+        _this.assign = response.data;
       });
       this.axios.get('/api/get-pekerja', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.petugas = response.data;
+        _this.petugas = response.data;
       });
       this.dialogAssign = true;
     },
     updateAssign: function updateAssign() {
-      var _this3 = this;
+      var _this2 = this;
       this.submitted = true;
       this.code = this.assign.ireqd_id;
       if (this.assign.status == 'RT') {
@@ -104,16 +83,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               'Authorization': 'Bearer ' + this.token
             }
           }).then(function () {
-            _this3.assign = [];
-            _this3.dialogAssign = false;
-            _this3.submitted = false;
-            _this3.$toast.add({
+            _this2.assign = [];
+            _this2.dialogAssign = false;
+            _this2.submitted = false;
+            _this2.$toast.add({
               severity: "info",
               summary: "Confirmed",
               detail: "Berhasil Assign",
               life: 3000
             });
-            _this3.getIctDetail();
+            _this2.getIctDetail();
           });
         }
       } else {
@@ -123,22 +102,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               'Authorization': 'Bearer ' + this.token
             }
           }).then(function () {
-            _this3.assign = [];
-            _this3.dialogAssign = false;
-            _this3.submitted = false;
-            _this3.$toast.add({
+            _this2.assign = [];
+            _this2.dialogAssign = false;
+            _this2.submitted = false;
+            _this2.$toast.add({
               severity: "info",
               summary: "Confirmed",
               detail: "Berhasil Assign",
               life: 3000
             });
-            _this3.getIctDetail();
+            _this2.getIctDetail();
           });
         }
       }
     },
     Submit: function Submit(ireqd_id) {
-      var _this4 = this;
+      var _this3 = this;
       this.$confirm.require({
         message: "Are you sure you want to submit this request?",
         header: "Confirmation",
@@ -147,18 +126,18 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Success Submit",
             life: 1000
           });
-          _this4.axios.get('/api/appd/' + ireqd_id + '/' + _this4.$route.params.code, {
+          _this3.axios.get('/api/appd/' + ireqd_id + '/' + _this3.$route.params.code, {
             headers: {
-              'Authorization': 'Bearer ' + _this4.token
+              'Authorization': 'Bearer ' + _this3.token
             }
           });
-          _this4.getIctDetail();
+          _this3.getIctDetail();
         },
         reject: function reject() {}
       });
@@ -169,26 +148,27 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.dialogAssign = false;
     },
     getIctDetail: function getIctDetail() {
-      var _this5 = this;
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {
+      var _this4 = this;
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this5.detail = response.data;
-        _this5.showPersonnel1 = response.data.map(function (x) {
+        _this4.detail = response.data.data;
+        _this4.showPersonnel1 = response.data.data.map(function (x) {
           return x.ireq_count_status;
         });
-        _this5.showPersonnel2 = response.data.map(function (x) {
+        _this4.showPersonnel2 = response.data.data.map(function (x) {
           return x.ireq_count_personnel2;
         });
-        _this5.showReason = response.data.map(function (x) {
+        _this4.showReason = response.data.data.map(function (x) {
           return x.ireq_count_reason;
         });
-        _this5.loading = false;
+        _this4.getNoreq();
+        _this4.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this5.$toast.add({
+          _this4.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -196,27 +176,30 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this5.$router.push('/login');
+            return _this4.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this4.$router.push('/access');
         }
       });
     },
     getNoreq: function getNoreq() {
-      var _this6 = this;
+      var _this5 = this;
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this6.kode = response.data;
-        _this6.status = response.data.cekstatus;
-        if (_this6.status == 'NT' || _this6.status == 'RT') {
-          _this6.show = true;
+        _this5.kode = response.data;
+        _this5.status = response.data.cekstatus;
+        if (_this5.status == 'NT' || _this5.status == 'RT') {
+          _this5.show = true;
         }
       });
     },
     CetakPdf: function CetakPdf() {
-      var _this7 = this;
+      var _this6 = this;
       this.loading = true;
       this.axios.get('/api/print-out-ict-request/' + this.$route.params.code, {
         headers: {
@@ -226,7 +209,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this7.loading = false;
+        _this6.loading = false;
       });
     } // CetakExcel(){
     //   window.open('/api/report-ict-detail-excel/' +this.code);

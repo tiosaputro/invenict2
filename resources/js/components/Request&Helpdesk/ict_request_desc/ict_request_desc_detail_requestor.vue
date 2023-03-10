@@ -149,7 +149,7 @@ export default {
     };
   },
   mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     getDetail(ireq_attachment){
@@ -157,22 +157,10 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
-           this.getIctDetail();
-           this.getNoreq()
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getIctDetail(){
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
+        this.getNoreq();
         this.tes = response.data.map((x)=>x.ireq_assigned_to);
         if(this.tes.length > 0 && this.tes[0] != null){
           this.ireq = this.tes
@@ -183,11 +171,14 @@ export default {
           if (error.response.status == 401) {
             this.$toast.add({
             severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
       });
     },
     getNoreq(){

@@ -109,7 +109,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this3 = this;
-      this.axios.get('/api/get-verif/' + this.$route.params.code, {
+      this.axios.get('/api/get-verif-manager/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
@@ -129,6 +129,9 @@ __webpack_require__.r(__webpack_exports__);
           setTimeout(function () {
             return _this3.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this3.$router.push('/login');
         }
       });
     },

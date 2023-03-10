@@ -156,13 +156,9 @@ export default {
     };
   },
   created() {
-      this.create();
+      this.getIctDetail();
   },
   methods: {
-    create(){
-      this.getIctDetail();
-      this.getNoreq();
-    },
     edit(ireqd_id){
       this.dialogEdit = true;
       this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -197,6 +193,7 @@ export default {
     getIctDetail(){
       this.axios.get('/api/get-detail-done/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
+        this.getNoreq();
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 403) {

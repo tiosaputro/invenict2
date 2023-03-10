@@ -4444,12 +4444,15 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
+              severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-           }
+          }
+          if (error.response.status == 403) {
+           this.$router.push('/access');
+          }
         });
       },
       getIct2(){
@@ -4467,12 +4470,15 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
+              severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-           }
+          }
+          if (error.response.status == 403) {
+           this.$router.push('/access');
+          }
         });
       },
       getIct3(){
@@ -4493,12 +4499,15 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
+              severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-           }
+          }
+          if (error.response.status == 403) {
+           this.$router.push('/access');
+          }
         });
       },
       getIct4(){
@@ -4512,12 +4521,15 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
+              severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-           }
+          }
+          if (error.response.status == 403) {
+           this.$router.push('/access');
+          }
         });
       },
       getIct5(){
@@ -4535,12 +4547,15 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
+              severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-           }
+          }
+          if (error.response.status == 403) {
+           this.$router.push('/access');
+          }
         });
       },
       getIct7(){
@@ -4556,12 +4571,15 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
+              severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-           }
+          }
+          if (error.response.status == 403) {
+           this.$router.push('/access');
+          }
         });
       },
       AssignPerRequest(ireq_id){

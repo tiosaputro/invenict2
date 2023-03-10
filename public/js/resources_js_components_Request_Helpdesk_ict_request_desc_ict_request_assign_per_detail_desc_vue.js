@@ -40,7 +40,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   mounted: function mounted() {
     this.getIctDetail();
-    this.getNoreq();
   },
   methods: (_methods = {
     getDetail: function getDetail(ireq_attachment) {
@@ -98,12 +97,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }
   }), _defineProperty(_methods, "getIctDetail", function getIctDetail() {
     var _this3 = this;
-    this.axios.get('/api/ict-detail/' + this.$route.params.code, {
+    this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {
       headers: {
         'Authorization': 'Bearer ' + this.token
       }
     }).then(function (response) {
-      _this3.detail = response.data;
+      _this3.detail = response.data.data;
+      _this3.getNoreq();
       _this3.loading = false;
     })["catch"](function (error) {
       if (error.response.status == 403) {
@@ -119,6 +119,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         setTimeout(function () {
           return _this3.$router.push('/login');
         }, 2000);
+      }
+      if (error.response.status == 403) {
+        _this3.$route.push('/access');
       }
     });
   }), _defineProperty(_methods, "getNoreq", function getNoreq() {

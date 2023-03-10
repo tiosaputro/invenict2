@@ -277,6 +277,28 @@ class IctRequestRequestorController extends Controller
         $save = Ict::deleteRequest($ireq_id);
         return ResponseFormatter::success($save,'Successfully Deleted Request');
     }
+    function submitRating(Request $request){
+        if($request->rating <= '2'){
+            $dtl = DB::table('ireq_dtl')
+            ->where('ireqd_id',$request->id)
+            ->where('ireq_id',$request->ireq_id)
+            ->update([
+                'ireq_value' => $request->rating,
+                'ireq_note' => $request->ket
+            ]);
+            
+            return ResponseFormatter::success($dtl,'Successfully Submitted Rating');
+        }
+        else{
+            $dtl = DB::table('ireq_dtl')
+            ->where('ireqd_id',$request->id)
+            ->where('ireq_id',$request->ireq_id)
+            ->update([
+                'ireq_value' => $request->rating
+            ]);
+            return ResponseFormatter::success($dtl,'Successfully Submitted Rating');
+        }
+    }
     function getAddReq()
     {
         $ref = Lookup_Refs::Type();

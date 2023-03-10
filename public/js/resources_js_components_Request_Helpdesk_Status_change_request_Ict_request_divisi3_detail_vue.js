@@ -39,7 +39,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     formatDate: function formatDate(date) {
@@ -50,49 +50,28 @@ __webpack_require__.r(__webpack_exports__);
       var myWindow = window.open(page, "_blank");
       myWindow.focus();
     },
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Status Change Request") || _this.checkto.includes("/ict-request-personnel")) {
-          _this.getIctDetail();
-          _this.getNoreq();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getUser: function getUser() {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/user', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.user = response.data;
+        _this.user = response.data;
       });
     },
     getStatus: function getStatus() {
-      var _this3 = this;
+      var _this2 = this;
       this.axios.get('/api/getStatusIct', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this3.status = response.data;
+        _this2.status = response.data;
       });
     },
     submit: function submit() {
-      var _this4 = this;
+      var _this3 = this;
       this.submitted = true;
       if (this.editDetail.status != null) {
         this.axios.put('/api/update-status-done/' + this.$route.params.code, this.editDetail, {
@@ -100,29 +79,30 @@ __webpack_require__.r(__webpack_exports__);
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function () {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: 'success',
             summary: 'Success Message',
             detail: 'Success Change Status',
             life: 3000
           });
-          _this4.cancel();
-          _this4.getIctDetail();
+          _this3.cancel();
+          _this3.getIctDetail();
         });
       }
     },
     getIctDetail: function getIctDetail() {
-      var _this5 = this;
-      this.axios.get('/api/get-detail-done/' + this.$route.params.code, {
+      var _this4 = this;
+      this.axios.get('/api/get-detail-done-personnel/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this5.detail = response.data;
-        _this5.loading = false;
+        _this4.detail = response.data;
+        _this4.getNoreq();
+        _this4.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this5.$toast.add({
+          _this4.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -130,19 +110,22 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this5.$router.push('/login');
+            return _this4.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this4.$router.push('/access');
         }
       });
     },
     getNoreq: function getNoreq() {
-      var _this6 = this;
+      var _this5 = this;
       this.axios.get('/api/get-noreq/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this6.kode = response.data;
+        _this5.kode = response.data;
       });
     }
   }

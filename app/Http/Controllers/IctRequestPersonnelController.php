@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Helpers\ResponseFormatter;
+use App\Model\IctDetail;
 use App\Mng_User;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\IctExportPersonnelAssignmentRequest;
@@ -12,6 +15,7 @@ use App\Exports\IctExportPersonnelReject;
 use App\Exports\IctExportPersonnelSedangDikerjakan;
 use App\Exports\IctExportPersonnelSudahDikerjakan;
 use App\Exports\IctExportPersonnelSelesai;
+use App\Jobs\SendNotifDone;
 
 class IctRequestPersonnelController extends Controller
 {
@@ -152,6 +156,93 @@ class IctRequestPersonnelController extends Controller
          ->get();
             return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4]);
     }
+    function saveRemark(Request $request,$code){
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireqd_id',$code)
+        ->where('ireq_id',$request->ireq_id)
+        ->update([
+            'ireq_assigned_remark' => $request->ireq_assigned_remark,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name
+        ]);
+        return ResponseFormatter::success($dtl,'Successfully Added Remark');
+    }
+    function rejectedByPersonnel(Request $request,$ireq_id){
+        $saveDtl = IctDetail::rejectedByPersonnel($request,$ireq_id); 
+        DB::getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST($ireq_id); end;");
+        return ResponseFormatter::success($saveDtl,'Successfully rejected by personnel');
+        
+    }
+    function acceptedByPersonnel($ireq_id){
+        $save = IctDetail::AcceptByPersonnel($ireq_id);
+        DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
+        IctDetail::cekStatusPenugasan($ireq_id);
+        return ResponseFormatter::success($save,'Successfully accepted by personnel');
+    }
+    function updateNote(Request $request,$code){
+        
+        $save = DB::table('ireq_dtl')
+        ->where('ireqd_id',$code)
+        ->where('ireq_id',$request->ireq_id)
+        ->update([
+            'ireq_note_personnel' => $request->ireq_reason,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name
+        ]);
+
+        return ResponseFormatter::success($save,'Successfully Submitted Note');
+    }
+    function updateStatusDone(Request $request,$code){
+        
+        $save = DB::table('ireq_dtl')
+        ->where('ireqd_id',$request->ireqd_id)
+        ->where('ireq_id',$code)
+        ->update([
+            'ireq_status' => $request->status,
+            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'ireq_date_done' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'last_updated_by' => Auth::user()->usr_name
+        ]);
+        
+        DB::getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
+        $ict = DB::table('ireq_dtl as id')
+        ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
+        ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
+            $join->on('id.ireq_type','lrfs.lookup_code')
+                 ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+        })
+        ->LEFTJOIN('vcompany_refs as vr',function ($join) {
+            $join->on('im.ireq_bu','vr.company_code');
+        })
+        ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
+        ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
+        ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
+        ->SELECT('loc.loc_email','mu.usr_email','mu.usr_fullname','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
+                'im.ireq_status','im.ireq_user',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
+        ->WHERE('im.ireq_id',$code)
+        ->WHERE('id.ireq_status','D')
+        ->ORDERBY('id.ireqd_id','ASC')
+        ->get();
+
+        if(env('APP_ENV') != 'local'){
+            $mail = $ict[0]->usr_email .= '@emp.id';
+        } else {
+            $mail = 'adhitya.saputro@emp.id';
+        }
+        SendNotifDone::dispatchAfterResponse($mail,$ict);
+        return ResponseFormatter::success($save,'Successfully Updated Status');
+    }
+    function getDetailDone($code)
+    {
+        $data = IctDetail::detailDone($code);
+        return response()->json($data);
+    }
     function cetak_pdf_personnel_assignment_request()
     {
         $ict =  DB::table('ireq_mst as im')
@@ -236,13 +327,13 @@ class IctRequestPersonnelController extends Controller
         ->get();
         return view('pdf/Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'));
     }
-    public function cetak_excel_personnel_sedang_dikerjakan()
+    function cetak_excel_personnel_sedang_dikerjakan()
     {
         $usr_fullname = Auth::user()->usr_fullname;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelSedangDikerjakan($usr_fullname),'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
-    Public function cetak_pdf_personnel_sudah_dikerjakan()
+    function cetak_pdf_personnel_sudah_dikerjakan()
     {
         $ict =  DB::table('ireq_dtl as id')
         ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
@@ -272,13 +363,13 @@ class IctRequestPersonnelController extends Controller
         ->get();
         return view('pdf/Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'));
     }
-    public function cetak_excel_personnel_sudah_dikerjakan()
+    function cetak_excel_personnel_sudah_dikerjakan()
     {
         $usr_fullname = AUth::user()->usr_fullname;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelSudahDikerjakan($usr_fullname),'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
-    Public function cetak_pdf_personnel_selesai()
+    function cetak_pdf_personnel_selesai()
     {
         $ict =  DB::table('ireq_dtl as id')
         ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
@@ -308,7 +399,7 @@ class IctRequestPersonnelController extends Controller
         ->get();
         return view('pdf/Laporan_IctRequest_Selesai', compact('ict'));
     }
-    public function cetak_excel_personnel_selesai()
+    function cetak_excel_personnel_selesai()
     {
         $usr_fullname = Auth::user()->usr_fullname;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');

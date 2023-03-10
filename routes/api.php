@@ -225,8 +225,14 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/count-per-status-ict/{ictPersonnel}','DashboardController@countPerStatusIct');
 
     //ict request reviewer
+    
+    Route::get('/ict-detail-penugasan-reviewer/{code}','IctRequestReviewerController@detailPenugasan');
+    Route::get('/ict-detail-reviewer/{code}','IctRequestReviewerController@index');
+    Route::get('/edit-ict-detail-reviewer/{ireq}/{code}','IctRequestReviewerController@editDataDetail');
     Route::get('/get-data-reviewer','IctRequestReviewerController@getDataReviewer');  
-    Route::post('/updateAssign','IctRequestReviewerController@updateAssign');
+    Route::post('/updateAssign','IctRequestReviewerController@updateAssignPerRequest');
+    Route::put('/updateAssignPerDetail/{code}','IctRequestReviewerController@updateAssignPerDetail');
+    Route::get('/appd/{ireqd_id}/{code}','IctRequestReviewerController@assignedPersonnelDetail');
     Route::get('/updateStatusPenugasan/{ireq_id}','IctRequestReviewerController@updateStatusPenugasan');
     Route::get('/updateStatusClosing/{ireq_id}','IctRequestReviewerController@updateStatusClosing');
     Route::put('/reject-by-reviewer/{code}','IctRequestReviewerController@rejectReviewer');
@@ -239,8 +245,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/detail-request-reviewer/{code}','IctRequestReviewerController@detailRequestReviewer');
     Route::get('/get-remark-reviewer/{ireq_id}','IctRequestReviewerController@getRemarkReviewer');
     Route::post('/save-remark-reviewer','IctRequestReviewerController@SaveRemarkReviewer');
+    Route::get('/updateStatusClosingDetail/{ireqd_id}/{ireq_no}','IctRequestReviewerController@updateStatusClosingDetail');
     Route::get('/detailrequest-tomail/{ireq_id}','IctRequestReviewerController@detailRequestToMail');
     Route::post('/sendMailtoRequestor','IctRequestReviewerController@sendMailtoRequestor');
+    Route::put('/updateAssignPerDetailFromReject/{code}','IctRequestReviewerController@updateAssignFromReject');
     Route::get('/report-ict-excel-reviewer-permohonan','IctRequestReviewerController@cetak_excel_reviewer_permohonan');
     Route::get('/report-ict-pdf-reviewer-permohonan','IctRequestReviewerController@cetak_pdf_reviewer_permohonan');
     Route::get('/report-ict-excel-reviewer-atasan-divisi','IctRequestReviewerController@cetak_excel_reviewer_atasan_divisi');
@@ -260,9 +268,12 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //ict request manager
     Route::get('/get-data-manager','IctRequestManagerController@getDataManager');
+    Route::get('/ict-detail-manager/{code}','IctRequestManagerController@detailRequest');
+    Route::get('/ict-detail-penugasan-manager/{code}','IctRequestManagerController@detailPenugasan');
     Route::get('/get-data-manager-verifikasi/{code}','IctRequestManagerController@getDataManagerVerifikasi');
     Route::put('/abm/{code}','IctRequestManagerController@approveByManager');
     Route::put('/rbm/{code}','IctRequestManagerController@rejectByManager');
+    Route::get('/get-verif-manager/{code}','IctRequestManagerController@getDetailVerif');
     Route::get('/report-ict-excel-manager-permohonan','IctRequestManagerController@cetak_excel_manager_permohonan');
     Route::get('/report-ict-pdf-manager-permohonan','IctRequestManagerController@cetak_pdf_manager_permohonan');
     Route::get('/report-ict-excel-manager-verifikasi','IctRequestManagerController@cetak_excel_manager_verifikasi');
@@ -286,6 +297,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/update-ict/{code}','IctRequestRequestorController@update');
     Route::delete('/delete-ict/{ireq_id}','IctRequestRequestorController@delete');
     Route::get('/getAddReq','IctRequestRequestorController@getAddReq');
+    Route::post('/submit-rating','IctRequestRequestorController@submitRating');
     Route::get('/getNoreq','IctRequestRequestorController@getNoreq');
     Route::get('/getDetail/{noreq}','IctRequestRequestorController@getDetail');
     Route::get('/getNameBu/{noreq}/{dtl}','IctRequestRequestorController@getNameBu');
@@ -310,6 +322,12 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //ict request personnel 
     Route::get('/get-sedang-dikerjakan','IctRequestPersonnelController@getDataPersonnel');
+    Route::get('/get-detail-done-personnel/{code}','IctRequestPersonnelController@getDetailDone');
+    Route::put('/rejectPersonnel/{ireq_id}','IctRequestPersonnelController@rejectedByPersonnel');
+    Route::get('/acceptPersonnel/{ireq_id}','IctRequestPersonnelController@acceptedByPersonnel');
+    Route::put('/save-remark-assigned/{code}','IctRequestPersonnelController@saveRemark');
+    Route::put('/update-note/{code}','IctRequestPersonnelController@updateNote');
+    Route::put('/update-status-done/{code}','IctRequestPersonnelController@updateStatusDone');
     Route::get('/report-ict-excel-personnel-assignment-request','IctRequestPersonnelController@cetak_excel_personnel_assignment_request');
     Route::get('/report-ict-pdf-personnel-assignment-request','IctRequestPersonnelController@cetak_pdf_personnel_assignment_request');
     Route::get('/report-ict-excel-personnel-reject','IctRequestPersonnelController@cetak_excel_personnel_reject');
@@ -328,6 +346,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/updateStatusPermohonan/{code}','IctRequestHigherLevelController@approveByAtasan');
     Route::put('/updateStatusReject/{code}','IctRequestHigherLevelController@rejectByAtasan');
     Route::get('/get-permohonan','IctRequestHigherLevelController@getPermohonan');   
+    Route::get('/get-verif-higher-level/{code}','IctRequestHigherLevelController@getDetailVerif');
+    Route::get('/ict-detail-higher-level/{code}','IctRequestHigherLevelController@detailRequest');
     Route::get('/report-ict-excel-atasan-permohonan','IctRequestHigherLevelController@cetak_excel_atasan_permohonan');
     Route::get('/report-ict-pdf-atasan-permohonan','IctRequestHigherLevelController@cetak_pdf_atasan_permohonan');
     Route::get('/report-ict-excel-atasan-verifikasi','IctRequestHigherLevelController@cetak_excel_atasan_verifikasi');
@@ -347,11 +367,8 @@ Route::middleware('auth:sanctum')->group(function(){
     //ict request (detail)
     Route::get('/getAddDetail','IctDetailController@getAddDetail');
     Route::get('/get-catalog-request/{tipereq}','IctDetailController@CatalogRequest');
-    Route::put('/save-remark-assigned/{code}','IctDetailController@saveRemark');
     Route::get('/ict-detail/{code}','IctDetailController@index');
     Route::get('/ict-detail-penugasan/{code}','IctDetailController@detailPenugasan');
-    Route::put('/rejectPersonnel/{ireq_id}','IctDetailController@rbp');
-    Route::get('/acceptPersonnel/{ireq_id}','IctDetailController@abp');
     Route::get('/get-detail-done/{code}','IctDetailController@getDetailDone');
     Route::post('/add-ict-detail/{code}','IctDetailController@save');
     Route::get('/edit-ict-detail/{ireq}/{code}','IctDetailController@edit');
@@ -360,13 +377,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-noreq/{code}','IctDetailController@getNo_req');
     Route::get('/get-verif/{code}','IctDetailController@getDetailVerif');
     Route::get('/detail/{ireqd_id}/{ireq_id}','IctDetailController@getDetail');
-    Route::put('/update-status-done/{code}','IctDetailController@updateStatusDone');
-    Route::put('/update-note/{code}','IctDetailController@updateNote');
-    Route::put('/updateAssignPerDetail/{code}','IctDetailController@updateAssign');
-    Route::get('/appd/{ireqd_id}/{code}','IctDetailController@appd');
-    Route::put('/updateAssignPerDetailFromReject/{code}','IctDetailController@updateAssignFromReject');
-    Route::get('/updateStatusClosingDetail/{ireqd_id}/{ireq_no}','IctDetailController@updateStatusClosingDetail');
-    Route::post('/submit-rating','IctDetailController@submitRating');
     
     //laporan
     // Route::get('/req-per-status-excel','LaporanController@cetak_excel_per_status');

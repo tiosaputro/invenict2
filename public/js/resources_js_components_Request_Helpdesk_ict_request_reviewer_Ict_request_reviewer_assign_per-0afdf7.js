@@ -44,7 +44,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     };
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: (_methods = {
     formatDate: function formatDate(date) {
@@ -55,47 +55,26 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var myWindow = window.open(page, "_blank");
       myWindow.focus();
     },
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Reviewer") || _this.checkto.includes("/ict-request-reviewer")) {
-          _this.getIctDetail();
-          _this.getNoreq();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     cancelAssign: function cancelAssign() {
       this.assign = [];
       this.petugas = [];
       this.dialogAssign = false;
     },
     AssignPerDetail: function AssignPerDetail(ireqd_id) {
-      var _this2 = this;
+      var _this = this;
       this.axios.get('/api/detail/' + ireqd_id + '/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.assign = response.data;
+        _this.assign = response.data;
       });
       this.axios.get('/api/get-pekerja', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.petugas = response.data;
+        _this.petugas = response.data;
       });
       this.dialogAssign = true;
     }
@@ -104,7 +83,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     this.assign = [];
     this.dialogAssign = false;
   }), _defineProperty(_methods, "updateAssign", function updateAssign() {
-    var _this3 = this;
+    var _this2 = this;
     this.submitted = true;
     if (this.assign.ireq_assigned_to1 != null) {
       this.axios.put('/api/updateAssignPerDetail/' + this.$route.params.code, this.assign, {
@@ -112,30 +91,31 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function () {
-        _this3.assign = [];
-        _this3.dialogAssign = false;
-        _this3.submitted = false;
-        _this3.$toast.add({
+        _this2.assign = [];
+        _this2.dialogAssign = false;
+        _this2.submitted = false;
+        _this2.$toast.add({
           severity: "info",
           summary: "Confirmed",
           detail: "Successfully Assignment",
           life: 3000
         });
-        _this3.getIctDetail();
+        _this2.getIctDetail();
       });
     }
   }), _defineProperty(_methods, "getIctDetail", function getIctDetail() {
-    var _this4 = this;
-    this.axios.get('/api/ict-detail/' + this.$route.params.code, {
+    var _this3 = this;
+    this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {
       headers: {
         'Authorization': 'Bearer ' + this.token
       }
     }).then(function (response) {
-      _this4.detail = response.data;
-      _this4.loading = false;
+      _this3.detail = response.data.data;
+      _this3.getNoreq();
+      _this3.loading = false;
     })["catch"](function (error) {
       if (error.response.status == 401) {
-        _this4.$toast.add({
+        _this3.$toast.add({
           severity: 'error',
           summary: 'Error',
           detail: 'Session login expired'
@@ -143,18 +123,21 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         localStorage.clear();
         localStorage.setItem('Expired', 'true');
         setTimeout(function () {
-          return _this4.$router.push('/login');
+          return _this3.$router.push('/login');
         }, 2000);
+      }
+      if (error.response.status == 403) {
+        _this3.$route.push('/access');
       }
     });
   }), _defineProperty(_methods, "getNoreq", function getNoreq() {
-    var _this5 = this;
+    var _this4 = this;
     this.axios.get('/api/get-noreq/' + this.$route.params.code, {
       headers: {
         'Authorization': 'Bearer ' + this.token
       }
     }).then(function (response) {
-      _this5.kode = response.data;
+      _this4.kode = response.data;
     });
   }), _methods)
 });

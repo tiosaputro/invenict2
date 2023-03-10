@@ -36,7 +36,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getIctDetail();
-    this.getNoreq();
   },
   methods: {
     getDetail: function getDetail(ireq_attachment) {
@@ -51,8 +50,8 @@ __webpack_require__.r(__webpack_exports__);
         header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Ya",
-        rejectLabel: "Tidak",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
         accept: function accept() {
           _this.$toast.add({
             severity: "info",
@@ -99,12 +98,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this3 = this;
-      this.axios.get('/api/get-verif/' + this.$route.params.code, {
+      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code, {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
         _this3.verif = response.data;
+        _this3.getNoreq();
         _this3.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 403) {

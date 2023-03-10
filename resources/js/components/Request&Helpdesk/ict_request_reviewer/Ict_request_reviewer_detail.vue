@@ -235,24 +235,11 @@ export default {
     };
   },
   mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     formatDate(date){
       return moment(date).format("DD MMM YYYY HH:mm");
-    },
-    cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request/reviewer")){ 
-           this.getIctDetail();
-           this.getNoreq()
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
     },
     AssignPerDetail(ireqd_id){
       this.axios.get('/api/detail/'+ ireqd_id+'/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -326,21 +313,25 @@ export default {
       this.dialogAssign = false;
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
-        this.showPersonnel1 = response.data.map((x)=>x.ireq_count_status);
-        this.showPersonnel2 = response.data.map((x)=>x.ireq_count_personnel2);
-        this.showReason = response.data.map((x)=>x.ireq_count_reason);
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data.data;
+        this.showPersonnel1 = response.data.data.map((x)=>x.ireq_count_status);
+        this.showPersonnel2 = response.data.data.map((x)=>x.ireq_count_personnel2);
+        this.showReason = response.data.data.map((x)=>x.ireq_count_reason);
+        this.getNoreq();
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
       });
     },
     getNoreq(){
