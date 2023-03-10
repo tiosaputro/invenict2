@@ -32,7 +32,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.cekUser();
+    this.getIct();
   },
   methods: {
     getIct: function getIct() {

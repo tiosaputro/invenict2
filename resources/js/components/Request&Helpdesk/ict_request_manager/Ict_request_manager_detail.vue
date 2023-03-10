@@ -172,7 +172,7 @@ export default {
             life: 3000,
           });
           this.axios.delete('/api/delete-ict-detail/' +ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}});
-        this.getIctDetail();
+          this.getIctDetail();
         },
         reject: () => {},
       });

@@ -165,12 +165,7 @@ export default {
         this.axios.get('/api/edit-catalog/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.catalog = response.data;
             this.getParent();
-        });
-    },
-      getParent(){
-          this.axios.get('/api/get-parent-catalog',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.parent = response.data;
-          }).catch(error=>{
+        }).catch(error=>{
             if(error.response.status == 401){
               this.$toast.add({
                 severity:'error', summary: 'Error', detail:'Session login expired'
@@ -182,6 +177,11 @@ export default {
             if(error.response.status == 403){
               this.$router.push('/access');
             }
+          });
+    },
+      getParent(){
+          this.axios.get('/api/get-parent-catalog',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+              this.parent = response.data;
           });
       },
     UpdateCatalog() {

@@ -238,8 +238,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this3.detail = response.data;
-        _this3.tipereq = _this3.detail.ireq_type;
-        _this3.cekTipeReq = _this3.detail.ireq_type;
         _this3.getType();
       })["catch"](function (error) {
         if (error.response.status == 401) {

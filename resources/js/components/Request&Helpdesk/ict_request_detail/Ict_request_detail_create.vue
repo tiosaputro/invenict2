@@ -12,13 +12,13 @@
              <form @submit.prevent="CreateIctDetail">
               <div class="field grid">
                 <label class="col-fixed w-9rem">No. Request</label>
-                 <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="detail.noreq"
-                    disabled
-                  />
-                </div>
+                  <div class="col-fixed w-9rem">
+                    <InputText
+                      type="text"
+                      v-model="detail.noreq"
+                      disabled
+                    />
+                  </div>
               </div>
               <div class="field grid">
                <label class="col-fixed w-9rem">Request Type</label>
@@ -350,8 +350,6 @@ export default {
     getNoreq(){
       this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
       this.detail = response.data;
-      this.tipereq = this.detail.ireq_type
-      this.cekTipeReq = this.detail.ireq_type
       this.getType();
       }).catch(error=>{
           if (error.response.status == 401) {

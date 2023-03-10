@@ -78,6 +78,14 @@ class Ict extends Model
         return $ict;
     }
 
+    public static function listNoRequest(){
+        $data = Ict::select('ireq_no as name','ireq_id as code')
+        ->ORDERBY('ireq_no','DESC')
+        ->WHERENotNull('ireq_status')
+        ->get();
+         return $data;
+    }
+    
     public static function updateRequest($request,$code){
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_date = Carbon::parse($request->ireq_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');

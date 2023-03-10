@@ -1,6 +1,7 @@
 /node_modules
 /app/Http/Contollers/LoginController.php
 /public
+/public/js
 /public/hot
 /public/storage
 /storage/*.key

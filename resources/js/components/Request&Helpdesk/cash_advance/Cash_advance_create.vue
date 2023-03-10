@@ -340,21 +340,9 @@ export default {
     }
   },
   mounted(){
-    this.cekUser();
+    this.getNoreq();
   },
   methods: {
-    cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Cash Advance") || this.checkto.includes("/cash-advance")){
-            this.getNoreq();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getDetail(noreq){
     if(this.noreq){
       this.axios.get('api/getDetail/'+noreq,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
@@ -379,16 +367,19 @@ export default {
       }
     }, 
     getNoreq(){
-      this.axios.get('api/getNoreq',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.req = response.data;
+      this.axios.get('api/list-no-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.req = response.data.data;
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
+              severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
           }
         });
     },   

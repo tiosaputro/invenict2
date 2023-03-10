@@ -312,11 +312,8 @@ class IctRequestRequestorController extends Controller
     }
     function getNoreq()
     {
-        $ict = Ict::select('ireq_no as name','ireq_id as code')
-                ->ORDERBY('ireq_no','ASC')
-                ->WHERENotNull('ireq_status')
-                ->get();
-            return response()->json($ict);
+        $data = Ict::listNoRequest();
+        return ResponseFormatter::success($data,'Successfully get data');
     }
     function getNameBu($noreq,$dtl)
     {

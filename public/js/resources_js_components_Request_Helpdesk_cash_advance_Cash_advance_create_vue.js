@@ -76,39 +76,19 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.cekUser();
+    this.getNoreq();
   },
   methods: {
-    cekUser: function cekUser() {
-      var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.checkto = response.data.map(function (x) {
-          return x.to;
-        });
-        _this.checkname = response.data.map(function (x) {
-          return x.name;
-        });
-        if (_this.checkname.includes("Cash Advance") || _this.checkto.includes("/cash-advance")) {
-          _this.getNoreq();
-        } else {
-          _this.$router.push('/access');
-        }
-      });
-    },
     getDetail: function getDetail(noreq) {
-      var _this2 = this;
+      var _this = this;
       if (this.noreq) {
         this.axios.get('api/getDetail/' + noreq, {
           headers: {
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (response) {
-          _this2.detail = response.data;
-          _this2.ireqd_id = '';
+          _this.detail = response.data;
+          _this.ireqd_id = '';
         });
         if (this.errors.noreq || this.error.noreq) {
           this.errors.noreq == '';
@@ -117,14 +97,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     get: function get(noreq, ireqd_id) {
-      var _this3 = this;
+      var _this2 = this;
       if (this.noreq && this.ireqd_id) {
         this.axios.get('api/getNameBu/' + noreq + '/' + ireqd_id, {
           headers: {
             'Authorization': 'Bearer ' + this.token
           }
         }).then(function (response) {
-          _this3.ca = response.data;
+          _this2.ca = response.data;
         });
         if (this.errors.noreq || this.error.noreq) {
           this.errors.noreq == '';
@@ -133,16 +113,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     getNoreq: function getNoreq() {
-      var _this4 = this;
-      this.axios.get('api/getNoreq', {
+      var _this3 = this;
+      this.axios.get('api/list-no-request', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this4.req = response.data;
+        _this3.req = response.data.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
-          _this4.$toast.add({
+          _this3.$toast.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Session login expired'
@@ -150,13 +130,16 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.clear();
           localStorage.setItem('Expired', 'true');
           setTimeout(function () {
-            return _this4.$router.push('/login');
+            return _this3.$router.push('/login');
           }, 2000);
+        }
+        if (error.response.status == 403) {
+          _this3.$router.push('/access');
         }
       });
     },
     CreateCash: function CreateCash() {
-      var _this5 = this;
+      var _this4 = this;
       this.errors = [];
       this.error = [];
       if (this.noreq != null || this.ireqd_id != null) {
@@ -175,15 +158,15 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (response) {
           setTimeout(function () {
-            return _this5.$router.push('/cash-advance');
+            return _this4.$router.push('/cash-advance');
           }, 1000);
-          _this5.$toast.add({
+          _this4.$toast.add({
             severity: "success",
             summary: "Success Message",
             detail: "Success Create"
           });
         })["catch"](function (error) {
-          _this5.errors = error.response.data.errors;
+          _this4.errors = error.response.data.errors;
         });
       } else {
         this.error.noreq = "No Request Belum Diisi";

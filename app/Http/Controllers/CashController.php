@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Model\Ict;
 use App\Model\Cash;
 use App\Mng_User;
 use App\Exports\CashExport;
@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Model\Mng_usr_roles;
-use App\Model\Mng_role_menu;
 use Illuminate\Validation\Rule;
 
 class CashController extends Controller
@@ -35,6 +33,10 @@ class CashController extends Controller
     {
         $cash = DB::table('v_cash_advance')->get();
         return response()->json($cash);
+    }
+    function getNoRequest(){
+        $data = Ict::listNoRequest();
+        return ResponseFormatter::success($data);
     }
     function detail($ca_idd){
         $dtl = DB::table('ireq_dtl as id')
