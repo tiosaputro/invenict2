@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    public function index(Request $request)
+    function index(Request $request)
     {
      if (env('APP_ENV') != 'local'){ //use ldap
         $ldap = new ldap_connection();
@@ -74,7 +74,7 @@ class LoginController extends Controller
                     }
         }
     }
-    public function loginFromIntranet(Request $request){
+    function loginFromIntranet(Request $request){
         $emailUser = str_replace('"','',$request->samaccountname);
         $cekUser = Mng_user::where('usr_email','like',$emailUser)->first();
         if(!empty($cekUser)){
@@ -100,7 +100,7 @@ class LoginController extends Controller
                     "usr_loc"=>$dataUser->usr_loc],200);
         }
     }                     
-    public function loginFromEmail(Request $request)
+    function loginFromEmail(Request $request)
     {
         $user= Mng_User::where('usr_id',$request->usr_id)->first();
         
@@ -114,12 +114,12 @@ class LoginController extends Controller
             ];
         return json_encode($response, 200);
     }
-    public function logout()
+    function logout()
     {
         $user = Auth::user()->tokens()->where('id', Auth::user()->currentAccessToken()->id)->delete();
         return ResponseFormatter::success($user,'Successfully Logout');
     }
-    public function show()
+    function show()
     {
         $user = Auth::user();
         return json_encode($user);

@@ -82,7 +82,7 @@ export default {
   methods: {
     getCatalog(){
       this.axios.get('api/get-catalog', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.catalog = response.data;
+        this.catalog = response.data.data;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401){

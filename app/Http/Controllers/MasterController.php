@@ -30,7 +30,7 @@ class MasterController extends Controller
             }
         });
     }
-    public function index()
+    function index()
         {
             $mas = DB::table('invent_mst as im')
             ->LEFTJOIN('invent_dtl as id','im.invent_code','id.invent_code')
@@ -44,7 +44,7 @@ class MasterController extends Controller
             ->get();
             return response()->json($mas);
         }
-    public function getAddMaster()
+    function getAddMaster()
     {
         $merk = Lookup_Refs::Merk();
         $kondisi = Lookup_Refs::Kondisi();
@@ -53,7 +53,7 @@ class MasterController extends Controller
             
         return response()->json(['merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis,'nama'=>$nama],200);
     }
-    public function save(Request $request)
+    function save(Request $request)
     {
         $message = [
             'nama.required' => 'Nama Peripheral Belum Diisi',
@@ -75,7 +75,7 @@ class MasterController extends Controller
         ]);
         return ResponseFormatter::success($createMas,'Successfully Created Data Master');
     }
-    public function edit($code)
+    function edit($code)
     {
         $mas = DB::table('invent_mst as im')
             ->leftjoin('lookup_refs as lr','im.invent_brand','lr.lookup_code')
@@ -109,7 +109,7 @@ class MasterController extends Controller
         ->first();
         return response()->json($mas);
     }
-    public function update(Request $request, $code)
+    function update(Request $request, $code)
     {
         $mas = Master::find($code);
         $mas->invent_type = $request->invent_type;
@@ -119,7 +119,7 @@ class MasterController extends Controller
         $mas->save();
         return ResponseFormatter::success($mas,'Successfully Updated Data Master');
     }
-    public function delete($invent_code)
+    function delete($invent_code)
     {
         $mas = Master::find($invent_code);
         if($mas->invent_photo){
@@ -129,7 +129,7 @@ class MasterController extends Controller
             
         return ResponseFormatter::success($mas,'Successfully Deleted Data Master');
     }
-    public function cetak_pdf()
+    function cetak_pdf()
     {
         $mass = DB::table('invent_mst as im')
         ->select('im.invent_code','im.invent_desc','im.invent_type','lrs.lookup_desc as invent_brand')
@@ -145,16 +145,16 @@ class MasterController extends Controller
         ->get();
         return view ('pdf/Laporan_Master',compact ('mass'));
     }
-    public function cetak_excel()
+    function cetak_excel()
     {
         return Excel::download(new MasterExport,'Laporan_Master.xlsx');
     }
-    public function getKode()
+    function getKode()
     {
         $mas = Master::Select('invent_code as code',DB::raw("(invent_code ||'-'|| invent_desc) as name"))->orderBy('invent_desc','ASC')->get();
         return response()->json($mas);
     }
-    public function getKodeIct($code)
+    function getKodeIct($code)
     {
         $mas = DB::table('invent_mst as im')
         ->select('im.invent_code as code', DB::raw("(im.invent_code ||'-'|| im.invent_desc) as name"))
@@ -167,12 +167,12 @@ class MasterController extends Controller
         })->get();
         return response()->json($mas);
     }
-    public function getImage($kode)
+    function getImage($kode)
     {
         $mas = DB::table('invent_dtl')->select('invent_photo as photo')->where('invent_code_dtl',$kode)->first();
         return response()->json($mas);
     }
-    public function getBarcode($invent_code)
+    function getBarcode($invent_code)
     {
         $mas = DB::table('invent_mst as im')
             ->leftjoin('vcompany_refs as vr','im.invent_bu','vr.company_code')

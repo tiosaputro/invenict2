@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use App\Mng_User;
 class IctRequestAdminController extends Controller
@@ -129,7 +130,8 @@ class IctRequestAdminController extends Controller
             ->WHERENotNull('id.ireq_status')
             ->ORDERBY('id.ireq_date','DESC')
             ->get();
-
-            return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
+            $data = array('ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6);
+            return ResponseFormatter::success($data,'tes');
+            // return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
         }
 }

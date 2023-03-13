@@ -4560,13 +4560,13 @@ export default {
       },
       getIct7(){
         this.axios.get('api/get-ict-admin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.ictAdmin = response.data.ict;
-          this.sdhDiverifikasiAdmin = response.data.ict1;
-          this.diRejectAdmin = response.data.ict2;
-          this.sdgDikerjakanAdmin = response.data.ict3;
-          this.sdhDikerjakanAdmin = response.data.ict4;
-          this.sdhSelesaiAdmin = response.data.ict5;
-          this.totalAdmin = response.data.ict6;
+          this.ictAdmin = response.data.data.ict;
+          this.sdhDiverifikasiAdmin = response.data.data.ict1;
+          this.diRejectAdmin = response.data.data.ict2;
+          this.sdgDikerjakanAdmin = response.data.data.ict3;
+          this.sdhDikerjakanAdmin = response.data.data.ict4;
+          this.sdhSelesaiAdmin = response.data.data.ict5;
+          this.totalAdmin = response.data.data.ict6;
           this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {

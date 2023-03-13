@@ -31,7 +31,7 @@ class CatalogController extends Controller
     function index(){
         $catalog = Catalog::select('catalog_id','catalog_name','catalog_desc',DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"))
         ->get();
-        return json_encode($catalog);
+        return ResponseFormatter::success($catalog,"Successfully get data catalog");
 
     }
     function save(Request $request){
@@ -62,7 +62,7 @@ class CatalogController extends Controller
     }
     function edit($code){
         $catalog = Catalog::find($code);
-        return json_encode($catalog);
+        return ResponseFormatter::success($catalog,"Successfully find catalog");
     }
     function update(Request $request, $code){
         $message = [

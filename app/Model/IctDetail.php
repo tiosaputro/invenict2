@@ -73,9 +73,9 @@ class IctDetail extends Model
     public static function getDataDetailRequest($code){
         $dtl = DB::table('ireq_dtl as id')
             ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_attachment',
-            'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
-            'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
-            'id.ireq_desc', 'id.ireq_qty',DB::raw('COUNT(id.ireq_assigned_to2) as ireq_count_personnel2'),DB::raw('COUNT(id.ireq_assigned_to1_reason) as ireq_count_reason'),DB::raw('COUNT(id.ireq_assigned_to1) as ireq_count_status'),DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
+                'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
+                'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
+                'id.ireq_desc', 'id.ireq_qty',DB::raw('COUNT(id.ireq_assigned_to2) as ireq_count_personnel2'),DB::raw('COUNT(id.ireq_assigned_to1_reason) as ireq_count_reason'),DB::raw('COUNT(id.ireq_assigned_to1) as ireq_count_status'),DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
             ->leftJoin('catalog_refs as cr',function ($join){
                 $join->on('id.invent_code','cr.catalog_id');
             })
@@ -92,9 +92,9 @@ class IctDetail extends Model
             })
             ->where('id.ireq_id',$code)
             ->groupBy(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),'id.ireq_attachment',
-            'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status',
-            'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc','id.ireq_remark',
-            'id.ireq_desc', 'id.ireq_qty',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"),'llr.lookup_desc')
+                'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status',
+                'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc','id.ireq_remark',
+                'id.ireq_desc', 'id.ireq_qty',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"),'llr.lookup_desc')
             ->orderBy('id.ireqd_id','ASC')
             ->get();
             return $dtl;

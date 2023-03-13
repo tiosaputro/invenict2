@@ -45,7 +45,7 @@ class IctDetailController extends Controller
         $data = IctDetail::getDataDetailRequest($code);
         return response()->json($data);
      }
-    Public function detailPenugasan($code)
+    function detailPenugasan($code)
     {
         $data = IctDetail::detailRequestForAssignment($code);
         return json_encode($data);
@@ -66,7 +66,7 @@ class IctDetailController extends Controller
         $tree = $this->parseTreeCatalogRequest($catalog);
         return json_encode($tree);
     }
-    public function parseTreeCatalogRequest($tree, $root = 0){
+    function parseTreeCatalogRequest($tree, $root = 0){
         $return = array();
           foreach($tree as $child => $parent) {
             if($parent->parent_id == $root) {
@@ -81,7 +81,7 @@ class IctDetailController extends Controller
         }
         return empty($return) ? null : $return;    
     }
-    Public function getDetailDone($code)
+    function getDetailDone($code)
     {
         $data = IctDetail::detailDone($code);
         return response()->json($data);
@@ -106,7 +106,7 @@ class IctDetailController extends Controller
          return response()->json($dtl);
       
     }
-    Public function save(Request $request,$code)
+    function save(Request $request,$code)
     {
         if($request->file){
             $nama_file = time().'.'.$request->file->getClientOriginalExtension();
@@ -165,7 +165,7 @@ class IctDetailController extends Controller
             return ResponseFormatter::success($dtl,'Successfully Created detail request');
         }
     }
-    Public function edit($ireq,$code)
+    function edit($ireq,$code)
     {
        $data = IctDetail::FindDetailRequest($ireq,$code);
         return response()->json($data);
@@ -246,7 +246,7 @@ class IctDetailController extends Controller
             return ResponseFormatter::success($saveDtl,'Successfully Updated detail request');
         }
     }
-    Public function delete($ireqd_id,$code)
+    function delete($ireqd_id,$code)
     {
         $cek = DB::table('ireq_dtl')->where('ireq_id',$code)->where('ireqd_id',$ireqd_id)->first();
         if($cek->ireq_attachment){
@@ -258,7 +258,7 @@ class IctDetailController extends Controller
         ->delete();
         return ResponseFormatter::success($deletedDtl,'Successfully Deleted detail request');
     }
-    public function cetak_pdf($code)
+    function cetak_pdf($code)
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_desc"),'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
@@ -280,7 +280,7 @@ class IctDetailController extends Controller
         ->get();
         return view('pdf/Laporan_IctDetailRequest', compact('detail'));
     }
-    public function cetak_pdff($code)
+    function cetak_pdff($code)
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
@@ -303,12 +303,12 @@ class IctDetailController extends Controller
         ->get();
         return view('pdf/tes', compact('detail'));
     }
-    public function cetak_excel($code)
+    function cetak_excel($code)
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailExport($code),'Laporan ICT request '.$newCreation.'.xlsx');
     }
-    public function cetak_pdf_tab_reviewer($code)
+    function cetak_pdf_tab_reviewer($code)
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
@@ -330,12 +330,12 @@ class IctDetailController extends Controller
         ->get();
         return view('pdf/Laporan_IctDetailRequest_Tab_Reviewer', compact('detail'));
     }
-    public function cetak_excel_tab_reviewer($code)
+    function cetak_excel_tab_reviewer($code)
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailTabReviewerExport($code),'Laporan Ict request (Detail Reviewer) '.$newCreation.'.xlsx');
     }
-    public function cetak_pdf_tab_verifikasi($code)
+    function cetak_pdf_tab_verifikasi($code)
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('id.ireq_type','id.ireq_desc','id.ireq_qty','id.ireq_remark',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
@@ -357,12 +357,12 @@ class IctDetailController extends Controller
         ->get();
         return view('pdf/Laporan_IctDetailRequest_Tab_Verifikasi', compact('detail'));
     }
-    public function cetak_excel_tab_verifikasi($code)
+    function cetak_excel_tab_verifikasi($code)
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailTabVerifikasiExport($code),'Laporan Ict request (Detail Terverifikasi) '.$newCreation.'.xlsx');
     }
-    public function cetak_pdf_reject($code)
+    function cetak_pdf_reject($code)
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('id.*','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
@@ -384,12 +384,12 @@ class IctDetailController extends Controller
         ->get();
         return view('pdf/Laporan_IctDetailReject', compact('detail'));
     }
-    public function cetak_excel_reject($code)
+    function cetak_excel_reject($code)
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailExportReject($code),'Laporan ICT Request '.$newCreation.'.xlsx');
     }
-    public function printout_ictrequest($code)
+    function printout_ictrequest($code)
     {
         $detail = DB::table('ireq_dtl as id')
         ->select('imm.ireq_status as cekstatus','id.ireq_type','imm.ireq_id','imm.ireq_no','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname',
@@ -437,17 +437,17 @@ class IctDetailController extends Controller
         }
             return view('pdf/Report_ICT_PerDetail', compact('detail','link'));
     }
-    public function cetak_excel_sedang_dikerjakan($code)
+    function cetak_excel_sedang_dikerjakan($code)
     {
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailTabSudahDikerjakanExport($code),'Laporan Ict Request '.$newCreation.'.xlsx');
     }
-    public function getDetailVerif($code)
+    function getDetailVerif($code)
     {
         $data = IctDetail::detailVerification($code);
         return response()->json($data);
     }
-    public function getDetail($ireqd_id,$ireq_id){
+    function getDetail($ireqd_id,$ireq_id){
         $dtl = DB::table('ireq_dtl as id')
         ->select('id.ireq_attachment','id.ireq_assigned_to1','id.ireq_assigned_remark','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 
         DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'lr.lookup_desc as ireq_type','id.ireq_qty','id.ireq_remark','id.ireq_assigned_to1_reason')

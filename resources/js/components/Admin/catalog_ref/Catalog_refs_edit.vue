@@ -163,7 +163,7 @@ export default {
   methods: {
     getCatalog(){
         this.axios.get('/api/edit-catalog/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.catalog = response.data;
+            this.catalog = response.data.data;
             this.getParent();
         }).catch(error=>{
             if(error.response.status == 401){

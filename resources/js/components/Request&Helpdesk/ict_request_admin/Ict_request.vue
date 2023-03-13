@@ -787,14 +787,14 @@ export default {
     },
     getIct(){
       this.axios.get('api/get-ict-admin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-          this.ict = response.data.ict;
+          this.ict = response.data.data.ict;
           this.loading = false;
-          this.verif = response.data.ict1;
-          this.reject = response.data.ict2
-          this.penugasan = response.data.ict8;
-          this.sedangDikerjakan = response.data.ict3;
-          this.sudahDikerjakan = response.data.ict4;
-          this.selesai = response.data.ict5;
+          this.verif = response.data.data.ict1;
+          this.reject = response.data.data.ict2
+          this.penugasan = response.data.data.ict8;
+          this.sedangDikerjakan = response.data.data.ict3;
+          this.sudahDikerjakan = response.data.data.ict4;
+          this.selesai = response.data.data.ict5;
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({

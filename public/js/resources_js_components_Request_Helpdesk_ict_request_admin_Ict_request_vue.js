@@ -196,14 +196,14 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this2.ict = response.data.ict;
+        _this2.ict = response.data.data.ict;
         _this2.loading = false;
-        _this2.verif = response.data.ict1;
-        _this2.reject = response.data.ict2;
-        _this2.penugasan = response.data.ict8;
-        _this2.sedangDikerjakan = response.data.ict3;
-        _this2.sudahDikerjakan = response.data.ict4;
-        _this2.selesai = response.data.ict5;
+        _this2.verif = response.data.data.ict1;
+        _this2.reject = response.data.data.ict2;
+        _this2.penugasan = response.data.data.ict8;
+        _this2.sedangDikerjakan = response.data.data.ict3;
+        _this2.sudahDikerjakan = response.data.data.ict4;
+        _this2.selesai = response.data.data.ict5;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this2.$toast.add({

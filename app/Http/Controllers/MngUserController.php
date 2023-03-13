@@ -32,7 +32,7 @@ class MngUserController extends Controller
             }
         });
     }
-    public function index()
+    function index()
     {
         $user = DB::table('v_mng_users')->get();
         return response()->json($user);
@@ -42,7 +42,7 @@ class MngUserController extends Controller
         $loc = Location::select('loc_code as code','loc_desc as name')->orderBy('loc_desc','ASC')->get();
         return json_encode($loc);
     }
-    public function save(Request $request)
+    function save(Request $request)
     {
         $message = [
             'usr_name.required'=>'User Name Belum Diisi',
@@ -68,7 +68,6 @@ class MngUserController extends Controller
             'usr_loc'=>'required'
         ],$message);
 
-        $newfullName = strtoupper($request->usr_fullname);
         $image = $request->image;
         $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
         $replace = substr($image, 0, strpos($image, ',')+1); 
@@ -78,7 +77,7 @@ class MngUserController extends Controller
         Storage::disk('profile')->put($nama_file, base64_decode($foto));
         $user = Mng_user::create([
             'usr_name'=>$request->usr_name,
-            'usr_fullname'=>$newfullName,
+            'usr_fullname'=>strtoupper($request->usr_fullname),
             'usr_passwd'=> Hash::make($request->usr_passwd),
             'usr_alamat'=> $request->usr_alamat,
             'usr_stat'=> $request->usr_status,
@@ -94,13 +93,13 @@ class MngUserController extends Controller
        
         return ResponseFormatter::success($user,'Successfully Created User');
     }
-    public function edit($code)
+    function edit($code)
     {
         $user = Mng_User::find($code);
         $role = Mng_usr_roles::getRole($code);
         return response()->json(['user'=>$user,'role'=>$role],200);
     }
-    public function update(Request $request,$code)
+    function update(Request $request,$code)
     {
         $user = Mng_user::find($code);
         $message = [
@@ -125,84 +124,40 @@ class MngUserController extends Controller
             'usr_loc'=>'required',
             'usr_bu'=>'required'
         ],$message);
-        $newfullName = strtoupper($request->usr_fullname);
         if($request->image){
-            if($request->usr_password){
-                unlink(Storage_path('app/public/profile/'.$user->usr_foto));
-                    $image= $request->image;
-                    $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-                    $replace = substr($image, 0, strpos($image, ',')+1); 
-                    $fotoo = str_replace($replace, '', $image);
-                    $foto= str_replace(' ', '+', $fotoo); 
-                    $nama_file = time().".".$extension;
-                    Storage::disk('profile')->put($nama_file, base64_decode($foto));
-                    $user->usr_fullname = $newfullName;
-                    $user->usr_alamat = $request->usr_alamat;
-                    $user->usr_passwd = Hash::make($request->usr_password);
-                    $user->usr_stat = $request->usr_stat;
-                    $user->usr_email = $request->usr_email;
-                    $user->div_id = $request->div_id;
-                    $user->usr_bu = $request->usr_bu;
-                    $user->usr_foto = $nama_file;
-                    $user->usr_loc = $request->usr_loc;
-                    $user->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-                    $user->last_updated_by = Auth::user()->usr_name;
-                    $user->program_name = 'MngUserController_UPDATE';
-                    $user->save();
-            } else{
-                    unlink(Storage_path('app/public/profile/'.$user->usr_foto));
-                    $image= $request->image;
-                    $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-                    $replace = substr($image, 0, strpos($image, ',')+1); 
-                    $fotoo = str_replace($replace, '', $image);
-                    $foto= str_replace(' ', '+', $fotoo); 
-                    $nama_file = time().".".$extension;
-                    Storage::disk('profile')->put($nama_file, base64_decode($foto));
-                    $user->usr_fullname = $newfullName;
-                    $user->usr_alamat = $request->usr_alamat;
-                    $user->usr_stat = $request->usr_stat;
-                    $user->usr_email = $request->usr_email;
-                    $user->div_id = $request->div_id;
-                    $user->usr_loc = $request->usr_loc;
-                    $user->usr_bu = $request->usr_bu;
-                    $user->usr_foto = $nama_file;
-                    $user->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-                    $user->last_updated_by = Auth::user()->usr_name;
-                    $user->program_name = 'MngUserController_UPDATE';
-                    $user->save();
-                    }
+            unlink(Storage_path('app/public/profile/'.$user->usr_foto));
+            $image= $request->image;
+            $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+            $replace = substr($image, 0, strpos($image, ',')+1); 
+            $fotoo = str_replace($replace, '', $image);
+            $foto= str_replace(' ', '+', $fotoo); 
+            $nama_file = time().".".$extension;
+            Storage::disk('profile')->put($nama_file, base64_decode($foto));
         }else{
-            if($request->usr_password){
-                $user->usr_fullname = $newfullName;
-                $user->usr_alamat = $request->usr_alamat;
-                $user->usr_stat = $request->usr_stat;
-                $user->usr_email = $request->usr_email;
-                $user->usr_passwd = Hash::make($request->usr_password);
-                $user->div_id = $request->div_id;
-                $user->usr_loc = $request->usr_loc;
-                $user->usr_bu = $request->usr_bu;
-                $user->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-                $user->last_updated_by = Auth::user()->usr_name;
-                $user->program_name = 'MngUserController_UPDATE';
-                $user->save();
-            }
+            $nama_file = $user->usr_foto;
+        }
+        if($request->usr_password){
+            $pass = Hash::make($request->usr_password);
+        }
         else{
-            $user->usr_fullname = $newfullName;
+            $pass = $user->usr_passwd;
+        }
+            $user->usr_fullname = strtoupper($request->usr_fullname);
             $user->usr_alamat = $request->usr_alamat;
+            $user->usr_passwd = $pass;
             $user->usr_stat = $request->usr_stat;
             $user->usr_email = $request->usr_email;
             $user->div_id = $request->div_id;
-            $user->usr_loc = $request->usr_loc;
             $user->usr_bu = $request->usr_bu;
+            $user->usr_foto = $nama_file;
+            $user->usr_loc = $request->usr_loc;
             $user->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
             $user->last_updated_by = Auth::user()->usr_name;
             $user->program_name = 'MngUserController_UPDATE';
             $user->save();
-        }
+        return ResponseFormatter::success($user,'Successfully Updated User');
     }
-    return ResponseFormatter::success($user,'Successfully Updated User');
-    }
-    public function delete($usr_id)
+    function delete($usr_id)
     {
         $user = Mng_user::find($usr_id);
         if($user->usr_foto){
@@ -216,6 +171,7 @@ class MngUserController extends Controller
         $roles =  Mng_roles::select('rol_id as code','rol_name as name')->where('rol_stat','T')->orderBy('rol_id','ASC')->get();
         $divisi = Divisi_refs::ListDivision();
         $location = Location::listLocation();
+        
         return json_encode(['bisnis'=>$bisnis,'roles'=>$roles,'divisi'=>$divisi,'location'=>$location],200);
     }
    

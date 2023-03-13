@@ -4,7 +4,7 @@
         <div class="card">
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>ICT Request (Detail)</h4>
+				    <h4>ICT Request (Detail)</h4>
           </template>
         </Toolbar>
           <div class="row">
@@ -23,7 +23,7 @@
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Request Type</label>
                  <div class="col-fixed w-9rem">
-                       <Dropdown
+                      <Dropdown
                         :options="type"
                         type="text"
                         v-model="ict.ireq_type"

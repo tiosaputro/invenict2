@@ -335,13 +335,13 @@ __webpack_require__.r(__webpack_exports__);
           'Authorization': 'Bearer ' + this.token
         }
       }).then(function (response) {
-        _this6.ictAdmin = response.data.ict;
-        _this6.sdhDiverifikasiAdmin = response.data.ict1;
-        _this6.diRejectAdmin = response.data.ict2;
-        _this6.sdgDikerjakanAdmin = response.data.ict3;
-        _this6.sdhDikerjakanAdmin = response.data.ict4;
-        _this6.sdhSelesaiAdmin = response.data.ict5;
-        _this6.totalAdmin = response.data.ict6;
+        _this6.ictAdmin = response.data.data.ict;
+        _this6.sdhDiverifikasiAdmin = response.data.data.ict1;
+        _this6.diRejectAdmin = response.data.data.ict2;
+        _this6.sdgDikerjakanAdmin = response.data.data.ict3;
+        _this6.sdhDikerjakanAdmin = response.data.data.ict4;
+        _this6.sdhSelesaiAdmin = response.data.data.ict5;
+        _this6.totalAdmin = response.data.data.ict6;
         _this6.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
