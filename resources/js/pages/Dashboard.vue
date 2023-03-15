@@ -1,12 +1,12 @@
 <template>
 <Toast />
-<div class="grid" v-if="this.role_name.includes('Admin')">
-		<div class="col-12 lg:col-6 xl:col-3" >
+<div class="grid">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasiadmin">
 			<div @click="blmDiverifikasiAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification </span>
-						<div class="text-900 font-medium text-xl">{{count5.belumdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.belumdiverifikasiadmin}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -14,12 +14,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasiadmin">
 			<div @click="sdhDiverifikasiAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Already Verified</span>
-						<div class="text-900 font-medium text-xl">{{count5.sudahdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdiverifikasiadmin}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -27,12 +27,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectadmin">
 			<div @click="diRejectAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
-						<div class="text-900 font-medium text-xl">{{count5.direject}}</div>
+						<div class="text-900 font-medium text-xl">{{count.direjectadmin}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -40,12 +40,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanadmin">
 			<div @click="sdgDikerjakanAdmin()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
-						<div class="text-900 font-medium text-xl">{{count5.sedangdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakanadmin}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
@@ -53,25 +53,25 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanadmin">
 				<div @click="sdhDikerjakanAdmin()" style="cursor:pointer;" class="card mb-0">
 					<div class="flex justify-content-between mb-3">
 						<div>
 							<span class="block text-500 font-medium mb-3">Done</span>
-							<div class="text-900 font-medium text-xl">{{count5.sudahdikerjakan}}</div>
+							<div class="text-900 font-medium text-xl">{{count.sudahdikerjakanadmin}}</div>
 						</div>
 						<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 							<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color: red;"></i>
 						</div>
 					</div>
 				</div>
-			</div>	
-		<div class="col-12 lg:col-6 xl:col-3">
+		</div>	
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaiadmin">
 				<div @click="sdhSelesaiAdmin()" style="cursor:pointer;" class="card mb-0">
 					<div class="flex justify-content-between mb-3">
 						<div>
 							<span class="block text-500 font-medium mb-3">Close</span>
-							<div class="text-900 font-medium text-xl">{{count5.sudahselesai}}</div>
+							<div class="text-900 font-medium text-xl">{{count.sudahselesaiadmin}}</div>
 						</div>
 						<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 							<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
@@ -79,12 +79,12 @@
 					</div>
 				</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.countrequestadmin">
 				<div @click="totalKeseluruhanAdmin()" style="cursor:pointer;" class="card mb-0">
 					<div class="flex justify-content-between mb-3">
 						<div>
 							<span class="block text-500 font-medium mb-3">Overall Request</span>
-							<div class="text-900 font-medium text-xl">{{count5.countrequest}}</div>
+							<div class="text-900 font-medium text-xl">{{count.countrequestadmin}}</div>
 						</div>
 						<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 							<i class="pi pi-book text-xl" style="fontSize: 4rem; color : green;"></i>
@@ -92,14 +92,12 @@
 					</div>
 				</div>
 		</div>
-</div>
-<div class="grid" v-else-if="this.role_name.includes('Manager')">
-	<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewmanager">
 			<div @click="sdgDireview4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Under Review </span>
-						<div class="text-900 font-medium text-xl">{{count4.sedangdireview}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sedangdireviewmanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-check text-xl" style="color: green;"></i>
@@ -107,12 +105,12 @@
 				</div>
 			</div>
 		</div>
-	<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmdiverifikasimanager">
 			<div @click="blmDiverifikasi4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
-						<div class="text-900 font-medium text-xl">{{count4.blmdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.blmdiverifikasimanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -120,12 +118,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasimanager">
 			<div @click="sdhDiverifikasi4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Already Verified</span>
-						<div class="text-900 font-medium text-xl">{{count4.sudahdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdiverifikasimanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl text-xl" style="color: green;"></i>
@@ -133,12 +131,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectmanager">
 			<div @click="direject4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
-						<div class="text-900 font-medium text-xl">{{count4.direject}}</div>
+						<div class="text-900 font-medium text-xl">{{count.direjectmanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -146,12 +144,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequestmanager">
 			<div @click="penugasanRequest4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
-						<div class="text-900 font-medium text-xl">{{count4.penugasanrequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.penugasanrequestmanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
@@ -159,12 +157,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanmanager">
 			<div @click="sdgdikerjakan4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
-						<div class="text-900 font-medium text-xl">{{count4.sedangdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakanmanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
@@ -172,12 +170,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanmanager">
 			<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
-						<div class="text-900 font-medium text-xl">{{count4.sudahdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdikerjakanmanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="color: red;"></i>
@@ -185,12 +183,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaimanager">
 			<div @click="sdhSelesai4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
-						<div class="text-900 font-medium text-xl">{{count4.sudahselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahselesaimanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="color: green;"></i>
@@ -198,12 +196,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalrequestmanager">
 			<div @click="totalRequest4()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
-						<div class="text-900 font-medium text-xl">{{count4.totalrequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.totalrequestmanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl" style="fontSize: 3.5rem; color: green;"></i>
@@ -211,14 +209,12 @@
 				</div>
 			</div>
 		</div>
-</div>
-<div class="grid" v-else-if="this.role_name.includes('Reviewer Bentu')">
-	<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasibentu">
 			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
-						<div class="text-900 font-medium text-xl">{{countBentu.blmDiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.blmDiverifikasibentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -226,12 +222,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisibentu">
 			<div @click="atasanDivisi2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Higher Level</span>
-						<div class="text-900 font-medium text-xl">{{countBentu.atasandivisi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.atasandivisibentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-clipboard-check text-xl" style="color: green;"></i>
@@ -239,12 +235,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerbentu">
 			<div @click="IctManager2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">ICT Manager</span>
-						<div class="text-900 font-medium text-xl">{{countBentu.manager}}</div>
+						<div class="text-900 font-medium text-xl">{{count.managerbentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-bookmark-fill text-xl" style="color: green;"></i>
@@ -252,12 +248,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectbentu">
 			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
-						<div class="text-900 font-medium text-xl">{{countBentu.reject}}</div>
+						<div class="text-900 font-medium text-xl">{{count.rejectbentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -265,12 +261,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestbentu">
 			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
-						<div class="text-900 font-medium text-xl">{{countBentu.penugasanRequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.penugasanRequestbentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
@@ -278,12 +274,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakanbentu">
 			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
-						<div class="text-900 font-medium text-xl">{{countBentu.sdgdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sdgdikerjakanbentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -291,12 +287,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakanbentu">
 			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
-						<div class="text-900 font-medium text-xl">{{countBentu.sdhdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sdhdikerjakanbentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
@@ -304,12 +300,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaibentu">
 			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
-						<div class="text-900 font-medium text-xl">{{countBentu.sdhselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sdhselesaibentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -317,12 +313,12 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestbentu">
 			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
-						<div class="text-900 font-medium text-xl">{{countBentu.totalRequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.totalRequestbentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -330,14 +326,12 @@
 				</div>
 			</div>
 		</div>	
-</div>
-<div class="grid" v-else-if="this.role_name.includes('Reviewer Kurau')">
-	<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasikurau">
 			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
-						<div class="text-900 font-medium text-xl">{{countKurau.blmDiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.blmDiverifikasikurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -345,12 +339,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisikurau">
 			<div @click="atasanDivisi2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Higher Level</span>
-						<div class="text-900 font-medium text-xl">{{countKurau.atasandivisi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.atasandivisikurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-clipboard-check text-xl" style="color: green;"></i>
@@ -358,12 +352,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerkurau">
 			<div @click="IctManager2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">ICT Manager</span>
-						<div class="text-900 font-medium text-xl">{{countKurau.manager}}</div>
+						<div class="text-900 font-medium text-xl">{{count.managerkurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-bookmark-fill text-xl" style="color: green;"></i>
@@ -371,12 +365,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectkurau">
 			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
-						<div class="text-900 font-medium text-xl">{{countKurau.reject}}</div>
+						<div class="text-900 font-medium text-xl">{{count.rejectkurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -384,12 +378,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestkurau">
 			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
-						<div class="text-900 font-medium text-xl">{{countKurau.penugasanRequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.penugasanRequestkurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
@@ -397,12 +391,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakankurau">
 			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
-						<div class="text-900 font-medium text-xl">{{countKurau.sdgdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sdgdikerjakankurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -410,12 +404,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakankurau">
 			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
-						<div class="text-900 font-medium text-xl">{{countKurau.sdhdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sdhdikerjakankurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
@@ -423,12 +417,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaikurau">
 			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
-						<div class="text-900 font-medium text-xl">{{countKurau.sdhselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sdhselesaikurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -436,12 +430,12 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestkurau">
 			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
-						<div class="text-900 font-medium text-xl">{{countKurau.totalRequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.totalRequestkurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -449,14 +443,12 @@
 				</div>
 			</div>
 		</div>	
-</div>
-<div class="grid" v-else-if="this.role_name.includes('Reviewer Jakarta')">
-	<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasijakarta">
 			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
-						<div class="text-900 font-medium text-xl">{{countJakarta.blmDiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.blmDiverifikasijakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -464,12 +456,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisijakarta">
 			<div @click="atasanDivisi2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Higher Level</span>
-						<div class="text-900 font-medium text-xl">{{countJakarta.atasandivisi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.atasandivisijakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-clipboard-check text-xl" style="color: green;"></i>
@@ -477,12 +469,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerjakarta">
 			<div @click="IctManager2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">ICT Manager</span>
-						<div class="text-900 font-medium text-xl">{{countJakarta.manager}}</div>
+						<div class="text-900 font-medium text-xl">{{count.managerjakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-bookmark-fill text-xl" style="color: green;"></i>
@@ -490,12 +482,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectjakarta">
 			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
-						<div class="text-900 font-medium text-xl">{{countJakarta.reject}}</div>
+						<div class="text-900 font-medium text-xl">{{count.rejectjakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -503,12 +495,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestjakarta">
 			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
-						<div class="text-900 font-medium text-xl">{{countJakarta.penugasanRequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.penugasanRequestjakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
@@ -516,12 +508,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakanjakarta">
 			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
-						<div class="text-900 font-medium text-xl">{{countJakarta.sdgdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sdgdikerjakanjakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -529,12 +521,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakanjakarta">
 			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
-						<div class="text-900 font-medium text-xl">{{countJakarta.sdhdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sdhdikerjakanjakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
@@ -542,12 +534,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaijakarta">
 			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
-						<div class="text-900 font-medium text-xl">{{countJakarta.sdhselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sdhselesaijakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -555,12 +547,12 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestjakarta">
 			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
-						<div class="text-900 font-medium text-xl">{{countJakarta.totalRequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.totalRequestjakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
@@ -568,14 +560,12 @@
 				</div>
 			</div>
 		</div>	
-</div>
-<div class="grid" v-else-if="this.role_name.includes('Personel ICT')">
-	<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequestpersonnel">
 			<div @click="penugasanRequest3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
-						<div class="text-900 font-medium text-xl">{{count3.penugasanrequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.penugasanrequestpersonnel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
@@ -583,12 +573,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectedpersonnel">
 			<div @click="diReject3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
-						<div class="text-900 font-medium text-xl">{{count3.rejected}}</div>
+						<div class="text-900 font-medium text-xl">{{count.rejectedpersonnel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="color: red;"></i>
@@ -596,12 +586,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumselesaipersonnel">
 			<div @click="blmSelesai3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
-						<div class="text-900 font-medium text-xl">{{count3.belumselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count.belumselesaipersonnel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-split text-xl" style="color: red;"></i>
@@ -609,12 +599,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanpersonnel">
 			<div @click="sdHDikerjakan3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
-						<div class="text-900 font-medium text-xl">{{count3.sudahdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdikerjakanpersonnel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -622,12 +612,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaipersonnel">
 			<div @click="sdhSelesai3()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
-						<div class="text-900 font-medium text-xl">{{count3.sudahselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahselesaipersonnel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="color: green;"></i>
@@ -635,14 +625,12 @@
 				</div>
 			</div>
 		</div>
-</div>
-<div class="grid" v-else-if="this.role_name.includes('Atasan Requestor Divisi')">
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewhigherlevel">
 			<div @click="sdgDireview1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Under Review </span>
-						<div class="text-900 font-medium text-xl">{{count1.sedangdireview}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sedangdireviewhigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-check text-xl" style="color: green;"></i>
@@ -650,12 +638,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasihigherlevel">
 			<div @click="blmDiverifikasi1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification </span>
-						<div class="text-900 font-medium text-xl">{{count1.belumdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.belumdiverifikasihigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: red;"></i>
@@ -663,12 +651,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasihigherlevel">
 			<div @click="sdhDiverifikasi1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Already Verified</span>
-						<div class="text-900 font-medium text-xl">{{count1.sudahdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdiverifikasihigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -676,12 +664,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjecthigherlevel">
 			<div @click="diReject1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
-						<div class="text-900 font-medium text-xl">{{count1.direject}}</div>
+						<div class="text-900 font-medium text-xl">{{count.direjecthigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="fontSize: 4rem; color: red;"></i>
@@ -689,12 +677,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequesthigherlevel">
 			<div @click="penugasanRequest1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
-						<div class="text-900 font-medium text-xl">{{count1.penugasanrequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.penugasanrequesthigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
@@ -702,12 +690,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanhigherlevel">
 			<div @click="sdgDikerjakan1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
-						<div class="text-900 font-medium text-xl">{{count1.sedangdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakanhigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
@@ -715,12 +703,12 @@
 				</div>
 			</div>
 		</div>	
-    <div class="col-12 lg:col-6 xl:col-3">
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanhigherlevel">
 			<div @click="sdhDikerjakan1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
-						<div class="text-900 font-medium text-xl">{{count1.sudahdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdikerjakanhigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color: red;"></i>
@@ -728,40 +716,38 @@
 				</div>
 			</div>
 		</div>	
-    <div class="col-12 lg:col-6 xl:col-3">
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaihigherlevel">
 			<div @click="sdhSelesai1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
-						<div class="text-900 font-medium text-xl">{{ count1.sudahselesai }}</div>
+						<div class="text-900 font-medium text-xl">{{ count.sudahselesaihigherlevel }}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
 					</div>
 				</div>
 			</div>
-    </div>
-	<div class="col-12 lg:col-6 xl:col-3">
+    	</div>
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalhigherlevel">
 			<div @click="totalRequest1()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
-						<div class="text-900 font-medium text-xl">{{count1.total}}</div>
+						<div class="text-900 font-medium text-xl">{{count.totalhigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-book text-xl" style="fontSize: 4rem; color : green;"></i>
 					</div>
 				</div>
 			</div>
-    </div>
-</div>
-<div class="grid" v-else-if="this.role_name.includes('Requestor Divisi') || this.role_name.includes('Default Role')">
-		<div class="col-12 lg:col-6 xl:col-3" >
+    	</div>
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewrequestor">
 			<div @click="sdgDireview()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Under review </span>
-						<div class="text-900 font-medium text-xl">{{count.sedangdireview}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sedangdireviewrequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-check text-xl" style="color: green;"></i>
@@ -769,12 +755,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" >
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasirequestor">
 			<div @click="blmDiverifikasi()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification </span>
-						<div class="text-900 font-medium text-xl">{{count.belumdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.belumdiverifikasirequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-hourglass-bottom text-xl" style="color: gray;"></i>
@@ -782,12 +768,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasirequestor">
 			<div @click="sdhDiverifikasi()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Already verified</span>
-						<div class="text-900 font-medium text-xl">{{count.sudahdiverifikasi}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdiverifikasirequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-check text-xl" style="color: green;"></i>
@@ -795,12 +781,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectrequestor">
 			<div @click="diReject()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
-						<div class="text-900 font-medium text-xl">{{count.direject}}</div>
+						<div class="text-900 font-medium text-xl">{{count.direjectrequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-times text-xl" style="fontSize: 4rem; color: red;"></i>
@@ -808,12 +794,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanrequestor">
 			<div @click="sdgDikerjakan()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
-						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakanrequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
@@ -821,12 +807,12 @@
 				</div>
 			</div>
 		</div>	
-    <div class="col-12 lg:col-6 xl:col-3">
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanrequestor">
 			<div @click="sdhDikerjakan()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
-						<div class="text-900 font-medium text-xl">{{count.sudahdikerjakan}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahdikerjakanrequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color: red;"></i>
@@ -834,153 +820,57 @@
 				</div>
 			</div>
 		</div>	
-    <div class="col-12 lg:col-6 xl:col-3">
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesairequestor">
 			<div @click="sdhSelesai()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
-						<div class="text-900 font-medium text-xl">{{count.sudahselesai}}</div>
+						<div class="text-900 font-medium text-xl">{{count.sudahselesairequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
 					</div>
 				</div>
 			</div>
-    </div>	
-    <div class="col-12 lg:col-6 xl:col-3">
+    	</div>	
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.countrequestrequestor">
 			<div @click="totalKeseluruhan()" style="cursor:pointer;" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
-						<div class="text-900 font-medium text-xl">{{count.countrequest}}</div>
+						<div class="text-900 font-medium text-xl">{{count.countrequestrequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
 						<i class="bi bi-journal-bookmark-fill text-xl" style="fontSize: 4rem; color : green;"></i>
 					</div>
 				</div>
 			</div>
-    </div>
+    	</div>
 </div>
 </template>
 <script>
 export default {
     data() {
         return {
-			fullPage: false,
-			loader:'',
-            user:[],
-			role_name :[],
             count:[],
-            count1:[],
-            countBentu:[],
-            countKurau:[],
-            countJakarta:[],
-            count3:[],
-            count4:[],
-            count5:[],
             token: localStorage.getItem('token'),
         }
     },
     mounted(){
-        this.CekUser();
+        this.getData();
     },
     methods:{
-		CekUser(){
-			this.loader = this.$loading.show
-			({
-				container: this.$refs.loadingContainer,
-				color: '#2772d9',
-				loader: 'spinner',
-				width: 64,
-				height: 64,
-				backgroundColor: '#1f2d40',
-				opacity: 0.5,
-				zIndex: 999,
-			}, {});
-			this.axios.get('/api/cek-role',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-				this.role_name = response.data.map((x)=>x.rol_name);
-				if(this.role_name.includes('Manager')){
-					this.getData4();
-				}	
-				else if(this.role_name.includes('Reviewer Bentu')){
-					this.getDataBentu();
-				}
-				else if(this.role_name.includes('Reviewer Kurau')){
-					this.getDataKurau();
-				}
-				else if(this.role_name.includes('Reviewer Jakarta')){
-					this.getDataJakarta();
-				}
-				else if(this.role_name.includes('Personel ICT')){
-					this.getData3();
-				}
-				else if(this.role_name.includes('Atasan Requestor Divisi')){
-					this.getData1();
-				}
-				else if(this.role_name.includes('Requestor Divisi') || this.role_name.includes('Default Role')){
-					this.getData();
-				}
-				else if(this.role_name.includes('Admin')){
-					this.getData5();
-				}
+		getData(){
+			this.axios.get('api/data-dashboard',{headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+				this.count = res.data.data;
 			}).catch(error=>{
-			if (error.response.status == 401) {
-				localStorage.clear();
-				localStorage.setItem('Expired','true')
-				this.$router.push('/login');
-				this.loader.hide();
-			}
-			});
+			 if (error.response.status == 401) {
+			 	localStorage.clear();
+			 	localStorage.setItem('Expired','true')
+			 	this.$router.push('/login');
+			   }
+			 });
 		},
-      	getData(){
-            this.axios.get('/api/getCountUser',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.count = response.data.data;
-				this.loader.hide();
-            });
-        },
-        //dashboard approval user
-        getData1(){
-            this.axios.get('api/getCountDivisi1',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.count1 = response.data.data;
-				this.loader.hide();
-            });
-        },
-        getDataBentu(){
-            this.axios.get('api/getCountReviewerBentu',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.countBentu = response.data;
-				this.loader.hide();
-            });
-        },
-		getDataKurau(){
-            this.axios.get('api/getCountReviewerKurau',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.countKurau = response.data;
-				this.loader.hide();
-            });
-        },
-		getDataJakarta(){
-            this.axios.get('api/getCountReviewerJakarta',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.countJakarta = response.data;
-				this.loader.hide();
-            });
-        },
-        getData3(){
-            this.axios.get('api/getCountDivisi3',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.count3 = response.data.data;
-				this.loader.hide();
-            });
-        },
-        getData4(){
-            this.axios.get('api/getCountDivisi4',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-                this.count4 = response.data.data;
-				this.loader.hide();
-            });
-        },
-        getData5(){
-          this.axios.get('api/getCountAdmin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.count5 = response.data.data;
-				this.loader.hide();
-          });
-        },
         blmDiverifikasiAdmin(){
           this.$router.push('/ict-request-desc')
           localStorage.setItem('desc',23);

@@ -4533,7 +4533,7 @@ export default {
         });
       },
       getIct5(){
-      this.axios.get('api/get-divisi-4',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/get-data-manager',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.blmDiverifikasi4 = response.data.ict;
         this.sdhDiverifikasi4 = response.data.ict1;
         this.direject4 = response.data.ict2;

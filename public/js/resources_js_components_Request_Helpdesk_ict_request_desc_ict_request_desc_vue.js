@@ -295,7 +295,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIct5: function getIct5() {
       var _this5 = this;
-      this.axios.get('api/get-divisi-4', {
+      this.axios.get('api/get-data-manager', {
         headers: {
           'Authorization': 'Bearer ' + this.token
         }

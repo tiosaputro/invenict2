@@ -200,13 +200,14 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/delete-menu/{menu_id}','MngMenuController@delete');
 
     //dashboard
+    Route::get('/data-dashboard','DashboardController@index');
     Route::get('/getCountUser','DashboardController@countUser');
-    Route::get('/getCountDivisi1','DashboardController@countDivisi1');
+    Route::get('/getCountDivisi1','DashboardController@countHigherLevel');
     Route::get('/getCountReviewerBentu','DashboardController@CountReviewerBentu');
     Route::get('/getCountReviewerKurau','DashboardController@CountReviewerKurau');
     Route::get('/getCountReviewerJakarta','DashboardController@CountReviewerJakarta');
-    Route::get('/getCountDivisi3','DashboardController@countDivisi3');
-    Route::get('/getCountDivisi4','DashboardController@countDivisi4');
+    Route::get('/getCountDivisi3','DashboardController@countPersonnel');
+    Route::get('/getCountDivisi4','DashboardController@countIctManager');
     Route::get('/getCountAdmin','DashboardController@countAdmin');
     Route::get('/status-per-divisi','DashboardController@countPerStatusPerDivisi');
     Route::get('/count-per-status','DashboardController@countPerStatus');
