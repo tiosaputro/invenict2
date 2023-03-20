@@ -151,7 +151,6 @@ export default {
         editDetail:[],
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        token: localStorage.getItem('token'),
         user:[],
     };
   },
@@ -161,13 +160,13 @@ export default {
   methods: {
     edit(ireqd_id){
       this.dialogEdit = true;
-      this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail/'+ ireqd_id).then((response)=>{
         this.editDetail = response.data;
       });
       this.getStatus();
     },
     getStatus(){
-      this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/getStatusIct').then((response)=>{
         this.status = response.data;
       });
     },
@@ -180,7 +179,7 @@ export default {
     submit(){
       this.submitted = true;
       if(this.editDetail.status != null){
-        this.axios.put('/api/update-status-done/'+this.$route.params.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-status-done/'+this.$route.params.code, this.editDetail).then(()=>{
           this.$toast.add({
             severity:'success', summary: 'Success', detail:'Status Berhasil Dirubah', life: 3000
           });
@@ -191,7 +190,7 @@ export default {
       
     },
     getIctDetail(){
-      this.axios.get('/api/get-detail-done/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/get-detail-done/' + this.$route.params.code).then((response)=> {
         this.detail = response.data;
         this.getNoreq();
         this.loading = false;
@@ -210,7 +209,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
         this.kode = response.data;
       });
     },

@@ -34,7 +34,6 @@ __webpack_require__.r(__webpack_exports__);
       ict: [],
       loading: false,
       req: [],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       items: [{
@@ -61,11 +60,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     cekUser: function cekUser() {
       var _this2 = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this2.checkto = response.data.map(function (x) {
           return x.to;
         });
@@ -83,22 +78,14 @@ __webpack_require__.r(__webpack_exports__);
     getIct: function getIct() {
       var _this3 = this;
       this.loading = true;
-      this.axios.get('api/dataIct', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (res) {
+      this.axios.get('api/dataIct').then(function (res) {
         _this3.ict = res.data;
         _this3.loading = false;
       });
     },
     getStatus: function getStatus() {
       var _this4 = this;
-      this.axios.get('api/get-status', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (res) {
+      this.axios.get('api/get-status').then(function (res) {
         _this4.status = res.data;
       });
     },
@@ -116,11 +103,7 @@ __webpack_require__.r(__webpack_exports__);
         this.filterDate.status == '';
       }
       ;
-      this.axios.post('api/filterByDate', this.filterDate, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (res) {
+      this.axios.post('api/filterByDate', this.filterDate).then(function (res) {
         _this5.ict = res.data;
         _this5.filter = true;
         _this5.dialogFilterDate = false;

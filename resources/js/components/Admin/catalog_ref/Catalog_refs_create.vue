@@ -154,7 +154,7 @@ export default {
         { nama: "Node", code: "N" },
         { nama: "Leaf", code: "L"}
       ],
-      token: localStorage.getItem('token')
+      
     };
   },
   created(){
@@ -162,7 +162,7 @@ export default {
     },
   methods: {
       getParent(){
-          this.axios.get('api/get-parent-catalog',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('api/get-parent-catalog').then((response)=>{
               this.parent = response.data;
           }).catch(error=>{
             if(error.response.status == 401){
@@ -181,7 +181,7 @@ export default {
     CreateCatalog() {
         this.errors = [];
 
-        this.axios.post('api/save-catalog',this.catalog,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('api/save-catalog',this.catalog).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

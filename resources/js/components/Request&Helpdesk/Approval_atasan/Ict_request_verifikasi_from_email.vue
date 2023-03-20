@@ -164,12 +164,11 @@ export default {
         },
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         status : null,
     };
   },
   mounted() {
-    this.getNoreq();
+    this.getIctDetail();
   },
   methods: {
       getDetail(ireq_attachment){
@@ -180,13 +179,13 @@ export default {
       VerifikasiRequest(){
         this.confirmationVerifikasi = true;
       },
-      cek(){
+      cekParams(){
         this.status = this.$route.params.status;
           if(this.status == 'approve'){
               this.Approve();
           }
           if(this.status == 'reject'){
-              this.dialogReject = true;
+              this.rejectRequest();
           }
       },
       Approve(){
@@ -206,7 +205,7 @@ export default {
             summary: "Success Message",
             detail: "Successfully approved the request",
           });
-          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code);
           setTimeout( () =>  this.$router.push('/ict-request-higher-level'),1000);
         },
         reject: () => {},
@@ -220,7 +219,7 @@ export default {
       this.confirmationVerifikasi = false;
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason).then(()=>{
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
@@ -237,10 +236,21 @@ export default {
         this.submitted = false;
       },
       getIctDetail(){
-        this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-          this.verif = response.data;
-          this.loading = false;
-          this.cek();
+        this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code).then((response)=> {
+          this.verif = response.data.data.detail;
+          this.kode = response.data.data.norequest;
+          if(this.kode.cekstatus =='NA1'){  
+            this.loading = false;
+            this.cekParams();
+          }
+          else{
+           this.$toast.add({
+            severity: "error",
+            summary: "Error Message",
+            detail: "This request has been verified",
+           });
+          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),2000);
+        }
         }).catch(error=>{
             if (error.response.status == 401) {
               this.$toast.add({
@@ -255,22 +265,6 @@ export default {
             }
         });
       },
-      getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
-        if(this.kode.cekstatus =='NA1'){
-          this.getIctDetail();
-        }
-        else{
-          this.$toast.add({
-            severity: "error",
-            summary: "Error Message",
-            detail: "This request has been verified",
-          });
-          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),2000);
-        }
-      });
-    },
   },
 };
 </script>

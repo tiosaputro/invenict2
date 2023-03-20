@@ -26,7 +26,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       code: this.$route.params.code,
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       tes: [],
@@ -45,19 +44,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this = this;
-      this.axios.get('/api/ict-detail-higher-level/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.detail = response.data.data;
-        _this.getNoreq();
-        _this.tes = response.data.data.map(function (x) {
+      this.axios.get('/api/ict-detail-higher-level/' + this.$route.params.code).then(function (response) {
+        _this.detail = response.data.data.detail;
+        _this.kode = response.data.data.norequest;
+        _this.status = response.data.data.norequest.cekstatus;
+        _this.tes = response.data.data.detail.map(function (x) {
           return x.ireq_assigned_to;
         });
         if (_this.tes.length > 0 && _this.tes[0] != null) {
           _this.ireq = _this.tes;
-        } else {}
+        }
         _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -77,29 +73,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getNoreq: function getNoreq() {
-      var _this2 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.kode = response.data;
-        _this2.status = response.data.cekstatus;
-      });
-    },
     CetakPdf: function CetakPdf() {
-      var _this3 = this;
+      var _this2 = this;
       this.loading = true;
-      this.axios.get('/api/print-out-ict-request/' + this.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/print-out-ict-request/' + this.code).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this3.loading = false;
+        _this2.loading = false;
       });
     }
   }

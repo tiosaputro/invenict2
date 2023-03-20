@@ -123,12 +123,9 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
         purch: [],
         purchase_id:null,
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        checkname : [],
-        checkto : [],
         divisi: [],
     };
   },
@@ -144,8 +141,8 @@ export default {
          return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")
     },
     getPurchase(){
-      this.axios.get('api/pem',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.purch = response.data;
+      this.axios.get('api/pem').then((response)=> {
+        this.purch = response.data.data;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -176,7 +173,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-pem/' +purchase_id,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('api/delete-pem/' +purchase_id).then(()=>{
             this.loading = true;
             this.getPurchase();
           });
@@ -186,7 +183,7 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('api/report-pem-pdf',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-pem-pdf').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

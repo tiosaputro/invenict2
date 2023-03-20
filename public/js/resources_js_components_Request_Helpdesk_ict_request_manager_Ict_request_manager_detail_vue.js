@@ -27,12 +27,7 @@ __webpack_require__.r(__webpack_exports__);
           value: null,
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
-      },
-      code: this.$route.params.code,
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
-      status: ''
+      }
     };
   },
   mounted: function mounted() {
@@ -49,13 +44,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this = this;
-      this.axios.get('/api/ict-detail-manager/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.detail = response.data.data;
-        _this.getNoreq();
+      this.axios.get('/api/ict-detail-manager/' + this.$route.params.code).then(function (response) {
+        _this.detail = response.data.data.detail;
+        _this.kode = response.data.data.norequest;
         _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -75,19 +66,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getNoreq: function getNoreq() {
-      var _this2 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.kode = response.data;
-        _this2.status = response.data.cekstatus;
-      });
-    },
     DeleteIct: function DeleteIct(ireqd_id) {
-      var _this3 = this;
+      var _this2 = this;
       this.$confirm.require({
         message: "Are you sure you want to delete this record data?",
         header: "Delete Confirmation",
@@ -96,34 +76,26 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
-          _this3.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          });
-          _this3.getIctDetail();
+          _this2.axios["delete"]('/api/delete-ict-detail/' + ireqd_id);
+          _this2.getIctDetail();
         },
         reject: function reject() {}
       });
     },
     CetakPdf: function CetakPdf() {
-      var _this4 = this;
+      var _this3 = this;
       this.loading = true;
-      this.axios.get('/api/print-out-ict-request/' + this.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/print-out-ict-request/' + this.$route.params.code).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this4.loading = false;
+        _this3.loading = false;
       });
     }
   }

@@ -87,7 +87,6 @@ export default {
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
       ],
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
     };
@@ -102,7 +101,7 @@ export default {
         data.append("lookup_desc", this.lookup_desc);
         data.append("lookup_status", this.lookup_status);
 
-        this.axios.post('api/add-kategori', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((resoonse)=>{
+        this.axios.post('api/add-kategori', data).then((resoonse)=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

@@ -175,7 +175,6 @@ export default {
         displayKode: true,
         header:null,
         detail:[],
-        token: localStorage.getItem('token'),
     };
   },
   created() {

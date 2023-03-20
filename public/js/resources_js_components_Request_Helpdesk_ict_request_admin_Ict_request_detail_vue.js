@@ -27,7 +27,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       code: this.$route.params.code,
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       tes: [],
@@ -40,11 +39,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/cek-user').then(function (response) {
         _this.checkto = response.data.map(function (x) {
           return x.to;
         });
@@ -61,11 +56,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this2 = this;
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then(function (response) {
         _this2.detail = response.data;
         _this2.tes = response.data.map(function (x) {
           return x.ireq_assigned_to;
@@ -91,11 +82,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this3 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
         _this3.kode = response.data.noreq;
         _this3.status = response.data.cekstatus;
       });
@@ -116,11 +103,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this4.axios["delete"]('/api/delete-ict-detail/' + ireqd_id + '/' + code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this4.token
-            }
-          });
+          _this4.axios["delete"]('/api/delete-ict-detail/' + ireqd_id + '/' + code);
           _this4.getIctDetail();
         },
         reject: function reject() {}
@@ -143,11 +126,7 @@ __webpack_require__.r(__webpack_exports__);
             life: 3000
           });
           _this5.loading = true;
-          _this5.axios.get('/api/updateStatusSubmit/' + _this5.code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this5.token
-            }
-          });
+          _this5.axios.get('/api/updateStatusSubmit/' + _this5.code);
           setTimeout(function () {
             return _this5.$router.push('/ict-request-admin');
           }, 1000);
@@ -158,11 +137,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdf: function CetakPdf() {
       var _this6 = this;
       this.loading = true;
-      this.axios.get('/api/print-out-ict-request/' + this.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/print-out-ict-request/' + this.code).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);

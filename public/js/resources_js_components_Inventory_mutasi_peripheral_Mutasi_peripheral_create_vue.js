@@ -33,10 +33,7 @@ __webpack_require__.r(__webpack_exports__);
       mutasi: [],
       mask: {
         input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      }
     };
   },
   mounted: function mounted() {
@@ -46,11 +43,7 @@ __webpack_require__.r(__webpack_exports__);
     getImage: function getImage() {
       var _this = this;
       if (this.invent_sn) {
-        this.axios.get('api/getImage/' + this.invent_sn, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/getImage/' + this.invent_sn).then(function (response) {
           _this.detail = response.data;
         });
       }
@@ -58,25 +51,17 @@ __webpack_require__.r(__webpack_exports__);
     getSn: function getSn() {
       var _this2 = this;
       if (this.kode) {
-        this.axios.get('/api/get-sn-peripheral/' + this.kode, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('/api/get-sn-peripheral/' + this.kode).then(function (response) {
           _this2.sn = response.data;
         });
       }
     },
     getKode: function getKode() {
       var _this3 = this;
-      this.axios.get('api/get-kode-peripheral', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.kodeperi = response.data.kode;
-        _this3.divisi = response.data.divisi;
-        _this3.bu = response.data.bu;
+      this.axios.get('api/get-kode-peripheral').then(function (response) {
+        _this3.kodeperi = response.data.data.kode;
+        _this3.divisi = response.data.data.divisi;
+        _this3.bu = response.data.data.bu;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this3.$toast.add({
@@ -117,11 +102,7 @@ __webpack_require__.r(__webpack_exports__);
             data.append("invent_bu", _this4.invent_bu);
             data.append("invent_divisi", _this4.invent_divisi);
             data.append("invent_sn", _this4.invent_sn);
-            _this4.axios.post('api/add-mut', data, {
-              headers: {
-                'Authorization': 'Bearer ' + _this4.token
-              }
-            }).then(function () {
+            _this4.axios.post('api/add-mut', data).then(function () {
               setTimeout(function () {
                 return _this4.$router.push('/mutasi-peripheral');
               }, 1000);

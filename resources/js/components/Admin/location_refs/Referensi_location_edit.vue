@@ -72,7 +72,6 @@ export default {
       checkname : [],
       checkto : [],
       loc: [],
-      token: localStorage.getItem('token'),
       name:''
     };
   },
@@ -81,7 +80,7 @@ export default {
   },
   methods: {
       getLoc(){
-        this.axios.get('/api/edit-loc/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response)=> {
+        this.axios.get('/api/edit-loc/' + this.$route.params.code ).then((response)=> {
             this.loc = response.data;
         }).catch(error=>{
           if ((error.response.status == 401)){
@@ -99,7 +98,7 @@ export default {
       },
     UpdateLocation(){
         this.errors = [];   
-        this.axios.put('/api/update-loc/' + this.$route.params.code, this.loc, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response) => {
+        this.axios.put('/api/update-loc/' + this.$route.params.code, this.loc ).then((response) => {
            this.$toast.add({
             severity: "success",
             summary: "Success Message",

@@ -25,7 +25,6 @@ __webpack_require__.r(__webpack_exports__);
         nama: "Tidak Aktif",
         code: "F"
       }],
-      token: localStorage.getItem('token'),
       name: ''
     };
   },
@@ -35,12 +34,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getRef: function getRef() {
       var _this = this;
-      this.axios.get('/api/edit-kategori/' + this.$route.params.code + '/' + this.$route.params.type, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.ref = response.data;
+      this.axios.get('/api/edit-kategori/' + this.$route.params.code + '/' + this.$route.params.type).then(function (response) {
+        _this.ref = response.data.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this.$toast.add({
@@ -62,11 +57,7 @@ __webpack_require__.r(__webpack_exports__);
     UpdateLookup: function UpdateLookup() {
       var _this2 = this;
       this.errors = [];
-      this.axios.put('/api/update-kategori/' + this.$route.params.code + '/' + this.$route.params.type, this.ref, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.put('/api/update-kategori/' + this.$route.params.code + '/' + this.$route.params.type, this.ref).then(function (response) {
         _this2.$toast.add({
           severity: "success",
           summary: "Success Message",

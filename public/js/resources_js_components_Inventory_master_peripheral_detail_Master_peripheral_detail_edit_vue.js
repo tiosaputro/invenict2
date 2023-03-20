@@ -26,7 +26,6 @@ __webpack_require__.r(__webpack_exports__);
       mask: {
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       detail: []
@@ -38,25 +37,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getDetail: function getDetail() {
       var _this = this;
-      this.axios.get('/api/edit-master-detail/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.detail = response.data;
+      this.axios.get('/api/edit-master-detail/' + this.$route.params.code).then(function (response) {
+        _this.detail = response.data.data;
       });
     },
     getMerk: function getMerk() {
       var _this2 = this;
-      this.axios.get('/api/rsrcsupp', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        // this.merks = response.data.merk;
-        _this2.bisnis = response.data.bisnis;
-        _this2.kondi = response.data.kondisi;
-        // this.kategori = response.data.nama;
+      this.axios.get('/api/rsrcsupp').then(function (response) {
+        _this2.bisnis = response.data.data.bisnis;
+        _this2.kondi = response.data.data.kondisi;
         _this2.getDetail();
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -110,11 +99,7 @@ __webpack_require__.r(__webpack_exports__);
       // this.detail.invent_lokasi_previous != null &&
       // this.detail.invent_pengguna_previous != null  
       ) {
-        this.axios.put('/api/update-master-detail/' + this.$route.params.code, this.detail, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/update-master-detail/' + this.$route.params.code, this.detail).then(function () {
           setTimeout(function () {
             return _this3.$router.push('/master-peripheral-detail/' + _this3.$route.params.kode);
           }, 1000);

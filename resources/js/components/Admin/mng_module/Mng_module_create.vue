@@ -87,7 +87,6 @@ export default {
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
       ],
-      token: localStorage.getItem('token')
     };
   },
   methods: {
@@ -100,7 +99,7 @@ export default {
         data.append("mod_stat", this.mod_stat);
 
 
-        this.axios.post('api/save-module',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('api/save-module',data).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

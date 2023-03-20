@@ -41,8 +41,7 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         nama: "Leaf",
         code: "L"
-      }],
-      token: localStorage.getItem('token')
+      }]
     };
   },
   created: function created() {
@@ -51,11 +50,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getModul: function getModul() {
       var _this = this;
-      this.axios.get('api/get-module', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-module').then(function (response) {
         _this.modul = response.data;
         _this.getParent();
       })["catch"](function (error) {
@@ -78,11 +73,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getParent: function getParent() {
       var _this2 = this;
-      this.axios.get('api/get-parent', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-parent').then(function (response) {
         _this2.parent = response.data;
       });
     },
@@ -99,11 +90,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append("controller", this.controller);
       data.append("action", this.action);
       data.append("parent_id", this.parent_id);
-      this.axios.post('api/save-menu', data, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.post('api/save-menu', data).then(function () {
         _this3.$toast.add({
           severity: "success",
           summary: "Success Message",

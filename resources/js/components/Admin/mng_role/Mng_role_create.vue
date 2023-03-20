@@ -122,7 +122,6 @@ export default {
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
       ],
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
     };
@@ -132,7 +131,7 @@ export default {
   },
   methods: {
     getMenu(){
-      this.axios.get('api/get-menu',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/get-menu').then((response)=>{
         this.menus = response.data
       }).catch(error=>{
         if (error.response.status == 401){
@@ -152,8 +151,8 @@ export default {
         this.errors = [];
         this.error=[];
         if(this.role.menu != '' && this.role.menu != null){
-        this.axios.post('api/save-role',this.role,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-          this.axios.post('api/save-role-menu',this.role,{headers: {'Authorization': 'Bearer '+this.token}});
+        this.axios.post('api/save-role',this.role).then(()=>{
+          this.axios.post('api/save-role-menu',this.role);
           this.$toast.add({
             severity: "success",
             summary: "Success Message",

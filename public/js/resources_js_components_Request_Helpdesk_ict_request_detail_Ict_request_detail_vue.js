@@ -27,9 +27,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       code: this.$route.params.code,
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
       showPersonnel: []
     };
   },
@@ -44,11 +41,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this = this;
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then(function (response) {
         _this.detail = response.data;
         _this.showPersonnel = response.data.map(function (x) {
           return x.ireq_count_status;
@@ -75,11 +68,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this2 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
         _this2.kode = response.data.noreq;
         _this2.status = response.data.cekstatus;
       });
@@ -100,11 +89,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this3.axios["delete"]('/api/delete-ict-detail/' + ireqd_id + '/' + code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          }).then(function () {
+          _this3.axios["delete"]('/api/delete-ict-detail/' + ireqd_id + '/' + code).then(function () {
             _this3.loading = true;
             _this3.getIctDetail();
           });
@@ -129,11 +114,7 @@ __webpack_require__.r(__webpack_exports__);
             life: 3000
           });
           _this4.loading = true;
-          _this4.axios.get('/api/updateStatusSubmit/' + _this4.code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this4.token
-            }
-          });
+          _this4.axios.get('/api/updateStatusSubmit/' + _this4.code);
           setTimeout(function () {
             return _this4.$router.push('/ict-request');
           }, 1000);
@@ -144,11 +125,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdf: function CetakPdf() {
       var _this5 = this;
       this.loading = true;
-      this.axios.get('/api/print-out-ict-request/' + this.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/print-out-ict-request/' + this.code).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);

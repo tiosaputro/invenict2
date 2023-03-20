@@ -32,7 +32,6 @@ __webpack_require__.r(__webpack_exports__);
       mask: {
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
       code: null
     };
   },
@@ -42,11 +41,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getType: function getType() {
       var _this = this;
-      this.axios.get('api/getAddReq', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/getAddReq').then(function (response) {
         _this.type = response.data.ref;
         _this.bu = response.data.bisnis;
         _this.divisi = response.data.divisi;
@@ -82,11 +77,7 @@ __webpack_require__.r(__webpack_exports__);
         data.append("user_name", this.usr_name);
         data.append("user_divisi", this.usr_divisi);
         data.append("priolev", this.priolev);
-        this.axios.post('api/add-ict', data, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.post('api/add-ict', data).then(function (response) {
           _this2.$toast.add({
             severity: "success",
             summary: "Success Message",

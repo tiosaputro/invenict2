@@ -227,10 +227,6 @@ export default {
         loading: true,
         detail: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        code : this.$route.params.code,
-        token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
         code:null
     };
   },
@@ -242,10 +238,10 @@ export default {
       return moment(date).format("DD MMM YYYY HH:mm");
     },
     AssignPerDetail(ireqd_id){
-      this.axios.get('/api/detail/'+ ireqd_id+'/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail/'+ ireqd_id+'/'+ this.$route.params.code).then((response)=>{
             this.assign = response.data;
           });
-      this.axios.get('/api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-pekerja').then((response)=>{
             this.petugas = response.data;
         });
       this.dialogAssign = true;
@@ -255,7 +251,7 @@ export default {
       this.code = this.assign.ireqd_id
       if(this.assign.status =='RT'){
         if(this.assign.ireq_assigned_to1 != null){
-          this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign).then(()=>{
             this.assign = [];
             this.dialogAssign = false;
             this.submitted = false;
@@ -270,7 +266,7 @@ export default {
         }
       }else{
         if(this.assign.ireq_assigned_to1 != null && this.assign.ireq_assigned_to1_reason != null){
-          this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign).then(()=>{
             this.assign = [];
             this.dialogAssign = false;
             this.submitted = false;
@@ -300,7 +296,7 @@ export default {
               detail: "Success Submit",
               life : 1000
             });
-            this.axios.get('/api/appd/' +ireqd_id + '/' +this.$route.params.code ,{headers: {'Authorization': 'Bearer '+this.token}});
+            this.axios.get('/api/appd/' +ireqd_id + '/' +this.$route.params.code );
             
             this.getIctDetail();
         },
@@ -313,12 +309,12 @@ export default {
       this.dialogAssign = false;
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data.data;
-        this.showPersonnel1 = response.data.data.map((x)=>x.ireq_count_status);
-        this.showPersonnel2 = response.data.data.map((x)=>x.ireq_count_personnel2);
-        this.showReason = response.data.data.map((x)=>x.ireq_count_reason);
-        this.getNoreq();
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.showPersonnel1 = response.data.data.detail.map((x)=>x.ireq_count_status);
+        this.showPersonnel2 = response.data.data.detail.map((x)=>x.ireq_count_personnel2);
+        this.showReason = response.data.data.detail.map((x)=>x.ireq_count_reason);
+        this.kode = response.data.data.norequest;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -334,31 +330,15 @@ export default {
           }
       });
     },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
-        this.status = response.data.cekstatus;
-        if(this.status =='NT' || this.status == 'RT'){ this.show = true}
-      });
-    },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
           this.loading = false;
        });
     },
-    // CetakExcel(){
-    //   window.open('/api/report-ict-detail-excel/' +this.code);
-    // },
-    // CetakPdfReject(){
-    //  window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
-    // },
-    // CetakExcelReject(){
-    //   window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
-    // },
   },
 };
 </script>

@@ -32,12 +32,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       code: this.$route.params.code,
-      token: localStorage.getItem('token'),
       status: null
     };
   },
   mounted: function mounted() {
-    this.getNoreq();
+    this.getIctDetail();
   },
   methods: {
     getDetail: function getDetail(ireq_attachment) {
@@ -48,13 +47,13 @@ __webpack_require__.r(__webpack_exports__);
     VerifikasiRequest: function VerifikasiRequest() {
       this.confirmationVerifikasi = true;
     },
-    cek: function cek() {
+    cekParams: function cekParams() {
       this.status = this.$route.params.status;
       if (this.status == 'approve') {
         this.Approve();
       }
       if (this.status == 'reject') {
-        this.dialogReject = true;
+        this.rejectRequest();
       }
     },
     Approve: function Approve() {
@@ -75,11 +74,7 @@ __webpack_require__.r(__webpack_exports__);
             summary: "Success Message",
             detail: "Successfully approved the request"
           });
-          _this.axios.get('/api/updateStatusPermohonan/' + _this.$route.params.code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this.token
-            }
-          });
+          _this.axios.get('/api/updateStatusPermohonan/' + _this.$route.params.code);
           setTimeout(function () {
             return _this.$router.push('/ict-request-higher-level');
           }, 1000);
@@ -96,11 +91,7 @@ __webpack_require__.r(__webpack_exports__);
       this.confirmationVerifikasi = false;
       this.submitted = true;
       if (this.reason.ket != null) {
-        this.axios.put('/api/updateStatusReject/' + this.$route.params.code, this.reason, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/updateStatusReject/' + this.$route.params.code, this.reason).then(function () {
           _this2.dialogReject = false;
           _this2.$toast.add({
             severity: "info",
@@ -120,14 +111,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this3 = this;
-      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
+      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code).then(function (response) {
+        _this3.verif = response.data.data.detail;
+        _this3.kode = response.data.data.norequest;
+        if (_this3.kode.cekstatus == 'NA1') {
+          _this3.loading = false;
+          _this3.cekParams();
+        } else {
+          _this3.$toast.add({
+            severity: "error",
+            summary: "Error Message",
+            detail: "This request has been verified"
+          });
+          setTimeout(function () {
+            return _this3.$router.push('/ict-request-higher-level');
+          }, 2000);
         }
-      }).then(function (response) {
-        _this3.verif = response.data;
-        _this3.loading = false;
-        _this3.cek();
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this3.$toast.add({
@@ -143,28 +142,6 @@ __webpack_require__.r(__webpack_exports__);
         }
         if (error.response.status == 403) {
           _this3.$router.push('/access');
-        }
-      });
-    },
-    getNoreq: function getNoreq() {
-      var _this4 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.kode = response.data;
-        if (_this4.kode.cekstatus == 'NA1') {
-          _this4.getIctDetail();
-        } else {
-          _this4.$toast.add({
-            severity: "error",
-            summary: "Error Message",
-            detail: "This request has been verified"
-          });
-          setTimeout(function () {
-            return _this4.$router.push('/ict-request-higher-level');
-          }, 2000);
         }
       });
     }

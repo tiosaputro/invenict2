@@ -29,7 +29,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
       },
-      token: localStorage.getItem('token'),
       user: []
     };
   },
@@ -40,22 +39,14 @@ __webpack_require__.r(__webpack_exports__);
     edit: function edit(ireqd_id) {
       var _this = this;
       this.dialogEdit = true;
-      this.axios.get('/api/detail/' + ireqd_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/detail/' + ireqd_id).then(function (response) {
         _this.editDetail = response.data;
       });
       this.getStatus();
     },
     getStatus: function getStatus() {
       var _this2 = this;
-      this.axios.get('/api/getStatusIct', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/getStatusIct').then(function (response) {
         _this2.status = response.data;
       });
     },
@@ -69,11 +60,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
       this.submitted = true;
       if (this.editDetail.status != null) {
-        this.axios.put('/api/update-status-done/' + this.$route.params.code, this.editDetail, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/update-status-done/' + this.$route.params.code, this.editDetail).then(function () {
           _this3.$toast.add({
             severity: 'success',
             summary: 'Success',
@@ -87,11 +74,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this4 = this;
-      this.axios.get('/api/get-detail-done/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-detail-done/' + this.$route.params.code).then(function (response) {
         _this4.detail = response.data;
         _this4.getNoreq();
         _this4.loading = false;
@@ -114,11 +97,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this5 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
         _this5.kode = response.data;
       });
     }

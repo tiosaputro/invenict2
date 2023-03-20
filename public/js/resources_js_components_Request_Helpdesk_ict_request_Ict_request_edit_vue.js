@@ -25,9 +25,6 @@ __webpack_require__.r(__webpack_exports__);
       mask: {
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
       requestor: ''
     };
   },
@@ -37,11 +34,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getIct: function getIct() {
       var _this = this;
-      this.axios.get('/api/edit-ict/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-ict/' + this.$route.params.code).then(function (response) {
         _this.mutasi = response.data.ict;
         _this.divisi = response.data.divisi;
         _this.type = response.data.ref;
@@ -73,11 +66,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.mutasi.ireq_date != '' && this.mutasi.ireq_prio_level != null &&
       // this.mutasi.ireq_remark != null  && 
       this.mutasi.ireq_divisi_user != null && this.mutasi.ireq_bu != null && this.mutasi.ireq_user != null) {
-        this.axios.put('/api/update-ict/' + this.$route.params.code, this.mutasi, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/update-ict/' + this.$route.params.code, this.mutasi).then(function () {
           _this2.$toast.add({
             severity: "success",
             summary: "Success Message",

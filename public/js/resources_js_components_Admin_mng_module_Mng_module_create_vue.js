@@ -24,8 +24,7 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         nama: "Tidak Aktif",
         code: "F"
-      }],
-      token: localStorage.getItem('token')
+      }]
     };
   },
   methods: {
@@ -36,11 +35,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append("mod_name", this.mod_name);
       data.append("mod_desc", this.mod_desc);
       data.append("mod_stat", this.mod_stat);
-      this.axios.post('api/save-module', data, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.post('api/save-module', data).then(function () {
         _this.$toast.add({
           severity: "success",
           summary: "Success Message",

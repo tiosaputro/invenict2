@@ -17,7 +17,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: true,
-      token: localStorage.getItem('token'),
       ref: [],
       filters: {
         'global': {
@@ -33,12 +32,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getRef: function getRef() {
       var _this = this;
-      this.axios.get('api/ref-lookup-brand', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.ref = response.data;
+      this.axios.get('api/ref-lookup-brand').then(function (response) {
+        _this.ref = response.data.data;
         _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -74,11 +69,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this2.axios["delete"]('api/delete-brand/' + lookup_code + "/" + lookup_type, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          }).then(function () {
+          _this2.axios["delete"]('api/delete-brand/' + lookup_code + "/" + lookup_type).then(function () {
             _this2.getRef();
           });
         },

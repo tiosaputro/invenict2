@@ -178,7 +178,6 @@ export default {
     return {
       errors: [],
       supp: [],
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
     };
@@ -188,7 +187,7 @@ export default {
   },
   methods: { 
     getSupp() {
-      this.axios.get('/api/edit-supp/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/edit-supp/' +this.$route.params.code).then((response)=>{
         this.supp = response.data;
       }).catch(error=>{
          if (error.response.status == 401){
@@ -206,7 +205,7 @@ export default {
     },
     UpdateSupplier(){
       this.errors= [];
-      this.axios.put('/api/update-supp/' +this.$route.params.code, this.supp, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+      this.axios.put('/api/update-supp/' +this.$route.params.code, this.supp).then(()=>{
         this.$toast.add({
             severity: "success",
             summary: "Success Message",

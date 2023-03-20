@@ -8,12 +8,11 @@ export default {
   data() {
     return {
       judul:"",
-      token: localStorage.getItem('token'),
     };
   },
   mounted(){
     var invent_code_dtl = localStorage.getItem('code')
-      this.axios.get('/api/detail-peripherall/' +invent_code_dtl, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail-peripherall/' +invent_code_dtl).then((response)=>{
         this.judul = response.data.invent_bu+" - ICT";
         var value = process.env.MIX_APP_URL+'/detPeripheral/'+ +invent_code_dtl;
         var title = this.judul;

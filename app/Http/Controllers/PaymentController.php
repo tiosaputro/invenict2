@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Model\Payment_request;
+use App\Models\Payment_request;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
-use App\Mng_User;
+use App\Models\Mng_user;
 
 class PaymentController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/payment-request";
         $this->middleware(function ($request, $next) {

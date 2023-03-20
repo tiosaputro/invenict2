@@ -113,10 +113,6 @@ export default {
         detail: [],
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        code : this.$route.params.code,
-        token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
         status:''
     };
   },
@@ -133,9 +129,10 @@ export default {
          myWindow.focus();
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-penugasan-manager/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
-        this.getNoreq();
+      this.axios.get('/api/ict-detail-penugasan-manager/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.kode = response.data.data.norequest;
+        this.status = response.data.data.norequest.cekstatus;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -151,15 +148,9 @@ export default {
           }
       });
     },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
-        this.status = response.data.cekstatus;
-      });
-    },
     CetakPdf(){
      this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

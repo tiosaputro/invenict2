@@ -162,9 +162,6 @@ export default {
          loading: true,
          cash: [],
          filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-         token: localStorage.getItem('token'),
-         checkname : [],
-         checkto : [],
          tes:[],
          ireq:[],
          ireq_id:''
@@ -186,8 +183,8 @@ export default {
         return formatter.format(value);
     },
     getCash(){
-        this.axios.get('/api/cash', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-          this.cash = response.data;
+        this.axios.get('/api/cash').then((response)=> {
+          this.cash = response.data.data;
           this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {
@@ -218,7 +215,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-cash/'+ca_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('api/delete-cash/'+ca_id);
           this.getCash();
         },
         reject: () => {},
@@ -231,7 +228,7 @@ export default {
       window.open('api/report-cash-excel');
     },
     detailRequest(ireq_id){
-      this.axios.get('api/detail-request/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/detail-request/' + ireq_id).then((response)=> {
         this.detail = response.data;
         this.ireq_id = response.data[0].ireq_no
         this.tes = response.data.map((x)=>x.ireq_assigned_to);

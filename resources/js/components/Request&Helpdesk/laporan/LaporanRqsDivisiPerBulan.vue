@@ -58,7 +58,6 @@ export default {
          tahun:[],
          loading: false,
          req: [],
-         token: localStorage.getItem('token'),
          checkname : [],
          checkto : [],
             items: [
@@ -84,7 +83,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Divis Requestor Per Bulan") || this.checkto.includes("/report-div-req-per-bulan")){
@@ -96,7 +95,7 @@ export default {
       });
     },
     getBulan(){
-        this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/get-tahun').then((response)=>{
             this.bulan = response.data.grafik2;
         }).catch(error=>{
           if (error.response.status == 401){
@@ -112,7 +111,7 @@ export default {
     getTahunRequestor(){
         this.tahunnRequestor = null;
         if(this.bulanRequestor != null){
-            this.axios.get('api/get-tahun-requestor/'+this.bulanRequestor, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+            this.axios.get('api/get-tahun-requestor/'+this.bulanRequestor).then((response)=>{
                 this.tahun = response.data;
             });
         }
@@ -122,7 +121,7 @@ export default {
         if(this.tahunnRequestor != null &&
             this.bulanRequestor != null){
             this.loading = true;
-            this.axios.get('api/count-per-divreq-bulan/'+this.tahunnRequestor +'/'+this.bulanRequestor, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{ 
+            this.axios.get('api/count-per-divreq-bulan/'+this.tahunnRequestor +'/'+this.bulanRequestor).then((response)=>{ 
                 this.req = response.data;
                 this.loading = false;
             });

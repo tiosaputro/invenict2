@@ -18,10 +18,7 @@ __webpack_require__.r(__webpack_exports__);
       ca: [],
       mask: {
         input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      }
     };
   },
   mounted: function mounted() {
@@ -30,11 +27,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getCash: function getCash() {
       var _this = this;
-      this.axios.get('/api/edit-cash/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-cash/' + this.$route.params.code).then(function (response) {
         _this.ca = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -57,11 +50,7 @@ __webpack_require__.r(__webpack_exports__);
     UpdateCash: function UpdateCash() {
       var _this2 = this;
       this.errors = [];
-      this.axios.put('/api/update-cash/' + this.$route.params.code, this.ca, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.put('/api/update-cash/' + this.$route.params.code, this.ca).then(function (response) {
         setTimeout(function () {
           return _this2.$router.push('/cash-advance');
         }, 1000);

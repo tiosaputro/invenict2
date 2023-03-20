@@ -124,7 +124,6 @@ export default {
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
       ],
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
     };
@@ -134,12 +133,12 @@ export default {
   },
   methods: {
     getMenus(){
-        this.axios.get('/api/get-menu',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/get-menu').then((response)=>{
           this.menus = response.data
       });
     },
     getRole(){
-        this.axios.get('/api/edit-role/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/edit-role/'+this.$route.params.code).then((response)=>{
           this.role = response.data;
           this.getMenus();
           this.getMenu();
@@ -158,14 +157,14 @@ export default {
         });
     },
     getMenu(){
-        this.axios.get('/api/edit-role-menu/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/edit-role-menu/' +this.$route.params.code).then((response)=>{
           this.menuss.menu = response.data;
       });
     },
     UpdateRole() {
         this.errors = [];
-        this.axios.put('/api/update-role/'+this.$route.params.code, this.role, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-        this.axios.put('/api/update-role-menu/'+this.$route.params.code, this.menuss, {headers: {'Authorization': 'Bearer '+this.token}});
+        this.axios.put('/api/update-role/'+this.$route.params.code, this.role).then(()=>{
+        this.axios.put('/api/update-role-menu/'+this.$route.params.code, this.menuss);
           this.$toast.add({
             severity: "success",
             summary: "Success Message",

@@ -23,12 +23,7 @@ __webpack_require__.r(__webpack_exports__);
       foto: '',
       ict: [],
       kodeperi: [],
-      kode: '',
       type: [],
-      bu: [],
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
       cekTipeReq: ''
     };
   },
@@ -67,11 +62,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getKode: function getKode() {
       var _this = this;
-      this.axios.get('/api/getAddDetail', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/getAddDetail').then(function (response) {
         _this.type = response.data.ref;
         _this.kodeperi = response.data.kode;
       })["catch"](function (error) {
@@ -91,12 +82,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIct: function getIct() {
       var _this2 = this;
-      this.axios.get('/api/edit-ict-detail-reviewer/' + this.$route.params.ireq + '/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.ict = response.data;
+      this.axios.get('/api/edit-ict-detail-reviewer/' + this.$route.params.ireq + '/' + this.$route.params.code).then(function (response) {
+        _this2.ict = response.data.data;
         if (_this2.ict.ireq_attachment) {
           if (_this2.ict.ireq_attachment.split('.').pop() == 'jpeg' || _this2.ict.ireq_attachment.split('.').pop() == 'png' || _this2.ict.ireq_attachment.split('.').pop() == 'jpg') {
             _this2.image = true;
@@ -130,11 +117,7 @@ __webpack_require__.r(__webpack_exports__);
       this.error = [];
       if (this.ict.ireq_type == 'P') {
         if (this.ict.ireq_remark != null) {
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict).then(function () {
             _this3.$toast.add({
               severity: "success",
               summary: "Success Message",
@@ -153,11 +136,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       } else {
         if (this.ict.ireq_remark != null) {
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict).then(function () {
             _this3.$toast.add({
               severity: "success",
               summary: "Success Message",

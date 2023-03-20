@@ -690,9 +690,6 @@ export default {
         sudahDikerjakan:[],
         user:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
         editDetail:{ ireq_reason :''},
         editStatus:[],
         note:[],
@@ -757,21 +754,21 @@ export default {
       }
     },
     createRemark(ireqd_id,ireq_id){
-      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
         this.remark = response.data;
         this.dialogRemark = true;
       });
         this.code = ireqd_id;
     },
     createNote(ireqd_id,ireq_id){
-      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
         this.note = response.data;
         this.dialogNote = true;
       });
         this.code = ireqd_id;
     },
     submitRemark(){
-        this.axios.put('/api/save-remark-assigned/'+this.code,this.remark,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
+        this.axios.put('/api/save-remark-assigned/'+this.code,this.remark).then(()=>{ 
          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
           this.note = [];
           this.code = null;
@@ -781,7 +778,7 @@ export default {
         this.getData();
     },
     submitNote(){
-        this.axios.put('/api/update-note/'+this.code,this.note,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
+        this.axios.put('/api/update-note/'+this.code,this.note).then(()=>{ 
          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
           this.note = [];
           this.code = null;
@@ -801,7 +798,7 @@ export default {
       this.dialogNote = false;
     },
     edit(ireqd_id,ireq_id){
-      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
         this.editStatus = response.data;
         this.code = ireq_id;
         this.getStatus();
@@ -810,7 +807,7 @@ export default {
     },
     submitStatus(){
       this.submitted = true;
-        this.axios.put('/api/update-status-done/'+this.code,this.editStatus,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-status-done/'+this.code,this.editStatus).then(()=>{
           this.loading = true;
           this.editStatus = [];
           this.code = null;
@@ -827,7 +824,7 @@ export default {
       this.dialogChangeStatus = false;
     },
     getData(){
-      this.axios.get('api/get-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/get-sedang-dikerjakan').then((response)=> {
         this.penugasan = response.data.ict3;
         this.countRemarkReviewerPenugasan = this.penugasan.map((x)=>x.countremarkreviewerpenugasan);
         this.reject = response.data.ict4;
@@ -862,7 +859,7 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-assignment-request').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -885,7 +882,7 @@ export default {
     },
     CetakPdfReject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-reject').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -908,7 +905,7 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-sedang-dikerjakan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -931,7 +928,7 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-sudah-dikerjakan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -954,7 +951,7 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-selesai').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -977,7 +974,7 @@ export default {
     },
     CetakPdf(ireq_id){
       this.loading = true;
-       this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

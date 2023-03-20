@@ -176,21 +176,16 @@
 export default {
   data() {
     return {
-      aktif:true,
       displayImage:false,
       preview:'',
       errors: [],
       error : [],
       kondi:[],
       bisnis:[],
-      kategori:[],
       foto: null,
       mask:{
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
       detail:[]
     };
   },
@@ -199,16 +194,14 @@ export default {
   },
   methods: {
     getDetail(){
-      this.axios.get('/api/add-master-detail/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/add-master-detail/'+this.$route.params.code).then((response)=>{
         this.detail = response.data;
       });
     },
       getMerk(){
-        this.axios.get('/api/rsrcsupp',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            // this.merks = response.data.merk;
-            this.bisnis = response.data.bisnis;
-            this.kondi = response.data.kondisi;
-            // this.kategori = response.data.nama;
+        this.axios.get('/api/rsrcsupp').then((response)=>{
+            this.bisnis = response.data.data.bisnis;
+            this.kondi = response.data.data.kondisi;
             this.getDetail();
         }).catch(error=>{
           if (error.response.status == 401){
@@ -243,7 +236,7 @@ export default {
       this.errors = [];
       this.error = [];
           
-        this.axios.post('/api/save-master-detail',this.detail,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('/api/save-master-detail',this.detail).then(()=>{
           setTimeout( () => this.$router.push('/master-peripheral-detail/'+this.$route.params.code),1000);
           this.$toast.add({
             severity: "success",

@@ -295,7 +295,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : []
     };
@@ -344,7 +343,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Payment Request") || this.checkto.includes("/payment-request")){
@@ -357,7 +356,7 @@ export default {
     },
     getDetail(noreq){
     if(this.noreq){
-      this.axios.get('api/getDetail/'+noreq,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/getDetail/'+noreq).then((response)=> {
         this.detail = response.data;
         this.ireqd_id = '';
       });
@@ -369,7 +368,7 @@ export default {
     },
     get(noreq,ireqd_id){
       if(this.noreq &&this.ireqd_id){
-      this.axios.get('api/getNameBu/'+noreq+'/'+ireqd_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/getNameBu/'+noreq+'/'+ireqd_id).then((response)=> {
         this.ca = response.data;
       });
       if(this.errors.noreq || this.error.noreq){
@@ -379,7 +378,7 @@ export default {
       }
     }, 
     getNoreq(){
-      this.axios.get('api/getNoreq',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/getNoreq').then((response)=>{
         this.req = response.data;
       }).catch(error=>{
           if (error.response.status == 401){
@@ -408,7 +407,7 @@ export default {
         data.append("tglsub", this.tglsub);
         data.append("tgltouser", this.tgltouser);
 
-        this.axios.post('api/add-payment-request', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.post('api/add-payment-request', data).then((response)=>{
           setTimeout( () => this.$router.push('/payment-request'),1000);
           this.$toast.add({
             severity: "success",

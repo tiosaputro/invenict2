@@ -176,9 +176,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
-      checkname : [],
-      ceckto : [],
     };
   },
   mounted(){
@@ -186,11 +183,11 @@ export default {
   },
   methods: {
     getDetailFormRequest(){
-      this.axios.get('api/rsrcsuppo',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.suplier = response.data.supp;
-        this.methode_pay = response.data.metode;
-        this.code_money = response.data.uang;
-        this.petugas = response.data.user;
+      this.axios.get('api/rsrcsuppo').then((response)=> {
+        this.suplier = response.data.data.supp;
+        this.methode_pay = response.data.data.metode;
+        this.code_money = response.data.data.uang;
+        this.petugas = response.data.data.user;
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -224,7 +221,7 @@ export default {
         data.append("money", this.money);
         data.append("purchase_total", this.purchase_total);
         data.append("status", this.status);
-        this.axios.post('api/add-pem', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.post('api/add-pem', data).then((response)=>{
           setTimeout( () => this.$router.push('/pembelian-peripheral'),1000);
           this.$toast.add({
             severity: "success",

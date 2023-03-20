@@ -30,8 +30,7 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
       },
-      code: this.$route.params.code,
-      token: localStorage.getItem('token')
+      code: this.$route.params.code
     };
   },
   mounted: function mounted() {
@@ -58,11 +57,7 @@ __webpack_require__.r(__webpack_exports__);
             summary: "Success Message",
             detail: "Successfully approved the request"
           });
-          _this.axios.get('/api/updateStatusPermohonan/' + _this.$route.params.code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this.token
-            }
-          });
+          _this.axios.get('/api/updateStatusPermohonan/' + _this.$route.params.code);
           setTimeout(function () {
             return _this.$router.push('/ict-request-desc');
           }, 1000);
@@ -74,11 +69,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       this.submitted = true;
       if (this.reason.ket != null) {
-        this.axios.put('/api/updateStatusReject/' + this.$route.params.code, this.reason, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/updateStatusReject/' + this.$route.params.code, this.reason).then(function () {
           _this2.dialogReject = false;
           _this2.$toast.add({
             severity: "info",
@@ -98,11 +89,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this3 = this;
-      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code).then(function (response) {
         _this3.verif = response.data;
         _this3.getNoreq();
         _this3.loading = false;
@@ -125,11 +112,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this4 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
         _this4.kode = response.data;
       });
     }

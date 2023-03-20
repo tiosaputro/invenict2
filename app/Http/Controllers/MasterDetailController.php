@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 use Carbon\Carbon;
-use App\Mng_User;
-use App\Model\MasterDetail;
+use App\Models\Mng_user;
+use App\Models\MasterDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -14,9 +14,9 @@ class MasterDetailController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
-        $this->to = "/master-peripheral-detail";
+        $this->to = "/master-peripheral";
         $this->middleware(function ($request, $next) {
           $this->userMenu = Mng_User::menu();
             if($this->userMenu->contains($this->to)){    
@@ -38,7 +38,7 @@ class MasterDetailController extends Controller
         ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
         ->where('im.invent_code',$code)
         ->first();
-        return response()->json(['dtl'=>$dtl,'mas'=>$mas],200);
+        return ResponseFormatter::success(array('dtl'=>$dtl,'mas'=>$mas),'Successfully get data');
     }
     function addDetail($code){
         $dtl = DB::table('invent_mst as im')
@@ -121,7 +121,7 @@ class MasterDetailController extends Controller
         'id.invent_pengguna_previous','id.invent_pengguna_update','dr.div_name as invent_divisi_update','drs.div_name as invent_divisi_previous')
         ->where('id.invent_code_dtl',$code)
         ->first();
-        return response()->json($mas);
+        return ResponseFormatter::success($mas,'Successfully get data');
     }
     function updateDetail(Request $request,$code){
         $newDate = Carbon::parse($request->invent_tgl_perolehan)->copy()->tz('Asia/Jakarta')->format('Y-m-d');

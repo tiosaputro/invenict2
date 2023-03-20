@@ -21,7 +21,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       displayDialog: true,
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       id: localStorage.getItem('id')
@@ -33,11 +32,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this.checkto = response.data.map(function (x) {
           return x.to;
         });

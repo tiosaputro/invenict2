@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Pembelian;
-use App\Model\Lookup_Refs;
-use App\Model\Supplier;
+use App\Models\Pembelian;
+use App\Models\Lookup_Refs;
+use App\Models\Supplier;
 use App\Exports\PembelianExport;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
-use App\Mng_User;
+use App\Models\Mng_user;
 
 class PembelianController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/pembelian-peripheral";
         $this->middleware(function ($request, $next) {
@@ -30,22 +30,22 @@ class PembelianController extends Controller
             }
         });
     }
-    public function index()
+    function index()
     {
         $pembelian = DB::table('purchase_mst as pm')
         ->select('pm.purchase_id','pm.purchase_total','sm.suplier_name as suplier_code','pm.purchase_date','pm.valuta_code')
         ->leftjoin('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
         ->orderBy('pm.creation_date','ASC')
         ->get();
-        return response()->json($pembelian);
+        return ResponseFormatter::success($pembelian,'Successfully get data');
     }
-    public function getAddPemb()
+    function getAddPemb()
     {
         $uang = Lookup_Refs::Valuta();
         $metode = Lookup_Refs::Pay_Methode();
         $supp = Supplier::ListSupplier();
         $user = Auth::user()->usr_name;
-        return response()->json(['uang'=>$uang,'metode'=>$metode,'supp'=>$supp,'user'=>$user],200);
+        return ResponseFormatter::success(array('uang'=>$uang,'metode'=>$metode,'supp'=>$supp,'user'=>$user),'Successfully get data');
     }
     Public function save(Request $request)
     {
@@ -64,7 +64,7 @@ class PembelianController extends Controller
         $uang = Lookup_Refs::Valuta();
         $metode = Lookup_Refs::Pay_Methode();
         $supp = Supplier::ListSupplier();
-        return response()->json(['pem'=>$pem,'uang'=>$uang,'metode'=>$metode,'supp'=>$supp],200);
+        return ResponseFormatter::success(array('pem'=>$pem,'uang'=>$uang,'metode'=>$metode,'supp'=>$supp),'Successfully get data');
     }
     Public function update(Request $request,$code)
     {
@@ -91,7 +91,7 @@ class PembelianController extends Controller
 
         return ResponseFormatter::success($pem,'Successfully Deleted Data');
     }
-    public function cetak_pdf()
+    function cetak_pdf()
     {
         $pem = DB::table('purchase_mst as pm')
         ->Select('pm.*','lr.lookup_desc as valuta_code','sm.suplier_name',
@@ -104,7 +104,7 @@ class PembelianController extends Controller
         
         return view('pdf/Laporan_Pembelian',compact('pem'));
     }
-    public function cetak_excel()
+    function cetak_excel()
     {
         return Excel::download(new PembelianExport,'Laporan_Pembelian.xlsx');
     }

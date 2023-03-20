@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Model\Ict;
-use App\Model\IctDetail;
+use App\Models\Ict;
+use App\Models\IctDetail;
 use App\Helpers\ResponseFormatter;
-use App\Mng_User;
+use App\Models\Mng_user;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Exports\IctExportManagerPermohonan;
@@ -23,7 +23,7 @@ class IctRequestManagerController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/ict-request-manager";
         $this->middleware(function ($request, $next) {
@@ -161,8 +161,9 @@ class IctRequestManagerController extends Controller
     }
 
     function detailRequest($code){
-        $data = IctDetail::getDataDetailRequest($code);
-        return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
+        $detail = IctDetail::getDataDetailRequest($code);
+        $norequest = Ict::detailNoRequest($code);
+        return ResponseFormatter::success(array('detail'=>$detail,'norequest'=>$norequest),'Successfully Get Data Detail Request'); 
     }
 
     function getDetailVerif($code)
@@ -208,8 +209,9 @@ class IctRequestManagerController extends Controller
 
     function detailPenugasan($code)
     {
-        $data = IctDetail::detailRequestForAssignment($code);
-        return json_encode($data);
+        $detail = IctDetail::detailRequestForAssignment($code);
+        $norequest = Ict::detailNoRequest($code);
+        return ResponseFormatter::success(array('detail'=>$detail,'norequest'=>$norequest),'Successfully get data');
     }
     function cetak_pdf_manager_permohonan()
     {

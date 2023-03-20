@@ -29,11 +29,7 @@ __webpack_require__.r(__webpack_exports__);
           value: null,
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
-      },
-      code: this.$route.params.code,
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      }
     };
   },
   mounted: function mounted() {
@@ -55,11 +51,7 @@ __webpack_require__.r(__webpack_exports__);
             summary: "Success Message",
             detail: "Successfully approved this request"
           });
-          _this.axios.get('/api/updateStatusPermohonan/' + _this.$route.params.code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this.token
-            }
-          });
+          _this.axios.get('/api/updateStatusPermohonan/' + _this.$route.params.code);
           setTimeout(function () {
             return _this.$router.push('/ict-request-higher-level');
           }, 1000);
@@ -71,11 +63,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       this.submitted = true;
       if (this.reason.ket != null) {
-        this.axios.put('/api/updateStatusReject/' + this.$route.params.code, this.reason, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/updateStatusReject/' + this.$route.params.code, this.reason).then(function () {
           _this2.dialogReject = false;
           _this2.$toast.add({
             severity: "info",
@@ -95,13 +83,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this3 = this;
-      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this3.verif = response.data;
-        _this3.getNoreq();
+      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code).then(function (response) {
+        _this3.verif = response.data.data.detail;
+        _this3.kode = response.data.data.norequest;
+        _this3.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this3.$toast.add({
@@ -120,19 +105,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getNoreq: function getNoreq() {
-      var _this4 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.kode = response.data;
-        _this4.loading = false;
-      });
-    },
     DeleteIct: function DeleteIct(ireqd_id) {
-      var _this5 = this;
+      var _this4 = this;
       this.$confirm.require({
         message: "Data ini benar-benar akan dihapus?",
         header: "Delete Confirmation",
@@ -141,27 +115,17 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Ya",
         rejectLabel: "Tidak",
         accept: function accept() {
-          _this5.$toast.add({
+          _this4.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
-          _this5.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this5.token
-            }
-          });
-          _this5.getIctDetail();
+          _this4.axios["delete"]('/api/delete-ict-detail/' + ireqd_id);
+          _this4.getIctDetail();
         },
         reject: function reject() {}
       });
-    },
-    CetakPdf: function CetakPdf() {
-      window.open('/api/report-ict-detail-pdf/' + this.code);
-    },
-    CetakExcel: function CetakExcel() {
-      window.open('/api/report-ict-detail-excel/' + this.code);
     }
   }
 });

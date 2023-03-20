@@ -45,7 +45,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_2__.FilterMatchMode.CONTAINS
         }
       },
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       code: null,
@@ -85,11 +84,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPermohonan: function getPermohonan() {
       var _this = this;
-      this.axios.get('api/get-data-manager', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-data-manager').then(function (response) {
         _this.blmdiverifikasi = response.data.ict;
         _this.showRemarkWaiting = _this.blmdiverifikasi.map(function (x) {
           return x.count_remark;
@@ -129,11 +124,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdf: function CetakPdf(ireq_id) {
       var _this2 = this;
       this.loading = true;
-      this.axios.get('api/print-out-ict-request/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/print-out-ict-request/' + ireq_id).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -155,11 +146,7 @@ __webpack_require__.r(__webpack_exports__);
         detail: "Successfully approved this request",
         life: 1000
       });
-      this.axios.put('/api/abm/' + this.code, this.reason, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.put('/api/abm/' + this.code, this.reason).then(function () {
         _this3.cancelApprove();
         _this3.loading = true;
         _this3.getPermohonan();
@@ -188,11 +175,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
       this.submitted = true;
       if (this.reason.ket != null) {
-        this.axios.put('/api/rbm/' + this.code, this.reason, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/rbm/' + this.code, this.reason).then(function () {
           _this4.dialogReject = false;
           _this4.$toast.add({
             severity: "info",
@@ -209,11 +192,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfBlmDiverifikasi: function CetakPdfBlmDiverifikasi() {
       var _this5 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-manager-permohonan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-manager-permohonan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -244,11 +223,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSudahDiverifikasi: function CetakPdfSudahDiverifikasi() {
       var _this7 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-manager-verifikasi', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-manager-verifikasi').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -279,11 +254,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfDireject: function CetakPdfDireject() {
       var _this9 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-manager-reject', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-manager-reject').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -314,11 +285,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfAssignmentRequest: function CetakPdfAssignmentRequest() {
       var _this11 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-manager-assignment-request', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-manager-assignment-request').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -349,11 +316,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
       var _this13 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-manager-sedang-dikerjakan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-manager-sedang-dikerjakan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -384,11 +347,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSudahDikerjakan: function CetakPdfSudahDikerjakan() {
       var _this15 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-manager-sudah-dikerjakan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-manager-sudah-dikerjakan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -419,11 +378,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSelesai: function CetakPdfSelesai() {
       var _this17 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-manager-selesai', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-manager-selesai').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);

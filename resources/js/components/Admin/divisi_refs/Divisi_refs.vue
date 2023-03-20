@@ -70,7 +70,7 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
+        
         divisi: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
     };
@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     getDivisi(){
-      this.axios.get('api/divisi', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/divisi').then((response)=> {
         this.divisi = response.data;
         this.loading = false;
       }).catch(error=>{
@@ -114,7 +114,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-divisi/' +div_id ,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('api/delete-divisi/' +div_id ).then(()=>{
             this.loading = true;
             this.getDivisi();
           });

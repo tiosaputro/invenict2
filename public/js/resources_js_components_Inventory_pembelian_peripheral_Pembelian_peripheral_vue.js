@@ -20,7 +20,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: true,
-      token: localStorage.getItem('token'),
       purch: [],
       purchase_id: null,
       filters: {
@@ -29,8 +28,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
       },
-      checkname: [],
-      checkto: [],
       divisi: []
     };
   },
@@ -47,12 +44,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPurchase: function getPurchase() {
       var _this = this;
-      this.axios.get('api/pem', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.purch = response.data;
+      this.axios.get('api/pem').then(function (response) {
+        _this.purch = response.data.data;
         _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -88,11 +81,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this2.axios["delete"]('api/delete-pem/' + purchase_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          }).then(function () {
+          _this2.axios["delete"]('api/delete-pem/' + purchase_id).then(function () {
             _this2.loading = true;
             _this2.getPurchase();
           });
@@ -103,11 +92,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdf: function CetakPdf() {
       var _this3 = this;
       this.loading = true;
-      this.axios.get('api/report-pem-pdf', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-pem-pdf').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);

@@ -22,8 +22,7 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         nama: "Tidak Aktif",
         code: "F"
-      }],
-      token: localStorage.getItem('token')
+      }]
     };
   },
   created: function created() {
@@ -32,11 +31,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getModule: function getModule() {
       var _this = this;
-      this.axios.get('/api/edit-module/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-module/' + this.$route.params.code).then(function (response) {
         _this.modul = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -59,11 +54,7 @@ __webpack_require__.r(__webpack_exports__);
     UpdateModule: function UpdateModule() {
       var _this2 = this;
       this.errors = [];
-      this.axios.put('/api/update-module/' + this.$route.params.code, this.modul, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.put('/api/update-module/' + this.$route.params.code, this.modul).then(function () {
         _this2.$toast.add({
           severity: "success",
           summary: "Success Message",

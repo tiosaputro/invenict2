@@ -244,9 +244,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
     };
   },
   created(){
@@ -254,7 +251,7 @@ export default {
   },
   methods: {
     getDataCA(){
-      this.axios.get('/api/getNameBu/'+this.$route.params.code+'/'+this.$route.params.dtl,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/getNameBu/'+this.$route.params.code+'/'+this.$route.params.dtl).then((response)=> {
         this.ca = response.data;
       }).catch(error=>{
           if (error.response.status == 401){
@@ -271,7 +268,7 @@ export default {
         });
     }, 
     getNoreq(){
-      this.axios.get('/api/getNoreq',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/getNoreq').then((response)=>{
         this.req = response.data;
       }).catch(error=>{
         if (error.response.status == 401){
@@ -297,7 +294,7 @@ export default {
         data.append("tglsub", this.tglsub);
         data.append("tgltouser", this.tgltouser);
 
-        this.axios.post('/api/add-cash', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.post('/api/add-cash', data).then((response)=>{
           setTimeout( () => this.$router.push('/cash-advance'),1000);
           this.$toast.add({
             severity: "success",

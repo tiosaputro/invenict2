@@ -32,7 +32,6 @@ __webpack_require__.r(__webpack_exports__);
         nama: "Leaf",
         code: "L"
       }],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -43,21 +42,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getMenu: function getMenu() {
       var _this = this;
-      this.axios.get('/api/edit-menu/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-menu/' + this.$route.params.code).then(function (response) {
         _this.menu = response.data;
       });
     },
     getModul: function getModul() {
       var _this2 = this;
-      this.axios.get('/api/get-module', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-module').then(function (response) {
         _this2.modul = response.data;
         _this2.getParent();
         _this2.getMenu();
@@ -81,22 +72,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     getParent: function getParent() {
       var _this3 = this;
-      this.axios.get('/api/get-parent', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-parent').then(function (response) {
         _this3.parent = response.data;
       });
     },
     UpdateMenu: function UpdateMenu() {
       var _this4 = this;
       this.errors = [];
-      this.axios.put('/api/update-menu/' + this.$route.params.code, this.menu, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.put('/api/update-menu/' + this.$route.params.code, this.menu).then(function () {
         _this4.$toast.add({
           severity: "success",
           summary: "Success Message",

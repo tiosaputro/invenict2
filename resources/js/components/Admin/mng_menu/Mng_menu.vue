@@ -72,7 +72,6 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
         menu: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
     };
@@ -82,7 +81,7 @@ export default {
   },
   methods: {
     getMenu(){
-      this.axios.get('api/menu', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/menu').then((response)=> {
         this.menu = response.data;
         this.loading = false;
       }).catch(error=>{
@@ -116,7 +115,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-menu/' +menu_id ,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('api/delete-menu/' +menu_id ).then(()=>{
             this.loading = true;
             this.getMenu();
           });

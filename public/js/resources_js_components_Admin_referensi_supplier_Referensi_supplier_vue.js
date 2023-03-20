@@ -18,7 +18,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       header: null,
       loading: true,
-      token: localStorage.getItem('token'),
       supp: [],
       supps: [],
       filters: {
@@ -43,22 +42,14 @@ __webpack_require__.r(__webpack_exports__);
     detailSupp: function detailSupp(suplier_code) {
       var _this = this;
       this.displaySupp = true;
-      this.axios.get('api/show-supp/' + suplier_code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/show-supp/' + suplier_code).then(function (response) {
         _this.supps = response.data;
         _this.header = 'Detail Suplier ' + _this.supps.suplier_name;
       });
     },
     getSupp: function getSupp() {
       var _this2 = this;
-      this.axios.get('api/supp', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/supp').then(function (response) {
         _this2.supp = response.data;
         _this2.loading = false;
       })["catch"](function (error) {
@@ -94,11 +85,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this3.axios["delete"]('api/delete-supp/' + suplier_code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          }).then(function () {
+          _this3.axios["delete"]('api/delete-supp/' + suplier_code).then(function () {
             _this3.loading = true;
             _this3.getSupp();
           });

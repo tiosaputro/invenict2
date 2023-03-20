@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
-use App\Model\IctDetail;
-use App\Mng_User;
+use App\Models\IctDetail;
+use App\Models\Mng_user;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\IctExportPersonnelAssignmentRequest;
 use App\Exports\IctExportPersonnelReject;
@@ -21,7 +21,7 @@ class IctRequestPersonnelController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/ict-request-personnel";
         $this->middleware(function ($request, $next) {

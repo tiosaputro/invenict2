@@ -17,7 +17,6 @@ __webpack_require__.r(__webpack_exports__);
       errors: [],
       div: [],
       verif: [],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -28,11 +27,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getDivisi: function getDivisi() {
       var _this = this;
-      this.axios.get('/api/edit-divisi/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-divisi/' + this.$route.params.code).then(function (response) {
         _this.div = response.data;
         _this.getVerificator();
       })["catch"](function (error) {
@@ -55,22 +50,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     getVerificator: function getVerificator() {
       var _this2 = this;
-      this.axios.get('/api/get-verificator/' + this.div.div_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-verificator/' + this.div.div_id).then(function (response) {
         _this2.verif = response.data;
       });
     },
     UpdateDivisi: function UpdateDivisi() {
       var _this3 = this;
       this.errors = [];
-      this.axios.put('/api/update-divisi/' + this.$route.params.code, this.div, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.put('/api/update-divisi/' + this.$route.params.code, this.div).then(function () {
         _this3.$toast.add({
           severity: "success",
           summary: "Success Message",

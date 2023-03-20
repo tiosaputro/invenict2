@@ -26,7 +26,6 @@ __webpack_require__.r(__webpack_exports__);
         nama: "Tidak Aktif",
         code: "F"
       }],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -40,11 +39,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append("lookup_code", this.lookup_code);
       data.append("lookup_desc", this.lookup_desc);
       data.append("lookup_status", this.lookup_status);
-      this.axios.post('api/add-ref', data, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (resoonse) {
+      this.axios.post('api/add-ref', data).then(function (resoonse) {
         _this.$toast.add({
           severity: "success",
           summary: "Success Message",

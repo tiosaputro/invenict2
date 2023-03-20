@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Model;;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MasterDetail extends Model
+class Master extends Model
 {
     protected $fillable = [
-        'invent_code_dtl',
         'invent_code',
         'invent_desc',
         'invent_brand',
@@ -29,8 +28,8 @@ class MasterDetail extends Model
         'invent_pengguna_previous',
         'invent_bu',
     ];
-    protected $table = 'invent_dtl';
-    protected $primaryKey = 'invent_code_dtl';
+    protected $table = 'invent_mst';
+    protected $primaryKey = 'invent_code';
     public $incrementing = false;
     public $timestamps = false;
 }

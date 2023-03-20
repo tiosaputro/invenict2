@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mng_User;
-use App\Model\Mng_usr_roles;
-use App\Model\Mng_role_menu;
+use App\Models\Mng_user;
+use App\Models\Mng_usr_roles;
+use App\Models\Mng_role_menu;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Http\Request;

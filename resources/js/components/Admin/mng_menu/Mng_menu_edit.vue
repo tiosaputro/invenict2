@@ -183,7 +183,6 @@ export default {
         { nama: "Node", code: "N" },
         { nama: "Leaf", code: "L"}
       ],
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
     };
@@ -193,12 +192,12 @@ export default {
   },
   methods: {
       getMenu(){
-          this.axios.get('/api/edit-menu/'+ this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/edit-menu/'+ this.$route.params.code).then((response)=>{
               this.menu = response.data;
           });
       },
       getModul(){
-          this.axios.get('/api/get-module',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/get-module').then((response)=>{
               this.modul = response.data;
               this.getParent();
               this.getMenu();
@@ -217,14 +216,14 @@ export default {
         });
       },
       getParent(){
-          this.axios.get('/api/get-parent',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/get-parent').then((response)=>{
               this.parent = response.data;
           });
       },
     UpdateMenu() {
         this.errors = [];
 
-        this.axios.put('/api/update-menu/'+this.$route.params.code ,this.menu,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-menu/'+this.$route.params.code ,this.menu).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

@@ -11,14 +11,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    var _ref;
-    return _ref = {
+    return {
       checkname: [],
       checkto: [],
       errors: [],
@@ -43,9 +38,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }],
       mask: {
         input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token')
-    }, _defineProperty(_ref, "checkname", []), _defineProperty(_ref, "ceckto", []), _ref;
+      }
+    };
   },
   mounted: function mounted() {
     this.getDetailFormRequest();
@@ -53,15 +47,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   methods: {
     getDetailFormRequest: function getDetailFormRequest() {
       var _this = this;
-      this.axios.get('api/rsrcsuppo', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.suplier = response.data.supp;
-        _this.methode_pay = response.data.metode;
-        _this.code_money = response.data.uang;
-        _this.petugas = response.data.user;
+      this.axios.get('api/rsrcsuppo').then(function (response) {
+        _this.suplier = response.data.data.supp;
+        _this.methode_pay = response.data.data.metode;
+        _this.code_money = response.data.data.uang;
+        _this.petugas = response.data.data.user;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this.$toast.add({
@@ -93,11 +83,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         data.append("money", this.money);
         data.append("purchase_total", this.purchase_total);
         data.append("status", this.status);
-        this.axios.post('api/add-pem', data, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.post('api/add-pem', data).then(function (response) {
           setTimeout(function () {
             return _this2.$router.push('/pembelian-peripheral');
           }, 1000);

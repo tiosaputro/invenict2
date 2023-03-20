@@ -175,9 +175,6 @@ export default {
       tipereq: '',
       type: [],
       bu: [],
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
       cekTipeReq:'',
     };
   },
@@ -207,7 +204,7 @@ export default {
       this.requestcatalog = '';
       this.cekTipeReq = tipereq;
       if(tipereq != null){
-        this.axios.get('/api/get-catalog-request/'+tipereq, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.axios.get('/api/get-catalog-request/'+tipereq).then((res)=>{
           this.catalog = res.data;
         });
       }
@@ -348,7 +345,7 @@ export default {
      }
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
       this.detail = response.data;
       this.getType();
       }).catch(error=>{
@@ -366,7 +363,7 @@ export default {
         });
     },
     getType(){
-        this.axios.get('/api/getAddDetail', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/getAddDetail').then((response)=>{
           this.type = response.data.ref;
           });
     },

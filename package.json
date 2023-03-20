@@ -61,6 +61,7 @@
         "vue-treeselect": "^1.0.7",
         "vue3-pdf": "^4.2.6",
         "vue3-qr-reader": "^1.0.0",
+        "vue3-storage": "^0.1.11",
         "vue3-treeselect": "^0.1.10"
     }
 }

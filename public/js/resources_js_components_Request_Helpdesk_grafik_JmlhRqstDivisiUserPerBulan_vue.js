@@ -17,7 +17,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       color: '1976D2',
-      token: localStorage.getItem('token'),
       perDivisiUserBulan: {},
       bulanUser: null,
       tahunnUser: null,
@@ -40,11 +39,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
@@ -60,11 +55,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getBulan: function getBulan() {
       var _this2 = this;
-      this.axios.get('api/get-tahun', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-tahun').then(function (response) {
         _this2.bulan = response.data.grafik2;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -85,11 +76,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
       this.tahunnUser = null;
       if (this.bulanUser != null) {
-        this.axios.get('api/get-tahun-user/' + this.bulanUser, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/get-tahun-user/' + this.bulanUser).then(function (response) {
           _this3.tahunn = response.data;
         });
       }
@@ -97,11 +84,7 @@ __webpack_require__.r(__webpack_exports__);
     getPerDivisiUserBulan: function getPerDivisiUserBulan() {
       var _this4 = this;
       if (this.tahunnUser != null && this.bulanUser != null) {
-        this.axios.get('api/count-per-divuser-bulan/' + this.tahunnUser + '/' + this.bulanUser, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/count-per-divuser-bulan/' + this.tahunnUser + '/' + this.bulanUser).then(function (response) {
           _this4.nameBulanUser = response.data[0].bulan + _this4.tahunnUser;
           _this4.perDivisiUserBulan = {
             labels: response.data.map(function (x) {

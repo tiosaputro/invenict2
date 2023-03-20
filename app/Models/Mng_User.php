@@ -1,18 +1,13 @@
 <?php
 
-namespace App;;
+namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Model\Mng_usr_roles;
 use Illuminate\Support\Facades\Hash;
-use App\Model\Location;
 use Illuminate\Support\Facades\DB;
-use App\Model\Divisi_refs;
-use App\Model\Mng_roles;
 use carbon\Carbon;
-use App\Model\Mng_menu;
 
 
 class Mng_User extends Authenticatable
@@ -67,7 +62,7 @@ class Mng_User extends Authenticatable
         $checkDivision = Divisi_refs::select('div_id')->where('div_name', 'like', $division)->first();
         $checkBisnisUnit = DB::table('vcompany_refs')->select('company_code')->where('name','like',$company)->first();
         $checkLocation = Location::select('loc_code')->where('loc_desc','like',$location)->first();
-        $createUser = Mng_user::create([
+        Mng_user::create([
             'usr_fullname'=>strtoupper($fullname),
             'usr_name'=> $usr_name,
             'usr_email' => $mail,

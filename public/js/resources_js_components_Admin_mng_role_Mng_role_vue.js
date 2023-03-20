@@ -17,7 +17,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: true,
-      token: localStorage.getItem('token'),
       role: [],
       filters: {
         'global': {
@@ -35,11 +34,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getRole: function getRole() {
       var _this = this;
-      this.axios.get('api/role', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/role').then(function (response) {
         _this.role = response.data;
         _this.loading = false;
       })["catch"](function (error) {
@@ -76,11 +71,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this2.axios["delete"]('api/delete-role/' + rol_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          });
+          _this2.axios["delete"]('api/delete-role/' + rol_id);
           _this2.getRole();
         },
         reject: function reject() {}

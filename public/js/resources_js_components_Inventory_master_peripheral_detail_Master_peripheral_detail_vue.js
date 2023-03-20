@@ -24,7 +24,6 @@ __webpack_require__.r(__webpack_exports__);
       detailPeripheral: [],
       loading: true,
       displayBarcode: false,
-      token: localStorage.getItem('token'),
       master: [],
       mas: [],
       barcode: '',
@@ -34,8 +33,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
       },
-      checkname: [],
-      checkto: [],
       text: ''
     };
   },
@@ -62,24 +59,16 @@ __webpack_require__.r(__webpack_exports__);
     detailKode: function detailKode(invent_code_dtl) {
       var _this = this;
       this.displayKode = true;
-      this.axios.get('/api/detail-peripherall/' + invent_code_dtl, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/detail-peripherall/' + invent_code_dtl).then(function (response) {
         _this.detail = response.data;
         _this.header = 'Detail Peripheral ' + _this.detail.invent_code + ' ' + _this.detail.invent_type;
       });
     },
     getMaster: function getMaster() {
       var _this2 = this;
-      this.axios.get('/api/master-detail/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.master = response.data.dtl;
-        _this2.detailPeripheral = response.data.mas;
+      this.axios.get('/api/master-detail/' + this.$route.params.code).then(function (response) {
+        _this2.master = response.data.data.dtl;
+        _this2.detailPeripheral = response.data.data.mas;
         _this2.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -114,11 +103,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this3.axios["delete"]('/api/delete-master-detail/' + invent_code_dtl, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          }).then(function () {
+          _this3.axios["delete"]('/api/delete-master-detail/' + invent_code_dtl).then(function () {
             _this3.loading = true;
             _this3.getMaster();
           });
@@ -154,18 +139,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      judul: "",
-      token: localStorage.getItem('token')
+      judul: ""
     };
   },
   mounted: function mounted() {
     var _this = this;
     var invent_code_dtl = localStorage.getItem('code');
-    this.axios.get('/api/detail-peripherall/' + invent_code_dtl, {
-      headers: {
-        'Authorization': 'Bearer ' + this.token
-      }
-    }).then(function (response) {
+    this.axios.get('/api/detail-peripherall/' + invent_code_dtl).then(function (response) {
       _this.judul = response.data.invent_bu + " - ICT";
       var value = "http://localhost:8000" + '/detPeripheral/' + +invent_code_dtl;
       var title = _this.judul;

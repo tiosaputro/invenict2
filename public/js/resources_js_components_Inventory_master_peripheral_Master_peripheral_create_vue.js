@@ -15,35 +15,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: false,
-      aktif: true,
-      displayImage: false,
-      preview: '',
       errors: [],
       error: [],
       merks: [],
-      kondi: [],
-      bisnis: [],
       kategori: [],
       nama: '',
-      tgl: '',
-      sn: '',
-      bu: '',
       merk: '',
-      type: '',
-      foto: null,
-      prevuser: '',
-      lastuser: '',
-      prevloct: '',
-      lastloct: '',
-      kondisi: '',
-      barcode: '',
-      garansi: null,
-      mask: {
-        input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      type: ''
     };
   },
   created: function created() {
@@ -52,15 +30,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getMerk: function getMerk() {
       var _this = this;
-      this.axios.get('api/rsrcsupp', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.merks = response.data.merk;
-        _this.bisnis = response.data.bisnis;
-        _this.kondi = response.data.kondisi;
-        _this.kategori = response.data.nama;
+      this.axios.get('api/rsrcsupp').then(function (response) {
+        _this.merks = response.data.data.merk;
+        _this.kategori = response.data.data.nama;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this.$toast.add({
@@ -89,11 +61,7 @@ __webpack_require__.r(__webpack_exports__);
         data.append("nama", this.nama);
         data.append("merk", this.merk);
         data.append("type", this.type);
-        this.axios.post('api/add-mas', data, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.post('api/add-mas', data).then(function () {
           setTimeout(function () {
             return _this2.$router.push('/master-peripheral');
           }, 1000);
@@ -153,7 +121,7 @@ var _hoisted_5 = {
 var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Nama Peripheral", -1 /* HOISTED */);
+  }, "Peripheral", -1 /* HOISTED */);
 });
 var _hoisted_7 = {
   "class": "col-fixed w-9rem"
@@ -172,7 +140,7 @@ var _hoisted_10 = {
 var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Merk", -1 /* HOISTED */);
+  }, "Brand", -1 /* HOISTED */);
 });
 var _hoisted_12 = {
   "class": "col-fixed w-9rem"
@@ -191,7 +159,7 @@ var _hoisted_15 = {
 var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Tipe", -1 /* HOISTED */);
+  }, "Type", -1 /* HOISTED */);
 });
 var _hoisted_17 = {
   "class": "col-fixed w-9rem"
@@ -225,7 +193,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.CreateMaster && $options.CreateMaster.apply($options, arguments);
     }, ["prevent"]))
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"field grid\">\r\n                  <label class=\"col-fixed w-9rem\">Kode</label>\r\n                    <div class=\"col-fixed w-9rem\">\r\n                      <InputText\r\n                        type=\"text\"\r\n                        disabled\r\n                      />\r\n                  </div>\r\n                </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Dropdown, {
     modelValue: $data.nama,
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.nama = $event;
@@ -235,7 +203,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     optionValue: "name",
     showClear: true,
     filter: true,
-    placeholder: "Pilih Peripheral",
+    placeholder: "Choose One",
     autofocus: "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.nama
@@ -250,7 +218,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     optionValue: "code",
     showClear: true,
     filter: true,
-    placeholder: "Pilih Merk",
+    placeholder: "Choose One",
     autofocus: "",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.merk
@@ -261,7 +229,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.type = $event;
     }),
-    placeholder: "Masukan Tipe",
+    placeholder: "Input Type",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.type
     })
@@ -269,7 +237,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0,
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
-    label: "Simpan",
+    label: "Save",
     type: "submit"
   })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
     key: 1,

@@ -24,7 +24,6 @@ __webpack_require__.r(__webpack_exports__);
       mask: {
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -35,11 +34,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/cek-user').then(function (response) {
         _this.checkto = response.data.map(function (x) {
           return x.to;
         });
@@ -55,11 +50,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIct: function getIct() {
       var _this2 = this;
-      this.axios.get('/api/edit-ict/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-ict/' + this.$route.params.code).then(function (response) {
         _this2.mutasi = response.data.ict;
         _this2.divisi = response.data.divisi;
         _this2.type = response.data.ref;
@@ -87,11 +78,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.mutasi.ireq_date != '' && this.mutasi.ireq_prio_level != null &&
       // this.mutasi.ireq_remark != null  && 
       this.mutasi.ireq_divisi_user != null && this.mutasi.ireq_bu != null && this.mutasi.ireq_user != null) {
-        this.axios.put('/api/update-ict/' + this.$route.params.code, this.mutasi, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/update-ict/' + this.$route.params.code, this.mutasi).then(function () {
           _this3.$toast.add({
             severity: "success",
             summary: "Success Message",

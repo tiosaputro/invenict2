@@ -191,9 +191,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
       },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
       showPersonelPermohonan: [],
       showPersonelAtasanDivisi: [],
       showPersonelmanager: [],
@@ -210,11 +207,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     SendEmail: function SendEmail(usr_email, ireq_id) {
-      this.axios.get('/api/detailrequest-tomail/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (res) {
+      this.axios.get('/api/detailrequest-tomail/' + ireq_id).then(function (res) {
         // this.dialogSendMail = true;
         var frommail = usr_email + "@emp.id";
         // this.mail.from = res.data.fromemail;
@@ -240,11 +233,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateMail: function updateMail() {
       var _this = this;
-      this.axios.post('/api/sendMailtoRequestor', this.mail, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.post('/api/sendMailtoRequestor', this.mail).then(function () {
         _this.cancelMail();
       });
     },
@@ -291,11 +280,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIct: function getIct() {
       var _this2 = this;
-      this.axios.get('api/get-data-reviewer', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-data-reviewer').then(function (response) {
         _this2.permohonan = response.data.ict;
         _this2.showPersonelPermohonan = _this2.permohonan.map(function (x) {
           return x.ireq_count_status;
@@ -371,11 +356,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Success Submit",
             life: 3000
           });
-          _this3.axios.get('api/sapr/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          }).then(function () {
+          _this3.axios.get('api/sapr/' + ireq_id).then(function () {
             _this3.getIct();
           });
         },
@@ -386,11 +367,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
       this.loading = true;
       this.remark.id = ireq_id;
-      this.axios.get('api/get-remark-reviewer/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (res) {
+      this.axios.get('api/get-remark-reviewer/' + ireq_id).then(function (res) {
         _this4.remark.remark = res.data.ireq_verificator_remark;
         _this4.dialogRemark = true;
         _this4.loading = false;
@@ -405,11 +382,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
       this.dialogRemark = false;
       this.loading = true;
-      this.axios.post('api/save-remark-reviewer', this.remark, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.post('api/save-remark-reviewer', this.remark).then(function () {
         _this5.$toast.add({
           severity: "info",
           summary: "Success",
@@ -436,11 +409,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
       this.submitted = true;
       if (this.rbr.ket != null) {
-        this.axios.put('/api/reject-by-reviewer/' + this.rbr.id, this.rbr, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/reject-by-reviewer/' + this.rbr.id, this.rbr).then(function () {
           _this6.dialogReject = false;
           _this6.rbr.id = null;
           _this6.rbr.ket = null;
@@ -473,11 +442,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Success Update Request",
             life: 2000
           });
-          _this7.axios.get('/api/naa/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this7.token
-            }
-          }).then(function () {
+          _this7.axios.get('/api/naa/' + ireq_id).then(function () {
             _this7.getIct();
           });
         },
@@ -501,11 +466,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Success Update Request",
             life: 2000
           });
-          _this8.axios.get('/api/nam/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this8.token
-            }
-          }).then(function () {
+          _this8.axios.get('/api/nam/' + ireq_id).then(function () {
             _this8.getIct();
           });
         },
@@ -515,11 +476,7 @@ __webpack_require__.r(__webpack_exports__);
     AssignPerRequest: function AssignPerRequest(ireq_id) {
       var _this9 = this;
       this.assign.id = ireq_id;
-      this.axios.get('api/get-pekerja', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-pekerja').then(function (response) {
         _this9.petugas = response.data;
       });
       this.dialogAssign = true;
@@ -528,11 +485,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this10 = this;
       this.submitted = true;
       if (this.assign.name != null) {
-        this.axios.post('/api/aprr', this.assign, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.post('/api/aprr', this.assign).then(function () {
           _this10.assign = {
             id: null,
             name: null
@@ -576,11 +529,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Closing request successful",
             life: 3000
           });
-          _this11.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this11.token
-            }
-          }).then(function () {
+          _this11.axios.get('/api/updateStatusClosingDetail/' + ireqd_id + '/' + ireq_id).then(function () {
             _this11.getIct();
           });
         },
@@ -591,11 +540,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this12 = this;
       this.displayDetailRequest = true;
       this.loadingDetail = true;
-      this.axios.get('/api/detail-request-reviewer/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/detail-request-reviewer/' + ireq_id).then(function (response) {
         _this12.detail = response.data;
         _this12.ireq_no = response.data[0].ireq_no;
         _this12.loadingDetail = false;
@@ -604,11 +549,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdf: function CetakPdf(ireq_id) {
       var _this13 = this;
       this.loading = true;
-      this.axios.get('api/print-out-ict-request/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/print-out-ict-request/' + ireq_id).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -618,11 +559,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfPermohonan: function CetakPdfPermohonan() {
       var _this14 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-reviewer-permohonan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-reviewer-permohonan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -653,11 +590,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfAtasanDivisi: function CetakPdfAtasanDivisi() {
       var _this16 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -688,11 +621,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfIctManager: function CetakPdfIctManager() {
       var _this18 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-reviewer-ict-manager', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-reviewer-ict-manager').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=no", "target=_blank");
         myWindow.document.write(responseHtml);
@@ -723,11 +652,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfReject: function CetakPdfReject() {
       var _this20 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-reviewer-reject', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-reviewer-reject').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -758,11 +683,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfAssignmentRequest: function CetakPdfAssignmentRequest() {
       var _this22 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-reviewer-assignment-request', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-reviewer-assignment-request').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -793,11 +714,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
       var _this24 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -828,11 +745,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSudahDikerjakan: function CetakPdfSudahDikerjakan() {
       var _this26 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -863,11 +776,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSelesai: function CetakPdfSelesai() {
       var _this28 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-reviewer-selesai', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-reviewer-selesai').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);

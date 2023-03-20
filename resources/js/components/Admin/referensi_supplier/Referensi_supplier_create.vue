@@ -204,7 +204,6 @@ export default {
       fax:'',
       notlp1:'',
       notlp2:'',
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
     };
@@ -226,7 +225,7 @@ export default {
         data.append("notlp1", this.notlp1);
         data.append("notlp2", this.notlp2);
 
-        this.axios.post('api/add-supp', data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('api/add-supp', data).then(()=>{
           setTimeout( () => this.$router.push('/referensi-supplier'),1000);
           this.$toast.add({
             severity: "success",

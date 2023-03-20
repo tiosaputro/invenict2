@@ -17,7 +17,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       color: '1976D2',
-      token: localStorage.getItem('token'),
       perStatus: {},
       checkname: [],
       checkto: []
@@ -34,11 +33,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
@@ -54,11 +49,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getTahun: function getTahun() {
       var _this2 = this;
-      this.axios.get('api/get-tahun', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-tahun').then(function (response) {
         _this2.perStatus = {
           labels: response.data.grafik3.map(function (x) {
             return x.ireq_status;

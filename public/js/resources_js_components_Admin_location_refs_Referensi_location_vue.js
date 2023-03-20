@@ -17,7 +17,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: true,
-      token: localStorage.getItem('token'),
       loc: [],
       filters: {
         'global': {
@@ -33,11 +32,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getLoc: function getLoc() {
       var _this = this;
-      this.axios.get('api/loc', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/loc').then(function (response) {
         _this.loc = response.data;
         _this.loading = false;
       })["catch"](function (error) {
@@ -73,11 +68,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this2.axios["delete"]('api/delete-loc/' + loc_code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          }).then(function () {
+          _this2.axios["delete"]('api/delete-loc/' + loc_code).then(function () {
             _this2.loading = true;
             _this2.getLoc();
           });

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Link;
+use App\Models\Link;
 class LinkController extends Controller
 {
-    public function cekVerif($code)
+    function cekVerif($code)
     {
         $link = Link::findOrFail($code);
         return json_encode($link);

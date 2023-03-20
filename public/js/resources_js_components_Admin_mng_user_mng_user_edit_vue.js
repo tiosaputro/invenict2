@@ -29,7 +29,6 @@ __webpack_require__.r(__webpack_exports__);
         nama: "Tidak Aktif",
         code: "F"
       }],
-      token: localStorage.getItem('token'),
       roles: [],
       divisi: [],
       checkname: [],
@@ -44,11 +43,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     detailRequest: function detailRequest() {
       var _this = this;
-      this.axios.get('/api/detail-add-request-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/detail-add-request-user').then(function (response) {
         _this.bu = response.data.bisnis;
         _this.divisi = response.data.divisi;
         _this.roles = response.data.roles;
@@ -74,11 +69,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getUser: function getUser() {
       var _this2 = this;
-      this.axios.get('/api/edit-user/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-user/' + this.$route.params.code).then(function (response) {
         _this2.user = response.data.user;
         _this2.role.role = response.data.role;
       });
@@ -103,16 +94,8 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = [];
       this.error = [];
       if (this.role.role != '') {
-        this.axios.put('/api/update-user/' + this.$route.params.code, this.user, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
-          _this3.axios.put('/api/update-usr-role/' + _this3.$route.params.code, _this3.role, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          });
+        this.axios.put('/api/update-user/' + this.$route.params.code, this.user).then(function () {
+          _this3.axios.put('/api/update-usr-role/' + _this3.$route.params.code, _this3.role);
           _this3.$toast.add({
             severity: "success",
             summary: "Success Message",

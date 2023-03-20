@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Validation\Rule;
-use App\Model\PembelianDetail;
-use App\Model\Pembelian;
-use App\Model\Master;
-use App\Mng_User;
-Use App\Model\Lookup_Refs;
-use App\Model\Supplier;
+use App\Models\PembelianDetail;
+use App\Models\Pembelian;
+use App\Models\Master;
+use App\Models\Mng_user;
+Use App\Models\Lookup_Refs;
+use App\Models\Supplier;
 use App\Helpers\ResponseFormatter;
 use App\Exports\PembelianDetailExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,7 +22,7 @@ class PembelianDetailController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/pembelian-peripheral";
         $this->middleware(function ($request, $next) {
@@ -34,37 +34,32 @@ class PembelianDetailController extends Controller
             }
         });
     }
-    Public function index($code)
+    function index($code)
     {
         $dtl = DB::table('purchase_dtl as pd')
-        ->select('pd.*','llr.lookup_desc as invent_brand','im.invent_type','lr.lookup_desc as dpurchase_sat','im.invent_desc','pm.valuta_code',
-                DB::raw("CASE WHEN pd.dpurchase_stat = 'T' Then 'Aktif' WHEN pd.dpurchase_stat = 'F' Then 'Tidak Aktif' end as dpurchase_stat "))
-        ->leftjoin('purchase_mst as pm','pd.purchase_id','pm.purchase_id')
-        ->leftjoin('invent_mst as im','pd.invent_code','im.invent_code')
-        ->leftJoin('lookup_refs as llr',function ($join) {
-            $join->on('im.invent_brand','llr.lookup_code')
-                ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
-        })
-        ->leftJoin('lookup_refs as lr',function ($join) {
-            $join->on('pd.dpurchase_sat','lr.lookup_code')
-                ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%']);
-        })
-        ->where('pd.purchase_id',$code)
-        ->orderBy('pd.creation_date','DESC')
-        ->get();
-            return response()->json($dtl);
-    }
-    
-    Public function getSuppDate($code)
-    {
-        $dtl = DB::table('purchase_mst as pm')
+            ->select('pd.*','llr.lookup_desc as invent_brand','im.invent_type','lr.lookup_desc as dpurchase_sat','im.invent_desc','pm.valuta_code',
+                    DB::raw("CASE WHEN pd.dpurchase_stat = 'T' Then 'Aktif' WHEN pd.dpurchase_stat = 'F' Then 'Tidak Aktif' end as dpurchase_stat "))
+            ->leftjoin('purchase_mst as pm','pd.purchase_id','pm.purchase_id')
+            ->leftjoin('invent_mst as im','pd.invent_code','im.invent_code')
+            ->leftJoin('lookup_refs as llr',function ($join) {
+                $join->on('im.invent_brand','llr.lookup_code')
+                    ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+            })
+            ->leftJoin('lookup_refs as lr',function ($join) {
+                $join->on('pd.dpurchase_sat','lr.lookup_code')
+                    ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%']);
+            })
+            ->where('pd.purchase_id',$code)
+            ->orderBy('pd.creation_date','DESC')
+            ->get();
+        $suppDate = DB::table('purchase_mst as pm')
             ->select('sm.suplier_name as suplier_code','pm.purchase_date')
             ->leftjoin('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
             ->where('pm.purchase_id',$code)
             ->first();
-        return response()->json($dtl);
+            return ResponseFormatter::success(array('detail'=>$dtl,'suppdate'=>$suppDate),'Successfully get data');
     }
-    Public function save(Request $request,$code)
+    function save(Request $request,$code)
     {
         $message = [
             'invent_code.unique' => 'Item ini sudah dimasukan, silahkan edit jika ingin menambah qty',
@@ -93,7 +88,7 @@ class PembelianDetailController extends Controller
 
         return ResponseFormatter::success($save,'Successfully Created Data');
     }
-    Public function edit($purchase)
+    function edit($purchase)
     {
         $dtl= PembelianDetail::select('invent_code','dpurchase_qty','dpurchase_sat','dpurchase_stat','dpurchase_prc_sat',
                 'dpurchase_prc','dpurchase_remark','purchase_id')
@@ -106,9 +101,9 @@ class PembelianDetailController extends Controller
         ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%'])
         ->orderBy('lookup_desc','ASC')
         ->get();
-        return response()->json(['dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref,'valuta'=>$valuta],200);
+        return ResponseFormatter::success(array('dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref,'valuta'=>$valuta),'Successfully get data');
     }
-    Public function update(Request $request,$code,$purchase)
+    function update(Request $request,$code,$purchase)
     {
        $dtl = PembelianDetail::find($purchase);
 
@@ -124,13 +119,13 @@ class PembelianDetailController extends Controller
            
         return ResponseFormatter::success($dtl,'Successfully Updated Data');
     }
-    Public function delete($code,$dpurchase_id)
+    function delete($code,$dpurchase_id)
     {
         $dtl = PembelianDetail::Where('dpurchase_id',$dpurchase_id)->first();
           $dtl->delete();
           return ResponseFormatter::success($dtl,'Successfully Deleted Data');
     }
-    public function getValuta($code)
+    function getValuta($code)
     {
         $dtl = Pembelian::Select('valuta_code')->where('purchase_id',$code)->first();
         $mas = DB::table('invent_mst as im')
@@ -148,9 +143,9 @@ class PembelianDetailController extends Controller
         ->whereRaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('satuan')).'%'])
         ->orderBy('lookup_desc','ASC')
         ->get();
-        return response()->json(['dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref],200);
+        return ResponseFormatter::success(array('dtl'=>$dtl,'mas'=>$mas,'ref'=>$ref),'Successfully get data');
     }
-    public function cetak_pdf($purchase_id)
+    function cetak_pdf($purchase_id)
     {
         $pembelian = DB::table('purchase_mst as pm')
         ->Select('pm.*','pd.*','im.invent_desc','lr.lookup_desc as dpurchase_sat','sm.suplier_name',
@@ -167,7 +162,7 @@ class PembelianDetailController extends Controller
         ->get();
         return view('pdf/Laporan_PembelianDetail',compact('pembelian'));
     }
-    public function cetak_excel($purchase_id)
+    function cetak_excel($purchase_id)
     {
         return Excel::download(new PembelianDetailExport($purchase_id),'Laporan_Pembelian.xlsx');
     }

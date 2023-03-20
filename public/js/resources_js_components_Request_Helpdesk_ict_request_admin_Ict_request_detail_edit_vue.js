@@ -22,7 +22,6 @@ __webpack_require__.r(__webpack_exports__);
       kode: '',
       type: [],
       bu: [],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       cekTipeReq: ''
@@ -41,11 +40,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/cek-user').then(function (response) {
         _this.checkto = response.data.map(function (x) {
           return x.to;
         });
@@ -61,11 +56,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getKode: function getKode() {
       var _this2 = this;
-      this.axios.get('/api/getAddDetail', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/getAddDetail').then(function (response) {
         _this2.type = response.data.ref;
         _this2.kodeperi = response.data.kode;
       })["catch"](function (error) {
@@ -85,11 +76,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIct: function getIct() {
       var _this3 = this;
-      this.axios.get('/api/edit-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code).then(function (response) {
         _this3.ict = response.data;
         _this3.cekTipeReq = _this3.ict.ireq_type;
         _this3.getKode();
@@ -101,11 +88,7 @@ __webpack_require__.r(__webpack_exports__);
       this.error = [];
       if (this.ict.ireq_type == 'P') {
         if (this.ict.ireq_type != null && this.ict.invent_code != null) {
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict).then(function () {
             _this4.$toast.add({
               severity: "success",
               summary: "Success Message",
@@ -127,11 +110,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       } else {
         if (this.ict.ireq_type != null) {
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq + '/' + this.$route.params.code, this.ict).then(function () {
             _this4.$toast.add({
               severity: "success",
               summary: "Success Message",

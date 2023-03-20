@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\IctDetail;
-use App\Model\Ict;
-use App\Mng_User;
+use App\Models\IctDetail;
+use App\Models\Mng_user;
 use Illuminate\Support\Facades\Storage;
-use App\Model\Link;
-use App\Model\Lookup_Refs;
-use App\Model\Catalog;
+use App\Models\Link;
+use App\Models\Lookup_Refs;
+use App\Models\Catalog;
 use App\Exports\IctDetailExport;
 use App\Exports\IctDetailExportReject;
 use App\Exports\IctDetailTabReviewerExport;
@@ -20,15 +19,12 @@ use Carbon\Carbon;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Jobs\SendNotifPersonnel;
-use App\Jobs\SendNotifInProgress;
-use App\Jobs\SendNotifDone;
 
 class IctDetailController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum')->only('index','getNo_req','save','edit','update','delete','submitRating');
         $this->to = "/ict-request";
         $this->middleware(function ($request, $next) {

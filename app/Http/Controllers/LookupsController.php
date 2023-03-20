@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Lookup_Refs;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Mng_User;
+use App\Models\Mng_user;
+use App\Models\Lookup_Refs;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LookupExport;
 use Illuminate\Validation\Rule;
@@ -17,7 +17,7 @@ class LookupsController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/referensi-lookups";
         $this->middleware(function ($request, $next) {
@@ -32,7 +32,7 @@ class LookupsController extends Controller
     function index()
     {
         $ref = DB::Table('v_lookup_refs')->get();
-        return response()->json($ref);
+        return ResponseFormatter::success($ref,'Successfully get data');
  
     }
     function save(Request $request) 
@@ -80,7 +80,7 @@ class LookupsController extends Controller
     function edit($code,$type)
     {
         $ref = Lookup_Refs::Where('lookup_code', $code)->where('lookup_type',$type)->first();
-        return response()->json($ref);
+        return ResponseFormatter::success($ref,'Successfully get data');
     }
     function update(Request $request,$code,$type)
     {

@@ -19,7 +19,6 @@ __webpack_require__.r(__webpack_exports__);
       status: [],
       loading: false,
       req: [],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       items: [{
@@ -43,11 +42,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this2 = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this2.checkto = response.data.map(function (x) {
           return x.to;
         });
@@ -63,11 +58,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getStatus: function getStatus() {
       var _this3 = this;
-      this.axios.get('api/get-tahun', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-tahun').then(function (response) {
         _this3.status = response.data.grafik1;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -88,11 +79,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
       if (this.statusUser != null) {
         this.loading = true;
-        this.axios.get('api/count-per-divuser-status/' + this.statusUser, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/count-per-divuser-status/' + this.statusUser).then(function (response) {
           _this4.req = response.data;
           _this4.loading = false;
         });

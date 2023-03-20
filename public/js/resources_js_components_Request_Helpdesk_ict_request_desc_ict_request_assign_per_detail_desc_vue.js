@@ -34,8 +34,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
       },
-      code: this.$route.params.code,
-      token: localStorage.getItem('token')
+      code: this.$route.params.code
     };
   },
   mounted: function mounted() {
@@ -54,18 +53,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     AssignPerDetail: function AssignPerDetail(ireqd_id, ireq_id) {
       var _this = this;
-      this.axios.get('/api/detail/' + ireqd_id + '/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/detail/' + ireqd_id + '/' + ireq_id).then(function (response) {
         _this.assign = response.data;
       });
-      this.axios.get('/api/get-pekerja', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-pekerja').then(function (response) {
         _this.petugas = response.data;
       });
       this.dialogAssign = true;
@@ -78,11 +69,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     var _this2 = this;
     this.submitted = true;
     if (this.assign.name != null) {
-      this.axios.put('/api/updateAssignPerDetail/' + this.$route.params.code, this.assign, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.put('/api/updateAssignPerDetail/' + this.$route.params.code, this.assign).then(function () {
         _this2.assign = [];
         _this2.dialogAssign = false;
         _this2.submitted = false;
@@ -97,11 +84,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }
   }), _defineProperty(_methods, "getIctDetail", function getIctDetail() {
     var _this3 = this;
-    this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {
-      headers: {
-        'Authorization': 'Bearer ' + this.token
-      }
-    }).then(function (response) {
+    this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then(function (response) {
       _this3.detail = response.data.data;
       _this3.getNoreq();
       _this3.loading = false;
@@ -126,11 +109,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     });
   }), _defineProperty(_methods, "getNoreq", function getNoreq() {
     var _this4 = this;
-    this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-      headers: {
-        'Authorization': 'Bearer ' + this.token
-      }
-    }).then(function (response) {
+    this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
       _this4.kode = response.data;
     });
   }), _methods)

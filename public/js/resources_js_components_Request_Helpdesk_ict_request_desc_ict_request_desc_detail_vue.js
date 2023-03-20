@@ -27,7 +27,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       code: this.$route.params.code,
-      token: localStorage.getItem('token'),
       tes: [],
       ireq: []
     };
@@ -44,11 +43,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this = this;
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then(function (response) {
         _this.detail = response.data;
         _this.tes = response.data.map(function (x) {
           return x.ireq_assigned_to;
@@ -76,11 +71,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this2 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
         _this2.kode = response.data.noreq;
         _this2.status = response.data.ireq_status;
       });
@@ -101,11 +92,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this3.axios["delete"]('/api/delete-ict-detail/' + ireqd_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          });
+          _this3.axios["delete"]('/api/delete-ict-detail/' + ireqd_id);
           _this3.getIctDetail();
         },
         reject: function reject() {}

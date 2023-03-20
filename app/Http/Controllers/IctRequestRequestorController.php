@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Model\Ict;
-use App\Model\IctDetail;
-use App\Model\Lookup_Refs;
-use App\Model\Link;
+use App\Models\Ict;
+use App\Models\IctDetail;
+use App\Models\Lookup_Refs;
+use App\Models\Link;
 use App\Helpers\ResponseFormatter;
-use App\Mng_User;
+use App\Models\Mng_user;
 use App\Jobs\SendNotifRequest;
-use App\Model\Location;
-use App\Model\Divisi_refs;
+use App\Models\Location;
+use App\Models\Divisi_refs;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\IctExportPermohonan;
 use App\Exports\IctExportVerifikasi;
@@ -29,7 +29,7 @@ class IctRequestRequestorController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/ict-request";
         $this->middleware(function ($request, $next) {

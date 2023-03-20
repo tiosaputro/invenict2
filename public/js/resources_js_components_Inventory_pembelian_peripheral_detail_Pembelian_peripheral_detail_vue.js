@@ -20,7 +20,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: true,
-      token: localStorage.getItem('token'),
       detail: [],
       purchase_id: this.$route.params.code,
       details: [],
@@ -29,11 +28,7 @@ __webpack_require__.r(__webpack_exports__);
           value: null,
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
-      },
-      code: this.$route.params.code,
-      checkname: [],
-      checkto: [],
-      divisi: []
+      }
     };
   },
   created: function created() {
@@ -49,13 +44,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPembelianDetail: function getPembelianDetail() {
       var _this = this;
-      this.axios.get('/api/detail-pem/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.detail = response.data;
-        _this.getDetails();
+      this.axios.get('/api/detail-pem/' + this.$route.params.code).then(function (response) {
+        _this.detail = response.data.data.detail;
+        _this.details = response.data.data.suppdate;
+        _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this.$toast.add({
@@ -74,19 +66,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getDetails: function getDetails() {
-      var _this2 = this;
-      this.axios.get('/api/getSuppDate/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.details = response.data;
-        _this2.loading = false;
-      });
-    },
     DeleteDetail: function DeleteDetail(dpurchase_id) {
-      var _this3 = this;
+      var _this2 = this;
       this.$confirm.require({
         message: "Are you sure to delete this record data?",
         header: "Delete Confirmation",
@@ -95,40 +76,32 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this3.$toast.add({
+          _this2.$toast.add({
             severity: "info",
             summary: "Confirmed",
             detail: "Record deleted",
             life: 3000
           });
-          _this3.axios["delete"]('/api/delete-detail-pem/' + _this3.$route.params.code + '/' + dpurchase_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          }).then(function () {
-            _this3.loading = true;
-            _this3.getPembelianDetail();
+          _this2.axios["delete"]('/api/delete-detail-pem/' + _this2.$route.params.code + '/' + dpurchase_id).then(function () {
+            _this2.loading = true;
+            _this2.getPembelianDetail();
           });
         },
         reject: function reject() {}
       });
     },
     CetakPdf: function CetakPdf() {
-      var _this4 = this;
+      var _this3 = this;
       this.loading = true;
-      this.axios.get('api/report-pem-detail-pdf/' + this.purchase_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-pem-detail-pdf/' + this.purchase_id).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this4.loading = false;
+        _this3.loading = false;
       });
     },
     CetakExcel: function CetakExcel() {
-      var _this5 = this;
+      var _this4 = this;
       var date = new Date();
       var today = moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("DD MMM YYYY");
       this.loading = true;
@@ -145,7 +118,7 @@ __webpack_require__.r(__webpack_exports__);
         link.setAttribute('download', 'PURCHASE DETAIL PERIPHERAL REPORT LIST ON ' + today + '.xlsx');
         document.body.appendChild(link);
         link.click();
-        _this5.loading = false;
+        _this4.loading = false;
       });
     }
   }
@@ -179,13 +152,13 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   style: {
     "width": "110px"
   }
-}, "Suplier ", -1 /* HOISTED */);
+}, "Supplier ", -1 /* HOISTED */);
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   style: {
     "width": "110px"
   }
-}, "Tgl. Pembelian ", -1 /* HOISTED */);
+}, "Purchase Date ", -1 /* HOISTED */);
 var _hoisted_8 = {
   "class": "flex flex-column md:flex-row md:justify-content-between md:align-items-center"
 };
@@ -244,7 +217,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return _ctx.$router.push({
             name: 'Add Pembelian Peripheral Detail',
             params: {
-              code: $data.code
+              code: _ctx.code
             }
           });
         })

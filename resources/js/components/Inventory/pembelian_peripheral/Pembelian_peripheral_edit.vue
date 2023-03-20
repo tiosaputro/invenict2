@@ -167,8 +167,6 @@ export default {
       methode_pay:[],
       errors: [],
       submitted: false,
-      checkname : [],
-      checkto : [],
       stat: [
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
@@ -176,7 +174,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token')
     };
   },
   created(){
@@ -184,11 +181,11 @@ export default {
   },
   methods: {
     getDetailFormRequest(){
-      this.axios.get('/api/edit-pem/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.purch = response.data.pem;
-        this.suplier = response.data.supp;
-        this.methode_pay = response.data.metode;
-        this.code_money = response.data.uang;
+      this.axios.get('/api/edit-pem/'+this.$route.params.code).then((response)=>{
+        this.purch = response.data.data.pem;
+        this.suplier = response.data.data.supp;
+        this.methode_pay = response.data.data.metode;
+        this.code_money = response.data.data.uang;
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -214,7 +211,7 @@ export default {
         // this.purch.purchase_status != null &&
         this.purch.purchase_remark != null
       ) {
-        this.axios.put('/api/update-pem/'+this.$route.params.code, this.purch, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.put('/api/update-pem/'+this.$route.params.code, this.purch).then((response)=>{
           setTimeout( () => this.$router.push('/pembelian-peripheral'),1000);
           this.$toast.add({
             severity: "success",

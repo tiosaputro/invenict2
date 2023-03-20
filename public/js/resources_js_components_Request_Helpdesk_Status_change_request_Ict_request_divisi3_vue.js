@@ -41,9 +41,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
       },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
       editDetail: {
         ireq_reason: ''
       },
@@ -124,11 +121,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     createRemark: function createRemark(ireqd_id, ireq_id) {
       var _this3 = this;
-      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id).then(function (response) {
         _this3.remark = response.data;
         _this3.dialogRemark = true;
       });
@@ -136,11 +129,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     createNote: function createNote(ireqd_id, ireq_id) {
       var _this4 = this;
-      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id).then(function (response) {
         _this4.note = response.data;
         _this4.dialogNote = true;
       });
@@ -148,11 +137,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     submitRemark: function submitRemark() {
       var _this5 = this;
-      this.axios.put('/api/save-remark-assigned/' + this.code, this.remark, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.put('/api/save-remark-assigned/' + this.code, this.remark).then(function () {
         _this5.$toast.add({
           severity: 'success',
           summary: 'Success',
@@ -168,11 +153,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     submitNote: function submitNote() {
       var _this6 = this;
-      this.axios.put('/api/update-note/' + this.code, this.note, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.put('/api/update-note/' + this.code, this.note).then(function () {
         _this6.$toast.add({
           severity: 'success',
           summary: 'Success',
@@ -198,11 +179,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     edit: function edit(ireqd_id, ireq_id) {
       var _this7 = this;
-      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/detail/' + ireqd_id + '/' + ireq_id).then(function (response) {
         _this7.editStatus = response.data;
         _this7.code = ireq_id;
         _this7.getStatus();
@@ -212,11 +189,7 @@ __webpack_require__.r(__webpack_exports__);
     submitStatus: function submitStatus() {
       var _this8 = this;
       this.submitted = true;
-      this.axios.put('/api/update-status-done/' + this.code, this.editStatus, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.put('/api/update-status-done/' + this.code, this.editStatus).then(function () {
         _this8.loading = true;
         _this8.editStatus = [];
         _this8.code = null;
@@ -240,11 +213,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getData: function getData() {
       var _this9 = this;
-      this.axios.get('api/get-sedang-dikerjakan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-sedang-dikerjakan').then(function (response) {
         _this9.penugasan = response.data.ict3;
         _this9.countRemarkReviewerPenugasan = _this9.penugasan.map(function (x) {
           return x.countremarkreviewerpenugasan;
@@ -297,11 +266,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfAssignmentRequest: function CetakPdfAssignmentRequest() {
       var _this11 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-personnel-assignment-request', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-personnel-assignment-request').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -332,11 +297,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfReject: function CetakPdfReject() {
       var _this13 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-personnel-reject', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-personnel-reject').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -367,11 +328,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
       var _this15 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-personnel-sedang-dikerjakan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-personnel-sedang-dikerjakan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -402,11 +359,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSudahDikerjakan: function CetakPdfSudahDikerjakan() {
       var _this17 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-personnel-sudah-dikerjakan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-personnel-sudah-dikerjakan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -437,11 +390,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSelesai: function CetakPdfSelesai() {
       var _this19 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-personnel-selesai', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-personnel-selesai').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -472,11 +421,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdf: function CetakPdf(ireq_id) {
       var _this21 = this;
       this.loading = true;
-      this.axios.get('api/print-out-ict-request/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/print-out-ict-request/' + ireq_id).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);

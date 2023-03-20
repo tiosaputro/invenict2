@@ -140,7 +140,6 @@ export default {
       kode:'',
       type: [],
       bu: [],
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
       cekTipeReq:'',
@@ -158,7 +157,7 @@ export default {
       }
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("List Request") || this.checkto.includes("/ict-request-admin")){ 
@@ -170,7 +169,7 @@ export default {
       });
     },
     getKode(){
-        this.axios.get('/api/getAddDetail',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/getAddDetail').then((response)=>{
         this.type = response.data.ref;
         this.kodeperi = response.data.kode;   
       }).catch(error=>{
@@ -185,7 +184,7 @@ export default {
         });
       },
       getIct(){
-          this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code).then((response)=>{
               this.ict = response.data;
               this.cekTipeReq = this.ict.ireq_type;
               this.getKode();
@@ -197,7 +196,7 @@ export default {
       if(this.ict.ireq_type == 'P'){
        if ( this.ict.ireq_type != null && this.ict.invent_code != null) 
        {
-        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -218,7 +217,7 @@ export default {
       }else{
         if ( this.ict.ireq_type != null) 
        {
-        this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

@@ -32,10 +32,7 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
       },
-      token: localStorage.getItem('token'),
-      user: [],
-      checkname: [],
-      checkto: []
+      user: []
     };
   },
   created: function created() {
@@ -52,11 +49,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getUser: function getUser() {
       var _this = this;
-      this.axios.get('/api/user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/user').then(function (response) {
         _this.user = response.data;
       });
     },

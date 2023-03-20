@@ -20,8 +20,6 @@ __webpack_require__.r(__webpack_exports__);
       methode_pay: [],
       errors: [],
       submitted: false,
-      checkname: [],
-      checkto: [],
       stat: [{
         nama: "Aktif",
         code: "T"
@@ -31,8 +29,7 @@ __webpack_require__.r(__webpack_exports__);
       }],
       mask: {
         input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token')
+      }
     };
   },
   created: function created() {
@@ -41,15 +38,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getDetailFormRequest: function getDetailFormRequest() {
       var _this = this;
-      this.axios.get('/api/edit-pem/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.purch = response.data.pem;
-        _this.suplier = response.data.supp;
-        _this.methode_pay = response.data.metode;
-        _this.code_money = response.data.uang;
+      this.axios.get('/api/edit-pem/' + this.$route.params.code).then(function (response) {
+        _this.purch = response.data.data.pem;
+        _this.suplier = response.data.data.supp;
+        _this.methode_pay = response.data.data.metode;
+        _this.code_money = response.data.data.uang;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this.$toast.add({
@@ -74,11 +67,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.purch.suplier_code != null && this.purch.purchase_date != null && this.purch.purchase_pay_methode != null && this.purch.purchase_petugas != null && this.purch.valuta_code != null &&
       // this.purch.purchase_status != null &&
       this.purch.purchase_remark != null) {
-        this.axios.put('/api/update-pem/' + this.$route.params.code, this.purch, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.put('/api/update-pem/' + this.$route.params.code, this.purch).then(function (response) {
           setTimeout(function () {
             return _this2.$router.push('/pembelian-peripheral');
           }, 1000);

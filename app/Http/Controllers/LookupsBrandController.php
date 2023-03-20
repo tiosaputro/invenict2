@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Lookup_Refs;
-use App\Mng_User;
+use App\Models\Lookup_Refs;
+use App\Models\Mng_user;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use App\Helpers\ResponseFormatter;
@@ -15,7 +15,7 @@ class LookupsBrandController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/referensi-brand";
         $this->middleware(function ($request, $next) {
@@ -31,7 +31,7 @@ class LookupsBrandController extends Controller
             $ref = Lookup_Refs::select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
             ->where('lookup_type','Merk')
             ->get();
-            return json_encode($ref);
+            return ResponseFormatter::success($ref,'Successfully get data');
         }
     function saveBrand(Request $request) 
         {

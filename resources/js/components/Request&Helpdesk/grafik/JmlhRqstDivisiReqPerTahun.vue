@@ -18,7 +18,6 @@ export default {
     data() {
         return {
             color: '1976D2',
-            token: localStorage.getItem('token'),
             perDivisiRequestorTahun:{},
             tahunRequestor:null,
             tahunn:[],
@@ -36,7 +35,7 @@ export default {
     },
     methods: {
         cekUser(){
-        this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/cek-user').then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Divisi Requestor Per Tahun") || this.checkto.includes("/req-per-divisi-req-per-tahun")){
@@ -48,7 +47,7 @@ export default {
         });
         },
          getTahun(){
-            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+            this.axios.get('api/get-tahun').then((response)=>{
                 this.tahunn = response.data.grafik;
             }).catch(error=>{
           if (error.response.status == 401){
@@ -63,7 +62,7 @@ export default {
         },
         getPerDivisiRequestorTahun(){
             if(this.tahunRequestor != null){
-                this.axios.get('api/count-per-divreq-tahun/'+this.tahunRequestor, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{ 
+                this.axios.get('api/count-per-divreq-tahun/'+this.tahunRequestor).then((response)=>{ 
                     this.perDivisiRequestorTahun = {
                         labels : response.data.map((x)=>x.div_name),
                         datasets : [

@@ -176,8 +176,6 @@ export default {
             remark:null,
         },
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         status : null,
     };
   },
@@ -208,13 +206,13 @@ export default {
             summary: "Success Message",
             detail: "Successfully approved the request",
           });
-          this.axios.put('/api/abm/' +this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.put('/api/abm/' +this.code, this.reason);
           setTimeout( () =>  this.$router.push('/ict-request-manager'),1000);
       },
       updateReject(){
           this.submitted = true;
            if(this.reason.ket != null){
-           this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+           this.axios.put('/api/rbm/'+ this.code, this.reason).then(()=>{
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
@@ -235,7 +233,7 @@ export default {
         this.reason.remark = null;
       },
       getIctDetail(){
-        this.axios.get('/api/get-verif-manager/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.axios.get('/api/get-verif-manager/' + this.$route.params.code).then((response)=> {
           this.verif = response.data;
           this.loading = false;
           this.cek();
@@ -254,7 +252,7 @@ export default {
       });
       },
       getNoreq(){
-        this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
           this.kode = response.data;
           if(this.kode.cekstatus =='NA2'){
           this.getIctDetail();

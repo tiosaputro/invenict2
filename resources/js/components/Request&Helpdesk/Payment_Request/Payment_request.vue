@@ -157,9 +157,6 @@ export default {
          loading: true,
          payment: [],
          filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-         token: localStorage.getItem('token'),
-         checkname : [],
-         checkto : [],
          tes:[],
          ireq:[],
          ireq_id:''

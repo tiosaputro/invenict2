@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Model\Ict;
-use App\Mng_User;
+use App\Models\Ict;
+use App\Models\Mng_user;
 
 class DashboardController extends Controller
 {

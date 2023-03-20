@@ -26,7 +26,6 @@ __webpack_require__.r(__webpack_exports__);
       fax: '',
       notlp1: '',
       notlp2: '',
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -48,11 +47,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append("kota", this.kota);
       data.append("notlp1", this.notlp1);
       data.append("notlp2", this.notlp2);
-      this.axios.post('api/add-supp', data, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.post('api/add-supp', data).then(function () {
         setTimeout(function () {
           return _this.$router.push('/referensi-supplier');
         }, 1000);

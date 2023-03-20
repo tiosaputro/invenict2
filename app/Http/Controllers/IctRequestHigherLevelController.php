@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Model\Ict;
-use App\Model\IctDetail;
+use App\Models\Ict;
+use App\Models\IctDetail;
 use App\Helpers\ResponseFormatter;
-use App\Mng_User;
+use App\Models\Mng_user;
 use App\Exports\IctExportPermohonanAtasan;
 use App\Exports\IctExportVerifikasiAtasan;
 use App\Exports\IctExportRejectAtasan;
@@ -22,7 +22,7 @@ class IctRequestHigherLevelController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/ict-request-higher-level";
         $this->middleware(function ($request, $next) {
@@ -220,12 +220,14 @@ class IctRequestHigherLevelController extends Controller
     }
     function detailRequest($code){
         $data = IctDetail::getDataDetailRequest($code);
-        return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
+        $dtl = Ict::detailNoRequest($code);
+        return ResponseFormatter::success(array('detail'=>$data,'norequest'=>$dtl),'Successfully Get Data Detail Request'); 
     }
     function getDetailVerif($code)
     {
         $data = IctDetail::detailVerification($code);
-        return response()->json($data);
+        $dtl = Ict::detailNoRequest($code);
+        return ResponseFormatter::success(array('detail'=>$data,'norequest'=>$dtl),'Successfully get data');
     }
     function cetak_pdf_atasan_permohonan()
     {

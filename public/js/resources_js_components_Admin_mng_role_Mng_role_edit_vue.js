@@ -27,7 +27,6 @@ __webpack_require__.r(__webpack_exports__);
         nama: "Tidak Aktif",
         code: "F"
       }],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -38,21 +37,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getMenus: function getMenus() {
       var _this = this;
-      this.axios.get('/api/get-menu', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-menu').then(function (response) {
         _this.menus = response.data;
       });
     },
     getRole: function getRole() {
       var _this2 = this;
-      this.axios.get('/api/edit-role/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-role/' + this.$route.params.code).then(function (response) {
         _this2.role = response.data;
         _this2.getMenus();
         _this2.getMenu();
@@ -76,27 +67,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     getMenu: function getMenu() {
       var _this3 = this;
-      this.axios.get('/api/edit-role-menu/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-role-menu/' + this.$route.params.code).then(function (response) {
         _this3.menuss.menu = response.data;
       });
     },
     UpdateRole: function UpdateRole() {
       var _this4 = this;
       this.errors = [];
-      this.axios.put('/api/update-role/' + this.$route.params.code, this.role, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
-        _this4.axios.put('/api/update-role-menu/' + _this4.$route.params.code, _this4.menuss, {
-          headers: {
-            'Authorization': 'Bearer ' + _this4.token
-          }
-        });
+      this.axios.put('/api/update-role/' + this.$route.params.code, this.role).then(function () {
+        _this4.axios.put('/api/update-role-menu/' + _this4.$route.params.code, _this4.menuss);
         _this4.$toast.add({
           severity: "success",
           summary: "Success Message",

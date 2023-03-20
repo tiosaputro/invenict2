@@ -27,6 +27,9 @@ import CheckReviewer from './CheckVerifReviewer';
 import CheckSso from './CheckingToken';
 
 export default {
+    created(){
+        this.axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
+    },
     methods: {
         changeTheme(event) {
             let themeElement = document.getElementById('theme-link');

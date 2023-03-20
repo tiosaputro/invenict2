@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Model;;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Model\Link;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\SendNotifApprovedFromHigherLevel;
 use App\Jobs\SendNotifRejectByHigherLevel;
@@ -86,6 +85,25 @@ class Ict extends Model
          return $data;
     }
     
+    public static function detailNoRequest($code){
+        $data = DB::table('ireq_mst as im')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('im.ireq_status','lr.lookup_code')
+                ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
+        })
+        ->leftJoin('location_refs as lrs',function ($join) {
+            $join->on('im.ireq_loc','lrs.loc_code');
+        })
+        ->leftJoin('ireq_dtl as id',function ($join) {
+            $join->on('im.ireq_id','id.ireq_id');
+        })
+        ->select(DB::raw("TO_CHAR(im.ireq_date, 'yyyy-MM-dd HH24:MI:SS') AS ireq_date "),'im.ireq_date as request_date','im.ireq_requestor','im.ireq_no as noreq','im.ireq_type','im.ireq_status as cekStatus',
+                'lr.lookup_desc as ireq_status','lrs.loc_desc')
+        ->where('im.ireq_id',$code)
+        ->first();
+         return $data;
+    }
+    
     public static function updateRequest($request,$code){
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_date = Carbon::parse($request->ireq_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
@@ -103,8 +121,8 @@ class Ict extends Model
     }
 
     public static function deleteRequest($ireq_id){
-        $ict = Ict::find($ireq_id)->delete();
-        $dtl= DB::table('ireq_dtl')->WHERE('ireq_id',$ireq_id)->delete();
+        Ict::find($ireq_id)->delete();
+        DB::table('ireq_dtl')->WHERE('ireq_id',$ireq_id)->delete();
     }
 
     public static function ApprovedByAtasan($code){

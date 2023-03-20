@@ -53,7 +53,7 @@ export default {
         }
     },
     created(){
-        this.create();
+       this.create();
     },
     watch: {
         $route() {
@@ -79,7 +79,7 @@ export default {
             }
             if(this.loggedIn){
                 if(!this.menuUser.length){
-                    this.axios.get('/api/menu-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                    this.axios.get('/api/menu-user').then((response)=>{
                         this.menuUser = response.data.data;
                     });
                 }

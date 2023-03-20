@@ -89,7 +89,6 @@ export default {
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
       ],
-      token: localStorage.getItem('token'),
       name:''
     };
   },
@@ -98,8 +97,8 @@ export default {
   },
   methods: {
       getRef(){
-        this.axios.get('/api/edit-ref/' + this.$route.params.code + '/' + this.$route.params.type, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response)=> {
-            this.ref = response.data;
+        this.axios.get('/api/edit-ref/' + this.$route.params.code + '/' + this.$route.params.type ).then((response)=> {
+            this.ref = response.data.data;
         }).catch(error=>{
           if ((error.response.status == 401)){
             this.$toast.add({
@@ -116,7 +115,7 @@ export default {
       },
     UpdateLookup(){
         this.errors = [];   
-        this.axios.put('/api/update-ref/' + this.$route.params.code + '/' + this.$route.params.type, this.ref, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response) => {
+        this.axios.put('/api/update-ref/' + this.$route.params.code + '/' + this.$route.params.type, this.ref ).then((response) => {
            this.$toast.add({
             severity: "success",
             summary: "Success Message",

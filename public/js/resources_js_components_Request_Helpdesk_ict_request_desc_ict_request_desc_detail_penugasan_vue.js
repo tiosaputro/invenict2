@@ -26,7 +26,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       code: this.$route.params.code,
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -42,11 +41,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this = this;
-      this.axios.get('/api/ict-detail-penugasan-reviewer/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/ict-detail-penugasan-reviewer/' + this.$route.params.code).then(function (response) {
         _this.detail = response.data;
         _this.getNoreq();
         _this.loading = false;
@@ -70,11 +65,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this2 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
         _this2.kode = response.data;
       });
     }

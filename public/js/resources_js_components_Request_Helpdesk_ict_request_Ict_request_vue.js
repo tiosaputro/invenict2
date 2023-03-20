@@ -51,10 +51,7 @@ __webpack_require__.r(__webpack_exports__);
           value: null,
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
-      },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      }
     };
   },
   created: function created() {
@@ -109,11 +106,7 @@ __webpack_require__.r(__webpack_exports__);
           data.append("ireq_id", this.reason.ireq_id);
           data.append("id", this.reason.id);
           data.append("ket", this.reason.ket);
-          this.axios.post('/api/submit-rating', data, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.post('/api/submit-rating', data).then(function () {
             _this.reason = {
               id: null,
               ket: null,
@@ -145,11 +138,7 @@ __webpack_require__.r(__webpack_exports__);
         _data.append("rating", this.rating);
         _data.append("id", this.reason.id);
         _data.append("ireq_id", this.reason.ireq_id);
-        this.axios.post('/api/submit-rating', _data, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.post('/api/submit-rating', _data).then(function () {
           _this.rating = null;
           _this.sangat_bagus = false;
           _this.bagus = false;
@@ -181,11 +170,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIct: function getIct() {
       var _this2 = this;
-      this.axios.get('api/get-ict', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-ict').then(function (response) {
         _this2.ict = response.data.ict;
         _this2.showRemarkPermohonan = _this2.ict.map(function (x) {
           return x.countremark_reviewer;
@@ -237,11 +222,7 @@ __webpack_require__.r(__webpack_exports__);
         rejectLabel: "No",
         accept: function accept() {
           _this3.loading = true;
-          _this3.axios.get('api/updateStatusSubmit/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          }).then(function () {
+          _this3.axios.get('api/updateStatusSubmit/' + ireq_id).then(function () {
             _this3.getIct();
             _this3.$toast.add({
               severity: "info",
@@ -264,11 +245,7 @@ __webpack_require__.r(__webpack_exports__);
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: function accept() {
-          _this4.axios["delete"]('api/delete-ict/' + ireq_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this4.token
-            }
-          }).then(function () {
+          _this4.axios["delete"]('api/delete-ict/' + ireq_id).then(function () {
             _this4.$toast.add({
               severity: "info",
               summary: "Confirmed",
@@ -285,11 +262,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfPermohonan: function CetakPdfPermohonan() {
       var _this5 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-permohonan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-permohonan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -320,11 +293,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfReviewer: function CetakPdfReviewer() {
       var _this7 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-tab-reviewer', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-tab-reviewer').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -355,11 +324,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfVerifikasi: function CetakPdfVerifikasi() {
       var _this9 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-verifikasi', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-verifikasi').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -390,11 +355,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfTabReject: function CetakPdfTabReject() {
       var _this11 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-reject', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-reject').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -425,11 +386,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfAssignmentRequest: function CetakPdfAssignmentRequest() {
       var _this13 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-assignment-request', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-assignment-request').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -460,11 +417,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSedangDikerjakan: function CetakPdfSedangDikerjakan() {
       var _this15 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-sedang-dikerjakan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-sedang-dikerjakan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -495,11 +448,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSudahDikerjakan: function CetakPdfSudahDikerjakan() {
       var _this17 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-tab-sudah-dikerjakan', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-tab-sudah-dikerjakan').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -530,11 +479,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdfSelesai: function CetakPdfSelesai() {
       var _this19 = this;
       this.loading = true;
-      this.axios.get('api/report-ict-pdf-selesai', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-ict-pdf-selesai').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -565,11 +510,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdf: function CetakPdf(ireq_id) {
       var _this21 = this;
       this.loading = true;
-      this.axios.get('api/print-out-ict-request/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/print-out-ict-request/' + ireq_id).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);

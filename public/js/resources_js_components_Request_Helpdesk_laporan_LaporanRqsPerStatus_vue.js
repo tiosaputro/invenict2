@@ -16,7 +16,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loading: true,
       req: [],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       items: [{
@@ -40,11 +39,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this.checkto = response.data.map(function (x) {
           return x.to;
         });
@@ -60,11 +55,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getReq: function getReq() {
       var _this2 = this;
-      this.axios.get('api/get-tahun', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-tahun').then(function (response) {
         _this2.req = response.data.grafik3;
         _this2.loading = false;
       })["catch"](function (error) {

@@ -6,14 +6,14 @@
         <ConfirmDialog> </ConfirmDialog>
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>Pembelian Peripheral(Detail) </h4>
+				    <h4>Pembelian Peripheral(Detail) </h4>
           </template>
           <template v-slot:end>
             <div>
-              <label style="width:110px">Suplier </label>
+              <label style="width:110px">Supplier </label>
               <label>: {{details.suplier_code}} </label>
               <br>
-              <label style="width:110px">Tgl. Pembelian </label>
+              <label style="width:110px">Purchase Date </label>
               <label>: {{formatDate(details.purchase_date)}}</label>
             </div>
           </template>
@@ -127,15 +127,10 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
         detail: [],
         purchase_id: this.$route.params.code,
         details:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        code : this.$route.params.code,
-        checkname : [],
-        checkto : [],
-        divisi: [],
     };
   },
   created() {
@@ -150,9 +145,10 @@ export default {
          return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")
       },
     getPembelianDetail(){
-      this.axios.get('/api/detail-pem/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
-        this.getDetails();
+      this.axios.get('/api/detail-pem/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.details = response.data.data.suppdate;
+        this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -165,12 +161,6 @@ export default {
           if(error.response.status == 403){
             this.$router.push('/access');
           }
-        });
-    },
-    getDetails(){
-        this.axios.get('/api/getSuppDate/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.details = response.data;
-            this.loading = false;
         });
     },
     DeleteDetail(dpurchase_id){
@@ -188,7 +178,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-detail-pem/' +this.$route.params.code + '/' +dpurchase_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('/api/delete-detail-pem/' +this.$route.params.code + '/' +dpurchase_id).then(()=>{
             this.loading = true;
             this.getPembelianDetail();
           });
@@ -198,7 +188,7 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('api/report-pem-detail-pdf/' + this.purchase_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-pem-detail-pdf/' + this.purchase_id).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

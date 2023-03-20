@@ -74,7 +74,6 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
         role: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         checkname : [],
@@ -86,7 +85,7 @@ export default {
   },
   methods: {
     getRole(){
-      this.axios.get('api/role', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/role').then((response)=> {
         this.role = response.data;
         this.loading = false;
       }).catch(error=>{
@@ -118,7 +117,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-role/' +rol_id ,{headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('api/delete-role/' +rol_id );
           this.getRole();
         },
         reject: () => {},

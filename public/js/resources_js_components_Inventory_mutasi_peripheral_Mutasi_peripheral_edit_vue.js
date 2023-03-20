@@ -34,10 +34,7 @@ __webpack_require__.r(__webpack_exports__);
       mut: [],
       mask: {
         input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      }
     };
   },
   mounted: function mounted() {
@@ -46,12 +43,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getMutasi: function getMutasi() {
       var _this = this;
-      this.axios.get('/api/edit-mut/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.mut = response.data;
+      this.axios.get('/api/edit-mut/' + this.$route.params.code).then(function (response) {
+        _this.mut = response.data.data;
         _this.getKode();
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -73,14 +66,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     getKode: function getKode() {
       var _this2 = this;
-      this.axios.get('/api/get-kode-peripheral', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.kodeperi = response.data.kode;
-        _this2.divisi = response.data.divisi;
-        _this2.bu = response.data.bu;
+      this.axios.get('/api/get-kode-peripheral').then(function (response) {
+        _this2.kodeperi = response.data.data.kode;
+        _this2.divisi = response.data.data.divisi;
+        _this2.bu = response.data.data.bu;
       });
     },
     UpdateMutasi: function UpdateMutasi() {
@@ -95,11 +84,7 @@ __webpack_require__.r(__webpack_exports__);
         accept: function accept() {
           _this3.submitted = true;
           if (_this3.mut.imutasi_tgl_dari != null && _this3.mut.imutasi_keterangan != null && _this3.mut.imutasi_pengguna != null && _this3.mut.imutasi_divisi != null && _this3.mut.imutasi_bu != null && _this3.mut.imutasi_lokasi != null) {
-            _this3.axios.put('/api/update-mut/' + _this3.$route.params.code, _this3.mut, {
-              headers: {
-                'Authorization': 'Bearer ' + _this3.token
-              }
-            }).then(function () {
+            _this3.axios.put('/api/update-mut/' + _this3.$route.params.code, _this3.mut).then(function () {
               setTimeout(function () {
                 return _this3.$router.push('/mutasi-peripheral');
               }, 1000);

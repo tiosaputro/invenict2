@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Location;
+use App\Models\Location;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
-use App\Mng_User;
+use App\Models\Mng_user;
 
 class LocationController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/referensi-location";
         $this->middleware(function ($request, $next) {

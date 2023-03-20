@@ -20,7 +20,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: true,
-      token: localStorage.getItem('token'),
       master: [],
       filters: {
         'global': {
@@ -36,12 +35,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getMaster: function getMaster() {
       var _this = this;
-      this.axios.get('api/mas', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.master = response.data;
+      this.axios.get('api/mas').then(function (response) {
+        _this.master = response.data.data;
         _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -77,11 +72,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this2.axios["delete"]('api/delete-mas/' + invent_code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          }).then(function () {
+          _this2.axios["delete"]('api/delete-mas/' + invent_code).then(function () {
             _this2.loading = true;
             _this2.getMaster();
           });
@@ -92,11 +83,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdf: function CetakPdf() {
       var _this3 = this;
       this.loading = true;
-      this.axios.get('api/report-master-pdf', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-master-pdf').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);

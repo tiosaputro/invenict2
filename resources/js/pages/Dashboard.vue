@@ -853,7 +853,6 @@ export default {
     data() {
         return {
             count:[],
-            token: localStorage.getItem('token'),
         }
     },
     mounted(){
@@ -861,7 +860,7 @@ export default {
     },
     methods:{
 		getData(){
-			this.axios.get('api/data-dashboard',{headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+			this.axios.get('api/data-dashboard').then((res)=>{
 				this.count = res.data.data;
 			}).catch(error=>{
 			 if (error.response.status == 401) {

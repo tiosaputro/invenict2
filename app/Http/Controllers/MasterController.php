@@ -1,24 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Model\Master;
+use App\Models\Master;
 use App\Exports\MasterExport;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
 use Carbon\Carbon;
-use App\Model\Lookup_Refs;
-use App\Mng_User;
+use App\Models\Lookup_Refs;
+use App\Models\Mng_user;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Model\Mng_usr_roles;
-use App\Model\Mng_role_menu;
 
 class MasterController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/master-peripheral";
         $this->middleware(function ($request, $next) {
@@ -42,7 +40,7 @@ class MasterController extends Controller
             ->groupBy('im.invent_code','im.invent_type','lr.lookup_desc','im.invent_desc')
             ->orderBy('im.invent_code','ASC')
             ->get();
-            return response()->json($mas);
+            return ResponseFormatter::success($mas,'Successfully get data');
         }
     function getAddMaster()
     {
@@ -51,7 +49,7 @@ class MasterController extends Controller
         $nama = Lookup_Refs::Kategori_peripheral();
         $bisnis = DB::table('v_company_refs')->get();
             
-        return response()->json(['merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis,'nama'=>$nama],200);
+        return ResponseFormatter::success(array('merk'=>$merk,'kondisi'=>$kondisi,'bisnis'=>$bisnis,'nama'=>$nama),'Successfully get data');
     }
     function save(Request $request)
     {
@@ -83,7 +81,7 @@ class MasterController extends Controller
             ->where('im.invent_code',$code)
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%'])
             ->first();
-        return response()->json(['mas'=>$mas],200);
+        return ResponseFormatter::success($mas,'Successfully get data');
     }
     
     function detailPeripheral($invent_code_dtl)
@@ -197,7 +195,7 @@ class MasterController extends Controller
 
         $divisi = DB::table('divisi_refs')->select('div_id as code','div_name as name')->orderBy('div_name','ASC')->get(); 
         $bu = DB::table('vcompany_refs')->select('company_code as code','name')->orderBy('name','ASC')->get();
-        return json_encode(['kode'=>$kode,'divisi'=>$divisi,'bu'=>$bu],200);
+        return ResponseFormatter::success(array('kode'=>$kode,'divisi'=>$divisi,'bu'=>$bu),'Successfully get data');
     }
     function getSn($kode){
         $sn = DB::table('invent_dtl')

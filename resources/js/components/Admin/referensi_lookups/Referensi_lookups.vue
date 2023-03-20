@@ -92,7 +92,6 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
         ref: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
     };
@@ -102,8 +101,8 @@ export default {
   },
   methods: {
     getRef(){
-      this.axios.get('api/ref', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.ref = response.data;
+      this.axios.get('api/ref').then((response)=> {
+        this.ref = response.data.data;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401){
@@ -136,7 +135,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-ref/' +lookup_code + "/" + lookup_type, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('api/delete-ref/' +lookup_code + "/" + lookup_type).then(()=>{
             this.loading = true;
             this.getRef();
           });
@@ -146,7 +145,7 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('api/report-lookups-pdf',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-lookups-pdf').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

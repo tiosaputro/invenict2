@@ -10,17 +10,8 @@
           <div class="row">
             <div class="col-sm-6">
              <form @submit.prevent="CreateMaster">
-               <!-- <div class="field grid">
-                  <label class="col-fixed w-9rem">Kode</label>
-                    <div class="col-fixed w-9rem">
-                      <InputText
-                        type="text"
-                        disabled
-                      />
-                  </div>
-                </div> -->
                 <div class="field grid">
-                  <label class="col-fixed w-9rem">Nama Peripheral</label>
+                  <label class="col-fixed w-9rem">Peripheral</label>
                     <div class="col-fixed w-9rem">
                       <Dropdown
                         v-model="nama"
@@ -29,7 +20,7 @@
                         optionValue="name"
                         :showClear="true"
                         :filter="true"
-                        placeholder="Pilih Peripheral"
+                        placeholder="Choose One"
                         autofocus
                         :class="{ 'p-invalid': errors.nama }"
                       />
@@ -42,7 +33,7 @@
                     </div>
                 </div>
                 <div class="field grid">
-                  <label class="col-fixed w-9rem">Merk</label>
+                  <label class="col-fixed w-9rem">Brand</label>
                     <div class="col-fixed w-9rem">
                       <Dropdown
                         v-model="merk"
@@ -51,7 +42,7 @@
                         optionValue="code"
                         :showClear="true"
                         :filter="true"
-                        placeholder="Pilih Merk"
+                        placeholder="Choose One"
                         autofocus
                         :class="{ 'p-invalid': errors.merk }"
                       />
@@ -64,12 +55,12 @@
                     </div>
                 </div>
                 <div class="field grid">
-                  <label class="col-fixed w-9rem">Tipe</label>
+                  <label class="col-fixed w-9rem">Type</label>
                     <div class="col-fixed w-9rem">
                      <InputText
                         type="text"
                         v-model= "type"
-                        placeholder= "Masukan Tipe"
+                        placeholder= "Input Type"
                         :class="{ 'p-invalid': errors.type }"
                       />
                       <small v-if="errors.type" class="p-error">
@@ -85,7 +76,7 @@
                   v-if="this.loading == false"
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  label="Simpan"
+                  label="Save"
                   type="submit"
                 />
                 <Button
@@ -108,35 +99,13 @@ export default {
   data() {
     return {
       loading:false,
-      aktif:true,
-      displayImage:false,
-      preview:'',
       errors: [],
       error : [],
       merks: [],
-      kondi:[],
-      bisnis:[],
       kategori:[],
       nama:'',
-      tgl:'',
-      sn:'',
-      bu:'',
       merk:'',
       type:'',
-      foto: null,
-      prevuser:'',
-      lastuser:'',
-      prevloct:'',
-      lastloct:'',
-      kondisi:'',
-      barcode:'',
-      garansi:null,
-      mask:{
-        input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
     };
   },
   created(){
@@ -144,11 +113,9 @@ export default {
   },
   methods: {
       getMerk(){
-        this.axios.get('api/rsrcsupp',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.merks = response.data.merk;
-            this.bisnis = response.data.bisnis;
-            this.kondi = response.data.kondisi;
-            this.kategori = response.data.nama;
+        this.axios.get('api/rsrcsupp').then((response)=>{
+            this.merks = response.data.data.merk;
+            this.kategori = response.data.data.nama;
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -176,7 +143,7 @@ export default {
           data.append("merk", this.merk);
           data.append("type", this.type);
           
-        this.axios.post('api/add-mas',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('api/add-mas',data).then(()=>{
           setTimeout( () => this.$router.push('/master-peripheral'),1000);
           this.$toast.add({
             severity: "success",

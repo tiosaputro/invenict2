@@ -134,7 +134,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
       code: null,
     };
   },
@@ -143,7 +142,7 @@ export default {
   },
   methods: {
     getType(){
-      this.axios.get('api/getAddReq', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/getAddReq').then((response)=>{
         this.type = response.data.ref;
         this.bu = response.data.bisnis;
         this.divisi = response.data.divisi;
@@ -181,7 +180,7 @@ export default {
         data.append("user_divisi", this.usr_divisi);
         data.append("priolev", this.priolev);
 
-        this.axios.post('api/add-ict', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.post('api/add-ict', data).then((response)=>{
           this.$toast.add({
             severity: "success",
             summary: "Success Message",

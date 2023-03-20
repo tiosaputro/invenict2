@@ -14,21 +14,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      aktif: true,
       displayImage: false,
       preview: '',
       errors: [],
       error: [],
       kondi: [],
       bisnis: [],
-      kategori: [],
       foto: null,
       mask: {
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
       detail: []
     };
   },
@@ -38,25 +33,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getDetail: function getDetail() {
       var _this = this;
-      this.axios.get('/api/add-master-detail/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/add-master-detail/' + this.$route.params.code).then(function (response) {
         _this.detail = response.data;
       });
     },
     getMerk: function getMerk() {
       var _this2 = this;
-      this.axios.get('/api/rsrcsupp', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        // this.merks = response.data.merk;
-        _this2.bisnis = response.data.bisnis;
-        _this2.kondi = response.data.kondisi;
-        // this.kategori = response.data.nama;
+      this.axios.get('/api/rsrcsupp').then(function (response) {
+        _this2.bisnis = response.data.data.bisnis;
+        _this2.kondi = response.data.data.kondisi;
         _this2.getDetail();
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -95,11 +80,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
       this.errors = [];
       this.error = [];
-      this.axios.post('/api/save-master-detail', this.detail, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.post('/api/save-master-detail', this.detail).then(function () {
         setTimeout(function () {
           return _this3.$router.push('/master-peripheral-detail/' + _this3.$route.params.code);
         }, 1000);

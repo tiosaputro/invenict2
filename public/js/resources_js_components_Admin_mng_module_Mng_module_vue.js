@@ -17,7 +17,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: true,
-      token: localStorage.getItem('token'),
       modul: [],
       filters: {
         'global': {
@@ -33,11 +32,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getModule: function getModule() {
       var _this = this;
-      this.axios.get('api/module', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/module').then(function (response) {
         _this.modul = response.data;
         _this.loading = false;
       })["catch"](function (error) {
@@ -80,11 +75,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this2.axios["delete"]('api/delete-module/' + mod_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          });
+          _this2.axios["delete"]('api/delete-module/' + mod_id);
           _this2.getModule();
         },
         reject: function reject() {}

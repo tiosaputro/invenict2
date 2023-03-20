@@ -213,9 +213,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
     };
   },
   mounted(){
@@ -223,8 +220,8 @@ export default {
   },
   methods: {
     getMutasi(){
-      this.axios.get('/api/edit-mut/'+this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.mut = response.data;
+      this.axios.get('/api/edit-mut/'+this.$route.params.code).then((response)=>{
+        this.mut = response.data.data;
         this.getKode();
       }).catch(error=>{
           if (error.response.status == 401){
@@ -241,10 +238,10 @@ export default {
         });
     }, 
     getKode(){
-      this.axios.get('/api/get-kode-peripheral', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kodeperi = response.data.kode;
-        this.divisi = response.data.divisi;
-        this.bu = response.data.bu;
+      this.axios.get('/api/get-kode-peripheral').then((response)=>{
+        this.kodeperi = response.data.data.kode;
+        this.divisi = response.data.data.divisi;
+        this.bu = response.data.data.bu;
       });
     },
     UpdateMutasi() {
@@ -266,7 +263,7 @@ export default {
             this.mut.imutasi_lokasi != null 
         ) {
 
-        this.axios.put('/api/update-mut/'+this.$route.params.code, this.mut, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-mut/'+this.$route.params.code, this.mut).then(()=>{
           setTimeout( () => this.$router.push('/mutasi-peripheral'),1000);
           this.$toast.add({
             severity: "success",

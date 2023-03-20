@@ -155,9 +155,6 @@ export default {
       kode:'',
       type: [],
       bu: [],
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
       cekTipeReq:'',
     };
   },
@@ -198,7 +195,7 @@ export default {
     getIreq(){
       this.kode  = '';
        if(this.ict.ireq_type){
-        this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type).then((res)=>{
           this.catalog = res.data;
         });
       }
@@ -209,7 +206,7 @@ export default {
       }
     },
     getKode(){
-        this.axios.get('/api/getAddDetail',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/getAddDetail').then((response)=>{
         this.type = response.data.ref;
         this.kodeperi = response.data.kode;   
       }).catch(error=>{
@@ -224,7 +221,7 @@ export default {
         });
       },
     getCatalog(){
-      this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+      this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type).then((res)=>{
           this.catalog = res.data;
         });
     },
@@ -235,7 +232,7 @@ export default {
       this.getCatalog();
     },
     getIct(){
-        this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code).then((response)=>{
           this.ict = response.data;
           if(this.ict.ireq_attachment){
             if(this.ict.ireq_attachment.split('.').pop()=='jpeg'||this.ict.ireq_attachment.split('.').pop()=='png'||this.ict.ireq_attachment.split('.').pop()=='jpg'){
@@ -270,7 +267,7 @@ export default {
        if ( this.ict.ireq_type != null && this.ict.invent_code != null) 
        {
 
-        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -297,7 +294,7 @@ export default {
         if ( this.ict.ireq_type != null) 
        {
 
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict).then(()=>{
           this.$toast.add({
             severity: "success",
             summary: "Success Message",

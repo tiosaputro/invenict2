@@ -4,7 +4,7 @@
         <div class="card">
           <Toolbar class="mb-4">
             <template v-slot:start>
-                  <h4>Pembelian Peripheral(Detail)</h4>
+              <h4>Pembelian Peripheral(Detail)</h4>
             </template>
           </Toolbar>
           <div class="card-body">
@@ -147,10 +147,6 @@ export default {
       sat:[],
       kodeperi:[],
       valuta:[],
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
-      divisi: [],
     };
   },
   created(){
@@ -158,10 +154,10 @@ export default {
   },
   methods: {
     getValutaCode(){
-      this.axios.get('/api/getValuta/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.valuta = response.data.dtl;
-        this.sat = response.data.ref;
-        this.kodeperi = response.data.mas;
+      this.axios.get('/api/getValuta/'+ this.$route.params.code).then((response)=>{
+        this.valuta = response.data.data.dtl;
+        this.sat = response.data.data.ref;
+        this.kodeperi = response.data.data.mas;
 
         if(this.valuta.valuta_code == '$'){
           this.locale = 'en-US';
@@ -212,7 +208,7 @@ export default {
         data.append("pricetotal", this.pricetotal);
         data.append("hrgsatuan", this.hrgsatuan);
         data.append("qty", this.qty);
-        this.axios.post('/api/add-detail-pem/'+ this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.post('/api/add-detail-pem/'+ this.$route.params.code, data).then((response)=>{
           setTimeout( () => this.$router.push('/pembelian-peripheral-detail/'+ this.$route.params.code),1000);
           this.$toast.add({
             severity: "success",

@@ -245,7 +245,6 @@ export default {
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
       ],
-      token: localStorage.getItem('token'),
       roles: [],
       divisi: [],
       checkname : [],
@@ -259,7 +258,7 @@ export default {
   },
   methods: {
     detailRequest(){
-      this.axios.get('api/detail-add-request-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/detail-add-request-user').then((response)=>{
         this.bu = response.data.bisnis;
         this.divisi = response.data.divisi;
         this.roles = response.data.roles;
@@ -298,8 +297,8 @@ export default {
         this.errors = [];
         if(this.user.image != '' && this.user.usr_roles != ''){
 
-        this.axios.post('api/add-user', this.user,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-        this.axios.post('api/save-usr-role',this.user,{headers: {'Authorization': 'Bearer '+this.token}});
+        this.axios.post('api/add-user', this.user).then(()=>{
+        this.axios.post('api/save-usr-role',this.user);
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

@@ -18,7 +18,6 @@ __webpack_require__.r(__webpack_exports__);
       loc_code: '',
       loc_desc: '',
       loc_email: '',
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -31,11 +30,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append("loc_code", this.loc_code);
       data.append("loc_desc", this.loc_desc);
       data.append("loc_email", this.loc_email);
-      this.axios.post('api/add-loc', data, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (resoonse) {
+      this.axios.post('api/add-loc', data).then(function (resoonse) {
         _this.$toast.add({
           severity: "success",
           summary: "Success Message",

@@ -13,7 +13,7 @@
           <template v-slot:end>
             <div v-if="this.detailRequest.request_date">
               <label style="width:110px">No. Request </label>
-              <label>: {{this.kode}} </label>
+              <label>: {{this.detailRequest.noreq}} </label>
               <br>
               <label style="width:110px">Request Date</label>
               <label>: {{formatDate(this.detailRequest.request_date)}}</label>
@@ -132,20 +132,10 @@ import moment from 'moment';
 export default {
   data() {
     return {
-        submitted:false,
-        dialogAssign:false,
-        assign:[],
-        petugas:[],
-        kode:'',
         status:'',
         loading: true,
         detail: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        code : this.$route.params.code,
-        token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
-        code:null,
         detailRequest:[],
     };
   },
@@ -173,9 +163,10 @@ export default {
          myWindow.focus();
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data.data;
-        this.getNoreq();
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.detailRequest = response.data.data.norequest;
+        this.status = response.data.data.norequest.cekstatus;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -191,16 +182,9 @@ export default {
           }
       });
     },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.detailRequest = response.data;
-        this.kode = response.data.noreq;
-        this.status = response.data.cekstatus;
-      });
-    },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

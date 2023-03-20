@@ -30,7 +30,6 @@ __webpack_require__.r(__webpack_exports__);
         nama: "Tidak Aktif",
         code: "F"
       }],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -41,11 +40,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getMenu: function getMenu() {
       var _this = this;
-      this.axios.get('api/get-menu', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-menu').then(function (response) {
         _this.menus = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -70,16 +65,8 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = [];
       this.error = [];
       if (this.role.menu != '' && this.role.menu != null) {
-        this.axios.post('api/save-role', this.role, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
-          _this2.axios.post('api/save-role-menu', _this2.role, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          });
+        this.axios.post('api/save-role', this.role).then(function () {
+          _this2.axios.post('api/save-role-menu', _this2.role);
           _this2.$toast.add({
             severity: "success",
             summary: "Success Message",

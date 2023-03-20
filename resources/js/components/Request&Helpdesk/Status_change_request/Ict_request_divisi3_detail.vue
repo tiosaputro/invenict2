@@ -102,10 +102,7 @@ export default {
         editDetail:[],
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        token: localStorage.getItem('token'),
         user:[],
-        checkname : [],
-        checkto : [],
     };
   },
   created() {
@@ -121,7 +118,7 @@ export default {
          myWindow.focus();
     },
     getUser(){
-        this.axios.get('/api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.axios.get('/api/user').then((response)=> {
         this.user = response.data;
         });
       },

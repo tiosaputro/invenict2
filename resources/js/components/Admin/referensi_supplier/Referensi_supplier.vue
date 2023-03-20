@@ -196,7 +196,6 @@ export default {
     return {
         header:null,
         loading:true,
-        token: localStorage.getItem('token'),
         supp: [],
         supps:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
@@ -215,13 +214,13 @@ export default {
     },
     detailSupp(suplier_code){
       this.displaySupp = true;
-      this.axios.get('api/show-supp/' +suplier_code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/show-supp/' +suplier_code).then((response)=>{
         this.supps = response.data;
         this.header = 'Detail Suplier '+this.supps.suplier_name;
       });
     },
     getSupp(){
-      this.axios.get('api/supp', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/supp').then((response)=> {
         this.supp = response.data;
         this.loading =  false;
       }).catch(error=>{
@@ -253,7 +252,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-supp/' + suplier_code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('api/delete-supp/' + suplier_code).then(()=>{
             this.loading = true;
             this.getSupp();
           });

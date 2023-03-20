@@ -18,10 +18,7 @@ __webpack_require__.r(__webpack_exports__);
       pr: [],
       mask: {
         input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      }
     };
   },
   mounted: function mounted() {

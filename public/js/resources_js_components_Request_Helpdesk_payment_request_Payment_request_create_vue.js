@@ -31,7 +31,6 @@ __webpack_require__.r(__webpack_exports__);
       mask: {
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -81,11 +80,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this.checkto = response.data.map(function (x) {
           return x.to;
         });
@@ -102,11 +97,7 @@ __webpack_require__.r(__webpack_exports__);
     getDetail: function getDetail(noreq) {
       var _this2 = this;
       if (this.noreq) {
-        this.axios.get('api/getDetail/' + noreq, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/getDetail/' + noreq).then(function (response) {
           _this2.detail = response.data;
           _this2.ireqd_id = '';
         });
@@ -119,11 +110,7 @@ __webpack_require__.r(__webpack_exports__);
     get: function get(noreq, ireqd_id) {
       var _this3 = this;
       if (this.noreq && this.ireqd_id) {
-        this.axios.get('api/getNameBu/' + noreq + '/' + ireqd_id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/getNameBu/' + noreq + '/' + ireqd_id).then(function (response) {
           _this3.ca = response.data;
         });
         if (this.errors.noreq || this.error.noreq) {
@@ -134,11 +121,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this4 = this;
-      this.axios.get('api/getNoreq', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/getNoreq').then(function (response) {
         _this4.req = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -169,11 +152,7 @@ __webpack_require__.r(__webpack_exports__);
         data.append("tglrecvcash", this.tglrecvcash);
         data.append("tglsub", this.tglsub);
         data.append("tgltouser", this.tgltouser);
-        this.axios.post('api/add-payment-request', data, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.post('api/add-payment-request', data).then(function (response) {
           setTimeout(function () {
             return _this5.$router.push('/payment-request');
           }, 1000);

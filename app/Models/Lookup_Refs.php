@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Model;;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class Lookup_Refs extends Model

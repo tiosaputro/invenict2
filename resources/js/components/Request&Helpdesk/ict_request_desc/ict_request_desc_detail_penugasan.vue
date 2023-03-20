@@ -100,7 +100,6 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
     };
@@ -115,7 +114,7 @@ export default {
          myWindow.focus();
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-penugasan-reviewer/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/ict-detail-penugasan-reviewer/' + this.$route.params.code).then((response)=> {
         this.detail = response.data;
         this.getNoreq();
         this.loading = false;
@@ -134,7 +133,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
         this.kode = response.data;
       });
     },

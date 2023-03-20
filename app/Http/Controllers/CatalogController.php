@@ -4,19 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helpers\ResponseFormatter;
-use App\Model\Catalog;
+use App\Models\Catalog;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Model\Mng_usr_roles;
-use App\Mng_User;
-use App\Model\Mng_role_menu;
+use App\Models\Mng_User;
 
 class CatalogController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/catalog-refs";
         $this->middleware(function ($request, $next) {

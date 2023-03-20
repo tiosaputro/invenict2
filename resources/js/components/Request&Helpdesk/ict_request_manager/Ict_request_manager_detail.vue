@@ -50,7 +50,6 @@
           <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
           <Column field="name" header="Items" :sortable="true" style="min-width:10rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:14rem"/>
           <Column header="Attachment" style="min-width:10rem">
@@ -112,11 +111,6 @@ export default {
         detail: [],
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        code : this.$route.params.code,
-        token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
-        status:''
     };
   },
   mounted() {
@@ -132,9 +126,9 @@ export default {
          myWindow.focus();
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-manager/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data.data;
-        this.getNoreq();
+      this.axios.get('/api/ict-detail-manager/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.kode = response.data.data.norequest;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -148,12 +142,6 @@ export default {
           if(error.response.status == 403){
             this.$route.push('/access');
           }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
-        this.status = response.data.cekstatus;
       });
     },
     DeleteIct(ireqd_id){
@@ -171,7 +159,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id);
           this.getIctDetail();
         },
         reject: () => {},
@@ -179,7 +167,7 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

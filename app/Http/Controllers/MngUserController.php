@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Mng_User;
-use App\Model\Mng_roles;
-use App\Model\Divisi_refs;
+use App\Models\Mng_user;
+use App\Models\Mng_roles;
+use App\Models\Divisi_refs;
+use App\Models\Mng_usr_roles;
 use carbon\Carbon;
-use App\Model\Location;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -14,13 +15,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Helpers\ResponseFormatter;
-use App\Model\Mng_usr_roles;
 
 class MngUserController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/mng-user";
         $this->middleware(function ($request, $next) {

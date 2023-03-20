@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Supplier;
-use App\Mng_User;
+use App\Models\Supplier;
+use App\Models\Mng_user;
 use App\Exports\SupplierExport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +16,7 @@ class SupplierController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/referensi-supplier";
         $this->middleware(function ($request, $next) {
@@ -28,7 +28,7 @@ class SupplierController extends Controller
             }
         });
     }
-    public function index()
+    function index()
     {
         $supp = Supplier::select('suplier_code','suplier_name','suplier_contact','suplier_fax')
         ->orderBy('creation_date','ASC')
@@ -36,7 +36,7 @@ class SupplierController extends Controller
         return response()->json($supp);
 
     }
-    public function save(Request $request)
+    function save(Request $request)
     {
         $message = [
             'code.unique' => 'Kode Sudah Ada',
@@ -97,7 +97,7 @@ class SupplierController extends Controller
         ]);
         return ResponseFormatter::success($supp,'Successfully Created Supplier');
     }
-    public function edit($code)
+    function edit($code)
     {
         $supp = DB::Table('suplier_mst')
         ->where('suplier_code',$code)
@@ -113,7 +113,7 @@ class SupplierController extends Controller
         })->first();
         return response()->json($supp);
     }
-    public function show($suplier_code)
+    function show($suplier_code)
     {
         $supp = DB::Table('suplier_mst')
         ->where('suplier_code',$suplier_code)
@@ -130,7 +130,7 @@ class SupplierController extends Controller
         return response()->json($supp);
     }
 
-    public function update(Request $request, $code)
+    function update(Request $request, $code)
     {
         $message = [
             'suplier_name.required'=>'Nama Belum Diisi',
@@ -158,42 +158,42 @@ class SupplierController extends Controller
             'suplier_tlp1' => 'required|numeric',
             'suplier_tlp2' => 'numeric'
         ],$message);
-    }
-    $request->validate([
-        'suplier_name' => 'required',
-        'suplier_contact' => 'required|alpha',
-        'suplier_address1' => 'required',
-        'suplier_city' => 'required',
-        'suplier_prov' => 'required',
-        'suplier_email' => 'required',
-        'suplier_fax' => 'required|numeric',
-        'suplier_tlp1' => 'required|numeric'
-    ],$message);
+        }
+        $request->validate([
+            'suplier_name' => 'required',
+            'suplier_contact' => 'required|alpha',
+            'suplier_address1' => 'required',
+            'suplier_city' => 'required',
+            'suplier_prov' => 'required',
+            'suplier_email' => 'required',
+            'suplier_fax' => 'required|numeric',
+            'suplier_tlp1' => 'required|numeric'
+        ],$message);
 
-        $supp = Supplier::find($code);
-        $supp->suplier_name = $request->suplier_name;
-        $supp->suplier_contact = $request->suplier_contact;
-        $supp->suplier_address1 = $request->suplier_address1;
-        $supp->suplier_address2 = $request->suplier_address2;
-        $supp->suplier_city = $request->suplier_city;
-        $supp->suplier_prov = $request->suplier_prov;
-        $supp->suplier_email = $request->suplier_email;
-        $supp->suplier_fax = $request->suplier_fax;
-        $supp->suplier_tlp1 = $request->suplier_tlp1;
-        $supp->suplier_tlp2 = $request->suplier_tlp2;
-        $supp->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $supp->last_updated_by = Auth::user()->usr_name;
-        $supp->program_name = "Supplier_Update";
-        $supp->save();
-        
+            $supp = Supplier::find($code);
+            $supp->suplier_name = $request->suplier_name;
+            $supp->suplier_contact = $request->suplier_contact;
+            $supp->suplier_address1 = $request->suplier_address1;
+            $supp->suplier_address2 = $request->suplier_address2;
+            $supp->suplier_city = $request->suplier_city;
+            $supp->suplier_prov = $request->suplier_prov;
+            $supp->suplier_email = $request->suplier_email;
+            $supp->suplier_fax = $request->suplier_fax;
+            $supp->suplier_tlp1 = $request->suplier_tlp1;
+            $supp->suplier_tlp2 = $request->suplier_tlp2;
+            $supp->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+            $supp->last_updated_by = Auth::user()->usr_name;
+            $supp->program_name = "Supplier_Update";
+            $supp->save();
+            
         return ResponseFormatter::success($supp,'Successfully Updated Supplier');
     }
-    public function delete($suplier_code)
+    function delete($suplier_code)
     {
         $supp = Supplier::find($suplier_code)->delete();
         return ResponseFormatter::success($supp,'Successfully Deleted Supplier');
     }
-    public function cetak_pdf()
+    function cetak_pdf()
     {
         $supp = DB::Table('suplier_mst')
         ->get(['suplier_code','suplier_name','suplier_contact','suplier_address1','suplier_address2','suplier_city','suplier_prov','suplier_email','suplier_fax','suplier_tlp1','suplier_tlp2'])
@@ -208,7 +208,7 @@ class SupplierController extends Controller
         });
         return view('pdf/Laporan_Supplier', compact('supp'));
     }
-    public function cetak_excel()
+    function cetak_excel()
     {
         return Excel::download(new SupplierExport,'Laporan_Supplier.xlsx');
     }

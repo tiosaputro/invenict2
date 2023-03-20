@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseFormatter;
-use App\Model\Divisi_refs;
+use App\Models\Divisi_refs;
+use App\Models\Mng_user;
 Use carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Mng_User;
 
 class DivisiRefsController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/divisi-refs";
         $this->middleware(function ($request, $next) {
@@ -64,7 +63,7 @@ class DivisiRefsController extends Controller
         $div->save();
         return ResponseFormatter::success($div,'Successfully Updated Division');
     }
-    public function delete($div_id)
+    function delete($div_id)
     {
         $divisi = Divisi_refs::find($div_id)->delete();
         return ResponseFormatter::success($divisi,'Successfully Deleted Division');

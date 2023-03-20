@@ -25,7 +25,6 @@ __webpack_require__.r(__webpack_exports__);
       kodeperi: [],
       type: [],
       bu: [],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: [],
       cekTipeReq: ''
@@ -56,11 +55,7 @@ __webpack_require__.r(__webpack_exports__);
           data.append("qty", this.qty);
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
-          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data).then(function () {
             _this.$toast.add({
               severity: "success",
               summary: "Success Message",
@@ -90,11 +85,7 @@ __webpack_require__.r(__webpack_exports__);
           _data.append("desk", this.desk);
           _data.append("ket", this.ket);
           _data.append("tipereq", this.tipereq);
-          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data).then(function () {
             _this.$toast.add({
               severity: "success",
               summary: "Success Message",
@@ -119,11 +110,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     cekUser: function cekUser() {
       var _this2 = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/cek-user').then(function (response) {
         _this2.checkto = response.data.map(function (x) {
           return x.to;
         });
@@ -139,11 +126,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this3 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
         _this3.detail = response.data;
         _this3.tipereq = _this3.detail.ireq_type;
         _this3.cekTipeReq = _this3.detail.ireq_type;
@@ -165,11 +148,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getType: function getType() {
       var _this4 = this;
-      this.axios.get('/api/getAddDetail', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/getAddDetail').then(function (response) {
         _this4.type = response.data.ref;
         _this4.kodeperi = response.data.kode;
       });
@@ -186,11 +165,7 @@ __webpack_require__.r(__webpack_exports__);
           data.append("qty", this.qty);
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
-          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data).then(function () {
             _this5.$toast.add({
               severity: "success",
               summary: "Success Message",
@@ -219,11 +194,7 @@ __webpack_require__.r(__webpack_exports__);
           _data2.append("desk", this.desk);
           _data2.append("ket", this.ket);
           _data2.append("tipereq", this.tipereq);
-          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data2, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, _data2).then(function () {
             _this5.$toast.add({
               severity: "success",
               summary: "Success Message",

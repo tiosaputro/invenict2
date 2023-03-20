@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PekerjaController extends Controller
 {
-    public function getPekerja()
+    function getPekerja()
     {
         if(Auth::user()->usr_loc == 'OJ'){
             $pekerja = DB::table('vpekerja_ict')->select('employee_number as code','official_name as name')

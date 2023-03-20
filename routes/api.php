@@ -117,7 +117,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/edit-detail-pem/{purchase}','PembelianDetailController@edit');
     Route::put('/update-detail-pem/{code}/{purchase}','PembelianDetailController@update');
     Route::delete('/delete-detail-pem/{code}/{dpurchase_id}','PembelianDetailController@delete');
-    Route::get('/getSuppDate/{code}','PembelianDetailController@getSuppDate');
     Route::get('/getValuta/{code}','PembelianDetailController@getValuta');
     Route::get('/report-pem-detail-pdf/{purchase_id}','PembelianDetailController@cetak_pdf');
     Route::get('/report-pem-detail-excel/{purchase_id}','PembelianDetailController@cetak_excel');

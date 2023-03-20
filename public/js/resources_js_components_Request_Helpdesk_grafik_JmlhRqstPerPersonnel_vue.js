@@ -20,7 +20,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       color: '1976D2',
-      token: localStorage.getItem('token'),
       statusPerIctPersonnel: {},
       date: new Date(),
       checkname: [],
@@ -38,11 +37,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
@@ -58,11 +53,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPersonnel: function getPersonnel() {
       var _this2 = this;
-      this.axios.get('api/get-tahun', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-tahun').then(function (response) {
         _this2.statusPerIctPersonnel = {
           labels: response.data.personnel.map(function (x) {
             return x.ireq_assigned_to;

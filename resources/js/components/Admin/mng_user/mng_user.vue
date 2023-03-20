@@ -85,7 +85,6 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
         user: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
     };
@@ -95,7 +94,7 @@ export default {
   },
   methods: {
     getUser(){
-      this.axios.get('api/get-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/get-user').then((response)=> {
         this.user = response.data;
         this.loading = false;
       }).catch(error=>{
@@ -127,7 +126,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-user/' +usr_id ,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('api/delete-user/' +usr_id ).then(()=>{
             this.loading = true;
             this.getUser();
           });

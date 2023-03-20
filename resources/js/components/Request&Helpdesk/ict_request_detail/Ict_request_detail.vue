@@ -158,9 +158,6 @@ export default {
         kode:'',
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
         showPersonnel:[]
     };
   },
@@ -174,7 +171,7 @@ export default {
          myWindow.focus();
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
         this.detail = response.data;
         this.showPersonnel = response.data.map((x)=>x.ireq_count_status);
         this.getNoreq();
@@ -195,7 +192,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
         this.kode = response.data.noreq;
         this.status = response.data.cekstatus;
       });
@@ -215,7 +212,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code).then(()=>{
             this.loading = true;
             this.getIctDetail();
           });
@@ -239,7 +236,7 @@ export default {
             life: 3000,
           });
           this.loading = true;
-          this.axios.get('/api/updateStatusSubmit/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.get('/api/updateStatusSubmit/' +this.code);
           setTimeout( () => this.$router.push('/ict-request'),1000);
         },
         reject: () => {},
@@ -247,7 +244,7 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.code).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

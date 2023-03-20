@@ -26,11 +26,7 @@ __webpack_require__.r(__webpack_exports__);
       hrgsatuan: null,
       sat: [],
       kodeperi: [],
-      valuta: [],
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
-      divisi: []
+      valuta: []
     };
   },
   created: function created() {
@@ -39,14 +35,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getValutaCode: function getValutaCode() {
       var _this = this;
-      this.axios.get('/api/getValuta/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.valuta = response.data.dtl;
-        _this.sat = response.data.ref;
-        _this.kodeperi = response.data.mas;
+      this.axios.get('/api/getValuta/' + this.$route.params.code).then(function (response) {
+        _this.valuta = response.data.data.dtl;
+        _this.sat = response.data.data.ref;
+        _this.kodeperi = response.data.data.mas;
         if (_this.valuta.valuta_code == '$') {
           _this.locale = 'en-US';
           _this.currency = 'USD';
@@ -94,11 +86,7 @@ __webpack_require__.r(__webpack_exports__);
         data.append("pricetotal", this.pricetotal);
         data.append("hrgsatuan", this.hrgsatuan);
         data.append("qty", this.qty);
-        this.axios.post('/api/add-detail-pem/' + this.$route.params.code, data, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.post('/api/add-detail-pem/' + this.$route.params.code, data).then(function (response) {
           setTimeout(function () {
             return _this2.$router.push('/pembelian-peripheral-detail/' + _this2.$route.params.code);
           }, 1000);

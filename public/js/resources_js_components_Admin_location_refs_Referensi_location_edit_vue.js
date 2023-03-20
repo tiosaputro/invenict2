@@ -18,7 +18,6 @@ __webpack_require__.r(__webpack_exports__);
       checkname: [],
       checkto: [],
       loc: [],
-      token: localStorage.getItem('token'),
       name: ''
     };
   },
@@ -28,11 +27,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getLoc: function getLoc() {
       var _this = this;
-      this.axios.get('/api/edit-loc/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-loc/' + this.$route.params.code).then(function (response) {
         _this.loc = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -55,11 +50,7 @@ __webpack_require__.r(__webpack_exports__);
     UpdateLocation: function UpdateLocation() {
       var _this2 = this;
       this.errors = [];
-      this.axios.put('/api/update-loc/' + this.$route.params.code, this.loc, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.put('/api/update-loc/' + this.$route.params.code, this.loc).then(function (response) {
         _this2.$toast.add({
           severity: "success",
           summary: "Success Message",

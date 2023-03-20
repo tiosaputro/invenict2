@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Lookup_Refs;
-use App\Mng_User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use App\Helpers\ResponseFormatter;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Lookup_Refs;
+use App\Models\Mng_user;
 
 class LookupsKategoriController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/referensi-kategori";
         $this->middleware(function ($request, $next) {
@@ -31,7 +31,7 @@ class LookupsKategoriController extends Controller
             $ref = Lookup_Refs::select('lookup_code','lookup_type',DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"),'lookup_desc')
             ->where('lookup_type','Kat_Peripheral')
             ->get();
-            return json_encode($ref);
+            return ResponseFormatter::success($ref,'Successfully get data');
         }
     function saveKategori(Request $request) 
         {
@@ -78,7 +78,7 @@ class LookupsKategoriController extends Controller
     function editKategori($code,$type)
     {
             $ref = Lookup_Refs::Where('lookup_code', $code)->where('lookup_type',$type)->first();
-            return response()->json($ref);
+            return ResponseFormatter::success($ref,'Successfully get data');
     }
     function updateKategori(Request $request,$code,$type)
     {

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class BisnisController extends Controller
 {
-    public function getBisnis()
+    function getBisnis()
     {
         $bisnis = DB::table('v_company_refs')->get();
         return response()->json($bisnis);

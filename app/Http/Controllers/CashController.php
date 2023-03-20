@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Model\Ict;
-use App\Model\Cash;
-use App\Mng_User;
+use App\Models\Ict;
+use App\Models\Cash;
+use App\Models\Mng_user;
 use App\Exports\CashExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Helpers\ResponseFormatter;
@@ -17,7 +17,7 @@ class CashController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/cash-advance";
         $this->middleware(function ($request, $next) {
@@ -32,7 +32,7 @@ class CashController extends Controller
     function index()
     {
         $cash = DB::table('v_cash_advance')->get();
-        return response()->json($cash);
+        return ResponseFormatter::success($cash,'Successfully get data');
     }
     function getNoRequest(){
         $data = Ict::listNoRequest();

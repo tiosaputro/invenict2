@@ -98,7 +98,6 @@ export default {
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
       ],
-      token: localStorage.getItem('token')
     };
   },
   created(){
@@ -106,7 +105,7 @@ export default {
   },
   methods: {
     getModule(){
-        this.axios.get('/api/edit-module/' + this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/edit-module/' + this.$route.params.code).then((response)=>{
             this.modul = response.data;
         }).catch(error=>{
           if (error.response.status == 401){
@@ -125,7 +124,7 @@ export default {
     UpdateModule() {
         this.errors = [];
 
-        this.axios.put('/api/update-module/'+ this.$route.params.code,this.modul,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-module/'+ this.$route.params.code,this.modul).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

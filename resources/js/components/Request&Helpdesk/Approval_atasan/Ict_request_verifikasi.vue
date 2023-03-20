@@ -121,10 +121,6 @@ export default {
             ket:null,
         },
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        code : this.$route.params.code,
-        token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
     };
   },
   mounted() {
@@ -145,7 +141,7 @@ export default {
             summary: "Success Message",
             detail: "Successfully approved this request",
           });
-          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code);
           setTimeout( () =>  this.$router.push('/ict-request-higher-level'),1000);
         },
         reject: () => {},
@@ -154,7 +150,7 @@ export default {
       updateReject(){
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason).then(()=>{
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
@@ -171,9 +167,10 @@ export default {
         this.submitted = false;
       },
     getIctDetail(){
-      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.verif = response.data;
-        this.getNoreq();
+      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code).then((response)=> {
+        this.verif = response.data.data.detail;
+        this.kode = response.data.data.norequest;
+        this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
@@ -186,12 +183,6 @@ export default {
           if(error.response.status == 403){
             this.$router.push('/access');
           }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
-        this.loading = false;
       });
     },
     DeleteIct(ireqd_id){
@@ -209,17 +200,11 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id);
           this.getIctDetail();
         },
         reject: () => {},
       });
-    },
-    CetakPdf(){
-      window.open('/api/report-ict-detail-pdf/' +this.code);
-    },
-    CetakExcel(){
-      window.open('/api/report-ict-detail-excel/' +this.code);
     },
   },
 };

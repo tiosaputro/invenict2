@@ -71,7 +71,6 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
         catalog: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
     };
@@ -81,7 +80,7 @@ export default {
   },
   methods: {
     getCatalog(){
-      this.axios.get('api/get-catalog', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/get-catalog').then((response)=> {
         this.catalog = response.data.data;
         this.loading = false;
       }).catch(error=>{
@@ -113,7 +112,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-catalog/' +catalog_id ,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{  
+          this.axios.delete('api/delete-catalog/' +catalog_id ).then(()=>{  
             this.loading = true;
             this.getCatalog();
           });

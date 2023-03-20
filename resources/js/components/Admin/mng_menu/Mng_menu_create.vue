@@ -185,7 +185,6 @@ export default {
         { nama: "Node", code: "N" },
         { nama: "Leaf", code: "L"}
       ],
-      token: localStorage.getItem('token')
     };
   },
   created(){
@@ -193,7 +192,7 @@ export default {
     },
   methods: {
       getModul(){
-          this.axios.get('api/get-module',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('api/get-module').then((response)=>{
               this.modul = response.data;
               this.getParent();
           }).catch(error=>{
@@ -211,7 +210,7 @@ export default {
         });
       },
       getParent(){
-          this.axios.get('api/get-parent',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('api/get-parent').then((response)=>{
               this.parent = response.data;
           });
       },
@@ -230,7 +229,7 @@ export default {
         data.append("parent_id", this.parent_id);
 
 
-        this.axios.post('api/save-menu',data,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('api/save-menu',data).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

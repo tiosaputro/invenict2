@@ -91,7 +91,6 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
         loc: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
     };
@@ -101,7 +100,7 @@ export default {
   },
   methods: {
     getLoc(){
-      this.axios.get('api/loc', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/loc').then((response)=> {
         this.loc = response.data;
         this.loading = false;
       }).catch(error=>{
@@ -135,7 +134,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-loc/' +loc_code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('api/delete-loc/' +loc_code).then(()=>{
             this.loading = true;
             this.getLoc();
           });

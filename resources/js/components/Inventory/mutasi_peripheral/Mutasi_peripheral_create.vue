@@ -238,9 +238,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
     };
   },
   mounted(){
@@ -249,23 +246,23 @@ export default {
   methods: {
     getImage(){
       if(this.invent_sn){
-      this.axios.get('api/getImage/'+this.invent_sn, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/getImage/'+this.invent_sn).then((response)=>{
         this.detail = response.data;
       });
       }
     },
     getSn(){
       if(this.kode){
-        this.axios.get('/api/get-sn-peripheral/'+this.kode, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/get-sn-peripheral/'+this.kode).then((response)=>{
         this.sn = response.data;
       });
       }
     },   
     getKode(){
-      this.axios.get('api/get-kode-peripheral', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kodeperi = response.data.kode;
-        this.divisi = response.data.divisi;
-        this.bu = response.data.bu;
+      this.axios.get('api/get-kode-peripheral').then((response)=>{
+        this.kodeperi = response.data.data.kode;
+        this.divisi = response.data.data.divisi;
+        this.bu = response.data.data.bu;
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -310,7 +307,7 @@ export default {
         data.append("invent_bu", this.invent_bu);
         data.append("invent_divisi", this.invent_divisi);
         data.append("invent_sn", this.invent_sn);
-        this.axios.post('api/add-mut', data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('api/add-mut', data).then(()=>{
           setTimeout( () => this.$router.push('/mutasi-peripheral'),1000);
           this.$toast.add({
             severity: "success",

@@ -259,9 +259,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       }, 
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
     };
   },
   mounted(){
@@ -269,7 +266,7 @@ export default {
   },
   methods: {
     getCash(){
-      this.axios.get('/api/edit-cash/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/edit-cash/' + this.$route.params.code).then((response)=>{
         this.ca = response.data;
       }).catch(error=>{
           if ((error.response.status == 401)){
@@ -288,7 +285,7 @@ export default {
     UpdateCash() {
       this.errors = [];
   
-        this.axios.put('/api/update-cash/'+this.$route.params.code, this.ca, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.put('/api/update-cash/'+this.$route.params.code, this.ca).then((response)=>{
           setTimeout( () => this.$router.push('/cash-advance'),1000);
           this.$toast.add({
             severity: "success",

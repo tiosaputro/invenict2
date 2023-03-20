@@ -70,13 +70,14 @@ import ToggleButton from 'primevue/togglebutton';
 import TreeSelect from 'primevue/treeselect';
 import VueAxios from 'vue-axios';
 import VueLoading from 'vue-loading-overlay';
-
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
     next();
 });
 
 const app = createApp(AppWrapper);
+
+
 
 app.config.globalProperties.$appState = reactive({ theme: 'vela-blue'});
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
@@ -86,6 +87,7 @@ app.use(ToastService);
 app.use(VueAxios,axios);
 app.use(router);
 app.use(VueLoading);
+
 app.config.devtools = false;
 app.config.debug = false;
 app.config.silent = true;

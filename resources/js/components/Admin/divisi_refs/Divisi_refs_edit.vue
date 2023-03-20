@@ -92,7 +92,7 @@ export default {
       errors: [],
       div:[],
       verif:[],
-      token: localStorage.getItem('token'),
+      
       checkname : [],
       checkto : [],
     };
@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     getDivisi(){
-        this.axios.get('/api/edit-divisi/'+ this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/edit-divisi/'+ this.$route.params.code).then((response)=>{
           this.div = response.data;
           this.getVerificator();
       }).catch(error=>{
@@ -120,14 +120,14 @@ export default {
         });
     },
     getVerificator(){
-        this.axios.get('/api/get-verificator/'+ this.div.div_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/get-verificator/'+ this.div.div_id).then((response)=>{
           this.verif = response.data;
       });
     },
     UpdateDivisi() {
         this.errors = [];
 
-        this.axios.put('/api/update-divisi/'+this.$route.params.code, this.div, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-divisi/'+this.$route.params.code, this.div).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

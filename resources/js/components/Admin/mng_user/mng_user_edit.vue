@@ -232,7 +232,6 @@ export default {
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
       ],
-      token: localStorage.getItem('token'),
       roles: [],
       divisi:[],
       checkname : [],
@@ -246,7 +245,7 @@ export default {
   },
   methods: {
     detailRequest(){
-      this.axios.get('/api/detail-add-request-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail-add-request-user').then((response)=>{
         this.bu = response.data.bisnis;
         this.divisi = response.data.divisi;
         this.roles= response.data.roles;
@@ -267,7 +266,7 @@ export default {
          });
     },
     getUser(){
-      this.axios.get('/api/edit-user/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/edit-user/' +this.$route.params.code).then((response)=>{
         this.user = response.data.user;
         this.role.role = response.data.role;
       })
@@ -291,8 +290,8 @@ export default {
         this.errors = [];
         this.error = [];
         if(this.role.role != ''){
-        this.axios.put('/api/update-user/' +this.$route.params.code , this.user,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
-        this.axios.put('/api/update-usr-role/'+this.$route.params.code, this.role ,{headers: {'Authorization': 'Bearer '+this.token}});
+        this.axios.put('/api/update-user/' +this.$route.params.code , this.user).then(()=>{
+        this.axios.put('/api/update-usr-role/'+this.$route.params.code, this.role );
           this.$toast.add({
             severity: "success",
             summary: "Success Message",

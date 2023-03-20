@@ -15,21 +15,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       loading: false,
-      aktif: false,
-      displayImage: false,
       submitted: false,
       errors: [],
-      kondi: [],
-      bisnis: [],
-      master: [],
-      preview: null,
-      invent_photo: null,
-      mask: {
-        input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      master: []
     };
   },
   created: function created() {
@@ -38,14 +26,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getMaster: function getMaster() {
       var _this = this;
-      this.axios.get('/api/edit-mas/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.master = response.data.mas;
-        _this.bisnis = response.data.bisnis;
-        _this.kondi = response.data.kondisi;
+      this.axios.get('/api/edit-mas/' + this.$route.params.code).then(function (response) {
+        _this.master = response.data.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
           _this.$toast.add({
@@ -69,11 +51,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       this.submitted = true;
       if (this.master.invent_type != null) {
-        this.axios.put('/api/update-mas/' + this.$route.params.code, this.master, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.put('/api/update-mas/' + this.$route.params.code, this.master).then(function (response) {
           localStorage.removeItem("barcode");
           setTimeout(function () {
             return _this2.$router.push('/master-peripheral');
@@ -130,7 +108,7 @@ var _hoisted_5 = {
 var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Kode", -1 /* HOISTED */);
+  }, "Code", -1 /* HOISTED */);
 });
 var _hoisted_7 = {
   "class": "col-fixed w-9rem"
@@ -141,7 +119,7 @@ var _hoisted_8 = {
 var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Nama Peripheral", -1 /* HOISTED */);
+  }, "Peripheral", -1 /* HOISTED */);
 });
 var _hoisted_10 = {
   "class": "col-fixed w-9rem"
@@ -163,7 +141,7 @@ var _hoisted_14 = {
 var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": "col-fixed w-9rem"
-  }, "Tipe", -1 /* HOISTED */);
+  }, "Type", -1 /* HOISTED */);
 });
 var _hoisted_16 = {
   "class": "col-fixed w-9rem"
@@ -220,7 +198,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.master.invent_type = $event;
     }),
-    placeholder: "Masukan Tipe",
+    placeholder: "Masukan Type",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.submitted && !$data.master.invent_type
     })
@@ -228,7 +206,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0,
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
-    label: "Simpan",
+    label: "Save",
     type: "submit"
   })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), this.loading == false ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Button, {
     key: 1,

@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Model\Mng_modules;
-use App\Mng_User;
+use App\Models\Mng_modules;
+use App\Models\Mng_user;
 use App\Helpers\ResponseFormatter;
 
 class ModuleController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/mng-module";
         $this->middleware(function ($request, $next) {
@@ -26,7 +26,7 @@ class ModuleController extends Controller
             }
         });
     }
-    public function index()
+    function index()
     {
         $module = DB::table('v_mng_modules')->get();
         return $module->toJson();
@@ -64,12 +64,12 @@ class ModuleController extends Controller
         ]);
         return ResponseFormatter::success($module,'Successfully Created Module');
     }
-    public function edit($code)
+    function edit($code)
     {
         $module = Mng_modules::select('mod_id','mod_name','mod_desc','mod_stat')->where('mod_id',$code)->first();
         return response()->json($module);
     }
-    public function update(Request $request,$code)
+    function update(Request $request,$code)
     {
         $message = [
             'mod_name.required'=>'Module Name Belum Diisi',

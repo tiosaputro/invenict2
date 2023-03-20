@@ -25,10 +25,7 @@ __webpack_require__.r(__webpack_exports__);
       tgltouser: '',
       mask: {
         input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      }
     };
   },
   created: function created() {
@@ -37,11 +34,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getDataCA: function getDataCA() {
       var _this = this;
-      this.axios.get('/api/getNameBu/' + this.$route.params.code + '/' + this.$route.params.dtl, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/getNameBu/' + this.$route.params.code + '/' + this.$route.params.dtl).then(function (response) {
         _this.ca = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -63,11 +56,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this2 = this;
-      this.axios.get('/api/getNoreq', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/getNoreq').then(function (response) {
         _this2.req = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -96,11 +85,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append("tglrecvcash", this.tglrecvcash);
       data.append("tglsub", this.tglsub);
       data.append("tgltouser", this.tgltouser);
-      this.axios.post('/api/add-cash', data, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.post('/api/add-cash', data).then(function (response) {
         setTimeout(function () {
           return _this3.$router.push('/cash-advance');
         }, 1000);

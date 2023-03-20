@@ -17,7 +17,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       color: '1976D2',
-      token: localStorage.getItem('token'),
       perDivisiUserTahun: {},
       tahunUser: null,
       tahunn: [],
@@ -36,11 +35,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
@@ -56,11 +51,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getTahun: function getTahun() {
       var _this2 = this;
-      this.axios.get('api/get-tahun', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-tahun').then(function (response) {
         _this2.tahunn = response.data.grafik;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -80,11 +71,7 @@ __webpack_require__.r(__webpack_exports__);
     getPerDivisiUserTahun: function getPerDivisiUserTahun() {
       var _this3 = this;
       if (this.tahunUser != null) {
-        this.axios.get('api/count-per-divuser-tahun/' + this.tahunUser, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/count-per-divuser-tahun/' + this.tahunUser).then(function (response) {
           _this3.perDivisiUserTahun = {
             labels: response.data.map(function (x) {
               return x.div_name;

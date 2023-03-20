@@ -133,7 +133,6 @@ export default {
         kode:'',
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
         tes:[],
@@ -145,7 +144,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
@@ -158,7 +157,7 @@ export default {
       });
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
         this.detail = response.data;
         this.tes = response.data.map((x)=>x.ireq_assigned_to);
         if(this.tes.length > 0 && this.tes[0] != null){
@@ -178,7 +177,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
         this.kode = response.data.noreq;
         this.status = response.data.cekstatus;
       });
@@ -198,7 +197,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code);
         this.getIctDetail();
         },
         reject: () => {},
@@ -220,7 +219,7 @@ export default {
             life: 3000,
           });
           this.loading = true;
-          this.axios.get('/api/updateStatusSubmit/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.get('/api/updateStatusSubmit/' +this.code);
           setTimeout( () => this.$router.push('/ict-request-admin'),1000);
         },
         reject: () => {},
@@ -228,7 +227,7 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.code).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

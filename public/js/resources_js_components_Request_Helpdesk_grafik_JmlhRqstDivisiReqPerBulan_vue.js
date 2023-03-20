@@ -24,7 +24,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       color: '1976D2',
-      token: localStorage.getItem('token'),
       perDivisiRequestorBulan: {},
       bulanRequestor: null,
       tahunnRequestor: null,
@@ -48,11 +47,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
@@ -70,22 +65,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       this.tahunnRequestor = null;
       if (this.bulanRequestor != null) {
-        this.axios.get('api/get-tahun-requestor/' + this.bulanRequestor, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/get-tahun-requestor/' + this.bulanRequestor).then(function (response) {
           _this2.tahunnnn = response.data;
         });
       }
     },
     getBulan: function getBulan() {
       var _this3 = this;
-      this.axios.get('api/get-tahun', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-tahun').then(function (response) {
         _this3.bulan = response.data.grafik2;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -105,11 +92,7 @@ __webpack_require__.r(__webpack_exports__);
     getPerDivisiRequestorBulan: function getPerDivisiRequestorBulan() {
       var _this4 = this;
       if (this.tahunnRequestor != null && this.bulanRequestor != null) {
-        this.axios.get('api/count-per-divreq-bulan/' + this.tahunnRequestor + '/' + this.bulanRequestor, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/count-per-divreq-bulan/' + this.tahunnRequestor + '/' + this.bulanRequestor).then(function (response) {
           _this4.nameBulanRequestor = response.data[0].bulan + _this4.tahunnRequestor;
           _this4.perDivisiRequestorBulan = {
             labels: response.data.map(function (x) {

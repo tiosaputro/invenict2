@@ -79,7 +79,6 @@ export default {
       loc_code:'' ,
       loc_desc:'' ,
       loc_email: '',
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
     };
@@ -93,7 +92,7 @@ export default {
         data.append("loc_desc", this.loc_desc);
         data.append("loc_email", this.loc_email);
 
-        this.axios.post('api/add-loc', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((resoonse)=>{
+        this.axios.post('api/add-loc', data).then((resoonse)=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

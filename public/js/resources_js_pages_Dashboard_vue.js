@@ -14,8 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      count: [],
-      token: localStorage.getItem('token')
+      count: []
     };
   },
   mounted: function mounted() {
@@ -24,11 +23,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getData: function getData() {
       var _this = this;
-      this.axios.get('api/data-dashboard', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (res) {
+      this.axios.get('api/data-dashboard').then(function (res) {
         _this.count = res.data.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {

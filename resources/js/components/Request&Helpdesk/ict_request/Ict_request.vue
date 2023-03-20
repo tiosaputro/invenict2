@@ -777,9 +777,6 @@ export default {
       sudahDikerjakan:[],
       selesai:[],
       filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
     };
   },
   created() {
@@ -834,7 +831,7 @@ export default {
         data.append("ireq_id", this.reason.ireq_id);
         data.append("id", this.reason.id);
         data.append("ket", this.reason.ket);
-        this.axios.post('/api/submit-rating',data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('/api/submit-rating',data).then(()=>{
           this.reason = {id:null, ket :null, ireq_id:null};
           this.dialogEdit = false;
           this.loading = true;
@@ -860,7 +857,7 @@ export default {
         data.append("rating", this.rating);
         data.append("id", this.reason.id);
         data.append("ireq_id", this.reason.ireq_id);
-        this.axios.post('/api/submit-rating',data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('/api/submit-rating',data).then(()=>{
           this.rating = null;
           this.sangat_bagus = false;
           this.bagus=false;
@@ -885,7 +882,7 @@ export default {
       this.dialogEdit = true;
     },
     getIct(){
-      this.axios.get('api/get-ict',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/get-ict').then((response)=> {
           this.ict = response.data.ict;
           this.showRemarkPermohonan = this.ict.map((x)=>x.countremark_reviewer);
           this.loading = false;
@@ -926,7 +923,7 @@ export default {
         rejectLabel: "No",
         accept: () => {
           this.loading = true;
-          this.axios.get('api/updateStatusSubmit/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.get('api/updateStatusSubmit/' +ireq_id).then(()=>{
             this.getIct();
             this.$toast.add({
               severity: "info",
@@ -948,7 +945,7 @@ export default {
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
-          this.axios.delete('api/delete-ict/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('api/delete-ict/' +ireq_id).then(()=>{
             this.$toast.add({
               severity: "info",
               summary: "Confirmed",
@@ -964,7 +961,7 @@ export default {
     },
     CetakPdfPermohonan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-permohonan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -987,7 +984,7 @@ export default {
     },
     CetakPdfReviewer(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-tab-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-tab-reviewer').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1010,7 +1007,7 @@ export default {
     },
     CetakPdfVerifikasi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-verifikasi',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-verifikasi').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1033,7 +1030,7 @@ export default {
     },
     CetakPdfTabReject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-reject').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1056,7 +1053,7 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-assignment-request').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1079,7 +1076,7 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-sedang-dikerjakan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1102,7 +1099,7 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-tab-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-tab-sudah-dikerjakan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1125,7 +1122,7 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-selesai').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1148,7 +1145,7 @@ export default {
     },
     CetakPdf(ireq_id){
       this.loading = true;
-       this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

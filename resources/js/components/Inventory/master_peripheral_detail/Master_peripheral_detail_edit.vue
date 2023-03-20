@@ -184,7 +184,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
       detail:[],
@@ -195,16 +194,14 @@ export default {
   },
   methods: {
     getDetail(){
-      this.axios.get('/api/edit-master-detail/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.detail = response.data;
+      this.axios.get('/api/edit-master-detail/'+this.$route.params.code).then((response)=>{
+        this.detail = response.data.data;
       });
     },
       getMerk(){
-        this.axios.get('/api/rsrcsupp',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            // this.merks = response.data.merk;
-            this.bisnis = response.data.bisnis;
-            this.kondi = response.data.kondisi;
-            // this.kategori = response.data.nama;
+        this.axios.get('/api/rsrcsupp').then((response)=>{
+            this.bisnis = response.data.data.bisnis;
+            this.kondi = response.data.data.kondisi;
             this.getDetail();
         }).catch(error=>{
           if (error.response.status == 401){
@@ -253,7 +250,7 @@ export default {
         // this.detail.invent_lokasi_previous != null &&
         // this.detail.invent_pengguna_previous != null  
       ) {
-        this.axios.put('/api/update-master-detail/'+this.$route.params.code,this.detail,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-master-detail/'+this.$route.params.code,this.detail).then(()=>{
           setTimeout( () => this.$router.push('/master-peripheral-detail/'+this.$route.params.kode),1000);
           this.$toast.add({
             severity: "success",

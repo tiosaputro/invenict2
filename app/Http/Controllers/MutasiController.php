@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Mutasi;
+use App\Models\Mutasi;
 use App\Exports\MutasiExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Mng_User;
+use App\Models\Mng_user;
 use App\Helpers\ResponseFormatter;
 
 class MutasiController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/mutasi-peripheral";
         $this->middleware(function ($request, $next) {
@@ -45,7 +45,7 @@ class MutasiController extends Controller
             ->leftjoin('vcompany_refs as vr','im.imutasi_bu','vr.company_code')
             ->orderBy('im.creation_date','DESC')
             ->get();
-        return response()->json($mutasi);
+        return ResponseFormatter::success($mutasi,'Successfully get data');
     }
     Public function save(Request $request)
     {
@@ -85,7 +85,7 @@ class MutasiController extends Controller
                 })
             ->Where('im.imutasi_id',$code)
             ->first();
-        return response()->json($mut);
+        return ResponseFormatter::success($mut,'Successfully get data');
     }
     Public function update(Request $request, $code)
     {
@@ -127,11 +127,11 @@ class MutasiController extends Controller
         $mut = Mutasi::find($imutasi_id)->delete();
         return ResponseFormatter::success($mut,'Successfully Deleted Mutasi');
     }
-    public function cetak_excel()
+    function cetak_excel()
     {
         return Excel::download(new MutasiExport,'Laporan_Mutasi.xlsx');
     }
-    public function cetak_pdf()
+    function cetak_pdf()
     {
         $mut = DB::table('invent_mutasi as im')
         ->LEFTJOIN('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')

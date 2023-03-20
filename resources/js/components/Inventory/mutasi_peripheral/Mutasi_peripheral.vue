@@ -251,11 +251,8 @@ export default {
     return {
         header:'',
         loading: true,
-        token: localStorage.getItem('token'),
         mutasi: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        checkname : [],
-        checkto : [],
         detail:[],
         displayKode : false
     };
@@ -268,8 +265,8 @@ export default {
       return moment(date).format("DD MMM YYYY")
     },
     getMutasi(){
-      this.axios.get('api/mut',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.mutasi = response.data;
+      this.axios.get('api/mut').then((response)=> {
+        this.mutasi = response.data.data;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -300,7 +297,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-mut/' +imutasi_id,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('api/delete-mut/' +imutasi_id).then(()=>{
             this.getMutasi();
           });  
         },
@@ -309,7 +306,7 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('api/report-mutasi-pdf',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-mutasi-pdf').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -332,7 +329,7 @@ export default {
     },
     detailKode(invent_code){
       this.displayKode = true;
-      this.axios.get('api/detail-peripheral/' +invent_code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/detail-peripheral/' +invent_code).then((response)=>{
         this.detail = response.data;
         this.header = 'Detail Peripheral '+this.detail.name;
       });

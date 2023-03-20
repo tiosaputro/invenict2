@@ -18,7 +18,6 @@ export default {
     data() {
         return {
             color: '1976D2',
-            token: localStorage.getItem('token'),
             statusPerIctPersonnel:{},
             date: new Date(),
             checkname : [],
@@ -35,7 +34,7 @@ export default {
     },
     methods: {
         cekUser(){
-        this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/cek-user').then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Per Personnel") || this.checkto.includes("/req-per-personnel")){
@@ -47,7 +46,7 @@ export default {
         });
         },
         getPersonnel(){
-            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+            this.axios.get('api/get-tahun').then((response)=>{
                 this.statusPerIctPersonnel = {
                         labels : response.data.personnel.map((x)=>x.ireq_assigned_to),
                         datasets : [

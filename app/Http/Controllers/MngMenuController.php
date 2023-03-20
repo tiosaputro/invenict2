@@ -1,21 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Model\Mng_menu;
-use App\Mng_User;
+use App\Models\Mng_menu;
+use App\Models\Mng_user;
 use carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Model\Mng_usr_roles;
-use App\Model\Mng_role_menu;
 use App\Helpers\ResponseFormatter;
 
 class MngMenuController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/mng-menu";
         $this->middleware(function ($request, $next) {

@@ -1,10 +1,10 @@
 <template>
   <div>
-        <Toast />
+      <Toast />
         <div class="card">
           <Toolbar class="mb-4">
             <template v-slot:start>
-                  <h4>Pembelian Peripheral(Detail)</h4>
+              <h4>Pembelian Peripheral(Detail)</h4>
             </template>
           </Toolbar>
           <div class="card-body">
@@ -132,10 +132,6 @@ export default {
       sat:[],
       kodeperi:[],
       detail:[],
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
-      divisi: [],
     };
   },
   created(){
@@ -146,11 +142,11 @@ export default {
       this.detail.dpurchase_prc = this.detail.dpurchase_qty * this.detail.dpurchase_prc_sat
     },
     getDetail(){
-        this.axios.get('/api/edit-detail-pem/'+this.$route.params.purchase,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.detail = response.data.dtl;
-            this.valuta = response.data.valuta;
-            this.sat = response.data.ref;
-            this.kodeperi = response.data.mas;
+        this.axios.get('/api/edit-detail-pem/'+this.$route.params.purchase).then((response)=>{
+            this.detail = response.data.data.dtl;
+            this.valuta = response.data.data.valuta;
+            this.sat = response.data.data.ref;
+            this.kodeperi = response.data.data.mas;
             this.getValutaCode();
         }).catch(error=>{
           if (error.response.status == 401){
@@ -190,7 +186,7 @@ export default {
         this.detail.dpurchase_remark != null &&
         this.detail.invent_code != null 
       ) {
-        this.axios.put('/api/update-detail-pem/'+ this.$route.params.code + '/' +this.$route.params.purchase, this.detail,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.put('/api/update-detail-pem/'+ this.$route.params.code + '/' +this.$route.params.purchase, this.detail).then((response)=>{
           setTimeout( () => this.$router.push('/pembelian-peripheral-detail/'+ this.$route.params.code),1000);
           this.$toast.add({
             severity: "success",

@@ -11,7 +11,7 @@
             <div class="col-sm-6">
             <form @submit.prevent="UpdateMaster">
               <div class="field grid">
-                <label class="col-fixed w-9rem">Kode</label>
+                <label class="col-fixed w-9rem">Code</label>
                   <div class="col-fixed w-9rem">
                     <InputText
                       type="text"
@@ -21,7 +21,7 @@
                   </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem">Nama Peripheral</label>
+                <label class="col-fixed w-9rem">Peripheral</label>
                   <div class="col-fixed w-9rem">
                     <InputText
                       type ="text"
@@ -42,12 +42,12 @@
                   </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem">Tipe</label>
+                <label class="col-fixed w-9rem">Type</label>
                   <div class="col-fixed w-9rem">
                     <InputText
                       type="text"
                       v-model="master.invent_type"
-                      placeholder= "Masukan Tipe"
+                      placeholder= "Masukan Type"
                       :class="{ 'p-invalid': submitted && !master.invent_type }"
                     />
                     <small class="p-error" v-if="submitted && !master.invent_type"
@@ -60,7 +60,7 @@
                     class="p-button-rounded p-button-primary mr-2"
                     v-if="this.loading == false"
                     icon="pi pi-check"
-                    label="Simpan"
+                    label="Save"
                     type="submit"
                   />
                   <Button
@@ -83,21 +83,9 @@ export default {
   data() {
     return {
       loading:false,
-      aktif: false,
-      displayImage:false,
       submitted: false,
       errors: [],
-      kondi:[],
-      bisnis:[],
       master:[],
-      preview:null,
-      invent_photo:null,
-      mask:{
-        input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
     };
   },
   created(){
@@ -105,10 +93,8 @@ export default {
   },
   methods: {
       getMaster(){
-          this.axios.get('/api/edit-mas/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-              this.master = response.data.mas;
-              this.bisnis = response.data.bisnis;
-              this.kondi = response.data.kondisi;
+          this.axios.get('/api/edit-mas/' + this.$route.params.code).then((response)=>{
+              this.master = response.data.data;
           }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
@@ -129,7 +115,7 @@ export default {
       if (
         this.master.invent_type != null 
       ) {
-        this.axios.put('/api/update-mas/' + this.$route.params.code ,this.master, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.put('/api/update-mas/' + this.$route.params.code ,this.master).then((response)=>{
           localStorage.removeItem("barcode");
           setTimeout( () => this.$router.push('/master-peripheral'),1000);
           this.$toast.add({

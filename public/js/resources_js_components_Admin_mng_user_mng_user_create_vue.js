@@ -37,7 +37,6 @@ __webpack_require__.r(__webpack_exports__);
         nama: "Tidak Aktif",
         code: "F"
       }],
-      token: localStorage.getItem('token'),
       roles: [],
       divisi: [],
       checkname: [],
@@ -52,11 +51,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     detailRequest: function detailRequest() {
       var _this = this;
-      this.axios.get('api/detail-add-request-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/detail-add-request-user').then(function (response) {
         _this.bu = response.data.bisnis;
         _this.divisi = response.data.divisi;
         _this.roles = response.data.roles;
@@ -99,16 +94,8 @@ __webpack_require__.r(__webpack_exports__);
       this.submitted = true;
       this.errors = [];
       if (this.user.image != '' && this.user.usr_roles != '') {
-        this.axios.post('api/add-user', this.user, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
-          _this2.axios.post('api/save-usr-role', _this2.user, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          });
+        this.axios.post('api/add-user', this.user).then(function () {
+          _this2.axios.post('api/save-usr-role', _this2.user);
           _this2.$toast.add({
             severity: "success",
             summary: "Success Message",

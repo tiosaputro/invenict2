@@ -30,10 +30,7 @@ __webpack_require__.r(__webpack_exports__);
       tgltouser: '',
       mask: {
         input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
+      }
     };
   },
   watch: {
@@ -82,11 +79,7 @@ __webpack_require__.r(__webpack_exports__);
     getDetail: function getDetail(noreq) {
       var _this = this;
       if (this.noreq) {
-        this.axios.get('api/getDetail/' + noreq, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/getDetail/' + noreq).then(function (response) {
           _this.detail = response.data;
           _this.ireqd_id = '';
         });
@@ -99,11 +92,7 @@ __webpack_require__.r(__webpack_exports__);
     get: function get(noreq, ireqd_id) {
       var _this2 = this;
       if (this.noreq && this.ireqd_id) {
-        this.axios.get('api/getNameBu/' + noreq + '/' + ireqd_id, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/getNameBu/' + noreq + '/' + ireqd_id).then(function (response) {
           _this2.ca = response.data;
         });
         if (this.errors.noreq || this.error.noreq) {
@@ -114,11 +103,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this3 = this;
-      this.axios.get('api/list-no-request', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/list-no-request').then(function (response) {
         _this3.req = response.data.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -152,11 +137,7 @@ __webpack_require__.r(__webpack_exports__);
         data.append("tglrecvcash", this.tglrecvcash);
         data.append("tglsub", this.tglsub);
         data.append("tgltouser", this.tgltouser);
-        this.axios.post('api/add-cash', data, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.post('api/add-cash', data).then(function (response) {
           setTimeout(function () {
             return _this4.$router.push('/cash-advance');
           }, 1000);

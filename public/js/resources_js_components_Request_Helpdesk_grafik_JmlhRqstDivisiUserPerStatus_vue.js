@@ -19,7 +19,6 @@ __webpack_require__.r(__webpack_exports__);
       statusUser: null,
       status: [],
       color: '1976D2',
-      token: localStorage.getItem('token'),
       statusPerDivisiUser: {},
       nameStatusUser: null,
       checkname: [],
@@ -37,11 +36,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/cek-user').then(function (response) {
         _this.checkname = response.data.map(function (x) {
           return x.name;
         });
@@ -58,11 +53,7 @@ __webpack_require__.r(__webpack_exports__);
     getStatusDivisiUser: function getStatusDivisiUser() {
       var _this2 = this;
       if (this.statusUser != null) {
-        this.axios.get('api/count-per-divuser-status/' + this.statusUser, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.get('api/count-per-divuser-status/' + this.statusUser).then(function (response) {
           if (response.data.length) {
             _this2.nameStatusUser = response.data[0].name;
             _this2.statusPerDivisiUser = {
@@ -93,11 +84,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getStatus: function getStatus() {
       var _this4 = this;
-      this.axios.get('api/get-tahun', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/get-tahun').then(function (response) {
         _this4.status = response.data.grafik1;
       })["catch"](function (error) {
         if (error.response.status == 401) {

@@ -29,9 +29,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
       },
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
       tes: [],
       ireq: [],
       ireq_id: ''
@@ -54,12 +51,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     getCash: function getCash() {
       var _this = this;
-      this.axios.get('/api/cash', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.cash = response.data;
+      this.axios.get('/api/cash').then(function (response) {
+        _this.cash = response.data.data;
         _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -94,11 +87,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this2.axios["delete"]('api/delete-cash/' + ca_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          });
+          _this2.axios["delete"]('api/delete-cash/' + ca_id);
           _this2.getCash();
         },
         reject: function reject() {}
@@ -112,11 +101,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     detailRequest: function detailRequest(ireq_id) {
       var _this3 = this;
-      this.axios.get('api/detail-request/' + ireq_id, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/detail-request/' + ireq_id).then(function (response) {
         _this3.detail = response.data;
         _this3.ireq_id = response.data[0].ireq_no;
         _this3.tes = response.data.map(function (x) {

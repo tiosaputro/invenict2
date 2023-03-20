@@ -190,7 +190,6 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
     };
@@ -213,10 +212,10 @@ export default {
           this.dialogAssign = false;
       },
     AssignPerDetail(ireqd_id){
-          this.axios.get('/api/detail/'+ ireqd_id+'/'+this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/detail/'+ ireqd_id+'/'+this.$route.params.code).then((response)=>{
             this.assign = response.data;
           });
-          this.axios.get('/api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/get-pekerja').then((response)=>{
             this.petugas = response.data;
           });
           this.dialogAssign = true; 
@@ -229,7 +228,7 @@ export default {
      updateAssign(){
         this.submitted = true;
         if(this.assign.ireq_assigned_to1 != null){
-          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign).then(()=>{
             this.assign = [];
             this.dialogAssign = false;
             this.submitted = false;
@@ -244,7 +243,7 @@ export default {
         }
       },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then((response)=> {
         this.detail = response.data.data;
         this.getNoreq();
         this.loading = false;
@@ -263,7 +262,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
         this.kode = response.data;
       });
     },

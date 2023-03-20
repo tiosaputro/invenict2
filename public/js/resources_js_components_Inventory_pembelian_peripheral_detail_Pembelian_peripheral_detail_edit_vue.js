@@ -20,11 +20,7 @@ __webpack_require__.r(__webpack_exports__);
       errors: [],
       sat: [],
       kodeperi: [],
-      detail: [],
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
-      divisi: []
+      detail: []
     };
   },
   created: function created() {
@@ -36,15 +32,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDetail: function getDetail() {
       var _this = this;
-      this.axios.get('/api/edit-detail-pem/' + this.$route.params.purchase, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.detail = response.data.dtl;
-        _this.valuta = response.data.valuta;
-        _this.sat = response.data.ref;
-        _this.kodeperi = response.data.mas;
+      this.axios.get('/api/edit-detail-pem/' + this.$route.params.purchase).then(function (response) {
+        _this.detail = response.data.data.dtl;
+        _this.valuta = response.data.data.valuta;
+        _this.sat = response.data.data.ref;
+        _this.kodeperi = response.data.data.mas;
         _this.getValutaCode();
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -82,11 +74,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       this.submitted = true;
       if (this.detail.dpurchase_qty != null && this.detail.dpurchase_sat != null && this.detail.dpurchase_prc_sat != null && this.detail.dpurchase_prc != null && this.detail.dpurchase_remark != null && this.detail.invent_code != null) {
-        this.axios.put('/api/update-detail-pem/' + this.$route.params.code + '/' + this.$route.params.purchase, this.detail, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (response) {
+        this.axios.put('/api/update-detail-pem/' + this.$route.params.code + '/' + this.$route.params.purchase, this.detail).then(function (response) {
           setTimeout(function () {
             return _this2.$router.push('/pembelian-peripheral-detail/' + _this2.$route.params.code);
           }, 1000);

@@ -21,7 +21,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       header: '',
       loading: true,
-      token: localStorage.getItem('token'),
       mutasi: [],
       filters: {
         'global': {
@@ -29,8 +28,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
       },
-      checkname: [],
-      checkto: [],
       detail: [],
       displayKode: false
     };
@@ -44,12 +41,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     getMutasi: function getMutasi() {
       var _this = this;
-      this.axios.get('api/mut', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.mutasi = response.data;
+      this.axios.get('api/mut').then(function (response) {
+        _this.mutasi = response.data.data;
         _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -85,11 +78,7 @@ __webpack_require__.r(__webpack_exports__);
             detail: "Record deleted",
             life: 3000
           });
-          _this2.axios["delete"]('api/delete-mut/' + imutasi_id, {
-            headers: {
-              'Authorization': 'Bearer ' + _this2.token
-            }
-          }).then(function () {
+          _this2.axios["delete"]('api/delete-mut/' + imutasi_id).then(function () {
             _this2.getMutasi();
           });
         },
@@ -99,11 +88,7 @@ __webpack_require__.r(__webpack_exports__);
     CetakPdf: function CetakPdf() {
       var _this3 = this;
       this.loading = true;
-      this.axios.get('api/report-mutasi-pdf', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/report-mutasi-pdf').then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
@@ -134,11 +119,7 @@ __webpack_require__.r(__webpack_exports__);
     detailKode: function detailKode(invent_code) {
       var _this5 = this;
       this.displayKode = true;
-      this.axios.get('api/detail-peripheral/' + invent_code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('api/detail-peripheral/' + invent_code).then(function (response) {
         _this5.detail = response.data;
         _this5.header = 'Detail Peripheral ' + _this5.detail.name;
       });

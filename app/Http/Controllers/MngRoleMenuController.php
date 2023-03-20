@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Mng_role_menu;
-use App\Model\Mng_roles;
+use App\Models\Mng_role_menu;
+use App\Models\Mng_roles;
 Use carbon\Carbon;
-use App\Mng_User;
+use App\Models\Mng_user;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +15,7 @@ class MngRoleMenuController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/mng-role";
         $this->middleware(function ($request, $next) {

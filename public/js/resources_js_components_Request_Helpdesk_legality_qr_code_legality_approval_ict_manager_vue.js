@@ -19,7 +19,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loading: true,
       detail: [],
-      token: localStorage.getItem('token'),
       verif: []
     };
   },
@@ -32,11 +31,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     cekUser: function cekUser() {
       var _this = this;
-      this.axios.get('/api/cek-user', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/cek-user').then(function (response) {
         _this.checkto = response.data.map(function (x) {
           return x.to;
         });
@@ -52,11 +47,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this2 = this;
-      this.axios.get('/api/detail-norequest/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/detail-norequest/' + this.$route.params.code).then(function (response) {
         _this2.detail = response.data;
         _this2.loading = false;
       });

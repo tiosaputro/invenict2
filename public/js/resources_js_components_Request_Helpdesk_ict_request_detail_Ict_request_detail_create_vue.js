@@ -32,9 +32,6 @@ __webpack_require__.r(__webpack_exports__);
       tipereq: '',
       type: [],
       bu: [],
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: [],
       cekTipeReq: ''
     };
   },
@@ -65,11 +62,7 @@ __webpack_require__.r(__webpack_exports__);
       this.requestcatalog = '';
       this.cekTipeReq = tipereq;
       if (tipereq != null) {
-        this.axios.get('/api/get-catalog-request/' + tipereq, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function (res) {
+        this.axios.get('/api/get-catalog-request/' + tipereq).then(function (res) {
           _this.catalog = res.data;
         });
       }
@@ -232,11 +225,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this3 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
         _this3.detail = response.data;
         _this3.getType();
       })["catch"](function (error) {
@@ -259,11 +248,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getType: function getType() {
       var _this4 = this;
-      this.axios.get('/api/getAddDetail', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/getAddDetail').then(function (response) {
         _this4.type = response.data.ref;
       });
     },

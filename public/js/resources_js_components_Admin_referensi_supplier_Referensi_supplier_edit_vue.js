@@ -16,7 +16,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       errors: [],
       supp: [],
-      token: localStorage.getItem('token'),
       checkname: [],
       checkto: []
     };
@@ -27,11 +26,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getSupp: function getSupp() {
       var _this = this;
-      this.axios.get('/api/edit-supp/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/edit-supp/' + this.$route.params.code).then(function (response) {
         _this.supp = response.data;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -54,11 +49,7 @@ __webpack_require__.r(__webpack_exports__);
     UpdateSupplier: function UpdateSupplier() {
       var _this2 = this;
       this.errors = [];
-      this.axios.put('/api/update-supp/' + this.$route.params.code, this.supp, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function () {
+      this.axios.put('/api/update-supp/' + this.$route.params.code, this.supp).then(function () {
         _this2.$toast.add({
           severity: "success",
           summary: "Success Message",

@@ -15,22 +15,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var calendar_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! calendar-link */ "./node_modules/calendar-link/dist/index.modern.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    var _ref;
-    return _ref = {
-      submitted: false,
-      dialogAssign: false,
-      assign: [],
-      petugas: [],
-      kode: '',
+    return {
       status: '',
       loading: true,
       detail: [],
@@ -40,11 +30,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_0__.FilterMatchMode.CONTAINS
         }
       },
-      code: this.$route.params.code,
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
-    }, _defineProperty(_ref, "code", null), _defineProperty(_ref, "detailRequest", []), _ref;
+      detailRequest: []
+    };
   },
   mounted: function mounted() {
     this.getIctDetail();
@@ -73,13 +60,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     getIctDetail: function getIctDetail() {
       var _this = this;
-      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this.detail = response.data.data;
-        _this.getNoreq();
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then(function (response) {
+        _this.detail = response.data.data.detail;
+        _this.detailRequest = response.data.data.norequest;
+        _this.status = response.data.data.norequest.cekstatus;
         _this.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -99,30 +83,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       });
     },
-    getNoreq: function getNoreq() {
-      var _this2 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this2.detailRequest = response.data;
-        _this2.kode = response.data.noreq;
-        _this2.status = response.data.cekstatus;
-      });
-    },
     CetakPdf: function CetakPdf() {
-      var _this3 = this;
+      var _this2 = this;
       this.loading = true;
-      this.axios.get('/api/print-out-ict-request/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/print-out-ict-request/' + this.$route.params.code).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this3.loading = false;
+        _this2.loading = false;
       });
     }
   }
@@ -245,7 +213,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_4];
     }),
     end: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_this.detailRequest.request_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.kode), 1 /* TEXT */), _hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate(_this.detailRequest.request_date)), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+      return [_this.detailRequest.request_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.detailRequest.noreq), 1 /* TEXT */), _hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatDate(_this.detailRequest.request_date)), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1 /* STABLE */
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {

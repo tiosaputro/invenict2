@@ -14,15 +14,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var primevue_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primevue/api */ "./node_modules/primevue/api/api.esm.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return _defineProperty({
+    return {
       showPersonnel1: [],
       showPersonnel2: [],
       showReason: [],
@@ -41,11 +37,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
       },
-      code: this.$route.params.code,
-      token: localStorage.getItem('token'),
-      checkname: [],
-      checkto: []
-    }, "code", null);
+      code: null
+    };
   },
   mounted: function mounted() {
     this.getIctDetail();
@@ -56,18 +49,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     AssignPerDetail: function AssignPerDetail(ireqd_id) {
       var _this = this;
-      this.axios.get('/api/detail/' + ireqd_id + '/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/detail/' + ireqd_id + '/' + this.$route.params.code).then(function (response) {
         _this.assign = response.data;
       });
-      this.axios.get('/api/get-pekerja', {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-pekerja').then(function (response) {
         _this.petugas = response.data;
       });
       this.dialogAssign = true;
@@ -78,11 +63,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.code = this.assign.ireqd_id;
       if (this.assign.status == 'RT') {
         if (this.assign.ireq_assigned_to1 != null) {
-          this.axios.put('/api/updateAssignPerDetailFromReject/' + this.code, this.assign, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.put('/api/updateAssignPerDetailFromReject/' + this.code, this.assign).then(function () {
             _this2.assign = [];
             _this2.dialogAssign = false;
             _this2.submitted = false;
@@ -97,11 +78,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       } else {
         if (this.assign.ireq_assigned_to1 != null && this.assign.ireq_assigned_to1_reason != null) {
-          this.axios.put('/api/updateAssignPerDetailFromReject/' + this.code, this.assign, {
-            headers: {
-              'Authorization': 'Bearer ' + this.token
-            }
-          }).then(function () {
+          this.axios.put('/api/updateAssignPerDetailFromReject/' + this.code, this.assign).then(function () {
             _this2.assign = [];
             _this2.dialogAssign = false;
             _this2.submitted = false;
@@ -132,11 +109,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
             detail: "Success Submit",
             life: 1000
           });
-          _this3.axios.get('/api/appd/' + ireqd_id + '/' + _this3.$route.params.code, {
-            headers: {
-              'Authorization': 'Bearer ' + _this3.token
-            }
-          });
+          _this3.axios.get('/api/appd/' + ireqd_id + '/' + _this3.$route.params.code);
           _this3.getIctDetail();
         },
         reject: function reject() {}
@@ -149,22 +122,18 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     getIctDetail: function getIctDetail() {
       var _this4 = this;
-      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this4.detail = response.data.data;
-        _this4.showPersonnel1 = response.data.data.map(function (x) {
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then(function (response) {
+        _this4.detail = response.data.data.detail;
+        _this4.showPersonnel1 = response.data.data.detail.map(function (x) {
           return x.ireq_count_status;
         });
-        _this4.showPersonnel2 = response.data.data.map(function (x) {
+        _this4.showPersonnel2 = response.data.data.detail.map(function (x) {
           return x.ireq_count_personnel2;
         });
-        _this4.showReason = response.data.data.map(function (x) {
+        _this4.showReason = response.data.data.detail.map(function (x) {
           return x.ireq_count_reason;
         });
-        _this4.getNoreq();
+        _this4.kode = response.data.data.norequest;
         _this4.loading = false;
       })["catch"](function (error) {
         if (error.response.status == 401) {
@@ -184,42 +153,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       });
     },
-    getNoreq: function getNoreq() {
-      var _this5 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
-        _this5.kode = response.data;
-        _this5.status = response.data.cekstatus;
-        if (_this5.status == 'NT' || _this5.status == 'RT') {
-          _this5.show = true;
-        }
-      });
-    },
     CetakPdf: function CetakPdf() {
-      var _this6 = this;
+      var _this5 = this;
       this.loading = true;
-      this.axios.get('/api/print-out-ict-request/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/print-out-ict-request/' + this.$route.params.code).then(function (response) {
         var responseHtml = response.data;
         var myWindow = window.open("", "response", "resizable=yes");
         myWindow.document.write(responseHtml);
-        _this6.loading = false;
+        _this5.loading = false;
       });
-    } // CetakExcel(){
-    //   window.open('/api/report-ict-detail-excel/' +this.code);
-    // },
-    // CetakPdfReject(){
-    //  window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
-    // },
-    // CetakExcelReject(){
-    //   window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
-    // },
+    }
   }
 });
 

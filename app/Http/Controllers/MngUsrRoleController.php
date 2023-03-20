@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Mng_usr_roles;
-use App\Model\Mng_role_menu;
-use App\Mng_User;
-use App\Model\Mng_roles;
+use App\Models\Mng_usr_roles;
+use App\Models\Mng_role_menu;
+use App\Models\Mng_user;
+use App\Models\Mng_roles;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +14,7 @@ use carbon\Carbon;
 
 class MngUsrRoleController extends Controller
 {
-    public function getRole() {
+    function getRole() {
 
         $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
         $rolemenu = Mng_role_menu::select('menu_id')->whereIn('rol_id',$role)->pluck('menu_id');
@@ -28,7 +28,7 @@ class MngUsrRoleController extends Controller
         return ResponseFormatter::success($tree,'Successfully Get Data Menu');
     }
      
-    public function parseTree($tree, $root = 0) {
+    function parseTree($tree, $root = 0) {
         $return = array();
         foreach($tree as $child => $parent) {
             if($parent->parent_id == $root) {
@@ -42,7 +42,7 @@ class MngUsrRoleController extends Controller
         }
         return empty($return) ? null : $return;    
     }
-    public function save(Request $request)
+    function save(Request $request)
     {
         $user = Mng_User::select('usr_id')->where('usr_name',$request->usr_name)->first();
         $roles = $request->usr_roles;
@@ -57,12 +57,12 @@ class MngUsrRoleController extends Controller
             ]);
       }
     }
-    public function edit($code)
+    function edit($code)
     {
         $role = Mng_usr_roles::getRole($code);
         return response()->json($role);
     }
-    public function update(Request $request, $code)
+    function update(Request $request, $code)
     {
         $role = $request->role;
         $roles = Mng_usr_roles::where('usr_id',$code)->first();
@@ -82,7 +82,7 @@ class MngUsrRoleController extends Controller
             ]);
         }
     }
-    public function cekRole()
+    function cekRole()
     {
             $id = Auth::user()->usr_id;
             $getRole = Mng_usr_roles::select('rol_id')->where('usr_id',$id)->pluck('rol_id');

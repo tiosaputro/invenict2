@@ -224,13 +224,10 @@ export default {
         detailPeripheral:[],
         loading: true,
         displayBarcode: false,
-        token: localStorage.getItem('token'),
         master: [],
         mas: [],
         barcode:'',
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        checkname : [],
-        checkto : [],
         text:'',
     };
   },
@@ -256,15 +253,15 @@ export default {
     },
     detailKode(invent_code_dtl){
       this.displayKode = true;
-      this.axios.get('/api/detail-peripherall/' +invent_code_dtl, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail-peripherall/' +invent_code_dtl).then((response)=>{
         this.detail = response.data;
         this.header = 'Detail Peripheral '+this.detail.invent_code +' '+ this.detail.invent_type;
       });
     },
     getMaster(){
-      this.axios.get('/api/master-detail/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.master = response.data.dtl;
-        this.detailPeripheral = response.data.mas;
+      this.axios.get('/api/master-detail/'+this.$route.params.code).then((response)=> {
+        this.master = response.data.data.dtl;
+        this.detailPeripheral = response.data.data.mas;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401){
@@ -295,7 +292,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-master-detail/' +invent_code_dtl,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('/api/delete-master-detail/' +invent_code_dtl).then(()=>{
             this.loading = true;
             this.getMaster();
           });

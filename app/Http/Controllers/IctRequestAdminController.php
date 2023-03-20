@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
-use App\Mng_User;
+use App\Models\Mng_user;
 class IctRequestAdminController extends Controller
 {
     protected $role;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->role = "Admin";
         $this->middleware(function ($request, $next) {

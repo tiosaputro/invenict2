@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Model\Ict;
-use App\Model\IctDetail;
+use App\Models\Ict;
+use App\Models\IctDetail;
 use App\Helpers\ResponseFormatter;
-use App\Mng_User;
+use App\Models\Mng_user;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Jobs\SendNotifPersonnel;
 use App\Exports\IctExportReviewerPermohonan;
@@ -25,7 +25,7 @@ class IctRequestReviewerController extends Controller
 {
     protected $to;
     protected $userMenu;
-    public function __construct(){
+    function __construct(){
         $this->middleware('auth:sanctum');
         $this->to = "/ict-request-reviewer";
         $this->middleware(function ($request, $next) {
@@ -38,8 +38,9 @@ class IctRequestReviewerController extends Controller
         });
     }
     function index($code){
-        $data = IctDetail::getDataDetailRequest($code);
-        return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
+        $detail = IctDetail::getDataDetailRequest($code);
+        $norequest = Ict::detailNoRequest($code);
+        return ResponseFormatter::success(array('detail'=>$detail,'norequest'=>$norequest),'Successfully Get Data Detail Request'); 
     }
     function sendMailtoRequestor(Request $request)
     {
@@ -48,7 +49,7 @@ class IctRequestReviewerController extends Controller
     }
     function editDataDetail($ireq,$code){
         $data = IctDetail::FindDetailRequest($ireq,$code);
-        return json_encode($data);
+        return ResponseFormatter::success($data,'Successfully get data');
     }
     function detailPenugasan($code)
     {

@@ -259,9 +259,6 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       }, 
-      token: localStorage.getItem('token'),
-      checkname : [],
-      checkto : [],
     };
   },
   mounted(){

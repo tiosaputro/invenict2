@@ -35,8 +35,6 @@ __webpack_require__.r(__webpack_exports__);
           matchMode: primevue_api__WEBPACK_IMPORTED_MODULE_1__.FilterMatchMode.CONTAINS
         }
       },
-      code: this.$route.params.code,
-      token: localStorage.getItem('token'),
       status: null
     };
   },
@@ -68,11 +66,7 @@ __webpack_require__.r(__webpack_exports__);
         summary: "Success Message",
         detail: "Successfully approved the request"
       });
-      this.axios.put('/api/abm/' + this.code, this.reason, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      });
+      this.axios.put('/api/abm/' + this.code, this.reason);
       setTimeout(function () {
         return _this.$router.push('/ict-request-manager');
       }, 1000);
@@ -81,11 +75,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       this.submitted = true;
       if (this.reason.ket != null) {
-        this.axios.put('/api/rbm/' + this.code, this.reason, {
-          headers: {
-            'Authorization': 'Bearer ' + this.token
-          }
-        }).then(function () {
+        this.axios.put('/api/rbm/' + this.code, this.reason).then(function () {
           _this2.dialogReject = false;
           _this2.$toast.add({
             severity: "info",
@@ -109,11 +99,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getIctDetail: function getIctDetail() {
       var _this3 = this;
-      this.axios.get('/api/get-verif-manager/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-verif-manager/' + this.$route.params.code).then(function (response) {
         _this3.verif = response.data;
         _this3.loading = false;
         _this3.cek();
@@ -137,11 +123,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNoreq: function getNoreq() {
       var _this4 = this;
-      this.axios.get('/api/get-noreq/' + this.$route.params.code, {
-        headers: {
-          'Authorization': 'Bearer ' + this.token
-        }
-      }).then(function (response) {
+      this.axios.get('/api/get-noreq/' + this.$route.params.code).then(function (response) {
         _this4.kode = response.data;
         if (_this4.kode.cekstatus == 'NA2') {
           _this4.getIctDetail();

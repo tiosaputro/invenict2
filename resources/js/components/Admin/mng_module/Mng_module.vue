@@ -72,7 +72,6 @@ export default {
   data() {
     return {
         loading: true,
-        token: localStorage.getItem('token'),
         modul: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
     };
@@ -82,7 +81,7 @@ export default {
   },
   methods: {
     getModule(){
-      this.axios.get('api/module', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/module').then((response)=> {
         this.modul = response.data;
         this.loading = false;
       }).catch(error=>{
@@ -117,7 +116,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-module/' +mod_id ,{headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('api/delete-module/' +mod_id );
           this.getModule();
         },
         reject: () => {},
