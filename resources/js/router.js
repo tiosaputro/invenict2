@@ -26,42 +26,42 @@ const routes = [
     {
         name: 'Ict Request Detail Desc',
         path: '/ict-request-descc/:code',
-        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_detail.vue'),
+        component: () => import('./components/ICT-Request/ict_request_desc/ict_request_desc_detail.vue'),
     },
     {
         name: 'Ict Request Detail Desc Requestor',
         path: '/ict-request-desc/:code',
-        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_detail_requestor.vue'),
+        component: () => import('./components/ICT-Request/ict_request_desc/ict_request_desc_detail_requestor.vue'),
     },
     {
         name: 'Ict Request Desc Detail Divisi 3',
         path: '/Ict-request-desc/:code',
-        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_divisi3_detail_desc.vue'),
+        component: () => import('./components/ICT-Request/ict_request_desc/ict_request_divisi3_detail_desc.vue'),
     },
     {
         name: 'Ict Request Desc Detail Divisi 4',
         path: '/ict-request-divisi4-desc/:code',
-        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_divisi4_detail_desc.vue'),
+        component: () => import('./components/ICT-Request/ict_request_desc/ict_request_divisi4_detail_desc.vue'),
     },
     {
         name: 'Ict Request Desc Verifikasi',
         path: '/Ict-Request-desc/:code',
-        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_verifikasi.vue'),
+        component: () => import('./components/ICT-Request/ict_request_desc/ict_request_desc_verifikasi.vue'),
     },
     {
         name: 'Ict Request Desc Assign Per Detail',
         path: '/ict-request-desc-assign/:code',
-        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_assign_per_detail_desc.vue'),
+        component: () => import('./components/ICT-Request/ict_request_desc/ict_request_assign_per_detail_desc.vue'),
     },
     {
         name: 'Ict Request Desc Detail Penugasan',
         path: '/ict-request-desc-detail-penugasan/:code',
-        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc_detail_penugasan.vue'),
+        component: () => import('./components/ICT-Request/ict_request_desc/ict_request_desc_detail_penugasan.vue'),
     },
     {
         name: 'Desc',
         path: '/ict-request-desc',
-        component: () => import('./components/Request&Helpdesk/ict_request_desc/ict_request_desc.vue'),
+        component: () => import('./components/ICT-Request/ict_request_desc/ict_request_desc.vue'),
 
     },
     //referensi_location
@@ -148,12 +148,12 @@ const routes = [
     {
         name: 'Master Peripheral',
         path: '/master-peripheral',
-        component: ()=> import('./components/Inventory/master_peripheral/Master_peripheral.vue'),
+        component: ()=> import('./components/ICT-Inventory/master_peripheral/Master_peripheral.vue'),
     },
     {
         name: 'Scan',
         path: '/scan',
-        component: ()=> import('./components/Inventory/master_peripheral/Scan.vue'),
+        component: ()=> import('./components/ICT-Inventory/master_peripheral/Scan.vue'),
 
     },
     {
@@ -165,210 +165,210 @@ const routes = [
     {
         name: 'Add Master Peripheral',
         path: '/Add-master-peripheral',
-        component: ()=> import('./components/Inventory/master_peripheral/Master_peripheral_create.vue'),
+        component: ()=> import('./components/ICT-Inventory/master_peripheral/Master_peripheral_create.vue'),
     },
     {
         name: 'Edit Master Peripheral',
         path: '/Edit-master-peripheral/:code',
-        component: ()=> import('./components/Inventory/master_peripheral/Master_peripheral_edit.vue'),
+        component: ()=> import('./components/ICT-Inventory/master_peripheral/Master_peripheral_edit.vue'),
     },
 
     //master peripheral detail
     {
         name: 'Master Peripheral Detail',
         path: '/master-peripheral-detail/:code',
-        component: ()=> import('./components/Inventory/master_peripheral_detail/Master_peripheral_detail.vue'),
+        component: ()=> import('./components/ICT-Inventory/master_peripheral_detail/Master_peripheral_detail.vue'),
     },
     {
         name: 'Add Master Peripheral Detail',
         path: '/Add-master-peripheral-detail/:code',
-        component: ()=> import('./components/Inventory/master_peripheral_detail/Master_peripheral_detail_create.vue'),
+        component: ()=> import('./components/ICT-Inventory/master_peripheral_detail/Master_peripheral_detail_create.vue'),
     },
     {
         name: 'Edit Master Peripheral Detail',
         path: '/Edit-master-peripheral/:code/:kode',
-        component: ()=> import('./components/Inventory/master_peripheral_detail/Master_peripheral_detail_edit.vue'),
+        component: ()=> import('./components/ICT-Inventory/master_peripheral_detail/Master_peripheral_detail_edit.vue'),
     },
     //mutasi peripheral
     {
         name: 'Mutasi Peripheral',
         path: '/mutasi-peripheral',
-        component: ()=> import('./components/Inventory/mutasi_peripheral/Mutasi_peripheral.vue'),
+        component: ()=> import('./components/ICT-Inventory/mutasi_peripheral/Mutasi_peripheral.vue'),
     },
     {
         name: 'Add Mutasi Peripheral',
         path: '/Add-mutasi-peripheral',
-        component: ()=> import('./components/Inventory/mutasi_peripheral/Mutasi_peripheral_create.vue'),
+        component: ()=> import('./components/ICT-Inventory/mutasi_peripheral/Mutasi_peripheral_create.vue'),
     },
     {
         name: 'Edit Mutasi Peripheral',
         path: '/Edit-mutasi-peripheral/:code',
-        component: ()=> import('./components/Inventory/mutasi_peripheral/Mutasi_peripheral_edit.vue'),
+        component: ()=> import('./components/ICT-Inventory/mutasi_peripheral/Mutasi_peripheral_edit.vue'),
     },
     //cash advance
     {
         name: 'Cash Advance ',
         path: '/cash-advance',
-        component: ()=> import('./components/Request&Helpdesk/cash_advance/Cash_advance.vue'),
+        component: ()=> import('./components/ICT-Request/cash_advance/Cash_advance.vue'),
     },
     {
         name: 'Add Cash Advance',
         path: '/Add-cash-advance',
-        component: ()=> import('./components/Request&Helpdesk/cash_advance/Cash_advance_create.vue'),
+        component: ()=> import('./components/ICT-Request/cash_advance/Cash_advance_create.vue'),
     },
     {
         name: 'add Cash Advance',
         path: '/add-cash-advance/:code/:dtl',
-        component: ()=> import('./components/Request&Helpdesk/cash_advance/Cash_advance_create_from_ict.vue'),
+        component: ()=> import('./components/ICT-Request/cash_advance/Cash_advance_create_from_ict.vue'),
     },
     {
         name: 'Edit Cash Advance',
         path: '/Edit-cash-advance/:code',
-        component: ()=> import('./components/Request&Helpdesk/cash_advance/Cash_advance_edit.vue'),
+        component: ()=> import('./components/ICT-Request/cash_advance/Cash_advance_edit.vue'),
     },
     //payment request
     {
         name: 'Payment Request',
         path: '/payment-request',
-        component: ()=> import('./components/Request&Helpdesk/payment_request/Payment_request.vue'),
+        component: ()=> import('./components/ICT-Request/payment_request/Payment_request.vue'),
     },
     {
         name: 'Add Payment Request',
         path: '/Add-payment-request',
-        component: ()=> import('./components/Request&Helpdesk/payment_request/Payment_request_create.vue'),
+        component: ()=> import('./components/ICT-Request/payment_request/Payment_request_create.vue'),
     },
     {
         name: 'add Payment Request',
         path: '/add-payment-request/:code/:dtl',
-        component: ()=> import('./components/Request&Helpdesk/payment_request/Payment_request_create_from_request.vue'),
+        component: ()=> import('./components/ICT-Request/payment_request/Payment_request_create_from_request.vue'),
     },
     {
         name: 'Edit Payment Request',
         path: '/Edit-payment-request/:code',
-        component: ()=> import('./components/Request&Helpdesk/payment_request/Payment_request_edit.vue'),
+        component: ()=> import('./components/ICT-Request/payment_request/Payment_request_edit.vue'),
     },
 
     //ict request
     {
         name: 'Ict Request',
         path: '/ict-request',
-        component: ()=> import('./components/Request&Helpdesk/ict_request/Ict_request.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request/Ict_request.vue'),
     },
     {
         name: 'Add Ict Request',
         path: '/Add-ict-request',
-        component: ()=> import('./components/Request&Helpdesk/ict_request/Ict_request_create.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request/Ict_request_create.vue'),
     },
     {
         name: 'Edit Ict Request',
         path: '/Edit-ict-request/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request/Ict_request_edit.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request/Ict_request_edit.vue'),
     },
     //ict request admin
     {
         name: 'Ict Request Admin',
         path: '/ict-request-admin',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_admin/Ict_request.vue'),
     },
     {
         name: 'Edit Ict Request Admin',
         path: '/Edit-ict-request-admin/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request_edit.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_admin/Ict_request_edit.vue'),
     },
     {
         name: 'Ict Request Admin Detail',
         path: '/ict-request-admin-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request_detail.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_admin/Ict_request_detail.vue'),
     },
     {
         name: 'Add Ict Request Admin Detail',
         path: '/Add-ict-request-admin-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request_detail_create.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_admin/Ict_request_detail_create.vue'),
     },
     {
         name: 'Edit Ict Request Admin Detail',
         path: '/Edit-ict-request-admin-detail/:code/:ireq',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_admin/Ict_request_detail_edit.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_admin/Ict_request_detail_edit.vue'),
     },
     //ict_request_divisi1
     {
         name: 'Ict Request Divisi 1',
         path: '/ict-request-higher-level',
-        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_divisi1.vue'),
+        component: ()=> import('./components/ICT-Request/Approval_atasan/Ict_request_divisi1.vue'),
     },
     {
         name: 'Ict Request Divisi 1 Detail',
         path: '/ict-request-higher-level-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_divisi1_detail.vue'),
+        component: ()=> import('./components/ICT-Request/Approval_atasan/Ict_request_divisi1_detail.vue'),
     },
     {
         name: 'Ict Request Verifikasi',
         path: '/ict-request-verifikasi/:code',
-        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_verifikasi.vue'),
+        component: ()=> import('./components/ICT-Request/Approval_atasan/Ict_request_verifikasi.vue'),
     },
     {
         name: 'Ict Request Verifikasi From Email',
         path: '/verifikasi-request/:code/:status',
-        component: ()=> import('./components/Request&Helpdesk/Approval_atasan/Ict_request_verifikasi_from_email.vue'),
+        component: ()=> import('./components/ICT-Request/Approval_atasan/Ict_request_verifikasi_from_email.vue'),
     },
     //status change request
     {
         name: 'Ict Request Divisi 3',
         path: '/ict-request-personnel',
-        component: ()=> import('./components/Request&Helpdesk/Status_change_request/Ict_request_divisi3.vue'),
+        component: ()=> import('./components/ICT-Request/Status_change_request/Ict_request_divisi3.vue'),
     },
     {
         name: 'Ict Request Divisi 3 Detail',
         path: '/ict-request-personnel-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/Status_change_request/Ict_request_divisi3_detail.vue'),
+        component: ()=> import('./components/ICT-Request/Status_change_request/Ict_request_divisi3_detail.vue'),
     },
     //ict request (detail)
     {
         name: 'Ict Request Detail',
         path: '/ict-request-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_detail/Ict_request_detail.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_detail/Ict_request_detail.vue'),
     },
     {
         name: 'Add Ict Request Detail',
         path: '/Add-ict-request-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_detail/Ict_request_detail_create.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_detail/Ict_request_detail_create.vue'),
     },
     {
         name: 'Edit Ict Request Detail',
         path: '/Edit-ict-request-detail/:code/:ireq',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_detail/Ict_request_detail_edit.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_detail/Ict_request_detail_edit.vue'),
     },
     //pembelian peripheral
     {
         name: 'Pembelian Peripheral',
         path: '/pembelian-peripheral',
-        component: ()=> import('./components/Inventory/pembelian_peripheral/Pembelian_peripheral.vue'),
+        component: ()=> import('./components/ICT-Inventory/pembelian_peripheral/Pembelian_peripheral.vue'),
     },
     {
         name: 'Add Pembelian Peripheral',
         path: '/Add-pembelian-peripheral',
-        component: ()=> import('./components/Inventory/pembelian_peripheral/Pembelian_peripheral_create.vue'),
+        component: ()=> import('./components/ICT-Inventory/pembelian_peripheral/Pembelian_peripheral_create.vue'),
     },
     {
         name: 'Edit Pembelian Peripheral',
         path: '/Edit-pembelian-peripheral/:code',
-        component: ()=> import('./components/Inventory/pembelian_peripheral/Pembelian_peripheral_edit.vue'),
+        component: ()=> import('./components/ICT-Inventory/pembelian_peripheral/Pembelian_peripheral_edit.vue'),
     },
      //detail pembelian peripheral
      {
         name: 'Pembelian Peripheral Detail',
         path: '/pembelian-peripheral-detail/:code',
-        component: ()=> import('./components/Inventory/pembelian_peripheral_detail/Pembelian_peripheral_detail.vue'),
+        component: ()=> import('./components/ICT-Inventory/pembelian_peripheral_detail/Pembelian_peripheral_detail.vue'),
     },
     {
         name: 'Add Pembelian Peripheral Detail',
         path: '/Add-pembelian-peripheral-detail/:code',
-        component: ()=> import('./components/Inventory/pembelian_peripheral_detail/Pembelian_peripheral_detail_create.vue'),
+        component: ()=> import('./components/ICT-Inventory/pembelian_peripheral_detail/Pembelian_peripheral_detail_create.vue'),
     },
     {
         name: 'Edit Pembelian Peripheral Detail',
         path: '/Edit-pembelian-peripheral-detail/:code/:purchase',
-        component: ()=> import('./components/Inventory/pembelian_peripheral_detail/Pembelian_peripheral_detail_edit.vue'),
+        component: ()=> import('./components/ICT-Inventory/pembelian_peripheral_detail/Pembelian_peripheral_detail_edit.vue'),
     },
     //mng_user
     {
@@ -470,130 +470,130 @@ const routes = [
     {
         name: 'Statistik Permintaan User Per Status',
         path: '/req-per-status',
-        component: ()=> import('./components/Request&Helpdesk/grafik/JmlRqstPerStatus.vue'),
+        component: ()=> import('./components/ICT-Request/grafik/JmlRqstPerStatus.vue'),
     },
     {
         name: 'Statistik Permintaan Divisi User Per Status',
         path: '/req-per-divisi-per-status',
-        component: ()=> import('./components/Request&Helpdesk/grafik/JmlhRqstDivisiUserPerStatus.vue'),
+        component: ()=> import('./components/ICT-Request/grafik/JmlhRqstDivisiUserPerStatus.vue'),
     },
     {
         name: 'Statistik Permintaan Divisi Req Per Status',
         path: '/req-per-divisi-req-per-status',
-        component: ()=> import('./components/Request&Helpdesk/grafik/JmlhRqstDivisiReqPerStatus.vue'),
+        component: ()=> import('./components/ICT-Request/grafik/JmlhRqstDivisiReqPerStatus.vue'),
     },
     {
         name: 'Statistik Permintaan Divisi User Per Tahun',
         path: '/req-per-divisi-user-per-tahun',
-        component: ()=> import('./components/Request&Helpdesk/grafik/JmlhRqstDivisiUserPerTahun.vue'),
+        component: ()=> import('./components/ICT-Request/grafik/JmlhRqstDivisiUserPerTahun.vue'),
     },
     {
         name: 'Statistik Permintaan Divisi Req Per Tahun',
         path: '/req-per-divisi-req-per-tahun',
-        component: ()=> import('./components/Request&Helpdesk/grafik/JmlhRqstDivisiReqPerTahun.vue'),
+        component: ()=> import('./components/ICT-Request/grafik/JmlhRqstDivisiReqPerTahun.vue'),
     },
     {
         name: 'Statistik Permintaan Divisi User Per Bulan',
         path: '/req-per-divisi-user-per-bulan',
-        component: ()=> import('./components/Request&Helpdesk/grafik/JmlhRqstDivisiUserPerBulan.vue'),
+        component: ()=> import('./components/ICT-Request/grafik/JmlhRqstDivisiUserPerBulan.vue'),
     },
     {
         name: 'Statistik Permintaan Divisi Req Per Bulan',
         path: '/req-per-divisi-req-per-bulan',
-        component: ()=> import('./components/Request&Helpdesk/grafik/JmlhRqstDivisiReqPerBulan.vue'),
+        component: ()=> import('./components/ICT-Request/grafik/JmlhRqstDivisiReqPerBulan.vue'),
     },
     {
         name: 'Statistik Permintaan Per Status Per Personnel',
         path: '/req-per-status-per-personnel',
-        component: ()=> import('./components/Request&Helpdesk/grafik/JmlhRqstPerStatusPerPersonnel.vue'),
+        component: ()=> import('./components/ICT-Request/grafik/JmlhRqstPerStatusPerPersonnel.vue'),
     },
     {
         name: 'Statistik Permintaan Per Personnel',
         path: '/req-per-personnel',
-        component: ()=> import('./components/Request&Helpdesk/grafik/JmlhRqstPerPersonnel.vue'),
+        component: ()=> import('./components/ICT-Request/grafik/JmlhRqstPerPersonnel.vue'),
     },
     //laporan
     {
         name: 'Laporan Permintaan Per status',
         path: '/report-per-status',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsPerStatus.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsPerStatus.vue'),
     },
     {
         name: 'Laporan ICT Request',
         path: '/report-ict-request',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsBtwnDate.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsBtwnDate.vue'),
     },
     {
         name: 'Laporan Permintaan Divisi Requestor Per Bulan',
         path: '/report-div-req-per-bulan',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsDivisiPerBulan.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsDivisiPerBulan.vue'),
     },
     {
         name: 'Laporan Permintaan Divisi User Per Bulan',
         path: '/report-div-user-per-bulan',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsDivisiUserPerBulan.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsDivisiUserPerBulan.vue'),
     },
     {
         name: 'Laporan Permintaan Divisi Requestor Per Tahun',
         path: '/report-div-req-per-tahun',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsDivisiReqPerTahun.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsDivisiReqPerTahun.vue'),
     },
     {
         name: 'Laporan Permintaan Divisi User Per Tahun',
         path: '/report-div-user-per-tahun',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsDivisiUserPerTahun.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsDivisiUserPerTahun.vue'),
     },
     {
         name: 'Laporan Permintaan Divisi Requestor Per Status',
         path: '/report-div-req-per-status',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsDivisiReqPerStatus.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsDivisiReqPerStatus.vue'),
     },
     {
         name: 'Laporan Permintaan Divisi User Per Status',
         path: '/report-div-user-per-status',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsDivisiUserPerStatus.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsDivisiUserPerStatus.vue'),
     },
     {
         name: 'Laporan Permintaan Per Personnel',
         path: '/report-per-personnel',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsPerPersonnel.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsPerPersonnel.vue'),
     },
     {
         name: 'Laporan Permintaan Per Status Per Personnel',
         path: '/report-per-status-per-personnel',
-        component: ()=> import('./components/Request&Helpdesk/laporan/LaporanRqsPerStatusPerPersonnel.vue'),
+        component: ()=> import('./components/ICT-Request/laporan/LaporanRqsPerStatusPerPersonnel.vue'),
     },
 
     //ict request reviewer
     {
         name: 'Ict Request Reviewer',
         path: '/ict-request-reviewer',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_reviewer/Ict_request_reviewer.vue'),
     },
     {
         name: 'Ict Request Reviewer Detail Permohonan',
         path: '/ict-request-reviewer/detail-permohonan/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_detail_permohonan.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_reviewer/Ict_request_reviewer_detail_permohonan.vue'),
     },
     {
         name: 'Ict Request Reviewer Edit Detail Permohonan',
         path: '/ict-request-reviewer/edit-detail-permohonan/:ireq/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_edit_detail_permohonan.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_reviewer/Ict_request_reviewer_edit_detail_permohonan.vue'),
     },
     {
         name: 'Ict Request Reviewer Detail',
         path: '/ict-request-reviewer/detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_detail.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_reviewer/Ict_request_reviewer_detail.vue'),
     },
     {
         name: 'Ict Request Reviewer Assign Per Detail',
         path: '/ict-request-reviewer/Assign-per-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_assign_per_detail.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_reviewer/Ict_request_reviewer_assign_per_detail.vue'),
     },
     {
         name: 'Ict Request Reviewer Detail Penugasan',
         path: '/ict-request-reviewer/detail-penugasan/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_reviewer/Ict_request_reviewer_detail_penugasan.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_reviewer/Ict_request_reviewer_detail_penugasan.vue'),
     },
     {
         name: 'Ict Request Verifikasi Reviewer',
@@ -606,44 +606,44 @@ const routes = [
     {
         name: 'Check legality Qr-code Higher Level',
         path: '/check-higher-level/:code',
-        component: ()=> import('./components/Request&Helpdesk/legality_qr_code/legality_approval_atasan.vue'),
+        component: ()=> import('./components/ICT-Request/legality_qr_code/legality_approval_atasan.vue'),
     },
     {
         name: 'Check legality Qr-code ICT Manager',
         path: '/check-ict-manager/:code',
-        component: ()=> import('./components/Request&Helpdesk/legality_qr_code/legality_approval_ict_manager.vue'),
+        component: ()=> import('./components/ICT-Request/legality_qr_code/legality_approval_ict_manager.vue'),
     },
     {
         name: 'Check legality Qr-code Requestor',
         path: '/check-requester/:code',
-        component: ()=> import('./components/Request&Helpdesk/legality_qr_code/legality_request.vue'),
+        component: ()=> import('./components/ICT-Request/legality_qr_code/legality_request.vue'),
     },
     {
         name: 'Scan Legality',
         path: '/scan-qr-code',
-        component: ()=> import('./components/Request&Helpdesk/legality_qr_code/Scan_legality.vue'),
+        component: ()=> import('./components/ICT-Request/legality_qr_code/Scan_legality.vue'),
     },
 
     //ict request manager
     {
         name: 'Ict Request Manager',
         path: '/ict-request-manager',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_manager.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_manager/Ict_request_manager.vue'),
     },
     {
         name: 'Ict Request Manager Detail',
         path: '/ict-request-manager-detail/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_manager_detail.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_manager/Ict_request_manager_detail.vue'),
     },
     {
         name: 'Ict Request Manager Detail Penugasan',
         path: '/ict-request-manager/detail-penugasan/:code',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_manager_detail_penugasan.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_manager/Ict_request_manager_detail_penugasan.vue'),
     },
     {
         name: 'Ict Request Verifikasi From Email ICT Manager',
         path: '/verifikasi-request-mng/:code/:status',
-        component: ()=> import('./components/Request&Helpdesk/ict_request_manager/Ict_request_verifikasi_from_email.vue'),
+        component: ()=> import('./components/ICT-Request/ict_request_manager/Ict_request_verifikasi_from_email.vue'),
     },
     {
         path: '/error/:stat',
@@ -653,6 +653,11 @@ const routes = [
     {
         path: '/notfound',
         name: 'notfound',
+        component: () => import('./pages/NotFound.vue')
+    },
+    {
+        path: '/:catchAll(.*)',
+        name: 'Page Not Found',
         component: () => import('./pages/NotFound.vue')
     },
     {

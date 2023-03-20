@@ -3,6 +3,7 @@
     <LoginLegality v-else-if="$route.name === 'Login Legality'" />
     <Error v-else-if="$route.name === 'error'" />
     <NotFound v-else-if="$route.path === '/notfound'" />
+    <NotFound v-else-if="$route.name === 'Page Not Found'" />
     <Access v-else-if="$route.path === '/access'" />
     <Detail v-else-if="$route.name === 'Detail Peripheral'" />
     <CheckVerif v-else-if="$route.name === 'Check Verif'" />
@@ -27,8 +28,10 @@ import CheckReviewer from './CheckVerifReviewer';
 import CheckSso from './CheckingToken';
 
 export default {
-    created(){
-        this.axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
+    watch:{
+        $route() {            
+            this.axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
+        }
     },
     methods: {
         changeTheme(event) {

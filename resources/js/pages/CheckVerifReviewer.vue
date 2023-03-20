@@ -20,8 +20,6 @@ export default {
   data() {
     return {
         verif:[],
-        ireq_id:null,
-        todayyy : null,
         loggedIn : localStorage.getItem('loggedIn')
     };
   },

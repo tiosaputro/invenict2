@@ -10,10 +10,8 @@ import './assets/themes/vela-blue/theme.css';
 import 'jquery/dist/jquery.min';
 import 'popper.js/dist/popper.min';
 import 'bootstrap/dist/js/bootstrap.min';
-import 'vue-loading-overlay/dist/vue-loading.css'; 
 import 'v-calendar/dist/style.css';
 
-// import QRCode from 'easyqrcodejs' ;  
 
 import { createApp, reactive } from 'vue';
 import axios from 'axios';
@@ -69,14 +67,12 @@ import Tooltip from 'primevue/tooltip';
 import ToggleButton from 'primevue/togglebutton';
 import TreeSelect from 'primevue/treeselect';
 import VueAxios from 'vue-axios';
-import VueLoading from 'vue-loading-overlay';
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
     next();
 });
 
 const app = createApp(AppWrapper);
-
 
 
 app.config.globalProperties.$appState = reactive({ theme: 'vela-blue'});
@@ -86,7 +82,6 @@ app.use(DialogService);
 app.use(ToastService);
 app.use(VueAxios,axios);
 app.use(router);
-app.use(VueLoading);
 
 app.config.devtools = false;
 app.config.debug = false;
@@ -98,7 +93,6 @@ app.directive('code', CodeHighlight);
 app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
 
-// app.component('QRCode',QRCode);
 
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);
