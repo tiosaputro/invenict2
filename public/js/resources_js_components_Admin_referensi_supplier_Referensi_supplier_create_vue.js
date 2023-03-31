@@ -25,9 +25,7 @@ __webpack_require__.r(__webpack_exports__);
       email: '',
       fax: '',
       notlp1: '',
-      notlp2: '',
-      checkname: [],
-      checkto: []
+      notlp2: ''
     };
   },
   methods: {

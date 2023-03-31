@@ -34,6 +34,7 @@
         "jspdf": "^2.5.1",
         "mime": "^3.0.0",
         "moment": "^2.29.4",
+        "oh-vue-icons": "^1.0.0-rc3",
         "path": "^0.12.7",
         "pdfvuer": "^2.0.1",
         "popper.js": "^1.16.1",
@@ -61,7 +62,6 @@
         "vue-treeselect": "^1.0.7",
         "vue3-pdf": "^4.2.6",
         "vue3-qr-reader": "^1.0.0",
-        "vue3-storage": "^0.1.11",
-        "vue3-treeselect": "^0.1.10"
+        "vue3-storage": "^0.1.11"
     }
 }

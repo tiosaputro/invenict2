@@ -67,10 +67,10 @@ export default {
             if (this.windowHeight < 650){
                 document.documentElement.style.fontSize = '12px';
             }
-            if (this.windowHeight > 650 && this.windowHeight < 1200){
+            else if (this.windowHeight > 650 && this.windowHeight < 1200){
                 document.documentElement.style.fontSize = '16px';
             }
-            if (this.windowHeight >= 1200){
+            else if (this.windowHeight >= 1200){
                 document.documentElement.style.fontSize = '18px';
             }
             
@@ -79,7 +79,7 @@ export default {
             }
             if(this.loggedIn){
                 if(!this.menuUser.length){
-                    this.axios.get('/api/menu-user').then((response)=>{
+                    this.axios.get('/api/menu-user', {headers: {'Authorization': 'Bearer '+localStorage.getItem('token')}}).then((response)=>{
                         this.menuUser = response.data.data;
                     });
                 }

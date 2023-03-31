@@ -3,12 +3,12 @@
     <div class="col-16">
      <Toast />
         <div class="card">
-        <Toolbar class="mb-4">
-          <template v-slot:start>
-				    <h4>Role Menu</h4>
-          </template>
-        </Toolbar>
-             <form @submit.prevent="UpdateRole">
+          <Toolbar class="mb-4">
+            <template v-slot:start>
+              <h4>Role Menu</h4>
+            </template>
+          </Toolbar>
+         <form @submit.prevent="UpdateRole">
           <div class="row">
             <div class="col-sm-6">
               <div class="card-body">
@@ -73,17 +73,14 @@
                 <div class="field grid">
                  <label style="width:120px">Menu</label>
                   <div class="col-8">
-                    <MultiSelect 
+                    <TreeSelect 
                       v-model="menuss.menu" 
-                      :options="menus" 
-                      optionValue="code"
-                      optionLabel="name" 
+                      :options="menus"
                       display="chip"
-                      :filter="true"
-                      placeholder="Select Menu" 
-                      :class="{ 'p-invalid': errors.menu }"
-                    >
-                    </MultiSelect>
+                      selectionMode="checkbox" 
+                      selectable="key"
+                      placeholder="Select Items"
+                    />
                    <small v-if="errors.menu" class="p-error">
                       {{ errors.menu[0] }}
                   </small>
@@ -118,14 +115,12 @@ export default {
       role:[],
       menus:[],
       menuss: {
-        menu:null,
-      },
+        menu:null
+       },
       stat: [
         { nama: "Aktif", code: "T" },
         { nama: "Tidak Aktif", code: "F" },
       ],
-      checkname : [],
-      checkto : [],
     };
   },
   created(){
@@ -164,7 +159,8 @@ export default {
     UpdateRole() {
         this.errors = [];
         this.axios.put('/api/update-role/'+this.$route.params.code, this.role).then(()=>{
-        this.axios.put('/api/update-role-menu/'+this.$route.params.code, this.menuss);
+        this.role.menu = Object.keys(this.menuss.menu);
+        this.axios.put('/api/update-role-menu/'+this.$route.params.code, this.role.menu);
           this.$toast.add({
             severity: "success",
             summary: "Success Message",

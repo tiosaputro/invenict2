@@ -178,8 +178,6 @@ export default {
     return {
       errors: [],
       supp: [],
-      checkname : [],
-      checkto : [],
     };
   },
   created() {

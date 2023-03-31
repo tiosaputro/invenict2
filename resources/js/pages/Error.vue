@@ -4,12 +4,13 @@
             <div class="col-12 xl:col-6" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, rgba(233, 30, 99, 0.4) 10%, rgba(33, 150, 243, 0) 30%);">
                 <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                     <div class="grid flex flex-column align-items-center">
-                        <div class="flex justify-content-center align-items-center bg-pink-500 border-circle" style="height:3.2rem; width:3.2rem;">
-                            <i class="pi pi-fw pi-exclamation-triangle text-2xl text-50"></i>
+                        <div class="flex justify-content-center align-items-center bg-pink-1000 border-circle" style="height:3.2rem; width:3.2rem;">
+                            <v-icon name="fa-exclamation-triangle" animation="ring" speed="low" scale="3" fill="#f21326"/>
+                            <!-- <i class="pi pi-fw pi-exclamation-triangle text-2xl text-50"></i> -->
                         </div>
                         <h1 class="font-bold text-5xl text-900 mb-2">Error Occured.</h1>
-                        <span v-if="this.expired" class="text-600">Your Link Was Expired</span>
-                        <span v-if="this.notvalid" class="text-600">Your Link Not Valid</span>
+                        <span v-if="this.expired" class="text-600">Your verification link has expired</span>
+                        <span v-if="this.notvalid" class="text-600">Your verification link not valid</span>
                         <img src="/layout/images/asset-error.svg" alt="Error" class="mt-5" width="80%">
                         <div class="col-12 mt-5 text-center">
                              <Button icon="bi bi-arrow-left" class="p-button-raised p-button-text"  @click="$router.push('/dashboard')" label="Go to Dashboard"></Button>

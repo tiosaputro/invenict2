@@ -8,8 +8,9 @@ use App\Models\Mng_roles;
 Use carbon\Carbon;
 use App\Models\Mng_user;
 use App\Helpers\ResponseFormatter;
-use Illuminate\Support\Facades\DB;
+use App\Models\Mng_menu;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MngRoleMenuController extends Controller
 {
@@ -35,16 +36,22 @@ class MngRoleMenuController extends Controller
     }
     function edit($code)
     {
-        $role = Mng_role_menu::select('menu_id as code')->where('rol_id',$code)->pluck('code');
-        return response()->json($role);
+        $role = Mng_role_menu::select('menu_id')->where('rol_id',$code)->pluck('menu_id'); 
+        $menu = Mng_menu::select('menu_id',DB::raw("(CASE WHEN menu_id IS NOT NULL THEN 'True' ELSE 'false' END) AS checked"))
+            ->whereIn('menu_id',$role)
+            ->get()
+            ->keyBy('menu_id')
+            ->toarray();
+       
+        return response()->json($menu);
     }
     function update(Request $request,$code)
     {
-        $menus = $request->menu;
+        $menus = $request->all();
         $menu = Mng_role_menu::select('creation_date','created_by')->where('rol_id',$code)->first();
         $createday = $menu->creation_date;
         $createdby = $menu->created_by;
-        $mm = Mng_role_menu::where('rol_id',$code)->delete();
+        Mng_role_menu::where('rol_id',$code)->delete();
          foreach ($menus as $m) {
             $menu = Mng_role_menu::create([
                 'menu_id' => $m,
@@ -61,11 +68,25 @@ class MngRoleMenuController extends Controller
     }
     function getMenu()
     {
-        $menu = DB::table('mng_menus as mm')
-        ->rightjoin('mng_menus as m','mm.menu_id','m.parent_id')
-        ->Select('m.menu_id as code', DB::raw("(mm.menu_name ||'-'|| m.menu_name) as name"))
-        ->orderBy('mm.menu_name')
+        $menu = Mng_menu::select('menu_display','controller','menu_id','parent_id')
+        ->groupBy('parent_id','menu_id','controller','menu_display')
+        ->orderBy('menu_display','ASC')
         ->get();
-        return response()->json($menu);
+        $tree = $this->parseTree($menu);
+        return response()->json($tree);
+    }
+    function parseTree($tree, $root = 0) {
+        $return = array();
+        foreach($tree as $child => $parent) {
+            if($parent->parent_id == $root) {
+            unset($tree[$child]);
+                $return[] = array(
+                        'key'        => $parent->menu_id,
+                        'label'     => $parent->menu_display,
+                        'children'  => $this->parseTree($tree, $parent->menu_id)  
+                );
+            }
+        }
+        return empty($return) ? null : $return;    
     }
 }

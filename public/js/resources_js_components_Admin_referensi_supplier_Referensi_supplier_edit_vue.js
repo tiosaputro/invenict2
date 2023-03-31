@@ -15,9 +15,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       errors: [],
-      supp: [],
-      checkname: [],
-      checkto: []
+      supp: []
     };
   },
   created: function created() {

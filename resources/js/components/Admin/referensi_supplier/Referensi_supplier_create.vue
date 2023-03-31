@@ -1,10 +1,10 @@
 <template>
   <div>
-        <Toast />
+    <Toast />
         <div class="card">
           <Toolbar class="mb-4">
             <template v-slot:start>
-                  <h4>Suplier</h4>
+              <h4>Suplier</h4>
             </template>
           </Toolbar>
           <div class="card-body">
@@ -204,8 +204,6 @@ export default {
       fax:'',
       notlp1:'',
       notlp2:'',
-      checkname : [],
-      checkto : [],
     };
   },
   methods: {

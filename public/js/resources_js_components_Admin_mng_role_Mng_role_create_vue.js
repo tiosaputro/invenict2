@@ -15,12 +15,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       error: [],
+      rolemenu: null,
       errors: [],
       role: {
         rol_name: '',
         rol_desc: '',
         rol_stat: '',
-        menu: ''
+        menu: null
       },
       menus: [],
       stat: [{
@@ -64,7 +65,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       this.errors = [];
       this.error = [];
-      if (this.role.menu != '' && this.role.menu != null) {
+      if (this.rolemenu != '' && this.rolemenu != null) {
+        this.role.menu = Object.keys(this.rolemenu);
         this.axios.post('api/save-role', this.role).then(function () {
           _this2.axios.post('api/save-role-menu', _this2.role);
           _this2.$toast.add({
@@ -189,7 +191,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Toolbar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Toolbar");
   var _component_InputText = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("InputText");
   var _component_Dropdown = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Dropdown");
-  var _component_MultiSelect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MultiSelect");
+  var _component_TreeSelect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TreeSelect");
   var _component_Button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Button");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toast), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Toolbar, {
     "class": "mb-4"
@@ -233,23 +235,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
       'p-invalid': $data.errors.rol_stat
     })
-  }, null, 8 /* PROPS */, ["modelValue", "options", "class"]), $data.errors.rol_stat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.rol_stat[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MultiSelect, {
-    modelValue: $data.role.menu,
+  }, null, 8 /* PROPS */, ["modelValue", "options", "class"]), $data.errors.rol_stat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.rol_stat[0]), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TreeSelect, {
+    modelValue: $data.rolemenu,
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-      return $data.role.menu = $event;
+      return $data.rolemenu = $event;
     }),
     options: $data.menus,
-    optionValue: "code",
-    optionLabel: "name",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-      'p-invalid': $data.error.menu
-    }),
-    placeholder: "Select Menu",
-    display: "chip"
-  }, null, 8 /* PROPS */, ["modelValue", "options", "class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TreeSelect \r\n                      v-model=\"menu\" \r\n                      :options=\"menus\"\r\n                      display=\"chip\"\r\n                      selectionMode=\"checkbox\" \r\n                      :metaKeySelection=\"false\"\r\n                      selectable=\"key\"\r\n                      placeholder=\"Select Items\"\r\n                    />{{ menu }} "), $data.error.menu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.menu), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
+    display: "chip",
+    selectionMode: "checkbox",
+    selectable: "key",
+    placeholder: "Select Items"
+  }, null, 8 /* PROPS */, ["modelValue", "options"]), $data.error.menu ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("small", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.error.menu), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     "class": "p-button-rounded p-button-primary mr-2",
     icon: "pi pi-check",
-    label: "Simpan",
+    label: "Save",
     type: "submit"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
     label: "Cancel",

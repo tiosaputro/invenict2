@@ -14,18 +14,18 @@ class ModuleController extends Controller
 {
     protected $to;
     protected $userMenu;
-    function __construct(){
-        $this->middleware('auth:sanctum');
-        $this->to = "/mng-module";
-        $this->middleware(function ($request, $next) {
-          $this->userMenu = Mng_User::menu();
-            if($this->userMenu->contains($this->to)){    
-                return $next($request);
-            } else {
-                return response(["message"=>"Cannot Access"],403);
-            }
-        });
-    }
+    // function __construct(){
+    //     $this->middleware('auth:sanctum')->only('index','save','edit','update','delete');
+    //     $this->to = "/mng-module";
+    //     $this->middleware(function ($request, $next) {
+    //       $this->userMenu = Mng_User::menu();
+    //         if($this->userMenu->contains($this->to)){    
+    //             return $next($request);
+    //         } else {
+    //             return response(["message"=>"Cannot Access"],403);
+    //         }
+    //     });
+    // }
     function index()
     {
         $module = DB::table('v_mng_modules')->get();

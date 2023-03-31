@@ -1,10 +1,10 @@
 <template>
   <div>
-        <Toast />
-        <div class="card">
+    <Toast />
+      <div class="card">
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>Management Role</h4>
+				    <h4>Management Role</h4>
           </template>
         </Toolbar>
           <div class="row">
@@ -56,30 +56,20 @@
               </div>
               <div class="card" style="width: 33rem;">
                 <div class="p-fluid">
-              <div class="field grid">
-                <label style="width:120px">Menu</label>
-                 <div class="col-8">
-                    <MultiSelect 
-                        v-model="role.menu" 
-                        :options="menus" 
-                        optionValue="code"
-                        optionLabel="name" 
-                        :class="{ 'p-invalid': error.menu }"
-                        placeholder="Select Menu" 
-                        display="chip" 
-                    />
-                   <!-- <TreeSelect 
-                      v-model="menu" 
-                      :options="menus"
-                      display="chip"
-                      selectionMode="checkbox" 
-                      :metaKeySelection="false"
-                      selectable="key"
-                      placeholder="Select Items"
-                    />{{ menu }} -->
-                    <small v-if="error.menu" class="p-error">
-                      {{error.menu}}
-                    </small>
+                 <div class="field grid">
+                  <label style="width:120px">Menu</label>
+                   <div class="col-8">
+                    <TreeSelect 
+                        v-model="rolemenu" 
+                        :options="menus"
+                        display="chip"
+                        selectionMode="checkbox" 
+                        selectable="key"
+                        placeholder="Select Items"
+                      />
+                      <small v-if="error.menu" class="p-error">
+                        {{error.menu}}
+                      </small>
                     </div>
                   </div>
                 </div>
@@ -89,7 +79,7 @@
                  <Button
                   class="p-button-rounded p-button-primary mr-2"
                   icon="pi pi-check"
-                  label="Simpan"
+                  label="Save"
                   type="submit"
                 />
                 <Button
@@ -110,12 +100,13 @@ export default {
   data() {
     return {
       error:[],
+      rolemenu:null,
       errors: [],
       role : {
         rol_name:'',
         rol_desc:'',
         rol_stat:'',
-        menu:'',
+        menu:null,
       },
       menus:[],
       stat: [
@@ -150,15 +141,16 @@ export default {
     CreateRole() {
         this.errors = [];
         this.error=[];
-        if(this.role.menu != '' && this.role.menu != null){
-        this.axios.post('api/save-role',this.role).then(()=>{
-          this.axios.post('api/save-role-menu',this.role);
-          this.$toast.add({
-            severity: "success",
-            summary: "Success Message",
-            detail: "Success Create",
-          });
-          setTimeout( () => this.$router.push('/mng-role'),1000);
+        if(this.rolemenu != '' && this.rolemenu != null){
+          this.role.menu = Object.keys(this.rolemenu);
+          this.axios.post('api/save-role',this.role).then(()=>{
+            this.axios.post('api/save-role-menu',this.role);
+            this.$toast.add({
+              severity: "success",
+              summary: "Success Message",
+              detail: "Success Create",
+            });
+            setTimeout( () => this.$router.push('/mng-role'),1000);
         }).catch(error=>{
           this.errors = error.response.data.errors;
          });

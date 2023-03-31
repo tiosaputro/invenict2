@@ -42,6 +42,7 @@ import InputText from 'primevue/inputtext';
 import Menu from 'primevue/menu';
 import Message from 'primevue/message';
 import MultiSelect from 'primevue/multiselect';
+import { OhVueIcon, addIcons } from "oh-vue-icons";
 import Password from 'primevue/password';
 import ProgressSpinner from 'primevue/progressspinner';
 import Pdf from 'pdfvuer';
@@ -67,6 +68,9 @@ import Tooltip from 'primevue/tooltip';
 import ToggleButton from 'primevue/togglebutton';
 import TreeSelect from 'primevue/treeselect';
 import VueAxios from 'vue-axios';
+import { ViFileTypePdf,FcImageFile,FaExclamationTriangle,GiPadlock   } from "oh-vue-icons/icons";
+addIcons(ViFileTypePdf,FcImageFile,FaExclamationTriangle,GiPadlock  );
+
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
     next();
@@ -93,6 +97,7 @@ app.directive('code', CodeHighlight);
 app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
 
+app.component("v-icon", OhVueIcon);
 
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);

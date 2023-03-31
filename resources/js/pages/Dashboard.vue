@@ -2,7 +2,7 @@
 <Toast />
 <div class="grid">
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasiadmin">
-			<div @click="blmDiverifikasiAdmin()" style="cursor:pointer;" class="card mb-0">
+			<div @click="blmDiverifikasiAdmin()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification </span>
@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasiadmin">
-			<div @click="sdhDiverifikasiAdmin()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhDiverifikasiAdmin()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Already Verified</span>
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectadmin">
-			<div @click="diRejectAdmin()" style="cursor:pointer;" class="card mb-0">
+			<div @click="diRejectAdmin()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanadmin">
-			<div @click="sdgDikerjakanAdmin()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgDikerjakanAdmin()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
@@ -54,7 +54,7 @@
 			</div>
 		</div>	
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanadmin">
-				<div @click="sdhDikerjakanAdmin()" style="cursor:pointer;" class="card mb-0">
+				<div @click="sdhDikerjakanAdmin()" class="card mb-0">
 					<div class="flex justify-content-between mb-3">
 						<div>
 							<span class="block text-500 font-medium mb-3">Done</span>
@@ -67,7 +67,7 @@
 				</div>
 		</div>	
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaiadmin">
-				<div @click="sdhSelesaiAdmin()" style="cursor:pointer;" class="card mb-0">
+				<div @click="sdhSelesaiAdmin()" class="card mb-0">
 					<div class="flex justify-content-between mb-3">
 						<div>
 							<span class="block text-500 font-medium mb-3">Close</span>
@@ -80,7 +80,7 @@
 				</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.countrequestadmin">
-				<div @click="totalKeseluruhanAdmin()" style="cursor:pointer;" class="card mb-0">
+				<div @click="totalKeseluruhanAdmin()" class="card mb-0">
 					<div class="flex justify-content-between mb-3">
 						<div>
 							<span class="block text-500 font-medium mb-3">Overall Request</span>
@@ -93,7 +93,7 @@
 				</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewmanager">
-			<div @click="sdgDireview4()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgDireview4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Under Review </span>
@@ -106,7 +106,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmdiverifikasimanager">
-			<div @click="blmDiverifikasi4()" style="cursor:pointer;" class="card mb-0">
+			<div @click="blmDiverifikasi4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
@@ -119,7 +119,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasimanager">
-			<div @click="sdhDiverifikasi4()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhDiverifikasi4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Already Verified</span>
@@ -132,7 +132,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectmanager">
-			<div @click="direject4()" style="cursor:pointer;" class="card mb-0">
+			<div @click="direject4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
@@ -145,7 +145,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequestmanager">
-			<div @click="penugasanRequest4()" style="cursor:pointer;" class="card mb-0">
+			<div @click="penugasanRequest4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
@@ -158,7 +158,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanmanager">
-			<div @click="sdgdikerjakan4()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgdikerjakan4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
@@ -171,7 +171,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanmanager">
-			<div @click="sdHDikerjakan4()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdHDikerjakan4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
@@ -184,7 +184,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaimanager">
-			<div @click="sdhSelesai4()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhSelesai4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
@@ -197,7 +197,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalrequestmanager">
-			<div @click="totalRequest4()" style="cursor:pointer;" class="card mb-0">
+			<div @click="totalRequest4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
@@ -210,7 +210,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasibentu">
-			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="blmDiassign2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
@@ -223,7 +223,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisibentu">
-			<div @click="atasanDivisi2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="atasanDivisi2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Higher Level</span>
@@ -236,7 +236,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerbentu">
-			<div @click="IctManager2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="IctManager2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">ICT Manager</span>
@@ -249,7 +249,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectbentu">
-			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="direject2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
@@ -262,7 +262,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestbentu">
-			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="penugasanRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
@@ -275,7 +275,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakanbentu">
-			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
@@ -288,7 +288,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakanbentu">
-			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
@@ -301,7 +301,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaibentu">
-			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhSelesai2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
@@ -314,7 +314,7 @@
 			</div>
 		</div>	
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestbentu">
-			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="totalRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
@@ -327,7 +327,7 @@
 			</div>
 		</div>	
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasikurau">
-			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="blmDiassign2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
@@ -340,7 +340,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisikurau">
-			<div @click="atasanDivisi2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="atasanDivisi2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Higher Level</span>
@@ -353,7 +353,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerkurau">
-			<div @click="IctManager2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="IctManager2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">ICT Manager</span>
@@ -366,7 +366,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectkurau">
-			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="direject2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
@@ -379,7 +379,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestkurau">
-			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="penugasanRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
@@ -392,7 +392,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakankurau">
-			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
@@ -405,7 +405,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakankurau">
-			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
@@ -418,7 +418,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaikurau">
-			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhSelesai2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
@@ -431,7 +431,7 @@
 			</div>
 		</div>	
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestkurau">
-			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="totalRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
@@ -444,7 +444,7 @@
 			</div>
 		</div>	
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasijakarta">
-			<div @click="blmDiassign2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="blmDiassign2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification</span>
@@ -457,7 +457,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisijakarta">
-			<div @click="atasanDivisi2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="atasanDivisi2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Higher Level</span>
@@ -470,7 +470,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerjakarta">
-			<div @click="IctManager2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="IctManager2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">ICT Manager</span>
@@ -483,7 +483,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectjakarta">
-			<div @click="direject2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="direject2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
@@ -496,7 +496,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestjakarta">
-			<div @click="penugasanRequest2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="penugasanRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
@@ -509,7 +509,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakanjakarta">
-			<div @click="sdgDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
@@ -522,7 +522,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakanjakarta">
-			<div @click="sdhDikerjakan2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
@@ -535,7 +535,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaijakarta">
-			<div @click="sdhSelesai2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhSelesai2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
@@ -548,7 +548,7 @@
 			</div>
 		</div>	
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestjakarta">
-			<div @click="totalRequest2()" style="cursor:pointer;" class="card mb-0">
+			<div @click="totalRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
@@ -561,7 +561,7 @@
 			</div>
 		</div>	
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequestpersonnel">
-			<div @click="penugasanRequest3()" style="cursor:pointer;" class="card mb-0">
+			<div @click="penugasanRequest3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
@@ -574,7 +574,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectedpersonnel">
-			<div @click="diReject3()" style="cursor:pointer;" class="card mb-0">
+			<div @click="diReject3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
@@ -587,7 +587,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumselesaipersonnel">
-			<div @click="blmSelesai3()" style="cursor:pointer;" class="card mb-0">
+			<div @click="blmSelesai3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
@@ -600,7 +600,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanpersonnel">
-			<div @click="sdHDikerjakan3()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdHDikerjakan3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
@@ -613,7 +613,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaipersonnel">
-			<div @click="sdhSelesai3()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhSelesai3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
@@ -626,7 +626,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewhigherlevel">
-			<div @click="sdgDireview1()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgDireview1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Under Review </span>
@@ -639,7 +639,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasihigherlevel">
-			<div @click="blmDiverifikasi1()" style="cursor:pointer;" class="card mb-0">
+			<div @click="blmDiverifikasi1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification </span>
@@ -652,7 +652,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasihigherlevel">
-			<div @click="sdhDiverifikasi1()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhDiverifikasi1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Already Verified</span>
@@ -665,7 +665,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjecthigherlevel">
-			<div @click="diReject1()" style="cursor:pointer;" class="card mb-0">
+			<div @click="diReject1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
@@ -678,7 +678,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequesthigherlevel">
-			<div @click="penugasanRequest1()" style="cursor:pointer;" class="card mb-0">
+			<div @click="penugasanRequest1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Request Assignment</span>
@@ -691,7 +691,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanhigherlevel">
-			<div @click="sdgDikerjakan1()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgDikerjakan1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
@@ -704,7 +704,7 @@
 			</div>
 		</div>	
     	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanhigherlevel">
-			<div @click="sdhDikerjakan1()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhDikerjakan1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
@@ -717,7 +717,7 @@
 			</div>
 		</div>	
     	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaihigherlevel">
-			<div @click="sdhSelesai1()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhSelesai1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
@@ -730,7 +730,7 @@
 			</div>
     	</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalhigherlevel">
-			<div @click="totalRequest1()" style="cursor:pointer;" class="card mb-0">
+			<div @click="totalRequest1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
@@ -743,7 +743,7 @@
 			</div>
     	</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewrequestor">
-			<div @click="sdgDireview()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgDireview()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Under review </span>
@@ -756,7 +756,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasirequestor">
-			<div @click="blmDiverifikasi()" style="cursor:pointer;" class="card mb-0">
+			<div @click="blmDiverifikasi()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Waiting for verification </span>
@@ -769,7 +769,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasirequestor">
-			<div @click="sdhDiverifikasi()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhDiverifikasi()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Already verified</span>
@@ -782,7 +782,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectrequestor">
-			<div @click="diReject()" style="cursor:pointer;" class="card mb-0">
+			<div @click="diReject()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Rejected</span>
@@ -795,7 +795,7 @@
 			</div>
 		</div>
 		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanrequestor">
-			<div @click="sdgDikerjakan()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdgDikerjakan()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">In Progress</span>
@@ -808,7 +808,7 @@
 			</div>
 		</div>	
     	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanrequestor">
-			<div @click="sdhDikerjakan()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhDikerjakan()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Done</span>
@@ -821,7 +821,7 @@
 			</div>
 		</div>	
     	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesairequestor">
-			<div @click="sdhSelesai()" style="cursor:pointer;" class="card mb-0">
+			<div @click="sdhSelesai()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Close</span>
@@ -834,7 +834,7 @@
 			</div>
     	</div>	
     	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.countrequestrequestor">
-			<div @click="totalKeseluruhan()" style="cursor:pointer;" class="card mb-0">
+			<div @click="totalKeseluruhan()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
 						<span class="block text-500 font-medium mb-3">Overall Request</span>
@@ -1061,3 +1061,8 @@ export default {
     }
 }
 </script>
+<style scoped lang="scss">
+.card{
+cursor:pointer;
+}
+</style>

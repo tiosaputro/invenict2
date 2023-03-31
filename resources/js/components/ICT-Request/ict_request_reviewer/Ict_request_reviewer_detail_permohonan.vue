@@ -57,16 +57,16 @@
             <template #body="slotProps">
               <p v-if="slotProps.data.ireq_attachment == null"></p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
-                  <i class="pi pi-images px-2"></i>
-                   <span class="px-3">IMAGE</span>
-                </Button>
+                <!-- <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'"> -->
+                  <v-icon name="fc-image-file" animation="pulse" speed="slow" scale="2" hover="true" style="cursor:pointer;"  @click="getDetail(slotProps.data.ireq_attachment)"/>
+                   <!-- <span class="px-3">IMAGE</span> -->
+                <!-- </Button> -->
               </p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
-                 <i class="pi pi-file-pdf px-2"></i>
-                  <span class="px-4">PDF</span>
-                </Button>
+                <!-- <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'"> -->
+                 <v-icon name="vi-file-type-pdf" animation="pulse" speed="slow" scale="2" hover="true" style="cursor:pointer;"  @click="getDetail(slotProps.data.ireq_attachment)"/>
+                  <!-- <span class="px-4">PDF</span> -->
+                <!-- </Button> -->
               </p>
             </template>  
           </Column>
