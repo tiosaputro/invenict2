@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Helpers\ResponseFormatter;
+use App\Models\UserProfile;
 
 class MngUserController extends Controller
 {
@@ -30,7 +31,7 @@ class MngUserController extends Controller
             } else {
                 return response(["message"=>"Cannot Access"],403);
             }
-        });
+        })->only('index');
     }
     function index()
     {
@@ -76,6 +77,7 @@ class MngUserController extends Controller
         $nama_file = time().".".$extension;
         Storage::disk('profile')->put($nama_file, base64_decode($foto));
         $user = Mng_user::create([
+            'usr_id'=>generate_id(),
             'usr_name'=>$request->usr_name,
             'usr_fullname'=>strtoupper($request->usr_fullname),
             'usr_passwd'=> Hash::make($request->usr_passwd),
@@ -167,12 +169,27 @@ class MngUserController extends Controller
         return ResponseFormatter::success($user,'Successfully Deleted Role');
     }
     function detailAddRequest(){
-        $bisnis = DB::table('v_company_refs')->get();
-        $roles =  Mng_roles::select('rol_id as code','rol_name as name')->where('rol_stat','T')->orderBy('rol_id','ASC')->get();
-        $divisi = Divisi_refs::ListDivision();
-        $location = Location::listLocation();
-        
-        return json_encode(['bisnis'=>$bisnis,'roles'=>$roles,'divisi'=>$divisi,'location'=>$location],200);
+        $data['bisnis'] = DB::table('v_company_refs')->get();
+        $data['roles'] =  Mng_roles::select('rol_id as code','rol_name as name')->where('rol_stat','T')->orderBy('rol_id','ASC')->get();
+        $data['divisi'] = Divisi_refs::ListDivision();
+        $data['location'] = Location::listLocation();
+        return json_encode($data);
+    }
+    function userList(){
+        $data['userlist']= Mng_user::orderby('usr_fullname','ASC')->get();
+        $data['requestor']= Auth::user();
+        return json_encode($data);
+    }
+    function showUser(){
+        $data['user'] = Auth::user();
+        return json_encode($data);
+    }
+    function divisionBu($code){
+        $check = UserProfile::where('user_id',$code)->first();
+        $data['division'] = str_replace('"', '', json_decode($check->profile_detail, 1)['division']);
+        $data['bu'] = str_replace('"', '', json_decode($check->profile_detail, 1)['company']);
+        $data['department'] = str_replace('"', '', json_decode($check->profile_detail, 1)['department']);
+        return json_encode($data);
     }
    
 }

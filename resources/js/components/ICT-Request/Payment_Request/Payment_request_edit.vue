@@ -259,6 +259,9 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       }, 
+      token: localStorage.getItem('token'),
+      checkname : [],
+      checkto : [],
     };
   },
   mounted(){
@@ -271,15 +274,12 @@ export default {
       }).catch(error=>{
           if ((error.response.status == 401)){
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem("Expired","true")
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if (error.response.status == 403) {
-            this.$router.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired","true")
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
     },   
     UpdatePayment() {

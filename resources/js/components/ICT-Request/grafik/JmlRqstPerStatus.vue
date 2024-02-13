@@ -17,6 +17,7 @@ export default {
     data() {
         return {
             color: '1976D2',
+            token: localStorage.getItem('token'),
             perStatus:{},
             checkname : [],
             checkto : []
@@ -32,7 +33,7 @@ export default {
     },
     methods: {    
         cekUser(){
-            this.axios.get('api/cek-user').then((response)=>{
+            this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.checkname = response.data.map((x)=> x.name)
                 this.checkto = response.data.map((x)=> x.to)
                     if(this.checkname.includes("Per Status") || this.checkto.includes("/req-per-divisi-req-per-status")){
@@ -44,7 +45,7 @@ export default {
              });
           },
         getTahun(){
-            this.axios.get('api/get-tahun').then((response)=>{
+            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                     this.perStatus = {
                         labels : response.data.grafik3.map((x)=>x.ireq_status),
                         datasets : [

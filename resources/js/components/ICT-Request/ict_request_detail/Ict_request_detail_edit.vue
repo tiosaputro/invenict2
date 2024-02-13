@@ -155,11 +155,14 @@ export default {
       kode:'',
       type: [],
       bu: [],
+      token: localStorage.getItem('token'),
+      checkname : [],
+      checkto : [],
       cekTipeReq:'',
     };
   },
   mounted(){
-      this.getIct();
+      this.cekUser();
   },
   methods: {
     change(kode){
@@ -195,7 +198,7 @@ export default {
     getIreq(){
       this.kode  = '';
        if(this.ict.ireq_type){
-        this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type).then((res)=>{
+        this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
           this.catalog = res.data;
         });
       }
@@ -205,8 +208,20 @@ export default {
         this.ict.invent_code = '';
       }
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
+        this.getIct();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getKode(){
-        this.axios.get('/api/getAddDetail').then((response)=>{
+        this.axios.get('/api/getAddDetail',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.type = response.data.ref;
         this.kodeperi = response.data.kode;   
       }).catch(error=>{
@@ -221,7 +236,7 @@ export default {
         });
       },
     getCatalog(){
-      this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type).then((res)=>{
+      this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
           this.catalog = res.data;
         });
     },
@@ -232,7 +247,7 @@ export default {
       this.getCatalog();
     },
     getIct(){
-        this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code).then((response)=>{
+        this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.ict = response.data;
           if(this.ict.ireq_attachment){
             if(this.ict.ireq_attachment.split('.').pop()=='jpeg'||this.ict.ireq_attachment.split('.').pop()=='png'||this.ict.ireq_attachment.split('.').pop()=='jpg'){
@@ -244,18 +259,6 @@ export default {
           }
           this.cekTipeReq = this.ict.ireq_type;
           this.getidCatalog();
-        }).catch(error=>{
-          if (error.response.status == 401) {
-            this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if (error.response.status == 403) {
-            this.$router.push('/access');
-          }
         });
       },
     UpdateIctDetail() {
@@ -267,7 +270,7 @@ export default {
        if ( this.ict.ireq_type != null && this.ict.invent_code != null) 
        {
 
-        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict).then(()=>{
+        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -294,7 +297,7 @@ export default {
         if ( this.ict.ireq_type != null) 
        {
 
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict).then(()=>{
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.$toast.add({
             severity: "success",
             summary: "Success Message",

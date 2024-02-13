@@ -17,7 +17,9 @@ class CashController extends Controller
 {
     protected $to;
     protected $userMenu;
+    protected $detailLog, $newTime;
     function __construct(){
+        $this->detailLog = array();
         $this->middleware('auth:sanctum');
         $this->to = "/cash-advance";
         $this->middleware(function ($request, $next) {
@@ -32,6 +34,9 @@ class CashController extends Controller
     function index()
     {
         $cash = DB::table('v_cash_advance')->get();
+        $this->newTime = getTimePage();
+        $this->detailLog[] = array('time' => $this->newTime, 'title' => 'Query Get CA', 'selisih' => selisihTimePage($this->newTime));
+        insertTimePageDetail(json_encode($this->detailLog));
         return ResponseFormatter::success($cash,'Successfully get data');
     }
     function getNoRequest(){

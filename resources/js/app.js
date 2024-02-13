@@ -40,6 +40,8 @@ import InlineMessage from 'primevue/inlinemessage';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import Menu from 'primevue/menu';
+import Menubar from "primevue/menubar";
+import TieredMenu from "primevue/tieredmenu";
 import Message from 'primevue/message';
 import MultiSelect from 'primevue/multiselect';
 import { OhVueIcon, addIcons } from "oh-vue-icons";
@@ -78,6 +80,13 @@ router.beforeEach(function(to, from, next) {
 
 const app = createApp(AppWrapper);
 
+axios.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token'); // Replace 'your_token_key' with the actual key used to store your token
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
 
 app.config.globalProperties.$appState = reactive({ theme: 'vela-blue'});
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
@@ -119,6 +128,8 @@ app.component('InlineMessage', InlineMessage);
 app.component('InputNumber', InputNumber);
 app.component('InputText', InputText);
 app.component('Menu', Menu);
+app.component("Menubar", Menubar);
+app.component("TieredMenu", TieredMenu);
 app.component('Message', Message);
 app.component('MultiSelect', MultiSelect);
 app.component('Password', Password);

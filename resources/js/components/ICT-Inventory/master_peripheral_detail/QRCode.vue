@@ -31,12 +31,12 @@ export default {
           titleBackgroundColor: "#fff", // background color. default is "#fff"
           titleHeight: 40, // height, including subTitle. default is 0
           titleTop: 15, // draws y coordinates. default is 30
-          // logo: '/assets/layout/images/logo_emp_new.png', 
+          // logo: '/assets/layout/images/logo-emp.png', 
           // logoWidth: 100, // fixed logo width. default is `width/3.5`
           // logoHeight: 100, // fixed logo height. default is `heigth/3.5`
           // logoBackgroundTransparent:true,
 
-          backgroundImage: '/assets/image-1.png', // Background Image
+          backgroundImage: '/assets/image-1.jpeg', // Background Image
           backgroundImageAlpha: 1, // Background image transparency, value between 0 and 1. default is 1. 
           // autoColor: false, // Automatic color adjustment(for data block)
           // autoColorDark: "rgba(0, 0, 0, .6)", // Automatic color: dark CSS color

@@ -155,10 +155,12 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
+        token: localStorage.getItem('token'),
     };
   },
   mounted() {
     this.getIctDetail();
+    this.getNoreq();
   },
   methods: {
     getDetail(ireq_attachment){
@@ -172,10 +174,10 @@ export default {
           this.dialogAssign = false;
       },
     AssignPerDetail(ireqd_id,ireq_id){
-          this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id).then((response)=>{
+          this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.assign = response.data;
           });
-          this.axios.get('/api/get-pekerja').then((response)=>{
+          this.axios.get('/api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.petugas = response.data;
           });
           this.dialogAssign = true; 
@@ -188,7 +190,7 @@ export default {
      updateAssign(){
         this.submitted = true;
         if(this.assign.name != null){
-          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign).then(()=>{
+          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.assign = [];
             this.dialogAssign = false;
             this.submitted = false;
@@ -203,9 +205,8 @@ export default {
         }
       },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then((response)=> {
-        this.detail = response.data.data;
-        this.getNoreq();
+      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 403) {
@@ -213,19 +214,16 @@ export default {
           }
            else if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$route.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired','true')
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
       });
     },

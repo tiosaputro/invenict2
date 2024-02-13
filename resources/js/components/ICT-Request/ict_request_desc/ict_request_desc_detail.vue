@@ -123,6 +123,7 @@ export default {
         kode:'',
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
+        token: localStorage.getItem('token'),
         tes:[],
         ireq:[]
     };
@@ -138,7 +139,7 @@ export default {
          myWindow.focus();
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
         this.tes = response.data.map((x)=>x.ireq_assigned_to);
         if(this.tes.length > 0 && this.tes[0] != null){
@@ -161,7 +162,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data.noreq;
         this.status = response.data.ireq_status;
       });
@@ -181,7 +182,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id);
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}});
         this.getIctDetail();
         },
         reject: () => {},

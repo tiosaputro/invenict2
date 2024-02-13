@@ -49,6 +49,7 @@ export default {
     return {
         loading: true,
         detail:[],
+        token: localStorage.getItem('token'),
         verif:[]
     };
   },
@@ -60,7 +61,7 @@ export default {
       return moment(date).format("DD MMM YYYY HH:mm")
     },
     cekUser(){
-      this.axios.get('/api/cek-user').then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
           if(this.checkname.includes("Scan Legality") || this.checkto.includes("/scan-qr-code")){
@@ -72,7 +73,7 @@ export default {
       });
     },
     getIctDetail(){
-      this.axios.get('/api/detail-norequest/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/detail-norequest/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
         this.loading = false;
       });

@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\BisnisController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\LoginController;
@@ -16,6 +17,8 @@ use App\Http\Controllers\MngUsrRoleController;
 use App\Http\Controllers\MngUserController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LookupsController;
+use App\Http\Controllers\LookupsBrandController;
+use App\Http\Controllers\LookupsKategoriController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\MngMenuController;
 use App\Http\Controllers\IctRequestReviewerController;
@@ -29,7 +32,10 @@ use App\Http\Controllers\IctDetailController;
 use App\Http\Controllers\PekerjaController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\PembelianDetailController;
+use App\Http\Controllers\SupervisorController;
 use Illuminate\Support\Facades\Route;
+use PhpOffice\PhpSpreadsheet\Style\Supervisor;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,8 +55,7 @@ Route::post('/login-approval', [LoginController::class,'loginFromEmail']);
 Route::get('/logout', [LoginController::class,'logout'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/cek-user',[LoginController::class,'cekUser']);
-    Route::get('/user',[LoginController::class,'show']);
-//referensi_location
+  //referensi_location
     Route::get('/loc', [LocationController::class,'index']);
     Route::post('/add-loc',[LocationController::class,'save']);
     Route::get('/edit-loc/{code}',[LocationController::class,'edit']);
@@ -58,10 +63,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/delete-loc/{loc_code}',[LocationController::class,'delete']);
     Route::get('/ref-loc', [LocationController::class,'getLocation']);
 
-//referensi_lookups
+  //referensi_lookups
     Route::get('/ref', [LookupsController::class,'index']);
-    Route::get('/ref-lookup-brand', [LookupsController::class,'lookupBrand']);
-    Route::get('/ref-lookup-kategori', [LookupsController::class,'lookupKategori']);
+    Route::get('/ref-lookup-brand', [LookupsBrandController::class,'lookupBrand']);
+    Route::get('/ref-lookup-kategori', [LookupsKategoriController::class,'lookupKategori']);
     Route::get('/ref-lookup-service', [LookupsController::class,'lookupService']);
     Route::post('/add-ref',[LookupsController::class,'save']);
     Route::get('/edit-ref/{code}/{type}',[LookupsController::class,'edit']);
@@ -70,20 +75,20 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/report-lookups-pdf',[LookupsController::class,'cetak_pdf']);
     Route::get('/report-lookups-excel',[LookupsController::class,'cetak_excel']);
 
-//lookup kategori
-    Route::get('/ref-lookup-kategori', [LookupsController::class,'lookupKategori']);
-    Route::post('/add-kategori',[LookupsController::class,'saveKategori']);
-    Route::get('/edit-kategori/{code}/{type}',[LookupsController::class,'editKategori']);
-    Route::put('/update-kategori/{code}/{type}',[LookupsController::class,'updateKategori']);
-    Route::delete('/delete-kategori/{lookup_code}/{lookup_type}',[LookupsController::class,'deleteKategori']);
-//lookup brand
-    Route::get('/ref-lookup-brand', [LookupsController::class,'lookupBrand']);
-    Route::post('/add-brand',[LookupsController::class,'saveBrand']);
-    Route::get('/edit-brand/{code}/{type}',[LookupsController::class,'editBrand']);
-    Route::put('/update-brand/{code}/{type}',[LookupsController::class,'updateBrand']);
-    Route::delete('/delete-brand/{lookup_code}/{lookup_type}',[LookupsController::class,'deleteBrand']);
+  //lookup kategori
+    Route::get('/ref-lookup-kategori', [LookupsKategoriController::class,'lookupKategori']);
+    Route::post('/add-kategori',[LookupsKategoriController::class,'saveKategori']);
+    Route::get('/edit-kategori/{code}/{type}',[LookupsKategoriController::class,'editKategori']);
+    Route::put('/update-kategori/{code}/{type}',[LookupsKategoriController::class,'updateKategori']);
+    Route::delete('/delete-kategori/{lookup_code}/{lookup_type}',[LookupsKategoriController::class,'deleteKategori']);
+  //lookup brand
+    Route::get('/ref-lookup-brand', [LookupsBrandController::class,'lookupBrand']);
+    Route::post('/add-brand',[LookupsBrandController::class,'saveBrand']);
+    Route::get('/edit-brand/{code}/{type}',[LookupsBrandController::class,'editBrand']);
+    Route::put('/update-brand/{code}/{type}',[LookupsBrandController::class,'updateBrand']);
+    Route::delete('/delete-brand/{lookup_code}/{lookup_type}',[LookupsBrandController::class,'deleteBrand']);
 
-//supplier
+  //supplier
     Route::get('/supp', [SupplierController::class,'index']);
     Route::post('/add-supp', [SupplierController::class,'save']);
     Route::get('/edit-supp/{code}', [SupplierController::class,'edit']);
@@ -95,7 +100,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-pekerja',[PekerjaController::class,'getPekerja']);
     
     //master peripheral
-    Route::get('/mas',[MasterController::class,'ndex']);
+    Route::get('/mas',[MasterController::class,'index']);
     Route::post('/add-mas',[MasterController::class,'save']);
     Route::get('/edit-mas/{code}',[MasterController::class,'edit']);
     Route::put('/update-mas/{code}',[MasterController::class,'update']);
@@ -167,6 +172,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/update-payment-request/{code}',[PaymentController::class,'update']);
     Route::delete('/delete-payment-request/{pr_id}',[PaymentController::class,'delete']);
 
+    //supervisor
+    Route::get('/get-data-supervisor',[SupervisorController::class,'index']);
+    Route::get('/add-data-supervisor',[SupervisorController::class,'addSpv']);
+    Route::get('/find-supervisor/{code}',[SupervisorController::class,'find']);
+    Route::post('/save-supervisor',[SupervisorController::class,'store']);
+    Route::delete('/delete-supervisor/{code}',[SupervisorController::class,'delete']);
+
     //mng_user
     Route::get('/get-user',[MngUserController::class,'index']);
     Route::post('/add-user',[MngUserController::class,'save']);
@@ -174,6 +186,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/edit-user/{code}',[MngUserController::class,'edit']);
     Route::put('/update-user/{code}',[MngUserController::class,'update']);
     Route::delete('/delete-user/{usr_id}',[MngUserController::class,'delete']);
+    Route::get('/user-list',[MngUserController::class,'userList']);
+    Route::get('/data-divbu/{code}',[MngUserController::class,'divisionBu']);
+    Route::get('/user',[MngUserController::class,'showUser']);
     //divisi_refs
     Route::get('/divisi',[DivisiRefsController::class,'index']);
     Route::get('/get-divisi',[DivisiRefsController::class,'getDivisi']);

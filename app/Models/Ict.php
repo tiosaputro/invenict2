@@ -24,6 +24,7 @@ class Ict extends Model
 {
     protected $fillable= [
         'ireq_id',
+        'ireq_spv',
         'ireq_no',
         'ireq_date',
         'ireq_type',
@@ -57,34 +58,8 @@ class Ict extends Model
     protected $table ='ireq_mst';
     protected $primaryKey ='ireq_id';
     public $timestamps = false;
+    public $incrementing = false;
 
-    public static function saveRequest($request){
-        $ict = Ict::Create([
-            'ireq_date' =>Carbon::createFromFormat('D M d Y H:i:s e+',$request->tgl)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'ireq_type' => $request->tipereq,
-            'ireq_requestor'=> Auth::user()->usr_name,
-            'ireq_divisi_requestor'=> Auth::user()->div_id,
-            'ireq_user' => $request->user_name,
-            'ireq_divisi_user'=>$request->user_divisi,
-            'ireq_bu' => $request->bisnis,
-            // 'ireq_remark'=> $request->ket,
-            'ireq_loc'=>Auth::user()->usr_loc,
-            'ireq_prio_level'=>$request->priolev,
-            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'created_by' => Auth::user()->usr_name,
-            'program_name'=>"Ict_Save",
-        ]);
-        return $ict;
-    }
-
-    public static function listNoRequest(){
-        $data = Ict::select('ireq_no as name','ireq_id as code')
-        ->ORDERBY('ireq_no','DESC')
-        ->WHERENotNull('ireq_status')
-        ->get();
-         return $data;
-    }
-    
     public static function detailNoRequest($code){
         $data = DB::table('ireq_mst as im')
         ->leftJoin('lookup_refs as lr',function ($join) {
@@ -103,28 +78,6 @@ class Ict extends Model
         ->first();
          return $data;
     }
-    
-    public static function updateRequest($request,$code){
-        $ict = Ict::where('ireq_id',$code)->first();
-        $ict->ireq_date = Carbon::parse($request->ireq_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $ict->ireq_prio_level = $request->ireq_prio_level;
-        // $ict->ireq_remark = $request->ireq_remark;
-        $ict->ireq_type = $request->ireq_type;
-        $ict->ireq_user = $request->ireq_user;
-        $ict->ireq_divisi_user = $request->ireq_divisi_user;
-        $ict->ireq_bu = $request->ireq_bu;
-        $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->program_name = "Ict_Update";
-        $ict->save();
-        return $ict;
-    }
-
-    public static function deleteRequest($ireq_id){
-        Ict::find($ireq_id)->delete();
-        DB::table('ireq_dtl')->WHERE('ireq_id',$ireq_id)->delete();
-    }
-
     public static function ApprovedByAtasan($code){
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'A1';

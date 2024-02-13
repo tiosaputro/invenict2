@@ -11,114 +11,6 @@
         </Toolbar>
             <TabView ref="tabView2" v-model:activeIndex="active1">
               <TabPanel header="Request">
-                <!-- <Carousel :value="permohonan" :numVisible="2" :numScroll="1" :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" :autoplayInterval="3000">
-                <template #item="slotProps">
-                  <Card style="width: 25rem; margin-bottom: 2em;">
-                      <template #title>
-                          {{slotProps.data.ireq_no}}
-                      </template>
-                      <template #content>
-                        <h6 class="mt-0 mb-3">{{slotProps.data.ireq_requestor}}</h6>
-                        <h7 class="mb-1">{{ formatDate(slotProps.data.ireq_date) }}</h7>
-                      </template>
-                      <template #footer>
-                        <Button
-                        class="p-button-rounded p-button-secondary mr-2 mt-2"
-                        icon="pi pi-info-circle"
-                        v-if="slotProps.data.ireq_count_status <= 0"
-                        v-tooltip.bottom="'Click for request details'"
-                        @click="detailTabRequestDetailPermohonan(slotProps.data.ireq_id)"
-                      />
-                      <Button
-                        class="p-button-sm p-button-rounded p-button-secondary mr-2 mt-2"
-                        icon="pi pi-info-circle"
-                        v-if="slotProps.data.ireq_count_status > 0"
-                        v-tooltip.bottom="'Click for request details'"
-                        @click="detailTabRequestDetail(slotProps.data.ireq_id)"
-                      />
-                      <Button                    
-                        class="p-button-sm p-button-rounded p-button-warning mr-2 mt-2"
-                        @click="SendEmail(slotProps.data.usr_email,slotProps.data.ireq_id)"
-                        icon="bi bi-envelope-check-fill"
-                        v-tooltip.bottom="'Click to send email to '+slotProps.data.usr_email+'@emp.id'"
-                      />
-                      <Button
-                        v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-sm p-button-rounded p-button-danger mr-2 mt-2"
-                        @click="Reject(slotProps.data.ireq_id)"
-                        v-tooltip.bottom="'Click to reject request'"
-                        icon="bi bi-x-square"
-                      />
-                      <Button
-                        icon="bi bi-chat-quote"
-                        class="p-button-sm p-button-rounded p-button mr-2 mt-2"
-                        @click="Remark(slotProps.data.ireq_id)"
-                        v-tooltip.bottom="'Click to add remark'"
-                      />
-                      <Button
-                        v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-rounded mr-2 mt-2"
-                        @click="ApproveAtasan(slotProps.data.ireq_id)"
-                        icon="bi bi-file-earmark-arrow-up"
-                        v-tooltip.bottom="'Click to higher level approval'"
-                      />
-                      <Button
-                        v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-rounded mr-2 mt-2"
-                        @click="ApproveManager(slotProps.data.ireq_id)"
-                        v-tooltip.bottom="'Click to ICT manager approval'"
-                        icon="bi bi-file-earmark-arrow-up-fill"
-                      />
-                      <Button
-                        class="p-button-rounded mr-2 mt-2" 
-                        @click="AssignPerRequest(slotProps.data.ireq_id)"
-                        icon="bi bi-person-workspace"
-                        v-tooltip.bottom="'Click to Assign Per Request'"
-                      />
-                      <Button
-                        class="p-button-rounded mr-2 mt-2"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Assign Per Detail',
-                            params : {code: slotProps.data.ireq_id},})"
-                        icon="bi bi-people"
-                        v-tooltip.bottom="'Click to Assign Per Detail'"
-                      />
-                      <Button
-                        v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id"
-                        class="p-button-rounded p-button-success mr-2 mt-2"
-                        @click="Submit(slotProps.data.ireq_id)"
-                        icon="bi bi-send-check"
-                        v-tooltip.bottom="'Click to submit'"
-                      />
-                      </template>
-                  </Card>
-                </template>
-            </Carousel> -->
-            <!-- <Carousel :value="permohonan" :numVisible="3" :numScroll="1" orientation="vertical" verticalViewPortHeight="430px"
-                        style="max-width: 400px; margin-top: 2em">
-                <template #header>
-                </template>
-                <template #item="slotProps">
-                    <div class="product-item">
-                        <div class="product-item-content">
-                            <div class="mb-3">
-                                <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.name" class="product-image" />
-                            </div>
-                            <div>
-                                <h4 class="mb-1">{{slotProps.data.ireq_no}}</h4>
-                                <h6 class="mt-0 mb-3">${{slotProps.data.ireq_requestor}}</h6>
-                                <h7 class="mb-1">{{ formatDate(slotProps.data.ireq_date) }}</h7>
-
-                                <div class="car-buttons mt-5">
-                                    <Button icon="pi pi-search" class="p-button p-button-rounded mr-2" />
-                                    <Button icon="pi pi-star-fill" class="p-button-success p-button-rounded mr-2" />
-                                    <Button icon="pi pi-cog" class="p-button-help p-button-rounded" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Carousel> -->
                 <DataTable
                   :value="permohonan"
                   :paginator="true"
@@ -156,7 +48,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_count_id" header="Total Detail" :sortable="true" style="min-width:10rem"/>
@@ -297,7 +193,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:16rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -424,7 +324,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:7rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:7rem"/>
-                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -540,7 +444,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
@@ -617,7 +525,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPenugasan.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
@@ -711,7 +623,11 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
-                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:4rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                   <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -809,7 +725,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
-                  <Column field="div_name" header="Division User" style="min-width:10rem" :sortable="true"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:12rem" :sortable="true"/>
                   <Column field="ireq_status" header="Status" style="min-width:10rem" :sortable="true">
                   <template #body= "slotProps">
@@ -906,25 +826,29 @@
                     <template #body="slotProps">
                       <p v-if="slotProps.data.ireq_attachment == null"></p>
                       <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                        <!-- <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'"> -->
-                          <v-icon name="fc-image-file" animation="pulse" speed="slow" scale="2" style="cursor:pointer;"  @click="getDetail(slotProps.data.ireq_attachment)"/>
-                           <!-- <span class="px-3">IMAGE</span> -->
-                        <!-- </Button> -->
+                        <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
+                          <i class="pi pi-images px-2"></i>
+                           <span class="px-3">IMAGE</span>
+                        </Button>
                       </p>
                       <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                        <!-- <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'"> -->
-                          <v-icon name="vi-file-type-pdf" animation="pulse" speed="slow" scale="2" style="cursor:pointer;"  @click="getDetail(slotProps.data.ireq_attachment)"/>
-                           <!-- <span class="px-4">PDF</span> -->
-                        <!-- </Button> -->
+                        <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                          <i class="pi pi-file-pdf px-2"></i>
+                           <span class="px-4">PDF</span>
+                        </Button>
                       </p>
                     </template>  
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
-                  <template #body= "slotProps">
+                    <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
@@ -1005,7 +929,7 @@
                         <Dropdown
                             v-model="assign.name"
                             :options="petugas"
-                            optionValue="name"
+                            optionValue="code"
                             :filter="true"
                             optionLabel="name"
                             placeholder="Choose One"
@@ -1182,35 +1106,6 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
-      products: [
-      {"id": "1000","code": "f230fh0g3","name": "Bamboo Watch","description": "Product Description","image": "bamboo-watch.jpg","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
-       {"id": "1001","code": "nvklal433","name": "Black Watch","description": "Product Description","image": "black-watch.jpg","price": 72,"category": "Accessories","quantity": 61,"inventoryStatus": "INSTOCK","rating": 4},
-       {"id": "1002","code": "zz21cz3c1","name": "Blue Band","description": "Product Description","image": "blue-band.jpg","price": 79,"category": "Fitness","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": 3},
-       {"id": "1003","code": "244wgerg2","name": "Blue T-Shirt","description": "Product Description","image": "blue-t-shirt.jpg","price": 29,"category": "Clothing","quantity": 25,"inventoryStatus": "INSTOCK","rating": 5},
-       {"id": "1004","code": "h456wer53","name": "Bracelet","description": "Product Description","image": "bracelet.jpg","price": 15,"category": "Accessories","quantity": 73,"inventoryStatus": "INSTOCK","rating": 4},
-       {"id": "1005","code": "av2231fwg","name": "Brown Purse","description": "Product Description","image": "brown-purse.jpg","price": 120,"category": "Accessories","quantity": 0,"inventoryStatus": "OUTOFSTOCK","rating": 4},
-       {"id": "1006","code": "bib36pfvm","name": "Chakra Bracelet","description": "Product Description","image": "chakra-bracelet.jpg","price": 32,"category": "Accessories","quantity": 5,"inventoryStatus": "LOWSTOCK","rating": 3},
-       {"id": "1007","code": "mbvjkgip5","name": "Galaxy Earrings","description": "Product Description","image": "galaxy-earrings.jpg","price": 34,"category": "Accessories","quantity": 23,"inventoryStatus": "INSTOCK","rating": 5},
-       {"id": "1008","code": "vbb124btr","name": "Game Controller","description": "Product Description","image": "game-controller.jpg","price": 99,"category": "Electronics","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": 4},
-       {"id": "1009","code": "cm230f032","name": "Gaming Set","description": "Product Description","image": "gaming-set.jpg","price": 299,"category": "Electronics","quantity": 63,"inventoryStatus": "INSTOCK","rating": 3}
-      ],
-			responsiveOptions: [
-				{
-					breakpoint: '1024px',
-					numVisible: 3,
-					numScroll: 3
-				},
-				{
-					breakpoint: '600px',
-					numVisible: 2,
-					numScroll: 2
-				},
-				{
-					breakpoint: '480px',
-					numVisible: 1,
-					numScroll: 1
-				}
-			],
         mail:{
           body:'',
           footer:'',
@@ -1254,6 +1149,9 @@ export default {
         sudahDikerjakan:[],
         selesai:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        token: localStorage.getItem('token'),
+        checkname : [],
+        checkto : [],
         showPersonelPermohonan:[],
         showPersonelAtasanDivisi:[],
         showPersonelmanager:[],
@@ -1269,8 +1167,20 @@ export default {
     this.getIct();
   },
   methods: {
+    getDivision(profileDetail){
+      try {
+        const parsedDetail = JSON.parse(profileDetail);
+        const division = parsedDetail.division || 'N/A';
+
+        // Remove double quotes around the division value
+        return division.replace(/^"(.*)"$/, '$1');
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return 'N/A'; // Display 'N/A' if there is an error parsing JSON
+      }
+    },
     SendEmail(usr_email,ireq_id){
-      this.axios.get('/api/detailrequest-tomail/'+ireq_id).then((res)=>{
+      this.axios.get('/api/detailrequest-tomail/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
         // this.dialogSendMail = true;
         var frommail = usr_email + "@emp.id";
         // this.mail.from = res.data.fromemail;
@@ -1295,7 +1205,7 @@ export default {
       };
     },
     updateMail(){
-      this.axios.post('/api/sendMailtoRequestor',this.mail).then(()=>{
+      this.axios.post('/api/sendMailtoRequestor',this.mail,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.cancelMail();
       });
     },
@@ -1341,7 +1251,7 @@ export default {
       this.$router.push('/ict-request-reviewer/detail-penugasan/'+ireq_id)
     },
     getIct(){
-      this.axios.get('api/get-data-reviewer').then((response)=> {
+      this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.permohonan = response.data.ict;
           this.showPersonelPermohonan = this.permohonan.map((x)=>x.ireq_count_status);
           this.showRemarkPermohonan = this.permohonan.map((x)=>x.count_remark);
@@ -1394,7 +1304,7 @@ export default {
             detail: "Success Submit",
             life: 3000,
           });
-          this.axios.get('api/sapr/'+ireq_id).then(()=>{
+          this.axios.get('api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.getIct();
           });
         },
@@ -1404,7 +1314,7 @@ export default {
     Remark(ireq_id){
       this.loading = true;
       this.remark.id = ireq_id;
-      this.axios.get('api/get-remark-reviewer/'+ireq_id).then((res)=>{
+      this.axios.get('api/get-remark-reviewer/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
         this.remark.remark = res.data.ireq_verificator_remark;
         this.dialogRemark = true;
         this.loading = false;
@@ -1418,7 +1328,7 @@ export default {
     updateRemark(){
       this.dialogRemark = false;
       this.loading = true;
-      this.axios.post('api/save-remark-reviewer',this.remark).then(()=>{
+      this.axios.post('api/save-remark-reviewer',this.remark, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "info",
           summary: "Success",
@@ -1441,7 +1351,7 @@ export default {
     updateReject(){
         this.submitted = true;
         if(this.rbr.ket != null){
-          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr).then(()=>{
+          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.dialogReject = false;    
             this.rbr.id = null;
             this.rbr.ket = null;
@@ -1473,7 +1383,7 @@ export default {
             detail: "Success Update Request",
             life:2000
           });
-          this.axios.get('/api/naa/' +ireq_id).then(()=>{
+          this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.getIct();
           });
         },
@@ -1496,7 +1406,7 @@ export default {
             detail: "Success Update Request",
             life:2000
           });
-          this.axios.get('/api/nam/' +ireq_id).then(()=>{
+          this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.getIct();
           });
         },
@@ -1505,7 +1415,7 @@ export default {
     },
     AssignPerRequest(ireq_id){
         this.assign.id = ireq_id;
-        this.axios.get('api/get-pekerja').then((response)=>{
+        this.axios.get('api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.petugas = response.data;
         });
         this.dialogAssign = true;
@@ -1513,7 +1423,7 @@ export default {
     updateAssign(){
         this.submitted = true;
         if(this.assign.name != null){
-          this.axios.post('/api/aprr', this.assign).then(()=>{
+          this.axios.post('/api/aprr', this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.assign = {
               id : null,
               name : null
@@ -1554,7 +1464,7 @@ export default {
               detail: "Closing request successful",
               life: 3000,
             });
-            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id).then(()=>{
+            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
               this.getIct();
             });
           },
@@ -1564,7 +1474,7 @@ export default {
     detailRequest(ireq_id){
       this.displayDetailRequest = true;
       this.loadingDetail = true;
-      this.axios.get('/api/detail-request-reviewer/' + ireq_id).then((response)=> {
+      this.axios.get('/api/detail-request-reviewer/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
         this.ireq_no = response.data[0].ireq_no;
         this.loadingDetail = false;
@@ -1572,7 +1482,7 @@ export default {
     },
     CetakPdf(ireq_id){
       this.loading = true;
-       this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
+       this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1581,7 +1491,7 @@ export default {
     },
     CetakPdfPermohonan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-permohonan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1604,7 +1514,7 @@ export default {
     },
     CetakPdfAtasanDivisi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi').then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1627,7 +1537,7 @@ export default {
     },
     CetakPdfIctManager(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-ict-manager').then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-ict-manager',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=no","target=_blank");
           myWindow.document.write(responseHtml);
@@ -1650,7 +1560,7 @@ export default {
     },
     CetakPdfReject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-reject').then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1673,7 +1583,7 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-assignment-request').then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1696,7 +1606,7 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1719,7 +1629,7 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1742,7 +1652,7 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-selesai').then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1800,8 +1710,4 @@ export default {
 .template .p-button.twitter:focus {
     box-shadow: 0 0 0 1px var(--blue-200);
 }
-.request-image {
-        width: 50%;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
-    }
 </style>

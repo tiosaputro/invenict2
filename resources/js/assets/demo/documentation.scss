@@ -41,7 +41,7 @@ pre[class*="language-"] {
 i:not([class~="pi"]) {
     background-color: transparent;
     color: #2196f3;
-    font-family: Monaco, courier, monospace;
+    font-family: var(--font-family-emp);
     font-style: normal;
     font-size: 12px;
     font-weight: 500;

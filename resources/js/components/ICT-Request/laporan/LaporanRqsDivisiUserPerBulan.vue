@@ -58,6 +58,7 @@ export default {
          tahunn:[],
          loading: false,
          req: [],
+         token: localStorage.getItem('token'),
          checkname : [],
          checkto : [],
             items: [
@@ -83,7 +84,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('api/cek-user').then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Divisi User Per Bulan") || this.checkto.includes("/report-div-user-per-bulan")){
@@ -95,7 +96,7 @@ export default {
       });
     },
         getBulan(){
-            this.axios.get('api/get-tahun').then((response)=>{
+            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.bulan = response.data.grafik2;
             }).catch(error=>{
           if (error.response.status == 401){
@@ -111,7 +112,7 @@ export default {
         getTahunUser(){
             this.tahunnUser = null;
             if(this.bulanUser != null){
-                this.axios.get('api/get-tahun-user/'+this.bulanUser).then((response)=>{
+                this.axios.get('api/get-tahun-user/'+this.bulanUser, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                     this.tahunn = response.data;
                 });
             }
@@ -120,7 +121,7 @@ export default {
             if(this.tahunnUser != null &&
                 this.bulanUser != null){
                 this.loading = true;
-                this.axios.get('api/count-per-divuser-bulan/'+this.tahunnUser +'/'+this.bulanUser).then((response)=>{ 
+                this.axios.get('api/count-per-divuser-bulan/'+this.tahunnUser +'/'+this.bulanUser, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{ 
                     this.req = response.data;
                     this.loading = false;
                 }).catch(error => console.log(error.response))

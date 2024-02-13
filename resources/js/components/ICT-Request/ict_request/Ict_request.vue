@@ -48,7 +48,11 @@
                     </Column>
                     <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:10rem"/>
                     <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
-                    <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                    <Column field="profile_detail" header="User Division" :sortable="true" style="min-width:10rem">
+                      <template #body="slotProps">
+                        {{ getDivision(slotProps.data.profile_detail) }}
+                      </template>
+                    </Column>
                     <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" v-if="this.showRemarkPermohonan.some(el=> el > 0)" style="min-width:12rem"/>
                     <Column headerStyle="min-width:13rem">
                       <template #body="slotProps">
@@ -144,7 +148,11 @@
                     </Column>
                     <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:10rem"/>
                     <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
-                    <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                    <Column field="profile_detail" header="User Division" :sortable="true" style="min-width:10rem">
+                      <template #body="slotProps">
+                        {{ getDivision(slotProps.data.profile_detail) }}
+                      </template>
+                    </Column>
                     <Column header="Status" :sortable="true" style="min-width:14rem">
                       <template #body= "slotProps">
                         <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -221,7 +229,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="User Division" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
                     <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -298,7 +310,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="User Division" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
                     <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -375,7 +391,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="User Division" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
@@ -452,7 +472,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="User Division" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:8rem">
                     <template #body="slotProps">
@@ -546,8 +570,12 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+                  <Column field="profile_detail" header="User Division" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
                     <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -632,22 +660,26 @@
                       <p v-if="slotProps.data.ireq_attachment == null"></p>
                       <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
                         <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
-                  <i class="pi pi-images px-2"></i>
-                   <span class="px-3">IMAGE</span>
-                </Button>
+                          <i class="pi pi-images px-2"></i>
+                          <span class="px-3">IMAGE</span>
+                        </Button>
                       </p>
                       <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
                         <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
-                <i class="pi pi-file-pdf px-2"></i>
-                  <span class="px-4">PDF</span>
-              </Button>
+                          <i class="pi pi-file-pdf px-2"></i>
+                          <span class="px-4">PDF</span>
+                        </Button>
                       </p>
                     </template>  
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
+                  <Column field="profile_detail" header="User Division" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
                       <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -777,12 +809,27 @@ export default {
       sudahDikerjakan:[],
       selesai:[],
       filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+      token: localStorage.getItem('token'),
+      checkname : [],
+      checkto : [],
     };
   },
   created() {
     this.getIct();
   },
   methods: {
+    getDivision(profileDetail){
+      try {
+        const parsedDetail = JSON.parse(profileDetail);
+        const division = parsedDetail.division || 'N/A';
+
+        // Remove double quotes around the division value
+        return division.replace(/^"(.*)"$/, '$1');
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return 'N/A'; // Display 'N/A' if there is an error parsing JSON
+      }
+    },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
@@ -831,7 +878,7 @@ export default {
         data.append("ireq_id", this.reason.ireq_id);
         data.append("id", this.reason.id);
         data.append("ket", this.reason.ket);
-        this.axios.post('/api/submit-rating',data).then(()=>{
+        this.axios.post('/api/submit-rating',data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.reason = {id:null, ket :null, ireq_id:null};
           this.dialogEdit = false;
           this.loading = true;
@@ -857,7 +904,7 @@ export default {
         data.append("rating", this.rating);
         data.append("id", this.reason.id);
         data.append("ireq_id", this.reason.ireq_id);
-        this.axios.post('/api/submit-rating',data).then(()=>{
+        this.axios.post('/api/submit-rating',data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.rating = null;
           this.sangat_bagus = false;
           this.bagus=false;
@@ -882,7 +929,7 @@ export default {
       this.dialogEdit = true;
     },
     getIct(){
-      this.axios.get('api/get-ict').then((response)=> {
+      this.axios.get('api/get-ict',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.ict = response.data.ict;
           this.showRemarkPermohonan = this.ict.map((x)=>x.countremark_reviewer);
           this.loading = false;
@@ -923,7 +970,7 @@ export default {
         rejectLabel: "No",
         accept: () => {
           this.loading = true;
-          this.axios.get('api/updateStatusSubmit/' +ireq_id).then(()=>{
+          this.axios.get('api/updateStatusSubmit/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.getIct();
             this.$toast.add({
               severity: "info",
@@ -945,7 +992,7 @@ export default {
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
-          this.axios.delete('api/delete-ict/' +ireq_id).then(()=>{
+          this.axios.delete('api/delete-ict/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.$toast.add({
               severity: "info",
               summary: "Confirmed",
@@ -961,7 +1008,7 @@ export default {
     },
     CetakPdfPermohonan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-permohonan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -984,7 +1031,7 @@ export default {
     },
     CetakPdfReviewer(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-tab-reviewer').then((response)=>{
+       this.axios.get('api/report-ict-pdf-tab-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1007,7 +1054,7 @@ export default {
     },
     CetakPdfVerifikasi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-verifikasi').then((response)=>{
+       this.axios.get('api/report-ict-pdf-verifikasi',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1030,7 +1077,7 @@ export default {
     },
     CetakPdfTabReject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reject').then((response)=>{
+       this.axios.get('api/report-ict-pdf-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1053,7 +1100,7 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-assignment-request').then((response)=>{
+       this.axios.get('api/report-ict-pdf-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1076,7 +1123,7 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-sedang-dikerjakan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1099,7 +1146,7 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-tab-sudah-dikerjakan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-tab-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1122,7 +1169,7 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-selesai').then((response)=>{
+       this.axios.get('api/report-ict-pdf-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1145,7 +1192,7 @@ export default {
     },
     CetakPdf(ireq_id){
       this.loading = true;
-       this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
+       this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

@@ -1,7 +1,7 @@
 <template>
 <Toast />
 <div class="grid">
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasiadmin">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasiadmin >= 0">
 			<div @click="blmDiverifikasiAdmin()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -14,7 +14,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasiadmin">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasiadmin >= 0">
 			<div @click="sdhDiverifikasiAdmin()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectadmin">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectadmin >= 0">
 			<div @click="diRejectAdmin()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -40,7 +40,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanadmin">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanadmin >= 0">
 			<div @click="sdgDikerjakanAdmin()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -53,7 +53,7 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanadmin">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanadmin >= 0">
 				<div @click="sdhDikerjakanAdmin()" class="card mb-0">
 					<div class="flex justify-content-between mb-3">
 						<div>
@@ -66,7 +66,7 @@
 					</div>
 				</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaiadmin">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaiadmin >= 0">
 				<div @click="sdhSelesaiAdmin()" class="card mb-0">
 					<div class="flex justify-content-between mb-3">
 						<div>
@@ -79,7 +79,7 @@
 					</div>
 				</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.countrequestadmin">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.countrequestadmin >= 0">
 				<div @click="totalKeseluruhanAdmin()" class="card mb-0">
 					<div class="flex justify-content-between mb-3">
 						<div>
@@ -92,7 +92,7 @@
 					</div>
 				</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewmanager">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewmanager >= 0">
 			<div @click="sdgDireview4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -105,7 +105,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmdiverifikasimanager">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmdiverifikasimanager >= 0">
 			<div @click="blmDiverifikasi4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -118,7 +118,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasimanager">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasimanager >= 0">
 			<div @click="sdhDiverifikasi4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -131,7 +131,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectmanager">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectmanager >= 0">
 			<div @click="direject4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -144,7 +144,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequestmanager">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequestmanager >= 0">
 			<div @click="penugasanRequest4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -157,7 +157,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanmanager">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanmanager >= 0">
 			<div @click="sdgdikerjakan4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -170,7 +170,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanmanager">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanmanager >= 0">
 			<div @click="sdHDikerjakan4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -183,7 +183,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaimanager">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaimanager >= 0">
 			<div @click="sdhSelesai4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -196,7 +196,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalrequestmanager">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalrequestmanager >= 0">
 			<div @click="totalRequest4()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -209,7 +209,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasibentu">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasibentu >= 0">
 			<div @click="blmDiassign2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -222,7 +222,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisibentu">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisibentu >= 0">
 			<div @click="atasanDivisi2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -235,7 +235,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerbentu">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerbentu >= 0">
 			<div @click="IctManager2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -248,7 +248,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectbentu">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectbentu >= 0">
 			<div @click="direject2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -261,7 +261,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestbentu">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestbentu >= 0">
 			<div @click="penugasanRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -274,7 +274,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakanbentu">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakanbentu >= 0">
 			<div @click="sdgDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -287,7 +287,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakanbentu">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakanbentu >= 0">
 			<div @click="sdhDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -300,7 +300,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaibentu">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaibentu >= 0">
 			<div @click="sdhSelesai2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -313,7 +313,7 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestbentu">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestbentu >= 0">
 			<div @click="totalRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -326,7 +326,7 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasikurau">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasikurau >= 0">
 			<div @click="blmDiassign2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -339,7 +339,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisikurau">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisikurau >= 0">
 			<div @click="atasanDivisi2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -352,7 +352,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerkurau">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerkurau >= 0">
 			<div @click="IctManager2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -365,7 +365,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectkurau">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectkurau >= 0">
 			<div @click="direject2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -378,7 +378,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestkurau">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestkurau >= 0">
 			<div @click="penugasanRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -391,7 +391,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakankurau">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakankurau >= 0">
 			<div @click="sdgDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -404,7 +404,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakankurau">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakankurau >= 0">
 			<div @click="sdhDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -417,7 +417,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaikurau">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaikurau >= 0">
 			<div @click="sdhSelesai2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -430,7 +430,7 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestkurau">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestkurau >= 0">
 			<div @click="totalRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -443,7 +443,7 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasijakarta">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.blmDiverifikasijakarta >= 0">
 			<div @click="blmDiassign2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -456,7 +456,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisijakarta">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.atasandivisijakarta >= 0">
 			<div @click="atasanDivisi2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -469,7 +469,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerjakarta">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.managerjakarta >= 0">
 			<div @click="IctManager2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -482,7 +482,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectjakarta">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectjakarta >= 0">
 			<div @click="direject2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -495,7 +495,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestjakarta">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanRequestjakarta >= 0">
 			<div @click="penugasanRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -508,7 +508,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakanjakarta">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdgdikerjakanjakarta >= 0">
 			<div @click="sdgDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -521,7 +521,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakanjakarta">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhdikerjakanjakarta >= 0">
 			<div @click="sdhDikerjakan2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -534,7 +534,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaijakarta">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sdhselesaijakarta >= 0">
 			<div @click="sdhSelesai2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -547,7 +547,7 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestjakarta">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalRequestjakarta >= 0">
 			<div @click="totalRequest2()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -560,7 +560,7 @@
 				</div>
 			</div>
 		</div>	
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequestpersonnel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequestpersonnel >= 0">
 			<div @click="penugasanRequest3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -573,7 +573,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectedpersonnel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.rejectedpersonnel >= 0">
 			<div @click="diReject3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -586,7 +586,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumselesaipersonnel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumselesaipersonnel >= 0">
 			<div @click="blmSelesai3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -599,7 +599,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanpersonnel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanpersonnel >= 0">
 			<div @click="sdHDikerjakan3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -612,7 +612,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaipersonnel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaipersonnel >= 0">
 			<div @click="sdhSelesai3()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -625,7 +625,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewhigherlevel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewhigherlevel >= 0">
 			<div @click="sdgDireview1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -638,7 +638,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasihigherlevel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasihigherlevel >= 0">
 			<div @click="blmDiverifikasi1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -651,7 +651,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasihigherlevel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasihigherlevel >= 0">
 			<div @click="sdhDiverifikasi1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -664,7 +664,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjecthigherlevel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjecthigherlevel >= 0">
 			<div @click="diReject1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -677,7 +677,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequesthigherlevel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.penugasanrequesthigherlevel >= 0">
 			<div @click="penugasanRequest1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -690,7 +690,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanhigherlevel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanhigherlevel >= 0">
 			<div @click="sdgDikerjakan1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -703,7 +703,7 @@
 				</div>
 			</div>
 		</div>	
-    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanhigherlevel">
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanhigherlevel >= 0">
 			<div @click="sdhDikerjakan1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -716,7 +716,7 @@
 				</div>
 			</div>
 		</div>	
-    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaihigherlevel">
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesaihigherlevel >= 0">
 			<div @click="sdhSelesai1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -729,7 +729,7 @@
 				</div>
 			</div>
     	</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalhigherlevel">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.totalhigherlevel >= 0">
 			<div @click="totalRequest1()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -742,7 +742,7 @@
 				</div>
 			</div>
     	</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewrequestor">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdireviewrequestor >= 0">
 			<div @click="sdgDireview()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -755,7 +755,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasirequestor">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.belumdiverifikasirequestor >= 0">
 			<div @click="blmDiverifikasi()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -768,7 +768,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasirequestor">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdiverifikasirequestor >= 0">
 			<div @click="sdhDiverifikasi()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -781,7 +781,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectrequestor">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.direjectrequestor >= 0">
 			<div @click="diReject()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -794,7 +794,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanrequestor">
+		<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sedangdikerjakanrequestor >= 0">
 			<div @click="sdgDikerjakan()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -807,7 +807,7 @@
 				</div>
 			</div>
 		</div>	
-    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanrequestor">
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahdikerjakanrequestor >= 0">
 			<div @click="sdhDikerjakan()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -820,7 +820,7 @@
 				</div>
 			</div>
 		</div>	
-    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesairequestor">
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.sudahselesairequestor >= 0">
 			<div @click="sdhSelesai()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>
@@ -833,7 +833,7 @@
 				</div>
 			</div>
     	</div>	
-    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.countrequestrequestor">
+    	<div class="col-12 lg:col-6 xl:col-3" v-if="this.count.countrequestrequestor >= 0">
 			<div @click="totalKeseluruhan()" class="card mb-0">
 				<div class="flex justify-content-between mb-3">
 					<div>

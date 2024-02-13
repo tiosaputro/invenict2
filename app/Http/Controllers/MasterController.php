@@ -100,7 +100,9 @@ class MasterController extends Controller
             $join->on('id.invent_bu','vr.company_code');
         })
         ->select('im.invent_code','im.invent_type','id.invent_photo','im.invent_desc','lrs.lookup_desc as invent_brand',
-        'id.invent_sn',DB::RAW("(im.invent_desc|| '-' || lrs.lookup_desc || '-' || im.invent_type ) as name"),DB::raw("TO_CHAR(id.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"),'id.invent_lama_garansi','lrfs.lookup_desc as invent_kondisi','vr.name as invent_bu',
+        'id.invent_sn',DB::RAW("(im.invent_desc|| '-' || lrs.lookup_desc || '-' || im.invent_type ) as name"),
+        DB::raw("TO_CHAR(id.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"),'id.invent_lama_garansi',
+        'lrfs.lookup_desc as invent_kondisi','vr.name as invent_bu',
         'id.invent_lokasi_previous','id.invent_lokasi_update','id.invent_bu_previous','id.invent_bu_update','id.invent_pengguna_previous',
         'id.invent_pengguna_update')
         ->where('id.invent_code_dtl',$invent_code_dtl)

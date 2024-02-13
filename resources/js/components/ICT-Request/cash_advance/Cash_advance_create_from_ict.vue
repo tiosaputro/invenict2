@@ -244,31 +244,43 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
+      token: localStorage.getItem('token'),
+      checkname : [],
+      checkto : [],
     };
   },
   created(){
-      this.getDataCA();
+      this.cekUser();
   },
   methods: {
-    getDataCA(){
-      this.axios.get('/api/getNameBu/'+this.$route.params.code+'/'+this.$route.params.dtl).then((response)=> {
+    cekUser(){
+        this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.checkto = response.data.map((x)=> x.to)
+          this.checkname = response.data.map((x)=> x.name)
+          if(this.checkname.includes("Status Change Request") || this.checkto.includes("/ict-request-divisi3")){ 
+            this.get();
+          }
+          else {
+            this.$router.push('/access');
+          }
+        });
+    },
+    get(){
+      this.axios.get('/api/getNameBu/'+this.$route.params.code+'/'+this.$route.params.dtl,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.ca = response.data;
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
           }
-          if(error.response.status == 403){
-            this.$router.push('/access');
-          }
         });
     }, 
     getNoreq(){
-      this.axios.get('/api/getNoreq').then((response)=>{
+      this.axios.get('/api/getNoreq',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.req = response.data;
       }).catch(error=>{
         if (error.response.status == 401){
@@ -294,7 +306,7 @@ export default {
         data.append("tglsub", this.tglsub);
         data.append("tgltouser", this.tgltouser);
 
-        this.axios.post('/api/add-cash', data).then((response)=>{
+        this.axios.post('/api/add-cash', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           setTimeout( () => this.$router.push('/cash-advance'),1000);
           this.$toast.add({
             severity: "success",

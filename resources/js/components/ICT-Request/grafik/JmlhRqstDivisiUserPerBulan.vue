@@ -19,6 +19,7 @@ export default {
     data() {
         return {
             color: '1976D2',
+            token: localStorage.getItem('token'),
             perDivisiUserBulan:{},
             bulanUser:null,
             tahunnUser:null,
@@ -40,7 +41,7 @@ export default {
     },
     methods: {
         cekUser(){
-        this.axios.get('api/cek-user').then((response)=>{
+        this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Divisi User Per Bulan") || this.checkto.includes("/req-per-divisi-user-per-bulan")){
@@ -52,7 +53,7 @@ export default {
         });
         },
         getBulan(){
-            this.axios.get('api/get-tahun').then((response)=>{
+            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.bulan = response.data.grafik2;
             }).catch(error=>{
           if (error.response.status == 401){
@@ -68,7 +69,7 @@ export default {
         getTahunUser(){
             this.tahunnUser = null;
             if(this.bulanUser != null){
-                this.axios.get('api/get-tahun-user/'+this.bulanUser).then((response)=>{
+                this.axios.get('api/get-tahun-user/'+this.bulanUser, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                     this.tahunn = response.data;
                 });
             }
@@ -76,7 +77,7 @@ export default {
         getPerDivisiUserBulan(){
             if(this.tahunnUser != null &&
                 this.bulanUser != null){
-                this.axios.get('api/count-per-divuser-bulan/'+this.tahunnUser +'/'+this.bulanUser).then((response)=>{ 
+                this.axios.get('api/count-per-divuser-bulan/'+this.tahunnUser +'/'+this.bulanUser, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{ 
                     this.nameBulanUser = response.data[0].bulan+this.tahunnUser;
                     this.perDivisiUserBulan = {
                         labels : response.data.map((x)=>x.div_name),

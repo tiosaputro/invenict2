@@ -113,11 +113,15 @@ export default {
         detail: [],
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        code : this.$route.params.code,
+        token: localStorage.getItem('token'),
+        checkname : [],
+        checkto : [],
         status:''
     };
   },
   mounted() {
-    this.getIctDetail();
+    this.cekUser();
   },
   methods: {
     formatDate(date){
@@ -128,29 +132,43 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-manager")){ 
+          this.getIctDetail();
+          this.getNoreq();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-penugasan-manager/' + this.$route.params.code).then((response)=> {
-        this.detail = response.data.data.detail;
-        this.kode = response.data.data.norequest;
-        this.status = response.data.data.norequest.cekstatus;
+      this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$route.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired','true')
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
+      });
+    },
+    getNoreq(){
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.kode = response.data;
+        this.status = response.data.cekstatus;
       });
     },
     CetakPdf(){
      this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

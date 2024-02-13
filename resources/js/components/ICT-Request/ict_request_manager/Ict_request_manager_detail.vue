@@ -50,6 +50,7 @@
           <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
           <Column field="name" header="Items" :sortable="true" style="min-width:10rem"/>
+          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:14rem"/>
           <Column header="Attachment" style="min-width:10rem">
@@ -111,10 +112,15 @@ export default {
         detail: [],
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        code : this.$route.params.code,
+        token: localStorage.getItem('token'),
+        checkname : [],
+        checkto : [],
+        status:''
     };
   },
   mounted() {
-   this.getIctDetail();
+   this.cekUser();
   },
   methods: {
     formatDate(date){
@@ -125,23 +131,38 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-manager")){ 
+          this.getIctDetail();
+          this.getNoreq();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-manager/' + this.$route.params.code).then((response)=> {
-        this.detail = response.data.data.detail;
-        this.kode = response.data.data.norequest;
+      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data;
         this.loading = false;
       }).catch(error=>{
-          if (error.response.status == 401) {
+        if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$route.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired','true')
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
+      });
+    },
+    getNoreq(){
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.kode = response.data;
+        this.status = response.data.cekstatus;
       });
     },
     DeleteIct(ireqd_id){
@@ -159,15 +180,15 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id);
-          this.getIctDetail();
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}});
+        this.getIctDetail();
         },
         reject: () => {},
       });
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

@@ -1,28 +1,34 @@
 <template>
   <div>
-        <Toast />
-        <div class="card">
+    <Toast />
+      <div class="card">
         <Toolbar class="mb-4">
           <template v-slot:start>
 				    <h4>ICT Request - Add Request</h4>
           </template>
         </Toolbar>
-            <div class="card-body">
-             <form @submit.prevent="CreateIct">
-               <!-- <div class="field grid">
-                <label class="col-fixed w-9rem">No. Request</label>
-               </div> -->
-              <div class="field grid">
+          <div class="card-body">
+            <form @submit.prevent="CreateIct">
+              <div class="flex flex-wrap gap-3" style="margin-bottom:1em">
+                <div class="w-9rem">Request For</div>
+                <div class="flex align-items-center">
+                    <RadioButton v-model="requestfor" @change="changeUser()" inputId="requestfor" name="1" value="1" />
+                    <label for="requestfor" class="ml-2">Personnal</label>
+                </div>
+                <div class="flex align-items-center">
+                    <RadioButton v-model="requestfor" @change="changeUser()" inputId="requestfor" name="2" value="2" />
+                    <label for="requestfor" class="ml-2">Others</label>
+                </div>
+              </div>
+              <div class="field grid" v-if="this.requestfor">
                 <label class="col-fixed w-9rem">Priority Level</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
-                        v-model="priolev"
+                        v-model="request.priolev"
                         :options="level"
                         optionLabel="name"
                         optionValue="code"
                         placeholder="Select One"
-                        :showClear="true"
-                        :filter="true"
                         :class="{ 'p-invalid': error.priolev }"
                      />
                         <small v-if="error.priolev" class="p-error">
@@ -30,65 +36,99 @@
                         </small>
                 </div>
               </div>
-              <div class="field grid">
+              <div class="field grid" v-if="this.requestfor">
                 <label class="col-fixed w-9rem">Requestor</label>
                  <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
-                    v-model="requestor"
+                    v-model="request.requestor_name"
                     disabled
                   />
                  </div>
               </div>
-              <div class="field grid">
+              <div class="field grid" v-if="this.requestfor" >
                 <label class="col-fixed w-9rem">User</label>
                  <div class="col-fixed w-9rem">
-                  <InputText
-                    type="text"
-                    v-model="usr_name"
-                    placeholder="Enter User"
-                    :class="{ 'p-invalid': error.usr_name }"
-                  />
+                  <Dropdown 
+                        :disabled="isDisabledUser"
+                        v-model ="request.usr_name"
+                        :options="userList"
+                        optionLabel="usr_fullname"
+                        optionValue="usr_id"
+                        @change="getDataBuDvision(request.usr_name)"
+                        :class="{ 'p-invalid': error.usr_name }"
+                        placeholder="Select One"
+                        :filter="true"
+                        :showClear="true"
+                     />
+                        <small v-if="error.usr_name" class="p-error">
+                          {{error.usr_name}}
+                        </small>
                   <small v-if="error.usr_name" class="p-error">
                     {{error.usr_name}}
                   </small>
                  </div>
               </div>
-              <div class="field grid">
+              <div class="field grid" v-if="this.request.usr_name">
                 <label class="col-fixed w-9rem">User Business Unit</label>
-                 <div class="col-fixed w-9rem">
-                     <Dropdown 
-                        v-model ="bisnis"
+                 <div class="col-fixed w-10rem">
+                     <!-- <Dropdown 
+                        v-model ="request.usr_requestor_bu_id"
                         :options="bu"
                         optionLabel="name"
                         optionValue="code"
-                        :class="{ 'p-invalid': error.bisnis }"
+                        :class="{ 'p-invalid': error.usr_requestor_bu_id }"
                         placeholder="Select One"
                         :filter="true"
                         :showClear="true"
                      />
-                        <small v-if="error.bisnis" class="p-error">
-                          {{error.bisnis}}
-                        </small>
+                        <small v-if="error.usr_requestor_bu_id" class="p-error">
+                          {{error.usr_requestor_bu_id}}
+                        </small> -->
+                        <InputText
+                          type="text"
+                          v-model="request.usr_bu_id"
+                          disabled
+                        />
+                      </div>
+              </div>
+              <div class="field grid" v-if="this.request.usr_name">
+                <label class="col-fixed w-9rem">User Division</label>
+                 <div class="col-fixed w-10rem">
+                    <InputText
+                      type="text"
+                      v-model="request.usr_div_id"
+                      disabled
+                    />
                 </div>
               </div>
-              <div class="field grid">
-                <label class="col-fixed w-9rem">User Division</label>
-                 <div class="col-fixed w-9rem">
-                     <Dropdown 
-                        v-model ="usr_divisi"
-                        :options="divisi"
-                        optionLabel="name"
-                        optionValue="code"
-                        :class="{ 'p-invalid': error.usr_divisi }"
+              <div class="field grid" v-if="this.request.usr_name">
+                <label class="col-fixed w-9rem">User Department</label>
+                 <div class="col-fixed w-10rem">
+                    <InputText
+                      type="text"
+                      v-model="request.usr_department"
+                      disabled
+                    />
+                </div>
+              </div>
+              <div class="field grid" v-if="this.request.usr_name">
+                <label class="col-fixed w-9rem">Your Supervisor</label>
+                  <div class="col-fixed w-9rem">
+                      <Dropdown 
+                        v-model ="request.ireq_spv"
+                        :options="spvList"
+                        optionLabel="spvnamejob"
+                        optionValue="spv_id"
+                        :class="{ 'p-invalid': error.ireq_spv }"
                         placeholder="Select One"
                         :filter="true"
                         :showClear="true"
                      />
-                        <small v-if="error.usr_divisi" class="p-error">
-                          {{error.usr_divisi}}
+                        <small v-if="error.ireq_spv" class="p-error">
+                          {{error.ireq_spv}}
                         </small>
-                </div>
+                  </div>
               </div>
               <div class="form-group">
                  <Button
@@ -110,27 +150,28 @@
             </form>
           </div>
       </div>
-      </div>
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      requestfor:'',
+      isDisabledUser:false,
       loading:false,
       errors: [],
       level:[],
       error:[],
-      tgl: new Date(),
-      tipereq: null,
-      priolev:null,
-      usr_name:null,
-      usr_divisi : null,
-      requestor:'',
-      ket:null,
-      divisi:[],
-      bisnis: null,
+      userList:[],
+      spvList:[],
+      request:{
+        tgl: new Date(),
+        priolev:null,
+        usr_name:null,
+        ireq_spv:'',
+        usr_department:'',
+      },
       type: [],
-      bu: [],
       mask:{
         input: 'DD MMM YYYY'
       },
@@ -141,25 +182,40 @@ export default {
       this.getType();
   },
   methods: {
+    changeUser(){
+        this.axios.get('api/user-list').then((response)=>{
+          if(this.requestfor == 1){
+              this.request.requestor_name = response.data.requestor.usr_fullname; 
+              this.request.usr_name = response.data.requestor.usr_id;
+              this.userList = response.data.userlist;
+              this.isDisabledUser = true;
+              this.getDataBuDvision(response.data.requestor.usr_id);
+            }else{
+              this.isDisabledUser = false;
+              this.userList = response.data.userlist;
+              this.request.usr_name = null;
+              this.request.requestor_name = response.data.requestor.usr_fullname; 
+          }
+        });
+    },
+    getDataBuDvision(code){
+        this.axios.get('api/data-divbu/' + code).then((response)=>{
+          this.request.usr_div_id = response.data.division;
+          this.request.usr_bu_id = response.data.bu;
+          this.request.usr_department = response.data.department;
+        });
+    },
     getType(){
       this.axios.get('api/getAddReq').then((response)=>{
         this.type = response.data.ref;
         this.bu = response.data.bisnis;
-        this.divisi = response.data.divisi;
-        this.level = response.data.prio;
-        this.requestor = response.data.fullname; 
+        this.level = response.data.priority;
+        this.userList = response.data.userlist;
+        this.spvList =  response.data.listSupervisor;
       }).catch(error=>{
-        if ((error.response.status == 401)){
-            this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem("Expired","true")
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$router.push('/access');
-          }
+        if(error.response.status == '401'){
+          return this.$router.push('/login')
+        }
       });
     },
     CreateIct() {
@@ -167,45 +223,31 @@ export default {
       this.error = [];
       this.loading = true;
       if (
-        this.priolev != null &&
-        this.usr_name != null &&
-        this.usr_divisi != null &&
-        this.bisnis != null
+        this.request.priolev != null &&
+        this.request.usr_name != null 
       )
       {
-        const data = new FormData();
-        data.append("tgl", this.tgl);
-        data.append("bisnis", this.bisnis);
-        data.append("user_name", this.usr_name);
-        data.append("user_divisi", this.usr_divisi);
-        data.append("priolev", this.priolev);
 
-        this.axios.post('api/add-ict', data).then((response)=>{
-          this.$toast.add({
-            severity: "success",
-            summary: "Success Message",
-            detail: "Success Create",
-          });
-          setTimeout( () => this.$router.push({name: 'Add Ict Request Detail', params: { code: response.data.data.ireq_id }, }),1000);
+        this.axios.post('api/add-ict', this.request).then((response)=>{
+        this.$toast.add({
+          severity: "success",
+          summary: "Success Message",
+          detail: "Success Create",
+        });
+        this.code = response.data.data.ireq_id;
+        setTimeout( () => this.$router.push({name: 'Add Ict Request Detail', params: { code: this.code }, }),1000);
         }).catch(error=>{
           this.loading = false;
           this.errors = error.response.data.errors;
          });
       }else{
         this.loading = false;
-        if(this.priolev == null){
+        if(this.request.priolev == null){
           this.error.priolev = "Priority level not filled"
         }
-        if(this.bisnis == null){
-          this.error.bisnis = "Business unit not filled"
-        }
-        if(this.usr_name == null){
+        if(this.request.usr_name == null){
           this.error.usr_name = "User not filled"
         }
-        if(this.usr_divisi == null){
-          this.error.usr_divisi = "User division not filled"
-        }
-        
       }
     },
   },

@@ -55,6 +55,7 @@ export default {
          personnel:[],
          loading: false,
          req: [],
+         token: localStorage.getItem('token'),
          checkname : [],
          checkto : [],
             items: [
@@ -80,7 +81,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('api/cek-user').then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Per Status Per Pesonnel") || this.checkto.includes("/report-per-status-per-personnel")){
@@ -94,14 +95,14 @@ export default {
         getPerStatusIct(){
             if(this.ictPersonnel !=null){
                 this.loading = true;
-                this.axios.get('api/count-per-status-ict/'+ this.ictPersonnel).then((response)=>{
+                this.axios.get('api/count-per-status-ict/'+ this.ictPersonnel, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                     this.req= response.data;
                     this.loading = false;
                 });
             }
         },
         getPersonnel(){
-            this.axios.get('api/get-tahun').then((response)=>{
+            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.personnel = response.data.personnell;
             }).catch(error=>{
           if (error.response.status == 401){

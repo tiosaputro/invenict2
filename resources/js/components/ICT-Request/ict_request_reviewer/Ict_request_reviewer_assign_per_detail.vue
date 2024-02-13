@@ -190,12 +190,13 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
+        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
     };
   },
   mounted() {
-    this.getIctDetail();
+    this.cekUser();
   },
   methods: {
     formatDate(date){
@@ -206,16 +207,29 @@ export default {
         var myWindow = window.open(page, "_blank");
         myWindow.focus();
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
+         this.getIctDetail();
+         this.getNoreq();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
       cancelAssign(){
           this.assign = [];
           this.petugas = [];
           this.dialogAssign = false;
       },
     AssignPerDetail(ireqd_id){
-          this.axios.get('/api/detail/'+ ireqd_id+'/'+this.$route.params.code).then((response)=>{
+          this.axios.get('/api/detail/'+ ireqd_id+'/'+this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.assign = response.data;
           });
-          this.axios.get('/api/get-pekerja').then((response)=>{
+          this.axios.get('/api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.petugas = response.data;
           });
           this.dialogAssign = true; 
@@ -228,7 +242,7 @@ export default {
      updateAssign(){
         this.submitted = true;
         if(this.assign.ireq_assigned_to1 != null){
-          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign).then(()=>{
+          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.assign = [];
             this.dialogAssign = false;
             this.submitted = false;
@@ -243,26 +257,22 @@ export default {
         }
       },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then((response)=> {
-        this.detail = response.data.data;
-        this.getNoreq();
+      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$route.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired','true')
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
       });
     },

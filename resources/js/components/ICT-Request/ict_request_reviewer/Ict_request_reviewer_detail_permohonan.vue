@@ -13,7 +13,7 @@
           <template v-slot:end>
             <div v-if="this.detailRequest.request_date">
               <label style="width:110px">No. Request </label>
-              <label>: {{this.detailRequest.noreq}} </label>
+              <label>: {{this.kode}} </label>
               <br>
               <label style="width:110px">Request Date</label>
               <label>: {{formatDate(this.detailRequest.request_date)}}</label>
@@ -57,16 +57,16 @@
             <template #body="slotProps">
               <p v-if="slotProps.data.ireq_attachment == null"></p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                <!-- <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'"> -->
-                  <v-icon name="fc-image-file" animation="pulse" speed="slow" scale="2" hover="true" style="cursor:pointer;"  @click="getDetail(slotProps.data.ireq_attachment)"/>
-                   <!-- <span class="px-3">IMAGE</span> -->
-                <!-- </Button> -->
+                <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
+                  <i class="pi pi-images px-2"></i>
+                   <span class="px-3">IMAGE</span>
+                </Button>
               </p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                <!-- <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'"> -->
-                 <v-icon name="vi-file-type-pdf" animation="pulse" speed="slow" scale="2" hover="true" style="cursor:pointer;"  @click="getDetail(slotProps.data.ireq_attachment)"/>
-                  <!-- <span class="px-4">PDF</span> -->
-                <!-- </Button> -->
+                <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
+                 <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
+                </Button>
               </p>
             </template>  
           </Column>
@@ -132,15 +132,25 @@ import moment from 'moment';
 export default {
   data() {
     return {
+        submitted:false,
+        dialogAssign:false,
+        assign:[],
+        petugas:[],
+        kode:'',
         status:'',
         loading: true,
         detail: [],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        code : this.$route.params.code,
+        token: localStorage.getItem('token'),
+        checkname : [],
+        checkto : [],
+        code:null,
         detailRequest:[],
     };
   },
   mounted() {
-    this.getIctDetail();
+    this.cekUser();
   },
   methods: {
     formatDate(date){
@@ -162,29 +172,44 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
+           this.getIctDetail();
+           this.getNoreq()
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then((response)=> {
-        this.detail = response.data.data.detail;
-        this.detailRequest = response.data.data.norequest;
-        this.status = response.data.data.norequest.cekstatus;
+      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$router.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired','true')
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
+      });
+    },
+    getNoreq(){
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.detailRequest = response.data;
+        this.kode = response.data.noreq;
+        this.status = response.data.cekstatus;
       });
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

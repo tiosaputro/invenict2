@@ -16,12 +16,15 @@ use App\Exports\IctExportPersonnelSedangDikerjakan;
 use App\Exports\IctExportPersonnelSudahDikerjakan;
 use App\Exports\IctExportPersonnelSelesai;
 use App\Jobs\SendNotifDone;
+use App\Services\IctRequestPersonnelServices;
 
 class IctRequestPersonnelController extends Controller
 {
     protected $to;
+    protected $personnelService;
     protected $userMenu;
-    function __construct(){
+    function __construct(IctRequestPersonnelServices $services){
+        $this->personnelService = $services; 
         $this->middleware('auth:sanctum');
         $this->to = "/ict-request-personnel";
         $this->middleware(function ($request, $next) {
@@ -36,125 +39,12 @@ class IctRequestPersonnelController extends Controller
     
     function getDataPersonnel()
     {
-        $usr_fullname = Auth::user()->usr_fullname;
-         $ict = DB::table('ireq_dtl as id')
-            ->SELECT(DB::raw('COUNT(imm.ireq_verificator_remark) as countRemarkReviewerInProgress'),'imm.ireq_verificator_remark','id.ireq_attachment','imm.ireq_no','id.ireq_assigned_remark','id.ireq_status as status','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-                DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
-                'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
-                'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
-                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"))
-                ->leftJoin('catalog_refs as cr',function ($join) {
-                    $join->on('id.invent_code','cr.catalog_id');
-                })
-                ->leftJoin('catalog_refs as crs',function ($join) {
-                    $join->on('cr.parent_id','crs.catalog_id');
-                })
-            ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
-            ->LEFTJOIN('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
-            ->LEFTJOIN('lookup_refs as llr','id.ireq_status','llr.lookup_code')
-            ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
-            ->LEFTJOIN('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
-            ->WHERE('id.ireq_status','T')
-            ->WHERE(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),$usr_fullname)
-            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
-            ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->GROUPBY('id.ireq_attachment','imm.ireq_verificator_remark','imm.ireq_no','id.ireq_assigned_remark','id.ireq_status','id.ireq_id','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-                DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),
-                'imm.ireq_user', 'llr.lookup_desc', 'imm.ireq_requestor',
-                'vr.name','lr.lookup_desc','imm.ireq_date',
-                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"))
-            ->ORDERBY('imm.ireq_date','DESC')
-            ->ORDERBY('id.ireqd_id','ASC')
-         ->get();
-
-         $ict1 = DB::table('ireq_dtl as id')
-            ->SELECT(DB::Raw('COUNT(imm.ireq_verificator_remark) as countRemarkReviewerDone'),'imm.ireq_verificator_remark','id.ireq_attachment','imm.ireq_no','id.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
-                'imm.ireq_user', 'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
-                'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date',
-                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_status as status')
-            ->leftJoin('catalog_refs as cr',function ($join) {
-                    $join->on('id.invent_code','cr.catalog_id');
-            })
-            ->leftJoin('catalog_refs as crs',function ($join) {
-                    $join->on('cr.parent_id','crs.catalog_id');
-            })
-            ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
-            ->LEFTJOIN('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
-            ->LEFTJOIN('lookup_refs as llr','id.ireq_status','llr.lookup_code')
-            ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
-            ->LEFTJOIN('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
-            ->WHERE('id.ireq_status','D')
-            ->WHERE(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),$usr_fullname)
-            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
-            ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->GROUPBY('id.ireq_attachment','imm.ireq_verificator_remark','imm.ireq_no','id.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),
-            'imm.ireq_user', 'llr.lookup_desc', 'imm.ireq_requestor',
-            'vr.name','lr.lookup_desc','imm.ireq_date',
-            DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"),'id.ireq_status')
-            ->ORDERBY('imm.ireq_date','DESC')
-            ->ORDERBY('id.ireqd_id','ASC')
-         ->get();
-
-         $ict2 = DB::table('ireq_dtl as id')
-            ->SELECT(DB::RAW('COUNT(imm.ireq_verificator_remark) as countRemarkReviewerClose'),'imm.ireq_verificator_remark','id.ireq_attachment','imm.ireq_no','imm.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-                'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
-                'vr.name as ireq_bu','id.ireq_id','lr.lookup_desc as ireq_type','imm.ireq_date','id.ireq_status as status', DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"))
-            ->leftJoin('catalog_refs as cr',function ($join) {
-                $join->on('id.invent_code','cr.catalog_id');
-            })
-            ->leftJoin('catalog_refs as crs',function ($join) {
-                $join->on('cr.parent_id','crs.catalog_id');
-            })
-            ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
-            ->LEFTJOIN('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
-            ->LEFTJOIN('lookup_refs as llr','id.ireq_status','llr.lookup_code')
-            ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
-            ->LEFTJOIN('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
-            ->WHERE('id.ireq_status','C')
-            ->WHERE(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),$usr_fullname)
-            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
-            ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->GROUPBy('id.ireq_attachment','imm.ireq_no','imm.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-                'imm.ireq_user','imm.ireq_verificator_remark', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),'llr.lookup_desc', 'imm.ireq_requestor',
-                'vr.name','id.ireq_id','lr.lookup_desc','imm.ireq_date','id.ireq_status', DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"))
-            ->ORDERBY('imm.ireq_date','DESC')
-            ->ORDERBY('id.ireqd_id','ASC')
-         ->get();
-
-         $ict3 = DB::table('ireq_mst as im')
-            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->RIGHTJOIN('ireq_dtl as id','im.ireq_id','id.ireq_id')
-            ->SELECT('im.ireq_date',DB::RAW("COUNT(im.ireq_verificator_remark) as countremarkreviewerpenugasan"),'im.ireq_verificator_remark','im.ireq_no','im.ireq_requestor',
-                'im.ireq_user','dr.div_name','im.ireq_status as status','im.ireq_id')
-            ->WHERE('im.ireq_status','NT')
-            ->WHERE('id.ireq_assigned_to1',$usr_fullname)
-            ->groupBy('im.ireq_date','im.ireq_verificator_remark','im.ireq_no','im.ireq_requestor','im.ireq_user','dr.div_name','im.ireq_status','im.ireq_id')
-            ->ORDERBY('im.ireq_date','DESC')
-        ->get();
-
-        $ict4 = DB::table('ireq_dtl as id')
-            ->SELECT('id.ireq_attachment','imm.ireq_no','id.ireq_assigned_to1_reason','imm.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-                'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
-                'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date','id.ireq_status as status', DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"))
-            ->LEFTJOIN('catalog_refs as cr',function ($join) {
-                $join->on('id.invent_code','cr.catalog_id');
-            })
-            ->LEFTJOIN('catalog_refs as crs',function ($join) {
-                $join->on('cr.parent_id','crs.catalog_id');
-            })
-            ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
-            ->LEFTJOIN('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
-            ->LEFTJOIN('lookup_refs as llr','id.ireq_status','llr.lookup_code')
-            ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
-            ->LEFTJOIN('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
-            ->WHERE('id.ireq_status','RT')
-            ->WHERE('id.ireq_assigned_to1',$usr_fullname)
-            ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
-            ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-            ->ORDERBY('imm.ireq_date','DESC')
-            ->ORDERBY('id.ireqd_id','ASC')
-         ->get();
-            return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4]);
+        $data['ict'] = $this->personnelService->getDetailWithFilter('T');
+        $data['ict1'] = $this->personnelService->getDetailWithFilter('D');
+        $data['ict2'] = $this->personnelService->getDetailWithFilter('C');
+        $data['ict3'] = $this->personnelService->getDataWithFilter('C');
+        $data['ict4'] = $this->personnelService->getDetailWithFilter('RT');
+        return json_encode($data);
     }
     function saveRemark(Request $request,$code){
         $dtl = DB::table('ireq_dtl')
@@ -169,13 +59,13 @@ class IctRequestPersonnelController extends Controller
     }
     function rejectedByPersonnel(Request $request,$ireq_id){
         $saveDtl = IctDetail::rejectedByPersonnel($request,$ireq_id); 
-        DB::getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST($ireq_id); end;");
+        DB::getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST('$ireq_id'); end;");
         return ResponseFormatter::success($saveDtl,'Successfully rejected by personnel');
         
     }
     function acceptedByPersonnel($ireq_id){
         $save = IctDetail::AcceptByPersonnel($ireq_id);
-        DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($ireq_id); end;");
+        DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST('$ireq_id'); end;");
         IctDetail::cekStatusPenugasan($ireq_id);
         return ResponseFormatter::success($save,'Successfully accepted by personnel');
     }
@@ -204,7 +94,7 @@ class IctRequestPersonnelController extends Controller
             'last_updated_by' => Auth::user()->usr_name
         ]);
         
-        DB::getPdo()->exec("begin SP_DONE_IREQ_MST($code); end;");
+        DB::getPdo()->exec("begin SP_DONE_IREQ_MST('$code'); end;");
         $ict = DB::table('ireq_dtl as id')
         ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
         ->LEFTJOIN('catalog_refs as cr',function ($join) {

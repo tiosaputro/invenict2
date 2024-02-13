@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mng_user;
 use App\Models\Mng_usr_roles;
 use App\Models\Mng_role_menu;
+use App\Models\UserProfile;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Http\Request;
@@ -15,6 +16,10 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+    public function example(Request $request)
+    {
+        return view('app');
+    }
     function index(Request $request)
     {
      if (env('APP_ENV') != 'local'){ //use ldap
@@ -29,32 +34,47 @@ class LoginController extends Controller
             }
             $filter = "(|(mail=" . $userlogin . ")(userprincipalname=" . $userlogin . ")(samaccountname=" . $request->email . "))";
             $check = $ldap->search($filter, $userlogin, $request->password);
+            
             if (!empty($check)){
               $checkUser = Mng_User::where('usr_email', $mailUser)->first();
                if(empty($checkUser)){
-                $createUser = Mng_user::createUser($check['streetaddress'],$check['division'],$request->password,$check['company'],$check['physicaldeliveryofficename'],$check['displayname'],$check['samaccountname'],$mailUser);
-                $dataUser = Mng_user::where('usr_id',$createUser->usr_id)->first();
-                $token = $dataUser->createToken('ApiToken')->plainTextToken;
+                    $createUser = Mng_user::createUser($check['streetaddress'],$check['division'],$request->password,$check['company'],$check['physicaldeliveryofficename'],$check['displayname'],$check['samaccountname'],$mailUser);
+                   
+                    $profile = new UserProfile();
+                    $profile->created_at = now();
+                    $profile->id = generate_id();
+                    $idUser = $createUser->usr_id;
+
+                    $dataUser = Mng_user::where('usr_id',$createUser->usr_id)->first();
+                    $token = $dataUser->createToken('ApiToken')->plainTextToken;
+
+               } else { // if exists    
+                    $profile = UserProfile::where('user_id', $checkUser->usr_id)->first();
+                    if (empty($profile)) {
+                        $profile = new UserProfile();
+                        $profile->id = generate_id();
+                    }
+                    $idUser = $checkUser->usr_id;
+                    $dataUser = Mng_user::where('usr_email',$mailUser)->first();
+                    $token = $checkUser->createToken('ApiToken')->plainTextToken;
+               }
+                $profile->user_id = $idUser;
+                $profile->profile_detail = json_encode($check);
+                $profile->created_by = $idUser;
+                $profile->updated_at = now();
+                $profile->updated_by = $idUser;
+                $profile->save();
                 return response([
-                    "success" => true, 
+                    "success" => true,
                     "message" => "You have logged in successfully",
                     "token"=> $token,
                     "usr_name"  => ucwords(strtolower($dataUser->usr_fullname)),
-                    "usr_loc"=>$dataUser->usr_loc],200);
-               } else { // if exists
-                $token = $checkUser->createToken('ApiToken')->plainTextToken;
-                return response([
-                    "success" => true, 
-                    "message" => "You have logged in successfully",
-                    "token"=> $token,
-                    "usr_name"  => ucwords(strtolower($checkUser->usr_fullname)),
-                    "usr_loc"=>$checkUser->usr_loc],200);
-               } 
+                    "usr_loc"=> $dataUser->usr_loc],200);
             } else {
                 return response("Can't login. Please check your username and password",422);
             }
         } else { // if local
-            $user= Mng_User::where('usr_email', $request->email)->first();              
+            $user= Mng_User::where('usr_email', $request->email)->first();
             if (!is_null ($user)) {
                 if(Hash::check($request->password, $user->usr_passwd)) {
                 $token = $user->createToken('ApiToken')->plainTextToken;
@@ -99,7 +119,7 @@ class LoginController extends Controller
                     "usr_name"  => ucwords(strtolower($dataUser->usr_fullname)),
                     "usr_loc"=>$dataUser->usr_loc],200);
         }
-    }                     
+    }
     function loginFromEmail(Request $request)
     {
         $user= Mng_User::where('usr_id',$request->usr_id)->first();
@@ -119,12 +139,7 @@ class LoginController extends Controller
         $user = Auth::user()->tokens()->where('id', Auth::user()->currentAccessToken()->id)->delete();
         return ResponseFormatter::success($user,'Successfully Logout');
     }
-    function show()
-    {
-        $user = Auth::user();
-        return json_encode($user);
-    }
-    
+
     function cekUser()
     {
         $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');

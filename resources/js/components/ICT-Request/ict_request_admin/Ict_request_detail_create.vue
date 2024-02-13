@@ -147,6 +147,7 @@ export default {
       kodeperi:[],
       type: [],
       bu: [],
+      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
       cekTipeReq:'',
@@ -178,7 +179,7 @@ export default {
         data.append("ket", this.ket);
         data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data).then(()=>{
+        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -208,7 +209,7 @@ export default {
         data.append("ket", this.ket);
         data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data).then(()=>{
+        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -230,7 +231,7 @@ export default {
      }
     },
     cekUser(){
-      this.axios.get('/api/cek-user').then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("List Request") || this.checkto.includes("/ict-request-admin")){ 
@@ -242,7 +243,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
       this.detail = response.data;
       this.tipereq = this.detail.ireq_type
       this.cekTipeReq = this.detail.ireq_type
@@ -259,7 +260,7 @@ export default {
         });
       },
       getType(){
-        this.axios.get('/api/getAddDetail').then((response)=>{
+        this.axios.get('/api/getAddDetail', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.type = response.data.ref;
           this.kodeperi = response.data.kode;
           });
@@ -277,7 +278,7 @@ export default {
         data.append("ket", this.ket);
         data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data).then(()=>{
+        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -306,7 +307,7 @@ export default {
         data.append("ket", this.ket);
         data.append("tipereq", this.tipereq);
 
-        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data).then(()=>{
+        this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

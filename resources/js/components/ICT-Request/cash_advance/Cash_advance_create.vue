@@ -295,6 +295,9 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
+      token: localStorage.getItem('token'),
+      checkname : [],
+      checkto : []
     };
   },
   watch:{
@@ -337,12 +340,24 @@ export default {
     }
   },
   mounted(){
-    this.getNoreq();
+    this.cekUser();
   },
   methods: {
+    cekUser(){
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Cash Advance") || this.checkto.includes("/cash-advance")){
+            this.getNoreq();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getDetail(noreq){
     if(this.noreq){
-      this.axios.get('api/getDetail/'+noreq).then((response)=> {
+      this.axios.get('api/getDetail/'+noreq,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
         this.ireqd_id = '';
       });
@@ -354,7 +369,7 @@ export default {
     },
     get(noreq,ireqd_id){
       if(this.noreq &&this.ireqd_id){
-      this.axios.get('api/getNameBu/'+noreq+'/'+ireqd_id).then((response)=> {
+      this.axios.get('api/getNameBu/'+noreq+'/'+ireqd_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.ca = response.data;
       });
       if(this.errors.noreq || this.error.noreq){
@@ -364,19 +379,16 @@ export default {
       }
     }, 
     getNoreq(){
-      this.axios.get('api/list-no-request').then((response)=>{
-        this.req = response.data.data;
+      this.axios.get('api/getNoreq',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.req = response.data;
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$router.push('/access');
           }
         });
     },   
@@ -396,7 +408,7 @@ export default {
         data.append("tglsub", this.tglsub);
         data.append("tgltouser", this.tgltouser);
 
-        this.axios.post('api/add-cash', data).then((response)=>{
+        this.axios.post('api/add-cash', data,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           setTimeout( () => this.$router.push('/cash-advance'),1000);
           this.$toast.add({
             severity: "success",

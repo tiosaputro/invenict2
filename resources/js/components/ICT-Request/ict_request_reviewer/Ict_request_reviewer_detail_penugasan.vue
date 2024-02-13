@@ -30,18 +30,17 @@
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
           responsiveLayout="scroll"
         >
-        
-        <template #header>
+          <template #header>
             <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                     <InputText
-                        v-model="filters['global'].value"
-                        placeholder="Search. . ."
-                     />
-                </span>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                  <InputText
+                    v-model="filters['global'].value"
+                    placeholder="Search. . ."
+                  />
+              </span>
             </div>
-        </template>
+          </template>
            <template #empty>
             Not Found
           </template>
@@ -113,6 +112,7 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
+        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
         status:'',
@@ -120,7 +120,7 @@ export default {
     };
   },
   mounted() {
-    this.getIctDetail();
+    this.cekUser();
   },
   methods: {
     formatDate(date){
@@ -131,35 +131,44 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
+          this.getIctDetail();
+          this.getNoreq();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-penugasan-reviewer/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
-        this.countNote = response.data.map((x)=> x.count_note);
-        this.getNoreq();
+        this.countNote = response.data.map((x)=> x.count_note)
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$router.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired','true')
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
         this.status = response.data.cekstatus;
       });
     },
     CetakPdfSedangDikerjakan(){
      this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

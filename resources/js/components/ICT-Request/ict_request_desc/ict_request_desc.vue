@@ -4322,6 +4322,7 @@ export default {
         dialogReject: false,
         desc : 1,
         loading: true,
+        token: localStorage.getItem('token'),
         ict: [],
         sdhDiverifikasi:[],
         diReject:[],
@@ -4403,7 +4404,7 @@ export default {
       getActive(){
         if(localStorage.getItem('desc')){
           this.desc = localStorage.getItem('desc');
-          if (this.desc <= 6 || this.desc == 22 ||this.desc == 40){
+          if (this.desc <= 6 || this.desc == 40){
               this.getIct();
           }
           else if (this.desc >= 7 && this.desc <= 12 || this.desc == 38 || this.desc == 41 || this.desc == 45){
@@ -4418,6 +4419,9 @@ export default {
           else if (this.desc > 19 && this.desc <=21 || this.desc == 39 || this.desc == 42){
             this.getIct5();
           }
+          else if (this.desc == 22){
+            this.getIct6();
+          }
           else if (this.desc > 22 && this.desc <= 29){
             this.getIct7();
           }
@@ -4430,7 +4434,7 @@ export default {
         }
       },
       getIct(){
-        this.axios.get('api/get-ict').then((response)=> {
+        this.axios.get('api/get-ict',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.ict = response.data.ict6;
           this.sdhDiverifikasi = response.data.ict1;
           this.diReject = response.data.ict2;
@@ -4438,24 +4442,20 @@ export default {
           this.sdhDikerjakan = response.data.ict4;
           this.sdhSelesai = response.data.ict5;
           this.sedangDireview = response.data.ict7;
-          this.total = response.data.ict10;
           this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if (error.response.status == 403) {
-           this.$router.push('/access');
-          }
+           }
         });
       },
       getIct2(){
-        this.axios.get('/api/get-permohonan').then((response)=> {
+        this.axios.get('/api/get-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.permohonan = response.data.ict7;
         this.sedangDireview1 = response.data.ict8;
         this.verif = response.data.ict1;
@@ -4469,19 +4469,16 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if (error.response.status == 403) {
-           this.$router.push('/access');
-          }
+           }
         });
       },
       getIct3(){
-        this.axios.get('api/get-data-reviewer').then((response)=> {
+        this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
           this.blmDiverifikasi = response.data.ict;
           this.showPersonelblmDiverifikasi = this.blmDiverifikasi.map((x)=>x.ireq_count_status);
           this.atasanDivisi = response.data.ict1;
@@ -4498,19 +4495,16 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if (error.response.status == 403) {
-           this.$router.push('/access');
-          }
+           }
         });
       },
       getIct4(){
-        this.axios.get('api/get-sedang-dikerjakan').then((response)=> {
+        this.axios.get('api/get-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.sedngDikerjakan = response.data.ict;
         this.sudhDikerjakan = response.data.ict1;
         this.selesaiii = response.data.ict2;
@@ -4520,19 +4514,16 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if (error.response.status == 403) {
-           this.$router.push('/access');
-          }
+           }
         });
       },
       getIct5(){
-      this.axios.get('api/get-data-manager').then((response)=> {
+      this.axios.get('api/get-divisi-4',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.blmDiverifikasi4 = response.data.ict;
         this.sdhDiverifikasi4 = response.data.ict1;
         this.direject4 = response.data.ict2;
@@ -4546,44 +4537,53 @@ export default {
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if (error.response.status == 403) {
-           this.$router.push('/access');
-          }
+           }
         });
       },
-      getIct7(){
-        this.axios.get('api/get-ict-admin').then((response)=>{
-          this.ictAdmin = response.data.data.ict;
-          this.sdhDiverifikasiAdmin = response.data.data.ict1;
-          this.diRejectAdmin = response.data.data.ict2;
-          this.sdgDikerjakanAdmin = response.data.data.ict3;
-          this.sdhDikerjakanAdmin = response.data.data.ict4;
-          this.sdhSelesaiAdmin = response.data.data.ict5;
-          this.totalAdmin = response.data.data.ict6;
+      getIct6(){
+        this.axios.get('api/total-request', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.total = response.data;
           this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if (error.response.status == 403) {
-           this.$router.push('/access');
-          }
+           }
+        });
+      },
+      getIct7(){
+        this.axios.get('api/get-ict-admin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.ictAdmin = response.data.ict;
+          this.sdhDiverifikasiAdmin = response.data.ict1;
+          this.diRejectAdmin = response.data.ict2;
+          this.sdgDikerjakanAdmin = response.data.ict3;
+          this.sdhDikerjakanAdmin = response.data.ict4;
+          this.sdhSelesaiAdmin = response.data.ict5;
+          this.totalAdmin = response.data.ict6;
+          this.loading = false;
+        }).catch(error=>{
+         if (error.response.status == 401) {
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
       },
       AssignPerRequest(ireq_id){
           this.assign.id = ireq_id;
-          this.axios.get('api/get-pekerja').then((response)=>{
+          this.axios.get('api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.petugas = response.data;
           });
           this.dialogAssign = true;
@@ -4591,7 +4591,7 @@ export default {
       updateAssign(){
         this.submitted = true;
         if(this.assign.name != null){
-          this.axios.post('/api/aprr', this.assign).then(()=>{
+          this.axios.post('/api/aprr', this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.assign = {
               id : null,
               name : null
@@ -4618,7 +4618,7 @@ export default {
           rejectLabel: "No",
           accept: () => {
             this.loading = true;
-            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_no).then(()=>{
+            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_no, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
               this.getActive();
               this.$toast.add({
               severity: "info",
@@ -4651,7 +4651,7 @@ export default {
         rejectLabel: "No",
         accept: () => {
           this.loading = true;
-          this.axios.get('/api/sapr/'+ireq_id).then(()=>{
+          this.axios.get('/api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.$toast.add({
             severity: "info",
             summary: "Success Message",
@@ -4674,7 +4674,7 @@ export default {
         rejectLabel: "No",
         accept: () => {
           this.loading = true;
-          this.axios.get('/api/naa/' +ireq_id).then(()=>{
+          this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -4696,7 +4696,7 @@ export default {
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
-          this.axios.get('/api/nam/' +ireq_id).then(()=>{
+          this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.loading = true;
             this.$toast.add({
             severity: "info",
@@ -4723,7 +4723,7 @@ export default {
       updateReject(){
         this.submitted = true;
         if(this.rbr.ket){
-          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr).then((res)=>{
+          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
             this.dialogReject = false;    
             this.rbr.id = '' ;
             this.rbr.ket = '' ;
@@ -4757,7 +4757,7 @@ export default {
             rejectLabel: "No",
             accept: () => {
               this.loading = true;
-                this.axios.get('/api/updateStatusPermohonan/' +this.code).then(()=>{
+                this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
                   this.$toast.add({
                     severity: "info",
                     summary: "Success Message",
@@ -4784,7 +4784,7 @@ export default {
       updateRejectAtasan(){
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+ this.code, this.reason).then(()=>{
+            this.axios.put('/api/updateStatusReject/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
               this.dialogRejectAtasan = false;
               this.$toast.add({
                 severity: "info",
@@ -4807,7 +4807,7 @@ export default {
       submitt(){
         this.submitted = true;
         if(this.editDetail.status != null){
-          this.axios.put('/api/update-status-done/'+this.code, this.editDetail).then(()=>{
+          this.axios.put('/api/update-status-done/'+this.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.$toast.add({
               severity:'success', summary: 'Success', detail:'Status Berhasil Dirubah', life: 3000
             });
@@ -4819,13 +4819,13 @@ export default {
       edit(ireqd_id,ireq_id){
         this.code = ireq_id;
         this.dialogEdit = true;
-        this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id).then((response)=>{
+        this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.editDetail = response.data;
         });
         this.getStatus();
       },
       getStatus(){
-        this.axios.get('/api/getStatusIct').then((response)=>{
+        this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.status = response.data;
         });
       },
@@ -4846,7 +4846,7 @@ export default {
           detail: "Permohonan Dilanjutkan",
           life : 1000
         });
-        this.axios.put('/api/abm/' +this.code, this.reason).then(()=>{
+        this.axios.put('/api/abm/' +this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.cancelApproveManager();
           this.getActive();
         });
@@ -4864,7 +4864,7 @@ export default {
       updateRejectManager(){
             this.submitted = true;
             if(this.reason.ket != null){
-              this.axios.put('/api/rbm/'+ this.code, this.reason).then(()=>{
+              this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
                 this.$toast.add({
                   severity: "info",
                   summary: "Confirmed",
@@ -4879,7 +4879,7 @@ export default {
       RemarkReviewer(ireq_id){
       this.loading = true;
       this.remarkreviewer.id = ireq_id;
-      this.axios.get('api/get-remark-reviewer/'+ireq_id).then((res)=>{
+      this.axios.get('api/get-remark-reviewer/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
         this.remarkreviewer.remark = res.data.ireq_verificator_remark;
         this.dialogRemarkReviewer = true;
         this.loading = false;
@@ -4892,7 +4892,7 @@ export default {
       },
       updateRemarkReviewer(){
         this.dialogRemarkReviewer = false;
-        this.axios.post('api/save-remark-reviewer',this.remarkreviewer).then(()=>{
+        this.axios.post('api/save-remark-reviewer',this.remarkreviewer, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
          this.loading = true;
           this.$toast.add({
             severity: "info",
@@ -4905,21 +4905,21 @@ export default {
         });
       },
       createRemarkAssigned(ireqd_id,ireq_id){
-        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
+        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.remarkAssigned = response.data;
           this.dialogRemarkAssigned = true;
         });
           this.code = ireqd_id;
       },
       createNoteAssigned(ireqd_id,ireq_id){
-        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
+        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.noteAssigned = response.data;
           this.dialogNoteAssigned = true;
         });
           this.code = ireqd_id;
       },
       submitRemarkAssigned(){
-          this.axios.put('/api/save-remark-assigned/'+this.code,this.remarkAssigned).then(()=>{ 
+          this.axios.put('/api/save-remark-assigned/'+this.code,this.remarkAssigned,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
           this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
             this.noteAssigned = [];
             this.code = null;
@@ -4929,7 +4929,7 @@ export default {
           this.getIct4();
       },
       submitNoteAssigned(){
-          this.axios.put('/api/update-note/'+this.code,this.noteAssigned).then(()=>{ 
+          this.axios.put('/api/update-note/'+this.code,this.noteAssigned,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
           this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
             this.noteAssigned = [];
             this.code = null;

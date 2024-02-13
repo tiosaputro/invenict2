@@ -647,6 +647,7 @@ export default {
         verif: [],
         reject:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
         code:null,
@@ -665,26 +666,26 @@ export default {
     },
     detailTabRequest(ireq_id){
       localStorage.setItem('active3',0);
-      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
+      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
     },
     detailTabApproved(ireq_id){
       localStorage.setItem('active3',1);
-      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
+      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
     },
     detailTabRejected(ireq_id){
       localStorage.setItem('active3',2);
-      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
+      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
     },
     detailTabRequestAssignment(ireq_id){
       localStorage.setItem('active3',4);
-      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
+      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
     },
     detailTabInProgress(ireq_id){
       localStorage.setItem('active3',5);
-      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
+      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
     },
     getPermohonan(){
-      this.axios.get('api/get-permohonan').then((response)=> {
+      this.axios.get('api/get-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.permohonan = response.data.ict;
         this.verif = response.data.ict1;
         this.reject = response.data.ict2;
@@ -694,18 +695,18 @@ export default {
         this.selesai = response.data.ict5;
         localStorage.setItem('active3',0)
         this.loading = false;
-        }).catch(error=>{
+      }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
+            severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
             setTimeout( () => this.$router.push('/login'),2000);
-            }
-            if(error.response.status == 403){
-              this.$router.push('/access');
-            }
+           }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
     },
     formatDate(date) {
@@ -731,7 +732,7 @@ export default {
                 detail: "Successfully approved this request",
                 life : 1000
               });
-              this.axios.get('/api/updateStatusPermohonan/' +this.code).then(()=>{            
+              this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{            
                 this.code = null;
                 this.loading = true;
                 this.getPermohonan();
@@ -753,7 +754,7 @@ export default {
     updateReject(){
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+ this.code, this.reason).then(()=>{
+            this.axios.put('/api/updateStatusReject/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
@@ -769,7 +770,7 @@ export default {
     },
     CetakPdfPermohonan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-atasan-permohonan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-atasan-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -792,7 +793,7 @@ export default {
     },
     CetakPdfVerifikasi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-atasan-verifikasi').then((response)=>{
+       this.axios.get('api/report-ict-pdf-atasan-verifikasi',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -815,7 +816,7 @@ export default {
     },
     CetakPdfReject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-atasan-reject').then((response)=>{
+       this.axios.get('api/report-ict-pdf-atasan-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -838,7 +839,7 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-atasan-assignment-request').then((response)=>{
+       this.axios.get('api/report-ict-pdf-atasan-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -861,7 +862,7 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-atasan-sedang-dikerjakan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-atasan-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -884,7 +885,7 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-atasan-sudah-dikerjakan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-atasan-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -907,7 +908,7 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-atasan-pdf-selesai').then((response)=>{
+       this.axios.get('api/report-ict-atasan-pdf-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -930,7 +931,7 @@ export default {
     },
     CetakPdf(ireq_id){
       this.loading = true;
-       this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
+       this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

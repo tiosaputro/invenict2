@@ -247,7 +247,22 @@ const routes = [
         path: '/Edit-payment-request/:code',
         component: ()=> import('./components/ICT-Request/payment_request/Payment_request_edit.vue'),
     },
-
+    //supervisor
+    {
+        name: 'Spv Refs',
+        path: '/supervisor-refs',
+        component: ()=> import('./components/Admin/referensi_supervisor/v_spv.vue'),
+    },
+    {
+        name: 'Add Spv',
+        path: '/Add-supervisor-refs',
+        component: ()=> import('./components/Admin/referensi_supervisor/v_add_spv.vue'),
+    },
+    {
+        name: 'Edit Spv',
+        path: '/edit-supervisor-refs/:code',
+        component: ()=> import('./components/Admin/referensi_supervisor/v_edit_spv.vue'),
+    },
     //ict request
     {
         name: 'Ict Request',

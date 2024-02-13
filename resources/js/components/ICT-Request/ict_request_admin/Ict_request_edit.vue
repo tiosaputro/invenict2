@@ -186,6 +186,7 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       },
+      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
     };
@@ -195,7 +196,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('/api/cek-user').then((response)=>{
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("List Request") || this.checkto.includes("/ict-request-admin")){ 
@@ -207,7 +208,7 @@ export default {
       });
     },
       getIct(){
-          this.axios.get('/api/edit-ict/' + this.$route.params.code).then((response)=> {
+          this.axios.get('/api/edit-ict/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
             this.mutasi = response.data.ict;
             this.divisi = response.data.divisi;
             this.type = response.data.ref;
@@ -235,7 +236,7 @@ export default {
         this.mutasi.ireq_bu != null &&
         this.mutasi.ireq_user != null
       ){
-        this.axios.put('/api/update-ict/'+ this.$route.params.code, this.mutasi).then(()=>{
+        this.axios.put('/api/update-ict/'+ this.$route.params.code, this.mutasi, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

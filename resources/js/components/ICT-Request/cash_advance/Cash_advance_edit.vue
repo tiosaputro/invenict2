@@ -259,33 +259,45 @@ export default {
       mask:{
         input: 'DD MMM YYYY'
       }, 
+      token: localStorage.getItem('token'),
+      checkname : [],
+      checkto : [],
     };
   },
   mounted(){
     this.getCash();
   },
   methods: {
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Cash Advance") || this.checkto.includes("/cash-advance")){
+            this.getCash();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getCash(){
-      this.axios.get('/api/edit-cash/' + this.$route.params.code).then((response)=>{
+      this.axios.get('/api/edit-cash/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.ca = response.data;
       }).catch(error=>{
           if ((error.response.status == 401)){
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem("Expired","true")
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$router.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem("Expired","true")
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
         });
     },   
     UpdateCash() {
       this.errors = [];
   
-        this.axios.put('/api/update-cash/'+this.$route.params.code, this.ca).then((response)=>{
+        this.axios.put('/api/update-cash/'+this.$route.params.code, this.ca, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           setTimeout( () => this.$router.push('/cash-advance'),1000);
           this.$toast.add({
             severity: "success",

@@ -14,6 +14,20 @@ use carbon\Carbon;
 
 class MngUsrRoleController extends Controller
 {
+    protected $detailLog, $newTime;
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()){    
+                return $next($request);
+                $this->detailLog = array();
+            } else {
+                return response(["message"=>"Cannot Access"],403);
+            }
+        });
+        
+    }
     function getRole() {
 
         $role = Mng_usr_roles::select('rol_id')->where('usr_id',Auth::user()->usr_id)->pluck('rol_id');
@@ -24,8 +38,10 @@ class MngUsrRoleController extends Controller
                 ->whereIn('menu_id',$rolemenu)
                 ->orderBy('menu_display','ASC')
                 ->get();
-        $tree = $this->parseTree($query);
-        return ResponseFormatter::success($tree,'Successfully Get Data Menu');
+        
+        $data['tree'] = $this->parseTree($query);
+        $data['user'] = Auth::user();
+        return ResponseFormatter::success($data,'Successfully Get Data Menu');
     }
      
     function parseTree($tree, $root = 0) {
@@ -55,7 +71,7 @@ class MngUsrRoleController extends Controller
                 'created_by'=> Auth::user()->usr_name,
                 'program_name'=>'MngUsrRoleController_SAVE'
             ]);
-      }
+        }
     }
     function edit($code)
     {
@@ -70,7 +86,7 @@ class MngUsrRoleController extends Controller
         $created_by = $roles->created_by;
         Mng_usr_roles::where('usr_id',$code)->delete();
         foreach ($role as $r){
-            $roless = Mng_usr_roles::create([
+            Mng_usr_roles::create([
                 'usr_id' => $code,
                 'rol_id' => $r,
                 'urol_stat' => 'T',

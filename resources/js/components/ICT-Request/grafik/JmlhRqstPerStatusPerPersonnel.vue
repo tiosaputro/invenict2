@@ -18,6 +18,7 @@ export default {
     data() {
         return {
             color: '1976D2',
+            token: localStorage.getItem('token'),
             PerStatusIct:{},
             ictPersonnel: null,
             personnel:[],
@@ -35,7 +36,7 @@ export default {
     },
     methods: {
         cekUser(){
-        this.axios.get('api/cek-user').then((response)=>{
+        this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Per Status Per Personnel") || this.checkto.includes("/req-per-status-per-personnel")){
@@ -47,7 +48,7 @@ export default {
         });
         },
         getPersonnel(){
-            this.axios.get('api/get-tahun').then((response)=>{
+            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.personnel = response.data.personnell;
             }).catch(error=>{
           if (error.response.status == 401){
@@ -62,7 +63,7 @@ export default {
         },
         getPerStatusIct(){
             if(this.ictPersonnel !=null){
-                this.axios.get('api/count-per-status-ict/'+ this.ictPersonnel).then((response)=>{
+                this.axios.get('api/count-per-status-ict/'+ this.ictPersonnel, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                     this.PerStatusIct = {
                         labels : response.data.map((x)=>x.status),
                         datasets : [

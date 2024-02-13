@@ -18,6 +18,7 @@ export default {
     data() {
         return {
             color: '1976D2',
+            token: localStorage.getItem('token'),
             statusPerDivisiRequestor:{},
             statusRequestor: null,
             status: [],
@@ -36,7 +37,7 @@ export default {
     },
     methods: {
         cekUser(){
-         this.axios.get('api/cek-user').then((response)=>{
+         this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Divisi Requestor Per Status") || this.checkto.includes("/req-per-divisi-req-per-status")){
@@ -48,7 +49,7 @@ export default {
         });
         },
         getStatus(){
-            this.axios.get('api/get-tahun').then((response)=>{
+            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 this.status = response.data.grafik1;
             }).catch(error=>{
           if (error.response.status == 401){
@@ -63,7 +64,7 @@ export default {
         },
         getStatusDivisiRequestor(){
             if(this.statusRequestor != null){
-                this.axios.get('api/count-per-divreq-status/'+this.statusRequestor).then((response)=>{
+                this.axios.get('api/count-per-divreq-status/'+this.statusRequestor, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
                 if(response.data.length){
                     this.nameStatusRequestor = response.data[0].name;
                     this.statusPerDivisiRequestor = {

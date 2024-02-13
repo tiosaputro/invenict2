@@ -137,10 +137,12 @@ export default {
         },
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
+        token: localStorage.getItem('token'),
     };
   },
   mounted() {
     this.getIctDetail();
+    this.getNoreq();
   },
   methods: {
     getDetail(ireq_attachment){
@@ -154,15 +156,15 @@ export default {
         header: "Confirmation Approval",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
-        acceptLabel: "Yes",
-        rejectLabel: "No",
+        acceptLabel: "Ya",
+        rejectLabel: "Tidak",
         accept: () => {
           this.$toast.add({
             severity: "info",
             summary: "Success Message",
             detail: "Successfully approved the request",
           });
-          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code);
+          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
           setTimeout( () =>  this.$router.push('/ict-request-desc'),1000);
         },
         reject: () => {},
@@ -171,7 +173,7 @@ export default {
       updateReject(){
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason).then(()=>{
+            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
@@ -188,9 +190,8 @@ export default {
         this.submitted = false;
       },
     getIctDetail(){
-      this.axios.get('/api/get-verif-higher-level/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.verif = response.data;
-        this.getNoreq();
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 403) {
@@ -207,7 +208,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
       });
     },

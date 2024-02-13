@@ -43,7 +43,7 @@
         "primeicons": "^6.0.1",
         "primevue": "^3.20.0",
         "prismjs": "^1.29.0",
-        "qrcode": "^1.5.1",
+        "qrcode": "^1.5.3",
         "qrcode-vue3": "^1.4.17",
         "qrcode.vue": "^3.3.3",
         "uninstall": "0.0.0",

@@ -102,11 +102,14 @@ export default {
         editDetail:[],
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        token: localStorage.getItem('token'),
         user:[],
+        checkname : [],
+        checkto : [],
     };
   },
   created() {
-    this.getIctDetail();
+    this.cekUser();
   },
   methods: {
     formatDate(date){
@@ -117,9 +120,22 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Status Change Request") || this.checkto.includes("/ict-request-divisi3")){   
+          this.getIctDetail();
+          this.getNoreq();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getUser(){
-        this.axios.get('/api/user').then((response)=> {
-        this.user = response.data;
+        this.axios.get('/api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.user = response.data.user;
         });
       },
     getStatus(){
@@ -141,22 +157,18 @@ export default {
       
     },
     getIctDetail(){
-      this.axios.get('/api/get-detail-done-personnel/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/get-detail-done/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
-        this.getNoreq();
         this.loading = false;
       }).catch((error)=>{
       if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-             this.$router.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired','true')
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
       });
     },
     getNoreq(){

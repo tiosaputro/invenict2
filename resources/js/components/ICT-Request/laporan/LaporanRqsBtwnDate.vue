@@ -113,6 +113,7 @@ export default {
          ict:[],
          loading: false,
          req: [],
+         token: localStorage.getItem('token'),
          checkname : [],
          checkto : [],
             items: [
@@ -141,7 +142,7 @@ export default {
       return moment(date).format("DD MMM YYYY HH:mm")
     },
     cekUser(){
-      this.axios.get('api/cek-user').then((response)=>{
+      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkto.includes("/report-ict-request")){
@@ -155,13 +156,13 @@ export default {
     },
     getIct(){
       this.loading = true;
-      this.axios.get('api/dataIct').then((res)=>{
+      this.axios.get('api/dataIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
         this.ict = res.data
         this.loading = false;
       });
     },
     getStatus(){
-      this.axios.get('api/get-status').then((res)=>{
+      this.axios.get('api/get-status', {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
         this.status = res.data;
       });
     },
@@ -170,7 +171,7 @@ export default {
       if (this.filterDate.start == null){ this.filterDate.start == ''};
       if (this.filterDate.status == null){ this.filterDate.status == ''};
     
-      this.axios.post('api/filterByDate',this.filterDate).then((res)=>{
+      this.axios.post('api/filterByDate',this.filterDate,{headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
         this.ict = res.data;
         this.filter = true;
         this.dialogFilterDate = false;

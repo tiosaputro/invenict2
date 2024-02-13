@@ -12,13 +12,13 @@
              <form @submit.prevent="CreateIctDetail">
               <div class="field grid">
                 <label class="col-fixed w-9rem">No. Request</label>
-                  <div class="col-fixed w-9rem">
-                    <InputText
-                      type="text"
-                      v-model="detail.noreq"
-                      disabled
-                    />
-                  </div>
+                 <div class="col-fixed w-9rem">
+                  <InputText
+                    type="text"
+                    v-model="detail.noreq"
+                    disabled
+                  />
+                </div>
               </div>
               <div class="field grid">
                <label class="col-fixed w-9rem">Request Type</label>
@@ -175,11 +175,14 @@ export default {
       tipereq: '',
       type: [],
       bu: [],
+      token: localStorage.getItem('token'),
+      checkname : [],
+      checkto : [],
       cekTipeReq:'',
     };
   },
   mounted(){
-      this.getNoreq();
+      this.cekUser();
   },
   methods: {
     change(){
@@ -204,7 +207,7 @@ export default {
       this.requestcatalog = '';
       this.cekTipeReq = tipereq;
       if(tipereq != null){
-        this.axios.get('/api/get-catalog-request/'+tipereq).then((res)=>{
+        this.axios.get('/api/get-catalog-request/'+tipereq, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
           this.catalog = res.data;
         });
       }
@@ -344,9 +347,23 @@ export default {
       }
      }
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
+           this.getNoreq();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
       this.detail = response.data;
+      this.tipereq = this.detail.ireq_type
+      this.cekTipeReq = this.detail.ireq_type
       this.getType();
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -357,13 +374,10 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-          if(error.response.status == 403){
-            this.$route.push('/access');
-          }
         });
     },
     getType(){
-        this.axios.get('/api/getAddDetail').then((response)=>{
+        this.axios.get('/api/getAddDetail', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
           this.type = response.data.ref;
           });
     },

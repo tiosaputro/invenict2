@@ -1,6 +1,6 @@
 <template>
   <div class="layout-footer">
-	<footer class="text-center text-white">
+	<footer class="text-center text-white" style="color: var(--newbodytext) !important;">
     <!-- Grid container -->
     <div class="container p-4 pb-0">
       <!-- Section: CTA -->
@@ -47,7 +47,7 @@
         }
       },
 			footerImage() {
-				return this.$appState.darkTheme ? '/assets/layout/images/logo_emp_new.png' : '/assets/layout/images/logo_emp_new.png';
+				return this.$appState.darkTheme ? '/assets/layout/images/logo-emp.png' : '/assets/layout/images/logo-emp.png';
 			}
 		},
 		computed: {

@@ -111,7 +111,7 @@ class PaymentController extends Controller
             'created_by' => Auth::user()->usr_name,
             'program_name'=>"PaymentController_Save",
         ]);
-        DB::getPdo()->exec("begin SP_PR_IREQ_MST($request->ireq_id); end;");
+        DB::getPdo()->exec("begin SP_PR_IREQ_MST('$request->ireq_id'); end;");
         
         return ResponseFormatter::success($createPr,'Successfully Created Data');
     }

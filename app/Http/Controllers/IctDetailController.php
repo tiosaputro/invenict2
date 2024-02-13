@@ -444,7 +444,7 @@ class IctDetailController extends Controller
         return response()->json($data);
     }
     function getDetail($ireqd_id,$ireq_id){
-        $dtl = DB::table('ireq_dtl as id')
+        $data['dtl'] = DB::table('ireq_dtl as id')
         ->select('id.ireq_attachment','id.ireq_assigned_to1','id.ireq_assigned_remark','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 
         DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'lr.lookup_desc as ireq_type','id.ireq_qty','id.ireq_remark','id.ireq_assigned_to1_reason')
         ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
@@ -461,6 +461,7 @@ class IctDetailController extends Controller
         ->where('id.ireqd_id',$ireqd_id)
         ->where('id.ireq_id',$ireq_id)
         ->first();
-            return json_encode($dtl);
+        $data['status'] = DB::table('VREQ_MST_STATUS')->get();
+        return json_encode($data);
     }
 }

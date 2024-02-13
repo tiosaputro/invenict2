@@ -50,7 +50,7 @@
 			        <div class="col">
 				        <div class="box">
                    <Button
-                    label="Back"
+                    label="Kembali"
                     class="p-button-raised p-button p-mr-2 p-mb-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
@@ -75,33 +75,44 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
+        token: localStorage.getItem('token'),
     };
   },
   mounted() {
     this.getIctDetail();
+    this.getNoreq();
   },
   methods: {
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Closing Request") || this.checkto.includes("/ict-request-divisi4")){ 
+          this.getIctDetail();
+          this.getNoreq();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
-        this.getNoreq();
         this.loading = false;
       }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if (error.response.status == 403) {
-           this.$router.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired','true')
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.kode = response.data;
       });
     },

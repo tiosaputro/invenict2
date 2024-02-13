@@ -11,7 +11,13 @@
             </div>
           </template>
           <template v-slot:end>
-            <label style="width:200px">No. Request : {{this.kode}}</label>
+            <div v-if="this.kode.ireq_date">
+              <label style="width:110px">No. Request </label>
+              <label>: {{this.kode.noreq}} </label>
+              <br>
+              <label style="width:110px">Request Date</label>
+              <label>: {{formatDate(this.kode.ireq_date)}}</label>
+            </div>
           </template>
         </Toolbar>
         <DataTable
@@ -149,6 +155,7 @@
 </template>
 <script>
 import {FilterMatchMode} from 'primevue/api';
+import moment from 'moment';
 export default {
   data() {
     return {
@@ -158,23 +165,41 @@ export default {
         kode:'',
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
+        token: localStorage.getItem('token'),
+        checkname : [],
+        checkto : [],
         showPersonnel:[]
     };
   },
   mounted() {
-    this.getIctDetail();
+    this.cekUser();
   },
   methods: {
+    formatDate(date){
+      return moment(date).format("DD MMM YYYY HH:mm");
+    },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
+           this.getIctDetail();
+           this.getNoreq()
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.detail = response.data;
         this.showPersonnel = response.data.map((x)=>x.ireq_count_status);
-        this.getNoreq();
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -185,15 +210,11 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-           if (error.response.status == 403) {
-            this.$router.push('/access');
-           }
-
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
-        this.kode = response.data.noreq;
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.kode = response.data;
         this.status = response.data.cekstatus;
       });
     },
@@ -212,7 +233,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code).then(()=>{
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id+'/'+code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
             this.loading = true;
             this.getIctDetail();
           });
@@ -225,7 +246,8 @@ export default {
         message: "Are you sure you want to submit this request?",
         header: "Confirmation Submit",
         icon: "pi pi-info-circle",
-        acceptClass: "p-button",
+        acceptClass: "p-button-success",
+        rejectClass: "p-button-danger",
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
@@ -236,7 +258,7 @@ export default {
             life: 3000,
           });
           this.loading = true;
-          this.axios.get('/api/updateStatusSubmit/' +this.code);
+          this.axios.get('/api/updateStatusSubmit/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}});
           setTimeout( () => this.$router.push('/ict-request'),1000);
         },
         reject: () => {},
@@ -244,7 +266,7 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.code).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

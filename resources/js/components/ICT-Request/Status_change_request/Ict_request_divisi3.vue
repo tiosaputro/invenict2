@@ -48,7 +48,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.countRemarkReviewerPenugasan.some(el=> el > 0)"/>
                   <Column style="min-width:20rem">
                   <template #body="slotProps">
@@ -149,7 +153,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
                   <template #footer>
                     <div class="p-grid p-dir-col">
@@ -186,7 +194,7 @@
                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} In Progress"
                   responsiveLayout="scroll"
                 >
-                <template #header>
+                  <template #header>
                     <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
@@ -231,7 +239,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:15rem">
@@ -257,20 +269,6 @@
                       v-tooltip.bottom="'Click to create remark'"
                       @click="createRemark(slotProps.data.ireqd_id,slotProps.data.ireq_id)"
                     />
-                      <!-- <Button
-                        class="p-button-raised p-button-info p-button-text mr-2"
-                        label="CA"
-                        @click="$router.push({
-                            name: 'add Cash Advance',
-                            params: { code: slotProps.data.ireq_id, dtl:slotProps.data.ireqd_id } })"
-                      />
-                      <Button
-                        class="p-button-raised p-button-success p-button-text mt-2"
-                        label="PR"
-                        @click="$router.push({
-                            name: 'add Payment Request',
-                            params: { code: slotProps.data.ireq_id, dtl:slotProps.data.ireqd_id } })"
-                      /> -->
                     </template>
                   </Column>
                   <template #footer>
@@ -353,7 +351,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column>
@@ -447,7 +449,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column>
@@ -517,7 +523,7 @@
           <Dialog
             v-model:visible="dialogChangeStatus"
             :style="{ width: '500px' }"
-            header="Dialog Ubah Status"
+            header="Dialog Form Change Status"
             :modal="true"
             class="fluid"
           >
@@ -690,18 +696,37 @@ export default {
         sudahDikerjakan:[],
         user:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        token: localStorage.getItem('token'),
+        checkname : [],
+        checkto : [],
         editDetail:{ ireq_reason :''},
         editStatus:[],
         note:[],
         remark:[],
         code:null,
-        status:[],
+        status:[
+          {'code': 'T','name':'In Progress'},
+          {'code': 'D','name':'Done'},
+          {'code': 'C','name':'Close'},
+        ],
     };
   },
   mounted() {
     this.getData();
   },
   methods: {
+    getDivision(profileDetail){
+      try {
+        const parsedDetail = JSON.parse(profileDetail);
+        const division = parsedDetail.division || 'N/A';
+
+        // Remove double quotes around the division value
+        return division.replace(/^"(.*)"$/, '$1');
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return 'N/A'; // Display 'N/A' if there is an error parsing JSON
+      }
+    },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
@@ -754,21 +779,21 @@ export default {
       }
     },
     createRemark(ireqd_id,ireq_id){
-      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
+      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.remark = response.data;
         this.dialogRemark = true;
       });
         this.code = ireqd_id;
     },
     createNote(ireqd_id,ireq_id){
-      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
+      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.note = response.data;
         this.dialogNote = true;
       });
         this.code = ireqd_id;
     },
     submitRemark(){
-        this.axios.put('/api/save-remark-assigned/'+this.code,this.remark).then(()=>{ 
+        this.axios.put('/api/save-remark-assigned/'+this.code,this.remark,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
           this.note = [];
           this.code = null;
@@ -778,7 +803,7 @@ export default {
         this.getData();
     },
     submitNote(){
-        this.axios.put('/api/update-note/'+this.code,this.note).then(()=>{ 
+        this.axios.put('/api/update-note/'+this.code,this.note,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
          this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
           this.note = [];
           this.code = null;
@@ -798,16 +823,16 @@ export default {
       this.dialogNote = false;
     },
     edit(ireqd_id,ireq_id){
-      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
-        this.editStatus = response.data;
+      this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.editStatus = response.data.dtl;
         this.code = ireq_id;
-        this.getStatus();
+        // this.getStatus();
       });
       this.dialogChangeStatus = true;
     },
     submitStatus(){
       this.submitted = true;
-        this.axios.put('/api/update-status-done/'+this.code,this.editStatus).then(()=>{
+        this.axios.put('/api/update-status-done/'+this.code,this.editStatus,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
           this.loading = true;
           this.editStatus = [];
           this.code = null;
@@ -824,7 +849,7 @@ export default {
       this.dialogChangeStatus = false;
     },
     getData(){
-      this.axios.get('api/get-sedang-dikerjakan').then((response)=> {
+      this.axios.get('api/get-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
         this.penugasan = response.data.ict3;
         this.countRemarkReviewerPenugasan = this.penugasan.map((x)=>x.countremarkreviewerpenugasan);
         this.reject = response.data.ict4;
@@ -836,14 +861,6 @@ export default {
         this.countRemarkReviewerClose = this.selesai.map((x)=>x.countremarkreviewerclose);
         this.loading = false;
       }).catch(error=>{
-          if ((error.response.status == 401)){
-            this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem("Expired","true")
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
           if(error.response.status == 403){
              this.$router.push('/access');
           }
@@ -859,7 +876,7 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-assignment-request').then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -882,7 +899,7 @@ export default {
     },
     CetakPdfReject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-reject').then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -905,7 +922,7 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-sedang-dikerjakan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -928,7 +945,7 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-sudah-dikerjakan').then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -951,7 +968,7 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-personnel-selesai').then((response)=>{
+       this.axios.get('api/report-ict-pdf-personnel-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -974,7 +991,7 @@ export default {
     },
     CetakPdf(ireq_id){
       this.loading = true;
-       this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
+       this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

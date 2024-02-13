@@ -445,7 +445,7 @@
                 <div class="row">
                     <div class="col">
                         <a>
-                          <img src="{{asset('assets/layout/images/logo_emp_new.png')}}" width="200" data-holder-rendered="true" />
+                          <img src="{{asset('assets/layout/images/logo-emp.png')}}" width="200" data-holder-rendered="true" />
                         </a>
                     </div>
                     <div class="col company-details">

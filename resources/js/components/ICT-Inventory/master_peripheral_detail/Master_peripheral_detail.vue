@@ -237,18 +237,13 @@ export default {
   methods: {
     previewBarcode(invent_code_dtl){
       localStorage.setItem('code',invent_code_dtl);
-      const dialogRef = this.$dialog.open(qrcode, {
-      props: {
+      this.$dialog.open(qrcode, {
+        props: {
           header: 'Preview Barcode',
-          style: {
-                  width: '25vw',
-                },
-          breakpoints: {
-                        '760px': '75vw',
-                        '440px': '90vw'
-                      },
+          style: { width: '25vw'},
+          breakpoints: {'760px': '75vw','440px': '90vw'},
           modal: true
-          },
+        },
       });
     },
     detailKode(invent_code_dtl){

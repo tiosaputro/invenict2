@@ -19,42 +19,6 @@
                   />
                 </div>
               </div>
-              <!-- <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Tgl. Request</label>
-                 <div class="col-fixed w-11rem">
-                      <DatePicker v-model="mutasi.ireq_date" :masks="mask" >
-                        <template v-slot="{ inputValue, togglePopover }">
-                          <div class="flex items-center">
-                            <input
-                              class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
-                              :value="inputValue"
-                              @click="togglePopover"
-                              placeholder="Pilih Tgl. Request"
-                              readonly
-                            />
-                          <Button icon="pi pi-calendar" v-if="!mutasi.ireq_date" @click="togglePopover"/>
-                          <Button icon="pi pi-trash" class="p-button-danger" v-else @click="mutasi.ireq_date = ''" />
-                        </div>
-                        </template>
-                      </DatePicker>
-                      <small v-if="error.ireq_date" class="p-error">
-                        {{ error.ireq_date }}
-                      </small>
-                </div>
-              </div>    -->
-              <!-- <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Tipe Request</label>
-                 <div class="field col-12 md:col-4">
-                     <Dropdown 
-                        v-model ="mutasi.ireq_type"
-                        :options="type"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Pilih Tipe Request"
-                        :showClear="true"
-                     />
-                </div>
-              </div> -->
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Priority Level</label>
                  <div class="col-fixed w-9rem">
@@ -87,11 +51,15 @@
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">User</label>
                  <div class="col-fixed w-9rem">
-                     <InputText
-                        type="text"
-                        v-model="mutasi.ireq_user"
-                        placeholder="Enter User"
-                        :class="{ 'p-invalid': errors.ireq_user }"
+                  <Dropdown 
+                        v-model ="mutasi.ireq_user"
+                        :options="userList"
+                        optionLabel="usr_fullname"
+                        optionValue="usr_id"
+                        :class="{ 'p-invalid': error.ireq_user }"
+                        placeholder="Select One"
+                        :filter="true"
+                        :showClear="true"
                      />
                         <small v-if="error.ireq_user" class="p-error">
                           {{ error.ireq_user }}
@@ -187,37 +155,51 @@ export default {
       mutasi:[],
       type: [],
       divisi: [],
+      userList:[],
       bu: [],
       mask:{
         input: 'DD MMM YYYY'
       },
+      token: localStorage.getItem('token'),
+      checkname : [],
+      checkto : [],
       requestor:'',
     };
   },
   created(){
-      this.getIct();
+      this.cekUser();
   },
   methods: {
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
+          this.getIct();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
       getIct(){
-          this.axios.get('/api/edit-ict/' + this.$route.params.code).then((response)=> {
+          this.axios.get('/api/edit-ict/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
             this.mutasi = response.data.ict;
             this.divisi = response.data.divisi;
             this.type = response.data.ref;
             this.bu = response.data.bisnis;
-            this.level = response.data.prio;
-          }).catch(error=>{
-            if ((error.response.status == 401)){
-              this.$toast.add({
-                severity:'error', summary: 'Error', detail:'Session login expired'
-              });
-              localStorage.clear();
-              localStorage.setItem("Expired","true")
-              setTimeout( () => this.$router.push('/login'),2000);
-            }
-            if(error.response.status == 403){
-              this.$router.push('/access');
-            }
+            this.level = response.data.priority;
+            this.userList = response.data.userlist
+        }).catch(error=>{
+          if (error.response.status == 401){
+            this.$toast.add({
+            severity:'error', summary: 'Error', detail:'Session login expired'
           });
+          localStorage.clear();
+          localStorage.setItem("Expired","true")
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
+        });
       },
     UpdateIct() {
       this.loading = true;
@@ -231,7 +213,7 @@ export default {
         this.mutasi.ireq_bu != null &&
         this.mutasi.ireq_user != null
       ){
-        this.axios.put('/api/update-ict/'+ this.$route.params.code, this.mutasi).then(()=>{
+        this.axios.put('/api/update-ict/'+ this.$route.params.code, this.mutasi, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

@@ -101,6 +101,7 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
+        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
         tes:[],
@@ -109,7 +110,7 @@ export default {
     };
   },
   mounted() {
-   this.getIctDetail();
+   this.cekUser();
   },
   methods: {
     getDetail(ireq_attachment){
@@ -117,33 +118,48 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
+    cekUser(){
+      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.checkto = response.data.map((x)=> x.to)
+        this.checkname = response.data.map((x)=> x.name)
+        if(this.checkname.includes("Approval Atasan") || this.checkto.includes("/ict-request-divisi1")){ 
+          this.getIctDetail();
+          this.getNoreq();
+        }
+        else {
+          this.$router.push('/access');
+        }
+      });
+    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-higher-level/' + this.$route.params.code).then((response)=> {
-        this.detail = response.data.data.detail;
-        this.kode = response.data.data.norequest;
-        this.status = response.data.data.norequest.cekstatus;
-        this.tes = response.data.data.detail.map((x)=>x.ireq_assigned_to);
+      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.detail = response.data;
+        this.tes = response.data.map((x)=>x.ireq_assigned_to);
         if(this.tes.length > 0 && this.tes[0] != null){
           this.ireq = this.tes
         }
+        else{}
         this.loading = false;
-        }).catch(error=>{
-          if (error.response.status == 401) {
+      }).catch(error=>{
+        if (error.response.status == 401) {
             this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-          }
-          if(error.response.status == 403){
-            this.$router.push('/access');
-          }
+            severity:'error', summary: 'Error', detail:'Session login expired'
+          });
+          localStorage.clear();
+          localStorage.setItem('Expired','true')
+          setTimeout( () => this.$router.push('/login'),2000);
+           }
+      });
+    },
+    getNoreq(){
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.kode = response.data;
+        this.status = response.data.cekstatus;
       });
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.code).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
