@@ -313,7 +313,7 @@ class Ict extends Model
         $divisiPengguna = $Ict->ireq_divisi_user;
 
         $Ict->ireq_status = 'NA1';
-        $Ict->ireq_verificator = Auth::user()->usr_name;
+        $Ict->ireq_verificator = Auth::user()->usr_id;
         $Ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $Ict->last_updated_by = Auth::user()->usr_name;
         $Ict->program_name = "IctController_needApprovalAtasan";
@@ -393,7 +393,7 @@ class Ict extends Model
     public static function needApprovalByIctManager($ireq_id){
         $ICT = Ict::where('ireq_id',$ireq_id)->first();
         $ICT->ireq_status = 'NA2';
-        $ICT->ireq_verificator = Auth::user()->usr_name;
+        $ICT->ireq_verificator = Auth::user()->usr_id;
         $ICT->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $ICT->last_updated_by = Auth::user()->usr_name;
         $ICT->program_name = "IctController_needApprovalManager";
@@ -519,7 +519,7 @@ class Ict extends Model
             $status = 'NT';
          }
             $ict->ireq_status = $status;
-            $ict->ireq_verificator = Auth::user()->usr_name;
+            $ict->ireq_verificator = Auth::user()->usr_id;
             $ict->ireq_assigned_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
             $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');   
             $ict->last_updated_by = Auth::user()->usr_name;

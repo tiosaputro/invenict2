@@ -11,7 +11,13 @@
             </div>
           </template>
           <template v-slot:end>
-              <label style="width:200px">No. Request: {{this.kode}}</label>
+            <div v-if="this.kode.ireq_date">
+              <label style="width:110px">No. Request </label>
+              <label>: {{this.kode.noreq}} </label>
+              <br>
+              <label style="width:110px">Request Date</label>
+              <label>: {{formatDate(this.kode.ireq_date)}}</label>
+            </div>
           </template>
         </Toolbar>
         <DataTable
@@ -114,6 +120,7 @@
 </template>
 <script>
 import {FilterMatchMode} from 'primevue/api';
+import moment from 'moment';
 export default {
   data() {
     return {
@@ -130,22 +137,25 @@ export default {
   },
   mounted() {
     this.getIctDetail();
-    this.getNoreq();
   },
   methods: {
+    formatDate(date){
+      return moment(date).format("DD MMM YYYY HH:mm");
+    },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
-        this.tes = response.data.map((x)=>x.ireq_assigned_to);
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.tes = response.data.data.detail.map((x)=>x.ireq_assigned_to);
+        this.kode = response.data.data.request;
+        this.status = response.data.data.request.ireq_status;
         if(this.tes.length > 0 && this.tes[0] != null){
           this.ireq = this.tes
         }
-        else{}
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 403) {
@@ -159,12 +169,6 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data.noreq;
-        this.status = response.data.ireq_status;
       });
     },
     DeleteIct(ireqd_id){
@@ -182,7 +186,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id);
         this.getIctDetail();
         },
         reject: () => {},

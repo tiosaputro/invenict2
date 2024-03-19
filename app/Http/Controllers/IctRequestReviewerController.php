@@ -13,6 +13,7 @@ use App\Models\Mng_user;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Jobs\SendNotifPersonnel;
 use App\Services\IctRequestReviewerServices;
+use App\Services\IctServices;
 use App\Exports\IctExportReviewerPermohonan;
 use App\Exports\IctExportReviewerAtasanDivisi;
 use App\Exports\IctExportReviewerIctManager;
@@ -21,14 +22,17 @@ use App\Exports\IctExportReviewerAssignmentRequest;
 use App\Exports\IctExportReviewerSedangDikerjakan;
 use App\Exports\IctExportReviewerSudahDikerjakan;
 use App\Exports\IctExportReviewerSelesai;
+use App\Models\UserProfile;
 
 class IctRequestReviewerController extends Controller
 {
     protected $to;
     protected $userMenu;
     protected $reviewerServices;
-    function __construct(IctRequestReviewerServices $services){
+    protected $IctServices;
+    function __construct(IctRequestReviewerServices $services, IctServices $service ){
         $this->reviewerServices = $services;
+        $this->IctServices = $service;
         $this->middleware('auth:sanctum');
         $this->to = "/ict-request-reviewer";
         $this->middleware(function ($request, $next) {
@@ -41,12 +45,11 @@ class IctRequestReviewerController extends Controller
         });
     }
     function index($code){
-        $detail = IctDetail::getDataDetailRequest($code);
-        $norequest = Ict::detailNoRequest($code);
-        return ResponseFormatter::success(array('detail'=>$detail,'norequest'=>$norequest),'Successfully Get Data Detail Request'); 
+        $data['detail'] = IctDetail::getDataDetailRequest($code);
+        $data['norequest'] = $this->IctServices->detailNoRequest($code);
+        return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
     }
-    function sendMailtoRequestor(Request $request)
-    {
+    function sendMailtoRequestor(Request $request){
         $save = Ict::sendMailToRequestor($request);
         return ResponseFormatter::success($save,'Successfully Sent Email to Requestor');
     }
@@ -54,8 +57,7 @@ class IctRequestReviewerController extends Controller
         $data = IctDetail::FindDetailRequest($ireq,$code);
         return ResponseFormatter::success($data,'Successfully get data');
     }
-    function detailPenugasan($code)
-    {
+    function detailPenugasan($code){
         $data = IctDetail::detailRequestForAssignment($code);
         return json_encode($data);
     }
@@ -72,27 +74,24 @@ class IctRequestReviewerController extends Controller
         ]);
         $personel = IctDetail::select('ireq_assigned_to2')->where('ireq_id',$code)->where('ireqd_id',$ireqd_id)->pluck('ireq_assigned_to2');
         $ict = Ict::where('ireq_id',$code)->first();
-        $mail = Mng_user::SELECT('usr_email')->WHERE('usr_fullname',$personel)->first();
-        DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST($code); end;");
-        $email = $mail->usr_email .= '@emp.id';
+        $mail = UserProfile::SELECT('profile_detail')->WHERE('user_id',$personel)->first();
+        DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST('$code'); end;");
+        $email =  str_replace('"', "", $mail['mail']);
         SendNotifPersonnel::dispatchAfterResponse($email,$ict);
         IctDetail::cekStatusPenugasan($code);
         return ResponseFormatter::success($dtl,'Successfully');
     }
-    function getRemarkReviewer($ireq_id)
-    {
+    function getRemarkReviewer($ireq_id){
         $ict = Ict::select('ireq_verificator_remark')->where('ireq_id',$ireq_id)->first();
         return json_encode($ict);
     }
-    function saveRemarkReviewer(Request $request)
-    {
+    function saveRemarkReviewer(Request $request){
         $ict = Ict::where('ireq_id',$request->id)->first();
         $ict->ireq_verificator_remark = $request->remark;
         $ict->save();
         return ResponseFormatter::success($ict,'Successfully save remark');
     }
-    function getDataReviewer()
-    {
+    function getDataReviewer(){
         $data['ict'] = $this->reviewerServices->getDataWithFilter('P',NULL,NULL,NULL);
         $data['ict1'] = $this->reviewerServices->getDataWithFilter('NA1','A1',NULL,NULL); 
         $data['ict2'] = $this->reviewerServices->getDataWithFilter('NA2','A2',NULL,NULL); 
@@ -105,8 +104,7 @@ class IctRequestReviewerController extends Controller
 
         return json_encode($data,200);
     }
-    function detailRequestReviewer($ireq_id)
-    {
+    function detailRequestReviewer($ireq_id){
         $dtl = DB::table('ireq_dtl as id')
             ->SELECT(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),
             'id.ireq_id','id.ireq_assigned_to1_reason','id.ireq_assigned_to1','im.ireq_no',
@@ -130,21 +128,18 @@ class IctRequestReviewerController extends Controller
             ->get();
             return response()->json($dtl);
     }
-    function rejectReviewer(Request $request, $code)
-    {
+    function rejectReviewer(Request $request, $code){
         $save = Ict::RejectedByReviewer($request,$code);
         IctDetail::RejectedByReviewer($request,$code);
         
         return ResponseFormatter::success($save,'Successfully rejected request');
     }
-    function needApprovalAtasan($ireq_id)
-    {
+    function needApprovalAtasan($ireq_id){
         $save = Ict::NeedApprovalByHigherLevel($ireq_id);
         IctDetail::needApprovalByHigherLevel($ireq_id);
         return ResponseFormatter::success($save,'Successfully send mail');
     }
-    function needApprovalManager($ireq_id)
-    {
+    function needApprovalManager($ireq_id){
         $save = Ict::needApprovalByIctManager($ireq_id);
         IctDetail::needApprovalByIctManager($ireq_id);
         
@@ -295,7 +290,7 @@ class IctRequestReviewerController extends Controller
         ->where('ireq_id',$request->ireq_id)
         ->update([
             'ireq_assigned_to1_reason'=>$request->ireq_assigned_to1_reason,
-            'ireq_assigned_to2' => $request->ireq_assigned_to1,
+            'ireq_assigned_to2' => $request->ireq_assigned_to2,
             'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'last_updated_by' => Auth::user()->usr_name
         ]);

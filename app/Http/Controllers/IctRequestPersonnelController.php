@@ -36,15 +36,14 @@ class IctRequestPersonnelController extends Controller
             }
         });
     }
-    
     function getDataPersonnel()
     {
         $data['ict'] = $this->personnelService->getDetailWithFilter('T');
         $data['ict1'] = $this->personnelService->getDetailWithFilter('D');
         $data['ict2'] = $this->personnelService->getDetailWithFilter('C');
-        $data['ict3'] = $this->personnelService->getDataWithFilter('C');
+        $data['ict3'] = $this->personnelService->getDataWithFilter('NT');
         $data['ict4'] = $this->personnelService->getDetailWithFilter('RT');
-        return json_encode($data);
+        return ResponseFormatter::success($data,'Successfully Get Data');
     }
     function saveRemark(Request $request,$code){
         $dtl = DB::table('ireq_dtl')

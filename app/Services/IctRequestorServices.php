@@ -81,6 +81,14 @@ class IctRequestorServices
         $data->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_id');
         $data->LEFTJOIN('mng_users as muu','im.ireq_user','muu.usr_id');
         $data->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id');
+        $data->LEFTJOIN('vpekerja_ict vi', function($join) {
+            $join->on('ireq_dtl.ireq_assigned_to1','vi.usr_id')
+                  ->whereNotNull('ireq_dtl.ireq_assigned_to1');
+        });
+        $data->LEFTJOIN('vpekerja_ict vii', function($join) {
+            $join->on('ireq_dtl.ireq_assigned_to2', 'vii.usr_id')
+                  ->whereNull('ireq_dtl.ireq_assigned_to1');
+        });
         $data->LEFTJOIN('lookup_refs as lr',function ($join) {
             $join->on('ireq_dtl.ireq_status','lr.lookup_code')->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         });
@@ -100,7 +108,7 @@ class IctRequestorServices
             'im.ireq_no',
             'ireq_dtl.ireq_id',
             'ireq_dtl.ireq_remark',
-            DB::raw("COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1) AS ireq_assigned_to"),
+            DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
             'ireq_dtl.ireqd_id',
             'lr.lookup_desc as ireq_status',
             'lrs.lookup_desc as ireq_type',
@@ -144,14 +152,11 @@ class IctRequestorServices
     }
     public static function updateRequest($request,$code){
         $ict = Ict::where('ireq_id',$code)->first();
-        $ict->ireq_date = Carbon::parse($request->ireq_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
         $ict->ireq_prio_level = $request->ireq_prio_level;
-        // $ict->ireq_remark = $request->ireq_remark;
         $ict->ireq_type = $request->ireq_type;
         $ict->ireq_user = $request->ireq_user;
-        $ict->ireq_divisi_user = $request->ireq_divisi_user;
-        $ict->ireq_bu = $request->ireq_bu;
-        $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $ict->ireq_spv = $request->ireq_spv;
+        $ict->last_update_date = now();
         $ict->last_updated_by = Auth::user()->usr_name;
         $ict->program_name = "Ict_Update";
         $ict->save();

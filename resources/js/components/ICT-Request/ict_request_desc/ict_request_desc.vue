@@ -2202,7 +2202,11 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ getDivision(slotProps.data.profile_detail) }}
+          </template>
+        </Column>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -2907,7 +2911,11 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ getDivision(slotProps.data.profile_detail) }}
+          </template>
+        </Column>
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
@@ -2984,7 +2992,11 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ getDivision(slotProps.data.profile_detail) }}
+          </template>
+        </Column>
           <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3067,7 +3079,11 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ getDivision(slotProps.data.profile_detail) }}
+          </template>
+        </Column>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3143,7 +3159,11 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ getDivision(slotProps.data.profile_detail) }}
+          </template>
+        </Column>
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
@@ -3220,7 +3240,11 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+            <template #body="slotProps">
+              {{ getDivision(slotProps.data.profile_detail) }}
+            </template>
+          </Column>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
@@ -3447,7 +3471,11 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ getDivision(slotProps.data.profile_detail) }}
+          </template>
+        </Column>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3676,7 +3704,11 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+        <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ getDivision(slotProps.data.profile_detail) }}
+          </template>
+        </Column>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
             <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -4393,6 +4425,17 @@ export default {
     this.getActive();
   },
   methods: {
+    getDivision(profileDetail){
+      try {
+        const parsedDetail = JSON.parse(profileDetail);
+        const division = parsedDetail.division || 'N/A';
+
+        return division.replace(/^"(.*)"$/, '$1');
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return 'N/A'; 
+      }
+    },
       getDetail(ireq_attachment){
         var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
           var myWindow = window.open(page, "_blank");
@@ -4434,7 +4477,7 @@ export default {
         }
       },
       getIct(){
-        this.axios.get('api/get-ict',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.axios.get('api/get-ict').then((response)=> {
           this.ict = response.data.ict6;
           this.sdhDiverifikasi = response.data.ict1;
           this.diReject = response.data.ict2;
@@ -4455,7 +4498,7 @@ export default {
         });
       },
       getIct2(){
-        this.axios.get('/api/get-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.axios.get('/api/get-permohonan').then((response)=> {
         this.permohonan = response.data.ict7;
         this.sedangDireview1 = response.data.ict8;
         this.verif = response.data.ict1;
@@ -4478,7 +4521,7 @@ export default {
         });
       },
       getIct3(){
-        this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.axios.get('api/get-data-reviewer').then((response)=> {
           this.blmDiverifikasi = response.data.ict;
           this.showPersonelblmDiverifikasi = this.blmDiverifikasi.map((x)=>x.ireq_count_status);
           this.atasanDivisi = response.data.ict1;
@@ -4504,7 +4547,7 @@ export default {
         });
       },
       getIct4(){
-        this.axios.get('api/get-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.axios.get('api/get-sedang-dikerjakan').then((response)=> {
         this.sedngDikerjakan = response.data.ict;
         this.sudhDikerjakan = response.data.ict1;
         this.selesaiii = response.data.ict2;
@@ -4523,16 +4566,16 @@ export default {
         });
       },
       getIct5(){
-      this.axios.get('api/get-divisi-4',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.blmDiverifikasi4 = response.data.ict;
-        this.sdhDiverifikasi4 = response.data.ict1;
-        this.direject4 = response.data.ict2;
-        this.sdgDikerjakan4 = response.data.ict3;
-        this.sdHDikerjakan4 = response.data.ict4
-        this.selesai4 = response.data.ict5;
-        this.totalRequest4 = response.data.ict6;
-        this.sedangDireview2 = response.data.ict7;
-        this.penugasanRequest4 = response.data.ict8;
+      this.axios.get('api/get-data-manager').then((response)=> {
+        this.sdhDiverifikasi4 = response.data.data.ict1;
+        this.direject4 = response.data.data.ict2;
+        this.sdgDikerjakan4 = response.data.data.ict3;
+        this.sdHDikerjakan4 = response.data.data.ict4
+        this.selesai4 = response.data.data.ict5;
+        this.totalRequest4 = response.data.data.ict9;
+        this.sedangDireview2 = response.data.data.ict7;
+        this.blmDiverifikasi4 = response.data.data.ict8;
+        this.penugasanRequest4 = response.data.data.ict6;
         this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {
@@ -4546,7 +4589,7 @@ export default {
         });
       },
       getIct6(){
-        this.axios.get('api/total-request', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/total-request').then((response)=>{
           this.total = response.data;
           this.loading = false;
         }).catch(error=>{
@@ -4561,14 +4604,14 @@ export default {
         });
       },
       getIct7(){
-        this.axios.get('api/get-ict-admin',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.ictAdmin = response.data.ict;
-          this.sdhDiverifikasiAdmin = response.data.ict1;
-          this.diRejectAdmin = response.data.ict2;
-          this.sdgDikerjakanAdmin = response.data.ict3;
-          this.sdhDikerjakanAdmin = response.data.ict4;
-          this.sdhSelesaiAdmin = response.data.ict5;
-          this.totalAdmin = response.data.ict6;
+        this.axios.get('api/get-ict-admin').then((response)=>{
+          this.ictAdmin = response.data.data.ict;
+          this.sdhDiverifikasiAdmin = response.data.data.ict1;
+          this.diRejectAdmin = response.data.data.ict2;
+          this.sdgDikerjakanAdmin = response.data.data.ict3;
+          this.sdhDikerjakanAdmin = response.data.data.ict4;
+          this.sdhSelesaiAdmin = response.data.data.ict5;
+          this.totalAdmin = response.data.data.ict6;
           this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {
@@ -4583,7 +4626,7 @@ export default {
       },
       AssignPerRequest(ireq_id){
           this.assign.id = ireq_id;
-          this.axios.get('api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('api/get-pekerja').then((response)=>{
             this.petugas = response.data;
           });
           this.dialogAssign = true;
@@ -4591,7 +4634,7 @@ export default {
       updateAssign(){
         this.submitted = true;
         if(this.assign.name != null){
-          this.axios.post('/api/aprr', this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.post('/api/aprr', this.assign).then(()=>{
             this.assign = {
               id : null,
               name : null
@@ -4618,7 +4661,7 @@ export default {
           rejectLabel: "No",
           accept: () => {
             this.loading = true;
-            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_no, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_no).then(()=>{
               this.getActive();
               this.$toast.add({
               severity: "info",
@@ -4651,7 +4694,7 @@ export default {
         rejectLabel: "No",
         accept: () => {
           this.loading = true;
-          this.axios.get('/api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.get('/api/sapr/'+ireq_id).then(()=>{
             this.$toast.add({
             severity: "info",
             summary: "Success Message",
@@ -4674,7 +4717,7 @@ export default {
         rejectLabel: "No",
         accept: () => {
           this.loading = true;
-          this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.get('/api/naa/' +ireq_id).then(()=>{
           this.$toast.add({
             severity: "info",
             summary: "Confirmed",
@@ -4689,14 +4732,14 @@ export default {
       },
       ApproveManager(ireq_id){
         this.$confirm.require({
-        message: "Apakah Anda Yakin?",
+        message: "Are you sure to approve this request?",
         header: "Confirmation",
         icon: "pi pi-info-circle",
         acceptClass: "p-button",
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
-          this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.get('/api/nam/' +ireq_id).then(()=>{
             this.loading = true;
             this.$toast.add({
             severity: "info",
@@ -4723,7 +4766,7 @@ export default {
       updateReject(){
         this.submitted = true;
         if(this.rbr.ket){
-          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr).then((res)=>{
             this.dialogReject = false;    
             this.rbr.id = '' ;
             this.rbr.ket = '' ;
@@ -4757,7 +4800,7 @@ export default {
             rejectLabel: "No",
             accept: () => {
               this.loading = true;
-                this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+                this.axios.get('/api/updateStatusPermohonan/' +this.code).then(()=>{
                   this.$toast.add({
                     severity: "info",
                     summary: "Success Message",
@@ -4784,7 +4827,7 @@ export default {
       updateRejectAtasan(){
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.axios.put('/api/updateStatusReject/'+ this.code, this.reason).then(()=>{
               this.dialogRejectAtasan = false;
               this.$toast.add({
                 severity: "info",
@@ -4807,7 +4850,7 @@ export default {
       submitt(){
         this.submitted = true;
         if(this.editDetail.status != null){
-          this.axios.put('/api/update-status-done/'+this.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/update-status-done/'+this.code, this.editDetail).then(()=>{
             this.$toast.add({
               severity:'success', summary: 'Success', detail:'Status Berhasil Dirubah', life: 3000
             });
@@ -4819,13 +4862,13 @@ export default {
       edit(ireqd_id,ireq_id){
         this.code = ireq_id;
         this.dialogEdit = true;
-        this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id).then((response)=>{
           this.editDetail = response.data;
         });
         this.getStatus();
       },
       getStatus(){
-        this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/getStatusIct').then((response)=>{
           this.status = response.data;
         });
       },
@@ -4846,7 +4889,7 @@ export default {
           detail: "Permohonan Dilanjutkan",
           life : 1000
         });
-        this.axios.put('/api/abm/' +this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/abm/' +this.code, this.reason).then(()=>{
           this.cancelApproveManager();
           this.getActive();
         });
@@ -4864,7 +4907,7 @@ export default {
       updateRejectManager(){
             this.submitted = true;
             if(this.reason.ket != null){
-              this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+              this.axios.put('/api/rbm/'+ this.code, this.reason).then(()=>{
                 this.$toast.add({
                   severity: "info",
                   summary: "Confirmed",
@@ -4879,7 +4922,7 @@ export default {
       RemarkReviewer(ireq_id){
       this.loading = true;
       this.remarkreviewer.id = ireq_id;
-      this.axios.get('api/get-remark-reviewer/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+      this.axios.get('api/get-remark-reviewer/'+ireq_id).then((res)=>{
         this.remarkreviewer.remark = res.data.ireq_verificator_remark;
         this.dialogRemarkReviewer = true;
         this.loading = false;
@@ -4892,7 +4935,7 @@ export default {
       },
       updateRemarkReviewer(){
         this.dialogRemarkReviewer = false;
-        this.axios.post('api/save-remark-reviewer',this.remarkreviewer, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('api/save-remark-reviewer',this.remarkreviewer).then(()=>{
          this.loading = true;
           this.$toast.add({
             severity: "info",
@@ -4905,21 +4948,21 @@ export default {
         });
       },
       createRemarkAssigned(ireqd_id,ireq_id){
-        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
           this.remarkAssigned = response.data;
           this.dialogRemarkAssigned = true;
         });
           this.code = ireqd_id;
       },
       createNoteAssigned(ireqd_id,ireq_id){
-        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id).then((response)=>{
           this.noteAssigned = response.data;
           this.dialogNoteAssigned = true;
         });
           this.code = ireqd_id;
       },
       submitRemarkAssigned(){
-          this.axios.put('/api/save-remark-assigned/'+this.code,this.remarkAssigned,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
+          this.axios.put('/api/save-remark-assigned/'+this.code,this.remarkAssigned).then(()=>{ 
           this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
             this.noteAssigned = [];
             this.code = null;
@@ -4929,7 +4972,7 @@ export default {
           this.getIct4();
       },
       submitNoteAssigned(){
-          this.axios.put('/api/update-note/'+this.code,this.noteAssigned,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{ 
+          this.axios.put('/api/update-note/'+this.code,this.noteAssigned).then(()=>{ 
           this.$toast.add({ severity:'success', summary: 'Success', detail:'Success Update', life: 2000 });
             this.noteAssigned = [];
             this.code = null;

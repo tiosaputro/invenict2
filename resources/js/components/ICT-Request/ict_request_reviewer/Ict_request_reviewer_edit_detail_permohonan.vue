@@ -4,7 +4,7 @@
         <div class="card">
         <Toolbar class="mb-4">
           <template v-slot:start>
-				        <h4>ICT Request (Detail)</h4>
+				    <h4>ICT Request (Detail)</h4>
           </template>
         </Toolbar>
           <div class="row">
@@ -23,38 +23,19 @@
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">Request Type</label>
                  <div class="col-fixed w-9rem">
-                       <Dropdown
-                        :options="type"
-                        type="text"
-                        v-model="ict.ireq_type"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Select One"
-                        @change="getIreq()"
-                        :class="{ 'p-invalid': error.ireq_type }"
-                        disabled
-                  />
-                     <small v-if="errors.ireq_type" class="p-error">
-                      {{ errors.ireq_type[0] }}
-                    </small>
-                     <small v-if="error.ireq_type" class="p-error">
-                      {{ error.ireq_type }}
-                  </small>
+                  <InputText 
+                      v-model="ict.request_type" 
+                      disabled
+                    />
                 </div>
               </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem"> Items </label>
                  <div class="col-4 md-4">
                     <InputText 
-                      v-model="ict.invent_desc" 
+                      v-model="ict.name" 
                       disabled
                     />
-                     <small v-if="errors.catalog" class="p-error">
-                      {{ errors.catalog[0] }}
-                    </small>
-                     <small v-if="error.requestcatalog" class="p-error">
-                      {{ error.requestcatalog }}
-                  </small>
                 </div>
               </div>
               <div class="field grid" v-if="this.cekTipeReq =='P'">
@@ -102,28 +83,28 @@
                   @click="$router.go(-1)"
                 />
               </div>
-            </form>
-          </div>
-         <div class="col-sm-6" >
-            <div class="field grid" v-if="this.image">
-               <label class="col-fixed w-9rem"></label>
-                <div class="col-10 md-6">
-                  <div class="card" style="height: 20 rem;">
-                    <img :src="preview" class="ict-image" v-if="this.preview"/>
-                    <img :src="'/attachment_request/'+this.ict.ireq_attachment" class="ict-image" v-else-if="!this.preview"/>
-                  </div>
-                </div>
+             </form>
+            </div>
+            <div class="col-sm-6" >
+              <div class="field grid" v-if="this.image">
+                  <label class="col-fixed w-9rem"></label>
+                    <div class="col-10 md-6">
+                      <div class="card" style="height: 20 rem;">
+                        <img :src="preview" class="ict-image" v-if="this.preview"/>
+                        <img :src="'/attachment_request/'+this.ict.ireq_attachment" class="ict-image" v-else-if="!this.preview"/>
+                      </div>
+                    </div>
               </div>
               <div class="field grid" v-else-if="this.pdf">
-               <label class="col-fixed w-9rem"></label>
-                <div class="col-10 md-6">
-                  <div class="card">
-                    <Pdf :src="preview" :page="1" class="ict-pdf" v-if="this.preview" />
-                    <Pdf :src="'/attachment_request/'+this.ict.ireq_attachment" :page="1" class="ict-pdf" v-else-if="!this.preview" />
-                  </div>
-                </div>
+                  <label class="col-fixed w-9rem"></label>
+                    <div class="col-10 md-6">
+                      <div class="card">
+                        <Pdf :src="preview" :page="1" class="ict-pdf" v-if="this.preview" />
+                        <Pdf :src="'/attachment_request/'+this.ict.ireq_attachment" :page="1" class="ict-pdf" v-else-if="!this.preview" />
+                      </div>
+                    </div>
               </div>
-          </div>
+            </div>
           </div>
       </div>
     </div>
@@ -144,14 +125,13 @@ export default {
       kode:'',
       type: [],
       bu: [],
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
       cekTipeReq:'',
     };
   },
   created(){
-      this.cekUser();
+    this.cekUser();
   },
   methods: {
     getAttach(event) {
@@ -175,7 +155,7 @@ export default {
             vm.image = e.target.result;
         };
         reader.readAsDataURL(foto);
-      },
+    },
     getIreq(){
       this.cekTipeReq = this.ict.ireq_type;
        if(this.cekTipeReq == 'S'){
@@ -184,35 +164,20 @@ export default {
       }
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-        this.getIct();
+          this.getIct();
         }
         else {
           this.$router.push('/access');
         }
       });
     },
-    getKode(){
-        this.axios.get('/api/getAddDetail',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.type = response.data.ref;
-        this.kodeperi = response.data.kode;   
-      }).catch(error=>{
-          if (error.response.status == 401){
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem("Expired","true")
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-        });
-      },
     getIct(){
-        this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.ict = response.data;
+        this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code).then((response)=>{
+          this.ict = response.data.data.request;
           if(this.ict.ireq_attachment){
             if(this.ict.ireq_attachment.split('.').pop()=='jpeg'||this.ict.ireq_attachment.split('.').pop()=='png'||this.ict.ireq_attachment.split('.').pop()=='jpg'){
               this.image = true;
@@ -222,16 +187,15 @@ export default {
             }
           }
           this.cekTipeReq = this.ict.ireq_type;
-          this.getKode();
         });
-      },
+    },
     UpdateIctDetail() {
       this.errors = [];
       this.error = [];
       if(this.ict.ireq_type == 'P'){
        if ( this.ict.ireq_remark != null) 
        {
-        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-ict-detail/'+ this.$route.params.ireq+'/'+this.$route.params.code, this.ict).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -249,7 +213,7 @@ export default {
       }else{
         if ( this.ict.ireq_remark != null) 
        {
-          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/update-ict-detail/' + this.$route.params.ireq +'/'+this.$route.params.code, this.ict).then(()=>{
           this.$toast.add({
             severity: "success",
             summary: "Success Message",
@@ -265,7 +229,7 @@ export default {
         }
       }
       }
-      },
+    },
   },
 };
 </script>

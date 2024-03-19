@@ -130,7 +130,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
+                  <Column field="name" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                     <template #body="slotProps">
@@ -244,7 +244,6 @@
                       {{ getDivision(slotProps.data.profile_detail) }}
                     </template>
                   </Column>
-                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:15rem">
                   <template #body="slotProps">
@@ -326,7 +325,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
+                  <Column field="name" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.countRemarkReviewerDone.some(el=> el > 0)"/>
                   <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
@@ -356,7 +355,6 @@
                       {{ getDivision(slotProps.data.profile_detail) }}
                     </template>
                   </Column>
-                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column>
                     <template #body="slotProps">
@@ -424,7 +422,7 @@
                   <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="invent_code" header="Items" :sortable="true" style="min-width:10rem"/>
+                  <Column field="name" header="Items" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.countRemarkReviewerClose.some(el=> el > 0)"/>
                   <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:12rem"/>
@@ -454,7 +452,6 @@
                       {{ getDivision(slotProps.data.profile_detail) }}
                     </template>
                   </Column>
-                  <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column>
                     <template #body="slotProps">
@@ -720,11 +717,10 @@ export default {
         const parsedDetail = JSON.parse(profileDetail);
         const division = parsedDetail.division || 'N/A';
 
-        // Remove double quotes around the division value
         return division.replace(/^"(.*)"$/, '$1');
       } catch (error) {
         console.error('Error parsing JSON:', error);
-        return 'N/A'; // Display 'N/A' if there is an error parsing JSON
+        return 'N/A'; 
       }
     },
     getDetail(ireq_attachment){
@@ -780,14 +776,14 @@ export default {
     },
     createRemark(ireqd_id,ireq_id){
       this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.remark = response.data;
+        this.remark = response.data.data.dtl;
         this.dialogRemark = true;
       });
         this.code = ireqd_id;
     },
     createNote(ireqd_id,ireq_id){
       this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.note = response.data;
+        this.note = response.data.data.dtl;
         this.dialogNote = true;
       });
         this.code = ireqd_id;
@@ -824,7 +820,7 @@ export default {
     },
     edit(ireqd_id,ireq_id){
       this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.editStatus = response.data.dtl;
+        this.editStatus = response.data.data.dtl;
         this.code = ireq_id;
         // this.getStatus();
       });
@@ -850,14 +846,14 @@ export default {
     },
     getData(){
       this.axios.get('api/get-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.penugasan = response.data.ict3;
+        this.penugasan = response.data.data.ict3;
         this.countRemarkReviewerPenugasan = this.penugasan.map((x)=>x.countremarkreviewerpenugasan);
-        this.reject = response.data.ict4;
-        this.sedangDikerjakan = response.data.ict;
+        this.reject = response.data.data.ict4;
+        this.sedangDikerjakan = response.data.data.ict;
         this.countRemarkReviewerInProgress = this.sedangDikerjakan.map((x)=>x.countremarkreviewerinprogress);
-        this.sudahDikerjakan = response.data.ict1;
+        this.sudahDikerjakan = response.data.data.ict1;
         this.countRemarkReviewerDone = this.sudahDikerjakan.map((x)=>x.countremarkreviewerdone);
-        this.selesai = response.data.ict2;
+        this.selesai = response.data.data.ict2;
         this.countRemarkReviewerClose = this.selesai.map((x)=>x.countremarkreviewerclose);
         this.loading = false;
       }).catch(error=>{

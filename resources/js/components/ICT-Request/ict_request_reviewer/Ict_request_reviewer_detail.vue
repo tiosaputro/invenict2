@@ -54,7 +54,7 @@
           <Column field="name" header="Items" :sortable="true"  style="min-width:8rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_assigned_to1" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonnel1.some(el=> el > 0)"/>
+          <Column field="ireq_assigned_to1" header="Personnel ICT (1)" :sortable="true" style="min-width:10rem" v-if="this.showPersonnel1.some(el=> el > 0)"/>
           <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true"  style="min-width:8rem" v-if="this.showReason.some(el=> el > 0)"/>
           <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true"  style="min-width:12rem" v-if="this.showPersonnel2.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:10rem">
@@ -73,7 +73,7 @@
               />
               <Button
                 v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.cekstatus == 'RT' || slotProps.data.ireq_assigned_to2 && slotProps.data.cekstatus == 'NT'"
-                class="p-button-raised p-button-success p-button-text mr-2 mt-2"
+                class="p-button-raised p-button-text mr-2 mt-2"
                 icon="pi pi-check"
                 label="Submit"
                 @click="Submit(slotProps.data.ireqd_id)"
@@ -134,7 +134,7 @@
             <label class="col-fixed w-9rem">Request Type</label>
               <div class="col-fixed">
                 <InputText
-                  v-model="assign.ireq_type"
+                  v-model="assign.request_type"
                   disabled
                 />
               </div>
@@ -187,12 +187,12 @@
             <label class="col-fixed w-9rem">Petugas (ICT)</label>
               <div class="col-fixed">
                 <Dropdown
-                  v-model="assign.ireq_assigned_to1"
+                  v-model="assign.ireq_assigned_to2"
                   :options="petugas"
-                  optionValue="name"
+                  optionValue="code"
                   optionLabel="name"
                   placeholder="Select One"
-                  :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to1 }"
+                  :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to2 }"
                 />
                 <small v-if="submitted && !assign.ireq_assigned_to1" class="p-error">
                   Petugas(ICT) not filled
@@ -242,12 +242,11 @@ export default {
       return moment(date).format("DD MMM YYYY HH:mm");
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request/reviewer")){ 
            this.getIctDetail();
-           this.getNoreq()
         }
         else {
           this.$router.push('/access');
@@ -255,12 +254,10 @@ export default {
       });
     },
     AssignPerDetail(ireqd_id){
-      this.axios.get('/api/detail/'+ ireqd_id+'/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.assign = response.data;
-          });
-      this.axios.get('/api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.petugas = response.data;
-        });
+      this.axios.get('/api/detail/'+ ireqd_id+'/'+ this.$route.params.code).then((response)=>{
+        this.assign = response.data.data.dtl;
+        this.petugas = response.data.data.pekerja;
+      });
       this.dialogAssign = true;
     },
     updateAssign(){
@@ -268,7 +265,7 @@ export default {
       this.code = this.assign.ireqd_id
       if(this.assign.status =='RT'){
         if(this.assign.ireq_assigned_to1 != null){
-          this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign).then(()=>{
             this.assign = [];
             this.dialogAssign = false;
             this.submitted = false;
@@ -278,12 +275,13 @@ export default {
               detail: "Berhasil Assign",
               life: 3000,
             });
+            this.loading = true;
             this.getIctDetail();
           });
         }
       }else{
         if(this.assign.ireq_assigned_to1 != null && this.assign.ireq_assigned_to1_reason != null){
-          this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/updateAssignPerDetailFromReject/'+ this.code ,this.assign).then(()=>{
             this.assign = [];
             this.dialogAssign = false;
             this.submitted = false;
@@ -326,11 +324,16 @@ export default {
       this.dialogAssign = false;
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
-        this.showPersonnel1 = response.data.map((x)=>x.ireq_count_status);
-        this.showPersonnel2 = response.data.map((x)=>x.ireq_count_personnel2);
-        this.showReason = response.data.map((x)=>x.ireq_count_reason);
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.showPersonnel1 = response.data.data.detail.map((x)=>x.ireq_count_status);
+        this.showPersonnel2 = response.data.data.detail.map((x)=>x.ireq_count_personnel2);
+        this.showReason = response.data.data.detail.map((x)=>x.ireq_count_reason);
+        this.kode = response.data.data.request;
+        this.status = response.data.data.request.Ccekstatus;
+        if(this.status =='NT' || this.status == 'RT'){ 
+          this.show = true
+        }
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -343,13 +346,6 @@ export default {
            }
       });
     },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
-        this.status = response.data.cekstatus;
-        if(this.status =='NT' || this.status == 'RT'){ this.show = true}
-      });
-    },
     CetakPdf(){
       this.loading = true;
        this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
@@ -359,15 +355,6 @@ export default {
           this.loading = false;
        });
     },
-    // CetakExcel(){
-    //   window.open('/api/report-ict-detail-excel/' +this.code);
-    // },
-    // CetakPdfReject(){
-    //  window.open('/api/report-ict-detail-pdf-tab-reject/' +this.code);
-    // },
-    // CetakExcelReject(){
-    //   window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
-    // },
   },
 };
 </script>

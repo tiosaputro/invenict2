@@ -23,7 +23,7 @@ class IctRequestAdminController extends Controller
     }
     function getDataIct()
     {
-            $ict = DB::table('ireq_mst as im')
+            $data['ict'] = DB::table('ireq_mst as im')
             ->LEFTJOIN('ireq_dtl as idm','im.ireq_id','idm.ireq_id')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
@@ -36,11 +36,10 @@ class IctRequestAdminController extends Controller
                 ->OrWhere('im.ireq_status','NA1')
                 ->OrWhere('im.ireq_status','NA2');
                 })
-            ->groupBy('im.ireq_id','im.ireq_status','im.ireq_no','im.ireq_date','im.ireq_requestor','im.ireq_user','im.creation_date','dr.div_name','lr.lookup_desc')
             ->ORDERBY('im.ireq_date','DESC')
             ->get();
 
-            $ict1 = DB::table('ireq_mst as im')
+            $data['ict1'] = DB::table('ireq_mst as im')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
             ->SELECT('im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status as status','dr.div_name','lr.lookup_desc as ireq_status','im.ireq_requestor')
@@ -53,7 +52,7 @@ class IctRequestAdminController extends Controller
             ->ORDERBY('im.ireq_date','DESC')
             ->get();
 
-            $ict2 = DB::table('ireq_mst as im')
+            $data['ict2'] = DB::table('ireq_mst as im')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->SELECT('dr.div_name','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_user','im.ireq_status as status','im.ireq_reason','lr.lookup_desc as ireq_status','im.ireq_requestor')
@@ -67,7 +66,7 @@ class IctRequestAdminController extends Controller
             ->ORDERBY('im.ireq_date','DESC')
             ->get();
 
-            $ict3 = DB::table('ireq_mst as im')
+            $data['ict3'] = DB::table('ireq_mst as im')
             ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')
             ->SELECT('im.ireq_requestor','im.ireq_id','im.ireq_no','im.ireq_date','im.ireq_status as status','im.ireq_user',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
             ->WHERE('im.ireq_status','T')
@@ -75,7 +74,7 @@ class IctRequestAdminController extends Controller
             ->ORDERBY('im.ireq_date','DESC')
             ->get();
 
-            $ict4 =  DB::table('ireq_dtl as id')
+            $data['ict4'] =  DB::table('ireq_dtl as id')
             ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('lookup_refs as lr',function ($join) {
@@ -99,7 +98,8 @@ class IctRequestAdminController extends Controller
             ->ORDERBY('im.ireq_date','DESC')
             ->ORDERBY('id.ireqd_id','ASC')
             ->get();
-            $ict5 = DB::table('ireq_dtl as id')
+
+            $data['ict5'] = DB::table('ireq_dtl as id')
             ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('lookup_refs as lr',function ($join) {
@@ -123,15 +123,14 @@ class IctRequestAdminController extends Controller
             ->ORDERBY('im.ireq_date','DESC')
             ->ORDERBY('id.ireqd_id','ASC')
             ->get();
-            $ict6 = DB::table('ireq_mst as id')
+
+            $data['ict6'] = DB::table('ireq_mst as id')
             ->LEFTJOIN('lookup_refs as lr','id.ireq_status','lr.lookup_code')
             ->SELECT('id.ireq_id','id.ireq_no','id.ireq_user','id.ireq_date','lr.lookup_desc as ireq_status','id.ireq_status as status','id.ireq_requestor')
             ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
             ->WHERENotNull('id.ireq_status')
             ->ORDERBY('id.ireq_date','DESC')
             ->get();
-            $data = array('ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6);
-            return ResponseFormatter::success($data,'tes');
-            // return response()->json(['ict'=>$ict,'ict1'=>$ict1,'ict2'=>$ict2,'ict3'=>$ict3,'ict4'=>$ict4,'ict5'=>$ict5,'ict6'=>$ict6],200);
+            return ResponseFormatter::success($data,'Successfully Get Data');
         }
 }

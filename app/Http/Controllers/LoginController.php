@@ -35,17 +35,17 @@ class LoginController extends Controller
             $filter = "(|(mail=" . $userlogin . ")(userprincipalname=" . $userlogin . ")(samaccountname=" . $request->email . "))";
             $check = $ldap->search($filter, $userlogin, $request->password);
             
-            if (!empty($check)){
+            if (!empty($check)){ //* if check AD Valid
               $checkUser = Mng_User::where('usr_email', $mailUser)->first();
                if(empty($checkUser)){
-                    $createUser = Mng_user::createUser($check['streetaddress'],$check['division'],$request->password,$check['company'],$check['physicaldeliveryofficename'],$check['displayname'],$check['samaccountname'],$mailUser);
+                    $createUser = Mng_user::createUser($check['streetaddress'], $request->password, $check['physicaldeliveryofficename'], $check['displayname'], $check['samaccountname'], $mailUser);
                    
                     $profile = new UserProfile();
                     $profile->created_at = now();
                     $profile->id = generate_id();
                     $idUser = $createUser->usr_id;
 
-                    $dataUser = Mng_user::where('usr_id',$createUser->usr_id)->first();
+                    $dataUser = Mng_user::find($createUser->usr_id);
                     $token = $dataUser->createToken('ApiToken')->plainTextToken;
 
                } else { // if exists    
@@ -55,7 +55,7 @@ class LoginController extends Controller
                         $profile->id = generate_id();
                     }
                     $idUser = $checkUser->usr_id;
-                    $dataUser = Mng_user::where('usr_email',$mailUser)->first();
+                    $dataUser = Mng_user::find($idUser);
                     $token = $checkUser->createToken('ApiToken')->plainTextToken;
                }
                 $profile->user_id = $idUser;

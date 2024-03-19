@@ -56,97 +56,103 @@
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_count_id" header="Total Detail" :sortable="true" style="min-width:10rem"/>
-                  <Column headerStyle="min-width:25rem">
+                  <Column headerStyle="min-width:10rem">
                     <template #body="slotProps">
-                      <Button
-                        class="p-button-rounded p-button-secondary mr-2 mt-2"
-                        icon="pi pi-info-circle"
-                        v-if="slotProps.data.ireq_count_status <= 0"
-                        v-tooltip.bottom="'Click for request details'"
-                        @click="detailTabRequestDetailPermohonan(slotProps.data.ireq_id)"
-                      />
-                      <Button
-                        class="p-button-rounded p-button-secondary mr-2 mt-2"
-                        icon="pi pi-info-circle"
-                        v-if="slotProps.data.ireq_count_status > 0"
-                        v-tooltip.bottom="'Click for request details'"
-                        @click="detailTabRequestDetail(slotProps.data.ireq_id)"
-                      />
-                      <Button                    
-                        class="p-button-rounded p-button-warning mr-2 mt-2"
-                        @click="SendEmail(slotProps.data.usr_email,slotProps.data.ireq_id)"
-                        icon="bi bi-envelope-check-fill"
-                        v-tooltip.bottom="'Click to send email to '+slotProps.data.usr_email+'@emp.id'"
-                      />
-                      <Button
-                        v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-rounded p-button-danger mr-2 mt-2"
-                        @click="Reject(slotProps.data.ireq_id)"
-                        v-tooltip.bottom="'Click to reject request'"
-                        icon="bi bi-x-square"
-                      />
-                      <Button
-                        icon="bi bi-chat-quote"
-                        class="p-button-rounded p-button mr-2 mt-2"
-                        @click="Remark(slotProps.data.ireq_id)"
-                        v-tooltip.bottom="'Click to add remark'"
-                      />
-                      <Button
-                        v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-rounded mr-2 mt-2"
-                        @click="ApproveAtasan(slotProps.data.ireq_id)"
-                        icon="bi bi-file-earmark-arrow-up"
-                        v-tooltip.bottom="'Click to higher level approval'"
-                      />
-                      <Button
-                        v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
-                        class="p-button-rounded mr-2 mt-2"
-                        @click="ApproveManager(slotProps.data.ireq_id)"
-                        v-tooltip.bottom="'Click to ICT manager approval'"
-                        icon="bi bi-file-earmark-arrow-up-fill"
-                      />
-                      <Button
-                        class="p-button-rounded mr-2 mt-2" 
-                        @click="AssignPerRequest(slotProps.data.ireq_id)"
-                        icon="bi bi-person-workspace"
-                        v-tooltip.bottom="'Click to Assign Per Request'"
-                      />
-                      <Button
-                        class="p-button-rounded mr-2 mt-2"
-                        @click="$router.push({
-                            name: 'Ict Request Reviewer Assign Per Detail',
-                            params : {code: slotProps.data.ireq_id},})"
-                        icon="bi bi-people"
-                        v-tooltip.bottom="'Click to Assign Per Detail'"
-                      />
-                      <Button
-                        v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id"
-                        class="p-button-rounded p-button-success mr-2 mt-2"
-                        @click="Submit(slotProps.data.ireq_id)"
-                        icon="bi bi-send-check"
-                        v-tooltip.bottom="'Click to submit'"
-                      />
+                      <div class="flex flex-wrap justify-content-center gap-2 mb-2" id="1">
+                        <Button
+                          class="p-button-rounded p-button-secondary mr-2 mt-2"
+                          icon="pi pi-info-circle"
+                          v-if="slotProps.data.ireq_count_status <= 0"
+                          v-tooltip.bottom="'Click for request details'"
+                          @click="detailTabRequestDetailPermohonan(slotProps.data.ireq_id)"
+                        />
+                        <Button
+                          class="p-button-rounded p-button-secondary mr-2 mt-2"
+                          icon="pi pi-info-circle"
+                          v-if="slotProps.data.ireq_count_status > 0"
+                          v-tooltip.bottom="'Click for request details'"
+                          @click="detailTabRequestDetail(slotProps.data.ireq_id)"
+                        />
+                        <Button                    
+                          class="p-button-rounded p-button-warning mr-2 mt-2"
+                          @click="SendEmail(slotProps.data.usr_email,slotProps.data.ireq_id)"
+                          icon="bi bi-envelope-check-fill"
+                          v-tooltip.bottom="'Click to send email to '+slotProps.data.usr_email+'@emp.id'"
+                        />
+                        <Button
+                          v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
+                          class="p-button-rounded p-button-danger mr-2 mt-2"
+                          @click="Reject(slotProps.data.ireq_id)"
+                          v-tooltip.bottom="'Click to reject request'"
+                          icon="bi bi-x-square"
+                        />
+                        <Button
+                          icon="bi bi-chat-quote"
+                          class="p-button-rounded p-button mr-2 mt-2"
+                          @click="Remark(slotProps.data.ireq_id)"
+                          v-tooltip.bottom="'Click to add remark'"
+                        />
+                      </div>
+                      <div class="flex flex-wrap justify-content-center gap-2 mb-2">
+                        <Button
+                          v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
+                          class="p-button-rounded mr-2 mt-2"
+                          @click="ApproveAtasan(slotProps.data.ireq_id)"
+                          icon="bi bi-file-earmark-arrow-up"
+                          v-tooltip.bottom="'Click to higher level approval'"
+                        />
+                        <Button
+                          v-if="slotProps.data.ireq_count_status != slotProps.data.ireq_count_id"
+                          class="p-button-rounded mr-2 mt-2"
+                          @click="ApproveManager(slotProps.data.ireq_id)"
+                          v-tooltip.bottom="'Click to ICT manager approval'"
+                          icon="bi bi-file-earmark-arrow-up-fill"
+                        />
+                        <Button
+                          class="p-button-rounded mr-2 mt-2" 
+                          @click="AssignPerRequest(slotProps.data.ireq_id)"
+                          icon="bi bi-person-workspace"
+                          v-tooltip.bottom="'Click to Assign Per Request'"
+                        />
+                        <Button
+                          class="p-button-rounded mr-2 mt-2"
+                          @click="$router.push({
+                              name: 'Ict Request Reviewer Assign Per Detail',
+                              params : {code: slotProps.data.ireq_id},})"
+                          icon="bi bi-people"
+                          v-tooltip.bottom="'Click to Assign Per Detail'"
+                        />
+                        <Button
+                          v-if="slotProps.data.ireq_count_status == slotProps.data.ireq_count_id"
+                          class="p-button-rounded p-button-success mr-2 mt-2"
+                          @click="Submit(slotProps.data.ireq_id)"
+                          icon="bi bi-send-check"
+                          v-tooltip.bottom="'Click to submit'"
+                        />
+                      </div>
                     </template>
+                    
+                    <SpeedDial :model="items" :direction="'up'"/>         
                   </Column>
                   <template #footer>
-                    <div class="grid p-dir-col">
-                      <div class="col">
-                        <div class="box">
-                          <Button
-                            label="Pdf"
-                            class="p-button-raised p-button-danger mr-2"
-                            icon="pi pi-file-pdf"
-                            @click="CetakPdfPermohonan()"
-                          />
-                          <Button
-                            label="Excel"
-                            class="p-button-raised p-button-success mr-2"
-                            icon="pi pi-print"
-                            @click="CetakExcelPermohonan()"
-                          />
+                      <div class="grid p-dir-col">
+                        <div class="col">
+                          <div class="box">
+                            <Button
+                              label="Pdf"
+                              class="p-button-raised p-button-danger mr-2"
+                              icon="pi pi-file-pdf"
+                              @click="CetakPdfPermohonan()"
+                            />
+                            <Button
+                              label="Excel"
+                              class="p-button-raised p-button-success mr-2"
+                              icon="pi pi-print"
+                              @click="CetakExcelPermohonan()"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
                   </template>
                 </DataTable>   
               </TabPanel>
@@ -985,7 +991,6 @@
                 <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:6rem"/>
                 <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
                 <Column field="kategori" header="Items" :sortable="true" style="min-width:12rem"/>
-                <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
                 <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
                 <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
                 <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
@@ -1106,6 +1111,43 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
+      items: [
+                {
+                    label: 'Add',
+                    icon: 'pi pi-pencil',
+                    command: () => {
+                        this.$toast.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
+                    }
+                },
+                {
+                    label: 'Update',
+                    icon: 'pi pi-refresh',
+                    command: () => {
+                        this.$toast.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
+                    }
+                },
+                {
+                    label: 'Delete',
+                    icon: 'pi pi-trash',
+                    command: () => {
+                        this.$toast.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
+                    }
+                },
+                {
+                    label: 'Upload',
+                    icon: 'pi pi-upload',
+                    command: () => {
+                        this.$router.push('/fileupload');
+                    }
+                },
+                {
+                    label: 'Vue Website',
+                    icon: 'pi pi-external-link',
+                    command: () => {
+                        window.location.href = 'https://vuejs.org/';
+                    }
+                }
+            ],
         mail:{
           body:'',
           footer:'',
@@ -1172,15 +1214,14 @@ export default {
         const parsedDetail = JSON.parse(profileDetail);
         const division = parsedDetail.division || 'N/A';
 
-        // Remove double quotes around the division value
         return division.replace(/^"(.*)"$/, '$1');
       } catch (error) {
         console.error('Error parsing JSON:', error);
-        return 'N/A'; // Display 'N/A' if there is an error parsing JSON
+        return 'N/A'; 
       }
     },
     SendEmail(usr_email,ireq_id){
-      this.axios.get('/api/detailrequest-tomail/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+      this.axios.get('/api/detailrequest-tomail/'+ireq_id).then((res)=>{
         // this.dialogSendMail = true;
         var frommail = usr_email + "@emp.id";
         // this.mail.from = res.data.fromemail;
@@ -1205,7 +1246,7 @@ export default {
       };
     },
     updateMail(){
-      this.axios.post('/api/sendMailtoRequestor',this.mail,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+      this.axios.post('/api/sendMailtoRequestor',this.mail).then(()=>{
         this.cancelMail();
       });
     },
@@ -1251,7 +1292,7 @@ export default {
       this.$router.push('/ict-request-reviewer/detail-penugasan/'+ireq_id)
     },
     getIct(){
-      this.axios.get('api/get-data-reviewer',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/get-data-reviewer').then((response)=> {
           this.permohonan = response.data.ict;
           this.showPersonelPermohonan = this.permohonan.map((x)=>x.ireq_count_status);
           this.showRemarkPermohonan = this.permohonan.map((x)=>x.count_remark);
@@ -1304,7 +1345,7 @@ export default {
             detail: "Success Submit",
             life: 3000,
           });
-          this.axios.get('api/sapr/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.get('api/sapr/'+ireq_id).then(()=>{
             this.getIct();
           });
         },
@@ -1314,7 +1355,7 @@ export default {
     Remark(ireq_id){
       this.loading = true;
       this.remark.id = ireq_id;
-      this.axios.get('api/get-remark-reviewer/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+      this.axios.get('api/get-remark-reviewer/'+ireq_id).then((res)=>{
         this.remark.remark = res.data.ireq_verificator_remark;
         this.dialogRemark = true;
         this.loading = false;
@@ -1328,7 +1369,7 @@ export default {
     updateRemark(){
       this.dialogRemark = false;
       this.loading = true;
-      this.axios.post('api/save-remark-reviewer',this.remark, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+      this.axios.post('api/save-remark-reviewer',this.remark).then(()=>{
         this.$toast.add({
           severity: "info",
           summary: "Success",
@@ -1351,7 +1392,7 @@ export default {
     updateReject(){
         this.submitted = true;
         if(this.rbr.ket != null){
-          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/reject-by-reviewer/'+this.rbr.id, this.rbr).then(()=>{
             this.dialogReject = false;    
             this.rbr.id = null;
             this.rbr.ket = null;
@@ -1383,7 +1424,7 @@ export default {
             detail: "Success Update Request",
             life:2000
           });
-          this.axios.get('/api/naa/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.get('/api/naa/' +ireq_id).then(()=>{
             this.getIct();
           });
         },
@@ -1406,7 +1447,7 @@ export default {
             detail: "Success Update Request",
             life:2000
           });
-          this.axios.get('/api/nam/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.get('/api/nam/' +ireq_id).then(()=>{
             this.getIct();
           });
         },
@@ -1415,7 +1456,7 @@ export default {
     },
     AssignPerRequest(ireq_id){
         this.assign.id = ireq_id;
-        this.axios.get('api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/get-pekerja').then((response)=>{
             this.petugas = response.data;
         });
         this.dialogAssign = true;
@@ -1423,7 +1464,7 @@ export default {
     updateAssign(){
         this.submitted = true;
         if(this.assign.name != null){
-          this.axios.post('/api/aprr', this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.post('/api/aprr', this.assign).then(()=>{
             this.assign = {
               id : null,
               name : null
@@ -1464,7 +1505,7 @@ export default {
               detail: "Closing request successful",
               life: 3000,
             });
-            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.axios.get('/api/updateStatusClosingDetail/' +ireqd_id + '/' + ireq_id).then(()=>{
               this.getIct();
             });
           },
@@ -1474,7 +1515,7 @@ export default {
     detailRequest(ireq_id){
       this.displayDetailRequest = true;
       this.loadingDetail = true;
-      this.axios.get('/api/detail-request-reviewer/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/detail-request-reviewer/' + ireq_id).then((response)=> {
         this.detail = response.data;
         this.ireq_no = response.data[0].ireq_no;
         this.loadingDetail = false;
@@ -1482,7 +1523,7 @@ export default {
     },
     CetakPdf(ireq_id){
       this.loading = true;
-       this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1491,7 +1532,7 @@ export default {
     },
     CetakPdfPermohonan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-permohonan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1502,7 +1543,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-permohonan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-reviewer-permohonan',{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -1514,7 +1555,7 @@ export default {
     },
     CetakPdfAtasanDivisi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1525,7 +1566,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-atasan-divisi',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-reviewer-atasan-divisi',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -1537,7 +1578,7 @@ export default {
     },
     CetakPdfIctManager(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-ict-manager',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-ict-manager').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=no","target=_blank");
           myWindow.document.write(responseHtml);
@@ -1548,7 +1589,7 @@ export default {
        const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-ict-manager',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-reviewer-ict-manager',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -1560,7 +1601,7 @@ export default {
     },
     CetakPdfReject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-reject').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1571,7 +1612,7 @@ export default {
        const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-reject',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-reviewer-reject',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -1583,7 +1624,7 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-assignment-request').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1594,7 +1635,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-assignment-request',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-reviewer-assignment-request',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -1606,7 +1647,7 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1617,7 +1658,7 @@ export default {
        const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-reviewer-sedang-dikerjakan',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -1629,7 +1670,7 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1640,7 +1681,7 @@ export default {
        const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-reviewer-sudah-dikerjakan',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -1652,7 +1693,7 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-reviewer-selesai').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -1663,7 +1704,7 @@ export default {
        const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-selesai',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-reviewer-selesai',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;

@@ -13,7 +13,7 @@
           <template v-slot:end>
             <div v-if="this.detailRequest.request_date">
               <label style="width:110px">No. Request </label>
-              <label>: {{this.kode}} </label>
+              <label>: {{this.detailRequest.noreq}} </label>
               <br>
               <label style="width:110px">Request Date</label>
               <label>: {{formatDate(this.detailRequest.request_date)}}</label>
@@ -178,7 +178,6 @@ export default {
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
            this.getIctDetail();
-           this.getNoreq()
         }
         else {
           this.$router.push('/access');
@@ -187,7 +186,9 @@ export default {
     },
     getIctDetail(){
       this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
+        this.detail = response.data.data.detail;
+        this.detailRequest = response.data.data.request;
+
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -198,13 +199,6 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.detailRequest = response.data;
-        this.kode = response.data.noreq;
-        this.status = response.data.cekstatus;
       });
     },
     CetakPdf(){

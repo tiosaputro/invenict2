@@ -10,8 +10,7 @@ use App\Models\Ict;
 
 class IctRequestPersonnelServices
 {
-    public function getDataWithFilter(){
-        $usr_fullname = Auth::user()->usr_fullname;
+    public function getDataWithFilter($status){
         $data = Ict::Query();
         $data->LEFTJOIN('divisi_refs as dr','ireq_mst.ireq_divisi_user','dr.div_id');
         $data->LEFTJOIN('user_profile up','ireq_mst.ireq_user','up.user_id');
@@ -28,8 +27,8 @@ class IctRequestPersonnelServices
             'mus.usr_fullname as ireq_user',
             'ireq_mst.ireq_status as status',
             'ireq_mst.ireq_id');
-        $data->WHERE('ireq_mst.ireq_status','NT');
-        $data->WHERE('id.ireq_assigned_to1',$usr_fullname);
+        $data->WHERE('ireq_mst.ireq_status',$status);
+        $data->WHERE('id.ireq_assigned_to1',Auth::user()->usr_id);
         $data->groupBy(
             'ireq_mst.ireq_date',
             DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1)'),
@@ -46,7 +45,6 @@ class IctRequestPersonnelServices
     }
 
     public function getDetailWithFilter($status){
-        $usr_fullname = Auth::user()->usr_fullname;
         $data = IctDetail::Query();
         $data->SELECT(
             DB::raw('COUNT(imm.ireq_verificator_remark) as countRemarkReviewerInProgress'),
@@ -88,7 +86,7 @@ class IctRequestPersonnelServices
                 $query->WHERE('ireq_dtl.ireq_status',$status);
             }
         });
-        $data->WHERE(DB::raw("COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1)"),$usr_fullname);
+        $data->WHERE(DB::raw("COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1)"),Auth::user()->usr_id);
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
         $data->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         $data->GROUPBY(

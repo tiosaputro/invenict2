@@ -70,36 +70,47 @@ class IctRequestRequestorController extends Controller
     }
     function edit($code)
     {
-        $data['ict'] = DB::table('ireq_mst as im')
-            ->SELECT('im.ireq_id','mu.usr_fullname as ireq_requestor','im.ireq_no','im.ireq_prio_level','im.ireq_type','im.ireq_date','im.ireq_bu','im.ireq_divisi_user','im.ireq_user')
+        $data['ict'] = Ict::SELECT(
+                        'ireq_mst.ireq_id',
+                        'mu.usr_fullname as ireq_requestor',
+                        'ireq_mst.ireq_no',
+                        'ireq_mst.ireq_prio_level',
+                        'ireq_mst.ireq_type',
+                        'ireq_mst.ireq_date',
+                        'ireq_mst.ireq_user',
+                        'ireq_mst.ireq_spv',
+                        DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail')
+                      )
             ->LEFTJOIN('lookup_refs as lr',function ($join) {
-                $join->on('im.ireq_type','lr.lookup_code')
+                $join->on('ireq_mst.ireq_type','lr.lookup_code')
                       ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-                })
-            ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_id')
-            ->WHERE('im.ireq_id',$code)
+            })
+            ->LEFTJOIN('user_profile up','ireq_mst.ireq_user','up.user_id')
+            ->LEFTJOIN('mng_users as mu','ireq_mst.ireq_requestor','mu.usr_id')
+            ->WHERE('ireq_mst.ireq_id',$code)
             ->first();
-        $data['ref'] = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-            ->WHERE('lookup_status','T')
-            ->WHERERaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
-            ->ORDERBY('lookup_desc','ASC')
-            ->get();
+            if ($data['ict']) {
+                $profileDetail = json_decode($data['ict']->profile_detail, true);
+                $data['ict']->division_user = isset($profileDetail['division']) ? str_replace('"', '', $profileDetail['division']) : null;
+                $data['ict']->department_user = isset($profileDetail['department']) ? str_replace('"', '', $profileDetail['department']) : null;
+                $data['ict']->bu_user = isset($profileDetail['company']) ? str_replace('"', '', $profileDetail['company']) : null;
+            }
+        // $data['ref'] = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
+        //     ->WHERE('lookup_status','T')
+        //     ->WHERERaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
+        //     ->ORDERBY('lookup_desc','ASC')
+        //     ->get();
     
         $data['bisnis'] = DB::table('v_company_refs')->get();
-    
         $data['divisi'] = DB::table('divisi_refs')
             ->SELECT('div_id as code',DB::raw("(div_code ||'-'|| div_name) as name"))
             ->ORDERBY('div_name','ASC')
             ->get();
     
-        $data['priority'] = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-            ->WHERE('lookup_status','T')
-            ->WHERERaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
-            ->ORDERBY('lookup_desc','ASC')
-            ->get();
-
+        $data['priority'] = Lookup_Refs::Prioritas();
         $data['userlist']= Mng_user::orderby('usr_fullname','ASC')->get();
-            return json_encode($data);
+        $data['listSupervisor'] = app(SupervisorServices::class)->getAllData();
+        return json_encode($data);
     }
     function update(Request $request, $code)
     {

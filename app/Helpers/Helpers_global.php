@@ -20,6 +20,15 @@ if (!function_exists('generate_id_number')) {
         return $random_number . date('His');
     }
 }
+if (!function_exists('formatDate')) {
+    function formatDate($date, $date_format)
+    {
+        if (empty($date)) {
+            return '';
+        }
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format($date_format);
+    }
+}
 
 function insertTimePage($tipe = '')
 {

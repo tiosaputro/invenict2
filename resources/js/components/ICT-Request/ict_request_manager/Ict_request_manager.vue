@@ -48,7 +48,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkWaiting.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                   <template #body= "slotProps">
@@ -132,7 +136,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarksdhdiverifikasi.some(el=> el > 0)"/>
                   <Column field="ireq_approver2_remark" header="Remark ICT Manager" :sortable="true" style="min-width:12rem" v-if="this.showRemarkApproversdhdiverifikasi.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
@@ -287,7 +295,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                     <template #body= "slotProps">
@@ -364,7 +376,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
                   <template #body= "slotProps">
@@ -463,7 +479,11 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
                   <template #body= "slotProps">
@@ -564,7 +584,11 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
+                    <template #body="slotProps">
+                      {{ getDivision(slotProps.data.profile_detail) }}
+                    </template>
+                  </Column>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -699,7 +723,6 @@ export default {
         sdhdiverifikasi: [],
         reject:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
         code:null,
@@ -712,6 +735,17 @@ export default {
     this.getPermohonan();
   },
   methods: {
+    getDivision(profileDetail){
+      try {
+        const parsedDetail = JSON.parse(profileDetail);
+        const division = parsedDetail.division || 'N/A';
+
+        return division.replace(/^"(.*)"$/, '$1');
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return 'N/A'; 
+      }
+    },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
@@ -738,17 +772,17 @@ export default {
       this.$router.push('/ict-request-manager/detail-penugasan/'+ireq_id);
     },
     getPermohonan(){
-      this.axios.get('api/get-data-manager',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.blmdiverifikasi = response.data.ict;
+      this.axios.get('api/get-data-manager').then((response)=> {
+        this.blmdiverifikasi = response.data.data.ict;
         this.showRemarkWaiting = this.blmdiverifikasi.map((x)=>x.count_remark);
-        this.sdhdiverifikasi = response.data.ict1;
+        this.sdhdiverifikasi = response.data.data.ict1;
         this.showRemarksdhdiverifikasi = this.sdhdiverifikasi.map((x)=>x.count_remark);
         this.showRemarkApproversdhdiverifikasi = this.sdhdiverifikasi.map((x)=>x.count_remark_approver2);
-        this.reject = response.data.ict2;
-        this.penugasan = response.data.ict6;
-        this.sedangDikerjakan = response.data.ict3;
-        this.sudahDikerjakan = response.data.ict4;
-        this.selesai = response.data.ict5;
+        this.reject = response.data.data.ict2;
+        this.penugasan = response.data.data.ict6;
+        this.sedangDikerjakan = response.data.data.ict3;
+        this.sudahDikerjakan = response.data.data.ict4;
+        this.selesai = response.data.data.ict5;
         this.loading = false;
         localStorage.setItem('active2',0);
       }).catch(error=>{
@@ -767,7 +801,7 @@ export default {
     },
     CetakPdf(ireq_id){
       this.loading = true;
-       this.axios.get('api/print-out-ict-request/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/print-out-ict-request/'+ireq_id).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -788,7 +822,7 @@ export default {
         detail: "Successfully approved this request",
         life : 1000
       });
-      this.axios.put('/api/abm/' +this.code,this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+      this.axios.put('/api/abm/' +this.code,this.reason).then(()=>{
         this.cancelApprove();
         this.loading = true;
         this.getPermohonan();
@@ -816,7 +850,7 @@ export default {
     updateReject(){
       this.submitted = true;
         if(this.reason.ket != null){
-          this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/rbm/'+ this.code, this.reason).then(()=>{
             this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
@@ -832,7 +866,7 @@ export default {
     },
     CetakPdfBlmDiverifikasi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-manager-permohonan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -843,7 +877,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-manager-permohonan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-manager-permohonan',{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -855,7 +889,7 @@ export default {
     },
     CetakPdfSudahDiverifikasi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-verifikasi',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-manager-verifikasi').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -866,7 +900,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-manager-verifikasi',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-manager-verifikasi',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -878,7 +912,7 @@ export default {
     },
     CetakPdfDireject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-reject',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-manager-reject').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -889,7 +923,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-manager-reject',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-manager-reject',{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -901,7 +935,7 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-assignment-request',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-manager-assignment-request').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -912,7 +946,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-manager-assignment-request',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-manager-assignment-request',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -924,7 +958,7 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-manager-sedang-dikerjakan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -935,7 +969,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-manager-sedang-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-manager-sedang-dikerjakan',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -947,7 +981,7 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-manager-sudah-dikerjakan').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -958,7 +992,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-manager-sudah-dikerjakan',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-manager-sudah-dikerjakan',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -970,7 +1004,7 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-selesai',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('api/report-ict-pdf-manager-selesai').then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);
@@ -981,7 +1015,7 @@ export default {
       const date = new Date();
       const today = moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-ict-excel-manager-selesai',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-ict-excel-manager-selesai',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;

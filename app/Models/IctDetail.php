@@ -72,10 +72,31 @@ class IctDetail extends Model
 
     public static function getDataDetailRequest($code){
         $dtl = DB::table('ireq_dtl as id')
-            ->select(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireq_attachment',
-                'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status as status',
-                'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc as ireq_type','id.ireq_remark',
-                'id.ireq_desc', 'id.ireq_qty',DB::raw('COUNT(id.ireq_assigned_to2) as ireq_count_personnel2'),DB::raw('COUNT(id.ireq_assigned_to1_reason) as ireq_count_reason'),DB::raw('COUNT(id.ireq_assigned_to1) as ireq_count_status'),DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'llr.lookup_desc as ireq_status','id.ireq_status as cekStatus')
+            ->select(
+                DB::raw("COALESCE(vi2.official_name,vi1.official_name) AS ireq_assigned_to"),
+                'id.ireq_attachment',
+                'id.ireq_id',
+                'id.ireq_assigned_to1_reason',
+                'id.invent_code',
+                'vi1.official_name as ireq_assigned_to1',
+                'id.ireq_status as status',
+                'vi2.official_name as ireq_assigned_to2',
+                'id.ireqd_id',
+                'lr.lookup_desc as ireq_type',
+                'id.ireq_remark',
+                'id.ireq_desc', 
+                'id.ireq_qty',
+                DB::raw('COUNT(id.ireq_assigned_to2) as ireq_count_personnel2'),
+                DB::raw('COUNT(id.ireq_assigned_to1_reason) as ireq_count_reason'),
+                DB::raw('COUNT(id.ireq_assigned_to1) as ireq_count_status'),
+                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),
+                'llr.lookup_desc as ireq_status',
+                'id.ireq_status as cekStatus')
+            ->leftJoin('vpekerja_ict as vi1', 'id.ireq_assigned_to1','vi1.usr_id')
+            ->leftJoin('vpekerja_ict as vi2', function($join) {
+                $join->on('id.ireq_assigned_to2','vi2.usr_id')
+                      ->whereNotNull('id.ireq_assigned_to2');
+            })
             ->leftJoin('catalog_refs as cr',function ($join){
                 $join->on('id.invent_code','cr.catalog_id');
             })
@@ -91,10 +112,22 @@ class IctDetail extends Model
                     ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
             })
             ->where('id.ireq_id',$code)
-            ->groupBy(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),'id.ireq_attachment',
-                'id.ireq_id','id.ireq_assigned_to1_reason','id.invent_code','id.ireq_assigned_to1','id.ireq_status',
-                'id.ireq_assigned_to2','id.ireqd_id','lr.lookup_desc','id.ireq_remark',
-                'id.ireq_desc', 'id.ireq_qty',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"),'llr.lookup_desc')
+            ->groupBy(
+                DB::raw("COALESCE(vi2.official_name,vi1.official_name)"),
+                'id.ireq_attachment',
+                'id.ireq_id',
+                'id.ireq_assigned_to1_reason',
+                'id.invent_code',
+                'vi1.official_name',
+                'id.ireq_status',
+                'vi2.official_name',
+                'id.ireqd_id',
+                'lr.lookup_desc',
+                'id.ireq_remark',
+                'id.ireq_desc', 
+                'id.ireq_qty',
+                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name)"),
+                'llr.lookup_desc')
             ->orderBy('id.ireqd_id','ASC')
             ->get();
             return $dtl;

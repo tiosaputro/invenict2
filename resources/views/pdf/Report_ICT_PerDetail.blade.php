@@ -492,8 +492,8 @@
                           <p style="font-size:16px;"> II. Requester / Reported By : </p>
                             <tr>
                                 <th>{{$detail[0]->ireq_requestor}}</th>
-                                <th>{{$detail[0]->div_name}}</th>
-                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkRequester) !!}<br>{{$detail[0]->date_request}}</th>
+                                <th>{{str_replace('"', '', json_decode($detail[0]->profile_detail, 1)['division'])}}</th>
+                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkRequester) !!}<br>{{ formatDate($detail[0]->ireq_date, 'd M Y H:i')}}</th>
                             </tr>
                             <tr>
                                 <td>Name</td>
@@ -504,16 +504,16 @@
                     <div class="cell-wrap right">
                         <table class="right">
                             <p style="font-size:16px;"> Approved By : (For new installation/software loan) </p>
-                             @if($detail[0]->date_approver1 || $detail[0]->status == "NA1")
+                             @if($detail[0]->ireq_approver1_date || $detail[0]->status == "NA1")
                                 <tr>
-                                    <th>{{$detail[0]->usr_fullname}}</th>
-                                    <th>{{$detail[0]->div_name}} Manager</th>
+                                    <th>{{$detail[0]->ireq_spv}}</th>
+                                    <th>{{$detail[0]->spv_job_title}}</th>
                                   @if($detail[0]->status == "RA1")
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel) !!}<br><strong>Rejected</strong> on {{$detail[0]->date_approver1}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel) !!}<br><strong>Rejected</strong> on {{formatDate($detail[0]->ireq_approver1_date, 'd M Y H:i')}}</th>
                                   @elseif($detail[0]->status == "NA1")
                                     <th rowspan="2" style="font-size:12pt; font-weight:bold;">Waiting Approval</th>
 									@else
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel) !!}<br><strong>Approved</strong> on {{$detail[0]->date_approver1}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel) !!}<br><strong>Approved</strong> on {{ formatDate($detail[0]->ireq_approver1_date, 'd M Y H:i')}}</th>
                                   @endif
 
                                 </tr>
@@ -540,16 +540,16 @@
                     <div class="col invoice-to">
                       <p style="font-size:16px;"> III. IT Use Only</p>
                          <table> <p style="font-size:16px;"> Approved By :   (Note : Sr. Manager approval needed for new equipment/software/tools)</p>
-                             @if($detail[0]->date_approver2 || $detail[0]->status=='NA2')
+                             @if($detail[0]->ireq_approver2_date || $detail[0]->status=='NA2')
                                 <tr>
                                     <th>Arifin Tahir</th>
                                     <th>ICT Manager</th>
                                     @if($detail[0]->status=='RA2')
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('L')->size(80)->generate($linkIctManager) !!} <br> <strong>Rejected</strong> On {{$detail[0]->date_approver2}}</th>
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('L')->size(80)->generate($linkIctManager) !!} <br> <strong>Rejected</strong> On {{ formatDate($detail[0]->ireq_approver2_date, 'd M y H:i') }}</th>
                                     @elseif($detail[0]->status=='NA2') 
                                     <th rowspan="2" style="font-size:10pt;"> Waiting Approval</th>
 									@else
-                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkIctManager) !!} <br><strong>Approved</strong> On {{$detail[0]->date_approver2}}</th>                         
+                                    <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkIctManager) !!} <br><strong>Approved</strong> On {{ formatDate($detail[0]->ireq_approver2_date, 'd M y H:i') }}</th>                         
                                     @endif
                                     <th>{{$detail[0]->ireq_approver2_remark}}</th>
                                 </tr>
@@ -604,14 +604,14 @@
                   <div class="col invoice-to">
                     <p></p>
                       <table> 
-                        @if($detail[0]->date_assigned_detail)
+                        @if($detail[0]->ireq_assigned_date)
                         @foreach($detail as $det)
                             <tr>
                                 <th width="90px" >{{$det->ireqd_id}}</th>
                                 <!-- <th>{{$det->ireq_remark}}</th> -->
-                                <th>{{$det->ireq_assigned_to_detail}}</th>
-                                <th width="150px">{{$det->date_assigned_detail}}</th>
-                                <th width="150px">{{$det->date_closing_detail}}</th>
+                                <th>{{$det->ireq_assigned_to}}</th>
+                                <th width="150px">{{formatDate($det->ireq_assigned_date, 'd M y')}}</th>
+                                <th width="150px">{{formatDate($det->ireq_date_closing, 'd M y')}}</th>
                                 <th>{{$det->assigned_remark_detail}}</th>
                                 <th>{{$det->ireq_status}}</th>
                             </tr>

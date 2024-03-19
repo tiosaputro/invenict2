@@ -50,37 +50,31 @@ class Mng_User extends Authenticatable
     public $incrementing = false;
     public $timestamps = false;
 
-    public static function createUser($address,$division,$password,$company,$location,$fullname,$usr_name,$mail){
-        $division = str_replace('"','',$division);
+    public static function createUser($address, $password, $location, $fullname, $usr_name, $mail){
         $address = str_replace('"','',$address);
         $password = str_replace('"','',$password);
-        $company = str_replace('"','',$company);
         $location = str_replace('"','',$location);
         $location = strtoupper($location);
         $fullname = str_replace('"','',$fullname);
         $usr_name = str_replace('"','',$usr_name);
-        $checkDivision = Divisi_refs::select('div_id')->where('div_name', 'like', $division)->first();
-        $checkBisnisUnit = DB::table('vcompany_refs')->select('company_code')->where('name','like',$company)->first();
         $checkLocation = Location::select('loc_code')->where('loc_desc','like',$location)->first();
+        $idUser = generate_id_number();
         $data = Mng_user::create([
-            'usr_id'=> generate_id_number(),
+            'usr_id'=> $idUser,
             'usr_fullname'=>strtoupper($fullname),
             'usr_name'=> $usr_name,
             'usr_email' => $mail,
             'usr_passwd' => Hash::make($password),
             'usr_stat'=> 'T',
-            'usr_alamat'=>$address,
-            'div_id'=> $checkDivision->div_id,
-            'usr_bu'=> ($checkBisnisUnit) ? $checkBisnisUnit->company_code : '-',
+            'usr_alamat'=> $address,
             'usr_loc'=> ($checkLocation) ? $checkLocation->loc_code : 'OJ',
             'created_by'=> 'INVENICT',
             'creation_date' => now(),
             'program_name'=>'Mng_user'
         ]);
-        $id = Mng_user::select('usr_id')->where('usr_email',$mail)->first();
         $role = Mng_roles::select('rol_id')->where('rol_name','like','Requestor Divisi')->first();
         Mng_usr_roles::create([
-                'usr_id' => $id->usr_id,
+                'usr_id' => $idUser,
                 'rol_id' => $role->rol_id,
                 'urol_stat' => 'T',
                 'creation_date' => now(),

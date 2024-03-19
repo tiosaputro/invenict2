@@ -14,7 +14,7 @@
                  <div class="col">
                   <InputText
                     type="text"
-                    v-model="mutasi.ireq_no"
+                    v-model="request.ireq_no"
                     disabled
                   />
                 </div>
@@ -23,7 +23,7 @@
                 <label class="col-fixed w-9rem" style="width:120px">Priority Level</label>
                  <div class="col-fixed w-9rem">
                      <Dropdown 
-                        v-model="mutasi.ireq_prio_level"
+                        v-model="request.ireq_prio_level"
                         :options="level"
                         optionLabel="name"
                         optionValue="code"
@@ -43,7 +43,7 @@
                  <div class="col-fixed w-9rem">
                   <InputText
                     type="text"
-                    v-model="mutasi.ireq_requestor"
+                    v-model="request.ireq_requestor"
                     disabled
                   />
                  </div>
@@ -52,75 +52,57 @@
                 <label class="col-fixed w-9rem" style="width:120px">User</label>
                  <div class="col-fixed w-9rem">
                   <Dropdown 
-                        v-model ="mutasi.ireq_user"
-                        :options="userList"
-                        optionLabel="usr_fullname"
-                        optionValue="usr_id"
-                        :class="{ 'p-invalid': error.ireq_user }"
-                        placeholder="Select One"
-                        :filter="true"
-                        :showClear="true"
-                     />
-                        <small v-if="error.ireq_user" class="p-error">
-                          {{ error.ireq_user }}
-                        </small>
+                    v-model ="request.ireq_user"
+                    :options="userList"
+                    optionLabel="usr_fullname"
+                    @change="getDataBuDvision(request.ireq_user)"
+                    optionValue="usr_id"
+                    :class="{ 'p-invalid': error.ireq_user }"
+                    placeholder="Select One"
+                    :filter="true"
+                    :showClear="true"
+                  />
+                  <small v-if="error.ireq_user" class="p-error">
+                    {{ error.ireq_user }}
+                  </small>
                 </div>
+              </div>
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:120px">User Business Unit</label>
+                 <div class="col-fixed w-9rem">
+                     <InputText v-model="request.bu_user" disabled/>
+                 </div>
+              </div>
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:120px">User Departement</label>
+                 <div class="col-fixed">
+                  <InputText v-model="request.department_user" disabled/>
+                 </div>
               </div>
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">User Division</label>
-                 <div class="col-fixed w-9rem">
-                     <Dropdown 
-                        v-model ="mutasi.ireq_divisi_user"
-                        :options="divisi"
-                        optionLabel="name"
-                        optionValue="code"
-                        placeholder="Select One"
-                        :filter="true"
-                        :showClear="true"
-                        :class="{ 'p-invalid': errors.ireq_divisi_user }"
-                     />
-                        <small v-if="error.ireq_divisi_user" class="p-error">
-                          {{error.ireq_divisi_user}}
-                        </small>
-                </div>
+                 <div class="col-fixed">
+                  <InputText v-model="request.division_user" disabled/>
+                 </div>
               </div>
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Business Unit</label>
-                 <div class="col-fixed w-9rem">
-                     <Dropdown 
-                        v-model ="mutasi.ireq_bu"
-                        :options="bu"
-                        optionLabel="name"
-                        optionValue="code"
+                <label class="col-fixed w-9rem">Your Supervisor</label>
+                  <div class="col-fixed w-9rem">
+                      <Dropdown 
+                        v-model ="request.ireq_spv"
+                        :options="spvList"
+                        optionLabel="spvnamejob"
+                        optionValue="spv_id"
+                        :class="{ 'p-invalid': error.ireq_spv }"
                         placeholder="Select One"
-                        :showClear="true"
                         :filter="true"
-                        :class="{ 'p-invalid': errors.ireq_bu }"
+                        :showClear="true"
                      />
-                        <small v-if="errors.ireq_bu" class="p-error">
-                          {{ errors.ireq_bu[0] }}
+                        <small v-if="error.ireq_spv" class="p-error">
+                          {{error.ireq_spv}}
                         </small>
-                        <small v-if="error.ireq_bu" class="p-error">
-                          {{ error.ireq_bu }}
-                        </small>
-                </div>
+                  </div>
               </div>
-              <!-- <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:120px">Keterangan</label>
-                 <div class="field col-12 md:col-4">
-                  <Textarea 
-                    v-model="mutasi.ireq_remark"
-                    :autoResize="true" 
-                    rows="5" 
-                    cols="20"
-                    placeholder="Masukan Keterangan . . ."
-                    :class="{ 'p-invalid': error.ireq_remark }"
-                  />
-                      <small class="p-error" v-if="error.ireq_remark"
-                        >{{error.ireq_remark}}
-                      </small>
-                </div>
-              </div> -->
               <div class="form-group">
                  <Button
                   v-if="this.loading == false"
@@ -152,26 +134,42 @@ export default {
       level:[],
       errors: [],
       error:[],
-      mutasi:[],
+      request:[],
       type: [],
       divisi: [],
       userList:[],
-      bu: [],
-      mask:{
-        input: 'DD MMM YYYY'
-      },
-      token: localStorage.getItem('token'),
+      spvList:[],
       checkname : [],
       checkto : [],
       requestor:'',
     };
   },
+  computed: {
+    inputWidth() {
+      // Adjust this multiplier according to your layout and styling preferences
+      const multiplier = 8;
+      // Calculate the width based on the length of department_user value
+      const width = (this.request.department_user.length || 1) * multiplier;
+      // Limit the maximum width to prevent excessively wide input boxes
+      const maxWidth = 500; // Adjust the maximum width as needed
+      console.log(`${Math.min(width, maxWidth)}px`);
+      return `${Math.min(width, maxWidth)}px`;
+      
+    }
+  },
   created(){
       this.cekUser();
   },
   methods: {
+    getDataBuDvision(code){
+        this.axios.get('/api/data-divbu/' + code).then((response)=>{
+          this.request.division_user = response.data.division;
+          this.request.bu_user = response.data.bu;
+          this.request.department_user = response.data.department;
+        });
+    },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
@@ -183,13 +181,14 @@ export default {
       });
     },
       getIct(){
-          this.axios.get('/api/edit-ict/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-            this.mutasi = response.data.ict;
+          this.axios.get('/api/edit-ict/' + this.$route.params.code).then((response)=> {
+            this.request = response.data.ict;
             this.divisi = response.data.divisi;
             this.type = response.data.ref;
             this.bu = response.data.bisnis;
             this.level = response.data.priority;
-            this.userList = response.data.userlist
+            this.userList = response.data.userlist;
+            this.spvList = response.data.listSupervisor;
         }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -206,14 +205,11 @@ export default {
       this.errors = [] ;
       this.error = [];
       if(
-        this.mutasi.ireq_date != '' &&
-        this.mutasi.ireq_prio_level != null &&
-        // this.mutasi.ireq_remark != null  && 
-        this.mutasi.ireq_divisi_user !=null &&
-        this.mutasi.ireq_bu != null &&
-        this.mutasi.ireq_user != null
+        this.request.ireq_prio_level != null &&
+        this.request.ireq_user != null &&
+        this.request.ireq_spv != null
       ){
-        this.axios.put('/api/update-ict/'+ this.$route.params.code, this.mutasi, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-ict/'+ this.$route.params.code, this.request).then(()=>{
         this.$toast.add({
           severity: "success",
           summary: "Success Message",
@@ -227,20 +223,22 @@ export default {
       }
       else{
         this.loading = false;
-        if(this.mutasi.ireq_prio_level == null){
+        if(this.request.ireq_prio_level == null){
           this.error.ireq_prio_level = "Priority level not filled"
       }
-        if(this.mutasi.ireq_divisi_user == null){
-          this.error.ireq_divisi_user = "User division not filled"
+        if(this.request.ireq_user == null){
+          this.error.ireq_divisi_user = "User not filled"
         }
-        if(this.mutasi.ireq_bu == null){
-          this.error.ireq_bu = "Business unit not filled"
-        }
-        if(this.mutasi.ireq_user == null){
-          this.error.ireq_user = "User not filled"
+        if(this.request.ireq_spv == null){
+          this.error.ireq_bu = "Supervisor not filled"
         }
       }
       },
   },
 };
 </script>
+<style scoped>
+.col-fixed {
+  width: auto;
+}
+</style>

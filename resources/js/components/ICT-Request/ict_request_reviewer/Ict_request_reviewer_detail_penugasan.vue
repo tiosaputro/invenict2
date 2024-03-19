@@ -132,7 +132,7 @@ export default {
          myWindow.focus();
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
@@ -145,7 +145,7 @@ export default {
       });
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code).then((response)=> {
         this.detail = response.data;
         this.countNote = response.data.map((x)=> x.count_note)
         this.loading = false;
@@ -161,7 +161,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
         this.kode = response.data;
         this.status = response.data.cekstatus;
       });

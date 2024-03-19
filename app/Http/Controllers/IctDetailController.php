@@ -19,12 +19,23 @@ use Carbon\Carbon;
 use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Services\IctDetailServices;
+use App\Services\PekerjaServices;
+use App\Services\IctServices;
+use App\Services\SupervisorServices;
+
 
 class IctDetailController extends Controller
 {
     protected $userMenu;
     protected $to;
-    function __construct(){
+    protected $Detailservices;
+    protected $Pekerjaservices;
+    protected $Ictservices;
+    function __construct(IctDetailServices $services, PekerjaServices $service, IctServices $servicess ){
+        $this->Detailservices = $services;
+        $this->Ictservices = $servicess;
+        $this->Pekerjaservices = $service;
         $this->middleware('auth:sanctum')->only('index','getNo_req','save','edit','update','delete','submitRating');
         $this->to = "/ict-request";
         $this->middleware(function ($request, $next) {
@@ -38,21 +49,23 @@ class IctDetailController extends Controller
     }
     function index($code)
     {
-        $data = IctDetail::getDataDetailRequest($code);
-        return response()->json($data);
+        $data['detail'] = $this->Detailservices->getDataDetailRequest($code,NULL,NULL,NULL);
+        $data['request'] = $this->Ictservices->detailNoRequest($code);
+        $data['pekerja'] = $this->Pekerjaservices->getPekerja();
+        return ResponseFormatter::success($data,'Successfully Get Data');
      }
     function detailPenugasan($code)
     {
-        $data = IctDetail::detailRequestForAssignment($code);
-        return json_encode($data);
+        $data['detail'] = $this->Detailservices->getDataDetailRequest($code, 'NT','RT','T');
+        $data['request'] = $this->Ictservices->detailNoRequest($code);
+        return ResponseFormatter::success($data,'Successfully Get Data');
     }
-    function getAddDetail() //  for form add request detail
+    function getAddDetail()
     {
         $ref = Lookup_Refs::Type();
 
         return response()->json(['ref'=>$ref],200);
     }
-
     function CatalogRequest($tipereq){
         $catalog = Catalog::select('parent_id','catalog_id','catalog_name',
             DB::raw("CASE WHEN catalog_type = 'N' Then 'false' WHEN catalog_type = 'L' Then 'true' end as catalog_type"))
@@ -79,28 +92,8 @@ class IctDetailController extends Controller
     }
     function getDetailDone($code)
     {
-        $data = IctDetail::detailDone($code);
+        $data = $this->Detailservices->detailDone($code);
         return response()->json($data);
-    }
-    function getNo_req($code)
-    {
-        $dtl = DB::table('ireq_mst as im')
-        ->leftJoin('lookup_refs as lr',function ($join) {
-            $join->on('im.ireq_status','lr.lookup_code')
-                  ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-        })
-        ->leftJoin('location_refs as lrs',function ($join) {
-            $join->on('im.ireq_loc','lrs.loc_code');
-        })
-        ->leftJoin('ireq_dtl as id',function ($join) {
-            $join->on('im.ireq_id','id.ireq_id');
-        })
-        ->select(DB::raw("TO_CHAR(im.ireq_date, 'yyyy-MM-dd HH24:MI:SS') AS ireq_date "),'im.ireq_date as request_date','im.ireq_requestor','im.ireq_no as noreq','im.ireq_type','im.ireq_status as cekStatus',
-                'lr.lookup_desc as ireq_status','lrs.loc_desc')
-         ->where('im.ireq_id',$code)
-         ->first();
-         return response()->json($dtl);
-      
     }
     function save(Request $request,$code)
     {
@@ -163,84 +156,59 @@ class IctDetailController extends Controller
     }
     function edit($ireq,$code)
     {
-       $data = IctDetail::FindDetailRequest($ireq,$code);
-        return response()->json($data);
+       $data['request'] = $this->Detailservices->FindDetailRequest($ireq,$code);
+       return ResponseFormatter::success($data,'Successfully Get Data');
     }
     function update(Request $request,$ireq,$code)
     {
-        $cek = DB::table('ireq_dtl')->where('ireq_id',$code)->where('ireqd_id',$ireq)->first();
-        if($request->image){
-             if($cek->ireq_attachment){
-                 unlink(Storage_path('app/public/attachment_request/'.$cek->ireq_attachment));
-                }
-            $image= $request->image;
-            $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-            $replace = substr($image, 0, strpos($image, ',')+1); 
-            $fotoo = str_replace($replace, '', $image);
-            $foto= str_replace(' ', '+', $fotoo); 
-            $nama_file = time().".".$extension;
-            Storage::disk('attachment_request')->put($nama_file, base64_decode($foto));
-        }
-        else{
+        $cek = DB::table('ireq_dtl')->where('ireq_id', $code)->where('ireqd_id', $ireq)->first();
+
+        if ($request->image) {
+            if ($cek->ireq_attachment) {
+                unlink(storage_path('app/public/attachment_request/'.$cek->ireq_attachment));
+            }
+            $nama_file = time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+            Storage::disk('attachment_request')->put($nama_file, base64_decode(explode(',', $request->image)[1]));
+        } else {
             $nama_file = $cek->ireq_attachment;
         }
-        if($request->ireq_type == 'P'){
-            $message = [
-                'ireq_type.required'=>'Request type not filled',
-                'invent_code.required'=>'Peripheral not filled',
-                'ireq_qty.required'=>'Qty not filled',
-                'ireq_remark.required'=>'Remark not filled',
-                'invent_code.required'=>'Catalog not filled'
-            ];
-                $request->validate([
-                    'ireq_type' => 'required',
-                    'invent_code'=>'required',
-                    'ireq_qty'=>'required',
-                    'ireq_remark' => 'required',
-                ],$message);
-            
-            $saveDtl = DB::table('ireq_dtl')
-            ->where('ireqd_id',$ireq)
-            ->where('ireq_id',$code)
-            ->update([
-                'ireq_type'=> $request->ireq_type,
-                'invent_code'=>$request->invent_code,
-                'ireq_qty'=>$request->ireq_qty,
-                'ireq_attachment'=>$nama_file,
-                'ireq_remark'=> $request->ireq_remark,
-                'last_update_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'last_updated_by'=>Auth::user()->usr_name,
-                'program_name'=>"IctDetail_Update"
-            ]);
 
-            return ResponseFormatter::success($saveDtl,'Successfully Updated detail request');
+        $message = [
+            'ireq_type.required' => 'Request type not filled',
+            'ireq_remark.required' => 'Remark not filled',
+            'invent_code.required' => 'Catalog not filled',
+        ];
+
+        $rules = [
+            'ireq_type' => 'required',
+            'invent_code' => 'required',
+            'ireq_remark' => 'required',
+        ];
+
+        if ($request->ireq_type == 'P') {
+            $message['ireq_qty.required'] = 'Qty not filled';
+            $rules['ireq_qty'] = 'required';
         }
-        else if($request->ireq_type == 'S'){
-            $message = [
-                'ireq_type.required'=>'Request type not filled',
-                'ireq_remark.required'=>'Remark not filled',
-                'invent_code.required'=>'Catalog not filled'
-            ];
-                $request->validate([
-                    'ireq_type' => 'required',
-                    'ireq_remark' => 'required',
-                    'invent_code'=>'required',
-                ],$message);
-            
-            $saveDtl = DB::table('ireq_dtl')
-            ->where('ireqd_id',$ireq)
-            ->where('ireq_id',$code)
+
+        $request->validate($rules, $message);
+
+        $saveDtl = DB::table('ireq_dtl')
+            ->where('ireqd_id', $ireq)
+            ->where('ireq_id', $code)
             ->update([
-                'ireq_type'=> $request->ireq_type,
-                'invent_code'=>$request->invent_code,
-                'ireq_remark'=> $request->ireq_remark,
-                'ireq_attachment'=>$nama_file,
-                'last_update_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'last_updated_by'=>Auth::user()->usr_name,
-                'program_name'=>"IctDetail_Update"
+                'ireq_type' => $request->ireq_type,
+                'invent_code' => $request->invent_code,
+                'ireq_qty' => $request->ireq_qty,
+                'ireq_attachment' => $nama_file,
+                'ireq_remark' => $request->ireq_remark,
+                'last_update_date' => now()->copy()->tz('Asia/Jakarta'),
+                'last_updated_by' => Auth::user()->usr_name,
+                'program_name' => 'IctDetail_Update'
             ]);
-            return ResponseFormatter::success($saveDtl,'Successfully Updated detail request');
-        }
+            
+
+        return ResponseFormatter::success($saveDtl, 'Successfully Updated detail request');
+
     }
     function delete($ireqd_id,$code)
     {
@@ -388,30 +356,62 @@ class IctDetailController extends Controller
     function printout_ictrequest($code)
     {
         $detail = DB::table('ireq_dtl as id')
-        ->select('imm.ireq_status as cekstatus','id.ireq_type','imm.ireq_id','imm.ireq_no','id.ireq_desc','dr.div_name','id.ireq_qty','mu.usr_fullname',
-                'id.ireq_remark','lllr.lookup_desc as prio_level','imm.ireq_requestor','imm.ireq_no','loc_refs.loc_desc as ireq_loc',
-                'imm.ireq_verificator_remark','imm.ireq_approver2_remark','llr.lookup_desc as ireq_type', 'vr.name as ireq_bu','imm.ireq_status as status',
-                DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY HH24:MI') as date_request"),DB::raw("TO_CHAR(imm.ireq_assigned_date,' dd Mon YYYY') as date_assigned"),
-                DB::raw("TO_CHAR(imm.ireq_approver1_date,' dd Mon YYYY HH24:MI') as date_approver1"),'imm.ireq_verificator',
-                DB::raw("COALESCE(imm.ireq_assigned_to2,imm.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireqq_status',
-                DB::raw("TO_CHAR(imm.ireq_approver2_date,' dd Mon YYYY HH24:MI') as date_approver2"),DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),
-                'lr.lookup_desc as ireq_status',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to_detail"),
-                DB::raw("TO_CHAR(id.ireq_assigned_date,' dd Mon YYYY') as date_assigned_detail"),'id.ireq_assigned_remark as assigned_remark_detail','imm.ireq_assigned_remark as assigned_remark_request',
-                'id.ireqd_id', DB::raw("TO_CHAR(id.ireq_date_closing,' dd Mon YYYY') as date_closing_detail"),DB::raw("TO_CHAR(imm.ireq_date_closing,' dd Mon YYYY') as date_closing_request"))
+        ->select(
+            'imm.ireq_status as cekstatus',
+            'id.ireq_type',
+            'imm.ireq_id',
+            'imm.ireq_no',
+            'id.ireq_desc',
+            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail'),
+            'id.ireq_qty',
+            'mu.usr_fullname as ireq_requestor',
+            'mus.usr_fullname as ireq_spv',
+            'sr.spv_job_title',
+            'id.ireq_remark',
+            'lllr.lookup_desc as prio_level',
+            'imm.ireq_no',
+            'loc_refs.loc_desc as ireq_loc',
+            'imm.ireq_verificator_remark',
+            'imm.ireq_approver2_remark',
+            'llr.lookup_desc as ireq_type', 
+            'imm.ireq_status as status',
+            'imm.ireq_date',
+            'imm.ireq_approver1_date',
+            'usr.usr_fullname as ireq_verificator',
+            DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
+            'lr.lookup_desc as ireqq_status',
+            'imm.ireq_approver2_date',
+            DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),
+            'lr.lookup_desc as ireq_status',
+            'id.ireq_assigned_date',
+            'id.ireq_assigned_remark as assigned_remark_detail',
+            'imm.ireq_assigned_remark as assigned_remark_request',
+            'id.ireqd_id',
+            'id.ireq_date_closing')
         ->LEFTJOIN('catalog_refs as cr',function ($join) {
             $join->on('id.invent_code','cr.catalog_id');
         })
         ->LEFTJOIN('catalog_refs as crs',function ($join) {
             $join->on('cr.parent_id','crs.catalog_id');
         })
+        ->LEFTJOIN('vpekerja_ict vi', function($join) {
+            $join->on('id.ireq_assigned_to1','vi.usr_id')
+                  ->whereNotNull('id.ireq_assigned_to1');
+        })
+        ->LEFTJOIN('vpekerja_ict vii', function($join) {
+            $join->on('id.ireq_assigned_to2', 'vii.usr_id')
+                  ->whereNull('id.ireq_assigned_to1');
+        })
         ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('supervisor_refs sr','imm.ireq_spv','sr.spv_id')
+        ->leftjoin('mng_users mus','sr.spv_name','mus.usr_id')
+        ->leftjoin('mng_users usr','imm.ireq_verificator','usr.usr_id')
         ->leftjoin('location_refs as loc_refs','imm.ireq_loc','loc_refs.loc_code')
-        ->leftjoin('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
-        ->leftjoin('mng_users as mu','dr.div_verificator','mu.usr_email')
+        ->LEFTJOIN('user_profile up','imm.ireq_user','up.user_id')
+        ->leftjoin('mng_users as mu','imm.ireq_user','mu.usr_id')
         ->leftjoin('lookup_refs as lllr','imm.ireq_prio_level','lllr.lookup_code')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
         ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
-        ->leftjoin('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
         ->where('id.ireq_id',$code)
         ->whereRaw('LOWER(lllr.lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
         ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
@@ -440,28 +440,13 @@ class IctDetailController extends Controller
     }
     function getDetailVerif($code)
     {
-        $data = IctDetail::detailVerification($code);
+        $data = $this->Detailservices->detailVerification($code);
         return response()->json($data);
     }
     function getDetail($ireqd_id,$ireq_id){
-        $data['dtl'] = DB::table('ireq_dtl as id')
-        ->select('id.ireq_attachment','id.ireq_assigned_to1','id.ireq_assigned_remark','im.ireq_no','id.ireq_id','id.ireq_note_personnel as ireq_reason','id.ireqd_id','id.ireq_status as status', 
-        DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),'lr.lookup_desc as ireq_type','id.ireq_qty','id.ireq_remark','id.ireq_assigned_to1_reason')
-        ->leftjoin('ireq_mst as im','id.ireq_id','im.ireq_id')
-        ->LEFTJOIN('catalog_refs as cr',function ($join) {
-            $join->on('id.invent_code','cr.catalog_id');
-        })
-        ->LEFTJOIN('catalog_refs as crs',function ($join) {
-            $join->on('cr.parent_id','crs.catalog_id');
-        })
-        ->leftJoin('lookup_refs as lr',function ($join) {
-            $join->on('id.ireq_type','lr.lookup_code')
-                 ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-        })
-        ->where('id.ireqd_id',$ireqd_id)
-        ->where('id.ireq_id',$ireq_id)
-        ->first();
+        $data['dtl'] = $this->Detailservices->FindDetailRequest($ireqd_id,$ireq_id);
         $data['status'] = DB::table('VREQ_MST_STATUS')->get();
-        return json_encode($data);
+        $data['pekerja'] = $this->Pekerjaservices->getPekerja();
+        return ResponseFormatter::success($data,'Successfully Get Data');
     }
 }

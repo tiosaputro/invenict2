@@ -49,7 +49,6 @@
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:9rem"/>
           <Column field="name" header="Items" :sortable="true" style="min-width:9rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:9rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:9rem"/>
           <Column header="Attachment" style="min-width:10rem">
@@ -170,7 +169,7 @@
                     <Button label="Simpan" @click="updateAssign()" class="p-button" autofocus />
                     <Button label="Cancel" @click="cancelAssign()" class="p-button-text" />
                 </template>
-            </Dialog>
+        </Dialog>
       </div>
     </div>
   </div>
@@ -190,7 +189,6 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
     };
@@ -208,41 +206,38 @@ export default {
         myWindow.focus();
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
          this.getIctDetail();
-         this.getNoreq();
         }
         else {
           this.$router.push('/access');
         }
       });
     },
-      cancelAssign(){
-          this.assign = [];
-          this.petugas = [];
-          this.dialogAssign = false;
-      },
+    cancelAssign(){
+      this.assign = [];
+      this.petugas = [];
+      this.dialogAssign = false;
+    },
     AssignPerDetail(ireqd_id){
-          this.axios.get('/api/detail/'+ ireqd_id+'/'+this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.assign = response.data;
-          });
-          this.axios.get('/api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-            this.petugas = response.data;
-          });
-          this.dialogAssign = true; 
+      this.axios.get('/api/detail/'+ ireqd_id+'/'+this.$route.params.code).then((response)=>{
+        this.assign = response.data.data.dtl;
+        this.petugas = response.data.data.pekerja;
+      });
+      this.dialogAssign = true; 
     },
     cancelAssign(){
         this.submitted = false;
         this.assign = [];
         this.dialogAssign = false;
     },
-     updateAssign(){
+    updateAssign(){
         this.submitted = true;
         if(this.assign.ireq_assigned_to1 != null){
-          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign).then(()=>{
             this.assign = [];
             this.dialogAssign = false;
             this.submitted = false;
@@ -255,10 +250,11 @@ export default {
             this.getIctDetail();
           });
         }
-      },
+    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.kode = response.data.data.request;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -269,11 +265,6 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
       });
     },
   },
