@@ -20,7 +20,7 @@ class IctRequestPersonnelServices
         $data->SELECT(
             'ireq_mst.ireq_date',
             DB::RAW("COUNT(ireq_mst.ireq_verificator_remark) as countremarkreviewerpenugasan"),
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail'),
+            'mus.usr_division',
             'ireq_mst.ireq_verificator_remark',
             'ireq_mst.ireq_no',
             'ms.usr_fullname as ireq_requestor',
@@ -31,7 +31,7 @@ class IctRequestPersonnelServices
         $data->WHERE('id.ireq_assigned_to1',Auth::user()->usr_id);
         $data->groupBy(
             'ireq_mst.ireq_date',
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1)'),
+            'mus.usr_division',
             'ireq_mst.ireq_verificator_remark',
             'ireq_mst.ireq_no',
             'ireq_mst.ireq_requestor',
@@ -54,7 +54,7 @@ class IctRequestPersonnelServices
             'ireq_dtl.ireq_assigned_remark',
             'ireq_dtl.ireq_status as status',
             'ireq_dtl.ireq_id',
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail'),
+            'mus.usr_division',
             'ireq_dtl.ireq_desc',
             'ireq_dtl.ireq_qty',
             'ireq_dtl.ireq_remark',
@@ -76,7 +76,6 @@ class IctRequestPersonnelServices
         $data->LEFTJOIN('lookup_refs as lr','ireq_dtl.ireq_type','lr.lookup_code');
         $data->LEFTJOIN('ireq_mst as imm','ireq_dtl.ireq_id','imm.ireq_id');        
         $data->LEFTJOIN('lookup_refs as llr','ireq_dtl.ireq_status','llr.lookup_code');
-        $data->LEFTJOIN('user_profile up','imm.ireq_user','up.user_id');
         $data->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code');
         $data->LEFTJOIN('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id');
         $data->LEFTJOIN('mng_users ms','imm.ireq_requestor','ms.usr_id');
@@ -101,7 +100,7 @@ class IctRequestPersonnelServices
             'ireq_dtl.ireq_remark',
             'ireq_dtl.ireqd_id',
             DB::raw("COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1)"),
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1)'),
+            'mus.usr_division',
             'imm.ireq_user', 
             'llr.lookup_desc', 
             'imm.ireq_requestor',

@@ -48,11 +48,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.countRemarkReviewerPenugasan.some(el=> el > 0)"/>
                   <Column style="min-width:20rem">
                   <template #body="slotProps">
@@ -153,11 +149,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
                   <template #footer>
                     <div class="p-grid p-dir-col">
@@ -239,11 +231,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:15rem">
                   <template #body="slotProps">
@@ -350,11 +338,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column>
                     <template #body="slotProps">
@@ -447,11 +431,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column>
                     <template #body="slotProps">
@@ -712,17 +692,7 @@ export default {
     this.getData();
   },
   methods: {
-    getDivision(profileDetail){
-      try {
-        const parsedDetail = JSON.parse(profileDetail);
-        const division = parsedDetail.division || 'N/A';
-
-        return division.replace(/^"(.*)"$/, '$1');
-      } catch (error) {
-        console.error('Error parsing JSON:', error);
-        return 'N/A'; 
-      }
-    },
+    
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
@@ -744,7 +714,7 @@ export default {
               detail: "Accept Request Success",
               life : 1000
             });
-            this.axios.get('/api/acceptPersonnel/' +ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.axios.get('/api/acceptPersonnel/' +ireq_id).then(()=>{
               this.getData();
             });
         },
@@ -765,7 +735,7 @@ export default {
       this.submitted = true;
       if(this.editDetail.ireq_reason != ''){
         this.loading = true;
-        this.axios.put('/api/rejectPersonnel/'+this.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/rejectPersonnel/'+this.code, this.editDetail).then(()=>{
           this.$toast.add({
             severity:'success', summary: 'Success Message', detail:'Successfully rejected request', life: 3000
           });
@@ -866,7 +836,7 @@ export default {
       return moment(date).format("DD MMM YYYY HH:mm")
     },
     getStatus(){
-      this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/getStatusIct').then((response)=>{
         this.status = response.data;
       });
     },

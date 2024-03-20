@@ -177,7 +177,6 @@ export default {
         },
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         status : null,
     };
   },
@@ -193,7 +192,7 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
-      cek(){
+    cekStatus(){
           this.status = this.$route.params.status;
           if(this.status == 'approve'){
               this.dialogApprove = true;
@@ -208,13 +207,13 @@ export default {
             summary: "Success Message",
             detail: "Successfully approved the request",
           });
-          this.axios.put('/api/abm/' +this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.put('/api/abm/' +this.code, this.reason);
           setTimeout( () =>  this.$router.push('/ict-request-manager'),1000);
       },
       updateReject(){
           this.submitted = true;
            if(this.reason.ket != null){
-           this.axios.put('/api/rbm/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+           this.axios.put('/api/rbm/'+ this.code, this.reason).then(()=>{
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
@@ -234,27 +233,13 @@ export default {
         this.dialogApprove = false;
         this.reason.remark = null;
       },
-      getIctDetail(){
-        this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-          this.verif = response.data;
-          this.loading = false;
-          this.cek();
-        }).catch(error=>{
-          if (error.response.status == 401) {
-            this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
-      });
-      },
       getNoreq(){
-        this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.kode = response.data;
+        this.axios.get('/api/ict-detail/'+ this.$route.params.code).then((response)=>{
+          this.kode = response.data.data.request;
           if(this.kode.cekstatus =='NA2'){
-          this.getIctDetail();
+            this.verif = response.data.data.detail;
+            this.loading = false;
+            this.cekStatus();
         }
         else{
           this.$toast.add({

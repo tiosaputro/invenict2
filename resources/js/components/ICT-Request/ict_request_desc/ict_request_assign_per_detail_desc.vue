@@ -44,7 +44,6 @@
           </template>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
           <Column field="name" header="Items" :sortable="true" style="min-width:12rem"/>
-          <!-- <Column field="ireq_desc" header="Deskripsi" :sortable="true" style="min-width:12rem"/> -->
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
           <Column header="Attachment" style="min-width:10rem">
@@ -64,7 +63,7 @@
               </p>
             </template>  
           </Column>
-          <Column field="ireq_assigned_to" header="Petugas (ICT)" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
                 <Button
@@ -117,18 +116,18 @@
                 </div>
               </div>
                 <div class="field grid">
-                    <label style="width:100px">Petugas (ICT)</label>
+                    <label style="width:100px">Personnel (ICT)</label>
                     <div class="col-3 md-6">
                         <Dropdown
                             v-model="assign.ireq_assigned_to"
                             :options="petugas"
                             optionValue="name"
                             optionLabel="name"
-                            placeholder="Pilih Petugas (ICT)"
+                            placeholder="Pilih Personnel (ICT)"
                             :class="{ 'p-invalid': submitted && !assign.ireq_assigned_to }"
                         />
                         <small v-if="submitted && !assign.ireq_assigned_to" class="p-error">
-                            Petugas(ICT) Harus Diisi
+                            Personnel(ICT) Harus Diisi
                         </small>
                   </div>
                 </div>
@@ -155,12 +154,10 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
     };
   },
   mounted() {
     this.getIctDetail();
-    this.getNoreq();
   },
   methods: {
     getDetail(ireq_attachment){
@@ -174,10 +171,10 @@ export default {
           this.dialogAssign = false;
       },
     AssignPerDetail(ireqd_id,ireq_id){
-          this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/detail/'+ ireqd_id+'/'+ireq_id).then((response)=>{
             this.assign = response.data;
           });
-          this.axios.get('/api/get-pekerja', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/get-pekerja').then((response)=>{
             this.petugas = response.data;
           });
           this.dialogAssign = true; 
@@ -190,7 +187,7 @@ export default {
      updateAssign(){
         this.submitted = true;
         if(this.assign.name != null){
-          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.put('/api/updateAssignPerDetail/'+ this.$route.params.code ,this.assign).then(()=>{
             this.assign = [];
             this.dialogAssign = false;
             this.submitted = false;
@@ -205,8 +202,9 @@ export default {
         }
       },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.kode = response.data.data.request;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 403) {
@@ -220,11 +218,6 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
       });
     },
   },

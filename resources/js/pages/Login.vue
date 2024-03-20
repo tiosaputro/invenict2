@@ -62,7 +62,7 @@
                                 style="text-transform: lowercase; padding: 1rem"
                                 class="w-full mb-3"
                                 :class="{ 'p-invalid': submitted && !email }"
-                                placeholder="Domain User"
+                                placeholder="Your Username"
                             />
                             <small class="p-error" v-if="submitted && !email"
                                 >Username Not Filled.
@@ -77,12 +77,13 @@
                             >
                             <Password
                                 v-model="password"
-                                placeholder="domain password"
+                                placeholder="Your Password"
                                 class="w-full mb-3"
                                 :toggleMask="true"
                                 :class="{ 'p-invalid': submitted && !password }"
                                 inputClass="w-full"
                                 inputStyle="padding:1rem"
+                                :feedback="false"
                             />
                             <small class="p-error" v-if="submitted && !password"
                                 >Password Not Filled.

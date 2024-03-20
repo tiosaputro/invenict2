@@ -137,6 +137,7 @@ class IctRequestReviewerController extends Controller
     function needApprovalAtasan($ireq_id){
         $save = Ict::NeedApprovalByHigherLevel($ireq_id);
         IctDetail::needApprovalByHigherLevel($ireq_id);
+        
         return ResponseFormatter::success($save,'Successfully send mail');
     }
     function needApprovalManager($ireq_id){

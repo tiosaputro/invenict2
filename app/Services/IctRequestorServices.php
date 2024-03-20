@@ -24,9 +24,17 @@ class IctRequestorServices
             $join->on('ireq_mst.ireq_status','lr.lookup_code')
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         });
+        $data->LEFTJOIN('vpekerja_ict vi', function($join) {
+            $join->on('ireq_mst.ireq_assigned_to1','vi.usr_id')
+                  ->whereNotNull('ireq_mst.ireq_assigned_to1');
+        });
+        $data->LEFTJOIN('vpekerja_ict vii', function($join) {
+            $join->on('ireq_mst.ireq_assigned_to2', 'vii.usr_id')
+                  ->whereNull('ireq_mst.ireq_assigned_to1');
+        });
         $data->SELECT(
             DB::RAW("COUNT(ireq_mst.ireq_verificator_remark) as countremark_reviewer"),
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail'),
+            'mu.usr_division',
             'ireq_mst.ireq_verificator_remark',
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_reason',
@@ -34,11 +42,11 @@ class IctRequestorServices
             'ireq_mst.ireq_no',
             'ireq_mst.ireq_date',
             'muu.usr_fullname as ireq_user',
-            DB::raw("COALESCE(ireq_mst.ireq_assigned_to2,ireq_mst.ireq_assigned_to1) AS ireq_assigned_to"),
+            DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
             'mu.usr_fullname as ireq_requestor',
             DB::raw('count(DISTINCT(idm.ireq_id)) as count'),
             'lr.lookup_desc as ireq_status');
-        $data->WHERE('ireq_mst.created_by',$usr_id);
+        $data->WHERE('ireq_mst.ireq_requestor',$usr_id);
         $data->WHERE(function($query) use($status4,$status1, $status2, $status3, $status5){
             if(isset($status1)){
                 $query->where('ireq_mst.ireq_status',$status1);
@@ -57,10 +65,10 @@ class IctRequestorServices
             }
         });
         $data->groupBy(
-            DB::raw("COALESCE(ireq_mst.ireq_assigned_to2,ireq_mst.ireq_assigned_to1)"),
+            DB::raw("COALESCE(vi.official_name,vii.official_name)"),
             'ireq_mst.ireq_reason',
             'lr.lookup_desc',
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1)'),
+            'mu.usr_division',
             'ireq_mst.ireq_verificator_remark',
             'muu.usr_fullname',
             'ireq_mst.ireq_id',
@@ -113,7 +121,7 @@ class IctRequestorServices
             'lr.lookup_desc as ireq_status',
             'lrs.lookup_desc as ireq_type',
             DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail'),
+            'mu.usr_division',
             'im.ireq_date',
             'ireq_dtl.ireq_qty',
             'ireq_dtl.ireq_status as status');
@@ -121,7 +129,7 @@ class IctRequestorServices
             $data->WHERE('ireq_dtl.ireq_status','D');
         }
         if(isset($createdBy)){
-            $data->WHERE('im.created_by',$createdBy);
+            $data->WHERE('im.ireq_requestor',$createdBy);
         };
         $data->ORDERBY('im.ireq_date','DESC');
         $data->ORDERBY('ireq_dtl.ireqd_id','ASC');

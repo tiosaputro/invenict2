@@ -83,7 +83,7 @@
               </p>
             </template>  
           </Column>
-          <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
+          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'user-request status-' + slotProps.data.cekstatus.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -141,7 +141,6 @@ export default {
         kode:'',
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
         tes:[],
@@ -158,12 +157,11 @@ export default {
          myWindow.focus();
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
            this.getIctDetail();
-           this.getNoreq()
         }
         else {
           this.$router.push('/access');
@@ -171,13 +169,14 @@ export default {
       });
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
-        this.tes = response.data.map((x)=>x.ireq_assigned_to);
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.tes = response.data.data.detail.map((x)=>x.ireq_assigned_to);
         if(this.tes.length > 0 && this.tes[0] != null){
           this.ireq = this.tes
         }
-        else{}
+        this.kode = response.data.data.request.noreq;
+        this.status = response.data.data.request.ireq_status;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -188,12 +187,6 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data.noreq;
-        this.status = response.data.ireq_status;
       });
     },
     DeleteIct(ireqd_id){
@@ -211,7 +204,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-ict-detail/' +ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('/api/delete-ict-detail/' +ireqd_id);
         this.getIctDetail();
         },
         reject: () => {},

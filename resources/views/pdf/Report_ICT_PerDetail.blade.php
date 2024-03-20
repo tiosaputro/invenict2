@@ -492,7 +492,7 @@
                           <p style="font-size:16px;"> II. Requester / Reported By : </p>
                             <tr>
                                 <th>{{$detail[0]->ireq_requestor}}</th>
-                                <th>{{str_replace('"', '', json_decode($detail[0]->profile_detail, 1)['division'])}}</th>
+                                <th>{{$detail[0]->division_user}}</th>
                                 <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkRequester) !!}<br>{{ formatDate($detail[0]->ireq_date, 'd M Y H:i')}}</th>
                             </tr>
                             <tr>
@@ -540,10 +540,10 @@
                     <div class="col invoice-to">
                       <p style="font-size:16px;"> III. IT Use Only</p>
                          <table> <p style="font-size:16px;"> Approved By :   (Note : Sr. Manager approval needed for new equipment/software/tools)</p>
-                             @if($detail[0]->ireq_approver2_date || $detail[0]->status=='NA2')
+                             @if($detail[0]->ireq_approver2_date || $detail[0]->status == 'NA2')
                                 <tr>
-                                    <th>Arifin Tahir</th>
-                                    <th>ICT Manager</th>
+                                    <th>{{$detail[0]->manager_ict_name}}</th>
+                                    <th>{{$detail[0]->manager_job_title}}</th>
                                     @if($detail[0]->status=='RA2')
                                     <th rowspan="2" style="font-size:10pt;">{!! QrCode::errorCorrection('L')->size(80)->generate($linkIctManager) !!} <br> <strong>Rejected</strong> On {{ formatDate($detail[0]->ireq_approver2_date, 'd M y H:i') }}</th>
                                     @elseif($detail[0]->status=='NA2') 

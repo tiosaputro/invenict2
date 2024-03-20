@@ -25,45 +25,28 @@ class LoginController extends Controller
      if (env('APP_ENV') != 'local'){ //use ldap
         $ldap = new ldap_connection();
         $userlogin = str_contains($request->email, '@');
-            if (!$userlogin) {
-                $userlogin = $request->email . '@emp-one.com';
-                $mailUser = $request->email;
-            } else {
-                $userlogin = $request->email;
-                $mailUser = str_replace(array('@emp-one.com','@emp.id'), '', $request->email);
-            }
-            $filter = "(|(mail=" . $userlogin . ")(userprincipalname=" . $userlogin . ")(samaccountname=" . $request->email . "))";
-            $check = $ldap->search($filter, $userlogin, $request->password);
+        if (!$userlogin) {
+            $userlogin = $request->email . '@emp-one.com';
+        } else if (str_contains($request->email, '@emp.id')){
+            $userlogin = str_replace('@emp.id', '', $request->email) . '@emp-one.com';
+        } else{
+            $userlogin = $request->email;
+        }
+        $filter = "(|(mail=" . $userlogin . ")(userprincipalname=" . $userlogin . ")(samaccountname=" . $request->email . "))";
+        $check = $ldap->search($filter, $userlogin, $request->password);
             
             if (!empty($check)){ //* if check AD Valid
-              $checkUser = Mng_User::where('usr_email', $mailUser)->first();
+              $checkUser = Mng_User::where('usr_domain', $userlogin)->first();
                if(empty($checkUser)){
-                    $createUser = Mng_user::createUser($check['streetaddress'], $request->password, $check['physicaldeliveryofficename'], $check['displayname'], $check['samaccountname'], $mailUser);
-                   
-                    $profile = new UserProfile();
-                    $profile->created_at = now();
-                    $profile->id = generate_id();
-                    $idUser = $createUser->usr_id;
-
+                    $createUser = Mng_user::createUser($check);
                     $dataUser = Mng_user::find($createUser->usr_id);
                     $token = $dataUser->createToken('ApiToken')->plainTextToken;
 
                } else { // if exists    
-                    $profile = UserProfile::where('user_id', $checkUser->usr_id)->first();
-                    if (empty($profile)) {
-                        $profile = new UserProfile();
-                        $profile->id = generate_id();
-                    }
-                    $idUser = $checkUser->usr_id;
-                    $dataUser = Mng_user::find($idUser);
+                    Mng_user::updateUser($check);
+                    $dataUser = Mng_user::find($checkUser->usr_id);
                     $token = $checkUser->createToken('ApiToken')->plainTextToken;
                }
-                $profile->user_id = $idUser;
-                $profile->profile_detail = json_encode($check);
-                $profile->created_by = $idUser;
-                $profile->updated_at = now();
-                $profile->updated_by = $idUser;
-                $profile->save();
                 return response([
                     "success" => true,
                     "message" => "You have logged in successfully",

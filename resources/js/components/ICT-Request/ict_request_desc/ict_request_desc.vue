@@ -2202,11 +2202,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-          <template #body="slotProps">
-            {{ getDivision(slotProps.data.profile_detail) }}
-          </template>
-        </Column>
+          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -2911,11 +2907,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-          <template #body="slotProps">
-            {{ getDivision(slotProps.data.profile_detail) }}
-          </template>
-        </Column>
+          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
@@ -2992,11 +2984,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-          <template #body="slotProps">
-            {{ getDivision(slotProps.data.profile_detail) }}
-          </template>
-        </Column>
+          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3079,11 +3067,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-          <template #body="slotProps">
-            {{ getDivision(slotProps.data.profile_detail) }}
-          </template>
-        </Column>
+          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3159,11 +3143,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-          <template #body="slotProps">
-            {{ getDivision(slotProps.data.profile_detail) }}
-          </template>
-        </Column>
+          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
@@ -3240,11 +3220,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-            <template #body="slotProps">
-              {{ getDivision(slotProps.data.profile_detail) }}
-            </template>
-          </Column>
+          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
@@ -3471,11 +3447,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-          <template #body="slotProps">
-            {{ getDivision(slotProps.data.profile_detail) }}
-          </template>
-        </Column>
+        <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3704,11 +3676,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-          <template #body="slotProps">
-            {{ getDivision(slotProps.data.profile_detail) }}
-          </template>
-        </Column>
+        <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
             <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -4425,17 +4393,7 @@ export default {
     this.getActive();
   },
   methods: {
-    getDivision(profileDetail){
-      try {
-        const parsedDetail = JSON.parse(profileDetail);
-        const division = parsedDetail.division || 'N/A';
-
-        return division.replace(/^"(.*)"$/, '$1');
-      } catch (error) {
-        console.error('Error parsing JSON:', error);
-        return 'N/A'; 
-      }
-    },
+    
       getDetail(ireq_attachment){
         var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
           var myWindow = window.open(page, "_blank");
@@ -4447,7 +4405,7 @@ export default {
       getActive(){
         if(localStorage.getItem('desc')){
           this.desc = localStorage.getItem('desc');
-          if (this.desc <= 6 || this.desc == 40){
+          if (this.desc <= 6 || this.desc == 40 || this.desc == 22){
               this.getIct();
           }
           else if (this.desc >= 7 && this.desc <= 12 || this.desc == 38 || this.desc == 41 || this.desc == 45){
@@ -4461,9 +4419,6 @@ export default {
           }
           else if (this.desc > 19 && this.desc <=21 || this.desc == 39 || this.desc == 42){
             this.getIct5();
-          }
-          else if (this.desc == 22){
-            this.getIct6();
           }
           else if (this.desc > 22 && this.desc <= 29){
             this.getIct7();
@@ -4485,6 +4440,7 @@ export default {
           this.sdhDikerjakan = response.data.ict4;
           this.sdhSelesai = response.data.ict5;
           this.sedangDireview = response.data.ict7;
+          this.total = response.data.ict10;
           this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {

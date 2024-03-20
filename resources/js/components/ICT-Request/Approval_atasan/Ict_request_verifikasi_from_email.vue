@@ -43,7 +43,7 @@
           </template>
           <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
-          <Column field="invent_desc" header="Items" :sortable="true" style="min-width:12rem"/>
+          <Column field="name" header="Items" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
           <Column header="Attachment" style="min-width:10rem">
@@ -62,17 +62,6 @@
                 </Button>
               </p>
             </template>  
-          </Column>
-          <Column style="min-width:8rem">
-           <template #body="slotProps">
-            <Button
-              v-if="slotProps.data.ireq_status == 'NA1'"
-              class="p-button-rounded p-button-success mr-2"
-              icon="pi pi-check-square"
-              v-tooltip.bottom="'Click to verification'"
-              @click="VerifikasiRequest(slotProps.data.ireq_id)"
-            />
-           </template>
           </Column>
           <template #footer>
             <div class="p-grid p-dir-col">
@@ -180,7 +169,7 @@ export default {
       VerifikasiRequest(){
         this.confirmationVerifikasi = true;
       },
-      cek(){
+      cekStatus(){
         this.status = this.$route.params.status;
           if(this.status == 'approve'){
               this.Approve();
@@ -206,8 +195,8 @@ export default {
             summary: "Success Message",
             detail: "Successfully approved the request",
           });
-          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
-          setTimeout( () =>  this.$router.push('/ict-request-divisi1'),1000);
+          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code);
+          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),1000);
         },
         reject: () => {},
       });
@@ -220,14 +209,14 @@ export default {
       this.confirmationVerifikasi = false;
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason).then(()=>{
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
                 summary: "Success Message",
                 detail: "Successfully rejected the request",
               });
-              setTimeout( () => this.$router.push('/ict-request-divisi1'),1000);
+              setTimeout( () => this.$router.push('/ict-request-higher-level'),1000);
             });
           }
       },
@@ -236,27 +225,13 @@ export default {
         this.reason.ket = null;
         this.submitted = false;
       },
-      getIctDetail(){
-        this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-          this.verif = response.data;
-          this.loading = false;
-          this.cek();
-        }).catch(error=>{
-            if (error.response.status == 401) {
-              this.$toast.add({
-              severity:'error', summary: 'Error', detail:'Session login expired'
-            });
-            localStorage.clear();
-            localStorage.setItem('Expired','true')
-            setTimeout( () => this.$router.push('/login'),2000);
-            }
-        });
-      },
       getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
+      this.axios.get('/api/ict-detail/'+ this.$route.params.code).then((response)=>{
+        this.kode = response.data.data.request;
         if(this.kode.cekstatus =='NA1'){
-          this.getIctDetail();
+          this.verif = response.data.data.detail;
+          this.cekStatus();
+          this.loading = false;
         }
         else{
           this.$toast.add({
@@ -264,7 +239,7 @@ export default {
             summary: "Error Message",
             detail: "This request has been verified",
           });
-          setTimeout( () =>  this.$router.push('/ict-request-divisi1'),2000);
+          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),2000);
         }
       });
     },

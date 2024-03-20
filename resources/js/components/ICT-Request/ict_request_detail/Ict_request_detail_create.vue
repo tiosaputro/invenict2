@@ -175,7 +175,6 @@ export default {
       tipereq: '',
       type: [],
       bu: [],
-      token: localStorage.getItem('token'),
       checkname : [],
       checkto : [],
       cekTipeReq:'',
@@ -207,7 +206,7 @@ export default {
       this.requestcatalog = '';
       this.cekTipeReq = tipereq;
       if(tipereq != null){
-        this.axios.get('/api/get-catalog-request/'+tipereq, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.axios.get('/api/get-catalog-request/'+tipereq).then((res)=>{
           this.catalog = res.data;
         });
       }
@@ -236,7 +235,7 @@ export default {
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
 
-          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token,'content-type': 'multipart/form-data'}}).then(()=>{
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'content-type': 'multipart/form-data'}}).then(()=>{
           this.$toast.add({
             severity: "success",
             summary: "Success Message",
@@ -264,7 +263,7 @@ export default {
           data.append("ket", this.ket);
           data.append("tipereq", this.tipereq);
 
-          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token, 'content-type': 'multipart/form-data'}}).then(()=>{
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'content-type': 'multipart/form-data'}}).then(()=>{
           this.$toast.add({
             severity: "success",
             summary: "Success Message",
@@ -348,23 +347,23 @@ export default {
      }
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
-           this.getNoreq();
+           this.getData();
         }
         else {
           this.$router.push('/access');
         }
       });
     },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-      this.detail = response.data;
+    getData(){
+      this.axios.get('/api/ict-detail/'+ this.$route.params.code).then((response)=>{
+      this.detail = response.data.data.request;
+      this.type = response.data.data.request_type;
       this.tipereq = this.detail.ireq_type
       this.cekTipeReq = this.detail.ireq_type
-      this.getType();
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
@@ -375,11 +374,6 @@ export default {
           setTimeout( () => this.$router.push('/login'),2000);
            }
         });
-    },
-    getType(){
-        this.axios.get('/api/getAddDetail', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-          this.type = response.data.ref;
-          });
     },
     CreateIctDetail() {
       this.errors = [];

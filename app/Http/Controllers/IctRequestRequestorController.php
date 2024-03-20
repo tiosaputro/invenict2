@@ -79,7 +79,7 @@ class IctRequestRequestorController extends Controller
                         'ireq_mst.ireq_date',
                         'ireq_mst.ireq_user',
                         'ireq_mst.ireq_spv',
-                        DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail')
+                        'mu.usr_division',
                       )
             ->LEFTJOIN('lookup_refs as lr',function ($join) {
                 $join->on('ireq_mst.ireq_type','lr.lookup_code')

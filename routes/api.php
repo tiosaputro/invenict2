@@ -409,7 +409,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
     //ict request (detail)
-    Route::get('/getAddDetail',[IctDetailController::class,'getAddDetail']);
     Route::get('/get-catalog-request/{tipereq}',[IctDetailController::class,'CatalogRequest']);
     Route::get('/ict-detail/{code}',[IctDetailController::class,'index']);
     Route::get('/ict-detail-penugasan/{code}',[IctDetailController::class,'detailPenugasan']);

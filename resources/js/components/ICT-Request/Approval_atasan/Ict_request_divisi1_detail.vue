@@ -9,7 +9,13 @@
 				        <h4>ICT Request (Detail) </h4>
           </template>
           <template v-slot:end>
-              <label style="width:140px">No. Request: {{kode.noreq}}</label>
+            <div v-if="this.detailRequest.request_date">
+              <label style="width:110px">No. Request </label>
+              <label>: {{this.detailRequest.noreq}} </label>
+              <br>
+              <label style="width:110px">Request Date</label>
+              <label>: {{formatDate(this.detailRequest.request_date)}}</label>
+            </div>
           </template>
         </Toolbar>
         <DataTable
@@ -93,15 +99,15 @@
 </template>
 <script>
 import {FilterMatchMode} from 'primevue/api';
+import moment from 'moment';
 export default {
   data() {
     return {
         loading: true,
         detail: [],
-        kode:[],
+        detailRequest:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
         tes:[],
@@ -113,18 +119,20 @@ export default {
    this.cekUser();
   },
   methods: {
+    formatDate(date){
+      return moment(date).format("DD MMM YYYY HH:mm");
+    },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Approval Atasan") || this.checkto.includes("/ict-request-divisi1")){ 
+        if(this.checkname.includes("Approval Atasan") || this.checkto.includes("/ict-request-higher-level")){ 
           this.getIctDetail();
-          this.getNoreq();
         }
         else {
           this.$router.push('/access');
@@ -132,13 +140,14 @@ export default {
       });
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
-        this.tes = response.data.map((x)=>x.ireq_assigned_to);
+      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.tes = response.data.data.detail.map((x)=>x.ireq_assigned_to);
+        this.detailRequest = response.data.data.request;
+        this.status = response.data.data.request.cekstatus;
         if(this.tes.length > 0 && this.tes[0] != null){
           this.ireq = this.tes
         }
-        else{}
         this.loading = false;
       }).catch(error=>{
         if (error.response.status == 401) {
@@ -151,15 +160,9 @@ export default {
            }
       });
     },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
-        this.status = response.data.cekstatus;
-      });
-    },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.code).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

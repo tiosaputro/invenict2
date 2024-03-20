@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Adldap\Models\User;
 use App\Models\Mng_user;
 use App\Models\Mng_roles;
 use App\Models\Divisi_refs;
@@ -185,10 +186,10 @@ class MngUserController extends Controller
         return json_encode($data);
     }
     function divisionBu($code){
-        $check = UserProfile::where('user_id',$code)->first();
-        $data['division'] = str_replace('"', '', json_decode($check->profile_detail, 1)['division']);
-        $data['bu'] = str_replace('"', '', json_decode($check->profile_detail, 1)['company']);
-        $data['department'] = str_replace('"', '', json_decode($check->profile_detail, 1)['department']);
+        $check = Mng_user::find($code);
+        $data['division'] = $check->usr_division;
+        $data['bu'] = $check->usr_nm_perush;
+        $data['department'] = $check->usr_department;
         return json_encode($data);
     }
    

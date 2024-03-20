@@ -666,33 +666,33 @@ export default {
     },
     detailTabRequest(ireq_id){
       localStorage.setItem('active3',0);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     detailTabApproved(ireq_id){
       localStorage.setItem('active3',1);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     detailTabRejected(ireq_id){
       localStorage.setItem('active3',2);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     detailTabRequestAssignment(ireq_id){
       localStorage.setItem('active3',4);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     detailTabInProgress(ireq_id){
       localStorage.setItem('active3',5);
-      this.$router.push('/ict-request-divisi1-detail/'+ireq_id);
+      this.$router.push('/ict-request-higher-level-detail/'+ireq_id);
     },
     getPermohonan(){
       this.axios.get('api/get-permohonan',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.permohonan = response.data.ict;
-        this.verif = response.data.ict1;
-        this.reject = response.data.ict2;
-        this.penugasan = response.data.ict9;
-        this.sedangDikerjakan = response.data.ict3;
-        this.sudahDikerjakan = response.data.ict4;
-        this.selesai = response.data.ict5;
+        this.permohonan = response.data.data.ict;
+        this.verif = response.data.data.ict1;
+        this.reject = response.data.data.ict2;
+        this.penugasan = response.data.data.ict9;
+        this.sedangDikerjakan = response.data.data.ict3;
+        this.sudahDikerjakan = response.data.data.ict4;
+        this.selesai = response.data.data.ict5;
         localStorage.setItem('active3',0)
         this.loading = false;
       }).catch(error=>{
@@ -732,7 +732,7 @@ export default {
                 detail: "Successfully approved this request",
                 life : 1000
               });
-              this.axios.get('/api/updateStatusPermohonan/' +this.code, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{            
+              this.axios.get('/api/updateStatusPermohonan/' +this.code).then(()=>{            
                 this.code = null;
                 this.loading = true;
                 this.getPermohonan();
@@ -754,7 +754,7 @@ export default {
     updateReject(){
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+ this.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.axios.put('/api/updateStatusReject/'+ this.code, this.reason).then(()=>{
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",

@@ -26,6 +26,7 @@ class Mng_User extends Authenticatable
         'usr_alamat',
         'usr_nip',
         'usr_email',
+        'usr_domain',
         'usr_npwp',
         'usr_jabatan',
         'usr_nm_perush',
@@ -38,8 +39,8 @@ class Mng_User extends Authenticatable
         'kddept_unit',
         'waba_id',
         'usr_foto',
-        'div_id',
-        'usr_bu',
+        'usr_division',
+        'usr_departement',
         'usr_loc'
     ];
     protected $hidden = [
@@ -50,27 +51,28 @@ class Mng_User extends Authenticatable
     public $incrementing = false;
     public $timestamps = false;
 
-    public static function createUser($address, $password, $location, $fullname, $usr_name, $mail){
-        $address = str_replace('"','',$address);
-        $password = str_replace('"','',$password);
-        $location = str_replace('"','',$location);
-        $location = strtoupper($location);
-        $fullname = str_replace('"','',$fullname);
-        $usr_name = str_replace('"','',$usr_name);
+    public static function createUser($request){
+        $location = strtoupper(str_replace('"','',$request['physicaldeliveryofficename']));
         $checkLocation = Location::select('loc_code')->where('loc_desc','like',$location)->first();
         $idUser = generate_id_number();
         $data = Mng_user::create([
             'usr_id'=> $idUser,
-            'usr_fullname'=>strtoupper($fullname),
-            'usr_name'=> $usr_name,
-            'usr_email' => $mail,
-            'usr_passwd' => Hash::make($password),
+            'usr_fullname'=>strtoupper(str_replace('"','',$request['displayname'])),
+            'usr_name'=> str_replace('"','',$request['givenname']),
+            'usr_email' => str_replace('"','',$request['mail']),
+            'usr_domain' => str_replace('"','',$request['userprincipalname']),
+            'usr_passwd' => Hash::make('123'),
+            'usr_division' => str_replace('"','',$request['division']),
+            'usr_department' => str_replace('"','',$request['department']),
+            'usr_nm_perush' => str_replace('"','',$request['company']),
+            'usr_nip' => str_replace('"','',$request['employeeid']),
+            'usr_jabatan' => str_replace('"','',$request['extensionattribute15']),
             'usr_stat'=> 'T',
-            'usr_alamat'=> $address,
+            'usr_alamat'=> str_replace('"','',$request['streetaddress']),
             'usr_loc'=> ($checkLocation) ? $checkLocation->loc_code : 'OJ',
             'created_by'=> 'INVENICT',
             'creation_date' => now(),
-            'program_name'=>'Mng_user'
+            'program_name'=>'Mng_user@createUser'
         ]);
         $role = Mng_roles::select('rol_id')->where('rol_name','like','Requestor Divisi')->first();
         Mng_usr_roles::create([
@@ -82,6 +84,29 @@ class Mng_User extends Authenticatable
                 'program_name'=>'Mng_user'
         ]);
         return $data;
+    }
+
+    public static function updateUser($request){
+        $location = strtoupper(str_replace('"','',$request['physicaldeliveryofficename']));
+        $checkLocation = Location::select('loc_code')->where('loc_desc','like',$location)->first();
+        $data = Mng_user::where('usr_domain',str_replace('"','',$request['userprincipalname']))->first();
+        $data->usr_fullname = strtoupper(str_replace('"','',$request['displayname']));
+        $data->usr_name = str_replace('"','',$request['givenname']);
+        $data->usr_email = str_replace('"','',$request['mail']);
+        $data->usr_domain = str_replace('"','',$request['userprincipalname']);
+        $data->usr_division = str_replace('"','',$request['division']);
+        $data->usr_passwd = Hash::make('123');
+        $data->usr_department = str_replace('"','',$request['department']);
+        $data->usr_nm_perush = str_replace('"','',$request['company']);
+        $data->usr_nip = str_replace('"','',$request['employeeid']);
+        $data->usr_jabatan = str_replace('"','',$request['extensionattribute15']);
+        $data->usr_stat = 'T';
+        $data->usr_alamat =str_replace('"','',$request['streetaddress']);
+        $data->usr_loc = ($checkLocation) ? $checkLocation->loc_code : 'OJ';
+        $data->LAST_UPDATED_BY = 'INVENICT';
+        $data->LAST_UPDATE_DATE = now();
+        $data->program_name = 'Mng_user@createUser';
+        $data->save();
     }
     public static function findUser($email){
         $user = Mng_user::where('usr_fullname','like',$email)->first();

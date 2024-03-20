@@ -112,7 +112,6 @@ export default {
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         checkname : [],
         checkto : [],
         status:'',
@@ -137,7 +136,6 @@ export default {
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
           this.getIctDetail();
-          this.getNoreq();
         }
         else {
           this.$router.push('/access');
@@ -146,8 +144,10 @@ export default {
     },
     getIctDetail(){
       this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code).then((response)=> {
-        this.detail = response.data;
-        this.countNote = response.data.map((x)=> x.count_note)
+        this.detail = response.data.data.detail;
+        this.countNote = response.data.data.detail.map((x)=> x.count_note)
+        this.kode = response.data.data.request;
+        this.status = response.data.data.request.cekstatus;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -160,15 +160,9 @@ export default {
            }
       });
     },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
-        this.kode = response.data;
-        this.status = response.data.cekstatus;
-      });
-    },
     CetakPdfSedangDikerjakan(){
      this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
          let responseHtml = response.data;
           var myWindow = window.open("", "response", "resizable=yes");
           myWindow.document.write(responseHtml);

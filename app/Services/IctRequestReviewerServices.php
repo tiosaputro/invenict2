@@ -25,7 +25,7 @@ class IctRequestReviewerServices
         $data->SELECT(
                 'ireq_mst.ireq_id',
                 'ireq_mst.ireq_verificator_remark',
-                DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail'),
+                'mus.usr_division',
                 'mu.usr_email',
                 'ms.usr_fullname as ireq_requestor',
                 'mus.usr_fullname as ireq_user',
@@ -34,13 +34,16 @@ class IctRequestReviewerServices
                 'ireq_mst.ireq_date',
                 'lr.lookup_desc as ireq_status',
                 'ireq_mst.ireq_status as status',
+                DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title) as spv"),
                 DB::raw('count(ireq_mst.ireq_verificator_remark) as count_remark'),
                 DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), 
                 DB::raw('count(idd.ireq_id) as ireq_count_id'),
                 DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
                 DB::raw('count(ireq_mst.ireq_approver2_remark) as count_remark_approver2'),'ireq_mst.ireq_approver2_remark');
         $data->LEFTJOIN('divisi_refs dr','ireq_mst.ireq_divisi_user','dr.div_id');
-        $data->LEFTJOIN('mng_users mu','ireq_mst.created_by','mu.usr_id');
+        $data->LEFTJOIN('mng_users mu','ireq_mst.ireq_requestor','mu.usr_id');
+        $data->LEFTJOIN('supervisor_refs sr','ireq_mst.ireq_spv','sr.spv_id');
+        $data->LEFTJOIN('mng_users usr','sr.spv_name','usr.usr_id');
         $data->LEFTJOIN('vpekerja_ict vi', function($join) {
             $join->on('ireq_mst.ireq_assigned_to1','vi.usr_id')
                   ->whereNotNull('ireq_mst.ireq_assigned_to1');
@@ -73,9 +76,10 @@ class IctRequestReviewerServices
         $data->GroupBy(
             'ms.usr_fullname',
             'mus.usr_fullname',
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1)'),
+            'mus.usr_division',
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_verificator_remark',
+            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title)"),
             DB::raw("COALESCE(vi.official_name,vii.official_name)"),
             'ireq_mst.ireq_status','ireq_mst.ireq_no','ireq_mst.ireq_date',
             'mu.usr_email',
@@ -138,7 +142,7 @@ class IctRequestReviewerServices
             'lrs.lookup_desc as ireq_type',
             DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),
             'im.ireq_date',
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail'),
+            'mus.usr_division',
             'ireq_dtl.ireq_qty');
         if(!empty($status)){
             $data->WHERE('ireq_dtl.ireq_status',$status);

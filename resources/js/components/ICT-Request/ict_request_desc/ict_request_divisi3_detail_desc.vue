@@ -156,22 +156,18 @@ export default {
     };
   },
   created() {
-      this.create();
+      this.getIctDetail();
   },
   methods: {
-    create(){
-      this.getIctDetail();
-      this.getNoreq();
-    },
     edit(ireqd_id){
       this.dialogEdit = true;
-      this.axios.get('/api/detail/'+ ireqd_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail/'+ ireqd_id).then((response)=>{
         this.editDetail = response.data;
       });
       this.getStatus();
     },
     getStatus(){
-      this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/getStatusIct').then((response)=>{
         this.status = response.data;
       });
     },
@@ -184,7 +180,7 @@ export default {
     submit(){
       this.submitted = true;
       if(this.editDetail.status != null){
-        this.axios.put('/api/update-status-done/'+this.$route.params.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-status-done/'+this.$route.params.code, this.editDetail).then(()=>{
           this.$toast.add({
             severity:'success', summary: 'Success', detail:'Status Berhasil Dirubah', life: 3000
           });
@@ -195,8 +191,9 @@ export default {
       
     },
     getIctDetail(){
-      this.axios.get('/api/get-detail-done/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
+      this.axios.get('/api/get-detail-done/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.kode = response.data.request;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 403) {
@@ -210,11 +207,6 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
       });
     },
   },

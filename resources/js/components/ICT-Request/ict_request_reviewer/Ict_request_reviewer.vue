@@ -48,11 +48,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_count_id" header="Total Detail" :sortable="true" style="min-width:10rem"/>
@@ -199,11 +196,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:16rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -330,11 +324,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:7rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:7rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -450,11 +441,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
@@ -531,11 +519,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPenugasan.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
@@ -628,12 +613,9 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:4rem"/>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                   <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -731,11 +713,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:12rem" :sortable="true"/>
                   <Column field="ireq_status" header="Status" style="min-width:10rem" :sortable="true">
                   <template #body= "slotProps">
@@ -847,11 +825,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="profile_detail" header="Division User" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ getDivision(slotProps.data.profile_detail) }}
-                    </template>
-                  </Column>
+                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
                     <template #body= "slotProps">
@@ -1209,17 +1183,6 @@ export default {
     this.getIct();
   },
   methods: {
-    getDivision(profileDetail){
-      try {
-        const parsedDetail = JSON.parse(profileDetail);
-        const division = parsedDetail.division || 'N/A';
-
-        return division.replace(/^"(.*)"$/, '$1');
-      } catch (error) {
-        console.error('Error parsing JSON:', error);
-        return 'N/A'; 
-      }
-    },
     SendEmail(usr_email,ireq_id){
       this.axios.get('/api/detailrequest-tomail/'+ireq_id).then((res)=>{
         // this.dialogSendMail = true;

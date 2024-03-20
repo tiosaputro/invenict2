@@ -9,9 +9,9 @@ use App\Models\IctDetail;
 use App\Models\Ict;
 use Carbon\Carbon;
 
-class IctRequestManagerServices
+class IctRequestHigherLevelServices
 {
-    public function getDataRequestWithFilter($status1, $status2, $status3, $status4){
+    public function getDataWithFilter($status1, $status2, $status3, $status4){
         $data = Ict::query();
         $data->SELECT(
                 'ireq_mst.ireq_id',
@@ -22,16 +22,12 @@ class IctRequestManagerServices
                 'mus.usr_fullname as ireq_user',
                 'ireq_mst.ireq_status as status',
                 'ireq_mst.ireq_no',
+                'ireq_mst.ireq_reason',
                 'ireq_mst.ireq_date',
                 'lr.lookup_desc as ireq_status',
-                'ireq_mst.ireq_status as status',
-                DB::raw('count(ireq_mst.ireq_verificator_remark) as count_remark'),
-                DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'), 
-                DB::raw('count(idd.ireq_id) as ireq_count_id'),
                 DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
-                DB::raw('count(ireq_mst.ireq_approver2_remark) as count_remark_approver2'),'ireq_mst.ireq_approver2_remark');
-        $data->LEFTJOIN('divisi_refs dr','ireq_mst.ireq_divisi_user','dr.div_id');
-        $data->LEFTJOIN('mng_users mu','ireq_mst.created_by','mu.usr_id');
+                'ireq_mst.ireq_approver2_remark');
+        $data->LEFTJOIN('mng_users mu','ireq_mst.ireq_requestor','mu.usr_id');
         $data->LEFTJOIN('vpekerja_ict vi', function($join) {
             $join->on('ireq_mst.ireq_assigned_to1','vi.usr_id')
                   ->whereNotNull('ireq_mst.ireq_assigned_to1');
@@ -40,7 +36,6 @@ class IctRequestManagerServices
             $join->on('ireq_mst.ireq_assigned_to2', 'vii.usr_id')
                   ->whereNull('ireq_mst.ireq_assigned_to1');
         });
-        $data->LEFTJOIN('user_profile up','ireq_mst.ireq_user','up.user_id');
         $data->LEFTJOIN('ireq_dtl idd','ireq_mst.ireq_id','idd.ireq_id');
         $data->LEFTJOIN('lookup_refs lr','ireq_mst.ireq_status','lr.lookup_code');
         $data->LEFTJOIN('mng_users ms','ireq_mst.ireq_requestor','ms.usr_id');
@@ -59,24 +54,26 @@ class IctRequestManagerServices
                 $query->whereNotNull('ireq_mst.ireq_status');
             }
         });
+        $data->where('ireq_mst.ireq_approver1',Auth::user()->usr_id);
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         $data->GroupBy(
-            'ms.usr_fullname',
-            'mus.usr_fullname',
-            'mus.usr_division',
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_verificator_remark',
-            DB::raw("COALESCE(vi.official_name,vii.official_name)"),
-            'ireq_mst.ireq_status','ireq_mst.ireq_no','ireq_mst.ireq_date',
+            'mus.usr_division',
             'mu.usr_email',
-            'lr.lookup_desc',
+            'ms.usr_fullname',
+            'mus.usr_fullname',
             'ireq_mst.ireq_status',
+            'ireq_mst.ireq_no',
+            'ireq_mst.ireq_reason',
+            'ireq_mst.ireq_date',
+            'lr.lookup_desc',
+            DB::raw("COALESCE(vi.official_name,vii.official_name)"),
             'ireq_mst.ireq_approver2_remark');
         $data->ORDERBY('ireq_mst.ireq_date','DESC');
-        return $data->get();
+        return $data->get(); 
     }
-
-    public function getDataDetailWithFilter($status){
+    public function getDetailWithFilter($status){
         $data = IctDetail::Query();
         $data->LEFTJOIN('ireq_mst as im','ireq_dtl.ireq_id','im.ireq_id');
         $data->LEFTJOIN('vpekerja_ict vi', function($join) {
@@ -89,8 +86,6 @@ class IctRequestManagerServices
         });
         $data->LEFTJOIN('mng_users ms','im.ireq_requestor','ms.usr_id');
         $data->LEFTJOIN('mng_users mus','im.ireq_user','mus.usr_id');
-        $data->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id');
-        $data->LEFTJOIN('user_profile up','im.ireq_user','up.user_id');
         $data->LEFTJOIN('lookup_refs as lr',function ($join) {
             $join->on('ireq_dtl.ireq_status','lr.lookup_code')
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
@@ -125,8 +120,10 @@ class IctRequestManagerServices
         if(!empty($status)){
             $data->WHERE('ireq_dtl.ireq_status',$status);
         }
+        $data->WHERE('im.ireq_approver1',Auth::user()->usr_id);
         $data->ORDERBY('im.ireq_date','DESC');
         $data->ORDERBY('ireq_dtl.ireqd_id','ASC');
         return $data->get();
     }
+
 }

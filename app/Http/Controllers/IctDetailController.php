@@ -52,6 +52,7 @@ class IctDetailController extends Controller
         $data['detail'] = $this->Detailservices->getDataDetailRequest($code,NULL,NULL,NULL);
         $data['request'] = $this->Ictservices->detailNoRequest($code);
         $data['pekerja'] = $this->Pekerjaservices->getPekerja();
+        $data['request_type'] = Lookup_Refs::Type();
         return ResponseFormatter::success($data,'Successfully Get Data');
      }
     function detailPenugasan($code)
@@ -92,7 +93,8 @@ class IctDetailController extends Controller
     }
     function getDetailDone($code)
     {
-        $data = $this->Detailservices->detailDone($code);
+        $data['detail'] = $this->Detailservices->getDataDetailRequest($code,NULL,NULL,NULL);
+        $data['request'] = $this->Ictservices->detailNoRequest($code);
         return response()->json($data);
     }
     function save(Request $request,$code)
@@ -362,7 +364,9 @@ class IctDetailController extends Controller
             'imm.ireq_id',
             'imm.ireq_no',
             'id.ireq_desc',
-            DB::raw('DBMS_LOB.SUBSTR(up.profile_detail, 4000, 1) as profile_detail'),
+            'mu.usr_division as division_user',
+            'mngr.usr_fullname as manager_ict_name',
+            'mngr.usr_jabatan as manager_job_title',
             'id.ireq_qty',
             'mu.usr_fullname as ireq_requestor',
             'mus.usr_fullname as ireq_spv',
@@ -406,8 +410,8 @@ class IctDetailController extends Controller
         ->leftjoin('supervisor_refs sr','imm.ireq_spv','sr.spv_id')
         ->leftjoin('mng_users mus','sr.spv_name','mus.usr_id')
         ->leftjoin('mng_users usr','imm.ireq_verificator','usr.usr_id')
+        ->leftjoin('mng_users mngr','imm.ireq_approver2','mngr.usr_id')
         ->leftjoin('location_refs as loc_refs','imm.ireq_loc','loc_refs.loc_code')
-        ->LEFTJOIN('user_profile up','imm.ireq_user','up.user_id')
         ->leftjoin('mng_users as mu','imm.ireq_user','mu.usr_id')
         ->leftjoin('lookup_refs as lllr','imm.ireq_prio_level','lllr.lookup_code')
         ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
@@ -433,15 +437,14 @@ class IctDetailController extends Controller
         }
             return view('pdf/Report_ICT_PerDetail', compact('detail','link'));
     }
-    function cetak_excel_sedang_dikerjakan($code)
-    {
+    function cetak_excel_sedang_dikerjakan($code){
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctDetailTabSudahDikerjakanExport($code),'Laporan Ict Request '.$newCreation.'.xlsx');
     }
-    function getDetailVerif($code)
-    {
-        $data = $this->Detailservices->detailVerification($code);
-        return response()->json($data);
+    function getDetailVerif($code){
+        $data['detail'] = $this->Detailservices->getDataDetailRequest($code,NULL,NULL,NULL);
+        $data['request'] = $this->Ictservices->detailNoRequest($code);
+        return json_encode($data);
     }
     function getDetail($ireqd_id,$ireq_id){
         $data['dtl'] = $this->Detailservices->FindDetailRequest($ireqd_id,$ireq_id);

@@ -24,7 +24,7 @@ class IctDetailServices
             })
             ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
             ->where('imm.ireq_id',$code)
-            ->where('id.ireq_assigned_to1',Auth::user()->usr_fullname)
+            ->where('id.ireq_assigned_to1',Auth::user()->usr_id)
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
             ->orderBy('id.ireqd_id','ASC')
             ->get();
@@ -198,7 +198,10 @@ class IctDetailServices
     }
     public static function detailVerification($code){
         $data = DB::table('ireq_dtl as id')
-        ->select('id.*','lr.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_desc"))
+        ->select(
+            'id.*',
+            'lr.lookup_desc as ireq_type',
+            DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_desc"))
         ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
         ->LEFTJOIN('catalog_refs as cr',function ($join) {
             $join->on('id.invent_code','cr.catalog_id');
@@ -278,7 +281,7 @@ class IctDetailServices
     public static function AcceptByPersonnel($ireq_id){
         $dtl = DB::table('ireq_dtl')
         ->where('ireq_id',$ireq_id)
-        ->where('ireq_assigned_to1',Auth::user()->usr_fullname)
+        ->where('ireq_assigned_to1',Auth::user()->usr_id)
         ->update([
             'ireq_status' => 'T',
             'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
@@ -291,7 +294,7 @@ class IctDetailServices
     public static function rejectedByPersonnel($request, $ireq_id){
         $dtl = DB::table('ireq_dtl')
         ->where('ireq_id',$ireq_id)
-        ->where('ireq_assigned_to1',Auth::user()->usr_fullname)
+        ->where('ireq_assigned_to1',Auth::user()->usr_id)
         ->update([
             'ireq_status' => 'RT',
             'ireq_assigned_to1_reason' => $request->ireq_reason,

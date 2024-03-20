@@ -102,7 +102,6 @@ export default {
         editDetail:[],
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        token: localStorage.getItem('token'),
         user:[],
         checkname : [],
         checkto : [],
@@ -121,12 +120,11 @@ export default {
          myWindow.focus();
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Status Change Request") || this.checkto.includes("/ict-request-divisi3")){   
           this.getIctDetail();
-          this.getNoreq();
         }
         else {
           this.$router.push('/access');
@@ -135,18 +133,18 @@ export default {
     },
     getUser(){
         this.axios.get('/api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.user = response.data.user;
+          this.user = response.data.user;
         });
       },
     getStatus(){
-      this.axios.get('/api/getStatusIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/getStatusIct').then((response)=>{
         this.status = response.data;
       });
     },
     submit(){
       this.submitted = true;
       if(this.editDetail.status != null){
-        this.axios.put('/api/update-status-done/'+this.$route.params.code, this.editDetail, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-status-done/'+this.$route.params.code, this.editDetail).then(()=>{
           this.$toast.add({
             severity:'success', summary: 'Success Message', detail:'Success Change Status', life: 3000
           });
@@ -157,8 +155,9 @@ export default {
       
     },
     getIctDetail(){
-      this.axios.get('/api/get-detail-done/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
+      this.axios.get('/api/get-detail-done/' + this.$route.params.code).then((response)=> {
+        this.detail = response.data.data.detail;
+        this.kode = response.data.data.request;
         this.loading = false;
       }).catch((error)=>{
       if (error.response.status == 401) {
@@ -169,11 +168,6 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
       });
     },
   },

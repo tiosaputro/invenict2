@@ -231,7 +231,7 @@ export default {
             summary: "Error Message",
             detail: "This request has been verified",
           });
-          setTimeout( () =>  this.$router.push('/ict-request-divisi1'),2000);
+          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),2000);
         }
       });
     },

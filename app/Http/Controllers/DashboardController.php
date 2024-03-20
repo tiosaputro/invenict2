@@ -53,16 +53,16 @@ class DashboardController extends Controller
     }
     function countUser()
     {
-        $usr_name = Auth::user()->usr_name;
+        $usr_id = Auth::user()->usr_id;
         $dashboard = $this->dashboardServices->CountDataDashboard();
-        $grafik['belumdiverifikasirequestor'] = collect($dashboard)->whereIN('ireq_status',['NA1','NA2'])->where('created_by',$usr_name)->count();
-        $grafik['sudahdiverifikasirequestor'] = collect($dashboard)->whereIN('ireq_status',['A1','A2'])->where('created_by',$usr_name)->count();
-        $grafik['sedangDireviewrequestor'] = collect($dashboard)->where('ireq_status','P')->where('created_by',$usr_name)->count();
-        $grafik['direjectrequestor'] = collect($dashboard)->whereIN('ireq_status',['RR','RA1','RA2','RT'])->where('created_by',$usr_name)->count();
-        $grafik['sedangdikerjakanrequestor'] = collect($dashboard)->whereIN('ireq_status',['T','NT'])->where('created_by',$usr_name)->count();
-        $grafik['sudahdikerjakanrequestor'] = collect($dashboard)->where('ireq_status','D')->where('created_by',$usr_name)->count();
-        $grafik['sudahselesairequestor'] = collect($dashboard)->where('ireq_status','C')->where('created_by',$usr_name)->count();
-        $grafik['countrequestrequestor'] = collect($dashboard)->whereNotNull('ireq_status')->where('created_by',$usr_name)->count();
+        $grafik['belumdiverifikasirequestor'] = collect($dashboard)->whereIN('ireq_status',['NA1','NA2'])->where('created_by',$usr_id)->count();
+        $grafik['sudahdiverifikasirequestor'] = collect($dashboard)->whereIN('ireq_status',['A1','A2'])->where('created_by',$usr_id)->count();
+        $grafik['sedangdireviewrequestor'] = collect($dashboard)->where('ireq_status','P')->where('created_by',$usr_id)->count();
+        $grafik['direjectrequestor'] = collect($dashboard)->whereIN('ireq_status',['RR','RA1','RA2','RT'])->where('created_by',$usr_id)->count();
+        $grafik['sedangdikerjakanrequestor'] = collect($dashboard)->whereIN('ireq_status',['T','NT'])->where('created_by',$usr_id)->count();
+        $grafik['sudahdikerjakanrequestor'] = collect($dashboard)->where('ireq_status','D')->where('created_by',$usr_id)->count();
+        $grafik['sudahselesairequestor'] = collect($dashboard)->where('ireq_status','C')->where('created_by',$usr_id)->count();
+        $grafik['countrequestrequestor'] = collect($dashboard)->whereNotNull('ireq_status')->where('created_by',$usr_id)->count();
 
         return ResponseFormatter::success($grafik,'Successfully Get Data Dashboard');
     }

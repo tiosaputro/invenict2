@@ -135,9 +135,8 @@ export default {
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Atasan Requestor Divisi") || this.checkto.includes("/ict-request-divisi1")){ 
+        if(this.checkname.includes("Atasan Requestor Divisi") || this.checkto.includes("/ict-request-higher-level")){ 
           this.getIctDetail();
-          this.getNoreq();
         }
         else {
           this.$router.push('/access');
@@ -159,7 +158,7 @@ export default {
             detail: "Successfully approved this request",
           });
           this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
-          setTimeout( () =>  this.$router.push('/ict-request-divisi1'),1000);
+          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),1000);
         },
         reject: () => {},
       });
@@ -174,7 +173,7 @@ export default {
                 summary: "Success Message",
                 detail: "Successfully rejected this request",
               });
-              setTimeout( () => this.$router.push('/ict-request-divisi1'),1000);
+              setTimeout( () => this.$router.push('/ict-request-higher-level'),1000);
             });
           }
       },
@@ -184,8 +183,10 @@ export default {
         this.submitted = false;
       },
     getIctDetail(){
-      this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.verif = response.data;
+      this.axios.get('/api/ict-detail/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.verif = response.data.data.detail;
+        this.kode = response.data.data.request;
+        this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
@@ -195,12 +196,6 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
-        this.loading = false;
       });
     },
     DeleteIct(ireqd_id){

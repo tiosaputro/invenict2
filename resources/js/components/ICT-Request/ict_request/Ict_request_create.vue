@@ -199,11 +199,13 @@ export default {
         });
     },
     getDataBuDvision(code){
+      if(code){
         this.axios.get('api/data-divbu/' + code).then((response)=>{
           this.request.usr_div_id = response.data.division;
           this.request.usr_bu_id = response.data.bu;
           this.request.usr_department = response.data.department;
         });
+      }
     },
     getType(){
       this.axios.get('api/getAddReq').then((response)=>{

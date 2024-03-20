@@ -64,7 +64,7 @@
           </Column>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_assigned_to" header="Petugas(ICT)" :sortable="true" style="min-width:4rem"/>
+          <Column field="ireq_assigned_to" header="Personnel(ICT)" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -120,7 +120,6 @@ export default {
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Reviewer") || this.checkname.includes("Status") || this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-reviewer")){ 
           this.getIctDetail();
-          this.getNoreq();
         }
         else {
           this.$router.push('/access');
@@ -129,7 +128,8 @@ export default {
     },
     getIctDetail(){
       this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-        this.detail = response.data;
+        this.detail = response.data.data.detail;
+        this.kode = response.data.data.request;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
@@ -140,11 +140,6 @@ export default {
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
            }
-      });
-    },
-    getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-        this.kode = response.data;
       });
     },
   },

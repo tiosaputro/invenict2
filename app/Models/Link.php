@@ -11,20 +11,23 @@ class Link extends Model
         'link_action',
         'expired_at',
         'usr_id',
-        'ireq_id'
+        'ireq_id',
+        'created_at',
+        'updated_at',
     ];
     protected $table= 'link_dtl';
     protected $primaryKey ='link_id';
     public $incrementing = false;
-    public $timestamps = false;
+    public $timestamps = true;
 
-    public static function createLink($usr_id,$ireq_id){
+    public static function createLink($usr_id, $ireq_id, $link){
        $save = Link::create([
             'link_id'=> md5(Carbon::now()),
-            'link_action'=> 'Ict Request Verifikasi From Email',
+            'link_action'=> $link,
             'expired_at'=>Carbon::parse(Carbon::now()->addDays(1))->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
             'usr_id'=>$usr_id,
-            'ireq_id'=>$ireq_id
+            'ireq_id'=>$ireq_id,
+            'created_at' => now()
         ]);
         return $save;
     }
@@ -32,7 +35,8 @@ class Link extends Model
        $save = Link::create([
             'link_id'=> md5(Carbon::now()),
             'link_action'=> 'Ict Request Reviewer Detail Permohonan',
-            'ireq_id'=>$ireq_id
+            'ireq_id'=>$ireq_id,
+            'created_at' => now()
         ]);
         return $save;
     }
