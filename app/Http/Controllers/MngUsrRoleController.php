@@ -67,8 +67,8 @@ class MngUsrRoleController extends Controller
                 'usr_id' => $user->usr_id,
                 'rol_id' => $r,
                 'urol_stat' => 'T',
-                'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'created_by'=> Auth::user()->usr_name,
+                'creation_date' => now(),
+                'created_by'=> Auth::user()->usr_id,
                 'program_name'=>'MngUsrRoleController_SAVE'
             ]);
         }
@@ -92,8 +92,8 @@ class MngUsrRoleController extends Controller
                 'urol_stat' => 'T',
                 'creation_date' => $createday,
                 'created_by'=> $created_by,
-                'last_updated_by'=> Auth::user()->usr_name,
-                'last_updated_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                'last_updated_by'=> Auth::user()->usr_id,
+                'last_updated_date'=>now(),
                 'program_name'=>'MngUsrRoleController_UPDATE'
             ]);
         }

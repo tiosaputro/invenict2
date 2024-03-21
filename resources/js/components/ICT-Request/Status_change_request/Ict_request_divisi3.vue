@@ -48,25 +48,28 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.countRemarkReviewerPenugasan.some(el=> el > 0)"/>
                   <Column style="min-width:20rem">
-                  <template #body="slotProps">
-                    <Button
-                      class="p-button-rounded p-button-secondary mr-2"
-                      icon="pi pi-info-circle"
-                      @click="$router.push({
-                            name: 'Ict Request Divisi 3 Detail',
-                            params: { code: slotProps.data.ireq_id }, })"
-                    />
+                    <template #body="slotProps">
                       <Button
-                        class="p-button-raised p-button-info p-button-text mr-2"
-                        label="Accept"
+                        class="p-button-rounded p-button-secondary mr-2 mt-2"
+                        icon="pi pi-info-circle"
+                        v-tooltip.bottom="'Click for request details'"
+                        @click="$router.push({
+                          name: 'Ict Request Divisi 3 Detail',
+                          params: { code: slotProps.data.ireq_id }, })"
+                      />
+                      <Button
+                        class="p-button-rounded p-button-info mr-2 mt-2"
+                        icon="pi pi-check"
+                        v-tooltip.bottom="'Click for accept request'"
                         @click="acceptRequest(slotProps.data.ireq_id)"
                       />
                       <Button
-                        class="p-button-raised p-button-danger p-button-text mt-2"
-                        label="Reject"
+                        class="p-button-rounded p-button-danger mr-2 mt-2"
+                        icon="bi bi-x-square"
+                        v-tooltip.bottom="'Click for reject request'"
                         @click="rejectRequest(slotProps.data.ireq_id)"
                       />
                     </template>
@@ -149,7 +152,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
                   <template #footer>
                     <div class="p-grid p-dir-col">
@@ -231,7 +234,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column style="min-width:15rem">
                   <template #body="slotProps">
@@ -338,7 +341,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column>
                     <template #body="slotProps">
@@ -431,7 +434,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
                   <Column>
                     <template #body="slotProps">
@@ -521,6 +524,17 @@
                   <div class="col-fixed">
                     <InputText 
                     v-model="editStatus.ireqd_id"
+                    disabled
+                    />
+                  </div> 
+              </div>
+            </div>
+            <div class="fluid">
+              <div class="field grid">
+                <label class="col-fixed w-9rem"> Items </label>
+                  <div class="col-fixed">
+                    <InputText 
+                    v-model="editStatus.name"
                     disabled
                     />
                   </div> 
@@ -684,7 +698,6 @@ export default {
         status:[
           {'code': 'T','name':'In Progress'},
           {'code': 'D','name':'Done'},
-          {'code': 'C','name':'Close'},
         ],
     };
   },
@@ -792,26 +805,22 @@ export default {
       this.axios.get('api/detail/'+ireqd_id+'/'+ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         this.editStatus = response.data.data.dtl;
         this.code = ireq_id;
-        // this.getStatus();
       });
       this.dialogChangeStatus = true;
     },
     submitStatus(){
       this.submitted = true;
         this.axios.put('/api/update-status-done/'+this.code,this.editStatus,{headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.cancelStatus();
           this.loading = true;
-          this.editStatus = [];
-          this.code = null;
-          this.status=[];
-          this.dialogChangeStatus = false;
           this.submitted = false;
           this.$toast.add({ severity:'success', summary: 'Message Success', detail:'Success Update Status', life: 2000 });
-          this.getData(); });
+          this.getData(); 
+        });
     },
     cancelStatus(){
       this.editStatus = [];
       this.code = null;
-      this.status=[];
       this.dialogChangeStatus = false;
     },
     getData(){

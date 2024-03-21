@@ -105,7 +105,7 @@
                 </div>
               </div>
               <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">Division User</label>
+                  <label class="col-fixed w-9rem" style="width:145px">User Division</label>
                     <div class="col-12 md:col-6">
                       <Dropdown 
                         v-model="mut.imutasi_divisi"
@@ -118,7 +118,7 @@
                         :class="{ 'p-invalid': submitted && !mut.imutasi_divisi }"
                       />
                       <small class="p-error" v-if="submitted && !mut.imutasi_divisi"
-                        >Division User not filled.
+                        >User Division not filled.
                       </small>
                       <small v-if="errors.imutasi_divisi" class="p-error">
                           {{ errors.imutasi_divisi[0] }}

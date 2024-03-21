@@ -37,12 +37,12 @@
 		methods: {
       cek(){
         var rol = localStorage.getItem('usr_loc');
-      if (rol == 'OB' || rol == 'FB'){
-          this.target = 'mailto:icthelpdesk.admin-bentu@emp.id?subject=%20help%20for%20app%20usage&body=';
-      } else if (rol =='OJ') {
-        this.target = 'mailto:icthelpdesk.admin@emp.id?subject=%20help%20for%20app%20usage&body=';
-        }
-        else if (rol =='OK' || rol == 'FK'){
+        if (rol == 'OB' || rol == 'FB'){
+            this.target = 'mailto:icthelpdesk.admin-bentu@emp.id?subject=%20help%20for%20app%20usage&body=';
+        } else if (rol =='OJ') {
+          this.target = 'mailto:icthelpdesk.admin@emp.id?subject=%20help%20for%20app%20usage&body=';
+          }
+          else if (rol =='OK' || rol == 'FK'){
           this.target = 'mailto:icthelpdesk.admin-kurau@emp.id?subject=%20help%20for%20app%20usage&body=';
         }
       },

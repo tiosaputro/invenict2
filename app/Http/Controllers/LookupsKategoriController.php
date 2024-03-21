@@ -69,8 +69,8 @@ class LookupsKategoriController extends Controller
                 'lookup_type' => $request->lookup_type,
                 'lookup_desc' => $request->lookup_desc,
                 'lookup_status' => $request->lookup_status,
-                'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'created_by' => Auth::user()->usr_name,
+                'creation_date' => now(),
+                'created_by' => Auth::user()->usr_id,
                 'program_name' => "Lookups_Save",
             ]);
             return ResponseFormatter::success($createLookup,'Successfully Created Lookup');
@@ -96,8 +96,8 @@ class LookupsKategoriController extends Controller
             ->update([
                 'lookup_desc' => $request->lookup_desc,
                 'lookup_status' => $request->lookup_status,
-                'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'last_updated_by' => Auth::user()->usr_name,
+                'last_update_date' => now(),
+                'last_updated_by' => Auth::user()->usr_id,
                 'program_name' => "Lookups_Update",
             ]);
             return ResponseFormatter::success($ref,'Successfully Updated Lookup');

@@ -11,6 +11,7 @@ use App\Helpers\ResponseFormatter;
 use App\Models\Mng_user;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\IctRequestManagerServices;
+use App\Services\IctServices;
 use App\Exports\IctExportManagerPermohonan;
 use App\Exports\IctExportManagerSudahDikerjakan;
 use App\Exports\IctExportManagerSudahSelesai;
@@ -24,8 +25,10 @@ class IctRequestManagerController extends Controller
     protected $to;
     protected $userMenu;
     protected $managerServices;
-    function __construct(IctRequestManagerServices $services){
+    protected $IctServices;
+    function __construct(IctRequestManagerServices $services, IctServices $service){
         $this->managerServices = $services;
+        $this->IctServices = $service;
         $this->middleware('auth:sanctum');
         $this->to = "/ict-request-manager";
         $this->middleware(function ($request, $next) {
@@ -86,7 +89,7 @@ class IctRequestManagerController extends Controller
 
     function approveByManager(Request $request,$code)
     { 
-        $save =  Ict::approvedByIctManager($request,$code);
+        $save =  $this->managerServices->approvedByIctManager($request,$code);
         IctDetail::approvedByIctManager($code);
 
         return ResponseFormatter::success($save,'Successfully approved Request');
@@ -94,8 +97,7 @@ class IctRequestManagerController extends Controller
 
     function rejectByManager(Request $request,$code)
     {
-        
-        $save = Ict::RejectedByIctManager($request,$code);
+        $save = $this->managerServices->RejectedByIctManager($request,$code);
         IctDetail::RejectedByIctManager($request,$code);
 
         return ResponseFormatter::success($save,'Successfully rejected Request');

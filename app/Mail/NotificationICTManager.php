@@ -32,6 +32,6 @@ class NotificationICTManager extends Mailable implements ShouldQueue
         return $this->from('noreply@emp.id','NO REPLY')
                     ->view('emailIctManager')
                     ->with(['ict' => $this->ict,
-                            'link'=>$this->LINK]);
+                            'link'=> $this->LINK]);
                 }
 }

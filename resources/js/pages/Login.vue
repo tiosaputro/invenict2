@@ -183,27 +183,11 @@ export default {
                         .catch((error) => {
                             this.submitted = false;
                             this.loading = false;
-                            if (error.response.status == 422) {
+                            if (error.response.status == 401) {
                                 this.$toast.add({
                                     severity: "error",
                                     summary: "Error Message",
-                                    detail: error.response.data,
-                                    life: 3000,
-                                });
-                            }
-                            if (error.response.status == 500) {
-                                this.$toast.add({
-                                    severity: "error",
-                                    summary: "Error Message",
-                                    detail: "Please check your connection",
-                                    life: 3000,
-                                });
-                            }
-                            if (error.response.status == 404) {
-                                this.$toast.add({
-                                    severity: "error",
-                                    summary: "Error Message",
-                                    detail: "Please check your username and password",
+                                    detail: error.response.data.message,
                                     life: 3000,
                                 });
                             }

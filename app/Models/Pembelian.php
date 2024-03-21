@@ -38,8 +38,8 @@ class Pembelian extends Model
             'purchase_pay_methode'=>$request->pay,
             'valuta_code'=> $request->money,
             'purchase_remark'=>$request->ket,
-            'creation_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'created_by'=> Auth::user()->usr_name,
+            'creation_date'=> now(),
+            'created_by'=> Auth::user()->usr_id,
             'program_name'=> "Pembelian_Save"
         ]);
         return $createData;

@@ -5,10 +5,9 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
 class NotificationRequestRejectedByIctManager extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
     public $ict;
     /**
      * Create a new message instance.

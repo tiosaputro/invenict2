@@ -88,8 +88,8 @@ class MasterDetailController extends Controller
             'invent_tgl_perolehan' => $newDate,
             'invent_lama_garansi' => $request->invent_garansi,
             'invent_kondisi' => $request->invent_kondisi,
-            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'created_by' => Auth::user()->usr_name,
+            'creation_date' => now(),
+            'created_by' => Auth::user()->usr_id,
             'program_name' => "MasterDetail_Save",
             'invent_photo' => $nama_file,
             'invent_bu' => $request->invent_bu,
@@ -144,8 +144,8 @@ class MasterDetailController extends Controller
             $mas->invent_tgl_perolehan =$newDate;
             $mas->invent_lama_garansi = $request->invent_lama_garansi;
             $mas->invent_kondisi = $request->invent_kondisi;
-            $mas->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-            $mas->last_updated_by = Auth::user()->usr_name;
+            $mas->last_update_date = now();
+            $mas->last_updated_by = Auth::user()->usr_id;
             $mas->program_name = "MasterDetail_Update";
             $mas->invent_bu = $request->invent_bu;
             $mas->invent_photo = $nama_file;

@@ -221,7 +221,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%;">Dear Mr/Ms, <strong>{{$ict[0]->usr_fullname}}</strong></p>
+    <p style="font-size: 14px; line-height: 140%;">Dear Mr/Ms, <strong>{{$datadone[0]->usr_fullname}}</strong></p>
   </div>
 
       </td>
@@ -424,7 +424,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$ict[0]->ireq_no}}</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$datadone[0]->ireq_no}}</p>
   </div>
 
       </td>
@@ -447,7 +447,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$ict[0]->ireq_requestor}}</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$datadone[0]->ireq_requestor}}</p>
   </div>
 
       </td>
@@ -470,7 +470,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$ict[0]->ireq_user}}</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$datadone[0]->ireq_user}}</p>
   </div>
 
       </td>
@@ -493,7 +493,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$ict[0]->ireq_date}}</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{formatDate($datadone[0]->ireq_date, 'd M y')}}</p>
   </div>
 
       </td>
@@ -516,7 +516,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$ict[0]->div_name}}</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$datadone[0]->usr_division}}</p>
   </div>
 
       </td>
@@ -725,7 +725,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
 </div>
 
 
-@foreach($ict as $i)
+@foreach($datadone as $i)
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row no-stack" style="Margin: 0 auto 0 0;min-width: 320px;max-width: 900px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
@@ -788,7 +788,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:20px 10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 14px;">
-    {{$i->invent_code}}
+    {{$i->name}}
   </h1>
 
       </td>
@@ -1014,7 +1014,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 40px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%;">Need Help? Click <a rel="noopener" href="mailto:{{$ict[0]->loc_email}}?subject=Need%20help&body=" target="_blank">here</a></p>
+    <p style="font-size: 14px; line-height: 140%;">Need Help? Click <a rel="noopener" href="mailto:{{$datadone[0]->loc_email}}?subject=Need%20help&body=" target="_blank">here</a></p>
 <p style="font-size: 14px; line-height: 140%;">Copyright © 2022 ICT Helpdesk All rights reserved</p>
   </div>
 

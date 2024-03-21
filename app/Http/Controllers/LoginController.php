@@ -54,10 +54,18 @@ class LoginController extends Controller
                     "usr_name"  => ucwords(strtolower($dataUser->usr_fullname)),
                     "usr_loc"=> $dataUser->usr_loc],200);
             } else {
-                return response("Can't login. Please check your username and password",422);
+                return response()->json(['message' => 'Periksa Kembali Akun Anda!!', 'state' => 'failed'], 401);
             }
-        } else { // if local
-            $user= Mng_User::where('usr_email', $request->email)->first();
+     } else { // if local
+        $userlogin = str_contains($request->email, '@');
+        if (!$userlogin) {
+            $userlogin = $request->email . '@emp-one.com';
+        } else if (str_contains($request->email, '@emp.id')){
+            $userlogin = str_replace('@emp.id', '', $request->email) . '@emp-one.com';
+        } else{
+            $userlogin = $request->email;
+        }
+            $user= Mng_User::where('usr_domain', $userlogin)->first();
             if (!is_null ($user)) {
                 if(Hash::check($request->password, $user->usr_passwd)) {
                 $token = $user->createToken('ApiToken')->plainTextToken;
@@ -70,12 +78,12 @@ class LoginController extends Controller
                         ];
                         return json_encode($response, 400);
                     }else{
-                        return response("Can't login. Please check your password",422);
+                        return response()->json(['message' => 'Periksa Kembali Akun Anda!!', 'state' => 'failed'], 401);
                         }
                     }else{
-                        return response("Username not registered.",422);
+                        return response()->json(['message' => 'Periksa Kembali Akun Anda!!', 'state' => 'failed'], 401);
                     }
-        }
+     }
     }
     function loginFromIntranet(Request $request){
         $emailUser = str_replace('"','',$request->samaccountname);

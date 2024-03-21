@@ -131,7 +131,7 @@
                 </div>
               </div>
               <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">Division User</label>
+                  <label class="col-fixed w-9rem" style="width:145px">User Division</label>
                     <div class="col-12 md:col-6">
                       <Dropdown 
                         v-model="invent_divisi"

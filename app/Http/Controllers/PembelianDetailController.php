@@ -81,8 +81,8 @@ class PembelianDetailController extends Controller
             'dpurchase_prc_sat'=>$request->hrgsatuan,
             'dpurchase_prc'=>$request->pricetotal,
             'dpurchase_remark'=>$request->ket,
-            'creation_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'created_by '=> Auth::user()->usr_name,
+            'creation_date'=> now(),
+            'created_by '=> Auth::user()->usr_id,
             'program_name'=> "PembelianDetail_Save"
         ]);
 
@@ -112,8 +112,8 @@ class PembelianDetailController extends Controller
         $dtl->dpurchase_prc_sat = $request->dpurchase_prc_sat;
         $dtl->dpurchase_prc = $request->dpurchase_prc;
         $dtl->dpurchase_remark = $request->dpurchase_remark;
-        $dtl->last_updated_by = Auth::user()->usr_name;
-        $dtl->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $dtl->last_updated_by = Auth::user()->usr_id;
+        $dtl->last_update_date = now();
         $dtl->program_name = "PembelianDetail_Update";
         $dtl->save();
            

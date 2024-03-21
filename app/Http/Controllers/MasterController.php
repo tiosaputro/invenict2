@@ -67,8 +67,8 @@ class MasterController extends Controller
             'invent_desc' => $request->nama,
             'invent_brand' => $request->merk,
             'invent_type' => $request->type,
-            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'created_by' => Auth::user()->usr_name,
+            'creation_date' => now(),
+            'created_by' => Auth::user()->usr_id,
             'program_name' => "Master_Save",
         ]);
         return ResponseFormatter::success($createMas,'Successfully Created Data Master');
@@ -113,8 +113,8 @@ class MasterController extends Controller
     {
         $mas = Master::find($code);
         $mas->invent_type = $request->invent_type;
-        $mas->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $mas->last_updated_by = Auth::user()->usr_name;
+        $mas->last_update_date = now();
+        $mas->last_updated_by = Auth::user()->usr_id;
         $mas->program_name = "Master_Update";
         $mas->save();
         return ResponseFormatter::success($mas,'Successfully Updated Data Master');

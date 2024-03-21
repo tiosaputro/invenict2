@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Jobs\SendNotifPersonnel;
 use App\Services\IctRequestReviewerServices;
 use App\Services\IctServices;
+use App\Services\IctDetailServices;
 use App\Exports\IctExportReviewerPermohonan;
 use App\Exports\IctExportReviewerAtasanDivisi;
 use App\Exports\IctExportReviewerIctManager;
@@ -22,7 +23,7 @@ use App\Exports\IctExportReviewerAssignmentRequest;
 use App\Exports\IctExportReviewerSedangDikerjakan;
 use App\Exports\IctExportReviewerSudahDikerjakan;
 use App\Exports\IctExportReviewerSelesai;
-use App\Models\UserProfile;
+use App\Services\SupervisorServices;
 
 class IctRequestReviewerController extends Controller
 {
@@ -30,9 +31,11 @@ class IctRequestReviewerController extends Controller
     protected $userMenu;
     protected $reviewerServices;
     protected $IctServices;
-    function __construct(IctRequestReviewerServices $services, IctServices $service ){
+    protected $IctDetailServices;
+    function __construct(IctRequestReviewerServices $services, IctServices $service, IctDetailServices $servicess ){
         $this->reviewerServices = $services;
         $this->IctServices = $service;
+        $this->IctDetailServices = $servicess;
         $this->middleware('auth:sanctum');
         $this->to = "/ict-request-reviewer";
         $this->middleware(function ($request, $next) {
@@ -49,6 +52,20 @@ class IctRequestReviewerController extends Controller
         $data['norequest'] = $this->IctServices->detailNoRequest($code);
         return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
     }
+    function editSpv($code){
+        $data['request'] = $this->IctServices->detailNoRequest($code);
+        $data['listSupervisor'] = app(SupervisorServices::class)->getAllData();
+        return ResponseFormatter::success($data,'Successfully Get Data'); 
+    }
+    function saveSpv(Request $request){
+       $data = Ict::find($request->ireq_id);
+       $data->ireq_spv = $request->ireq_spv;
+       $data->last_update_date = now();
+       $data->last_updated_by = Auth::user()->usr_id;
+       $data->program_name = "IctRequestReviewerController__saveSpv";
+       $data->save();
+        return ResponseFormatter::success($data,'Successfully Get Data'); 
+    }
     function sendMailtoRequestor(Request $request){
         $save = Ict::sendMailToRequestor($request);
         return ResponseFormatter::success($save,'Successfully Sent Email to Requestor');
@@ -62,24 +79,25 @@ class IctRequestReviewerController extends Controller
         return json_encode($data);
     }
     function assignedPersonnelDetail($ireqd_id,$code){
-        $dtl = DB::table('ireq_dtl')
+        DB::table('ireq_dtl')
         ->where('ireqd_id',$ireqd_id)
         ->where('ireq_id',$code)
         ->update([
             'ireq_status' => 'T',
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'ireq_assigned_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'ireq_assigned_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctDetail_appd"
         ]);
         $personel = IctDetail::select('ireq_assigned_to2')->where('ireq_id',$code)->where('ireqd_id',$ireqd_id)->pluck('ireq_assigned_to2');
-        $ict = Ict::where('ireq_id',$code)->first();
-        $mail = UserProfile::SELECT('profile_detail')->WHERE('user_id',$personel)->first();
+        $dataPersonnel = Ict::where('ireq_id',$code)->first();
+        $mail = Mng_user::SELECT('usr_email')->WHERE('user_id',$personel)->first()->pluck('usr_email');
+        
         DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST('$code'); end;");
-        $email =  str_replace('"', "", $mail['mail']);
-        SendNotifPersonnel::dispatchAfterResponse($email,$ict);
-        IctDetail::cekStatusPenugasan($code);
-        return ResponseFormatter::success($dtl,'Successfully');
+        
+        SendNotifPersonnel::dispatchAfterResponse($mail,$dataPersonnel);
+        $this->IctDetailServices->cekStatusPenugasan($code);
+        return ResponseFormatter::success('Successfully');
     }
     function getRemarkReviewer($ireq_id){
         $ict = Ict::select('ireq_verificator_remark')->where('ireq_id',$ireq_id)->first();
@@ -129,8 +147,8 @@ class IctRequestReviewerController extends Controller
             return response()->json($dtl);
     }
     function rejectReviewer(Request $request, $code){
-        $save = Ict::RejectedByReviewer($request,$code);
-        IctDetail::RejectedByReviewer($request,$code);
+        $save = $this->reviewerServices->RejectedByReviewer($request,$code);
+        $this->IctDetailServices->RejectedByReviewer($request,$code);
         
         return ResponseFormatter::success($save,'Successfully rejected request');
     }
@@ -164,9 +182,9 @@ class IctRequestReviewerController extends Controller
         ->where('ireq_id',$ireq_id)
         ->update([
             'ireq_status' => 'C',
-            'ireq_date_closing'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'ireq_date_closing'=> now(),
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctDetail_updateStatusClosingDetail"
         ]);
         DB::getPdo()->exec("begin SP_CLOSING_IREQ_MST('$ireq_id'); end;");
@@ -216,7 +234,7 @@ class IctRequestReviewerController extends Controller
     function detailRequestToMail($ireq_id){
         $ict = Ict::find($ireq_id);
         $fromemail = DB::table('location_refs')->select('loc_email')->where('loc_code',$ict->ireq_loc)->first();
-        $usr_fullname = Auth::user()->usr_fullname;
+        $usr_fullname = Auth::user()->usr_id;
         $requestor = DB::table('mng_users')->select('usr_fullname')->where('usr_name',$ict->ireq_requestor)->first();
         return response()->json(['requestor'=>$requestor->usr_fullname,'noreq'=>$ict->ireq_no,'fromemail'=>$fromemail->loc_email,'usr_fullname'=>$usr_fullname],200);
     }
@@ -225,8 +243,8 @@ class IctRequestReviewerController extends Controller
         $ict = Ict::where('ireq_id',$request->id)->first();
         $ict->ireq_status = 'T';
         $ict->ireq_assigned_to1 = $request->name;
-        $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $ict->last_updated_by = Auth::user()->usr_id;
+        $ict->last_update_date = now();
         $ict->program_name = "IctController_updateAssign";
         $ict->save();
 
@@ -234,8 +252,8 @@ class IctRequestReviewerController extends Controller
         foreach ($dtl as $d){
             $d->ireq_status = 'T';
             $d->ireq_assigned_to1 = $request->name;
-            $d->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-            $d->last_updated_by = Auth::user()->usr_name;
+            $d->last_update_date = now();
+            $d->last_updated_by = Auth::user()->usr_id;
             $d->program_name = "IctController_updateAssign";
             $d->save();
         }
@@ -245,9 +263,9 @@ class IctRequestReviewerController extends Controller
     {
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_status = 'T';
-        $ict->ireq_verificator = Auth::user()->usr_name;
-        $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');    
-        $ict->last_updated_by = Auth::user()->usr_name;
+        $ict->ireq_verificator = Auth::user()->usr_id;
+        $ict->last_update_date = now();    
+        $ict->last_updated_by = Auth::user()->usr_id;
         $ict->program_name = "IctController_updateStatusPenugasan";
         $ict->save();
         
@@ -255,8 +273,8 @@ class IctRequestReviewerController extends Controller
         ->WHERE('ireq_id',$ireq_id)
         ->update([
             'ireq_status' => 'T',
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctController_updateStatusPenugasan",
         ]);
 
@@ -265,11 +283,11 @@ class IctRequestReviewerController extends Controller
     function updateStatusClosing($ireq_id)
     {
         $ict = Ict::where('ireq_id',$ireq_id)->first();
-        $ict->ireq_approver2 = Auth::user()->usr_name;
+        $ict->ireq_approver2 = Auth::user()->usr_id;
         $ict->ireq_status = 'C';
-        $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $ict->last_updated_by = Auth::user()->usr_name;
-        $ict->ireq_date_closing = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $ict->last_update_date = now();
+        $ict->last_updated_by = Auth::user()->usr_id;
+        $ict->ireq_date_closing = now();
         $ict->program_name = "IctController_updateStatusClosing";
         $ict->save();
 
@@ -277,8 +295,8 @@ class IctRequestReviewerController extends Controller
         ->WHERE('ireq_id',$ireq_id)
         ->update([
             'ireq_status' => 'C',
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctController_updateStatusClosing",
         ]);
         
@@ -292,8 +310,8 @@ class IctRequestReviewerController extends Controller
         ->update([
             'ireq_assigned_to1_reason'=>$request->ireq_assigned_to1_reason,
             'ireq_assigned_to2' => $request->ireq_assigned_to2,
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id
         ]);
         return ResponseFormatter::success($save,'Successfully Assigned');
     }
@@ -304,8 +322,8 @@ class IctRequestReviewerController extends Controller
         ->where('ireq_id',$code)
         ->update([
             'ireq_assigned_to1'=>$request->ireq_assigned_to1,
-            'last_update_date' =>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by'=>Auth::user()->usr_name
+            'last_update_date' =>now(),
+            'last_updated_by'=>Auth::user()->usr_id
         ]);
         return ResponseFormatter::success($save,'Successfully Assigned');
     }

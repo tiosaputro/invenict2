@@ -64,8 +64,8 @@ class MutasiController extends Controller
                 'imutasi_divisi' => $request->invent_divisi,
                 'imutasi_bu' => $request->invent_bu,
                 'imutasi_keterangan' => $request->ket,
-                'creation_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'created_by' => Auth::user()->usr_name,
+                'creation_date'=> now(),
+                'created_by' => Auth::user()->usr_id,
                 'program_name'=> "Mutasi_Save"
             ]);
             return ResponseFormatter::success($saveMutasi,'Successfully Created Mutasi');
@@ -101,8 +101,8 @@ class MutasiController extends Controller
             $mut->imutasi_divisi = $request->imutasi_divisi;
             $mut->imutasi_bu = $request->imutasi_bu;
             $mut->imutasi_keterangan = $request->imutasi_keterangan;
-            $mut->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-            $mut->last_updated_by = Auth::user()->usr_name;
+            $mut->last_update_date = now();
+            $mut->last_updated_by = Auth::user()->usr_id;
             $mut->program_name = "Mutasi_Update";
             $mut->save();
         }else{
@@ -114,8 +114,8 @@ class MutasiController extends Controller
             $mut->imutasi_divisi = $request->imutasi_divisi;
             $mut->imutasi_bu = $request->imutasi_bu;
             $mut->imutasi_keterangan = $request->imutasi_keterangan;
-            $mut->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-            $mut->last_updated_by = Auth::user()->usr_name;
+            $mut->last_update_date = now();
+            $mut->last_updated_by = Auth::user()->usr_id;
             $mut->program_name = "Mutasi_Update";
             $mut->save();
         }

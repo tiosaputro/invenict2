@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\IctDetail;
 use App\Models\Ict;
 use Carbon\Carbon;
+use App\Jobs\SendNotifRejectByReviewer;
 
 class IctRequestReviewerServices
 {
@@ -31,6 +32,7 @@ class IctRequestReviewerServices
                 'mus.usr_fullname as ireq_user',
                 'ireq_mst.ireq_status as status',
                 'ireq_mst.ireq_no',
+                'ireq_mst.ireq_reason',
                 'ireq_mst.ireq_date',
                 'lr.lookup_desc as ireq_status',
                 'ireq_mst.ireq_status as status',
@@ -52,7 +54,6 @@ class IctRequestReviewerServices
             $join->on('ireq_mst.ireq_assigned_to2', 'vii.usr_id')
                   ->whereNull('ireq_mst.ireq_assigned_to1');
         });
-        $data->LEFTJOIN('user_profile up','ireq_mst.ireq_user','up.user_id');
         $data->LEFTJOIN('ireq_dtl idd','ireq_mst.ireq_id','idd.ireq_id');
         $data->LEFTJOIN('lookup_refs lr','ireq_mst.ireq_status','lr.lookup_code');
         $data->LEFTJOIN('mng_users ms','ireq_mst.ireq_requestor','ms.usr_id');
@@ -78,6 +79,7 @@ class IctRequestReviewerServices
             'mus.usr_fullname',
             'mus.usr_division',
             'ireq_mst.ireq_id',
+            'ireq_mst.ireq_reason',
             'ireq_mst.ireq_verificator_remark',
             DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title)"),
             DB::raw("COALESCE(vi.official_name,vii.official_name)"),
@@ -89,7 +91,7 @@ class IctRequestReviewerServices
         $data->ORDERBY('ireq_mst.ireq_date','DESC');
         return $data->get(); 
     }
-    public function getDetailWithFilter($status){
+    public function getDetailWithFilter($status, $code = NULL, $loc = 'TRUE'){
         if(Auth::user()->usr_loc == "OJ"){
             $loc = ["OJ"];
         }
@@ -131,8 +133,12 @@ class IctRequestReviewerServices
             'ireq_dtl.ireq_attachment',
             DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
             'ms.usr_fullname as ireq_requestor',
+            'ms.usr_fullname',
+            'ms.usr_email as mail_requestor',
             'mus.usr_fullname as ireq_user',
+            'mus.usr_division as division_user',
             'im.ireq_no',
+            'im.ireq_reason',
             'im.ireq_verificator_remark',
             'ireq_dtl.ireq_status as status',
             'ireq_dtl.ireq_id',
@@ -144,13 +150,35 @@ class IctRequestReviewerServices
             'im.ireq_date',
             'mus.usr_division',
             'ireq_dtl.ireq_qty');
+        if(!empty($code)){
+            $data->WHERE('im.ireq_id',$code);
+        }
         if(!empty($status)){
             $data->WHERE('ireq_dtl.ireq_status',$status);
         }
-        $data->WHEREIn('im.ireq_loc',$loc);
+        if(!empty($loc)){
+            $data->WHEREIn('im.ireq_loc',$loc);
+        }
         $data->ORDERBY('im.ireq_date','DESC');
         $data->ORDERBY('ireq_dtl.ireqd_id','ASC');
         return $data->get();
+    }
+    public function RejectedByReviewer($request, $code){
+        $ict = Ict::where('ireq_id',$code)->first();
+        $ict->ireq_status = 'RR';
+        $ict->ireq_approver1 = Auth::user()->usr_id;
+        $ict->ireq_approver1_date = now();
+        $ict->ireq_reason = $request->ket;
+        $ict->last_update_date = now();
+        $ict->last_updated_by = Auth::user()->usr_id;
+        $ict->program_name = "IctController_rejectByReviewer";
+        $ict->save();
+
+        $data = $this->getDetailWithFilter(NULL, $code, NULL);
+        $email_address = $data[0]->mail_requestor ;
+        SendNotifRejectByReviewer::dispatchAfterResponse($email_address,$data);
+        
+        return $data;
     }
 
 }

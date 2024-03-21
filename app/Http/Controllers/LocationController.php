@@ -46,8 +46,8 @@ class LocationController extends Controller
             'loc_code' => $request->loc_code,
             'loc_desc' => $request->loc_desc,
             'loc_email' => $request->loc_email,
-            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'created_by' => Auth::user()->usr_name,
+            'creation_date' => now(),
+            'created_by' => Auth::user()->usr_id,
             'program_name' => "Location_Save",
         ]);
         return ResponseFormatter::success($loc,'Successfully Created Location');
@@ -68,8 +68,8 @@ class LocationController extends Controller
         $loc = Location::find($code);
         $loc->loc_desc = $request->loc_desc;
         $loc->loc_email = $request->loc_email;
-        $loc->last_updated_by = Auth::user()->usr_name;
-        $loc->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $loc->last_updated_by = Auth::user()->usr_id;
+        $loc->last_update_date = now();
         $loc->program_name = "LocationController@update";
         $loc->save();
         

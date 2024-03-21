@@ -53,12 +53,12 @@ class ModuleController extends Controller
         ],$message);
 
         
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newCreation = now();
         $module = Mng_modules::create([
             'mod_name'=>$request->mod_name,
             'mod_desc'=>$request->mod_desc,
             'mod_stat'=>$request->mod_stat,
-            'created_by'=> Auth::user()->usr_name,
+            'created_by'=> Auth::user()->usr_id,
             'creation_date'=>$newCreation,
             'program_name'=>'ModuleController_SAVE'
         ]);
@@ -82,12 +82,12 @@ class ModuleController extends Controller
             'mod_stat'=>'required'
         ],$message);
 
-        $newUpdate = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newUpdate = now();
         $mod = Mng_modules::find($code);
         $mod->mod_name = $request->mod_name;
         $mod->mod_desc = $request->mod_desc;
         $mod->mod_stat = $request->mod_stat;
-        $mod->last_updated_by = Auth::user()->usr_name;
+        $mod->last_updated_by = Auth::user()->usr_id;
         $mod->last_update_date = $newUpdate;
         $mod->save();
         

@@ -14,16 +14,16 @@ class SendNotifPersonnel implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $send_mail;
-    protected $ict;
+    protected $dataPersonnel;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($send_mail,$ict)
+    public function __construct($send_mail,$dataPersonnel)
     {
         $this->send_mail = $send_mail;
-        $this->ict = $ict;
+        $this->dataPersonnel = $dataPersonnel;
     }
 
     /**
@@ -33,6 +33,6 @@ class SendNotifPersonnel implements ShouldQueue
      */
     public function handle()
     {     
-        Mail::to($this->send_mail)->send(new NotificationPersonnel($this->ict));
+        Mail::to($this->send_mail)->send(new NotificationPersonnel($this->dataPersonnel));
     }
 }

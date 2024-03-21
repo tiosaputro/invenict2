@@ -83,9 +83,9 @@ class Ict extends Model
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'A1';
         $ict->ireq_approver1 = Auth::user()->usr_id;
-        $ict->ireq_approver1_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $ict->ireq_approver1_date = now();
         $ict->last_updated_by = Auth::user()->usr_id;
-        $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $ict->last_update_date = now();
         $ict->program_name = "IctController_approveByAtasan";
         $ict->save();
 
@@ -140,9 +140,9 @@ class Ict extends Model
         $ict = Ict::where('ireq_id',$code)->first();
         $ict->ireq_status = 'RA1';
         $ict->ireq_approver1 = Auth::user()->usr_id;
-        $ict->ireq_approver1_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $ict->ireq_approver1_date = now();
         $ict->ireq_reason = $request->ket;
-        $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $ict->last_update_date = now();
         $ict->last_updated_by = Auth::user()->usr_id;
         $ict->program_name = "IctController_rejectByAtasan";
         $ict->save();
@@ -194,104 +194,7 @@ class Ict extends Model
         return $ict;
     }
     
-    public static function ApprovedByIctManager($request,$code){
-        $ict = Ict::where('ireq_id',$code)->first();
-        $ict->ireq_status = 'A2';
-        $ict->ireq_approver2_remark = $request->remark;
-        $ict->ireq_approver2 = Auth::user()->usr_id;
-        $ict->ireq_approver2_date = now();
-        $ict->last_updated_by = Auth::user()->usr_id;
-        $ict->last_update_date = now();
-        $ict->program_name = "IctController_approveByManager";
-        $ict->save();
-
-        $data = DB::table('ireq_dtl as id')
-            ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
-            ->LEFTJOIN('catalog_refs as cr',function ($join) {
-                $join->on('id.invent_code','cr.catalog_id');
-            })
-            ->LEFTJOIN('catalog_refs as crs',function ($join) {
-                $join->on('cr.parent_id','crs.catalog_id');
-            })
-            ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
-                $join->on('id.ireq_type','lrfs.lookup_code')
-                     ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-            })
-            ->LEFTJOIN('vcompany_refs as vr',function ($join) {
-                $join->on('im.ireq_bu','vr.company_code');
-            })
-            ->LEFTJOIN('mng_users mu','im.ireq_requestor','mu.usr_id')
-            ->LEFTJOIN('location_refs loc','im.ireq_loc','loc.loc_code')
-            ->LEFTJOIN('supervisor_refs sr','im.ireq_spv','sr.spv_id')
-            ->LEFTJOIN('mng_users mus','sr.spv_name','mus.usr_id')
-            ->LEFTJOIN('mng_users usr','im.ireq_user','usr.usr_id')
-            ->SELECT(
-                'mus.usr_email as spv_mail',
-                'loc.loc_email',
-                'mu.usr_fullname',
-                'sr.spv_name',
-                'mu.usr_email as user_mail',
-                'im.ireq_no',
-                'id.ireqd_id',
-                'vr.name as ireq_bu',
-                'im.ireq_id',
-                'mu.usr_division as div_name', 
-                DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),
-                'mu.usr_fullname as ireq_requestor',
-                'usr.usr_fullname as ireq_user',
-                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),
-                'id.ireq_qty',
-                'lrfs.lookup_desc as ireq_type',
-                'id.ireq_remark')
-            ->WHERE('im.ireq_id',$code)
-            ->ORDERBY('id.ireqd_id','ASC')
-            ->get();
-            $user_mail = $data[0]->user_mail;
-            SendNotifApprovedFromIctManager::dispatchAfterResponse($user_mail,$data);
-
-            return $ict;
-    }
-
-    public static function RejectedByIctManager($request, $code){
-        $ict = Ict::where('ireq_id',$code)->first();
-        $ict->ireq_status = 'RA2';
-        $ict->ireq_approver1 = Auth::user()->usr_id;
-        $ict->ireq_approver1_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $ict->ireq_reason = $request->ket;
-        $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $ict->last_updated_by = Auth::user()->usr_id;
-        $ict->program_name = "IctController_rejectByManager";
-        $ict->save();
-
-        $ICT = DB::table('ireq_dtl as id')
-            ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
-            ->LEFTJOIN('catalog_refs as cr',function ($join) {
-                $join->on('id.invent_code','cr.catalog_id');
-            })
-            ->LEFTJOIN('catalog_refs as crs',function ($join) {
-                $join->on('cr.parent_id','crs.catalog_id');
-            })
-            ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
-                $join->on('id.ireq_type','lrfs.lookup_code')
-                     ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-            })
-            ->LEFTJOIN('vcompany_refs as vr',function ($join) {
-                $join->on('im.ireq_bu','vr.company_code');
-            })
-            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_id')
-            ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
-            ->SELECT('im.ireq_reason','loc.loc_email','mu.usr_fullname','mu.usr_email','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
-                    'im.ireq_user',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
-            ->WHERE('im.ireq_id',$code)
-            ->ORDERBY('id.ireqd_id','ASC')
-            ->get();
-
-        $user_mail = $ICT[0]->user_mail;
-        SendNotifRejectByIctManager::dispatchAfterResponse($user_mail,$ICT);
-        
-        return $ict;
-    }
+    
 
     public static function sendMailToRequestor($request){
         $Ict = DB::table('ireq_dtl as id')
@@ -324,52 +227,14 @@ class Ict extends Model
         return $Ict;
     }
 
-    public static function RejectedByReviewer($request, $code){
-        $ict = Ict::where('ireq_id',$code)->first();
-        $ict->ireq_status = 'RR';
-        $ict->ireq_approver1 = Auth::user()->usr_id;
-        $ict->ireq_approver1_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $ict->ireq_reason = $request->ket;
-        $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $ict->last_updated_by = Auth::user()->usr_id;
-        $ict->program_name = "IctController_rejectByReviewer";
-        $ict->save();
-
-        $ICT = DB::table('ireq_dtl as id')
-            ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
-            ->LEFTJOIN('catalog_refs as cr',function ($join) {
-                $join->on('id.invent_code','cr.catalog_id');
-            })
-            ->LEFTJOIN('catalog_refs as crs',function ($join) {
-                $join->on('cr.parent_id','crs.catalog_id');
-            })
-            ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
-                $join->on('id.ireq_type','lrfs.lookup_code')
-                     ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-            })
-            ->LEFTJOIN('vcompany_refs as vr',function ($join) {
-                $join->on('im.ireq_bu','vr.company_code');
-            })
-            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
-            ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
-            ->SELECT('im.ireq_reason','loc.loc_email','mu.usr_fullname','mu.usr_email','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
-                    'im.ireq_user',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
-            ->WHERE('im.ireq_id',$code)
-            ->ORDERBY('id.ireqd_id','ASC')
-            ->get();
-        $email_address = $ICT[0]->usr_email .= '@emp.id';
-        SendNotifRejectByReviewer::dispatchAfterResponse($email_address,$ICT);
-        
-        return $ict;
-    }
+    
  
     public static function NeedApprovalByHigherLevel($ireq_id){
         $Ict = Ict::find($ireq_id);
 
         $Ict->ireq_status = 'NA1';
         $Ict->ireq_verificator = Auth::user()->usr_id;
-        $Ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $Ict->last_update_date = now();
         $Ict->last_updated_by = Auth::user()->usr_id;
         $Ict->program_name = "IctController_needApprovalAtasan";
         $Ict->save();
@@ -437,7 +302,7 @@ class Ict extends Model
         $ICT = Ict::where('ireq_id',$ireq_id)->first();
         $ICT->ireq_status = 'NA2';
         $ICT->ireq_verificator = Auth::user()->usr_id;
-        $ICT->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $ICT->last_update_date = now();
         $ICT->last_updated_by = Auth::user()->usr_id;
         $ICT->program_name = "IctController_needApprovalManager";
         $ICT->save();
@@ -502,7 +367,7 @@ class Ict extends Model
         if($ict->ireq_status == 'RT'){
             $ict->ireq_assigned_to2 = $request->name;
             $ict->last_updated_by = Auth::user()->usr_id;
-            $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+            $ict->last_update_date = now();
             $ict->program_name = "IctController_asignPerRequestReviewer";
             $ict->save();
 
@@ -511,7 +376,7 @@ class Ict extends Model
             ->update([
                 'ireq_assigned_to2' =>$request->name,
                 'last_updated_by' => Auth::user()->usr_id,
-                'last_update_date' =>  Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                'last_update_date' =>  now(),
                 'program_name' => "IctController_asignPerRequestReviewer"
             ]);
             return $ict;
@@ -519,7 +384,7 @@ class Ict extends Model
         else{
             $ict->ireq_assigned_to1 = $request->name;
             $ict->last_updated_by = Auth::user()->usr_id;
-            $ict->last_update_date =  Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+            $ict->last_update_date =  now();
             $ict->program_name = "IctController_asignPerRequestReviewer";
             $ict->save();
 
@@ -527,7 +392,7 @@ class Ict extends Model
             ->WHERE('ireq_id',$request->id)
             ->update([
                 'ireq_assigned_to1'=>$request->name,
-                'last_update_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                'last_update_date'=> now(),
                 'last_updated_by'=>Auth::user()->usr_id,
                 'program_name'=>"IctController_asignPerRequestReviewer"
             ]);
@@ -553,8 +418,8 @@ class Ict extends Model
          }
             $ict->ireq_status = $status;
             $ict->ireq_verificator = Auth::user()->usr_id;
-            $ict->ireq_assigned_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-            $ict->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');   
+            $ict->ireq_assigned_date = now();
+            $ict->last_update_date = now();   
             $ict->last_updated_by = Auth::user()->usr_id;
             $ict->program_name = "IctController_submitAssignPerRequest";
             $ict->save();
@@ -563,8 +428,8 @@ class Ict extends Model
             ->WHERE('ireq_id',$ireq_id)
             ->update([
                 'ireq_status' =>$status,
-                'ireq_assigned_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                'ireq_assigned_date' => now(),
+                'last_update_date' => now(),
                 'last_updated_by' => Auth::user()->usr_id,
                 'program_name' => "IctController_submitAssignPerRequest"
             ]);
@@ -585,22 +450,43 @@ class Ict extends Model
                 $join->on('id.ireq_type','lrfs.lookup_code')
                      ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
             })
-            ->LEFTJOIN('vcompany_refs as vr',function ($join) {
-                $join->on('im.ireq_bu','vr.company_code');
-            })
             ->LEFTJOIN('location_refs as lr',function ($join) {
                 $join->on('im.ireq_loc','lr.loc_code');
             })
-            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
-            ->SELECT('lr.loc_email','im.ireq_no','mu.usr_fullname','mu.usr_email','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
-                    'im.ireq_user',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark')
+            ->LEFTJOIN('vpekerja_ict vi', function($join) {
+                $join->on('im.ireq_assigned_to1','vi.usr_id')
+                      ->whereNotNull('im.ireq_assigned_to1');
+            })
+            ->LEFTJOIN('vpekerja_ict vii', function($join) {
+                $join->on('im.ireq_assigned_to2', 'vii.usr_id')
+                      ->whereNull('im.ireq_assigned_to1');
+            })
+            ->LEFTJOIN('mng_users mu','im.ireq_requestor','mu.usr_id')
+            ->LEFTJOIN('mng_users mus','im.ireq_user','mus.usr_id')
+            ->SELECT(
+                'lr.loc_email',
+                'im.ireq_no',
+                'mu.usr_fullname',
+                'mu.usr_fullname as ireq_requestor',
+                'mu.usr_name',
+                'mu.usr_email as mail_requestor',
+                'mus.usr_fullname as ireq_user',
+                'mus.usr_division as div_name',
+                'im.ireq_no',
+                'id.ireqd_id',
+                'im.ireq_id',
+                DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),
+                DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
+                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),
+                'id.ireq_qty',
+                'lrfs.lookup_desc as ireq_type',
+                'id.ireq_remark')
             ->WHERE('im.ireq_id',$ireq_id)
             ->ORDERBY('id.ireqd_id','ASC')
             ->get();
             
             if(env('APP_ENV') != 'local'){    
-                $email_address = $Ict[0]->usr_email .= '@emp.id';
+                $email_address = $Ict[0]->mail_requestor;
                 $email = $email;
              }else {
                 $email = 'adhitya.saputro@emp.id';

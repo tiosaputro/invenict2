@@ -95,7 +95,7 @@ class IctDetailController extends Controller
     {
         $data['detail'] = $this->Detailservices->getDataDetailRequest($code,NULL,NULL,NULL);
         $data['request'] = $this->Ictservices->detailNoRequest($code);
-        return response()->json($data);
+        return ResponseFormatter::success($data,'Successfully Get Data');
     }
     function save(Request $request,$code)
     {
@@ -127,8 +127,8 @@ class IctDetailController extends Controller
                 'ireq_qty'=> $request->qty,
                 'ireq_remark'=>$request->ket,
                 'ireq_attachment'=>$nama_file,
-                'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'created_by' => Auth::user()->usr_name,
+                'creation_date'=>now(),
+                'created_by' => Auth::user()->usr_id,
                 'program_name'=>"IctDetail_Save"
             ]);
             return ResponseFormatter::success($dtl,'Successfully Created request');
@@ -149,8 +149,8 @@ class IctDetailController extends Controller
                 // 'ireq_desc'=> $request->desk,
                 'ireq_remark'=>$request->ket,
                 'ireq_attachment'=>$nama_file,
-                'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'created_by' => Auth::user()->usr_name,
+                'creation_date'=>now(),
+                'created_by' => Auth::user()->usr_id,
                 'program_name'=>"IctDetail_Save"
             ]);
             return ResponseFormatter::success($dtl,'Successfully Created detail request');
@@ -204,7 +204,7 @@ class IctDetailController extends Controller
                 'ireq_attachment' => $nama_file,
                 'ireq_remark' => $request->ireq_remark,
                 'last_update_date' => now()->copy()->tz('Asia/Jakarta'),
-                'last_updated_by' => Auth::user()->usr_name,
+                'last_updated_by' => Auth::user()->usr_id,
                 'program_name' => 'IctDetail_Update'
             ]);
             
@@ -388,6 +388,7 @@ class IctDetailController extends Controller
             DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),
             'lr.lookup_desc as ireq_status',
             'id.ireq_assigned_date',
+            'id.ireq_date_closing',
             'id.ireq_assigned_remark as assigned_remark_detail',
             'imm.ireq_assigned_remark as assigned_remark_request',
             'id.ireqd_id',

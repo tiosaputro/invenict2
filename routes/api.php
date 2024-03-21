@@ -270,6 +270,8 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //ict request reviewer
     
+    Route::get('/edit-spv/{code}',[IctRequestReviewerController::class,'editSPv']);
+    Route::post('/save-spv',[IctRequestReviewerController::class,'saveSpv']);
     Route::get('/ict-detail-penugasan-reviewer/{code}',[IctRequestReviewerController::class,'detailPenugasan']);
     Route::get('/ict-detail-reviewer/{code}',[IctRequestReviewerController::class,'index']);
     Route::get('/edit-ict-detail-reviewer/{ireq}/{code}',[IctRequestReviewerController::class,'editDataDetail']);

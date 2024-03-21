@@ -64,8 +64,8 @@ class MngMenuController extends Controller
             'controller'=>$request->controller,
             'action'=>$request->action,
             'parent_id'=>$request->parent_id,
-            'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'created_by'=> Auth::user()->usr_name,
+            'creation_date'=>now(),
+            'created_by'=> Auth::user()->usr_id,
             'program_name'=> 'MngMenuController_Save'
         ]);
         return ResponseFormatter::success($createMenu,'Successfully Created data menu');
@@ -104,8 +104,8 @@ class MngMenuController extends Controller
         $menu->controller = $request->controller;
         $menu->action = $request->action;
         $menu->parent_id = $request->parent_id;
-        $menu->last_updated_by = Auth::user()->usr_name;
-        $menu->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $menu->last_updated_by = Auth::user()->usr_id;
+        $menu->last_update_date = now();
         $menu->program_name = "MngMenuController@update";
         $menu->save();
         

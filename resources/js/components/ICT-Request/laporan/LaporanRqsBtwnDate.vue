@@ -55,7 +55,7 @@
           </Column>
           <Column field="ireq_requestor" header="Requestor" style="min-width:8rem" :sortable="true"/>
           <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
-          <Column field="div_name" header="Division User" style="min-width:8rem" :sortable="true"/>
+          <Column field="div_name" header="User Division" style="min-width:8rem" :sortable="true"/>
           <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:8rem" :sortable="true"/>
           <Column field="ireq_status" header="Status" style="min-width:8rem" :sortable="true">
             <template #body= "slotProps">

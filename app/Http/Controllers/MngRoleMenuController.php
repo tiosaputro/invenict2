@@ -59,8 +59,8 @@ class MngRoleMenuController extends Controller
                 'rolm_stat' => 'T',
                 'creation_date' => $createday,
                 'created_by'=> $createdby,
-                'last_updated_by'=> Auth::user()->usr_name,
-                'last_update_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                'last_updated_by'=> Auth::user()->usr_id,
+                'last_update_date'=> now(),
                 'program_name'=>'MngRoleMenuController_UPDATE'
             ]);
         }

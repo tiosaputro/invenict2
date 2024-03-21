@@ -91,8 +91,8 @@ class SupplierController extends Controller
             'suplier_tlp1' => $request->notlp1,
             'suplier_tlp2' => $request->notlp2,
             'suplier_status' => "T",
-            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'created_by' => Auth::user()->usr_name,
+            'creation_date' => now(),
+            'created_by' => Auth::user()->usr_id,
             'program_name' => "Supplier_Save",
         ]);
         return ResponseFormatter::success($supp,'Successfully Created Supplier');
@@ -181,8 +181,8 @@ class SupplierController extends Controller
             $supp->suplier_fax = $request->suplier_fax;
             $supp->suplier_tlp1 = $request->suplier_tlp1;
             $supp->suplier_tlp2 = $request->suplier_tlp2;
-            $supp->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-            $supp->last_updated_by = Auth::user()->usr_name;
+            $supp->last_update_date = now();
+            $supp->last_updated_by = Auth::user()->usr_id;
             $supp->program_name = "Supplier_Update";
             $supp->save();
             

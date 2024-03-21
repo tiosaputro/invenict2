@@ -41,8 +41,8 @@ class MngRolesController extends Controller
                 'rol_name'=>$request->rol_name,
                 'rol_desc'=>$request->rol_desc,
                 'rol_stat'=>$request->rol_stat,
-                'created_by'=> Auth::user()->usr_name,
-                'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                'created_by'=> Auth::user()->usr_id,
+                'creation_date'=>now(),
                 'program_name'=>'MngRoles_SAVE'
             ]);
     }
@@ -70,8 +70,8 @@ class MngRolesController extends Controller
         $role->rol_name = $request->rol_name;
         $role->rol_desc = $request->rol_desc;
         $role->rol_stat = $request->rol_stat;
-        $role->last_updated_by = Auth::user()->usr_name;
-        $role->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $role->last_updated_by = Auth::user()->usr_id;
+        $role->last_update_date = now();
         $role->program_name = 'MngRolesController_UUPDATE';
         $role->save();
 

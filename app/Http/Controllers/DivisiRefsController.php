@@ -52,12 +52,12 @@ class DivisiRefsController extends Controller
                 'div_verificator'=>'required',
             ],$message);
 
-        $newUpdate = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newUpdate = now();
         $div = Divisi_refs::find($code);
         $div->div_name = $request->div_name;
         $div->div_code = $request->div_code;
         $div->div_verificator = $request->div_verificator;
-        $div->last_updated_by = Auth::user()->usr_name;
+        $div->last_updated_by = Auth::user()->usr_id;
         $div->last_update_date = $newUpdate;
         $div->program_name = "DivisiRefs_Update";
         $div->save();

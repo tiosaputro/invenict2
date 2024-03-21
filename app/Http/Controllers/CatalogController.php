@@ -52,8 +52,8 @@ class CatalogController extends Controller
             'catalog_stat'=>$request->catalog_stat,
             'catalog_request_type'=>$request->catalog_request_type,
             'parent_id'=>$request->parent_id,
-            'created_by'=>Auth::user()->usr_name,
-            'creation_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'created_by'=>Auth::user()->usr_id,
+            'creation_date'=>now(),
             'program_name'=>'catalogController@save'
         ]);
         return ResponseFormatter::success($catalog,'Successfully Create Catalog');
@@ -83,8 +83,8 @@ class CatalogController extends Controller
         $cat->catalog_stat=$request->catalog_stat;
         $cat->catalog_request_type=$request->catalog_request_type;
         $cat->parent_id=$request->parent_id;
-        $cat->created_by=Auth::user()->usr_name;
-        $cat->creation_date=Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $cat->created_by=Auth::user()->usr_id;
+        $cat->creation_date=now();
         $cat->program_name='catalogController@save';
         $cat->save();
         

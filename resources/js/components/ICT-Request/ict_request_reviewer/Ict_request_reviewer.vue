@@ -48,7 +48,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelPermohonan.some(el=> el > 0)"/>
@@ -56,6 +56,12 @@
                   <Column headerStyle="min-width:10rem">
                     <template #body="slotProps">
                       <div class="flex flex-wrap justify-content-center gap-2 mb-2" id="1">
+                        <Button
+                          class="p-button-rounded p-button-warning mr-2 mt-2"
+                          icon="pi pi-pencil"
+                          v-tooltip.bottom="'Click for Edit Supervisor'"
+                          @click="editDataSpv(slotProps.data.ireq_id)"
+                        />
                         <Button
                           class="p-button-rounded p-button-secondary mr-2 mt-2"
                           icon="pi pi-info-circle"
@@ -196,7 +202,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:16rem">
                     <template #body= "slotProps">
@@ -324,7 +330,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:7rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:7rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                     <template #body= "slotProps">
@@ -441,7 +447,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
@@ -519,7 +525,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPenugasan.some(el=> el > 0)"/>
@@ -613,7 +619,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:4rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
@@ -713,7 +719,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:12rem" :sortable="true"/>
                   <Column field="ireq_status" header="Status" style="min-width:10rem" :sortable="true">
                   <template #body= "slotProps">
@@ -825,7 +831,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
                     <template #body= "slotProps">
@@ -866,6 +872,36 @@
                 </DataTable>
               </TabPanel>
             </TabView>
+            <Dialog v-model:visible="dialogEditSpv"
+                :style="{ width: '400px' }"
+                header="Form Dialog Edit SPV"
+                :modal="true"
+                class="fluid grid"
+            >
+                <div class="p-fluid">
+                  <div class="field grid">
+                    <label class="col-fixed w-9rem" style="width:100px">Supervisor</label>
+                     <div class="col">
+                        <Dropdown
+                            v-model="editSpv.ireq_spv"
+                            :options="listSpv"
+                            optionValue="spv_id"
+                            :filter="true"
+                            optionLabel="spvnamejob"
+                            placeholder="Choose One"
+                            :class="{ 'p-invalid': submitted && !editSpv.ireq_spv }"
+                        />
+                            <small v-if="submitted && !editSpv.ireq_spv" class="p-error">
+                            Supervisor not filled
+                            </small>
+                     </div>
+                   </div>
+                </div>
+                <template #footer>
+                    <Button label="Save" @click="submitSpv()" class="p-button" autofocus />
+                    <Button label="Cancel" @click="cancelSpv()" class="p-button-text" />
+                </template>
+            </Dialog>
             <Dialog v-model:visible="dialogReject"
                 :style="{ width: '400px' }"
                 header="Form Dialog Reject"
@@ -1085,7 +1121,7 @@ import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
-      items: [
+        items: [
                 {
                     label: 'Add',
                     icon: 'pi pi-pencil',
@@ -1131,10 +1167,13 @@ export default {
           noreq:'',
           ireq_id:''
         },
+        editSpv:[],
+        listSpv:[],
         dialogSendMail:false,
         active1:JSON.parse(localStorage.getItem('active1')),
         dialogAssign:false,
         dialogRemark:false,
+        dialogEditSpv:false,
         remark:{
           remark:'',
           id:''
@@ -1183,16 +1222,27 @@ export default {
     this.getIct();
   },
   methods: {
+    editDataSpv(ireq_id){
+      this.axios.get('/api/edit-spv/'+ireq_id).then((res)=>{
+        this.editSpv = res.data.data.request;
+        this.listSpv = res.data.data.listSupervisor;
+        this.dialogEditSpv = true;
+      });
+    },
+    submitSpv(){
+      this.axios.post('/api/save-spv',this.editSpv).then(()=>{
+        this.cancelSpv();
+        this.getIct();
+      })
+    },
+    cancelSpv(){
+      this.editSpv = [];
+      this.listSpv = [];
+      this.dialogEditSpv = false;
+    },
     SendEmail(usr_email,ireq_id){
       this.axios.get('/api/detailrequest-tomail/'+ireq_id).then((res)=>{
-        // this.dialogSendMail = true;
-        var frommail = usr_email + "@emp.id";
-        // this.mail.from = res.data.fromemail;
-        // this.mail.to = frommail;
-        // this.mail.ireq_id = ireq_id;
-        // this.mail.subject = res.data.noreq;
-        // this.mail.footer = "Terimakasih, \n\n\n"+res.data.usr_fullname;
-        // this.mail.body = "Dear Mr/Mrs, "+res.data.requestor+"\n\n";
+        var frommail = usr_email;
         window.open("mailto:"+frommail+"?subject="+res.data.noreq);
       });
     },

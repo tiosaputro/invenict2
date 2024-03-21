@@ -33,8 +33,8 @@ class Mng_role_menu extends Model
                 'menu_id' => $m,
                 'rol_id' => $role->rol_id,
                 'rolm_stat' => 'T',
-                'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-                'created_by'=> Auth::user()->usr_name,
+                'creation_date' => now(),
+                'created_by'=> Auth::user()->usr_id,
                 'program_name'=>'MngRoleMenuController_SAVE'
             ]);
       } 

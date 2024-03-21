@@ -5,19 +5,18 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
 class NotificationRequestHasBeenDone extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
-    public $ict;
+    use Queueable;
+    public $datadone;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($ict)
+    public function __construct($datadone)
     {
-        $this->ict = $ict;
+        $this->datadone = $datadone;
     }
 
     /**
@@ -30,6 +29,6 @@ class NotificationRequestHasBeenDone extends Mailable implements ShouldQueue
         return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Has Been Done')
                     ->view('emailNotificationRequestDone')
-                    ->with(['ict' => $this->ict]);
+                    ->with(['datadone' => $this->datadone]);
                 }
 }

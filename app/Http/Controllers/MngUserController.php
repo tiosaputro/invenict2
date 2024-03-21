@@ -88,8 +88,8 @@ class MngUserController extends Controller
             'usr_bu'=>$request->usr_bu,
             'div_id'=>$request->div,
             'usr_foto'=> $nama_file,
-            'created_by'=> Auth::user()->usr_name,
-            'creation_date'=> Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'created_by'=> Auth::user()->usr_id,
+            'creation_date'=> now(),
             'usr_loc'=>$request->usr_loc,
             'program_name'=>'MngUser_SAVE'
         ]);
@@ -154,8 +154,8 @@ class MngUserController extends Controller
             $user->usr_bu = $request->usr_bu;
             $user->usr_foto = $nama_file;
             $user->usr_loc = $request->usr_loc;
-            $user->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-            $user->last_updated_by = Auth::user()->usr_name;
+            $user->last_update_date = now();
+            $user->last_updated_by = Auth::user()->usr_id;
             $user->program_name = 'MngUserController_UPDATE';
             $user->save();
         return ResponseFormatter::success($user,'Successfully Updated User');

@@ -48,21 +48,24 @@
           <template #loading>
             Loading data. Please wait.
           </template>
-          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:5rem"/>
+          <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:8rem"/>
           <Column field="name" header="Items" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
-          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
+          <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:14rem"/>
           <Column header="Attachment" style="min-width:10rem">
             <template #body="slotProps">
               <p v-if="slotProps.data.ireq_attachment == null"></p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)"/>
+                <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
+                  <i class="pi pi-images px-2"></i>
+                   <span class="px-3">IMAGE</span>
+                </Button>
               </p>
               <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
                 <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
-                  <i class="pi pi-file-pdf px-2"></i>
-                    <span class="px-4">PDF</span>
+                 <i class="pi pi-file-pdf px-2"></i>
+                  <span class="px-4">PDF</span>
                 </Button>
               </p>
             </template>  
@@ -102,7 +105,6 @@ export default {
         editDetail:[],
         kode:[],
         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        user:[],
         checkname : [],
         checkto : [],
     };
@@ -131,11 +133,6 @@ export default {
         }
       });
     },
-    getUser(){
-        this.axios.get('/api/user',{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
-          this.user = response.data.user;
-        });
-      },
     getStatus(){
       this.axios.get('/api/getStatusIct').then((response)=>{
         this.status = response.data;

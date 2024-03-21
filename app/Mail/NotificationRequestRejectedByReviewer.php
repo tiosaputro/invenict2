@@ -5,10 +5,9 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
 class NotificationRequestRejectedByReviewer extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
     public $ict;
     /**
      * Create a new message instance.
@@ -30,6 +29,6 @@ class NotificationRequestRejectedByReviewer extends Mailable implements ShouldQu
         return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Rejected By Reviewer')
                     ->view('emailNotificationRejectedByReviewer')
-                    ->with(['ict' => $this->ict]);
+                    ->with('ict',$this->ict);
                 }
 }

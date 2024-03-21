@@ -393,7 +393,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
@@ -481,7 +481,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>    
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>    
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
@@ -882,7 +882,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
           <template #body= "slotProps">
@@ -970,7 +970,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
@@ -1036,7 +1036,7 @@
           </Column>
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelblmDiverifikasi.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
@@ -1163,7 +1163,7 @@
           </Column>
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:4rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:4rem"/>
+          <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:4rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
@@ -1264,7 +1264,7 @@
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -1361,7 +1361,7 @@
         </Column>
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
             <template #body= "slotProps">
@@ -1427,7 +1427,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
           <template #footer>
             <div class="grid dir-col">
               <div class="col">
@@ -1509,7 +1509,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
           <template #footer>
             <div class="grid dir-col">
@@ -1592,7 +1592,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"/>
         <Column style="min-width:15rem">
@@ -1701,7 +1701,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
@@ -1789,7 +1789,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:8rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
@@ -2202,7 +2202,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -2449,7 +2449,7 @@
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
           <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -2536,7 +2536,7 @@
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
           <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -2682,7 +2682,7 @@
           </Column>
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-          <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelatasanDivisi.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
             <template #body= "slotProps">
@@ -2801,7 +2801,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelictManager.some(el=> el > 0)"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
@@ -2907,7 +2907,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
@@ -2984,7 +2984,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_statuss" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3067,7 +3067,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3143,7 +3143,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
@@ -3220,7 +3220,7 @@
             </template>
           </Column>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+          <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
           <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
           <Column style="min-width:12rem">
             <template #body="slotProps">
@@ -3293,7 +3293,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
             <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3370,7 +3370,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3447,7 +3447,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3676,7 +3676,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
             <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -3753,7 +3753,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
@@ -3845,7 +3845,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">
@@ -3923,7 +3923,7 @@
         </Column>
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="div_name" header="User Division" :sortable="true" style="min-width:10rem"/>
+        <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:10rem"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
           <template #body= "slotProps">

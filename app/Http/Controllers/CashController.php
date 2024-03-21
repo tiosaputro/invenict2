@@ -105,7 +105,7 @@ class CashController extends Controller
                 // 'tglclosing' => 'required'
             ],$message);
 
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newCreation = now();
         $newTglSub = Carbon::createFromFormat('D M d Y H:i:s e+',$request->tglsub)->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
 
         if($request->tglrecvunit){
@@ -148,7 +148,7 @@ class CashController extends Controller
             'ca_hand_over_date'=> $newTglToUser,
             'ca_settlement_date' => $newTglClosing,
             'creation_date' => $newCreation,
-            'created_by' => Auth::user()->usr_name,
+            'created_by' => Auth::user()->usr_id,
             'program_name'=>"Cash_Save",
         ]);
         DB::getPdo()->exec("begin SP_CA_IREQ_MST($request->ireq_id); end;");
@@ -220,7 +220,7 @@ class CashController extends Controller
             $newTglClosing = '';
         }
 
-        $newUpdate = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $newUpdate = now();
         $newTglSub = Carbon::parse($request->ca_submit_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
 
         $cash = Cash::find($code);
@@ -232,7 +232,7 @@ class CashController extends Controller
         $cash->ca_hand_over_date = $newTglToUser;
         $cash->ca_settlement_date = $newTglClosing;
         $cash->last_update_date = $newUpdate;
-        $cash->last_updated_by = Auth::user()->usr_name;
+        $cash->last_updated_by = Auth::user()->usr_id;
         $cash->program_name = "Cash_Update";
         $cash->save();
 

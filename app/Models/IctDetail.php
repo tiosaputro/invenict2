@@ -145,14 +145,14 @@ class IctDetail extends Model
             })
             ->leftjoin('lookup_refs as lr','id.ireq_type','lr.lookup_code')
             ->where('imm.ireq_id',$code)
-            ->where('id.ireq_assigned_to1',Auth::user()->usr_fullname)
+            ->where('id.ireq_assigned_to1',Auth::user()->usr_id)
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
             ->orderBy('id.ireqd_id','ASC')
             ->get();
         return $data;
     }
-    public static function cekStatusPenugasan($ireq_id){
-        $ict = DB::table('ireq_dtl as id')
+    public static function cekStatusPenugasan($code){
+        $data = DB::table('ireq_dtl as id')
             ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
             ->LEFTJOIN('catalog_refs as cr',function ($join) {
                 $join->on('id.invent_code','cr.catalog_id');
@@ -162,26 +162,51 @@ class IctDetail extends Model
             })
             ->LEFTJOIN('lookup_refs as lrfs',function ($join) {
                 $join->on('id.ireq_type','lrfs.lookup_code')
-                    ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
+                     ->WHERERaw('LOWER(lrfs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
             })
             ->LEFTJOIN('vcompany_refs as vr',function ($join) {
                 $join->on('im.ireq_bu','vr.company_code');
             })
-            ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-            ->LEFTJOIN('mng_users as mu','im.ireq_requestor','mu.usr_name')
-            ->LEFTJOIN('location_refs as loc','im.ireq_loc','loc.loc_code')
-            ->SELECT('loc.loc_email','mu.usr_email','mu.usr_fullname','im.ireq_no','id.ireqd_id','vr.name as ireq_bu','im.ireq_id','dr.div_name', 'mu.usr_name',DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),'im.ireq_requestor',
-                    'im.ireq_status','im.ireq_user',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),'id.ireq_qty','lrfs.lookup_desc as ireq_type','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"))
-            ->WHERE('im.ireq_id',$ireq_id)
-            ->WHERE('id.ireq_status','T')
+            ->LEFTJOIN('vpekerja_ict vi', function($join) {
+                $join->on('im.ireq_assigned_to1','vi.usr_id')
+                      ->whereNotNull('im.ireq_assigned_to1');
+            })
+            ->LEFTJOIN('vpekerja_ict vii', function($join) {
+                $join->on('im.ireq_assigned_to2', 'vii.usr_id')
+                      ->whereNull('im.ireq_assigned_to1');
+            })
+            ->LEFTJOIN('mng_users mu','im.ireq_requestor','mu.usr_id')
+            ->LEFTJOIN('location_refs loc','im.ireq_loc','loc.loc_code')
+            ->LEFTJOIN('supervisor_refs sr','im.ireq_spv','sr.spv_id')
+            ->LEFTJOIN('mng_users mus','sr.spv_name','mus.usr_id')
+            ->LEFTJOIN('mng_users usr','im.ireq_user','usr.usr_id')
+            ->SELECT(
+                'mus.usr_email as spv_mail',
+                'loc.loc_email',
+                'mu.usr_fullname',
+                'sr.spv_name',
+                'mu.usr_email as user_mail',
+                'im.ireq_no',
+                'id.ireqd_id',
+                'vr.name as ireq_bu',
+                'im.ireq_id',
+                'mu.usr_division as div_name', 
+                DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY HH24:MM') as ireq_date"),
+                'mu.usr_fullname as ireq_requestor',
+                'usr.usr_fullname as ireq_user',
+                DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_code"),
+                'id.ireq_qty',
+                'lrfs.lookup_desc as ireq_type',
+                'id.ireq_remark')
+            ->WHERE('im.ireq_id',$code)
             ->ORDERBY('id.ireqd_id','ASC')
             ->get();
         if(env('APP_ENV') != 'local'){
-            $mail = $ict[0]->usr_email .= '@emp.id';
+            $mail_user = $data[0]->usr_email;
         } else {
-            $mail = 'adhitya.saputro@emp.id';
+            $mail_user = 'adhitya.saputro@emp.id';
         }
-        SendNotifInProgress::dispatchAfterResponse($mail,$ict);
+        SendNotifInProgress::dispatchAfterResponse($mail_user,$data);
         $message = 'Success';
         return $message;
 
@@ -191,8 +216,8 @@ class IctDetail extends Model
         ->WHERE('ireq_id',$code)
         ->update([
             'ireq_status' => 'A1',
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctController_approveByAtasan",
         ]);
         return $dtl;
@@ -248,8 +273,8 @@ class IctDetail extends Model
         ->update([
             'ireq_status' => 'A2',
             'ireq_reason' => $request->ket,
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctController_rejectByManager",
         ]);
         return $dtl;
@@ -275,8 +300,8 @@ class IctDetail extends Model
         ->WHERE('ireq_id',$code)
         ->update([
             'ireq_status' => 'A2',
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctController_approveByManager",
         ]);
         return $dtl;
@@ -288,8 +313,8 @@ class IctDetail extends Model
         ->update([
             'ireq_status' => 'RA2',
             'ireq_reason' => $request->ket,
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctController_rejectIctManager",
         ]);
         
@@ -302,8 +327,8 @@ class IctDetail extends Model
         ->update([
             'ireq_status' => 'RR',
             'ireq_reason' => $request->ket,
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctController_rejectReviewer",
         ]);
         
@@ -315,8 +340,8 @@ class IctDetail extends Model
         ->WHERE('ireq_id',$ireq_id)
         ->update([
             'ireq_status' => 'NA1',
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctController_needApprovalAtasan",
         ]);
     }
@@ -326,22 +351,9 @@ class IctDetail extends Model
         ->WHERE('ireq_id',$ireq_id)
         ->update([
             'ireq_status' => 'NA2',
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctController_needApprovalManager",
-        ]);
-        return $dtl;
-    }
-
-    public static function AcceptByPersonnel($ireq_id){
-        $dtl = DB::table('ireq_dtl')
-        ->where('ireq_id',$ireq_id)
-        ->where('ireq_assigned_to1',Auth::user()->usr_fullname)
-        ->update([
-            'ireq_status' => 'T',
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
-            'program_name' => "IctDetailController_abp",
         ]);
         return $dtl;
     }
@@ -349,12 +361,12 @@ class IctDetail extends Model
     public static function rejectedByPersonnel($request, $ireq_id){
         $dtl = DB::table('ireq_dtl')
         ->where('ireq_id',$ireq_id)
-        ->where('ireq_assigned_to1',Auth::user()->usr_fullname)
+        ->where('ireq_assigned_to1',Auth::user()->usr_id)
         ->update([
             'ireq_status' => 'RT',
             'ireq_assigned_to1_reason' => $request->ireq_reason,
-            'last_update_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'last_updated_by' => Auth::user()->usr_name,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
             'program_name' => "IctDetailController_rbp"
         ]);
         return $dtl;

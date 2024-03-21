@@ -2,28 +2,28 @@
 
 namespace App\Jobs;
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\NotificationRequestHasBeenDone;
-use Illuminate\Support\Facades\Mail;
 
-class SendNotifDone implements ShouldQueue
+class SendNotifDoneUser implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $mail;
-    protected $ict;
+    protected $datadone;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($mail,$ict)
+    public function __construct($mail,$datadone)
     {
         $this->mail = $mail;
-        $this->ict = $ict;
+        $this->datadone = $datadone;
     }
 
     /**
@@ -33,6 +33,6 @@ class SendNotifDone implements ShouldQueue
      */
     public function handle()
     {     
-        Mail::to($this->mail)->send(new NotificationRequestHasBeenDone($this->ict));
+        Mail::to($this->mail)->send(new NotificationRequestHasBeenDone($this->datadone));
     }
 }

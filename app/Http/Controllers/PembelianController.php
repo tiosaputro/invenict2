@@ -44,7 +44,7 @@ class PembelianController extends Controller
         $uang = Lookup_Refs::Valuta();
         $metode = Lookup_Refs::Pay_Methode();
         $supp = Supplier::ListSupplier();
-        $user = Auth::user()->usr_name;
+        $user = Auth::user()->usr_id;
         return ResponseFormatter::success(array('uang'=>$uang,'metode'=>$metode,'supp'=>$supp,'user'=>$user),'Successfully get data');
     }
     Public function save(Request $request)
@@ -77,8 +77,8 @@ class PembelianController extends Controller
         $pem->purchase_total = $request->purchase_total;
         $pem->purchase_status = $request->purchase_status;
         $pem->purchase_remark = $request->purchase_remark;
-        $pem->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $pem->last_updated_by = Auth::user()->usr_name;
+        $pem->last_update_date = now();
+        $pem->last_updated_by = Auth::user()->usr_id;
         $pem->program_name = "Pembelian_Update";
         $pem->save();
         

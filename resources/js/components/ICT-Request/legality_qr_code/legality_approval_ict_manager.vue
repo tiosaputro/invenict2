@@ -29,7 +29,7 @@
           </Column>
           <Column field="ireq_requestor" header="Requester" style="min-width:10rem"/>
           <Column field="ireq_user" header="User" style="min-width:10rem"/>
-          <Column field="div_name" header="Division User" style="min-width:10rem"/>
+          <Column field="div_name" header="User Division" style="min-width:10rem"/>
           <Column field="ireq_bu" header="Business Unit" style="min-width:10rem"/>
           <Column field="ireq_approval2" header="Approval By" style="min-width:10rem"/>
           <Column field="date_approver2" header="Approval Date" style="min-width:10rem">

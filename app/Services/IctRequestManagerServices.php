@@ -8,12 +8,15 @@ use Illuminate\Support\Facades\DB;
 use App\Models\IctDetail;
 use App\Models\Ict;
 use Carbon\Carbon;
+use App\Jobs\SendNotifApprovedFromIctManager;
+Use App\Jobs\SendNotifRejectByIctManager;
 
 class IctRequestManagerServices
 {
     public function getDataRequestWithFilter($status1, $status2, $status3, $status4){
         $data = Ict::query();
         $data->SELECT(
+                DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title) as spv"),
                 'ireq_mst.ireq_id',
                 'ireq_mst.ireq_verificator_remark',
                 'mus.usr_division',
@@ -23,6 +26,7 @@ class IctRequestManagerServices
                 'ireq_mst.ireq_status as status',
                 'ireq_mst.ireq_no',
                 'ireq_mst.ireq_date',
+                'ireq_mst.ireq_reason',
                 'lr.lookup_desc as ireq_status',
                 'ireq_mst.ireq_status as status',
                 DB::raw('count(ireq_mst.ireq_verificator_remark) as count_remark'),
@@ -32,6 +36,8 @@ class IctRequestManagerServices
                 DB::raw('count(ireq_mst.ireq_approver2_remark) as count_remark_approver2'),'ireq_mst.ireq_approver2_remark');
         $data->LEFTJOIN('divisi_refs dr','ireq_mst.ireq_divisi_user','dr.div_id');
         $data->LEFTJOIN('mng_users mu','ireq_mst.created_by','mu.usr_id');
+        $data->LEFTJOIN('supervisor_refs sr','ireq_mst.ireq_spv','sr.spv_id');
+        $data->LEFTJOIN('mng_users usr','sr.spv_name','usr.usr_id');
         $data->LEFTJOIN('vpekerja_ict vi', function($join) {
             $join->on('ireq_mst.ireq_assigned_to1','vi.usr_id')
                   ->whereNotNull('ireq_mst.ireq_assigned_to1');
@@ -61,7 +67,9 @@ class IctRequestManagerServices
         });
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         $data->GroupBy(
+            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title)"),
             'ms.usr_fullname',
+            'ireq_mst.ireq_reason',
             'mus.usr_fullname',
             'mus.usr_division',
             'ireq_mst.ireq_id',
@@ -76,7 +84,7 @@ class IctRequestManagerServices
         return $data->get();
     }
 
-    public function getDataDetailWithFilter($status){
+    public function getDataDetailWithFilter($status, $code = NULL){
         $data = IctDetail::Query();
         $data->LEFTJOIN('ireq_mst as im','ireq_dtl.ireq_id','im.ireq_id');
         $data->LEFTJOIN('vpekerja_ict vi', function($join) {
@@ -108,8 +116,12 @@ class IctRequestManagerServices
         $data->SELECT(
             'ireq_dtl.ireq_attachment',
             DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
+            'ms.usr_email as mail_requestor',
             'ms.usr_fullname as ireq_requestor',
+            'ms.usr_fullname',
             'mus.usr_fullname as ireq_user',
+            'mus.usr_division as division_user',
+            'im.ireq_reason',
             'im.ireq_no',
             'im.ireq_verificator_remark',
             'ireq_dtl.ireq_status as status',
@@ -124,9 +136,46 @@ class IctRequestManagerServices
             'ireq_dtl.ireq_qty');
         if(!empty($status)){
             $data->WHERE('ireq_dtl.ireq_status',$status);
+        }if(!empty($code)){
+            $data->WHERE('im.ireq_id',$code);
         }
         $data->ORDERBY('im.ireq_date','DESC');
         $data->ORDERBY('ireq_dtl.ireqd_id','ASC');
         return $data->get();
+    }
+    public function RejectedByIctManager($request, $code){
+        $ict = Ict::where('ireq_id',$code)->first();
+        $ict->ireq_status = 'RA2';
+        $ict->ireq_approver1 = Auth::user()->usr_id;
+        $ict->ireq_approver1_date = now();
+        $ict->ireq_reason = $request->ket;
+        $ict->last_update_date = now();
+        $ict->last_updated_by = Auth::user()->usr_id;
+        $ict->program_name = "IctController_rejectByManager";
+        $ict->save();
+
+        $data = $this->getDataDetailWithFilter(NULL, $code);
+
+        $user_mail = $data[0]->mail_requestor;
+        SendNotifRejectByIctManager::dispatchAfterResponse($user_mail,$data);
+        
+        return $ict;
+    }
+    public function ApprovedByIctManager($request,$code){
+        $ict = Ict::where('ireq_id',$code)->first();
+        $ict->ireq_status = 'A2';
+        $ict->ireq_approver2_remark = $request->remark;
+        $ict->ireq_approver2 = Auth::user()->usr_id;
+        $ict->ireq_approver2_date = now();
+        $ict->last_updated_by = Auth::user()->usr_id;
+        $ict->last_update_date = now();
+        $ict->program_name = "IctController_approveByManager";
+        $ict->save();
+
+        $data = $this->getDataDetailWithFilter(NULL, $code);
+        $user_mail = $data[0]->mail_requestor;
+        SendNotifApprovedFromIctManager::dispatchAfterResponse($user_mail,$data);
+
+        return $ict;
     }
 }

@@ -9,15 +9,15 @@ use Illuminate\Queue\SerializesModels;
 class NotificationPersonnel extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    public $ict;
+    public $dataPersonnel;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($ict)
+    public function __construct($dataPersonnel)
     {
-        $this->ict = $ict;
+        $this->dataPersonnel = $dataPersonnel;
     }
 
     /**
@@ -29,6 +29,6 @@ class NotificationPersonnel extends Mailable implements ShouldQueue
     {
         return $this->from('noreply@emp.id','NO REPLY')
                     ->view('emailPersonnel')
-                    ->with(['ict' => $this->ict]);
+                    ->with(['dataPersonnel' => $this->dataPersonnel]);
                 }
 }

@@ -48,7 +48,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkWaiting.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                   <template #body= "slotProps">
@@ -132,7 +133,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarksdhdiverifikasi.some(el=> el > 0)"/>
                   <Column field="ireq_approver2_remark" header="Remark ICT Manager" :sortable="true" style="min-width:12rem" v-if="this.showRemarkApproversdhdiverifikasi.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
@@ -210,7 +212,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-                  <Column field="div_name" header="User Division" :sortable="true" style="min-width:12rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:12rem"/>
+                  <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
@@ -287,7 +290,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                     <template #body= "slotProps">
@@ -364,7 +368,8 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
                   <template #body= "slotProps">
@@ -463,7 +468,7 @@
                   </Column>
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
                   <template #body= "slotProps">
@@ -564,7 +569,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
-                  <Column field="usr_division" header="Division User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>

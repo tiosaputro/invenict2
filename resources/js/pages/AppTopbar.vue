@@ -94,12 +94,6 @@ export default {
                 this.user = response.data.data.user;
             }).catch((error) => {
                 if (error.response.status == 401) {
-                    this.$toast.add({
-                        severity: "error",
-                        summary: "Error Message",
-                        detail: "Session Login Expired",
-                        life: 1000,
-                    });
                     localStorage.clear();
                     localStorage.setItem("Expired", "true");
                     setTimeout(() => this.$router.push("/login"), 2000);

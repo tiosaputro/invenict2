@@ -101,14 +101,14 @@ class PaymentController extends Controller
             'ireq_id' =>$request->ireq_id,
             'ireqd_id'=>$request->ireqd_id,
             'pr_pic_name'=>$request->jum,
-            'pr_submit_date'=>Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
+            'pr_submit_date'=>now(),
             'pr_recv_cash_date'=>$newTglRecCash,
             'pr_purchase_date'=>$newTglbuy,
             'pr_recv_item_date' => $newTglRecUnit,
             'pr_hand_over_date'=> $newTglToUser,
             'pr_settlement_date' => $newTglClosing,
-            'creation_date' => Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s'),
-            'created_by' => Auth::user()->usr_name,
+            'creation_date' => now(),
+            'created_by' => Auth::user()->usr_id,
             'program_name'=>"PaymentController_Save",
         ]);
         DB::getPdo()->exec("begin SP_PR_IREQ_MST('$request->ireq_id'); end;");
@@ -176,14 +176,14 @@ class PaymentController extends Controller
 
         $pr = Payment_request::find($code);
         $pr->pr_pic_name = $request->pr_pic_name;
-        $pr->pr_submit_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
+        $pr->pr_submit_date = now();
         $pr->pr_recv_cash_date = $newTglRecCash;
         $pr->pr_purchase_date = $newTglbuy;
         $pr->pr_recv_item_date = $newTglRecUnit;
         $pr->pr_hand_over_date = $newTglToUser;
         $pr->pr_settlement_date = $newTglClosing;
-        $pr->last_update_date = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('Y-m-d H:i:s');
-        $pr->last_updated_by = Auth::user()->usr_name;
+        $pr->last_update_date = now();
+        $pr->last_updated_by = Auth::user()->usr_id;
         $pr->program_name = "PaymentController_update";
         $pr->save();
         return ResponseFormatter::success($pr,'Successfully Updated Data');
