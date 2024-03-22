@@ -15,7 +15,6 @@ use App\Exports\IctExportPersonnelSedangDikerjakan;
 use App\Exports\IctExportPersonnelSudahDikerjakan;
 use App\Exports\IctExportPersonnelSelesai;
 use App\Jobs\SendNotifDoneUser;
-use App\Models\IctDetail;
 use App\Services\IctRequestPersonnelServices;
 use App\Services\IctDetailServices;
 
@@ -60,16 +59,14 @@ class IctRequestPersonnelController extends Controller
         return ResponseFormatter::success($dtl,'Successfully Added Remark');
     }
     function rejectedByPersonnel(Request $request,$ireq_id){
-        $saveDtl = $this->IctDetailService->rejectedByPersonnel($request,$ireq_id); 
-        DB::getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST('$ireq_id'); end;");
-        return ResponseFormatter::success($saveDtl,'Successfully rejected by personnel');
+        $this->personnelService->rejectedByPersonnel($request,$ireq_id); 
+        return ResponseFormatter::success('Successfully rejected by personnel');
         
     }
     function acceptedByPersonnel($ireq_id){
-        $save = $this->IctDetailService->AcceptByPersonnel($ireq_id);
-        DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST('$ireq_id'); end;");
-        $data = $this->IctDetailService->cekStatusPenugasan($ireq_id);
-        return ResponseFormatter::success($save,'Successfully accepted by personnel');
+        $this->personnelService->AcceptByPersonnel($ireq_id);
+        $this->IctDetailService->cekStatusPenugasan($ireq_id);
+        return ResponseFormatter::success('Successfully accepted by personnel');
     }
     function updateNote(Request $request,$code){
         

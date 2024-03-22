@@ -23,6 +23,7 @@ use App\Services\IctDetailServices;
 use App\Services\PekerjaServices;
 use App\Services\IctServices;
 use App\Services\SupervisorServices;
+use Illuminate\Support\Facades\View;
 
 
 class IctDetailController extends Controller
@@ -436,7 +437,9 @@ class IctDetailController extends Controller
             ]);
             $link = Link::where('ireq_id',$code)->whereNull('usr_id')->first();
         }
-            return view('pdf/Report_ICT_PerDetail', compact('detail','link'));
+            $data['norequest'] = $detail[0]->ireq_no;
+            $data['htmlContent'] = View::make('pdf.Report_ICT_PerDetail', compact('detail', 'link'))->render();
+            return json_encode($data);
     }
     function cetak_excel_sedang_dikerjakan($code){
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');

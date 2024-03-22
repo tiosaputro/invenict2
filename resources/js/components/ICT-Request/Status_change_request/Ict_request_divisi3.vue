@@ -479,18 +479,18 @@
           >
             <div class="fluid">
               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:100px">Alasan</label>
+                <label class="col-fixed w-9rem" style="width:100px">Reason</label>
                   <div class="col-fixed w-9rem">
                     <Textarea
                       v-model="editDetail.ireq_reason"
                       :autoResize="true" 
                         rows="5" 
                         cols="20"
-                        placeholder="Masukan Alasan"
+                        placeholder="Give a reason"
                         :class="{ 'p-invalid': submitted && !editDetail.ireq_reason }"
                     />
                     <small v-if="submitted && !editDetail.ireq_reason" class="p-error">
-                      Alasan Belum Diisi
+                      Reason not filled
                     </small>
                   </div>
                 </div>
@@ -665,7 +665,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -842,7 +842,7 @@ export default {
         });
     },
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY HH:mm")
+      return this.$moment(date).format("DD MMM YYYY HH:mm")
     },
     getStatus(){
       this.axios.get('/api/getStatusIct').then((response)=>{

@@ -25,6 +25,7 @@ use App\Exports\IctExportReviewerSudahDikerjakan;
 use App\Exports\IctExportReviewerSelesai;
 use App\Services\SupervisorServices;
 
+
 class IctRequestReviewerController extends Controller
 {
     protected $to;
@@ -48,7 +49,7 @@ class IctRequestReviewerController extends Controller
         });
     }
     function index($code){
-        $data['detail'] = IctDetail::getDataDetailRequest($code);
+        $data['detail'] = $this->IctDetailServices->getDataDetailRequest($code);
         $data['norequest'] = $this->IctServices->detailNoRequest($code);
         return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
     }
@@ -64,11 +65,11 @@ class IctRequestReviewerController extends Controller
        $data->last_updated_by = Auth::user()->usr_id;
        $data->program_name = "IctRequestReviewerController__saveSpv";
        $data->save();
-        return ResponseFormatter::success($data,'Successfully Get Data'); 
+       return ResponseFormatter::success($data,'Successfully Get Data'); 
     }
     function sendMailtoRequestor(Request $request){
-        $save = Ict::sendMailToRequestor($request);
-        return ResponseFormatter::success($save,'Successfully Sent Email to Requestor');
+        $this->reviewerServices->sendMailToRequestor($request);
+        return ResponseFormatter::success('Successfully Sent Email to Requestor');
     }
     function editDataDetail($ireq,$code){
         $data = IctDetail::FindDetailRequest($ireq,$code);
@@ -91,8 +92,7 @@ class IctRequestReviewerController extends Controller
         ]);
         $personel = IctDetail::select('ireq_assigned_to2')->where('ireq_id',$code)->where('ireqd_id',$ireqd_id)->pluck('ireq_assigned_to2');
         $dataPersonnel = Ict::where('ireq_id',$code)->first();
-        $mail = Mng_user::SELECT('usr_email')->WHERE('user_id',$personel)->first()->pluck('usr_email');
-        
+        $mail = Mng_user::SELECT('usr_email')->WHERE('usr_id',$personel)->pluck('usr_email');
         DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST('$code'); end;");
         
         SendNotifPersonnel::dispatchAfterResponse($mail,$dataPersonnel);
@@ -104,7 +104,7 @@ class IctRequestReviewerController extends Controller
         return json_encode($ict);
     }
     function saveRemarkReviewer(Request $request){
-        $ict = Ict::where('ireq_id',$request->id)->first();
+        $ict = Ict::findOrFail($request->id);
         $ict->ireq_verificator_remark = $request->remark;
         $ict->save();
         return ResponseFormatter::success($ict,'Successfully save remark');
@@ -147,33 +147,24 @@ class IctRequestReviewerController extends Controller
             return response()->json($dtl);
     }
     function rejectReviewer(Request $request, $code){
-        $save = $this->reviewerServices->RejectedByReviewer($request,$code);
-        $this->IctDetailServices->RejectedByReviewer($request,$code);
-        
-        return ResponseFormatter::success($save,'Successfully rejected request');
+        $this->reviewerServices->RejectedByReviewer($request,$code);
+        return ResponseFormatter::success('Successfully rejected request');
     }
     function needApprovalAtasan($ireq_id){
-        $save = Ict::NeedApprovalByHigherLevel($ireq_id);
-        IctDetail::needApprovalByHigherLevel($ireq_id);
-        
-        return ResponseFormatter::success($save,'Successfully send mail');
+        $this->reviewerServices->NeedApprovalByHigherLevel($ireq_id);
+        return ResponseFormatter::success('Successfully send mail');
     }
     function needApprovalManager($ireq_id){
-        $save = Ict::needApprovalByIctManager($ireq_id);
-        IctDetail::needApprovalByIctManager($ireq_id);
-        
-        return ResponseFormatter::success($save,'Successfully send mail');
+        $this->reviewerServices->needApprovalByIctManager($ireq_id);
+        return ResponseFormatter::success('Successfully send mail');
     }
-    function asignPerRequestReviewer(Request $request)
-    {
-        $save = Ict::assignPerRequest($request);
-
-        return ResponseFormatter::success($save,'Successfully assign request');
+    function asignPerRequestReviewer(Request $request){
+        $this->reviewerServices->assignPerRequest($request);
+        return ResponseFormatter::success('Successfully assign request');
     }
-    function submitAssignPerRequest($ireq_id)
-    {
-        $save = Ict::submitAssignPerRequets($ireq_id); 
-        return ResponseFormatter::success($save,'Successfully Submit');
+    function submitAssignPerRequest($ireq_id){
+        $this->reviewerServices->submitAssignPerRequets($ireq_id); 
+        return ResponseFormatter::success('Successfully Submit');
 
     }
     function updateStatusClosingDetail($ireqd_id,$ireq_id){
@@ -191,7 +182,7 @@ class IctRequestReviewerController extends Controller
         return ResponseFormatter::success($save,'Successfully Closing');
     }
     function getDataIct(){
-        $ict=DB::table('ireq_dtl as id')
+        $ict = DB::table('ireq_dtl as id')
             ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
             ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
             ->LEFTJOIN('lookup_refs as lr',function ($join) {
@@ -238,8 +229,7 @@ class IctRequestReviewerController extends Controller
         $requestor = DB::table('mng_users')->select('usr_fullname')->where('usr_name',$ict->ireq_requestor)->first();
         return response()->json(['requestor'=>$requestor->usr_fullname,'noreq'=>$ict->ireq_no,'fromemail'=>$fromemail->loc_email,'usr_fullname'=>$usr_fullname],200);
     }
-    function updateAssignPerRequest(Request $request)
-    {
+    function updateAssignPerRequest(Request $request){
         $ict = Ict::where('ireq_id',$request->id)->first();
         $ict->ireq_status = 'T';
         $ict->ireq_assigned_to1 = $request->name;
@@ -259,8 +249,7 @@ class IctRequestReviewerController extends Controller
         }
         return ResponseFormatter::success($ict,'Successfully Assigned');
     }
-    function updateStatusPenugasan($ireq_id)
-    {
+    function updateStatusPenugasan($ireq_id){
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_status = 'T';
         $ict->ireq_verificator = Auth::user()->usr_id;
@@ -280,8 +269,7 @@ class IctRequestReviewerController extends Controller
 
         return ResponseFormatter::success($ict,'Successfully Updated');
     }
-    function updateStatusClosing($ireq_id)
-    {
+    function updateStatusClosing($ireq_id){
         $ict = Ict::where('ireq_id',$ireq_id)->first();
         $ict->ireq_approver2 = Auth::user()->usr_id;
         $ict->ireq_status = 'C';
@@ -302,8 +290,7 @@ class IctRequestReviewerController extends Controller
         
         return ResponseFormatter::success($ict,'Successfully Closing ');
     }
-    function updateAssignFromReject(Request $request,$code)
-    {
+    function updateAssignFromReject(Request $request,$code){
         $save = DB::table('ireq_dtl')
         ->where('ireqd_id',$code)
         ->where('ireq_id',$request->ireq_id)
@@ -315,8 +302,7 @@ class IctRequestReviewerController extends Controller
         ]);
         return ResponseFormatter::success($save,'Successfully Assigned');
     }
-    function updateAssignPerDetail(Request $request,$code)
-    {
+    function updateAssignPerDetail(Request $request,$code){
         $save = DB::table('ireq_dtl')
         ->where('ireqd_id',$request->ireqd_id)
         ->where('ireq_id',$code)
@@ -327,8 +313,7 @@ class IctRequestReviewerController extends Controller
         ]);
         return ResponseFormatter::success($save,'Successfully Assigned');
     }
-    function cetak_pdf_reviewer_permohonan()
-    {
+    function cetak_pdf_reviewer_permohonan(){
         if(Auth::user()->usr_loc == 'OJ'){
             $ict =  DB::table('ireq_mst as im')
             ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
@@ -391,13 +376,11 @@ class IctRequestReviewerController extends Controller
             return view('pdf/Laporan_IctRequest_Permohonan', compact('ict'));
         }
     }
-    function cetak_excel_reviewer_permohonan()
-    {
+    function cetak_excel_reviewer_permohonan(){
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportReviewerPermohonan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
-    function cetak_pdf_reviewer_atasan_divisi()
-    {
+    function cetak_pdf_reviewer_atasan_divisi(){
         if(Auth::user()->usr_loc == 'OJ'){
             $ict =  DB::table('ireq_mst as im')
             ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
@@ -472,13 +455,11 @@ class IctRequestReviewerController extends Controller
             
         }
     }
-    function cetak_excel_reviewer_atasan_divisi()
-    {
+    function cetak_excel_reviewer_atasan_divisi(){
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportReviewerAtasanDivisi,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
-    function cetak_pdf_reviewer_ict_manager()
-    {
+    function cetak_pdf_reviewer_ict_manager(){
         if(Auth::user()->usr_loc == 'OJ'){
             $ict =  DB::table('ireq_mst as im')
             ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
@@ -552,13 +533,11 @@ class IctRequestReviewerController extends Controller
             return view('pdf/Laporan_IctRequest_Permohonan', compact('ict'));
         }
     }
-    function cetak_excel_reviewer_ict_manager()
-    {
+    function cetak_excel_reviewer_ict_manager(){
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportReviewerIctManager,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
-    function cetak_pdf_reviewer_reject()
-    {
+    function cetak_pdf_reviewer_reject(){
         if(Auth::user()->usr_loc == 'OJ'){
             $ict =  DB::table('ireq_mst as im')
             ->SELECT('im.ireq_no','im.ireq_reason','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
@@ -635,13 +614,11 @@ class IctRequestReviewerController extends Controller
             return view('pdf/Laporan_IctRequest_Reject', compact('ict'));
         }
     }
-    function cetak_excel_reviewer_reject()
-    {
+    function cetak_excel_reviewer_reject(){
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportRejectReviewer,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
-    function cetak_pdf_reviewer_assignment_request()
-    {
+    function cetak_pdf_reviewer_assignment_request(){
         if(Auth::user()->usr_loc == 'OJ'){
             $ict =  DB::table('ireq_mst as im')
             ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',
@@ -715,13 +692,11 @@ class IctRequestReviewerController extends Controller
             return view('pdf/Laporan_IctRequest_Sedang_Dikerjakan', compact('ict'));
         }
     }
-    function cetak_excel_reviewer_assignment_request()
-    {
+    function cetak_excel_reviewer_assignment_request(){
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportReviewerAssignmentRequest,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
     }
-    function cetak_pdf_reviewer_sedang_dikerjakan()
-    {
+    function cetak_pdf_reviewer_sedang_dikerjakan(){
         if(Auth::user()->usr_loc == 'OJ'){
             $ict =  DB::table('ireq_mst as im')
             ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',

@@ -12,7 +12,7 @@
     </div>
 </template>
 <script>
-import moment from 'moment';
+
 import Exporter from "vue-chartjs-exporter";
 export default {
     data() {

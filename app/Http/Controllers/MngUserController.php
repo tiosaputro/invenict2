@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Helpers\ResponseFormatter;
-use App\Models\UserProfile;
+use App\Helpers\ldap_connection;
 
 class MngUserController extends Controller
 {
@@ -47,26 +47,14 @@ class MngUserController extends Controller
     function save(Request $request)
     {
         $message = [
-            'usr_name.required'=>'User Name Belum Diisi',
-            'usr_fullname.required'=>'User Full Name Belum Diisi',
-            'usr_email.required'=>'Email Belum Diisi',
-            'usr_email.unique'=>'Email Sudah Pernah Didaftarkan',
-            'usr_alamat.required'=>'Alamat Belum Diisi',
+            'usr_domain.required'=>'User Domain Belum Diisi',
+            // 'usr_domain.unique'=>'User Domain Sudah Pernah Didaftarkan',
             'usr_status.required'=>'Status Belum Diisi',
-            'usr_passwd.required'=>'Password Belum Diisi',
-            'div.required'=>'Divisi Belum Diisi',
-            'usr_bu.required'=>'Bisnis Unit Belum Diisi',
             'usr_loc'=>'Lokasi Belum Diisi'
         ];
         $request->validate([
-            'usr_name' => 'required',
-            'usr_passwd'=>'required',
-            'usr_email'=>'required|unique:mng_users,usr_email',
-            'usr_alamat'=>'required',
-            'usr_fullname'=>'required',
+            'usr_domain'=>'required',
             'usr_status'=>'required',
-            'div'=>'required',
-            'usr_bu'=>'required',
             'usr_loc'=>'required'
         ],$message);
 
@@ -77,24 +65,40 @@ class MngUserController extends Controller
         $foto= str_replace(' ', '+', $fotoo); 
         $nama_file = time().".".$extension;
         Storage::disk('profile')->put($nama_file, base64_decode($foto));
-        $user = Mng_user::create([
-            'usr_id'=>generate_id(),
-            'usr_name'=>$request->usr_name,
-            'usr_fullname'=>strtoupper($request->usr_fullname),
-            'usr_passwd'=> Hash::make($request->usr_passwd),
-            'usr_alamat'=> $request->usr_alamat,
-            'usr_stat'=> $request->usr_status,
-            'usr_email'=> $request->usr_email,
-            'usr_bu'=>$request->usr_bu,
-            'div_id'=>$request->div,
-            'usr_foto'=> $nama_file,
-            'created_by'=> Auth::user()->usr_id,
-            'creation_date'=> now(),
-            'usr_loc'=>$request->usr_loc,
-            'program_name'=>'MngUser_SAVE'
-        ]);
-       
-        return ResponseFormatter::success($user,'Successfully Created User');
+        $ldap = new ldap_connection();
+        $userDomain = str_contains($request->usr_domain, '@');
+        if (!$userDomain) {
+            $userDomain = $request->usr_domain . '@emp-one.com';
+        } else if (str_contains($request->usr_domain, '@emp.id')){
+            $userDomain = str_replace('@emp.id', '', $request->usr_domain) . '@emp-one.com';
+        } else{
+            $userDomain = $request->usr_domain;
+        }
+        $check = $ldap->findUser($userDomain);
+        if($check){
+            $user = Mng_user::create([
+                'usr_id'=> generate_id_number(),
+                'usr_name'=> str_replace('"', '', $check['displayname']),
+                'usr_fullname'=> str_replace('"', '', $check['name']),
+                'usr_alamat'=> str_replace('"', '', $check['streetaddress']),
+                'usr_nm_perush'=> str_replace('"', '', $check['company']),
+                'usr_stat'=> $request->usr_status,
+                'usr_domain'=> $userDomain,
+                'usr_department'=> str_replace('"', '', $check['department']),
+                'usr_division'=> str_replace('"', '', $check['division']),
+                'usr_email'=> str_replace('"', '', $check['mail']),
+                'usr_nip'=> str_replace('"', '', $check['employeeid']),
+                'usr_jabatan'=> str_replace('"', '', $check['extensionattribute15']),
+                'usr_foto'=> $nama_file,
+                'created_by'=> Auth::user()->usr_id,
+                'creation_date'=> now(),
+                'usr_loc'=>$request->usr_loc,
+                'program_name'=>'MngUser_SAVE'
+            ]);
+            return ResponseFormatter::success($user,'Successfully Created User');
+        }else {
+            return response()->json(['message' => 'User Domain Not Found!!', 'state' => 'failed'], 401);
+        }
     }
     function edit($code)
     {
@@ -106,26 +110,12 @@ class MngUserController extends Controller
     {
         $user = Mng_user::find($code);
         $message = [
-            'usr_fullname.required'=>'User Full Name Belum Diisi',
-            'usr_email.required'=>'Email Belum Diisi',
-            'usr_email.unique'=>'Email Sudah Pernah Didaftarkan',
-            'usr_alamat.required'=>'Alamat Belum Diisi',
             'usr_stat.required'=>'Status Belum Diisi',
-            'div_id.required'=>'Divisi Belum Diisi',
-            'usr_bu.required'=>'Bisnis Unit Belum Diisi',
             'usr_loc.required'=>'Location Belum Diisi',
         ];
         $request->validate([
-            'usr_email'=>[
-                'required',
-                Rule::unique('mng_users','usr_email')->ignore($code,'usr_id')
-        ],
-            'usr_alamat'=>'required',
-            'usr_fullname'=>'required',
             'usr_stat'=>'required',
-            'div_id'=>'required',
             'usr_loc'=>'required',
-            'usr_bu'=>'required'
         ],$message);
         if($request->image){
             unlink(Storage_path('app/public/profile/'.$user->usr_foto));
@@ -139,19 +129,7 @@ class MngUserController extends Controller
         }else{
             $nama_file = $user->usr_foto;
         }
-        if($request->usr_password){
-            $pass = Hash::make($request->usr_password);
-        }
-        else{
-            $pass = $user->usr_passwd;
-        }
-            $user->usr_fullname = strtoupper($request->usr_fullname);
-            $user->usr_alamat = $request->usr_alamat;
-            $user->usr_passwd = $pass;
             $user->usr_stat = $request->usr_stat;
-            $user->usr_email = $request->usr_email;
-            $user->div_id = $request->div_id;
-            $user->usr_bu = $request->usr_bu;
             $user->usr_foto = $nama_file;
             $user->usr_loc = $request->usr_loc;
             $user->last_update_date = now();

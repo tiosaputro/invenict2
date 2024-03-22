@@ -18,7 +18,7 @@
         <th style="text-align:left; font-weight: bold;">User</th>
         <th style="text-align:left; font-weight: bold;">User Division</th>
         <th style="text-align:left; font-weight: bold;">Business Unit</th>
-        <th style="text-align:left; font-weight: bold;">Personnel ICT</th>
+        <th style="text-align:left; font-weight: bold;">ICT Personnel</th>
         <th style="text-align:left; font-weight: bold;">Status</th>
     </tr>
     </thead>

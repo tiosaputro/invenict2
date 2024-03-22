@@ -35,7 +35,7 @@
         <th style="text-align:left; font-weight: bold;">Deskripsi</th>
         <th style="text-align:left; font-weight: bold;">Qty</th>
         <th style="text-align:left; font-weight: bold;">Keterangan</th>
-        <th style="text-align:left; font-weight: bold;">Personnel ICT</th>
+        <th style="text-align:left; font-weight: bold;">ICT Personnel</th>
     </tr>   
     </thead>
     <tbody>

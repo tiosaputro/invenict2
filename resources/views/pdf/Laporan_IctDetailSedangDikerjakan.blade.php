@@ -55,7 +55,7 @@
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Deskripsi</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Qty</th>
 								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Keterangan</th>
-								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">Personnel ICT</th>
+								<th style="font-size:12pt; font-weight: bold; background-color:#807a6b">ICT Personnel</th>
 							</tr>
 						</thead>
 						<tbody>

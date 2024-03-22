@@ -29,6 +29,7 @@ class IctRequestPersonnelServices
             'ireq_mst.ireq_id');
         $data->WHERE('ireq_mst.ireq_status',$status);
         $data->WHERE('id.ireq_assigned_to1',Auth::user()->usr_id);
+        $data->WHERE('id.ireq_status',$status);
         $data->groupBy(
             'ireq_mst.ireq_date',
             'mus.usr_division',
@@ -43,7 +44,6 @@ class IctRequestPersonnelServices
         $data->ORDERBY('ireq_mst.ireq_date','DESC');
         return $data->get();
     }
-
     public function getDetailWithFilter($status){
         $data = IctDetail::Query();
         $data->SELECT(
@@ -115,6 +115,33 @@ class IctRequestPersonnelServices
         $data->ORDERBY('imm.ireq_date','DESC');
         $data->ORDERBY('ireq_dtl.ireqd_id','ASC');
         return $data->get();
+    }
+    public function rejectedByPersonnel($request, $ireq_id){
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->where('ireq_assigned_to1',Auth::user()->usr_id)
+        ->update([
+            'ireq_status' => 'RT',
+            'ireq_assigned_to1_reason' => $request->ireq_reason,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
+            'program_name' => "IctDetailController_rbp"
+        ]);
+        DB::getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST('$ireq_id'); end;");
+        return $dtl;
+    }
+    public function AcceptByPersonnel($ireq_id){
+        $dtl = DB::table('ireq_dtl')
+        ->where('ireq_id',$ireq_id)
+        ->where('ireq_assigned_to1',Auth::user()->usr_id)
+        ->update([
+            'ireq_status' => 'T',
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
+            'program_name' => "IctDetailController_abp",
+        ]);
+        DB::getPdo()->exec("begin SP_PENUGASAN_IREQ_MST('$ireq_id'); end;");
+        return $dtl;
     }
 
 }

@@ -36,7 +36,7 @@ export default {
           // logoHeight: 100, // fixed logo height. default is `heigth/3.5`
           // logoBackgroundTransparent:true,
 
-          backgroundImage: '/assets/image-1.jpeg', // Background Image
+          backgroundImage: '/assets/logo-emp.png', // Background Image
           backgroundImageAlpha: 1, // Background image transparency, value between 0 and 1. default is 1. 
           // autoColor: false, // Automatic color adjustment(for data block)
           // autoColorDark: "rgba(0, 0, 0, .6)", // Automatic color: dark CSS color

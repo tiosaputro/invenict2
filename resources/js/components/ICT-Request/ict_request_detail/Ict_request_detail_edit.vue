@@ -109,7 +109,7 @@
                   icon="pi pi-times"
                   @click="$router.go(-1)"
                 />
-                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" v-else/>
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" animationDuration=".5s" v-else/>
               </div>
             </form>
           </div>

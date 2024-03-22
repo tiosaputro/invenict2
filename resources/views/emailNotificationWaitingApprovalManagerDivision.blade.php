@@ -505,7 +505,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$ict[0]->ireq_date}}</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{formatDate($ict[0]->ireq_date,'d M y')}}</p>
   </div>
 
       </td>
@@ -574,7 +574,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: justify;">{{$ict[0]->div_name}}</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: justify;">{{$ict[0]->division_user}}</p>
   </div>
 
       </td>
@@ -823,7 +823,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;" align="left">
         
   <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$i->invent_code}}</p>
+    <p style="font-size: 14px; line-height: 140%; text-align: center;">{{$i->kategori}}</p>
   </div>
 
       </td>

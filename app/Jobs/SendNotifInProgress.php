@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\NotificationRequestInProgress;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class SendNotifInProgress implements ShouldQueue
 {
@@ -33,6 +34,7 @@ class SendNotifInProgress implements ShouldQueue
      */
     public function handle()
     {     
+        log::info([$this->ict]);
         Mail::to($this->mail)->send(new NotificationRequestInProgress($this->ict));
     }
 }

@@ -10,7 +10,6 @@
     .row {
         margin-left:-5px;
         margin-right:-5px;
-        pad
     }
     .row::after {
         content: "";
@@ -86,7 +85,6 @@
         text-align: center;
         font-weight:bold;
         color: black;
-        border-top: 1px solid #;
         overflow: hidden;
         bottom:0;
     }
@@ -106,7 +104,6 @@
     .invoice header {
         padding: 10px 0;
         margin-bottom: 20px;
-        border-bottom: 1px solid #
     }
 
     .invoice main {
@@ -181,7 +178,6 @@
         border:solid 2px;
 		font-size:14px;
         text-align: center;
-        background-color:#;
     }
     table th {
         border:solid 2px;
@@ -273,7 +269,6 @@
         margin: 0;
         overflow: hidden;
         height:0.375pt;
-        color: #;
         font-size: 16px;
         overflow: hidden;
     }
@@ -294,7 +289,6 @@
     }
 
     .invoice table tfoot tr:last-child td {
-        color: #;
         overflow: hidden;
         font-size: 1.4em;
         border: 2px solid;
@@ -316,7 +310,6 @@
         text-align: center;
         font-weight:bold;
         color: black;
-        border-top: 1px solid #;
         overflow: hidden;
         position:relative;
     }
@@ -379,7 +372,7 @@
     .invoice header {
         padding: 10px 0;
         margin-bottom: 20px;
-        border-bottom: 1px solid #
+        border-bottom: 1px solid;
     }
     .invoice main {
         padding-bottom: 50px
@@ -400,9 +393,8 @@
     }
 
     .invoice table tfoot tr:last-child td {
-        color: #;
         font-size: 1.4em;
-        border-top: 1px solid #;
+        border-top: 1px solid ;
         page-break-after: auto;
     }
 

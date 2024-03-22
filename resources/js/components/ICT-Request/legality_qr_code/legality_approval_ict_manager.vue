@@ -43,7 +43,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 export default {
   data() {
     return {
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY HH:mm")
+      return this.$moment(date).format("DD MMM YYYY HH:mm")
     },
     cekUser(){
       this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

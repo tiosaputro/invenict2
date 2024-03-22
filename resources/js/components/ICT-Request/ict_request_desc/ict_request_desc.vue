@@ -1037,7 +1037,7 @@
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelblmDiverifikasi.some(el=> el > 0)"/>
+          <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:10rem" v-if="this.showPersonelblmDiverifikasi.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -2683,7 +2683,7 @@
           <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
           <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
           <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelatasanDivisi.some(el=> el > 0)"/>
+          <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:10rem" v-if="this.showPersonelatasanDivisi.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -2802,7 +2802,7 @@
         <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
         <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
         <Column field="usr_division" header="Divison User" :sortable="true" style="min-width:10rem"/>
-        <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelictManager.some(el=> el > 0)"/>
+        <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:10rem" v-if="this.showPersonelictManager.some(el=> el > 0)"/>
         <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
           <template #body= "slotProps">
             <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -4302,7 +4302,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -4400,7 +4400,7 @@ export default {
           myWindow.focus();
       },
       formatDate(date) {
-        return moment(date).format("DD MMM YYYY HH:mm")
+        return this.$moment(date).format("DD MMM YYYY HH:mm")
       },
       getActive(){
         if(localStorage.getItem('desc')){
@@ -4455,15 +4455,15 @@ export default {
       },
       getIct2(){
         this.axios.get('/api/get-permohonan').then((response)=> {
-        this.permohonan = response.data.ict7;
-        this.sedangDireview1 = response.data.ict8;
-        this.verif = response.data.ict1;
-        this.reject = response.data.ict2;
-        this.penugasanRequest1 = response.data.ict9;
-        this.sedangDikerjakan = response.data.ict3;
-        this.sudahDikerjakan = response.data.ict4;
-        this.selesai = response.data.ict5;
-        this.totalRequest1 = response.data.ict6;
+        this.permohonan = response.data.data.ict7;
+        this.sedangDireview1 = response.data.data.ict8;
+        this.verif = response.data.data.ict1;
+        this.reject = response.data.data.ict2;
+        this.penugasanRequest1 = response.data.data.ict9;
+        this.sedangDikerjakan = response.data.data.ict3;
+        this.sudahDikerjakan = response.data.data.ict4;
+        this.selesai = response.data.data.ict5;
+        this.totalRequest1 = response.data.data.ict6;
         this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {

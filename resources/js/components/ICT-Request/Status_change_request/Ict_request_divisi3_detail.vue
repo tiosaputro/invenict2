@@ -92,7 +92,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -114,7 +114,7 @@ export default {
   },
   methods: {
     formatDate(date){
-      return moment(date).format("DD MMM YYYY HH:mm");
+      return this.$moment(date).format("DD MMM YYYY HH:mm");
     },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;

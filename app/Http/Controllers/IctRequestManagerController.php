@@ -19,6 +19,7 @@ use App\Exports\IctExportManagerAssignmentRequest;
 use App\Exports\IctExportVerifikasiManager;
 use App\Exports\IctExportRejectManager;
 use App\Exports\IctExportManagerSedangDikerjakan;
+use App\Services\IctDetailServices;
 
 class IctRequestManagerController extends Controller
 {
@@ -58,7 +59,8 @@ class IctRequestManagerController extends Controller
     }
 
     function detailRequest($code){
-        $data['detail'] = IctDetail::getDataDetailRequest($code);
+        $ictDetailService = new IctDetailServices();
+        $data['detail'] = $ictDetailService->getDataDetailRequest($code);
         $data['norequest'] = Ict::detailNoRequest($code);
         return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
     }
@@ -89,18 +91,16 @@ class IctRequestManagerController extends Controller
 
     function approveByManager(Request $request,$code)
     { 
-        $save =  $this->managerServices->approvedByIctManager($request,$code);
-        IctDetail::approvedByIctManager($code);
+        $this->managerServices->approvedByIctManager($request,$code);
 
-        return ResponseFormatter::success($save,'Successfully approved Request');
+        return ResponseFormatter::success('Successfully approved Request');
     }
 
     function rejectByManager(Request $request,$code)
     {
-        $save = $this->managerServices->RejectedByIctManager($request,$code);
-        IctDetail::RejectedByIctManager($request,$code);
+        $this->managerServices->RejectedByIctManager($request,$code);
 
-        return ResponseFormatter::success($save,'Successfully rejected Request');
+        return ResponseFormatter::success('Successfully rejected Request');
     }
 
     function detailPenugasan($code)

@@ -50,7 +50,7 @@
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
-                        <span :class="'user-request status-' + slotProps.data.ireq_statuss.toLowerCase()">{{slotProps.data.ireq_status}}</span>
+                        <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
                   <Column style="min-width:12rem">
@@ -62,7 +62,7 @@
                         @click="detailTabRequest(slotProps.data.ireq_id)"
                       />
                       <Button
-                        v-if="slotProps.data.ireq_statuss == 'NA1'"
+                        v-if="slotProps.data.status == 'NA1'"
                         class="p-button-rounded p-button-success mr-2"
                         icon="pi pi-check-square"
                         v-tooltip.bottom="'Click to Verification'"
@@ -630,7 +630,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -710,7 +710,7 @@ export default {
         });
     },
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY HH:mm")
+      return this.$moment(date).format("DD MMM YYYY HH:mm")
     },
     VerifikasiRequest(ireq_id){
       this.code = ireq_id;

@@ -19,6 +19,7 @@ use App\Exports\IctExportAtasanSedangDikerjakan;
 use App\Exports\IctExportAtasanSudahDikerjakan;
 use App\Exports\IctExportAtasanSelesai;
 use App\Services\IctRequestHigherLevelServices;
+Use App\Services\IctDetailServices;
 class IctRequestHigherLevelController extends Controller
 {
     protected $to;
@@ -39,16 +40,13 @@ class IctRequestHigherLevelController extends Controller
     }
     function approveByAtasan($code)
     {
-        $save = Ict::ApprovedByAtasan($code);
-        IctDetail::ApprovedByAtasan($code);
-        return ResponseFormatter::success($save,'Successfully approved Request');
+        $this->HigherLevelServices->ApprovedByAtasan($code);
+        return ResponseFormatter::success('Successfully approved Request');
     }
     function rejectByAtasan(Request $request, $code)
     {
-        $save = Ict::RejectedByAtasan($request,$code);
-        IctDetail::RejectedByAtasan($request,$code);
-
-        return ResponseFormatter::success($save,'Successfully rejected Request');
+        $this->HigherLevelServices->RejectedByAtasan($request,$code);
+        return ResponseFormatter::success('Successfully rejected Request');
     }
     function getPermohonan()
     {
@@ -66,9 +64,10 @@ class IctRequestHigherLevelController extends Controller
             return ResponseFormatter::success($data,'Successfully get data');
     }
     function detailRequest($code){
-        $data = IctDetail::getDataDetailRequest($code);
-        $dtl = Ict::detailNoRequest($code);
-        return ResponseFormatter::success(array('detail'=>$data,'norequest'=>$dtl),'Successfully Get Data Detail Request'); 
+        $ictDetailService = new IctDetailServices();
+        $data['detail'] = $ictDetailService->getDataDetailRequest($code);
+        $data['norequest'] = Ict::detailNoRequest($code);
+        return ResponseFormatter::success($data,'Successfully Get Data Detail Request'); 
     }
     function getDetailVerif($code)
     {

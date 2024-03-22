@@ -244,7 +244,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -262,7 +262,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY")
+      return this.$moment(date).format("DD MMM YYYY")
     },
     getMutasi(){
       this.axios.get('api/mut').then((response)=> {

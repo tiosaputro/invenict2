@@ -54,9 +54,9 @@
           <Column field="name" header="Items" :sortable="true"  style="min-width:8rem"/>
           <Column field="ireq_qty" header="Qty" :sortable="true"  style="min-width:6rem"/>
           <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:10rem"/>
-          <Column field="ireq_assigned_to1" header="Personnel ICT (1)" :sortable="true" style="min-width:10rem" v-if="this.showPersonnel1.some(el=> el > 0)"/>
+          <Column field="ireq_assigned_to1" header="ICT Personnel (1)" :sortable="true" style="min-width:10rem" v-if="this.showPersonnel1.some(el=> el > 0)"/>
           <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true"  style="min-width:8rem" v-if="this.showReason.some(el=> el > 0)"/>
-          <Column field="ireq_assigned_to2" header="Personnel ICT (2)" :sortable="true"  style="min-width:12rem" v-if="this.showPersonnel2.some(el=> el > 0)"/>
+          <Column field="ireq_assigned_to2" header="ICT Personnel (2)" :sortable="true"  style="min-width:12rem" v-if="this.showPersonnel2.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true"  style="min-width:10rem">
             <template #body= "slotProps">
               <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -209,7 +209,8 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+import html2pdf from 'html2pdf.js';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -239,7 +240,7 @@ export default {
   },
   methods: {
     formatDate(date){
-      return moment(date).format("DD MMM YYYY HH:mm");
+      return this.$moment(date).format("DD MMM YYYY HH:mm");
     },
     cekUser(){
       this.axios.get('/api/cek-user').then((response)=>{
@@ -311,9 +312,10 @@ export default {
               detail: "Success Submit",
               life : 1000
             });
-            this.axios.get('/api/appd/' +ireqd_id + '/' +this.$route.params.code ,{headers: {'Authorization': 'Bearer '+this.token}});
+            this.axios.get('/api/appd/' +ireqd_id + '/' +this.$route.params.code);
             
             this.getIctDetail();
+            this.loading
         },
         reject: () => {},
       });
@@ -348,10 +350,21 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
+       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
+        let htmlContent = response.data.htmlContent;
+         let RequestNo = response.data.norequest;
+         const options = {
+            filename: 'Form ICT Request No. '+RequestNo+'.pdf',
+            jsPDF: { 
+              unit: 'mm', 
+              format: 'a4',
+              orientation: 'landscape',
+              width: 210,
+              height: 297
+            }
+          };
+
+          this.$html2pdf().set(options).from(htmlContent).save();
           this.loading = false;
        });
     },

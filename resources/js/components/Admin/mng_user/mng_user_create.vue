@@ -11,115 +11,17 @@
             <div class="col-sm-6">
              <form @submit.prevent="CreateUser">
               <div class="card-body">
-               <div class="field grid">
-                <label style="width:120px">Full Name</label>
-                 <div class="col-6">
-                <InputText
-                  type="text"
-                  v-model="user.usr_fullname"
-                  placeholder="Masukan Full Name"
-                  style="text-transform:uppercase;"
-                  :class="{ 'p-invalid': errors.usr_fullname }"
-                />
-                   <small v-if="errors.usr_fullname" class="p-error">
-                      {{ errors.usr_fullname[0] }}
-                  </small>
-                </div>
-              </div>
               <div class="field grid">
-                <label style="width:120px">Username</label>
-                 <div class="col-6 ">
-                  <InputText
-                    type="text"
-                    v-model="user.usr_name"
-                    placeholder="Masukan Username"
-                    :class="{ 'p-invalid': errors.usr_name  }"
-                  />
-                    <small v-if="errors.usr_name" class="p-error">
-                      {{ errors.usr_name[0] }}
-                  </small>
-                </div>
-              </div>
-
-              <div class="field grid">
-                <label style="width:120px">Email</label>
+                <label style="width:120px">User Domain</label>
                  <div class="col-4">
                   <InputText
                     type="text"
-                    v-model="user.usr_email"
-                    placeholder="Masukan Email"
-                    :class="{ 'p-invalid': errors.usr_email  }"
+                    v-model="user.usr_domain"
+                    placeholder="Input User Domain"
+                    :class="{ 'p-invalid': errors.usr_domain  }"
                   />
-                    <small v-if="errors.usr_email" class="p-error">
-                      {{ errors.usr_email[0] }}
-                  </small>
-                </div>
-              </div>
-              <div class="field grid">
-                <label style="width:120px">Password</label>
-                 <div class="col-5">
-                   <Password
-                    v-model="user.usr_passwd"
-                    placeholder="Masukan Password"
-                    :class="{ 'p-invalid': errors.usr_passwd }"
-                    toggleMask
-                    :feedback="false"
-                   />
-                    <small v-if="errors.usr_passwd" class="p-error">
-                      {{ errors.usr_passwd[0] }}
-                  </small>
-                </div>
-              </div>
-              
-              <div class="field grid">
-                <label style="width:120px">Alamat</label>
-                 <div class="col-4">
-                <Textarea
-                  v-model="user.usr_alamat"
-                    :autoResize="true" 
-                    rows="5" 
-                    cols="30"
-                    placeholder="Masukan Keterangan . . ."
-                    :class="{ 'p-invalid': errors.usr_alamat }"
-                />
-                   <small v-if="errors.usr_alamat" class="p-error">
-                      {{ errors.usr_alamat[0] }}
-                  </small>
-                </div>
-              </div>
-              <div class="field grid">
-                <label style="width:120px">Bisnis Unit</label>
-                 <div class="col-4">
-                  <Dropdown
-                      v-model="user.usr_bu"
-                      :options="bu"
-                      :showClear="true"
-                      :filter="true"
-                      optionLabel="name"
-                      optionValue="code"
-                      placeholder="Select A Bisnis Unit"
-                      :class="{ 'p-invalid': errors.div }"
-                    />
-                   <small v-if="errors.usr_bu" class="p-error">
-                      {{ errors.usr_bu[0] }}
-                  </small>
-                </div>
-              </div>
-              <div class="field grid">
-                <label style="width:120px">Divisi</label>
-                 <div class="col-4">
-                  <Dropdown
-                      v-model="user.div"
-                      :options="divisi"
-                      :showClear="true"
-                      :filter="true"
-                      optionLabel="name"
-                      optionValue="code"
-                      placeholder="Select A Divisi"
-                      :class="{ 'p-invalid': errors.div }"
-                    />
-                   <small v-if="errors.div" class="p-error">
-                      {{ errors.div[0] }}
+                    <small v-if="errors.usr_domain" class="p-error">
+                      {{ errors.usr_domain[0] }}
                   </small>
                 </div>
               </div>
@@ -142,7 +44,7 @@
                 </div>
               </div>
               <div class="field grid">
-                <label style="width:120px">Lokasi</label>
+                <label style="width:120px">Location</label>
                  <div class="col-4">
                   <Dropdown
                       v-model="user.usr_loc"
@@ -231,7 +133,7 @@ export default {
           usr_name:'',
           usr_fullname:'',
           usr_passwd:'',
-          usr_email:'',
+          usr_domain:'',
           usr_status:'',
           usr_alamat:'',
           usr_roles:'',

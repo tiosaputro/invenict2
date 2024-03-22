@@ -60,7 +60,7 @@ class MngUsrRoleController extends Controller
     }
     function save(Request $request)
     {
-        $user = Mng_User::select('usr_id')->where('usr_name',$request->usr_name)->first();
+        $user = Mng_User::select('usr_id')->where('usr_domain',$request->usr_domain)->first();
         $roles = $request->usr_roles;
         foreach( $roles as $r){
             Mng_usr_roles::create([

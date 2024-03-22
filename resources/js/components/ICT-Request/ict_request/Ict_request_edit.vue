@@ -70,7 +70,7 @@
               <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:120px">User Business Unit</label>
                  <div class="col-fixed w-9rem">
-                     <InputText v-model="request.bu_user" disabled/>
+                     <InputText v-model="request.company_user" disabled/>
                  </div>
               </div>
               <div class="field grid">
@@ -118,7 +118,7 @@
                   icon="pi pi-times"
                   @click="$router.push('/ict-request')"
                 />
-                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" v-else/>
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" animationDuration=".5s" v-else/>
                 
               </div>
             </form>

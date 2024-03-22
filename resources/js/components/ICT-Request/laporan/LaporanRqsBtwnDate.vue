@@ -56,7 +56,7 @@
           <Column field="ireq_requestor" header="Requestor" style="min-width:8rem" :sortable="true"/>
           <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
           <Column field="div_name" header="User Division" style="min-width:8rem" :sortable="true"/>
-          <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:8rem" :sortable="true"/>
+          <Column field="ireq_assigned_to" header="ICT Personnel" style="min-width:8rem" :sortable="true"/>
           <Column field="ireq_status" header="Status" style="min-width:8rem" :sortable="true">
             <template #body= "slotProps">
               <span :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -93,7 +93,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 export default {
   data() {
     return {
@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY HH:mm")
+      return this.$moment(date).format("DD MMM YYYY HH:mm")
     },
     cekUser(){
       this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{

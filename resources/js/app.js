@@ -12,7 +12,8 @@ import 'jquery/dist/jquery.min';
 import 'popper.js/dist/popper.min';
 import 'bootstrap/dist/js/bootstrap.min';
 import 'v-calendar/dist/style.css';
-
+import moment from 'moment';
+import html2pdf from 'html2pdf.js';
 
 import { createApp, reactive } from 'vue';
 import axios from 'axios';
@@ -50,8 +51,6 @@ import Password from 'primevue/password';
 import ProgressSpinner from 'primevue/progressspinner';
 import Pdf from 'pdfvuer';
 import PrimeVue from 'primevue/config';
-import QrcodeVue from 'qrcode.vue';
-import QRCodeVue3 from "qrcode-vue3";
 import Rating from 'primevue/rating';
 import RadioButton from 'primevue/radiobutton';
 import Ripple from 'primevue/ripple';
@@ -83,12 +82,14 @@ router.beforeEach(function(to, from, next) {
 const app = createApp(AppWrapper);
 
 axios.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token'); // Replace 'your_token_key' with the actual key used to store your token
+    const token = localStorage.getItem('token');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
 });
+app.config.globalProperties.$moment = moment;
+app.config.globalProperties.$html2pdf = html2pdf;
 
 app.config.globalProperties.$appState = reactive({ theme: 'vela-blue'});
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
@@ -109,7 +110,6 @@ app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
 
 app.component("v-icon", OhVueIcon);
-
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);
 app.component('Button', Button);
@@ -137,8 +137,6 @@ app.component('MultiSelect', MultiSelect);
 app.component('Password', Password);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('Pdf',Pdf);
-app.component('QrcodeVue',QrcodeVue);
-app.component('QRCodeVue3',QRCodeVue3);
 app.component('RadioButton', RadioButton);
 app.component('Rating', Rating);
 app.component('Sidebar', Sidebar);

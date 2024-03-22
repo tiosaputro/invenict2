@@ -118,7 +118,7 @@
                 <label class="col-fixed w-9rem" style="width:100px">Request Type</label>
                  <div class="col-fixed">
                      <InputText
-                        v-model="assign.ireq_type"
+                        v-model="assign.request_type"
                         disabled
                      />
                   </div>
@@ -153,7 +153,7 @@
                         <Dropdown
                             v-model="assign.ireq_assigned_to1"
                             :options="petugas"
-                            optionValue="name"
+                            optionValue="code"
                             optionLabel="name"
                             :filter="true"
                             placeholder="Pilih Personnel (ICT)"
@@ -175,7 +175,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -198,7 +198,7 @@ export default {
   },
   methods: {
     formatDate(date){
-      return moment(date).format("DD MMM YYYY HH:mm");
+      return this.$moment(date).format("DD MMM YYYY HH:mm");
     },
     getDetail(ireq_attachment){
       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;

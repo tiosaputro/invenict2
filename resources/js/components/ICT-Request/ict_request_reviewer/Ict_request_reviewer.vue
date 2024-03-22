@@ -49,9 +49,9 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="User Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPermohonan.some(el=> el > 0)"/>
-                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelPermohonan.some(el=> el > 0)"/>
+                  <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:10rem" v-if="this.showPersonelPermohonan.some(el=> el > 0)"/>
                   <Column field="ireq_count_id" header="Total Detail" :sortable="true" style="min-width:10rem"/>
                   <Column headerStyle="min-width:10rem">
                     <template #body="slotProps">
@@ -203,13 +203,13 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="User Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:16rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelAtasanDivisi.some(el=> el > 0)"/>
+                  <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:10rem" v-if="this.showPersonelAtasanDivisi.some(el=> el > 0)"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkAtasanDivisi.some(el=> el > 0)"/>
                   <Column headerStyle="min-width:20rem">
                     <template #body="slotProps">
@@ -331,13 +331,13 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:7rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:7rem"/>
                   <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="User Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                     </template>
                   </Column>
-                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem" v-if="this.showPersonelmanager.some(el=> el > 0)"/>
+                  <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:10rem" v-if="this.showPersonelmanager.some(el=> el > 0)"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkManager.some(el=> el > 0)"/>
                   <Column field="ireq_approver2_remark" header="Remark ICT Manager" :sortable="true" style="min-width:14rem" v-if="this.showRemarkApprover2Manager.some(el=> el > 0)"/>
                   <Column headerStyle="min-width:15rem">
@@ -448,7 +448,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="User Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                     <template #body= "slotProps">
@@ -526,8 +526,8 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="User Supervisor" :sortable="true" style="min-width:10rem"/>
+                  <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="this.showRemarkPenugasan.some(el=> el > 0)"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
                   <template #body= "slotProps">
@@ -620,7 +620,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:4rem"/>
                   <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="spv" header="Supervisor User" :sortable="true" style="min-width:10rem"/>
+                  <Column field="spv" header="User Supervisor" :sortable="true" style="min-width:10rem"/>
                   <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
                   <template #body= "slotProps">
@@ -720,7 +720,7 @@
                   <Column field="ireq_requestor" header="Requestor" style="min-width:8rem" :sortable="true"/>
                   <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
                   <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to" header="Personnel ICT" style="min-width:12rem" :sortable="true"/>
+                  <Column field="ireq_assigned_to" header="ICT Personnel" style="min-width:12rem" :sortable="true"/>
                   <Column field="ireq_status" header="Status" style="min-width:10rem" :sortable="true">
                   <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -832,7 +832,7 @@
                   <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
                   <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
                   <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
+                  <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:12rem"/>
                   <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
                     <template #body= "slotProps">
                       <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -1003,7 +1003,7 @@
                 <Column field="kategori" header="Items" :sortable="true" style="min-width:12rem"/>
                 <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem"/>
                 <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem"/>
-                <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem"/>
+                <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:12rem"/>
                 <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem"/>
               </DataTable>
             </Dialog>  
@@ -1116,7 +1116,8 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+import html2pdf from 'html2pdf.js';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -1340,7 +1341,7 @@ export default {
         });    
     },  
     formatDate(date){
-      return moment(date).format("DD MMM YYYY HH:mm")
+      return this.$moment(date).format("DD MMM YYYY HH:mm")
     },
     Submit(ireq_id){
       this.$confirm.require({
@@ -1537,9 +1538,18 @@ export default {
     CetakPdf(ireq_id){
       this.loading = true;
        this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
+          let htmlContent = response.data;
+          const options = {
+            filename: 'document.pdf', // Optional, specify a filename for the downloaded PDF
+            jsPDF: { 
+              unit: 'mm', 
+              format: 'a4', // Set the format to A4
+              orientation: 'landscape', // Set the orientation to portrait or landscape
+            }
+          };
+
+          // Convert HTML to PDF with options
+          html2pdf().set(options).from(htmlContent).save();
           this.loading = false;
        });
     },

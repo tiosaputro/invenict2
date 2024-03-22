@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\SendNotifInProgress;
 
@@ -70,7 +69,7 @@ class IctDetail extends Model
         return $this->getAttribute($keyName);
     }
 
-    public static function getDataDetailRequest($code){
+    public function getDataDetailRequest($code){
         $dtl = DB::table('ireq_dtl as id')
             ->select(
                 DB::raw("COALESCE(vi2.official_name,vi1.official_name) AS ireq_assigned_to"),
@@ -211,17 +210,6 @@ class IctDetail extends Model
         return $message;
 
     }
-    public static function ApprovedByAtasan($code){
-        $dtl = DB::table('ireq_dtl')
-        ->WHERE('ireq_id',$code)
-        ->update([
-            'ireq_status' => 'A1',
-            'last_update_date' => now(),
-            'last_updated_by' => Auth::user()->usr_id,
-            'program_name' => "IctController_approveByAtasan",
-        ]);
-        return $dtl;
-    }
     public static function detailRequestForAssignment($code){
         $dtl = DB::table('ireq_dtl as id')
         ->select(DB::raw('COUNT(id.ireq_note_personnel) as count_note'),'id.ireq_attachment','id.ireq_qty','id.ireq_status as status','id.ireq_remark','id.ireqd_id','id.ireq_note_personnel',
@@ -267,18 +255,6 @@ class IctDetail extends Model
             ->first();
         return $data;
     }
-    public static function RejectedByAtasan($request, $code){
-        $dtl = DB::table('ireq_dtl')
-        ->WHERE('ireq_id',$code)
-        ->update([
-            'ireq_status' => 'A2',
-            'ireq_reason' => $request->ket,
-            'last_update_date' => now(),
-            'last_updated_by' => Auth::user()->usr_id,
-            'program_name' => "IctController_rejectByManager",
-        ]);
-        return $dtl;
-    }
     public static function detailVerification($code){
         $data = DB::table('ireq_dtl as id')
         ->select('id.*','lr.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as invent_desc"))
@@ -295,80 +271,7 @@ class IctDetail extends Model
         ->get();
         return $data;
     }
-    public static function ApprovedByIctManager($code){
-        $dtl = DB::table('ireq_dtl')
-        ->WHERE('ireq_id',$code)
-        ->update([
-            'ireq_status' => 'A2',
-            'last_update_date' => now(),
-            'last_updated_by' => Auth::user()->usr_id,
-            'program_name' => "IctController_approveByManager",
-        ]);
-        return $dtl;
-    }
-     
-    public static function RejectedByIctManager($request, $code){
-        $dtl = DB::table('ireq_dtl')
-        ->WHERE('ireq_id',$code)
-        ->update([
-            'ireq_status' => 'RA2',
-            'ireq_reason' => $request->ket,
-            'last_update_date' => now(),
-            'last_updated_by' => Auth::user()->usr_id,
-            'program_name' => "IctController_rejectIctManager",
-        ]);
-        
-        return $dtl;
-    }
 
-    public static function RejectedByReviewer($request, $code){
-        $dtl = DB::table('ireq_dtl')
-        ->WHERE('ireq_id',$code)
-        ->update([
-            'ireq_status' => 'RR',
-            'ireq_reason' => $request->ket,
-            'last_update_date' => now(),
-            'last_updated_by' => Auth::user()->usr_id,
-            'program_name' => "IctController_rejectReviewer",
-        ]);
-        
-        return $dtl;
-    }
-
-    public static function needApprovalByHigherLevel($ireq_id){
-        DB::table('ireq_dtl')
-        ->WHERE('ireq_id',$ireq_id)
-        ->update([
-            'ireq_status' => 'NA1',
-            'last_update_date' => now(),
-            'last_updated_by' => Auth::user()->usr_id,
-            'program_name' => "IctController_needApprovalAtasan",
-        ]);
-    }
-
-    public static function needApprovalByIctManager($ireq_id){
-        $dtl = DB::table('ireq_dtl')
-        ->WHERE('ireq_id',$ireq_id)
-        ->update([
-            'ireq_status' => 'NA2',
-            'last_update_date' => now(),
-            'last_updated_by' => Auth::user()->usr_id,
-            'program_name' => "IctController_needApprovalManager",
-        ]);
-        return $dtl;
-    }
-
-    public static function rejectedByPersonnel($request, $ireq_id){
-        $dtl = DB::table('ireq_dtl')
-        ->where('ireq_id',$ireq_id)
-        ->where('ireq_assigned_to1',Auth::user()->usr_id)
-        ->update([
-            'ireq_status' => 'RT',
-            'ireq_assigned_to1_reason' => $request->ireq_reason,
-            'last_update_date' => now(),
-            'last_updated_by' => Auth::user()->usr_id,
-            'program_name' => "IctDetailController_rbp"
-        ]);
-        return $dtl;
-    }
+    
+    
 }

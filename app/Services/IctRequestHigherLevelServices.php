@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\IctDetail;
 use App\Models\Ict;
-use Carbon\Carbon;
+use App\Jobs\SendNotifApprovedFromHigherLevel;
+use App\Jobs\SendNotifRejectByHigherLevel;
 
 class IctRequestHigherLevelServices
 {
@@ -28,6 +29,7 @@ class IctRequestHigherLevelServices
                 DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
                 'ireq_mst.ireq_approver2_remark');
         $data->LEFTJOIN('mng_users mu','ireq_mst.ireq_requestor','mu.usr_id');
+        $data->LEFTJOIN('supervisor_refs sr','ireq_mst.ireq_spv','sr.spv_id');
         $data->LEFTJOIN('vpekerja_ict vi', function($join) {
             $join->on('ireq_mst.ireq_assigned_to1','vi.usr_id')
                   ->whereNotNull('ireq_mst.ireq_assigned_to1');
@@ -54,7 +56,7 @@ class IctRequestHigherLevelServices
                 $query->whereNotNull('ireq_mst.ireq_status');
             }
         });
-        $data->where('ireq_mst.ireq_approver1',Auth::user()->usr_id);
+        $data->where('sr.spv_name',Auth::user()->usr_id);
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
         $data->GroupBy(
             'ireq_mst.ireq_id',
@@ -73,9 +75,10 @@ class IctRequestHigherLevelServices
         $data->ORDERBY('ireq_mst.ireq_date','DESC');
         return $data->get(); 
     }
-    public function getDetailWithFilter($status){
+    public function getDetailWithFilter($status, $code = NULL){
         $data = IctDetail::Query();
         $data->LEFTJOIN('ireq_mst as im','ireq_dtl.ireq_id','im.ireq_id');
+        $data->LEFTJOIN('supervisor_refs sr','im.ireq_spv','sr.spv_id');
         $data->LEFTJOIN('vpekerja_ict vi', function($join) {
             $join->on('ireq_dtl.ireq_assigned_to1','vi.usr_id')
                   ->whereNotNull('ireq_dtl.ireq_assigned_to1');
@@ -104,7 +107,11 @@ class IctRequestHigherLevelServices
             'ireq_dtl.ireq_attachment',
             DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
             'ms.usr_fullname as ireq_requestor',
+            'ms.usr_fullname',
             'mus.usr_fullname as ireq_user',
+            'mus.usr_division as division_user', 
+            'ms.usr_email as user_mail',
+            'im.ireq_reason',
             'im.ireq_no',
             'im.ireq_verificator_remark',
             'ireq_dtl.ireq_status as status',
@@ -120,10 +127,63 @@ class IctRequestHigherLevelServices
         if(!empty($status)){
             $data->WHERE('ireq_dtl.ireq_status',$status);
         }
-        $data->WHERE('im.ireq_approver1',Auth::user()->usr_id);
+        if(!empty($code)){
+            $data->WHERE('im.ireq_id',$code);
+        }
+        $data->WHERE('sr.spv_name',Auth::user()->usr_id);
         $data->ORDERBY('im.ireq_date','DESC');
         $data->ORDERBY('ireq_dtl.ireqd_id','ASC');
         return $data->get();
+    }
+    public function ApprovedByAtasan($code){
+        $ict = Ict::where('ireq_id',$code)->first();
+        $ict->ireq_status = 'A1';
+        $ict->ireq_approver1 = Auth::user()->usr_id;
+        $ict->ireq_approver1_date = now();
+        $ict->last_updated_by = Auth::user()->usr_id;
+        $ict->last_update_date = now();
+        $ict->program_name = "IctController_approveByAtasan";
+        $ict->save();
+
+        DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'A1',
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
+            'program_name' => "IctController_approveByAtasan",
+        ]);
+
+        $data = $this->getDetailWithFilter(NULL, $code);
+        $user_mail = $data[0]->user_mail;
+        SendNotifApprovedFromHigherLevel::dispatchAfterResponse($user_mail,$data);
+        return $ict;
+    }
+    public function RejectedByAtasan($request, $code){
+        $ict = Ict::where('ireq_id',$code)->first();
+        $ict->ireq_status = 'RA1';
+        $ict->ireq_approver1 = Auth::user()->usr_id;
+        $ict->ireq_approver1_date = now();
+        $ict->ireq_reason = $request->ket;
+        $ict->last_update_date = now();
+        $ict->last_updated_by = Auth::user()->usr_id;
+        $ict->program_name = "IctController_rejectByAtasan";
+        $ict->save();
+        
+        DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'A2',
+            'ireq_reason' => $request->ket,
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
+            'program_name' => "IctController_rejectByManager",
+        ]);
+
+        $data = $this->getDetailWithFilter(NULL, $code);
+        $user_mail = $data[0]->user_mail;
+        SendNotifRejectByHigherLevel::dispatchAfterResponse($user_mail,$data);
+        return $ict;
     }
 
 }

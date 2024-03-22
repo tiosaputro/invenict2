@@ -121,7 +121,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return moment(date).format("DD MMM YYYY")
+      return this.$moment(date).format("DD MMM YYYY")
     },
      formatPrice(value) {
          let val = (value/1).toFixed(2).replace('.', ',')

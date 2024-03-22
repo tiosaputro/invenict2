@@ -79,27 +79,19 @@ class IctRequestRequestorController extends Controller
                         'ireq_mst.ireq_date',
                         'ireq_mst.ireq_user',
                         'ireq_mst.ireq_spv',
-                        'mu.usr_division',
+                        'mu.usr_division as division_requestor',
+                        'usr.usr_division as division_user',
+                        'usr.usr_department as department_user',
+                        'usr.usr_nm_perush as company_user'
                       )
             ->LEFTJOIN('lookup_refs as lr',function ($join) {
                 $join->on('ireq_mst.ireq_type','lr.lookup_code')
                       ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
             })
-            ->LEFTJOIN('user_profile up','ireq_mst.ireq_user','up.user_id')
-            ->LEFTJOIN('mng_users as mu','ireq_mst.ireq_requestor','mu.usr_id')
+            ->LEFTJOIN('mng_users usr','ireq_mst.ireq_user','usr.usr_id')
+            ->LEFTJOIN('mng_users mu','ireq_mst.ireq_requestor','mu.usr_id')
             ->WHERE('ireq_mst.ireq_id',$code)
             ->first();
-            if ($data['ict']) {
-                $profileDetail = json_decode($data['ict']->profile_detail, true);
-                $data['ict']->division_user = isset($profileDetail['division']) ? str_replace('"', '', $profileDetail['division']) : null;
-                $data['ict']->department_user = isset($profileDetail['department']) ? str_replace('"', '', $profileDetail['department']) : null;
-                $data['ict']->bu_user = isset($profileDetail['company']) ? str_replace('"', '', $profileDetail['company']) : null;
-            }
-        // $data['ref'] = Lookup_Refs::Select('lookup_code as code','lookup_desc as name')
-        //     ->WHERE('lookup_status','T')
-        //     ->WHERERaw('LOWER(lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
-        //     ->ORDERBY('lookup_desc','ASC')
-        //     ->get();
     
         $data['bisnis'] = DB::table('v_company_refs')->get();
         $data['divisi'] = DB::table('divisi_refs')
@@ -179,8 +171,16 @@ class IctRequestRequestorController extends Controller
         ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
         ->LEFTJOIN('mng_users as mu','im.ireq_approver1','mu.usr_name')
         ->LEFTJOIN('mng_users as muu','im.ireq_approver2','muu.usr_name')
-        ->SELECT('im.ireq_no','im.ireq_date','vr.name as ireq_bu','im.ireq_approver1_date as date_approver1',
-        'im.ireq_approver2_date as date_approver2','dr.div_name','im.ireq_user','im.ireq_requestor','mu.usr_fullname as ireq_approval1','muu.usr_fullname as ireq_approval2')
+        ->SELECT(
+            'im.ireq_no',
+            'im.ireq_date',
+            'vr.name as ireq_bu',
+            'im.ireq_approver1_date as date_approver1',
+            'im.ireq_approver2_date as date_approver2',
+            'dr.div_name','im.ireq_user',
+            'im.ireq_requestor',
+            'mu.usr_fullname as ireq_approval1',
+            'muu.usr_fullname as ireq_approval2')
         ->WHERE('im.ireq_id',$code)
         ->get();
         return json_encode($ict);

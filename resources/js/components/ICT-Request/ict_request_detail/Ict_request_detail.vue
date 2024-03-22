@@ -89,7 +89,7 @@
               </p>
             </template>  
           </Column>
-          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem" v-if="this.showPersonnel.some(el=> el > 0)"/>
+          <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:12rem" v-if="this.showPersonnel.some(el=> el > 0)"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span v-if="slotProps.data.status" :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
@@ -155,7 +155,7 @@
 </template>
 <script>
 import {FilterMatchMode} from 'primevue/api';
-import moment from 'moment';
+
 export default {
   data() {
     return {
@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     formatDate(date){
-      return moment(date).format("DD MMM YYYY HH:mm");
+      return this.$moment(date).format("DD MMM YYYY HH:mm");
     },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
@@ -262,9 +262,20 @@ export default {
     CetakPdf(){
       this.loading = true;
        this.axios.get('/api/print-out-ict-request/' +this.code,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
+        let htmlContent = response.data.htmlContent;
+         let RequestNo = response.data.norequest;
+         const options = {
+            filename: 'Form ICT Request No. '+RequestNo+'.pdf',
+            jsPDF: { 
+              unit: 'mm', 
+              format: 'a4',
+              orientation: 'landscape',
+              width: 210,
+              height: 297
+            }
+          };
+
+          this.$html2pdf().set(options).from(htmlContent).save();
           this.loading = false;
        });
     },

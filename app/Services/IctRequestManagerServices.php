@@ -83,7 +83,6 @@ class IctRequestManagerServices
         $data->ORDERBY('ireq_mst.ireq_date','DESC');
         return $data->get();
     }
-
     public function getDataDetailWithFilter($status, $code = NULL){
         $data = IctDetail::Query();
         $data->LEFTJOIN('ireq_mst as im','ireq_dtl.ireq_id','im.ireq_id');
@@ -154,6 +153,15 @@ class IctRequestManagerServices
         $ict->program_name = "IctController_rejectByManager";
         $ict->save();
 
+        DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'A2',
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
+            'program_name' => "IctController_approveByManager",
+        ]);
+
         $data = $this->getDataDetailWithFilter(NULL, $code);
 
         $user_mail = $data[0]->mail_requestor;
@@ -171,6 +179,15 @@ class IctRequestManagerServices
         $ict->last_update_date = now();
         $ict->program_name = "IctController_approveByManager";
         $ict->save();
+
+        DB::table('ireq_dtl')
+        ->WHERE('ireq_id',$code)
+        ->update([
+            'ireq_status' => 'A2',
+            'last_update_date' => now(),
+            'last_updated_by' => Auth::user()->usr_id,
+            'program_name' => "IctController_approveByManager",
+        ]);
 
         $data = $this->getDataDetailWithFilter(NULL, $code);
         $user_mail = $data[0]->mail_requestor;

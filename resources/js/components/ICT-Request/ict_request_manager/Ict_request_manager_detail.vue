@@ -103,7 +103,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+
 import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
@@ -123,7 +123,7 @@ export default {
   },
   methods: {
     formatDate(date){
-      return moment(date).format("DD MMM YYYY HH:mm");
+      return this.$moment(date).format("DD MMM YYYY HH:mm");
     },
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
@@ -183,9 +183,20 @@ export default {
     CetakPdf(){
       this.loading = true;
        this.axios.get('/api/print-out-ict-request/' +this.code).then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
+        let htmlContent = response.data.htmlContent;
+         let RequestNo = response.data.norequest;
+         const options = {
+            filename: 'Form ICT Request No. '+RequestNo+'.pdf',
+            jsPDF: { 
+              unit: 'mm', 
+              format: 'a4',
+              orientation: 'landscape',
+              width: 210,
+              height: 297
+            }
+          };
+
+          this.$html2pdf().set(options).from(htmlContent).save();
           this.loading = false;
        });
     },

@@ -128,7 +128,6 @@
 <script>
 import {FilterMatchMode} from 'primevue/api';
 import { ics } from "calendar-link";
-import moment from 'moment';
 export default {
   data() {
     return {
@@ -153,7 +152,7 @@ export default {
   },
   methods: {
     formatDate(date){
-      return moment(date).format("DD MMM YYYY HH:mm");
+      return this.$moment(date).format("DD MMM YYYY HH:mm");
     },
     AddToCalendar(){
       const remark = this.detail.map((x)=>x.ireq_remark);
@@ -203,9 +202,20 @@ export default {
     CetakPdf(){
       this.loading = true;
        this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
+         let htmlContent = response.data.htmlContent;
+         let RequestNo = response.data.norequest;
+         const options = {
+            filename: 'Form ICT Request No. '+RequestNo+'.pdf',
+            jsPDF: { 
+              unit: 'mm', 
+              format: 'a4',
+              orientation: 'landscape',
+              width: 210,
+              height: 297
+            }
+          };
+
+          this.$html2pdf().set(options).from(htmlContent).save();
           this.loading = false;
        });
     },

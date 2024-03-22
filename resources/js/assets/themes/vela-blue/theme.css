@@ -10,9 +10,8 @@
     --text-color-secondary: rgba(255, 255, 255, 0.6);
     --primary-color: #64b5f6;
     --primary-color-text: #212529;
-    --font-family-emp: "Roboto", sans-serif;
-    /* --font-family-emp: emp-font;
-    --font-family-emp-url: url(/invenict2/public/fonts/emp-font.woff); */
+    --font-family-emp: emp-font;
+    --font-family-emp-url: url(./css/emp-font.woff);
     --surface-0: #fefefe;
     --surface-50: #2e3744;
     --surface-100: #454d59;
@@ -70,7 +69,7 @@ body {
     background-size: cover; */
 }
 input::placeholder {
-    color: #92919169; /* Change this to your desired color */
+    color: #151313; /* Change this to your desired color */
 }
 .svgbackground {
     background: linear-gradient(
@@ -676,14 +675,13 @@ input::placeholder {
     height: 20px;
 }
 .p-checkbox .p-checkbox-box {
-    border: 2px solid #304562;
-    background: #17212f;
+    border: 2px solid #121313;
+    background: #eef1f4;
     width: 20px;
     height: 20px;
     color: rgba(255, 255, 255, 0.87);
     border-radius: 3px;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s,
-        box-shadow 0.2s;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 .p-checkbox .p-checkbox-box .p-checkbox-icon {
     transition-duration: 0.2s;
@@ -700,8 +698,8 @@ input::placeholder {
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
     outline: 0 none;
     outline-offset: 0;
-    box-shadow: 0 0 0 1px #93cbf9;
-    border-color: #64b5f6;
+    box-shadow: 0 0 0 1px #161617;
+    border-color: #101010;
 }
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
     border-color: #2396f2;
@@ -1317,7 +1315,7 @@ input::placeholder {
 }
 
 .p-multiselect {
-    background: #17212f;
+    background: #e9ebef;
     border: 1px solid #304562;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s,
         box-shadow 0.2s;
@@ -1338,12 +1336,12 @@ input::placeholder {
         box-shadow 0.2s;
 }
 .p-multiselect .p-multiselect-label.p-placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(28, 27, 27, 0.6);
 }
 .p-multiselect.p-multiselect-chip .p-multiselect-token {
     padding: 0.25rem 0.5rem;
     margin-right: 0.5rem;
-    background: #304562;
+    background: #0b0b0b;
     color: rgba(255, 255, 255, 0.87);
     border-radius: 16px;
 }
@@ -1354,7 +1352,7 @@ input::placeholder {
 }
 .p-multiselect .p-multiselect-trigger {
     background: transparent;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(24, 23, 23, 0.6);
     width: 2.357rem;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
@@ -1368,7 +1366,7 @@ input::placeholder {
 }
 
 .p-multiselect-panel {
-    background: #1f2d40;
+    background: #f6f0f0;
     color: rgba(255, 255, 255, 0.87);
     border: 1px solid #304562;
     border-radius: 3px;
@@ -1379,7 +1377,7 @@ input::placeholder {
     padding: 0.5rem 1rem;
     border-bottom: 0 none;
     color: rgba(255, 255, 255, 0.87);
-    background: #1f2d40;
+    background: #fbfcfd;
     margin: 0;
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
@@ -1427,20 +1425,20 @@ input::placeholder {
     margin: 0;
     padding: 0.5rem 1rem;
     border: 0 none;
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(9, 9, 9, 0.87);
     background: transparent;
     transition: box-shadow 0.2s;
     border-radius: 0;
 }
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(11, 11, 11, 0.934);
     background: rgba(100, 181, 246, 0.16);
 }
 .p-multiselect-panel
     .p-multiselect-items
     .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
     color: rgba(255, 255, 255, 0.87);
-    background: rgba(255, 255, 255, 0.03);
+    background: rgb(83, 189, 74);
 }
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
     outline: 0 none;
@@ -2556,8 +2554,7 @@ input::placeholder {
     margin-left: 0.5rem;
 }
 .p-datatable .p-sortable-column:not(.p-highlight):hover {
-    /* background: rgba(255, 255, 255, 0.03);
-  color: rgba(255, 255, 255, 0.87); */
+  color: rgba(255, 255, 255, 0.87);
 }
 .p-datatable
     .p-sortable-column:not(.p-highlight):hover
@@ -2565,14 +2562,12 @@ input::placeholder {
     color: rgba(255, 255, 255, 0.87);
 }
 .p-datatable .p-sortable-column.p-highlight {
-    background: #1f2d40;
     color: #64b5f6;
 }
 .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
     color: #64b5f6;
 }
 .p-datatable .p-sortable-column.p-highlight:hover {
-    background: rgba(255, 255, 255, 0.03);
     color: #64b5f6;
 }
 .p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon {
@@ -3001,7 +2996,7 @@ input::placeholder {
     box-shadow: 0 0 0 1px #93cbf9;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-left {
-    font-family: "PrimeIcons" !important;
+    font-family: url(/public/fonts/emp-font.woff) !important;
     text-indent: 0;
     font-size: 1rem;
 }
@@ -3009,7 +3004,7 @@ input::placeholder {
     content: "\e900";
 }
 .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-right {
-    font-family: "PrimeIcons" !important;
+    font-family: url(/public/fonts/emp-font.woff) !important;
     text-indent: 0;
     font-size: 1rem;
 }
@@ -3111,7 +3106,7 @@ input::placeholder {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    font-family: "PrimeIcons" !important;
+    font-family: url(/public/fonts/emp-font.woff) !important;
     font-size: 1rem;
     width: 2rem;
     height: 2rem;
@@ -3209,7 +3204,7 @@ input::placeholder {
     border: 1px solid #64b5f6;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left {
-    font-family: "PrimeIcons" !important;
+    font-family: url(/public/fonts/emp-font.woff) !important;
     text-indent: 0;
     font-size: 1rem;
 }
@@ -3217,7 +3212,7 @@ input::placeholder {
     content: "\e900";
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-right {
-    font-family: "PrimeIcons" !important;
+    font-family: url(/public/fonts/emp-font.woff) !important;
     text-indent: 0;
     font-size: 1rem;
 }

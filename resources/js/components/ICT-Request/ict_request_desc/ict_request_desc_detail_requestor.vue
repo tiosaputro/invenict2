@@ -83,7 +83,7 @@
               </p>
             </template>  
           </Column>
-          <Column field="ireq_assigned_to" header="Personnel ICT" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
+          <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:12rem" v-if="this.ireq.length"/>
           <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
             <template #body= "slotProps">
               <span :class="'user-request status-' + slotProps.data.cekstatus.toLowerCase()">{{slotProps.data.ireq_status}}</span>
