@@ -130,7 +130,7 @@ class IctRequestorServices
             'ireq_dtl.ireq_qty',
             'ireq_dtl.ireq_status as status');
         if(isset($status)){
-            $data->WHERE('ireq_dtl.ireq_status','D');
+            $data->WHERE('ireq_dtl.ireq_status',$status);
         }
         if(isset($createdBy)){
             $data->WHERE('im.ireq_requestor',$createdBy);

@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Master Peripheral") || this.checkto.includes("/master-peripheral")){
@@ -117,7 +117,7 @@ export default {
       });
     },
       getMaster(){
-          this.axios.get('/api/edit-mas/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('/api/edit-mas/' + this.$route.params.code).then((response)=>{
               this.master = response.data.mas;
               this.bisnis = response.data.bisnis;
               this.kondi = response.data.kondisi;
@@ -141,7 +141,7 @@ export default {
       if (
         this.master.invent_type != null 
       ) {
-        this.axios.put('/api/update-mas/' + this.$route.params.code ,this.master, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.put('/api/update-mas/' + this.$route.params.code ,this.master).then((response)=>{
           localStorage.removeItem("barcode");
           setTimeout( () => this.$router.push('/master-peripheral'),1000);
           this.$toast.add({

@@ -161,7 +161,6 @@
 </template>
 <script>
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -175,7 +174,7 @@ export default {
             ket:null,
             remark:null,
         },
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
         status : null,
     };
@@ -234,14 +233,13 @@ export default {
         this.reason.remark = null;
       },
       getNoreq(){
-        this.axios.get('/api/ict-detail/'+ this.$route.params.code).then((response)=>{
+        this.axios.get('/api/ict-detail-manager/'+ this.$route.params.code).then((response)=>{
           this.kode = response.data.data.request;
           if(this.kode.cekstatus =='NA2'){
             this.verif = response.data.data.detail;
             this.loading = false;
             this.cekStatus();
-        }
-        else{
+        } else {
           this.$toast.add({
             severity: "error",
             summary: "Error Message",
@@ -249,6 +247,10 @@ export default {
           });
           setTimeout( () =>  this.$router.push('/ict-request-manager'),2000);
         }
+        }).catch(error=>{
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
       },
   },

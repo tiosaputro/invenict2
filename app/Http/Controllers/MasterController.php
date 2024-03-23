@@ -88,6 +88,8 @@ class MasterController extends Controller
     {
         $mas = DB::table('invent_dtl as id')
         ->leftjoin('invent_mst as im','id.invent_code','im.invent_code')
+        ->leftjoin('mng_users usr1','id.invent_pengguna_previous','usr1.usr_id')
+        ->leftjoin('mng_users usr2','id.invent_pengguna_update','usr2.usr_id')
         ->leftJoin('lookup_refs as lrs',function ($join) {
             $join->on('im.invent_brand','lrs.lookup_code')
                   ->whereRaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
@@ -99,12 +101,25 @@ class MasterController extends Controller
         ->leftJoin('vcompany_refs as vr',function ($join) {
             $join->on('id.invent_bu','vr.company_code');
         })
-        ->select('im.invent_code','im.invent_type','id.invent_photo','im.invent_desc','lrs.lookup_desc as invent_brand',
-        'id.invent_sn',DB::RAW("(im.invent_desc|| '-' || lrs.lookup_desc || '-' || im.invent_type ) as name"),
-        DB::raw("TO_CHAR(id.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"),'id.invent_lama_garansi',
-        'lrfs.lookup_desc as invent_kondisi','vr.name as invent_bu',
-        'id.invent_lokasi_previous','id.invent_lokasi_update','id.invent_bu_previous','id.invent_bu_update','id.invent_pengguna_previous',
-        'id.invent_pengguna_update')
+        ->select(
+            'im.invent_code',
+            'im.invent_type',
+            'id.invent_photo',
+            'im.invent_desc',
+            'lrs.lookup_desc as invent_brand',
+            'id.invent_sn',
+            DB::RAW("(im.invent_desc|| '-' || lrs.lookup_desc || '-' || im.invent_type ) as name"),
+            DB::raw("TO_CHAR(id.invent_tgl_perolehan,' dd Mon YYYY') as invent_tgl_perolehan"),
+            'id.invent_lama_garansi',
+            'lrfs.lookup_desc as invent_kondisi',
+            'vr.name as invent_bu',
+            'id.invent_lokasi_previous',
+            'id.invent_lokasi_update',
+            'usr1.usr_nm_perush as invent_bu_previous',
+            'usr2.usr_nm_perush as invent_bu_update',
+            'usr1.usr_fullname as invent_pengguna_previous',
+            'usr2.usr_fullname as invent_pengguna_update'
+            )
         ->where('id.invent_code_dtl',$invent_code_dtl)
         ->first();
         return response()->json($mas);

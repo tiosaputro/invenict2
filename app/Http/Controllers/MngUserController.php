@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Adldap\Models\User;
 use App\Models\Mng_user;
 use App\Models\Mng_roles;
 use App\Models\Divisi_refs;
 use App\Models\Mng_usr_roles;
-use carbon\Carbon;
 use App\Models\Location;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 use App\Helpers\ResponseFormatter;
 use App\Helpers\ldap_connection;
 
@@ -34,18 +30,15 @@ class MngUserController extends Controller
             }
         })->only('index');
     }
-    function index()
-    {
+    function index(){
         $user = DB::table('v_mng_users')->get();
         return response()->json($user);
     }
-    
     function getLocation(){
         $loc = Location::select('loc_code as code','loc_desc as name')->orderBy('loc_desc','ASC')->get();
         return json_encode($loc);
     }
-    function save(Request $request)
-    {
+    function save(Request $request){
         $message = [
             'usr_domain.required'=>'User Domain Belum Diisi',
             // 'usr_domain.unique'=>'User Domain Sudah Pernah Didaftarkan',
@@ -95,19 +88,28 @@ class MngUserController extends Controller
                 'usr_loc'=>$request->usr_loc,
                 'program_name'=>'MngUser_SAVE'
             ]);
+            $roles = $request->usr_roles;
+            foreach( $roles as $r){
+            Mng_usr_roles::create([
+                'usr_id' => $user->usr_id,
+                'rol_id' => $r,
+                'urol_stat' => 'T',
+                'creation_date' => now(),
+                'created_by'=> Auth::user()->usr_id,
+                'program_name'=>'MngUsrRoleController_SAVE'
+            ]);
+        }
             return ResponseFormatter::success($user,'Successfully Created User');
         }else {
             return response()->json(['message' => 'User Domain Not Found!!', 'state' => 'failed'], 401);
         }
     }
-    function edit($code)
-    {
+    function edit($code){
         $user = Mng_User::find($code);
         $role = Mng_usr_roles::getRole($code);
         return response()->json(['user'=>$user,'role'=>$role],200);
     }
-    function update(Request $request,$code)
-    {
+    function update(Request $request,$code){
         $user = Mng_user::find($code);
         $message = [
             'usr_stat.required'=>'Status Belum Diisi',
@@ -138,8 +140,7 @@ class MngUserController extends Controller
             $user->save();
         return ResponseFormatter::success($user,'Successfully Updated User');
     }
-    function delete($usr_id)
-    {
+    function delete($usr_id){
         $user = Mng_user::find($usr_id);
         if($user->usr_foto){
             unlink(Storage_path('app/public/profile/'.$user->usr_foto));

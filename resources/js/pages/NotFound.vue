@@ -8,7 +8,7 @@
                             <i class="pi pi-fw pi-lock text-2xl text-50"></i>
                         </div>
                         <h1 class="text-900 font-bold text-4xl lg:text-5xl mb-2">404 Not Found</h1>
-                        <span class="text-600 text-center">The page that you are looking for does not exist.</span>
+                        <span class="text-900 text-center">The page that you are looking for does not exist.</span>
                         <img src="/layout/images/asset-tier-3.svg" class="mt-5" width="80%"/>
                         <div class="col-12 mt-5 text-center">
                             <Button icon="bi bi-arrow-left" class="p-button-raised p-button-text" label="Go back to home" @click="this.$router.push('/dashboard')"/>

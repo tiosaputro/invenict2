@@ -124,6 +124,7 @@ class IctRequestReviewerServices
         $data->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id');
         $data->LEFTJOIN('user_profile up','im.ireq_user','up.user_id');
         $data->LEFTJOIN('supervisor_refs sr','im.ireq_spv','sr.spv_id');
+        $data->LEFTJOIN('mng_users usr','usr.usr_id','sr.spv_name');
         $data->LEFTJOIN('lookup_refs as lr',function ($join) {
             $join->on('ireq_dtl.ireq_status','lr.lookup_code')
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
@@ -142,10 +143,11 @@ class IctRequestReviewerServices
             'ireq_dtl.ireq_attachment',
             DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
             'ms.usr_fullname as ireq_requestor',
-            'ms.usr_fullname',
             'ms.usr_email as mail_requestor',
             'mus.usr_fullname as ireq_user',
+            'usr.usr_fullname as spv_name',
             'mus.usr_division as division_user',
+            'sr.spv_name as spv_id',
             'im.ireq_no',
             'im.ireq_reason',
             'im.ireq_verificator_remark',
@@ -158,8 +160,7 @@ class IctRequestReviewerServices
             DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),
             'im.ireq_date',
             'mus.usr_division',
-            'ireq_dtl.ireq_qty',
-            'sr.spv_name'
+            'ireq_dtl.ireq_qty'
         );
         if(!empty($code)){
             $data->WHERE('im.ireq_id',$code);
@@ -226,9 +227,9 @@ class IctRequestReviewerServices
 
         $data = $this->getDetailWithFilter(NULL, $code, NULL);
 
-        Link::createLink($data[0]->spv_name, $code, 'Ict Request Verifikasi From Email');
+        Link::createLink($data[0]->spv_id, $code, 'Ict Request Verifikasi From Email');
         
-        $LINK = Link::where('ireq_id',$code)->WHERE('usr_id',$data[0]->spv_name)->orderBy('created_at', 'desc')->first();
+        $LINK = Link::where('ireq_id',$code)->WHERE('usr_id',$data[0]->spv_id)->orderBy('created_at', 'desc')->first();
 
         if(env('APP_ENV') != 'local'){
             $spv_mail = $data[0]->spv_mail;

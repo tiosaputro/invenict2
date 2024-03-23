@@ -33,11 +33,8 @@ class CashController extends Controller
     }
     function index()
     {
-        $cash = DB::table('v_cash_advance')->get();
-        $this->newTime = getTimePage();
-        $this->detailLog[] = array('time' => $this->newTime, 'title' => 'Query Get CA', 'selisih' => selisihTimePage($this->newTime));
-        insertTimePageDetail(json_encode($this->detailLog));
-        return ResponseFormatter::success($cash,'Successfully get data');
+        $data['cash'] = DB::table('v_cash_advance')->get();
+        return ResponseFormatter::success($data,'Successfully get data');
     }
     function getNoRequest(){
         $data = Ict::listNoRequest();

@@ -158,7 +158,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
          if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){
@@ -170,7 +170,7 @@ export default {
       });
     },
     getValutaCode(){
-      this.axios.get('/api/getValuta/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/getValuta/'+ this.$route.params.code).then((response)=>{
         this.valuta = response.data.dtl;
         this.sat = response.data.ref;
         this.kodeperi = response.data.mas;
@@ -221,7 +221,7 @@ export default {
         data.append("pricetotal", this.pricetotal);
         data.append("hrgsatuan", this.hrgsatuan);
         data.append("qty", this.qty);
-        this.axios.post('/api/add-detail-pem/'+ this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.post('/api/add-detail-pem/'+ this.$route.params.code, data).then((response)=>{
           setTimeout( () => this.$router.push('/pembelian-peripheral-detail/'+ this.$route.params.code),1000);
           this.$toast.add({
             severity: "success",

@@ -211,7 +211,6 @@
 <script>
 import html2pdf from 'html2pdf.js';
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -227,7 +226,7 @@ export default {
         status:'',
         loading: true,
         detail: [],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
         token: localStorage.getItem('token'),
         checkname : [],
@@ -236,23 +235,11 @@ export default {
     };
   },
   mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     formatDate(date){
       return this.$moment(date).format("DD MMM YYYY HH:mm");
-    },
-    cekUser(){
-      this.axios.get('/api/cek-user').then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request/reviewer")){ 
-           this.getIctDetail();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
     },
     AssignPerDetail(ireqd_id){
       this.axios.get('/api/detail/'+ ireqd_id+'/'+ this.$route.params.code).then((response)=>{
@@ -315,7 +302,7 @@ export default {
             this.axios.get('/api/appd/' +ireqd_id + '/' +this.$route.params.code);
             
             this.getIctDetail();
-            this.loading
+            this.loading = true;
         },
         reject: () => {},
       });
@@ -326,7 +313,7 @@ export default {
       this.dialogAssign = false;
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then((response)=> {
         this.detail = response.data.data.detail;
         this.showPersonnel1 = response.data.data.detail.map((x)=>x.ireq_count_status);
         this.showPersonnel2 = response.data.data.detail.map((x)=>x.ireq_count_personnel2);
@@ -340,12 +327,15 @@ export default {
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
       });
     },
     CetakPdf(){

@@ -186,7 +186,6 @@ export default {
       this.createImage(this.foto);
       },
     createImage(foto) {
-      var image = new Image();
       var reader = new FileReader();
       var vm = this.user;
       reader.onload = function (e) {
@@ -200,7 +199,6 @@ export default {
         if(this.user.image != '' && this.user.usr_roles != ''){
 
         this.axios.post('api/add-user', this.user).then(()=>{
-        this.axios.post('api/save-usr-role',this.user);
         this.$toast.add({
           severity: "success",
           summary: "Success Message",

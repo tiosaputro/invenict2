@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         if(this.checkto.includes("/referensi-service")){
           this.getRef();
@@ -99,7 +99,7 @@ export default {
       });
     },
       getRef(){
-        this.axios.get('/api/edit-ref/' + this.$route.params.code + '/' + this.$route.params.type, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response)=> {
+        this.axios.get('/api/edit-ref/' + this.$route.params.code + '/' + this.$route.params.type ).then((response)=> {
             this.ref = response.data;
         }).catch(error=>{
           if ((error.response.status == 401)){
@@ -114,7 +114,7 @@ export default {
       },
     UpdateLookup(){
         this.errors = [];   
-        this.axios.put('/api/update-ref/' + this.$route.params.code + '/' + this.$route.params.type, this.ref, {headers: {'Authorization': 'Bearer '+this.token}} ).then((response) => {
+        this.axios.put('/api/update-ref/' + this.$route.params.code + '/' + this.$route.params.type, this.ref ).then((response) => {
            this.$toast.add({
             severity: "success",
             summary: "Success Message",

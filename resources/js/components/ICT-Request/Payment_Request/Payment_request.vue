@@ -148,7 +148,6 @@
 </template>
 <script>
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -156,7 +155,7 @@ export default {
          detail:[],
          loading: true,
          payment: [],
-         filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+         filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
          token: localStorage.getItem('token'),
          checkname : [],
          checkto : [],
@@ -181,7 +180,7 @@ export default {
         return formatter.format(value);
     },
     getPayment(){
-        this.axios.get('api/payment-request', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+        this.axios.get('api/payment-request').then((response)=> {
           this.payment = response.data;
           this.loading = false;
         }).catch(error=>{
@@ -213,7 +212,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-payment-request/'+pr_id, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('api/delete-payment-request/'+pr_id);
           this.getPayment();
         },
         reject: () => {},
@@ -226,7 +225,7 @@ export default {
       window.open('api/report-cash-excel');
     },
     detailRequest(ireq_id){
-      this.axios.get('api/detail-request/' + ireq_id, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/detail-request/' + ireq_id).then((response)=> {
         this.detail = response.data;
         this.ireq_id = response.data[0].ireq_no
         this.tes = response.data.map((x)=>x.ireq_assigned_to);

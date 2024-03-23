@@ -93,7 +93,6 @@
 </template>
 <script>
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -104,13 +103,11 @@ export default {
         status:[],
         editDetail:[],
         kode:[],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
-        checkname : [],
-        checkto : [],
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
     };
   },
   created() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     formatDate(date){
@@ -120,18 +117,6 @@ export default {
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
-    },
-    cekUser(){
-      this.axios.get('/api/cek-user').then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Status Change Request") || this.checkto.includes("/ict-request-divisi3")){   
-          this.getIctDetail();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
     },
     getStatus(){
       this.axios.get('/api/getStatusIct').then((response)=>{
@@ -152,19 +137,22 @@ export default {
       
     },
     getIctDetail(){
-      this.axios.get('/api/get-detail-done/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/get-detail-done-personnel/' + this.$route.params.code).then((response)=> {
         this.detail = response.data.data.detail;
         this.kode = response.data.data.request;
         this.loading = false;
       }).catch((error)=>{
-      if (error.response.status == 401) {
+        if (error.response.status == 401) {
             this.$toast.add({
             severity:'error', summary: 'Error', detail:'Session login expired'
           });
           localStorage.clear();
           localStorage.setItem('Expired','true')
           setTimeout( () => this.$router.push('/login'),2000);
-           }
+        }
+        if(error.response.status == 403){
+          this.$router.push('access');
+        }
       });
     },
   },

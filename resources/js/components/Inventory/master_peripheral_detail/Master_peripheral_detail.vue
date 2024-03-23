@@ -213,7 +213,6 @@
   </div>    
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 import qrcode from './QRCode'; 
 export default {
   data() {
@@ -228,7 +227,7 @@ export default {
         master: [],
         mas: [],
         barcode:'',
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         checkname : [],
         checkto : [],
         text:'',
@@ -256,7 +255,7 @@ export default {
     },
     detailKode(invent_code_dtl){
       this.displayKode = true;
-      this.axios.get('/api/detail-peripherall/' +invent_code_dtl, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail-peripherall/' +invent_code_dtl).then((response)=>{
         this.detail = response.data;
         this.header = 'Detail Peripheral '+this.detail.invent_code +' '+ this.detail.invent_type;
       });

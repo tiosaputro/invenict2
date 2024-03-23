@@ -17,6 +17,8 @@ use App\Exports\IctExportPersonnelSelesai;
 use App\Jobs\SendNotifDoneUser;
 use App\Services\IctRequestPersonnelServices;
 use App\Services\IctDetailServices;
+use App\Services\IctServices;
+use Illuminate\Support\Facades\View;
 
 class IctRequestPersonnelController extends Controller
 {
@@ -104,24 +106,16 @@ class IctRequestPersonnelController extends Controller
     }
     function getDetailDone($code)
     {
-        $data = $this->IctDetailService->detailDone($code);
+        $ictService = new IctServices();
+        $data['detail'] = $this->IctDetailService->getDataDetailRequest($code,NULL,NULL,NULL);
+        $data['request'] = $ictService->detailNoRequest($code);
         return ResponseFormatter::success($data,'Successfully get data');
     }
     function cetak_pdf_personnel_assignment_request()
     {
-        $ict =  DB::table('ireq_mst as im')
-        ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','im.ireq_reason','im.ireq_user','dr.div_name','im.ireq_assigned_to1 AS ireq_assigned_to',
-                DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'llr.lookup_desc as ireq_status')
-        ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->LEFTJOIN('ireq_dtl as id','im.ireq_id','id.ireq_id')
-        ->LEFTJOIN('lookup_refs as llr','im.ireq_status','llr.lookup_code')
-        ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->WHERE('id.ireq_status','NT')
-        ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->WHERE('id.ireq_assigned_to1',Auth::user()->usr_id)
-        ->ORDERBY('im.ireq_date','DESC')
-        ->get();
-        return view('pdf/Laporan_IctRequest_Sedang_Dikerjakan', compact('ict'));
+        $ict =  $this->personnelService->getDetailWithFilter('NT');
+        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Sedang_Dikerjakan', compact('ict'))->render();
+        return ResponseFormatter::success($data,'Successfully Print Report');
     }
     function cetak_excel_personnel_assignment_request()
     {
@@ -131,29 +125,9 @@ class IctRequestPersonnelController extends Controller
     }
     function cetak_pdf_personnel_reject()
     {
-        $ict =  DB::table('ireq_dtl as id')
-        ->SELECT('imm.ireq_no','id.ireq_assigned_to1_reason','imm.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
-            'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',
-            'vr.name as ireq_bu','lr.lookup_desc as ireq_type','imm.ireq_date','id.ireq_status as status', DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"))
-        ->LEFTJOIN('lookup_refs as lr','id.ireq_type','lr.lookup_code')
-        ->LEFTJOIN('catalog_refs as cr',function ($join) {
-            $join->on('id.invent_code','cr.catalog_id');
-        })
-        ->LEFTJOIN('catalog_refs as crs',function ($join) {
-            $join->on('cr.parent_id','crs.catalog_id');
-        })
-        ->LEFTJOIN('ireq_mst as imm','id.ireq_id','imm.ireq_id')        
-        ->LEFTJOIN('lookup_refs as llr','id.ireq_status','llr.lookup_code')
-        ->LEFTJOIN('vcompany_refs as vr','imm.ireq_bu','vr.company_code')
-        ->LEFTJOIN('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id')
-        ->WHERE('id.ireq_status','RT')
-        ->WHERE('id.ireq_assigned_to1',Auth::user()->usr_id)
-        ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
-        ->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
-        ->ORDERBY('imm.ireq_date','DESC')
-        ->ORDERBY('id.ireqd_id','ASC')
-     ->get();
-        return view('pdf/Laporan_IctDetailReject', compact('ict'));
+        $ict =  $this->personnelService->getDetailWithFilter('RT');
+        $data['htmlContent'] = View::make('pdf.Laporan_IctDetailReject', compact('ict'))->render();
+        return ResponseFormatter::success($data,'Successfully Print Report');
     }
     function cetak_excel_personnel_reject()
     {
@@ -163,33 +137,9 @@ class IctRequestPersonnelController extends Controller
     }
     function cetak_pdf_personnel_sedang_dikerjakan()
     {
-        $ict =  DB::table('ireq_dtl as id')
-        ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
-        ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->LEFTJOIN('lookup_refs as lr',function ($join) {
-            $join->on('id.ireq_status','lr.lookup_code')
-                  ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-        })
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('id.ireq_type','lrs.lookup_code')
-                  ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-        })
-        ->LEFTJOIN('catalog_refs as cr',function ($join) {
-            $join->on('id.invent_code','cr.catalog_id');
-        })
-        ->LEFTJOIN('catalog_refs as crs',function ($join) {
-            $join->on('cr.parent_id','crs.catalog_id');
-        })
-        ->SELECT('vr.name as ireq_bu','im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
-        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_requestor','im.ireq_user',
-        'dr.div_name','id.ireq_qty','id.ireq_status as status')
-        ->WHERE('id.ireq_status','T')
-        ->WHERE(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),Auth::user()->usr_id)
-        ->ORDERBY('im.ireq_date','DESC')
-        ->ORDERBY('id.ireqd_id','ASC')
-        ->get();
-        return view('pdf/Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'));
+        $ict = $this->personnelService->getDetailWithFilter('T');
+        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'))->render();
+        return ResponseFormatter::success($data,'Successfully Print Report');
     }
     function cetak_excel_personnel_sedang_dikerjakan()
     {
@@ -199,33 +149,9 @@ class IctRequestPersonnelController extends Controller
     }
     function cetak_pdf_personnel_sudah_dikerjakan()
     {
-        $ict =  DB::table('ireq_dtl as id')
-        ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
-        ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->LEFTJOIN('lookup_refs as lr',function ($join) {
-            $join->on('id.ireq_status','lr.lookup_code')
-                  ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-        })
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('id.ireq_type','lrs.lookup_code')
-                  ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-        })
-        ->LEFTJOIN('catalog_refs as cr',function ($join) {
-            $join->on('id.invent_code','cr.catalog_id');
-        })
-        ->LEFTJOIN('catalog_refs as crs',function ($join) {
-            $join->on('cr.parent_id','crs.catalog_id');
-        })
-        ->SELECT('vr.name as ireq_bu','im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
-        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_requestor','im.ireq_user',
-        'dr.div_name','id.ireq_qty','id.ireq_status as status')
-        ->WHERE('id.ireq_status','D')
-        ->WHERE(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),Auth::user()->usr_id)
-        ->ORDERBY('im.ireq_date','DESC')
-        ->ORDERBY('id.ireqd_id','ASC')
-        ->get();
-        return view('pdf/Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'));
+        $ict = $this->personnelService->getDetailWithFilter('D');
+        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'))->render();
+        return ResponseFormatter::success($data,'Successfully Print Report');
     }
     function cetak_excel_personnel_sudah_dikerjakan()
     {
@@ -235,33 +161,9 @@ class IctRequestPersonnelController extends Controller
     }
     function cetak_pdf_personnel_selesai()
     {
-        $ict =  DB::table('ireq_dtl as id')
-        ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
-        ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
-        ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
-        ->LEFTJOIN('lookup_refs as lr',function ($join) {
-            $join->on('id.ireq_status','lr.lookup_code')
-                  ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);
-        })
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('id.ireq_type','lrs.lookup_code')
-                  ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
-        })
-        ->LEFTJOIN('catalog_refs as cr',function ($join) {
-            $join->on('id.invent_code','cr.catalog_id');
-        })
-        ->LEFTJOIN('catalog_refs as crs',function ($join) {
-            $join->on('cr.parent_id','crs.catalog_id');
-        })
-        ->SELECT('vr.name as ireq_bu','im.ireq_no','id.ireq_id','id.ireq_remark',DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'id.ireqd_id',
-        'lr.lookup_desc as ireq_status','lrs.lookup_desc as ireq_type',DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_requestor','im.ireq_user',
-        'dr.div_name','id.ireq_qty','id.ireq_status as status')
-        ->WHERE('id.ireq_status','C')
-        ->WHERE(DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1)"),Auth::user()->usr_id)
-        ->ORDERBY('im.ireq_date','DESC')
-        ->ORDERBY('id.ireqd_id','ASC')
-        ->get();
-        return view('pdf/Laporan_IctRequest_Selesai', compact('ict'));
+        $ict = $this->personnelService->getDetailWithFilter('C');
+        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Selesai', compact('ict'))->render();
+        return ResponseFormatter::success($data,'Successfully Print Report');
     }
     function cetak_excel_personnel_selesai()
     {

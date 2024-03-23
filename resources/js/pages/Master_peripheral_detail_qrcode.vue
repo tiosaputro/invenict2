@@ -182,7 +182,7 @@ export default {
   },
   methods: {
     getDetailKode(){
-      this.axios.get('/api/detail-peripherall/' +this.$route.params.invent_code_dtl, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/detail-peripherall/' +this.$route.params.invent_code_dtl).then((response)=>{
         this.detail = response.data;
         this.header = 'Detail Peripheral';
       });

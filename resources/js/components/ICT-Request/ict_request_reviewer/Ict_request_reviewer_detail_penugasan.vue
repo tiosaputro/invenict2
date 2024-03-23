@@ -103,23 +103,20 @@
 </template>
 <script>
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
         loading: true,
         detail: [],
         kode:[],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        checkname : [],
-        checkto : [],
         status:'',
         countNote:[]
     };
   },
   mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     formatDate(date){
@@ -130,20 +127,8 @@ export default {
          var myWindow = window.open(page, "_blank");
          myWindow.focus();
     },
-    cekUser(){
-      this.axios.get('/api/cek-user').then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
-          this.getIctDetail();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/ict-detail-penugasan-reviewer/' + this.$route.params.code).then((response)=> {
         this.detail = response.data.data.detail;
         this.countNote = response.data.data.detail.map((x)=> x.count_note)
         this.kode = response.data.data.request;
@@ -153,11 +138,14 @@ export default {
           if (error.response.status == 401) {
             this.$toast.add({
             severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
       });
     },
     CetakPdfSedangDikerjakan(){

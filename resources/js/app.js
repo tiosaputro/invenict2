@@ -38,6 +38,7 @@ import Dialog from 'primevue/dialog';
 import DialogService from 'primevue/dialogservice';
 import DynamicDialog from 'primevue/dynamicdialog';
 import Dropdown from 'primevue/dropdown';
+import {FilterMatchMode} from 'primevue/api';
 import InlineMessage from 'primevue/inlinemessage';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
@@ -90,6 +91,7 @@ axios.interceptors.request.use((config) => {
 });
 app.config.globalProperties.$moment = moment;
 app.config.globalProperties.$html2pdf = html2pdf;
+app.config.globalProperties.$FilterMatchMode = FilterMatchMode;
 
 app.config.globalProperties.$appState = reactive({ theme: 'vela-blue'});
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
@@ -109,7 +111,6 @@ app.directive('code', CodeHighlight);
 app.directive('badge', BadgeDirective);
 app.directive('styleclass', StyleClass);
 
-app.component("v-icon", OhVueIcon);
 app.component('Badge', Badge);
 app.component('BlockViewer', BlockViewer);
 app.component('Button', Button);
@@ -151,5 +152,6 @@ app.component('Toast', Toast);
 app.component('Toolbar', Toolbar);
 app.component('ToggleButton', ToggleButton);
 app.component('TreeSelect',TreeSelect);
+app.component("v-icon", OhVueIcon);
 
 app.mount('#app');

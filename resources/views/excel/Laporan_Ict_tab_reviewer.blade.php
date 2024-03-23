@@ -23,8 +23,8 @@
             <td style="text-align:left" width="18" height="10">{{ $i->ireq_date }}</td>
             <td style="text-align:left" width="20" height="15">{{ $i->ireq_requestor}}</td>
             <td style="text-align:left" width="20" height="15">{{ $i->ireq_user}}</td>
-            <td style="text-align:left" width="30" height="15">{{ $i->div_name}}</td>
-            <td style="text-align:left" width="30" height="15">{{ $i->ireq_bu}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->usr_division}}</td>
+            <td style="text-align:left" width="30" height="15">{{ $i->usr_division}}</td>
             <td style="text-align:left" width="20" height="15">{{ $i->ireq_status}}</td>
         </tr>
     @endforeach

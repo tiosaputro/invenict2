@@ -269,7 +269,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Cash Advance") || this.checkto.includes("/cash-advance")){
@@ -281,7 +281,7 @@ export default {
       });
     },
     getCash(){
-      this.axios.get('/api/edit-cash/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/edit-cash/' + this.$route.params.code).then((response)=>{
         this.ca = response.data;
       }).catch(error=>{
           if ((error.response.status == 401)){
@@ -297,7 +297,7 @@ export default {
     UpdateCash() {
       this.errors = [];
   
-        this.axios.put('/api/update-cash/'+this.$route.params.code, this.ca, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.put('/api/update-cash/'+this.$route.params.code, this.ca).then((response)=>{
           setTimeout( () => this.$router.push('/cash-advance'),1000);
           this.$toast.add({
             severity: "success",

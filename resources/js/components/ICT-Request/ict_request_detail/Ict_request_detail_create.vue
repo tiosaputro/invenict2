@@ -324,7 +324,7 @@ export default {
           data.append("catalog", this.kode);
           data.append("tipereq", this.tipereq);
 
-          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'Authorization': 'Bearer '+this.token, 'content-type': 'multipart/form-data'}}).then(()=>{
+          this.axios.post('/api/add-ict-detail/' + this.$route.params.code, data, {headers: {'content-type': 'multipart/form-data'}}).then(()=>{
           this.$toast.add({
             severity: "success",
             summary: "Success Message",

@@ -73,7 +73,7 @@
       return {
           loading: true,
           spv: [],
-          filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+          filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
       };
     },
     created() {

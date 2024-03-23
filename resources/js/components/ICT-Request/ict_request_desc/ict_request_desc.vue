@@ -4303,7 +4303,6 @@
 </template>
 <script>
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -4363,7 +4362,7 @@ export default {
         petugas:[],
         submitted: false,
         dialogAssign: false,
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         user:[],
         rbr:{ ket:'', id:'' },
         confirmationVerifikasi:false,

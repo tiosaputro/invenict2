@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         cekUser(){
-          this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+          this.axios.get('api/cek-user').then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Divisi Requestor Per Bulan") || this.checkto.includes("/req-per-divisi-req-per-bulan")){
@@ -63,13 +63,13 @@ export default {
         getTahunRequestor(){
             this.tahunnRequestor = null;
             if(this.bulanRequestor != null){
-                this.axios.get('api/get-tahun-requestor/'+this.bulanRequestor, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.axios.get('api/get-tahun-requestor/'+this.bulanRequestor).then((response)=>{
                     this.tahunnnn = response.data;
                 });
             }
         },
         getBulan(){
-            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+            this.axios.get('api/get-tahun').then((response)=>{
                 this.bulan = response.data.grafik2;
             }).catch(error=>{
           if (error.response.status == 401){
@@ -85,7 +85,7 @@ export default {
         getPerDivisiRequestorBulan(){
             if(this.tahunnRequestor != null &&
                 this.bulanRequestor != null){
-                this.axios.get('api/count-per-divreq-bulan/'+this.tahunnRequestor +'/'+this.bulanRequestor, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{ 
+                this.axios.get('api/count-per-divreq-bulan/'+this.tahunnRequestor +'/'+this.bulanRequestor).then((response)=>{ 
                     this.nameBulanRequestor = response.data[0].bulan + this.tahunnRequestor;
                     this.perDivisiRequestorBulan = {
                         labels : response.data.map((x)=>x.div_name),

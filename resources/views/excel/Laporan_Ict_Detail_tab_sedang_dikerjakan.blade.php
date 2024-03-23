@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <th colspan="2" style="text-align:left; font-weight: bold; font-size: 12px;"> Tgl. Request</th>
-            <th colspan="1" style="text-align:left; font-weight: bold; font-size: 12px;"> {{$detail[0]->ireq_date}}</th>
+            <th colspan="1" style="text-align:left; font-weight: bold; font-size: 12px;"> {{ formatDate($detail[0]->ireq_date, 'd M y') }}</th>
             <th colspan="1" style="text-align:left; font-weight: bold; font-size: 12px;"> Bisnis Unit</th>
             <th colspan="2" style="text-align:left; font-weight: bold;font-size: 12px;"> {{$detail[0]->ireq_bu}}</th>
         </tr>

@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         cekUser(){
-        this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('api/cek-user').then((response)=>{
             this.checkname = response.data.map((x)=> x.name)
             this.checkto = response.data.map((x)=> x.to)
             if(this.checkname.includes("Divisi User Per Status") || this.checkto.includes("/req-per-divisi-per-status")){
@@ -50,7 +50,7 @@ export default {
         },
         getStatusDivisiUser(){
             if(this.statusUser != null){
-                this.axios.get('api/count-per-divuser-status/'+this.statusUser, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+                this.axios.get('api/count-per-divuser-status/'+this.statusUser).then((response)=>{
                   if(response.data.length){
                     this.nameStatusUser = response.data[0].name;
                     this.statusPerDivisiUser = {
@@ -78,7 +78,7 @@ export default {
         },
         
         getStatus(){
-            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+            this.axios.get('api/get-tahun').then((response)=>{
                 this.status = response.data.grafik1;
             }).catch(error=>{
           if (error.response.status == 401){

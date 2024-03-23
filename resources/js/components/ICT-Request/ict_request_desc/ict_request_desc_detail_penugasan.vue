@@ -91,14 +91,13 @@
   </div>
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
         loading: true,
         detail: [],
         kode:[],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
         token: localStorage.getItem('token'),
         checkname : [],
@@ -115,7 +114,7 @@ export default {
          myWindow.focus();
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Reviewer") || this.checkname.includes("Status") || this.checkname.includes("Approval Manager") || this.checkto.includes("/ict-request-reviewer")){ 
@@ -127,7 +126,7 @@ export default {
       });
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/ict-detail-penugasan/' + this.$route.params.code).then((response)=> {
         this.detail = response.data.data.detail;
         this.kode = response.data.data.request;
         this.loading = false;

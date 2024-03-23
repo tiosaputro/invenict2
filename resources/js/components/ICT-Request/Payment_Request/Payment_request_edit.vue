@@ -269,7 +269,7 @@ export default {
   },
   methods: {
     getPayment(){
-      this.axios.get('/api/edit-payment-request/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/edit-payment-request/' + this.$route.params.code).then((response)=>{
         this.pr = response.data;
       }).catch(error=>{
           if ((error.response.status == 401)){
@@ -285,7 +285,7 @@ export default {
     UpdatePayment() {
       this.errors = [];
   
-        this.axios.put('/api/update-payment-request/'+this.$route.params.code, this.pr, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.put('/api/update-payment-request/'+this.$route.params.code, this.pr).then((response)=>{
           setTimeout( () => this.$router.push('/payment-request'),1000);
           this.$toast.add({
             severity: "success",

@@ -176,7 +176,6 @@
 </template>
 <script>
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -187,14 +186,12 @@ export default {
         petugas: [],
         assign:[],
         kode:[],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        checkname : [],
-        checkto : [],
     };
   },
   mounted() {
-    this.cekUser();
+    this.getIctDetail();
   },
   methods: {
     formatDate(date){
@@ -204,18 +201,6 @@ export default {
       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
         var myWindow = window.open(page, "_blank");
         myWindow.focus();
-    },
-    cekUser(){
-      this.axios.get('/api/cek-user').then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Reviewer") || this.checkto.includes("/ict-request-reviewer")){ 
-         this.getIctDetail();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
     },
     cancelAssign(){
       this.assign = [];
@@ -252,19 +237,21 @@ export default {
         }
     },
     getIctDetail(){
-      this.axios.get('/api/ict-detail/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/ict-detail-reviewer/' + this.$route.params.code).then((response)=> {
         this.detail = response.data.data.detail;
         this.kode = response.data.data.request;
         this.loading = false;
       }).catch(error=>{
           if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          } else if (error.response.status == 403){
+            this.$router.push('/access');
+          }
       });
     },
   },

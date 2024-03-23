@@ -257,6 +257,76 @@ class IctDetailServices
         return $data;
     }   
 
+    public function dataReport($code){
+        $data = DB::table('ireq_dtl as id')
+        ->select(
+            'imm.ireq_status as cekstatus',
+            'id.ireq_type',
+            'imm.ireq_id',
+            'imm.ireq_no',
+            'id.ireq_desc',
+            'mu.usr_division as division_user',
+            'mngr.usr_fullname as manager_ict_name',
+            'mngr.usr_jabatan as manager_job_title',
+            'id.ireq_qty',
+            'mu.usr_fullname as ireq_requestor',
+            'mus.usr_fullname as ireq_spv',
+            'sr.spv_job_title',
+            'id.ireq_remark',
+            'lllr.lookup_desc as prio_level',
+            'imm.ireq_no',
+            'loc_refs.loc_desc as ireq_loc',
+            'imm.ireq_verificator_remark',
+            'imm.ireq_approver2_remark',
+            'llr.lookup_desc as ireq_type', 
+            'imm.ireq_status as status',
+            'imm.ireq_date',
+            'imm.ireq_approver1_date',
+            'usr.usr_fullname as ireq_verificator',
+            DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
+            'lr.lookup_desc as ireqq_status',
+            'imm.ireq_approver2_date',
+            DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),
+            'lr.lookup_desc as ireq_status',
+            'id.ireq_assigned_date',
+            'id.ireq_date_closing',
+            'id.ireq_assigned_remark as assigned_remark_detail',
+            'imm.ireq_assigned_remark as assigned_remark_request',
+            'id.ireqd_id',
+            'id.ireq_date_closing')
+        ->LEFTJOIN('catalog_refs as cr',function ($join) {
+            $join->on('id.invent_code','cr.catalog_id');
+        })
+        ->LEFTJOIN('catalog_refs as crs',function ($join) {
+            $join->on('cr.parent_id','crs.catalog_id');
+        })
+        ->LEFTJOIN('vpekerja_ict vi', function($join) {
+            $join->on('id.ireq_assigned_to1','vi.usr_id')
+                  ->whereNotNull('id.ireq_assigned_to1');
+        })
+        ->LEFTJOIN('vpekerja_ict vii', function($join) {
+            $join->on('id.ireq_assigned_to2', 'vii.usr_id')
+                  ->whereNull('id.ireq_assigned_to1');
+        })
+        ->leftjoin('ireq_mst as imm','id.ireq_id','imm.ireq_id')
+        ->leftjoin('supervisor_refs sr','imm.ireq_spv','sr.spv_id')
+        ->leftjoin('mng_users mus','sr.spv_name','mus.usr_id')
+        ->leftjoin('mng_users usr','imm.ireq_verificator','usr.usr_id')
+        ->leftjoin('mng_users mngr','imm.ireq_approver2','mngr.usr_id')
+        ->leftjoin('location_refs as loc_refs','imm.ireq_loc','loc_refs.loc_code')
+        ->leftjoin('mng_users as mu','imm.ireq_user','mu.usr_id')
+        ->leftjoin('lookup_refs as lllr','imm.ireq_prio_level','lllr.lookup_code')
+        ->leftjoin('lookup_refs as llr','id.ireq_type','llr.lookup_code')
+        ->leftjoin('lookup_refs as lr','id.ireq_status','lr.lookup_code')
+        ->where('id.ireq_id',$code)
+        ->whereRaw('LOWER(lllr.lookup_type) LIKE ? ',[trim(strtolower('req_prio')).'%'])
+        ->whereRaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%'])
+        ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%'])
+        ->orderBy('id.ireqd_id','ASC')
+        ->get();
+        return $data;
+    }
+
 
 
 }

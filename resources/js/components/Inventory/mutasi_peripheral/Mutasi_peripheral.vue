@@ -245,7 +245,6 @@
 </template>
 <script>
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -253,7 +252,7 @@ export default {
         loading: true,
         token: localStorage.getItem('token'),
         mutasi: [],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         checkname : [],
         checkto : [],
         detail:[],
@@ -318,9 +317,9 @@ export default {
     },
     CetakExcel(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-mutasi-excel',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-mutasi-excel',{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -332,7 +331,7 @@ export default {
     },
     detailKode(invent_code){
       this.displayKode = true;
-      this.axios.get('api/detail-peripheral/' +invent_code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/detail-peripheral/' +invent_code).then((response)=>{
         this.detail = response.data;
         this.header = 'Detail Peripheral '+this.detail.name;
       });

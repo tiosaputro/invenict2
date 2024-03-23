@@ -127,7 +127,8 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //mutasi peripheral
     Route::get('/mut',[MutasiController::class,'index']);
-    Route::post('/add-mut',[MutasiController::class,'save']);
+    Route::get('/add-mut',[MutasiController::class,'add']);
+    Route::post('/save-mut',[MutasiController::class,'save']);
     Route::get('/edit-mut/{code}',[MutasiController::class,'edit']);
     Route::put('/update-mut/{code}',[MutasiController::class,'update']);
     Route::delete('/delete-mut/{imutasi_id}',[MutasiController::class,'delete']);
@@ -206,7 +207,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //Mng_usr_roles
     Route::get('/menu-user',[MngUsrRoleController::class,'getRole']);
-    Route::post('/save-usr-role',[MngUsrRoleController::class,'save']);
     Route::get('/edit-usr-role/{code}',[MngUsrRoleController::class,'edit']);
     Route::put('/update-usr-role/{code}',[MngUsrRoleController::class,'update']);
     Route::get('/cek-role',[MngUsrRoleController::class,'cekRole']);
@@ -269,7 +269,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/count-per-status-ict/{ictPersonnel}',[DashboardController::class,'countPerStatusIct']);
 
     //ict request reviewer
-    
     Route::get('/edit-spv/{code}',[IctRequestReviewerController::class,'editSPv']);
     Route::post('/save-spv',[IctRequestReviewerController::class,'saveSpv']);
     Route::get('/ict-detail-penugasan-reviewer/{code}',[IctRequestReviewerController::class,'detailPenugasan']);
@@ -364,7 +363,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/report-ict-pdf-tab-sudah-dikerjakan',[IctRequestRequestorController::class,'cetak_pdf_sudah_dikerjakan']);
     Route::get('/report-ict-excel-selesai',[IctRequestRequestorController::class,'cetak_excel_selesai']);
     Route::get('/report-ict-pdf-selesai',[IctRequestRequestorController::class,'cetak_pdf_selesai']);
-
 
     //ict request personnel 
     Route::get('/get-sedang-dikerjakan',[IctRequestPersonnelController::class,'getDataPersonnel']);

@@ -118,7 +118,6 @@
 </template>
 <script>
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -126,7 +125,7 @@ export default {
         token: localStorage.getItem('token'),
         purch: [],
         purchase_id:null,
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         checkname : [],
         checkto : [],
         divisi: [],
@@ -195,9 +194,9 @@ export default {
     },
     CetakExcel(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-pem-excel',{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-pem-excel',{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;

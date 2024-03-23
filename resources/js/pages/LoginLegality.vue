@@ -43,7 +43,7 @@
                             <div class="text-900 text-3xl font-medium mb-3">
                                 Welcome to
                             </div>
-                            <span class="text-600 font-medium"
+                            <span class="text-900 font-medium"
                                 >System ICT Helpdesk 👋</span
                             >
                             <Message severity="warn" v-if="this.error"

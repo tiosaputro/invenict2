@@ -138,7 +138,6 @@
   </div>
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -151,9 +150,8 @@ export default {
         reason:{
             ket:null,
         },
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
         status : null,
     };
   },
@@ -226,7 +224,7 @@ export default {
         this.submitted = false;
       },
       getNoreq(){
-      this.axios.get('/api/ict-detail/'+ this.$route.params.code).then((response)=>{
+      this.axios.get('/api/ict-detail-higher-level/'+ this.$route.params.code).then((response)=>{
         this.kode = response.data.data.request;
         if(this.kode.cekstatus =='NA1'){
           this.verif = response.data.data.detail;

@@ -46,6 +46,11 @@
           <Column field="usr_name" header="User Name" :sortable="true" style="min-width:8rem"/>
           <Column field="usr_email" header="User Email" :sortable="true" style="min-width:10rem"/>
           <Column field="usr_division" header="User Divisi" :sortable="true" style="min-width:10rem"/>
+          <Column field="creation_date" header="Create Date" :sortable="true" style="min-width:10rem">
+          <template #body="slotProps">
+            {{ formatDate(slotProps.data.creation_date) }}
+          </template>
+          </Column>
           <Column header="User Photo" style="min-width:8rem">
             <template #body="slotProps">
                 <img :src="'/profile/' +slotProps.data.usr_foto" class="profile-image" />
@@ -80,19 +85,21 @@
   </div>
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
         loading: true,
         user: [],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
     };
   },
   created() {
     this.getUser();
   },
   methods: {
+    formatDate(date) {
+      return this.$moment(date).format("DD MMM YYYY HH:mm")
+    },
     getUser(){
       this.axios.get('api/get-user').then((response)=> {
         this.user = response.data;

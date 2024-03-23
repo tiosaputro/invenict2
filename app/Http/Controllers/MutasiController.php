@@ -11,12 +11,15 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Mng_user;
 use App\Helpers\ResponseFormatter;
+use App\Services\MutasiServices;
 
 class MutasiController extends Controller
 {
     protected $to;
     protected $userMenu;
-    function __construct(){
+    protected $mutasiServices;
+    function __construct(MutasiServices $service){
+        $this->mutasiServices = $service;
         $this->middleware('auth:sanctum');
         $this->to = "/mutasi-peripheral";
         $this->middleware(function ($request, $next) {
@@ -30,45 +33,39 @@ class MutasiController extends Controller
     }
     Public Function index()
     {
-        $mutasi = DB::table('invent_mutasi as im')
-            ->select(DB::raw("(imm.invent_desc ||'-'|| lrs.lookup_desc ||'-'|| imm.invent_type ) as invent_desc"),'im.imutasi_pengguna','im.imutasi_tgl_dari','im.imutasi_tgl_sd',
-            'im.imutasi_lokasi','id.invent_code_dtl','im.imutasi_id','id.invent_code',
-            'id.invent_sn','dr.div_name as imutasi_divisi',
-            'vr.name as imutasi_bu')
-            ->leftjoin('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
-            ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
-            ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-                $join->on('imm.invent_brand','lrs.lookup_code')
-                      ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
-            })
-            ->leftjoin('divisi_refs as dr','im.imutasi_divisi','dr.div_id')
-            ->leftjoin('vcompany_refs as vr','im.imutasi_bu','vr.company_code')
-            ->orderBy('im.creation_date','DESC')
-            ->get();
+        $mutasi = $this->mutasiServices->getDataWithFilter();
         return ResponseFormatter::success($mutasi,'Successfully get data');
+    }
+    function add(){
+        $data['kode'] = DB::table('invent_mst as im')
+        ->leftJoin('lookup_refs as lr',function ($join) {
+            $join->on('im.invent_brand','lr.lookup_code')
+                ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
+        })
+        ->select('im.invent_code as code',DB::raw("(im.invent_desc || '-' || lr.lookup_desc || '-' ||  im.invent_type) as name"))
+        ->orderBy('im.invent_desc','ASC')
+        ->get();
+        $data['listUser'] = Mng_user::orderBy('usr_fullname','ASC')->get();
+        return ResponseFormatter::success($data,'Successfully get data');
     }
     Public function save(Request $request)
     {
-      if ($request->todate){   
-            $newToDate = Carbon::createFromFormat('D M d Y H:i:s e+',$request->todate)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
+        $fromDate = Carbon::parse($request->fromdate);
+        $toDate = $request->todate ? Carbon::parse($request->fromdate) : null;
 
-        }else{
-            $newToDate = '';
-        }
-            $saveMutasi = Mutasi::Create([
-                'invent_code_dtl'=> $request->invent_sn,
-                'imutasi_tgl_dari' => Carbon::createFromFormat('D M d Y H:i:s e+',$request->fromdate)->copy()->tz('Asia/Jakarta')->format('Y-m-d'),
-                'imutasi_tgl_sd'=>$newToDate,
-                'imutasi_lokasi' => $request->lokasi,
-                'imutasi_pengguna' => $request->user,
-                'imutasi_divisi' => $request->invent_divisi,
-                'imutasi_bu' => $request->invent_bu,
-                'imutasi_keterangan' => $request->ket,
-                'creation_date'=> now(),
-                'created_by' => Auth::user()->usr_id,
-                'program_name'=> "Mutasi_Save"
-            ]);
-            return ResponseFormatter::success($saveMutasi,'Successfully Created Mutasi');
+        $saveMutasi = Mutasi::create([
+            'invent_code_dtl'=> $request->invent_sn,
+            'imutasi_tgl_dari' => $fromDate,
+            'imutasi_tgl_sd' => $toDate,
+            'imutasi_lokasi' => $request->lokasi,
+            'imutasi_pengguna' => $request->user,
+            'imutasi_keterangan' => $request->ket,
+            'creation_date'=> now(),
+            'created_by' => Auth::user()->usr_id,
+            'program_name'=> "Mutasi_Save"
+        ]);
+
+        return ResponseFormatter::success($saveMutasi, 'Successfully Created Mutasi');
     }
     Public function edit($code)
     {
@@ -90,35 +87,21 @@ class MutasiController extends Controller
     Public function update(Request $request, $code)
     {
         $newFromDate = Carbon::parse($request->imutasi_tgl_dari)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-        
+        $mut = Mutasi::where('imutasi_id',$code)->first();
+        $mut->imutasi_tgl_dari = $newFromDate;
+        $mut->imutasi_lokasi = $request->imutasi_lokasi;
         if ($request->imutasi_tgl_sd){
             $newToDate = Carbon::parse($request->imutasi_tgl_sd)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
-            $mut = Mutasi::where('imutasi_id',$code)->first();
-            $mut->imutasi_tgl_dari = $newFromDate;
             $mut->imutasi_tgl_sd = $newToDate;
-            $mut->imutasi_lokasi = $request->imutasi_lokasi;
-            $mut->imutasi_pengguna = $request->imutasi_pengguna;
-            $mut->imutasi_divisi = $request->imutasi_divisi;
-            $mut->imutasi_bu = $request->imutasi_bu;
-            $mut->imutasi_keterangan = $request->imutasi_keterangan;
-            $mut->last_update_date = now();
-            $mut->last_updated_by = Auth::user()->usr_id;
-            $mut->program_name = "Mutasi_Update";
-            $mut->save();
-        }else{
-            $mut = Mutasi::where('imutasi_id',$code)->first();
-            $mut->imutasi_tgl_dari = $newFromDate;
-            $mut->imutasi_tgl_sd = $request->imutasi_tgl_sd;
-            $mut->imutasi_lokasi = $request->imutasi_lokasi;
-            $mut->imutasi_pengguna = $request->imutasi_pengguna;
-            $mut->imutasi_divisi = $request->imutasi_divisi;
-            $mut->imutasi_bu = $request->imutasi_bu;
-            $mut->imutasi_keterangan = $request->imutasi_keterangan;
-            $mut->last_update_date = now();
-            $mut->last_updated_by = Auth::user()->usr_id;
-            $mut->program_name = "Mutasi_Update";
-            $mut->save();
         }
+        $mut->imutasi_pengguna = $request->imutasi_pengguna;
+        $mut->imutasi_divisi = $request->imutasi_divisi;
+        $mut->imutasi_bu = $request->imutasi_bu;
+        $mut->imutasi_keterangan = $request->imutasi_keterangan;
+        $mut->last_update_date = now();
+        $mut->last_updated_by = Auth::user()->usr_id;
+        $mut->program_name = "Mutasi_Update";
+        $mut->save();
         
         return ResponseFormatter::success($mut,'Successfully Updated Mutasi');
     }

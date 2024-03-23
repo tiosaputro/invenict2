@@ -81,11 +81,9 @@ class IctRequestPersonnelServices
         $data->LEFTJOIN('divisi_refs as dr','imm.ireq_divisi_user','dr.div_id');
         $data->LEFTJOIN('mng_users ms','imm.ireq_requestor','ms.usr_id');
         $data->LEFTJOIN('mng_users mus','imm.ireq_user','mus.usr_id');
-        $data->WHERE(function($query) use($status){
-            if(!empty($status)){
-                $query->WHERE('ireq_dtl.ireq_status',$status);
-            }
-        });
+        if(!empty($status)){
+            $data->WHERE('ireq_dtl.ireq_status',$status);
+        }
         $data->WHERE(DB::raw("COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1)"),Auth::user()->usr_id);
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('req_type')).'%']);
         $data->WHERERaw('LOWER(llr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);

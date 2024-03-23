@@ -8,7 +8,7 @@
                           <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"/>
                         </div>
                         <h1 class="text-900 font-bold text-4xl lg:text-5xl mb-2">Verification Link</h1>
-                        <span class="text-600 text-center">Please wait...</span>
+                        <span class="text-900 text-center">Please wait...</span>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@ export default {
              this.$router.push({ name: 'error', params: { stat: 'notvalid' } }) }
           else{
             this.ireq_id = res.data.ireq_id;
-            this.todayyy = moment(new Date()).format('YYYY-MM-DD HH:mm:s')
+            this.todayyy = this.$moment(new Date()).format('YYYY-MM-DD HH:mm:s')
 
             if (this.verif.expired_at >= this.todayyy){
               this.loginUser();

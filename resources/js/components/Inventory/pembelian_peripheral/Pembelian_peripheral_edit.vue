@@ -206,7 +206,7 @@ export default {
         // this.purch.purchase_status != null &&
         this.purch.purchase_remark != null
       ) {
-        this.axios.put('/api/update-pem/'+this.$route.params.code, this.purch, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.put('/api/update-pem/'+this.$route.params.code, this.purch).then((response)=>{
           setTimeout( () => this.$router.push('/pembelian-peripheral'),1000);
           this.$toast.add({
             severity: "success",

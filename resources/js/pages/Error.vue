@@ -9,8 +9,8 @@
                             <!-- <i class="pi pi-fw pi-exclamation-triangle text-2xl text-50"></i> -->
                         </div>
                         <h1 class="font-bold text-5xl text-900 mb-2">Error Occured.</h1>
-                        <span v-if="this.expired" class="text-600">Your verification link has expired</span>
-                        <span v-if="this.notvalid" class="text-600">Your verification link not valid</span>
+                        <span v-if="this.expired" class="text-900">Your verification link has expired</span>
+                        <span v-if="this.notvalid" class="text-900">Your verification link not valid</span>
                         <img src="/layout/images/asset-error.svg" alt="Error" class="mt-5" width="80%">
                         <div class="col-12 mt-5 text-center">
                              <Button icon="bi bi-arrow-left" class="p-button-raised p-button-text"  @click="$router.push('/dashboard')" label="Go to Dashboard"></Button>

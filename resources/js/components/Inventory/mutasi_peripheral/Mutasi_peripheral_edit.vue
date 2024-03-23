@@ -223,7 +223,7 @@ export default {
   },
   methods: {
   cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Mutasi Peripheral") || this.checkto.includes("/mutasi-peripheral")){
@@ -235,13 +235,13 @@ export default {
       });
     },
     getMutasi(){
-      this.axios.get('/api/edit-mut/'+this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/edit-mut/'+this.$route.params.code).then((response)=>{
         this.mut = response.data;
         this.getKode();
       });
     }, 
     getKode(){
-      this.axios.get('/api/get-kode-peripheral', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-kode-peripheral').then((response)=>{
         this.kodeperi = response.data.kode;
         this.divisi = response.data.divisi;
         this.bu = response.data.bu;
@@ -275,7 +275,7 @@ export default {
             this.mut.imutasi_lokasi != null 
         ) {
 
-        this.axios.put('/api/update-mut/'+this.$route.params.code, this.mut, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.put('/api/update-mut/'+this.$route.params.code, this.mut).then(()=>{
           setTimeout( () => this.$router.push('/mutasi-peripheral'),1000);
           this.$toast.add({
             severity: "success",

@@ -65,14 +65,13 @@
   </div>
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
         loading: true,
         
         divisi: [],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
     };
   },
   created() {

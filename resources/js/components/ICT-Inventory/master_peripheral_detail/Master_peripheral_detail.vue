@@ -213,7 +213,6 @@
   </div>    
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 import qrcode from './QRCode'; 
 export default {
   data() {
@@ -227,7 +226,7 @@ export default {
         master: [],
         mas: [],
         barcode:'',
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         text:'',
     };
   },

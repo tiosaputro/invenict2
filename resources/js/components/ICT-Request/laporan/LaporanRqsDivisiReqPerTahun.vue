@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Divisi Requestor Per Tahun") || this.checkto.includes("/report-div-req-per-tahun")){
@@ -96,14 +96,14 @@ export default {
         getPerDivisiRequestorTahun(){
             if(this.tahunRequestor != null){
               this.loading = true;
-                this.axios.get('api/count-per-divreq-tahun/'+this.tahunRequestor, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{ 
+                this.axios.get('api/count-per-divreq-tahun/'+this.tahunRequestor).then((response)=>{ 
                     this.req = response.data;
                     this.loading = false;
                 });
             }
         },
         getTahun(){
-            this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+            this.axios.get('api/get-tahun').then((response)=>{
                 this.tahunn = response.data.grafik;
             }).catch(error=>{
           if (error.response.status == 401){

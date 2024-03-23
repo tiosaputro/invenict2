@@ -141,7 +141,6 @@
   </div>
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -152,7 +151,7 @@ export default {
         petugas: [],
         assign:[],
         kode:[],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
     };
   },

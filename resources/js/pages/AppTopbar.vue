@@ -81,7 +81,6 @@ export default {
             user: [],
             expanded: false,
 			items:[],
-            token : localStorage.getItem("token")
         };
     },
     created() {
@@ -89,16 +88,18 @@ export default {
     },
     methods: {
 		getdata(){
-		    this.axios.get("/api/menu-user").then((response) => {
-                this.items = response.data.data.tree;
-                this.user = response.data.data.user;
-            }).catch((error) => {
-                if (error.response.status == 401) {
-                    localStorage.clear();
-                    localStorage.setItem("Expired", "true");
-                    setTimeout(() => this.$router.push("/login"), 2000);
-                }
-            });	
+            if(!this.items.length){
+                this.axios.get("/api/menu-user").then((response) => {
+                    this.items = response.data.data.tree;
+                    this.user = response.data.data.user;
+                }).catch((error) => {
+                    // if (error.response.status == 401) {
+                    //     localStorage.clear();
+                    //     localStorage.setItem("Expired", "true");
+                    //     setTimeout(() => this.$router.push("/login"), 2000);
+                    // }
+                });	
+            }
 		},
         toUpper(str) {
             return str

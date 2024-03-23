@@ -1,189 +1,123 @@
 <template>
-  <div>
-    <ConfirmDialog> </ConfirmDialog>
-    <Toast />
+    <div>
+        <ConfirmDialog> </ConfirmDialog>
+        <Toast />
         <div class="card">
-          <Toolbar class="mb-4">
-            <template v-slot:start>
-              <h4>Mutasi Peripheral</h4>
-            </template>
-          </Toolbar>
-        <div class="row">
-          <div class="col-sm-6">
-            <form @submit.prevent="CreateMutasi">
-               <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:145px">Peripheral</label>
-                    <div class="field col-12 md:col-6">
-                      <Dropdown 
-                        v-model="kode"
-                        :options="kodeperi"
-                        optionLabel="name"
-                        optionValue="code"
-                        :showClear="true"
-                        :filter="true"
-                        @change="getSn()"
-                        placeholder="Select"
-                        :class="{ 'p-invalid': submitted && !kode }"
-                      />
-                      <small v-if="errors.kode" class="p-error">
-                          {{ errors.kode[0] }}
-                      </small>  
-                      <small class="p-error" v-if="submitted && !kode"
-                        > Peripheral not filled
-                      </small>
-                    </div>
-                  </div>
-                  <div class="field grid">
-                    <label class="col-fixed w-9rem" style="width:145px">S/N</label>
-                    <div class="field col-12 md:col-6">
-                      <Dropdown 
-                        v-model="invent_sn"
-                        :options="sn"
-                        optionLabel="name"
-                        optionValue="code"
-                        :showClear="true"
-                        :filter="true"
-                        @change="getImage()"
-                        placeholder="Select"
-                        :class="{ 'p-invalid': submitted && !invent_sn }"
-                      />
-                      <small v-if="errors.invent_sn" class="p-error">
-                          {{ errors.invent_sn[0] }}
-                      </small>  
-                      <small class="p-error" v-if="submitted && !invent_sn"
-                        > S/N not filled.
-                      </small>
-                    </div>
-                  </div>
-                  <div class="field grid ">
-                   <label class="col-fixed w-9rem" style="width:145px">From Date</label>
-                    <div class="col-12 md:col-6">
-                      <DatePicker v-model="fromdate" :masks="mask" >
-                        <template v-slot="{ inputValue, togglePopover }">
-                         <div class="flex items-center">
-                          <input
-                            class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
-                            :value="inputValue"
-                            @click="togglePopover"
-                            placeholder="Pilih Dari Tanggal"
-                            readonly
-                          />
-                        <Button icon="pi pi-calendar" v-if="!fromdate" @click="togglePopover"/>
-                        <Button icon="pi pi-trash" class="p-button-danger" v-else @click="fromdate = ''" />
-                       </div>
-                      </template>
-                      </DatePicker>
-                      <small class="p-error" v-if="submitted && !fromdate"
-                        > Dari Tgl Belum Diisi.
-                      </small>
-                  </div>
-                </div>
-                <div class="field grid">
-                 <label class="col-fixed w-9rem" style="width:145px">To Date</label>
-                  <div class="col-12 md:col-6">
-                      <DatePicker v-model="todate" :masks="mask" :min-date="fromdate" >
-                        <template v-slot="{ inputValue, togglePopover }">
-                          <div class="flex items-center">
-                          <input
-                            class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
-                            :value="inputValue"
-                            @click="togglePopover"
-                            placeholder="Pilih SD Tanggal"
-                            readonly
-                          />
-                          <Button icon="pi pi-calendar" v-if="!todate" @click="togglePopover"/>
-                          <Button icon="pi pi-trash" class="p-button-danger" v-else @click="todate = ''" />
-                         </div>
-                        </template>
-                      </DatePicker>
-                  </div>
-              </div>
-                <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">Location</label>
-                    <div class="col-10 md:col-4">
-                    <InputText
-                      type ="text"
-                      v-model="lokasi"
-                      placeholder="Masukan Lokasi. . ."
-                      :class="{ 'p-invalid': submitted && !lokasi }"
-                    />
-                      <small class="p-error" v-if="submitted && !lokasi"
-                        >Lokasi Belum Diisi.
-                      </small>
-                  </div>
-              </div>
-                <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">User</label>
-                    <div class="col-12 md:col-6">
-                      <InputText
-                          type="text"
-                          v-model="user"
-                          placeholder="Masukan Pengguna . . ."
-                          :class="{ 'p-invalid': submitted && !user }"
-                        />
-                        
-                      <small class="p-error" v-if="submitted && !user"
-                        >Pengguna Belum Diisi.
-                      </small>
-                      <small v-if="errors.user" class="p-error">
-                          {{ errors.user[0] }}
-                      </small>
-                </div>
-              </div>
-              <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">User Division</label>
-                    <div class="col-12 md:col-6">
-                      <Dropdown 
-                        v-model="invent_divisi"
-                        :options="divisi"
-                        optionLabel="name"
-                        optionValue="code"
-                        :showClear="true"
-                        :filter="true"
-                        placeholder="Select"
-                        :class="{ 'p-invalid': submitted && !invent_divisi }"
-                      />
-                      <small class="p-error" v-if="submitted && !invent_divisi"
-                        >Pengguna Belum Diisi.
-                      </small>
-                      <small v-if="errors.invent_divisi" class="p-error">
-                          {{ errors.invent_divisi[0] }}
-                      </small>
-                </div>
-              </div>
-              <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">Business Unit</label>
-                    <div class="col-12 md:col-6">
-                      <Dropdown 
-                        v-model="invent_bu"
-                        :options="bu"
-                        optionLabel="name"
-                        optionValue="code"
-                        :showClear="true"
-                        :filter="true"
-                        placeholder="Select"
-                        :class="{ 'p-invalid': submitted && !invent_bu }"
-                      />
-                      <small class="p-error" v-if="submitted && !invent_bu"
-                        >Business Unit not filled.
-                      </small>
-                      <small v-if="errors.invent_bu" class="p-error">
-                          {{ errors.invent_bu[0] }}
-                      </small>
-                </div>
-              </div>
-               <div class="field grid">
-                <label class="col-fixed w-9rem" style="width:145px">Remark</label>
-                 <div class="col-12 md:col-6">
-                  <Textarea
-                    v-model="ket"
-                    :autoResize="true" 
-                    rows="5" 
-                    cols="20"
-                    placeholder="Enter remark"
-                    :class="{ 'p-invalid': submitted && !ket }"
-                  />
-                      <small class="p-error" v-if="submitted && !ket"
+            <Toolbar class="mb-4">
+                <template v-slot:start>
+                    <h4>Mutasi Peripheral</h4>
+                </template>
+            </Toolbar>
+            <div class="row">
+                <div class="col-sm-6">
+                    <form @submit.prevent="CreateMutasi">
+                        <div class="field grid">
+                            <label class="col-fixed w-9rem" style="width:145px">Peripheral</label>
+                            <div class="field col-12 md:col-6">
+                                <Dropdown v-model="mutasi.invent_code" :options="kodeperi" optionLabel="name"
+                                    optionValue="code" :showClear="true" :filter="true" @change="getSn()"
+                                    placeholder="Select" :class="{ 'p-invalid': submitted && !mutasi.invent_code }" />
+                                <small v-if="errors.invent_code" class="p-error">
+                                    {{ errors.invent_code[0] }}
+                                </small>
+                                <small class="p-error" v-if="submitted && !mutasi.invent_code"> Peripheral not filled
+                                </small>
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <label class="col-fixed w-9rem" style="width:145px">S/N</label>
+                            <div class="field col-12 md:col-6">
+                                <Dropdown v-model="mutasi.invent_sn" :options="sn" optionLabel="name" optionValue="code"
+                                    :showClear="true" :filter="true" @change="getImage()" placeholder="Select"
+                                    :class="{ 'p-invalid': submitted && !mutasi.invent_sn }" />
+                                <small v-if="errors.invent_sn" class="p-error">
+                                    {{ errors.invent_sn[0] }}
+                                </small>
+                                <small class="p-error" v-if="submitted && !mutasi.invent_sn"> S/N not filled.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="field grid ">
+                            <label class="col-fixed w-9rem" style="width:145px">From Date</label>
+                            <div class="col-12 md:col-6">
+                                <DatePicker v-model="mutasi.fromdate" :masks="mask">
+                                    <template v-slot="{ inputValue, togglePopover }">
+                                        <div class="flex items-center">
+                                            <input
+                                                class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
+                                                :value="inputValue" @click="togglePopover"
+                                                placeholder="Pilih Dari Tanggal" readonly />
+                                            <Button icon="pi pi-calendar" v-if="!mutasi.fromdate"
+                                                @click="togglePopover" />
+                                            <Button icon="pi pi-trash" class="p-button-danger" v-else
+                                                @click="mutasi.fromdate = ''" />
+                                        </div>
+                                    </template>
+                                </DatePicker>
+                                <small class="p-error" v-if="submitted && !mutasi.fromdate"> Dari Tgl Belum Diisi.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <label class="col-fixed w-9rem" style="width:145px">To Date</label>
+                            <div class="col-12 md:col-6">
+                                <DatePicker v-model="mutasi.todate" :masks="mask" :min-date="mutasi.fromdate">
+                                    <template v-slot="{ inputValue, togglePopover }">
+                                        <div class="flex items-center">
+                                            <input
+                                                class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
+                                                :value="inputValue" @click="togglePopover"
+                                                placeholder="Pilih SD Tanggal" readonly />
+                                            <Button icon="pi pi-calendar" v-if="!mutasi.todate"
+                                                @click="togglePopover" />
+                                            <Button icon="pi pi-trash" class="p-button-danger" v-else
+                                                @click="mutasi.todate = ''" />
+                                        </div>
+                                    </template>
+                                </DatePicker>
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <label class="col-fixed w-9rem" style="width:145px">Location</label>
+                            <div class="col-10 md:col-4">
+                                <InputText type="text" v-model="mutasi.lokasi" placeholder="Masukan Lokasi. . ."
+                                    :class="{ 'p-invalid': submitted && !mutasi.lokasi }" />
+                                <small class="p-error" v-if="submitted && !mutasi.lokasi">Lokasi Belum Diisi.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <label class="col-fixed w-9rem" style="width:145px">User</label>
+                            <div class="col-12 md:col-6">
+                                <Dropdown v-model="mutasi.user" :options="listUser" optionLabel="usr_fullname"
+                                    optionValue="usr_id" :showClear="true" :filter="true" @change="getBuDiv()"
+                                    placeholder="Select" :class="{ 'p-invalid': submitted && !mutasi.user }" />
+
+                                <small class="p-error" v-if="submitted && !mutasi.user">Pengguna Belum Diisi.
+                                </small>
+                                <small v-if="errors.user" class="p-error">
+                                    {{ errors.user[0] }}
+                                </small>
+                            </div>
+                        </div>
+                        <div class="field grid" v-if="this.mutasi.user">
+                            <label class="col-fixed w-9rem" style="width:145px">User Division</label>
+                            <div class="col-10 md:col-4">
+                                <InputText type="text" v-model="mutasi.imutasi_divisi" disabled />
+                            </div>
+                        </div>
+                        <div class="field grid" v-if="this.mutasi.user">
+                            <label class="col-fixed w-9rem" style="width:145px">Business Unit</label>
+                            <div class="col-10 md:col-4">
+                                <InputText type="text" v-model="mutasi.imutasi_bu" disabled />
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <label class="col-fixed w-9rem" style="width:145px">Remark</label>
+                            <div class="col-12 md:col-6">
+                                <Textarea v-model="mutasi.ket" :autoResize="true" rows="5" cols="20"
+                                    placeholder="Enter remark" :class="{ 'p-invalid': submitted && !mutasi.ket }" />
+                                <small class="p-error" v-if="submitted && !mutasi.ket"
                         >Keterangan Belum Diisi.
                       </small>
                       <small v-if="errors.ket" class="p-error">
@@ -208,7 +142,7 @@
             </form>
             </div>
           <div class="col-sm-6">
-            <img :src="'/master_peripheral/' + detail.photo" class="mutasi-image" v-if="this.invent_sn" />
+            <img :src="'/master_peripheral/' + detail.photo" class="mutasi-image" v-if="this.mutasi.invent_sn" />
           </div>
        </div>
       </div>
@@ -220,21 +154,22 @@ export default {
     return {
       submitted: false,
       errors: [],
-      kode: null,
       fromdate: new Date(),
       todate: '',
-      ket:null,
-      user:null,
-      lokasi:null,
       detail:[],
       kodeperi:[],
-      divisi:[],
-      invent_bu:null,
-      invent_sn:null,
-      invent_divisi:null,
+      listUser:[],
       sn:[],
-      bu:[],
-      mutasi:[],
+      mutasi:{
+       invent_code : null,
+       invent_sn : null,
+       fromdate : null,
+       ket : null,
+       user : null,
+       lokasi : null,
+       imutasi_divisi : null,
+       imutasi_bu :null
+      },
       mask:{
         input: 'DD MMM YYYY'
       },
@@ -245,24 +180,31 @@ export default {
   },
   methods: {
     getImage(){
-      if(this.invent_sn){
-      this.axios.get('api/getImage/'+this.invent_sn).then((response)=>{
+      if(this.mutasi.invent_sn){
+      this.axios.get('api/getImage/'+this.mutasi.invent_sn).then((response)=>{
         this.detail = response.data;
       });
       }
     },
     getSn(){
-      if(this.kode){
-        this.axios.get('/api/get-sn-peripheral/'+this.kode).then((response)=>{
+      if(this.mutasi.invent_code){
+        this.axios.get('api/get-sn-peripheral/'+this.mutasi.invent_code).then((response)=>{
         this.sn = response.data;
       });
       }
-    },   
+    },  
+    getBuDiv(){
+      if(this.mutasi.user){
+        this.axios.get('api/data-divbu/'+this.mutasi.user).then((response)=>{
+        this.mutasi.imutasi_divisi = response.data.division;
+        this.mutasi.imutasi_bu = response.data.bu;
+      });
+      }
+    },    
     getKode(){
-      this.axios.get('api/get-kode-peripheral').then((response)=>{
+      this.axios.get('api/add-mut').then((response)=>{
         this.kodeperi = response.data.data.kode;
-        this.divisi = response.data.data.divisi;
-        this.bu = response.data.data.bu;
+        this.listUser = response.data.data.listUser;
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -288,26 +230,14 @@ export default {
         accept: () => {
         this.submitted=true;
         if (
-            this.kode != null &&
-            this.invent_sn != null &&
-            this.fromdate != null &&
-            this.ket != null &&
-            this.user != null &&
-            this.invent_divisi != null &&
-            this.invent_bu != null &&
-            this.lokasi != null 
+            this.mutasi.invent_code != null &&
+            this.mutasi.invent_sn != null &&
+            this.mutasi.fromdate != null &&
+            this.mutasi.ket != null &&
+            this.mutasi.user != null &&
+            this.mutasi.lokasi != null 
         ) {
-        const data = new FormData();
-        data.append("kode", this.kode);
-        data.append("fromdate", this.fromdate);
-        data.append("ket", this.ket);
-        data.append("todate", this.todate);
-        data.append("user", this.user);
-        data.append("lokasi", this.lokasi);
-        data.append("invent_bu", this.invent_bu);
-        data.append("invent_divisi", this.invent_divisi);
-        data.append("invent_sn", this.invent_sn);
-        this.axios.post('api/add-mut', data).then(()=>{
+        this.axios.post('api/save-mut', this.mutasi).then(()=>{
           setTimeout( () => this.$router.push('/mutasi-peripheral'),1000);
           this.$toast.add({
             severity: "success",

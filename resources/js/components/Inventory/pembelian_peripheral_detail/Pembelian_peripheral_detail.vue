@@ -122,7 +122,6 @@
 </template>
 <script>
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -131,7 +130,7 @@ export default {
         detail: [],
         purchase_id: this.$route.params.code,
         details:[],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
         checkname : [],
         checkto : [],
@@ -143,7 +142,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
          if(this.checkname.includes("Pembelian Peripheral") || this.checkto.includes("/pembelian-peripheral")){
@@ -163,7 +162,7 @@ export default {
          return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")
       },
     getPembelianDetail(){
-      this.axios.get('/api/detail-pem/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/detail-pem/' + this.$route.params.code).then((response)=> {
         this.detail = response.data;
       });
     },
@@ -197,7 +196,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('/api/delete-detail-pem/' +this.$route.params.code + '/' +dpurchase_id, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+          this.axios.delete('/api/delete-detail-pem/' +this.$route.params.code + '/' +dpurchase_id).then(()=>{
             this.loading = true;
             this.getPembelianDetail();
           });
@@ -216,9 +215,9 @@ export default {
     },
     CetakExcel(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
-       this.axios.get('api/report-pem-detail-excel/' + this.purchase_id,{headers: {'Authorization': 'Bearer '+this.token, 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
+       this.axios.get('api/report-pem-detail-excel/' + this.purchase_id,{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;

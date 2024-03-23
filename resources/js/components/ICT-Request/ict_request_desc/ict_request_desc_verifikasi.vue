@@ -123,7 +123,6 @@
   </div>
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -135,7 +134,7 @@ export default {
         reason:{
             ket:null,
         },
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
         token: localStorage.getItem('token'),
     };
@@ -164,7 +163,7 @@ export default {
             summary: "Success Message",
             detail: "Successfully approved the request",
           });
-          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code);
           setTimeout( () =>  this.$router.push('/ict-request-desc'),1000);
         },
         reject: () => {},
@@ -173,7 +172,7 @@ export default {
       updateReject(){
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason).then(()=>{
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
@@ -190,7 +189,7 @@ export default {
         this.submitted = false;
       },
     getIctDetail(){
-      this.axios.get('/api/get-verif/' + this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('/api/get-verif/' + this.$route.params.code).then((response)=> {
         this.verif = response.data;
         this.loading = false;
       }).catch(error=>{
@@ -208,7 +207,7 @@ export default {
       });
     },
     getNoreq(){
-      this.axios.get('/api/get-noreq/'+ this.$route.params.code, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/get-noreq/'+ this.$route.params.code).then((response)=>{
         this.kode = response.data;
       });
     },

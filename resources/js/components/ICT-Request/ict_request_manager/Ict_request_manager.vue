@@ -682,7 +682,6 @@
 <script>
 import { isThisTypeAnnotation } from '@babel/types';
 
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -703,7 +702,7 @@ export default {
         selesai:[],
         sdhdiverifikasi: [],
         reject:[],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         checkname : [],
         checkto : [],
         code:null,
@@ -716,7 +715,6 @@ export default {
     this.getPermohonan();
   },
   methods: {
-    
     getDetail(ireq_attachment){
        var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
          var myWindow = window.open(page, "_blank");
@@ -759,7 +757,7 @@ export default {
       }).catch(error=>{
          if (error.response.status == 401) {
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
+              severity:'error', summary: 'Error', detail:'Session login expired'
             });
             localStorage.clear();
             localStorage.setItem('Expired','true')
@@ -773,9 +771,19 @@ export default {
     CetakPdf(ireq_id){
       this.loading = true;
        this.axios.get('api/print-out-ict-request/'+ireq_id).then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
+        let htmlContent = response.data.data.htmlContent;
+          let norequest = response.data.data.norequest;
+          const options = {
+            filename: 'Form ICT Request No.'+norequest+'.pdf', // Optional, specify a filename for the downloaded PDF
+            jsPDF: { 
+              unit: 'mm', 
+              format: 'a4', // Set the format to A4
+              orientation: 'landscape', // Set the orientation to portrait or landscape
+            }
+          };
+
+          // Convert HTML to PDF with options
+          this.$html2pdf().set(options).from(htmlContent).save();
           this.loading = false;
        });
     },
@@ -838,15 +846,23 @@ export default {
     CetakPdfBlmDiverifikasi(){
       this.loading = true;
        this.axios.get('api/report-ict-pdf-manager-permohonan').then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
-          this.loading = false;
+        let htmlContent = response.data.data.htmlContent;
+        const options = {
+          filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', // Set the format to A4
+            orientation: 'landscape', // Set the orientation to portrait or landscape
+          }
+        };
+        // Convert HTML to PDF with options
+        this.$html2pdf().set(options).from(htmlContent).save();
+        this.loading = false;
        });
     },
     CetakExcelBlmDiverifikasi(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
        this.axios.get('api/report-ict-excel-manager-permohonan',{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -861,15 +877,23 @@ export default {
     CetakPdfSudahDiverifikasi(){
       this.loading = true;
        this.axios.get('api/report-ict-pdf-manager-verifikasi').then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
-          this.loading = false;
+        let htmlContent = response.data.data.htmlContent;
+        const options = {
+          filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', // Set the format to A4
+            orientation: 'landscape', // Set the orientation to portrait or landscape
+          }
+        };
+        // Convert HTML to PDF with options
+        this.$html2pdf().set(options).from(htmlContent).save();
+        this.loading = false;
        });
     },
     CetakExcelSudahDiverifikasi(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
        this.axios.get('api/report-ict-excel-manager-verifikasi',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -884,15 +908,23 @@ export default {
     CetakPdfDireject(){
       this.loading = true;
        this.axios.get('api/report-ict-pdf-manager-reject').then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
-          this.loading = false;
+        let htmlContent = response.data.data.htmlContent;
+        const options = {
+          filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', // Set the format to A4
+            orientation: 'landscape', // Set the orientation to portrait or landscape
+          }
+        };
+        // Convert HTML to PDF with options
+        this.$html2pdf().set(options).from(htmlContent).save();
+        this.loading = false;
        });
     },
     CetakExcelDireject(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
        this.axios.get('api/report-ict-excel-manager-reject',{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -907,15 +939,23 @@ export default {
     CetakPdfAssignmentRequest(){
       this.loading = true;
        this.axios.get('api/report-ict-pdf-manager-assignment-request').then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
-          this.loading = false;
+        let htmlContent = response.data.data.htmlContent;
+        const options = {
+          filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', // Set the format to A4
+            orientation: 'landscape', // Set the orientation to portrait or landscape
+          }
+        };
+        // Convert HTML to PDF with options
+        this.$html2pdf().set(options).from(htmlContent).save();
+        this.loading = false;
        });
     },
     CetakExcelAssignmentRequest(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
        this.axios.get('api/report-ict-excel-manager-assignment-request',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -930,15 +970,23 @@ export default {
     CetakPdfSedangDikerjakan(){
       this.loading = true;
        this.axios.get('api/report-ict-pdf-manager-sedang-dikerjakan').then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
-          this.loading = false;
+        let htmlContent = response.data.data.htmlContent;
+        const options = {
+          filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', // Set the format to A4
+            orientation: 'landscape', // Set the orientation to portrait or landscape
+          }
+        };
+        // Convert HTML to PDF with options
+        this.$html2pdf().set(options).from(htmlContent).save();
+        this.loading = false;
        });
     },
     CetakExcelSedangDikerjakan(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
        this.axios.get('api/report-ict-excel-manager-sedang-dikerjakan',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -953,15 +1001,23 @@ export default {
     CetakPdfSudahDikerjakan(){
       this.loading = true;
        this.axios.get('api/report-ict-pdf-manager-sudah-dikerjakan').then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
-          this.loading = false;
+        let htmlContent = response.data.data.htmlContent;
+        const options = {
+          filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', // Set the format to A4
+            orientation: 'landscape', // Set the orientation to portrait or landscape
+          }
+        };
+        // Convert HTML to PDF with options
+        this.$html2pdf().set(options).from(htmlContent).save();
+        this.loading = false;
        });
     },
     CetakExcelSudahDikerjakan(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
        this.axios.get('api/report-ict-excel-manager-sudah-dikerjakan',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -976,15 +1032,23 @@ export default {
     CetakPdfSelesai(){
       this.loading = true;
        this.axios.get('api/report-ict-pdf-manager-selesai').then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
-          this.loading = false;
+        let htmlContent = response.data.data.htmlContent;
+        const options = {
+          filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', // Set the format to A4
+            orientation: 'landscape', // Set the orientation to portrait or landscape
+          }
+        };
+        // Convert HTML to PDF with options
+        this.$html2pdf().set(options).from(htmlContent).save();
+        this.loading = false;
        });
     },
     CetakExcelSelesai(){
       const date = new Date();
-      const today = moment(date).format("DD MMM YYYY")
+      const today = this.$moment(date).format("DD MMM YYYY")
       this.loading = true;
        this.axios.get('api/report-ict-excel-manager-selesai',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
           const url = window.URL.createObjectURL(new Blob([response.data]));

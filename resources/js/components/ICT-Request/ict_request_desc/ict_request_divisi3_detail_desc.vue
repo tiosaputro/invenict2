@@ -139,7 +139,6 @@
   </div>
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
@@ -150,7 +149,7 @@ export default {
         status:[],
         editDetail:[],
         kode:[],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         token: localStorage.getItem('token'),
         user:[],
     };
@@ -191,7 +190,7 @@ export default {
       
     },
     getIctDetail(){
-      this.axios.get('/api/get-detail-done/' + this.$route.params.code).then((response)=> {
+      this.axios.get('/api/get-detail-done-personnel/' + this.$route.params.code).then((response)=> {
         this.detail = response.data.data.detail;
         this.kode = response.data.request;
         this.loading = false;

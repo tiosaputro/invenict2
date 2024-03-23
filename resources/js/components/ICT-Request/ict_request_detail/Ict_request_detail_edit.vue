@@ -198,7 +198,7 @@ export default {
     getIreq(){
       this.kode  = '';
        if(this.ict.ireq_type){
-        this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+        this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type).then((res)=>{
           this.catalog = res.data;
         });
       }
@@ -209,7 +209,7 @@ export default {
       }
     },
     cekUser(){
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Status") || this.checkto.includes("/ict-request")){ 
@@ -236,7 +236,7 @@ export default {
         });
       },
     getCatalog(){
-      this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type, {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+      this.axios.get('/api/get-catalog-request/'+this.ict.ireq_type).then((res)=>{
           this.catalog = res.data;
         });
     },

@@ -142,7 +142,7 @@ export default {
       return this.$moment(date).format("DD MMM YYYY HH:mm")
     },
     cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkto.includes("/report-ict-request")){
@@ -156,13 +156,13 @@ export default {
     },
     getIct(){
       this.loading = true;
-      this.axios.get('api/dataIct', {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+      this.axios.get('api/dataIct').then((res)=>{
         this.ict = res.data
         this.loading = false;
       });
     },
     getStatus(){
-      this.axios.get('api/get-status', {headers: {'Authorization': 'Bearer '+this.token}}).then((res)=>{
+      this.axios.get('api/get-status').then((res)=>{
         this.status = res.data;
       });
     },

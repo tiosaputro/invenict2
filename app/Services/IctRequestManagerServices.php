@@ -135,7 +135,8 @@ class IctRequestManagerServices
             'ireq_dtl.ireq_qty');
         if(!empty($status)){
             $data->WHERE('ireq_dtl.ireq_status',$status);
-        }if(!empty($code)){
+        }
+        if(!empty($code)){
             $data->WHERE('im.ireq_id',$code);
         }
         $data->ORDERBY('im.ireq_date','DESC');

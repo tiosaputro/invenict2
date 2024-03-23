@@ -1841,7 +1841,7 @@ input::placeholder {
 }
 .p-button.p-button-text {
     background-color: transparent;
-    color: #64b5f6;
+    color: #111;
     border-color: transparent;
 }
 .p-button.p-button-text:enabled:hover {

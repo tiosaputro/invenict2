@@ -248,7 +248,7 @@ export default {
   },
   methods: {
   cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Mutasi Peripheral") || this.checkto.includes("/mutasi-peripheral")){
@@ -261,20 +261,20 @@ export default {
     },
     getImage(){
       if(this.invent_sn){
-      this.axios.get('api/getImage/'+this.invent_sn, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/getImage/'+this.invent_sn).then((response)=>{
         this.detail = response.data;
       });
       }
     },
     getSn(){
       if(this.kode){
-        this.axios.get('/api/get-sn-peripheral/'+this.kode, {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+        this.axios.get('/api/get-sn-peripheral/'+this.kode).then((response)=>{
         this.sn = response.data;
       });
       }
     },   
     getKode(){
-      this.axios.get('api/get-kode-peripheral', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/get-kode-peripheral').then((response)=>{
         this.kodeperi = response.data.kode;
         this.divisi = response.data.divisi;
         this.bu = response.data.bu;
@@ -319,7 +319,7 @@ export default {
         data.append("invent_bu", this.invent_bu);
         data.append("invent_divisi", this.invent_divisi);
         data.append("invent_sn", this.invent_sn);
-        this.axios.post('api/add-mut', data, {headers: {'Authorization': 'Bearer '+this.token}}).then(()=>{
+        this.axios.post('api/add-mut', data).then(()=>{
           setTimeout( () => this.$router.push('/mutasi-peripheral'),1000);
           this.$toast.add({
             severity: "success",

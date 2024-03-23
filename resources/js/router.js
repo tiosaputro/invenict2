@@ -317,11 +317,6 @@ const routes = [
         component: ()=> import('./components/ICT-Request/Approval_atasan/Ict_request_divisi1_detail.vue'),
     },
     {
-        name: 'Ict Request Verifikasi',
-        path: '/ict-request-verifikasi/:code',
-        component: ()=> import('./components/ICT-Request/Approval_atasan/Ict_request_verifikasi.vue'),
-    },
-    {
         name: 'Ict Request Verifikasi From Email',
         path: '/verifikasi-request/:code/:status',
         component: ()=> import('./components/ICT-Request/Approval_atasan/Ict_request_verifikasi_from_email.vue'),

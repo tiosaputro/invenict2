@@ -131,7 +131,7 @@ export default {
     };
   },
   created(){
-    this.cekUser();
+    this.getIct();
   },
   methods: {
     getAttach(event) {
@@ -163,21 +163,10 @@ export default {
         this.ict.invent_code = '';
       }
     },
-    cekUser(){
-      this.axios.get('/api/cek-user').then((response)=>{
-        this.checkto = response.data.map((x)=> x.to)
-        this.checkname = response.data.map((x)=> x.name)
-        if(this.checkname.includes("Request") || this.checkto.includes("/ict-request")){ 
-          this.getIct();
-        }
-        else {
-          this.$router.push('/access');
-        }
-      });
-    },
     getIct(){
-        this.axios.get('/api/edit-ict-detail/' +this.$route.params.ireq+'/'+this.$route.params.code).then((response)=>{
+        this.axios.get('/api/edit-ict-detail-reviewer/' +this.$route.params.ireq+'/'+this.$route.params.code).then((response)=>{
           this.ict = response.data.data.request;
+          this.ict.ireq_qty = parseInt(this.ict.ireq_qty,10);
           if(this.ict.ireq_attachment){
             if(this.ict.ireq_attachment.split('.').pop()=='jpeg'||this.ict.ireq_attachment.split('.').pop()=='png'||this.ict.ireq_attachment.split('.').pop()=='jpg'){
               this.image = true;
@@ -187,6 +176,10 @@ export default {
             }
           }
           this.cekTipeReq = this.ict.ireq_type;
+        }).catch(error => {
+          if(error.response.status == 403){
+            this.$router.push('/access');
+          }
         });
     },
     UpdateIctDetail() {

@@ -67,14 +67,13 @@
   </div>
 </template>
 <script>
-import {FilterMatchMode} from 'primevue/api';
 export default {
   data() {
     return {
         loading: true,
         token: localStorage.getItem('token'),
         ref: [],
-        filters: { 'global': {value: null, matchMode: FilterMatchMode.CONTAINS} },
+        filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         checkname : [],
         checkto : [],
     };
@@ -84,7 +83,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         if(this.checkto.includes("/referensi-kategori")){
           this.getRef();
@@ -95,7 +94,7 @@ export default {
       });
     },
     getRef(){
-      this.axios.get('api/ref-lookup-service', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/ref-lookup-service').then((response)=> {
         this.ref = response.data;
         this.loading = false;
       }).catch(error=>{
@@ -124,7 +123,7 @@ export default {
             detail: "Record deleted",
             life: 3000,
           });
-          this.axios.delete('api/delete-ref/' +lookup_code + "/" + lookup_type, {headers: {'Authorization': 'Bearer '+this.token}});
+          this.axios.delete('api/delete-ref/' +lookup_code + "/" + lookup_type);
           this.getRef();
         },
         reject: () => {},

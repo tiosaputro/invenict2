@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     cekUser(){
-      this.axios.get('api/cek-user', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
+      this.axios.get('api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Per Status") || this.checkto.includes("/report-per-status")){
@@ -86,7 +86,7 @@ export default {
       });
     },
     getReq(){
-      this.axios.get('api/get-tahun', {headers: {'Authorization': 'Bearer '+this.token}}).then((response)=> {
+      this.axios.get('api/get-tahun').then((response)=> {
         this.req = response.data.grafik3;
         this.loading = false;
       }).catch(error=>{
