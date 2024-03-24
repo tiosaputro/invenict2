@@ -42,8 +42,7 @@ class IctDetail extends Model
     public $timestamps = false;
     public $incrementing = false;
 
-    protected function setKeysForSaveQuery(Builder $query)
-    {
+    protected function setKeysForSaveQuery(Builder $query){
         $keys = $this->getKeyName();
         if(!is_array($keys)){
             return parent::setKeysForSaveQuery($query);
@@ -56,8 +55,7 @@ class IctDetail extends Model
         return $query;
     }
 
-    protected function getKeyForSaveQuery($keyName = null)
-    {
+    protected function getKeyForSaveQuery($keyName = null){
         if(is_null($keyName)){
             $keyName = $this->getKeyName();
         }

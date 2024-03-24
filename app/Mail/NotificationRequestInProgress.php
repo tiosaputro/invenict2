@@ -14,8 +14,7 @@ class NotificationRequestInProgress extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($ict)
-    {
+    public function __construct($ict){
         $this->ict = $ict;
     }
 
@@ -24,8 +23,7 @@ class NotificationRequestInProgress extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build()
-    {
+    public function build(){
         return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request In Progress')
                     ->view('emailNotificationRequestInProgress')

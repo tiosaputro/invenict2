@@ -12,8 +12,7 @@ class IctExportAssignmentRequest implements FromView
     function __construct($usr_name){
         $this->usr_name = $usr_name;
     }
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Ict_Sedang_Dikerjakan', [ 'Ict' => DB::table('ireq_mst as im')
         ->SELECT('vr.name as ireq_bu','im.ireq_requestor','im.ireq_id','im.ireq_status as status','im.ireq_no',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_user','im.ireq_requestor','dr.div_name',DB::raw("COALESCE(im.ireq_assigned_to2,im.ireq_assigned_to1) AS ireq_assigned_to"),'lr.lookup_desc as ireq_status')
         ->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')

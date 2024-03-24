@@ -14,8 +14,7 @@ class NotificationRequestHasBeenDone extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($datadone)
-    {
+    public function __construct($datadone){
         $this->datadone = $datadone;
     }
 
@@ -24,8 +23,7 @@ class NotificationRequestHasBeenDone extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build()
-    {
+    public function build(){
         return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Has Been Done')
                     ->view('emailNotificationRequestDone')

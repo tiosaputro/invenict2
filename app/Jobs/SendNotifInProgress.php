@@ -21,8 +21,7 @@ class SendNotifInProgress implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($mail,$ict)
-    {
+    public function __construct($mail,$ict){
         $this->mail = $mail;
         $this->ict = $ict;
     }
@@ -32,8 +31,7 @@ class SendNotifInProgress implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {     
+    public function handle(){     
         log::info([$this->ict]);
         Mail::to($this->mail)->send(new NotificationRequestInProgress($this->ict));
     }

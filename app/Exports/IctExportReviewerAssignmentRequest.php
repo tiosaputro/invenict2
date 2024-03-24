@@ -13,8 +13,7 @@ class IctExportReviewerAssignmentRequest implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function view(): View
-    {
+    public function view(): View{
         if(Auth::user()->usr_loc == 'OJ'){
             return view('excel/Laporan_Ict_Sedang_Dikerjakan', [ 'Ict' => DB::table('ireq_mst as im')
             ->SELECT('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','im.ireq_user','dr.div_name',

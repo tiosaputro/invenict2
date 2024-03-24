@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-const routes = [
-    {
+const routes = [{
         name: 'Checking Token SSO',
         path: '/sso/:token',
         component: () => import('./pages/CheckingToken.vue'),
@@ -62,7 +61,6 @@ const routes = [
         name: 'Desc',
         path: '/ict-request-desc',
         component: () => import('./components/ICT-Request/ict_request_desc/ict_request_desc.vue'),
-
     },
     //referensi_location
     {
@@ -612,8 +610,7 @@ const routes = [
     },
     
     //legality_qr_code
-
-    {
+{
         name: 'Check legality Qr-code Higher Level',
         path: '/check-higher-level/:code',
         component: ()=> import('./components/ICT-Request/legality_qr_code/legality_approval_atasan.vue'),

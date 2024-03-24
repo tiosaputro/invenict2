@@ -29,14 +29,12 @@ class LookupsController extends Controller
             }
         });
     }
-    function index()
-    {
+    function index(){
         $ref = DB::Table('v_lookup_refs')->get();
         return ResponseFormatter::success($ref,'Successfully get data');
  
     }
-    function save(Request $request) 
-    {
+    function save(Request $request) {
         $message = [
             'lookup_code.unique' => 'Kode Sudah Ada',
             'lookup_code.required'=>'Kode Belum Diisi',
@@ -77,13 +75,11 @@ class LookupsController extends Controller
         ]);
         return ResponseFormatter::success($createLookup,'Successfully Created Lookup');
     }
-    function edit($code,$type)
-    {
+    function edit($code,$type){
         $ref = Lookup_Refs::Where('lookup_code', $code)->where('lookup_type',$type)->first();
         return ResponseFormatter::success($ref,'Successfully get data');
     }
-    function update(Request $request,$code,$type)
-    {
+    function update(Request $request,$code,$type){
         $message = [
             'lookup_desc.required' => 'Deskripsi Belum Diisi',
             'lookup_status.required' => 'Status Belum Diisi'
@@ -104,22 +100,19 @@ class LookupsController extends Controller
         ]);
         return ResponseFormatter::success($ref,'Successfully Updated Lookup');
     }
-    function delete($lookup_code,$lookup_type)
-    {
+    function delete($lookup_code,$lookup_type){
         $ref = Lookup_Refs::where('lookup_code',$lookup_code)->where('lookup_type',$lookup_type)->delete();
         
         return ResponseFormatter::success($ref,'Successfully Deleted Data Lookup');
     }
-    function cetak_pdf()
-    {
+    function cetak_pdf(){
         $ref = DB::table('lookup_refs as ls')
         ->Select('ls.*', DB::raw("CASE WHEN ls.lookup_status = 'T' Then 'Aktif' WHEN ls.lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status "))
         ->orderBy('lookup_type','ASC')
         ->get();
         return view('pdf/Laporan_Lookups', compact('ref'));
     }
-    function cetak_excel()
-    {
+    function cetak_excel(){
         return Excel::download(new LookupExport,'Laporan_Lookups.xlsx');
     }
     

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\Models\Mng_user;
 use App\Helpers\ResponseFormatter;
 use App\Services\MutasiServices;
+use Illuminate\Support\Facades\View;
 
 class MutasiController extends Controller
 {
@@ -31,8 +32,7 @@ class MutasiController extends Controller
             }
         });
     }
-    Public Function index()
-    {
+    public function index(){
         $mutasi = $this->mutasiServices->getDataWithFilter();
         return ResponseFormatter::success($mutasi,'Successfully get data');
     }
@@ -42,14 +42,15 @@ class MutasiController extends Controller
             $join->on('im.invent_brand','lr.lookup_code')
                 ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
         })
-        ->select('im.invent_code as code',DB::raw("(im.invent_desc || '-' || lr.lookup_desc || '-' ||  im.invent_type) as name"))
+        ->select(
+            'im.invent_code as code',
+            DB::raw("(im.invent_desc || '-' || lr.lookup_desc || '-' ||  im.invent_type) as name"))
         ->orderBy('im.invent_desc','ASC')
         ->get();
         $data['listUser'] = Mng_user::orderBy('usr_fullname','ASC')->get();
         return ResponseFormatter::success($data,'Successfully get data');
     }
-    Public function save(Request $request)
-    {
+    public function save(Request $request){
         $fromDate = Carbon::parse($request->fromdate);
         $toDate = $request->todate ? Carbon::parse($request->fromdate) : null;
 
@@ -67,25 +68,11 @@ class MutasiController extends Controller
 
         return ResponseFormatter::success($saveMutasi, 'Successfully Created Mutasi');
     }
-    Public function edit($code)
-    {
-        $mut = DB::table('invent_mutasi as im')
-            ->Select(DB::raw("(imm.invent_desc || '-' || lr.lookup_desc || '-' ||  imm.invent_type) as invent_code"),'id.invent_sn',
-                'im.imutasi_lokasi','im.imutasi_pengguna','im.imutasi_keterangan','id.invent_photo','im.imutasi_divisi','im.imutasi_bu',
-                    DB::raw("TO_CHAR(im.imutasi_tgl_dari,' dd Mon YYYY') as imutasi_tgl_dari"),
-                    DB::raw("TO_CHAR(im.imutasi_tgl_sd,' dd Mon YYYY') as imutasi_tgl_sd"))
-            ->leftjoin('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
-            ->leftjoin('invent_mst as imm','id.invent_code','imm.invent_code')
-            ->leftJoin('lookup_refs as lr',function ($join) {
-                $join->on('imm.invent_brand','lr.lookup_code')
-                     ->whereRaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
-                })
-            ->Where('im.imutasi_id',$code)
-            ->first();
+    public function edit($code){
+        $mut = $this->mutasiServices->getDataWithFilter($code);
         return ResponseFormatter::success($mut,'Successfully get data');
     }
-    Public function update(Request $request, $code)
-    {
+    public function update(Request $request, $code){
         $newFromDate = Carbon::parse($request->imutasi_tgl_dari)->copy()->tz('Asia/Jakarta')->format('Y-m-d');
         $mut = Mutasi::where('imutasi_id',$code)->first();
         $mut->imutasi_tgl_dari = $newFromDate;
@@ -105,29 +92,16 @@ class MutasiController extends Controller
         
         return ResponseFormatter::success($mut,'Successfully Updated Mutasi');
     }
-    Public function delete($imutasi_id)
-    {
+    public function delete($imutasi_id){
         $mut = Mutasi::find($imutasi_id)->delete();
         return ResponseFormatter::success($mut,'Successfully Deleted Mutasi');
     }
-    function cetak_excel()
-    {
+    function cetak_excel(){
         return Excel::download(new MutasiExport,'Laporan_Mutasi.xlsx');
     }
-    function cetak_pdf()
-    {
-        $mut = DB::table('invent_mutasi as im')
-        ->LEFTJOIN('invent_dtl as id','im.invent_code_dtl','id.invent_code_dtl')
-        ->LEFTJOIN('invent_mst as ivm','id.invent_code','ivm.invent_code')
-        ->LEFTJOIN('lookup_refs as lrs',function ($join) {
-            $join->on('ivm.invent_brand','lrs.lookup_code')
-                  ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ',[trim(strtolower('merk')).'%']);
-        })
-        ->select('im.imutasi_pengguna','im.imutasi_lokasi','im.imutasi_keterangan','ivm.invent_code','ivm.invent_desc','ivm.invent_type','id.invent_sn','lrs.lookup_desc as invent_brand',
-            DB::raw("TO_CHAR(im.imutasi_tgl_dari,' dd Mon YYYY') as imutasi_tgl_dari"),
-            DB::raw("TO_CHAR(im.imutasi_tgl_sd,' dd Mon YYYY') as imutasi_tgl_sd"))
-        ->orderBy('im.creation_date','DESC')
-        ->get();
-        return view('pdf/Laporan_Mutasi', compact('mut'));
+    function cetak_pdf(){
+        $mut = $this->mutasiServices->getDataWithFilter();
+        $data['htmlContent'] = View::make('pdf.Laporan_Mutasi', compact('mut'))->render();
+        return ResponseFormatter::success($data,'Successfully Print Report');
     }
 }

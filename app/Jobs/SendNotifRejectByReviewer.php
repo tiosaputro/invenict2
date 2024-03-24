@@ -20,8 +20,7 @@ class SendNotifRejectByReviewer implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($email_address,$ICT)
-    {
+    public function __construct($email_address,$ICT){
         $this->email_address = $email_address;
         $this->ICT = $ICT;
     }
@@ -31,8 +30,7 @@ class SendNotifRejectByReviewer implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {     
+    public function handle(){     
         Mail::to($this->email_address)->send(new NotificationRequestRejectedByReviewer($this->ICT));
     }
 }

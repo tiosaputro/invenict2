@@ -11,8 +11,7 @@ class IctExportVerifikasiManager implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Ict_Permohonan', [ 'Ict' => DB::table('ireq_mst as im')
         ->select('im.ireq_no','im.ireq_requestor','vr.name as ireq_bu','im.ireq_user','dr.div_name',
                 DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'llr.lookup_desc as ireq_status')

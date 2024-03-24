@@ -61,8 +61,7 @@ class ldap_connection{
             ldap_close($ldapconn);
     } //endfunction
 
-    public function findUser($userprincipalname)
-    {
+    public function findUser($userprincipalname){
         $ldap_host = $this->ldapHost;
         // connect to active directory
         $ldapconn = ldap_connect($ldap_host, $this->port) or die("Could not connect to LDAP Server");

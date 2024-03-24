@@ -95,12 +95,12 @@
                     icon="pi pi-file-pdf"
                     @click="CetakPdf()"
                   />
-                  <Button 
+                  <!-- <Button 
                     label="Excel"
                     class="p-button-raised p-button-success mr-2"
                     icon="pi pi-print"
                     @click="CetakExcel()"
-                  />
+                  /> -->
                 </div>
 			        </div>
             </div>
@@ -244,7 +244,6 @@
   </div>
 </template>
 <script>
-
 export default {
   data() {
     return {
@@ -306,26 +305,66 @@ export default {
     CetakPdf(){
       this.loading = true;
        this.axios.get('api/report-mutasi-pdf').then((response)=>{
-         let responseHtml = response.data;
-          var myWindow = window.open("", "response", "resizable=yes");
-          myWindow.document.write(responseHtml);
-          this.loading = false;
+        let htmlContent = response.data.data.htmlContent;
+        const options = {
+          filename: 'Mutasi List Report.pdf', // Optional, specify a filename for the downloaded PDF
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', // Set the format to A4
+            orientation: 'landscape', // Set the orientation to portrait or landscape
+          }
+        };
+        // Convert HTML to PDF with options
+        this.$html2pdf().set(options).from(htmlContent).save();
+        this.loading = false;
        });
     },
-    CetakExcel(){
-      const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY")
-      this.loading = true;
-       this.axios.get('api/report-mutasi-excel',{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'MUTASI PERIPHERAL REPORT LIST ON '+today+'.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          this.loading = false;
-       });
-    },
+  //   CetakExcel(){
+  //     const date = new Date();
+  //     const today = this.$moment(date).format("DD MMM YYYY")
+  //     this.loading = true;
+  //      this.axios.get('api/report-mutasi-excel', {
+  //   responseType: 'arraybuffer' // Specify arraybuffer responseType
+  // }).then((response)=>{
+  //         // const url = window.URL.createObjectURL(new Blob([response.data]));
+  //         // const link = document.createElement('a');
+  //         // link.href = url;
+  //         // link.setAttribute('download', 'MUTASI PERIPHERAL REPORT LIST ON '+today+'.xlsx');
+  //         // document.body.appendChild(link);
+  //         // link.click();
+  //         // Convert the received array buffer data to a Blob
+  //         if (!Array.isArray(ress)) {
+  //           console.error('Data is not an array:', ress);
+  //           return;
+  //         }
+
+  //         // Create a new workbook
+  //         const workbook = XLSX.utils.book_new();
+
+  //         // Convert data to worksheet
+  //         const worksheet = XLSX.utils.json_to_sheet(response.data);
+
+  //         // Add the worksheet to the workbook
+  //         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+  //         // Convert the workbook to a binary string
+  //         const excelBuffer = XLSX.write(workbook, {
+  //           type: 'array',
+  //           bookType: 'xlsx'
+  //         });
+
+  //         // Convert the binary string to a Blob
+  //         const blob = new Blob([excelBuffer], {
+  //           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  //         });
+
+  //         // Save Blob as a file using FileSaver.js
+  //         saveAs(blob, 'data.xlsx');
+  //         this.loading = false;
+  //      }).catch(error => {
+  //         console.error('Error fetching data:', error);
+  //       });
+  //   },
     detailKode(invent_code){
       this.displayKode = true;
       this.axios.get('api/detail-peripheral/' +invent_code).then((response)=>{

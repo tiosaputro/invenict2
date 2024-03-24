@@ -22,8 +22,7 @@ class SendNotifToRequestor implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($to,$Ict,$body,$footer)
-    {
+    public function __construct($to,$Ict,$body,$footer){
         $this->to = $to;
         $this->Ict = $Ict;
         $this->body = $body;
@@ -35,8 +34,7 @@ class SendNotifToRequestor implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {     
+    public function handle(){     
         Mail::to($this->to)->send(new NotificationMail($this->Ict,$this->body,$this->footer));
     }
 }

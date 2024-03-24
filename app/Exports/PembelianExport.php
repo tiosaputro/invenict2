@@ -11,8 +11,7 @@ class PembelianExport implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Pembelian', [ 'pembelian'=> DB::table('purchase_mst as pm')
         ->Select('pm.*','lr.lookup_desc as valuta_code','sm.suplier_name',
                 'llr.lookup_desc as purchase_pay_methode', DB::raw("TO_CHAR(pm.purchase_date,' dd Mon YYYY') as purchase_date"))

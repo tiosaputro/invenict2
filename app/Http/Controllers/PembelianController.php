@@ -30,8 +30,7 @@ class PembelianController extends Controller
             }
         });
     }
-    function index()
-    {
+    function index(){
         $pembelian = DB::table('purchase_mst as pm')
         ->select('pm.purchase_id','pm.purchase_total','sm.suplier_name as suplier_code','pm.purchase_date','pm.valuta_code')
         ->leftjoin('suplier_mst as sm','pm.suplier_code','sm.suplier_code')
@@ -39,21 +38,18 @@ class PembelianController extends Controller
         ->get();
         return ResponseFormatter::success($pembelian,'Successfully get data');
     }
-    function getAddPemb()
-    {
+    function getAddPemb(){
         $uang = Lookup_Refs::Valuta();
         $metode = Lookup_Refs::Pay_Methode();
         $supp = Supplier::ListSupplier();
         $user = Auth::user()->usr_id;
         return ResponseFormatter::success(array('uang'=>$uang,'metode'=>$metode,'supp'=>$supp,'user'=>$user),'Successfully get data');
     }
-    Public function save(Request $request)
-    {
+    public function save(Request $request){
         $saveData = Pembelian::createDataPembelian($request);
         return ResponseFormatter::success($saveData,'Successfully Created Data');
     }
-    Public function edit($code)
-    {
+    public function edit($code){
         $pem = DB::table('purchase_mst as pm')
             ->select('pm.purchase_petugas','pm.suplier_code',
                     'pm.purchase_pay_methode','pm.valuta_code','pm.purchase_total','pm.purchase_status','pm.purchase_remark',
@@ -66,8 +62,7 @@ class PembelianController extends Controller
         $supp = Supplier::ListSupplier();
         return ResponseFormatter::success(array('pem'=>$pem,'uang'=>$uang,'metode'=>$metode,'supp'=>$supp),'Successfully get data');
     }
-    Public function update(Request $request,$code)
-    {
+    public function update(Request $request,$code){
         $pem = Pembelian::find($code);
         $pem->purchase_date = Carbon::parse($request->purchase_date)->copy()->tz('Asia/Jakarta')->format('Y-m-d');;
         $pem->purchase_petugas = $request->purchase_petugas;
@@ -85,14 +80,12 @@ class PembelianController extends Controller
         return ResponseFormatter::success($pem,'Successfully Updated Data');
     }
 
-    Public function delete($purchase_id)
-    {
+    public function delete($purchase_id){
         $pem = Pembelian::find($purchase_id)->delete();
 
         return ResponseFormatter::success($pem,'Successfully Deleted Data');
     }
-    function cetak_pdf()
-    {
+    function cetak_pdf(){
         $pem = DB::table('purchase_mst as pm')
         ->Select('pm.*','lr.lookup_desc as valuta_code','sm.suplier_name',
                 'llr.lookup_desc as purchase_pay_methode', DB::raw("TO_CHAR(pm.purchase_date,' dd Mon YYYY') as purchase_date"),DB::raw("CASE WHEN pm.purchase_status = 'T' Then 'Aktif' WHEN pm.purchase_status = 'F' Then 'Tidak Aktif' end as purchase_status "))
@@ -104,8 +97,7 @@ class PembelianController extends Controller
         
         return view('pdf/Laporan_Pembelian',compact('pem'));
     }
-    function cetak_excel()
-    {
+    function cetak_excel(){
         return Excel::download(new PembelianExport,'Laporan_Pembelian.xlsx');
     }
 }   

@@ -14,8 +14,7 @@ class NotificationRequestWaitingToBeReceivedByPersonnelIct extends Mailable impl
      *
      * @return void
      */
-    public function __construct($ict)
-    {
+    public function __construct($ict){
         $this->ict = $ict;
     }
 
@@ -24,8 +23,7 @@ class NotificationRequestWaitingToBeReceivedByPersonnelIct extends Mailable impl
      *
      * @return $this
      */
-    public function build()
-    {
+    public function build(){
         return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Waiting To Be Received By ICT Personnel')
                     ->view('emailNotificationWaitingReceivedByPersonnel')

@@ -781,8 +781,10 @@ export default {
       sudahDikerjakan:[],
       selesai:[],
       filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
-      token: localStorage.getItem('token'),
       checkname : [],
+      Type:{
+        'report_type': ''
+      },
       checkto : [],
     };
   },
@@ -968,7 +970,8 @@ export default {
     },
     CetakPdfPermohonan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-permohonan').then((response)=>{
+      this.Type.report_type = 'permohonan';
+       this.axios.post('api/print-out-pdf-requestor', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
           const options = {
             filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1000,7 +1003,8 @@ export default {
     },
     CetakPdfReviewer(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-tab-reviewer').then((response)=>{
+      this.Type.report_type = 'tab_reviewer';
+       this.axios.post('api/print-out-pdf-requestor', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1031,7 +1035,8 @@ export default {
     },
     CetakPdfVerifikasi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-verifikasi').then((response)=>{
+      this.Type.report_type = 'verifikasi';
+       this.axios.post('api/print-out-pdf-requestor', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1062,7 +1067,8 @@ export default {
     },
     CetakPdfTabReject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reject').then((response)=>{
+      this.Type.report_type = 'reject';
+       this.axios.post('api/print-out-pdf-requestor', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1093,7 +1099,8 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-assignment-request').then((response)=>{
+      this.Type.report_type = 'assignment_request';
+       this.axios.post('api/print-out-pdf-requestor', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1124,7 +1131,8 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-sedang-dikerjakan').then((response)=>{
+      this.Type.report_type = 'sedang_dikerjakan';
+       this.axios.post('api/print-out-pdf-requestor', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1155,7 +1163,8 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-tab-sudah-dikerjakan').then((response)=>{
+      this.Type.report_type = 'sudah_dikerjakan';
+       this.axios.post('api/print-out-pdf-requestor', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1186,7 +1195,8 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-selesai').then((response)=>{
+      this.Type.report_type = 'selesai';
+       this.axios.post('api/print-out-pdf-requestor', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF

@@ -1112,8 +1112,6 @@
   </div>
 </template>
 <script>
-import html2pdf from 'html2pdf.js';
-
 export default {
   data() {
     return {
@@ -1163,9 +1161,6 @@ export default {
         sudahDikerjakan:[],
         selesai:[],
         filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
-        token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
         showPersonelPermohonan:[],
         showPersonelAtasanDivisi:[],
         showPersonelmanager:[],
@@ -1174,7 +1169,10 @@ export default {
         showRemarkManager:[],
         showRemarkPenugasan:[],
         showRemarkApprover2Manager:[],
-        showReasonPersonnel:[]
+        showReasonPersonnel:[],
+        Type:{
+          'report_type': ''
+        },
     };
   },
   created() {
@@ -1517,7 +1515,8 @@ export default {
     },
     CetakPdfPermohonan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-permohonan').then((response)=>{
+      this.Type.report_type = 'permohonan';
+       this.axios.post('api/print-out-pdf-reviewer', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1548,7 +1547,8 @@ export default {
     },
     CetakPdfAtasanDivisi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-atasan-divisi').then((response)=>{
+      this.Type.report_type = 'atasan';
+       this.axios.post('api/print-out-pdf-reviewer', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1579,7 +1579,8 @@ export default {
     },
     CetakPdfIctManager(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-ict-manager').then((response)=>{
+      this.Type.report_type = 'manager';
+       this.axios.post('api/print-out-pdf-reviewer', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1610,7 +1611,8 @@ export default {
     },
     CetakPdfReject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-reject').then((response)=>{
+      this.Type.report_type = 'reject';
+       this.axios.post('api/print-out-pdf-reviewer', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1641,7 +1643,8 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-assignment-request').then((response)=>{
+      this.Type.report_type = 'assignment_request';
+       this.axios.post('api/print-out-pdf-reviewer', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1672,7 +1675,8 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-sedang-dikerjakan').then((response)=>{
+      this.Type.report_type = 'sedang_dikerjakan';
+       this.axios.post('api/print-out-pdf-reviewer', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1703,7 +1707,8 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-sudah-dikerjakan').then((response)=>{
+      this.Type.report_type = 'sudah_dikerjakan';
+       this.axios.post('api/print-out-pdf-reviewer', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1734,7 +1739,8 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-reviewer-selesai').then((response)=>{
+      this.Type.report_type = 'selesai';
+       this.axios.post('api/print-out-pdf-reviewer', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF

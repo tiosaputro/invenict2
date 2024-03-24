@@ -11,8 +11,7 @@ class CashExport implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function view(): View
-    {
+    public function view(): View {
         return view('excel/Laporan_Cash', [ 'cash'=> DB::table('ca_mst as cm')
         ->select('im.ireq_no as ca_idd','im.ireq_requestor as req', 'vr.name as bu','cm.ca_pic_name','im.ireq_requestor as ireq_id',
                 DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),

@@ -12,8 +12,7 @@ class IctExportReviewerPermohonan implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function view(): View
-    {
+    public function view(): View{
         if(Auth::user()->usr_loc == 'OJ'){
             return view('excel/Laporan_Ict_Permohonan', [ 'Ict' => DB::table('ireq_mst as im')
                 ->select('im.ireq_no','im.ireq_user','im.ireq_requestor','vr.name as ireq_bu','lr.lookup_desc as ireq_type','dr.div_name',

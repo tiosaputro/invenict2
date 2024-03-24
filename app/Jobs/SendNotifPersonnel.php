@@ -20,8 +20,7 @@ class SendNotifPersonnel implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($send_mail,$dataPersonnel)
-    {
+    public function __construct($send_mail,$dataPersonnel){
         $this->send_mail = $send_mail;
         $this->dataPersonnel = $dataPersonnel;
     }
@@ -31,8 +30,7 @@ class SendNotifPersonnel implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {     
+    public function handle(){     
         Mail::to($this->send_mail)->send(new NotificationPersonnel($this->dataPersonnel));
     }
 }

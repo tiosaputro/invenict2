@@ -14,8 +14,7 @@ class NotificationRequestRejectedByHigherLevel extends Mailable implements Shoul
      *
      * @return void
      */
-    public function __construct($ict)
-    {
+    public function __construct($ict){
         $this->ict = $ict;
     }
 
@@ -24,8 +23,7 @@ class NotificationRequestRejectedByHigherLevel extends Mailable implements Shoul
      *
      * @return $this
      */
-    public function build()
-    {
+    public function build(){
         return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Rejected By Higher Level')
                     ->view('emailNotificationRejectedByHigherLevel')

@@ -28,14 +28,12 @@ class MngRoleMenuController extends Controller
             }
         });
     }
-    function save(Request $request)
-    {
+    function save(Request $request){
         $role = Mng_roles::select('rol_id')->where('rol_name',$request->rol_name)->first();
         $saveRoleMenu = Mng_role_menu::saveRoleMenu($request,$role);
         return ResponseFormatter::success($saveRoleMenu,'Successfully Created');
     }
-    function edit($code)
-    {
+    function edit($code){
         $role = Mng_role_menu::select('menu_id')->where('rol_id',$code)->pluck('menu_id'); 
         $menu = Mng_menu::select('menu_id',DB::raw("(CASE WHEN menu_id IS NOT NULL THEN 'True' ELSE 'false' END) AS checked"))
             ->whereIn('menu_id',$role)
@@ -45,8 +43,7 @@ class MngRoleMenuController extends Controller
        
         return response()->json($menu);
     }
-    function update(Request $request,$code)
-    {
+    function update(Request $request,$code){
         $menus = $request->all();
         $menu = Mng_role_menu::select('creation_date','created_by')->where('rol_id',$code)->first();
         $createday = $menu->creation_date;
@@ -66,8 +63,7 @@ class MngRoleMenuController extends Controller
         }
       return ResponseFormatter::success($menu,'Successfully Updated');
     }
-    function getMenu()
-    {
+    function getMenu(){
         $menu = Mng_menu::select('menu_display','controller','menu_id','parent_id')
         ->groupBy('parent_id','menu_id','controller','menu_display')
         ->orderBy('menu_display','ASC')

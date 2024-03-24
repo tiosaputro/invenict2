@@ -14,8 +14,7 @@ class IctExportVerifikasi implements FromView
     function __construct($usr_name) {
         $this->usr_name = $usr_name;
     }
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Ict_Verifikasi', [ 'Ict' => DB::table('ireq_mst as im')
         ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')
         ->LEFTJOIN('lookup_refs as lr','im.ireq_status','lr.lookup_code')

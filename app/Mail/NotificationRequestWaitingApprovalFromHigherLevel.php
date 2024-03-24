@@ -14,8 +14,7 @@ class NotificationRequestWaitingApprovalFromHigherLevel extends Mailable impleme
      *
      * @return void
      */
-    public function __construct($ict)
-    {
+    public function __construct($ict){
         $this->ict = $ict;
     }
 
@@ -24,8 +23,7 @@ class NotificationRequestWaitingApprovalFromHigherLevel extends Mailable impleme
      *
      * @return $this
      */
-    public function build()
-    {
+    public function build(){
         return $this->from('noreply@emp.id','NO REPLY')
                     ->subject('Notification Request Waiting Approval From Higher Level')
                     ->view('emailNotificationWaitingApprovalManagerDivision')

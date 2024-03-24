@@ -74,8 +74,8 @@
                                     <td>{{$m->invent_sn}}</td>
                                     <td>{{$m->imutasi_pengguna}}</td>
                                     <td>{{$m->imutasi_lokasi}}</td>
-                                    <td>{{$m->imutasi_tgl_dari}}</td>
-                                    <td>{{$m->imutasi_tgl_sd}}</td>
+                                    <td>{{formatDate($m->imutasi_tgl_dari,' d M y')}}</td>
+                                    <td>{{formatDate($m->imutasi_tgl_sd,' d M y')}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

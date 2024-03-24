@@ -15,8 +15,7 @@ class IctExportAtasanSudahDikerjakan implements FromView
     function __construct($usr_email){
         $this->usr_email = $usr_email;
     }
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Ict_Sudah_Dikerjakan', [ 'Ict' => DB::table('ireq_dtl as id')
         ->LEFTJOIN('ireq_mst as im','id.ireq_id','im.ireq_id')
         ->LEFTJOIN('vcompany_refs as vr','im.ireq_bu','vr.company_code')

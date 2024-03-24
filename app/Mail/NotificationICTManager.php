@@ -15,8 +15,7 @@ class NotificationICTManager extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($ict,$LINK)
-    {
+    public function __construct($ict,$LINK){
         $this->ict = $ict;
         $this->LINK = $LINK;
     }
@@ -26,8 +25,7 @@ class NotificationICTManager extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build()
-    {
+    public function build(){
         return $this->from('noreply@emp.id','NO REPLY')
                     ->view('emailIctManager')
                     ->with(['ict' => $this->ict,

@@ -28,16 +28,14 @@ class SupplierController extends Controller
             }
         });
     }
-    function index()
-    {
+    function index(){
         $supp = Supplier::select('suplier_code','suplier_name','suplier_contact','suplier_fax')
         ->orderBy('creation_date','ASC')
         ->get();
         return response()->json($supp);
 
     }
-    function save(Request $request)
-    {
+    function save(Request $request){
         $message = [
             'code.unique' => 'Kode Sudah Ada',
             'code.required'=>'Kode Belum Diisi',
@@ -97,8 +95,7 @@ class SupplierController extends Controller
         ]);
         return ResponseFormatter::success($supp,'Successfully Created Supplier');
     }
-    function edit($code)
-    {
+    function edit($code){
         $supp = DB::Table('suplier_mst')
         ->where('suplier_code',$code)
         ->get(['suplier_code','suplier_name','suplier_contact','suplier_address1','suplier_address2','suplier_city','suplier_prov','suplier_email','suplier_fax','suplier_tlp1','suplier_tlp2'])
@@ -113,8 +110,7 @@ class SupplierController extends Controller
         })->first();
         return response()->json($supp);
     }
-    function show($suplier_code)
-    {
+    function show($suplier_code){
         $supp = DB::Table('suplier_mst')
         ->where('suplier_code',$suplier_code)
         ->get(['suplier_code','suplier_name','suplier_contact','suplier_address1','suplier_address2','suplier_city','suplier_prov','suplier_email','suplier_fax','suplier_tlp1','suplier_tlp2'])
@@ -130,8 +126,7 @@ class SupplierController extends Controller
         return response()->json($supp);
     }
 
-    function update(Request $request, $code)
-    {
+    function update(Request $request, $code){
         $message = [
             'suplier_name.required'=>'Nama Belum Diisi',
             'suplier_address1.required'=>'Alamat 1 Belum diisi',
@@ -188,13 +183,11 @@ class SupplierController extends Controller
             
         return ResponseFormatter::success($supp,'Successfully Updated Supplier');
     }
-    function delete($suplier_code)
-    {
+    function delete($suplier_code){
         $supp = Supplier::find($suplier_code)->delete();
         return ResponseFormatter::success($supp,'Successfully Deleted Supplier');
     }
-    function cetak_pdf()
-    {
+    function cetak_pdf(){
         $supp = DB::Table('suplier_mst')
         ->get(['suplier_code','suplier_name','suplier_contact','suplier_address1','suplier_address2','suplier_city','suplier_prov','suplier_email','suplier_fax','suplier_tlp1','suplier_tlp2'])
         ->map(function($data) {
@@ -208,8 +201,7 @@ class SupplierController extends Controller
         });
         return view('pdf/Laporan_Supplier', compact('supp'));
     }
-    function cetak_excel()
-    {
+    function cetak_excel(){
         return Excel::download(new SupplierExport,'Laporan_Supplier.xlsx');
     }
 }

@@ -15,8 +15,7 @@ class IctDetailExport implements FromView
     public function __construct($code) {
         $this->code = $code;
     }
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Ict_Detail_Permohonan', [  'detail' => DB::table('ireq_dtl as id')
         ->select('id.*','im.invent_desc','imm.ireq_requestor','imm.ireq_no','llr.lookup_desc as ireq_type',
                 'vr.name as ireq_bu',DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as ireq_date"),

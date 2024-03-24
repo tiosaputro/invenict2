@@ -102,8 +102,7 @@ class LookupsBrandController extends Controller
             ]);
             return ResponseFormatter::success($ref,'Successfully Updated Lookup');
     }
-    function deleteBrand($lookup_code,$lookup_type)
-    {
+    function deleteBrand($lookup_code,$lookup_type){
         $ref = Lookup_Refs::where('lookup_code',$lookup_code)->where('lookup_type',$lookup_type)->delete();
             
         return ResponseFormatter::success($ref,'Successfully Deleted Data Lookup');

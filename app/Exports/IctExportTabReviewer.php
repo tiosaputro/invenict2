@@ -14,8 +14,7 @@ class IctExportTabReviewer implements FromView
     */
     public function __construct() {
     }
-    public function view(): View
-    {
+    public function view(): View{
         $ictRequestorServices = app(IctRequestorServices::class);
         return view('excel/Laporan_Ict_tab_reviewer', 
         [ 

@@ -26,21 +26,18 @@ class ModuleController extends Controller
     //         }
     //     });
     // }
-    function index()
-    {
+    function index(){
         $module = DB::table('v_mng_modules')->get();
         return $module->toJson();
     }
-    Public function getModule()
-    {
+    public function getModule(){
         $module = Mng_modules::select('mod_id as code','mod_name as name')
         ->where('mod_stat','T')
         ->orderBy('mod_name', 'ASC')
         ->get();
         return response()->json($module);
     }
-    Public function save(Request $request)
-    {
+    public function save(Request $request){
         $message = [
             'mod_name.required'=>'Module Name Belum Diisi',
             'mod_desc.required'=>'Module Description Belum Diisi',
@@ -64,13 +61,11 @@ class ModuleController extends Controller
         ]);
         return ResponseFormatter::success($module,'Successfully Created Module');
     }
-    function edit($code)
-    {
+    function edit($code){
         $module = Mng_modules::select('mod_id','mod_name','mod_desc','mod_stat')->where('mod_id',$code)->first();
         return response()->json($module);
     }
-    function update(Request $request,$code)
-    {
+    function update(Request $request,$code){
         $message = [
             'mod_name.required'=>'Module Name Belum Diisi',
             'mod_desc.required'=>'Module Description Belum Diisi',
@@ -93,8 +88,7 @@ class ModuleController extends Controller
         
         return ResponseFormatter::success($mod,'Successfully Updated Module');
     }
-    Public function delete($mod_id)
-    {
+    public function delete($mod_id){
         $module = Mng_modules::find($mod_id)->delete();
         return ResponseFormatter::success($module,'Successfully Deleted Module');
     }

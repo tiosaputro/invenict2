@@ -14,8 +14,7 @@ class LaporanReqDivUserPerTahun implements FromView
     function __construct($tahunUser) {
         $this->tahunUser = $tahunUser;
     }
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Req_Div_User_Per_Tahun', [ 'status'=> $grafik = DB::table('ireq_mst as im')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_user','dr.div_id')
         ->select('dr.div_name',DB::raw("count(im.ireq_id) as jumlah"),DB::raw("TO_CHAR(im.ireq_date,'YYYY') as tahun"))

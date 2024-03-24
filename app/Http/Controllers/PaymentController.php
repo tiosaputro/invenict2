@@ -27,16 +27,14 @@ class PaymentController extends Controller
             }
         });
     }
-    function index()
-    {
+    function index(){
         $pr = DB::table('pr_mst as pr')
             ->leftjoin('ireq_mst as im','pr.ireq_id','im.ireq_id')
             ->select('pr.pr_id','im.ireq_no','pr.ireqd_id','pr.pr_submit_date','pr.pr_pic_name','im.ireq_requestor')
             ->get();
             return response()->json($pr);
     }
-    function save(Request $request)
-    {
+    function save(Request $request){
         $message = [
             'ireq_id.required'=>'No Request Belum Diisi',
             'ireq_id.unique'=>'No request ini sudah pernah dibuatkan payment requestnya',
@@ -116,8 +114,7 @@ class PaymentController extends Controller
         return ResponseFormatter::success($createPr,'Successfully Created Data');
     }
 
-    function edit($code)
-    {
+    function edit($code){
     $pr = DB::table('pr_mst as cm')
         ->select('im.ireq_no as pr_idd','im.ireq_requestor as req', 'vr.name as bu','cm.pr_pic_name','cm.ireqd_id','im.ireq_user',
                     DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"),
@@ -134,8 +131,7 @@ class PaymentController extends Controller
         return response()->json($pr);
 
     }
-    function update(Request $request,$code)
-    {
+    function update(Request $request,$code){
         $message = [
             'pr_submit_date.required'=>'Tgl Submit Belum diisi',
             'pr_pic_name.required'=>'Jumlah Belum Diisi',
@@ -188,8 +184,7 @@ class PaymentController extends Controller
         $pr->save();
         return ResponseFormatter::success($pr,'Successfully Updated Data');
     }
-    function delete($pr_id)
-    {
+    function delete($pr_id){
         $pr = Payment_request::find($pr_id)->delete();
         return ResponseFormatter::success($pr,'Successfully Deleted Data');
     }

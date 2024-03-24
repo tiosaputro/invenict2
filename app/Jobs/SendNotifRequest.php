@@ -21,8 +21,7 @@ class SendNotifRequest implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($send_mail,$ICT,$LINK)
-    {
+    public function __construct($send_mail,$ICT,$LINK){
         $this->send_mail = $send_mail;
         $this->ICT = $ICT;
         $this->LINK = $LINK;
@@ -33,8 +32,7 @@ class SendNotifRequest implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {     
+    public function handle(){     
         Mail::to($this->send_mail)->send(new NotificationRequest($this->ICT,$this->LINK));
     }
 }

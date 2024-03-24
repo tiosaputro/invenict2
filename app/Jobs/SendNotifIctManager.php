@@ -21,8 +21,7 @@ class SendNotifIctManager implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($send_mail,$ict,$LINK)
-    {
+    public function __construct($send_mail,$ict,$LINK){
         $this->send_mail = $send_mail;
         $this->ict = $ict;
         $this->LINK = $LINK;
@@ -33,8 +32,7 @@ class SendNotifIctManager implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {     
+    public function handle(){     
         Mail::to($this->send_mail)->send(new NotificationICTManager($this->ict,$this->LINK));
     }
 }

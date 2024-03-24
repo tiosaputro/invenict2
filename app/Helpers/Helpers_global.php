@@ -7,22 +7,19 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('generate_id')) {
-    function generate_id()
-    {
+    function generate_id(){
         return \Illuminate\Support\Str::random(10) . date('his');
     }
 }
 if (!function_exists('generate_id_number')) {
-    function generate_id_number()
-    {
+    function generate_id_number(){
         $random_number = mt_rand(1000000000, 9999999999);
         // Concatenate the random number with the current time in the format 'his' (hour, minute, second)
         return $random_number . date('His');
     }
 }
 if (!function_exists('formatDate')) {
-    function formatDate($date, $date_format)
-    {
+    function formatDate($date, $date_format){
         if (empty($date)) {
             return '';
         }

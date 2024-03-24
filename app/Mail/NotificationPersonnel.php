@@ -14,8 +14,7 @@ class NotificationPersonnel extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($dataPersonnel)
-    {
+    public function __construct($dataPersonnel){
         $this->dataPersonnel = $dataPersonnel;
     }
 
@@ -24,8 +23,7 @@ class NotificationPersonnel extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build()
-    {
+    public function build(){
         return $this->from('noreply@emp.id','NO REPLY')
                     ->view('emailPersonnel')
                     ->with(['dataPersonnel' => $this->dataPersonnel]);

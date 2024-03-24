@@ -13,8 +13,7 @@ class IctExportVerifikasiAtasan implements FromView
     function __construct($usr_email) {
         $this->usr_email = $usr_email;
     }
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Ict_Permohonan', [ 'Ict' => DB::table('ireq_mst as im')
         ->SELECT('dr.div_name','im.ireq_id','im.ireq_no',DB::raw("TO_CHAR(im.ireq_date,' dd Mon YYYY') as ireq_date"),'im.ireq_status as ireq_statuss','im.ireq_user',
         'im.ireq_requestor','lr.lookup_desc as ireq_status','vr.name as ireq_bu')

@@ -14,8 +14,7 @@ class PembelianDetailExport implements FromView
     function __construct($purchase_id) {
         $this->purchase_id = $purchase_id;
     }
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Pembelian_Detail', [ 'pembelian'=> DB::table('purchase_mst as pm')
         ->Select('pm.*','pd.*','im.invent_desc','lr.lookup_desc as dpurchase_sat','sm.suplier_name',
                 'llr.lookup_desc as purchase_pay_methode', DB::raw("TO_CHAR(pm.purchase_date,' dd Mon YYYY') as purchase_date"),

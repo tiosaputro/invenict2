@@ -12,6 +12,7 @@ class MutasiServices
         $data->select(
             DB::raw("(imm.invent_desc ||'-'|| lrs.lookup_desc ||'-'|| imm.invent_type ) as invent_desc"),
             'usr.usr_fullname as imutasi_pengguna',
+            'lrs.lookup_desc as invent_brand',
             'usr.usr_division as imutasi_divisi',
             'usr.usr_nm_perush as imutasi_bu',
             'invent_mutasi.imutasi_tgl_dari',
@@ -20,6 +21,8 @@ class MutasiServices
             'id.invent_code_dtl',
             'invent_mutasi.imutasi_id',
             'id.invent_code',
+            'imm.invent_code',
+            'imm.invent_type',
             'id.invent_sn'
         );
         $data->leftjoin('invent_dtl id','invent_mutasi.invent_code_dtl','id.invent_code_dtl');

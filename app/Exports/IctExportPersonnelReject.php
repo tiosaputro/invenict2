@@ -11,8 +11,7 @@ class IctExportPersonnelReject implements FromView
     function __construct($usr_fullname){
         $this->usr_fullname = $usr_fullname;
     }
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Ict_Detail_Reject', [ 'Ict' =>DB::table('ireq_dtl as id')
         ->SELECT('imm.ireq_no','id.ireq_assigned_to1_reason','imm.ireq_id','id.ireq_assigned_remark','id.ireq_desc','id.ireq_qty','id.ireq_remark','id.ireqd_id','dr.div_name',
             'imm.ireq_user', DB::raw("COALESCE(id.ireq_assigned_to2,id.ireq_assigned_to1) AS ireq_assigned_to"),'llr.lookup_desc as ireq_status', 'imm.ireq_requestor',

@@ -15,8 +15,7 @@ class LaporanReqDivReqPerBulan implements FromView
         $this->tahunRequestor = $tahunRequestor;
         $this->bulanRequestor = $bulanRequestor;
     }
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Req_Div_Req_Per_Bulan', [ 'status'=> DB::table('ireq_mst as im')
         ->leftjoin('divisi_refs as dr','im.ireq_divisi_requestor','dr.div_id')
         ->select('dr.div_name',DB::raw("count(im.ireq_id) as jumlah"), DB::raw("TO_CHAR(im.ireq_date,'Month') as bulan"),

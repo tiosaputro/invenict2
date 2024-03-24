@@ -20,8 +20,7 @@ class SendNotifDoneUser implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($mail,$datadone)
-    {
+    public function __construct($mail,$datadone){
         $this->mail = $mail;
         $this->datadone = $datadone;
     }
@@ -31,8 +30,7 @@ class SendNotifDoneUser implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {     
+    public function handle(){     
         Mail::to($this->mail)->send(new NotificationRequestHasBeenDone($this->datadone));
     }
 }

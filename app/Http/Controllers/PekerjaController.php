@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PekerjaController extends Controller
 {
-    function getPekerja()
-    {
+    function getPekerja(){
         if(Auth::user()->usr_loc == "OJ"){
             $loc = ["OJ"];
         }

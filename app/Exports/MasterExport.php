@@ -11,8 +11,7 @@ class MasterExport implements FromView
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function view(): View
-    {
+    public function view(): View{
         return view('excel/Laporan_Master',['Master'=> DB::table('invent_mst as im')
         ->select('im.invent_code','im.invent_desc','im.invent_type','lrs.lookup_desc as invent_brand')
         ->LEFTJOIN('lookup_refs as lrs',function ($join) {

@@ -17,8 +17,7 @@ class NotificationMail extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($Ict,$body,$footer)
-    {
+    public function __construct($Ict,$body,$footer){
         $this->Ict = $Ict;
         $this->body = $body;
         $this->footer = $footer;
@@ -29,8 +28,7 @@ class NotificationMail extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build()
-    {
+    public function build(){
         return $this->from('noreply@emp.id','NO REPLY')
                     ->view('emailNotificationMail')
                     ->with('ict', $this->Ict);
