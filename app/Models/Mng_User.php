@@ -40,7 +40,7 @@ class Mng_User extends Authenticatable
         'waba_id',
         'usr_foto',
         'usr_division',
-        'usr_departement',
+        'usr_department',
         'usr_loc'
     ];
     protected $hidden = [
@@ -89,6 +89,7 @@ class Mng_User extends Authenticatable
     public static function updateUser($request){
         $location = strtoupper(str_replace('"','',$request['physicaldeliveryofficename']));
         $checkLocation = Location::select('loc_code')->where('loc_desc','like',$location)->first();
+
         $data = Mng_user::where('usr_domain',str_replace('"','',$request['userprincipalname']))->first();
         $data->usr_fullname = strtoupper(str_replace('"','',$request['displayname']));
         $data->usr_name = str_replace('"','',$request['givenname']);
@@ -105,7 +106,7 @@ class Mng_User extends Authenticatable
         $data->usr_loc = ($checkLocation) ? $checkLocation->loc_code : 'OJ';
         $data->LAST_UPDATED_BY = 'INVENICT';
         $data->LAST_UPDATE_DATE = now();
-        $data->program_name = 'Mng_user@createUser';
+        $data->program_name = 'Mng_user@updateUser';
         $data->save();
     }
     public static function findUser($email){

@@ -504,7 +504,7 @@
                                 <td>{{$i->kategori}}</td>
                                 <td>{{$i->ireq_qty}}</td>
                                 <td>{{$i->ireq_remark}}</td>
-                                <td>{{ formatDate($i->ireq_date, 'd M y') }}</td>
+                                <td>{{ formatDate($i->ireq_date, 'd M Y H:i') }}</td>
                                 <td>{{$i->ireq_requestor}}</td>
                                 <td>{{$i->ireq_user}}</td>
                                 <td>{{$i->usr_division}}</td>

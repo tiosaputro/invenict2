@@ -680,7 +680,6 @@
   </div>
 </template>
 <script>
-import { isThisTypeAnnotation } from '@babel/types';
 
 export default {
   data() {
@@ -703,12 +702,13 @@ export default {
         sdhdiverifikasi: [],
         reject:[],
         filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
-        checkname : [],
-        checkto : [],
         code:null,
         showRemarkWaiting:[],
         showRemarksdhdiverifikasi:[],
-        showRemarkApproversdhdiverifikasi:[]
+        showRemarkApproversdhdiverifikasi:[],
+        Type:{
+          'report_type': ''
+        },
     };
   },
   created() {
@@ -845,7 +845,8 @@ export default {
     },
     CetakPdfBlmDiverifikasi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-permohonan').then((response)=>{
+      this.Type.report_type = 'permohonan';
+       this.axios.post('api/print-out-pdf-manager', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -876,7 +877,8 @@ export default {
     },
     CetakPdfSudahDiverifikasi(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-verifikasi').then((response)=>{
+      this.Type.report_type = 'verifikasi';
+       this.axios.post('api/print-out-pdf-manager', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -907,7 +909,8 @@ export default {
     },
     CetakPdfDireject(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-reject').then((response)=>{
+      this.Type.report_type = 'reject';
+       this.axios.post('api/print-out-pdf-manager', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -938,7 +941,8 @@ export default {
     },
     CetakPdfAssignmentRequest(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-assignment-request').then((response)=>{
+      this.Type.report_type = 'assignment_request';
+       this.axios.post('api/print-out-pdf-manager', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -969,7 +973,8 @@ export default {
     },
     CetakPdfSedangDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-sedang-dikerjakan').then((response)=>{
+      this.Type.report_type = 'sedang_dikerjakan';
+       this.axios.post('api/print-out-pdf-manager', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1000,7 +1005,8 @@ export default {
     },
     CetakPdfSudahDikerjakan(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-sudah-dikerjakan').then((response)=>{
+      this.Type.report_type = 'sudah_dikerjakan';
+       this.axios.post('api/print-out-pdf-manager', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF
@@ -1031,7 +1037,8 @@ export default {
     },
     CetakPdfSelesai(){
       this.loading = true;
-       this.axios.get('api/report-ict-pdf-manager-selesai').then((response)=>{
+      this.Type.report_type = 'selesai';
+       this.axios.post('api/print-out-pdf-manager', this.Type).then((response)=>{
         let htmlContent = response.data.data.htmlContent;
         const options = {
           filename: 'ICT Request List.pdf', // Optional, specify a filename for the downloaded PDF

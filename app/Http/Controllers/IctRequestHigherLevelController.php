@@ -81,50 +81,53 @@ class IctRequestHigherLevelController extends Controller
         $data['norequest'] = Ict::detailNoRequest($code);
         return ResponseFormatter::success($data, 'Successfully get data');
     }
-    public function cetak_pdf_atasan_permohonan(){
-        $ict = $this->HigherLevelServices->getDataWithFilter('NA1', 'NA2', 'P', null);
-        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Permohonan', compact('ict'))->render();
+
+    public function cetak_pdf($filter1, $filter2 = null, $filter3 = null, $filter4 = null, $viewName, $methodService){
+        $ict = $this->HigherLevelServices->$methodService($filter1, $filter2, $filter3, $filter4);
+        $data['htmlContent'] = View::make($viewName, compact('ict'))->render();
         return ResponseFormatter::success($data, 'Successfully Print Report');
     }
+
+    public function printPdfByFilter(Request $request){
+        switch($request->report_type){
+            case 'permohonan':
+                return $this->cetak_pdf('NA2', 'NA1', 'P', null, 'pdf.Laporan_IctRequest_Permohonan', 'getDataWithFilter');
+            case 'verifikasi':
+                return $this->cetak_pdf('A1', 'A2', null, null, 'pdf.Laporan_IctRequest_Permohonan', 'getDataWithFilter');
+            case 'assignment_request':
+                return $this->cetak_pdf('NT', 'RT', null, null, 'pdf.Laporan_IctRequest_Sedang_Dikerjakan', 'getDataWithFilter');
+            case 'reject':
+                return $this->cetak_pdf('RA1', 'RA2', 'RR', null, 'pdf.Laporan_IctRequest_Reject', 'getDataWithFilter');
+            case 'sedang_dikerjakan':
+                return $this->cetak_pdf('T', null, null, null, 'pdf.Laporan_IctRequest_Sedang_Dikerjakan', 'getDataWithFilter');
+            case 'sudah_dikerjakan':
+                return $this->cetak_pdf('D',  null, null, null, 'pdf.Laporan_IctRequest_Sudah_Dikerjakan', 'getDetailWithFilter');
+            case 'selesai':
+                return $this->cetak_pdf('C', null, null, null, 'pdf.Laporan_IctRequest_Sudah_Dikerjakan', 'getDetailWithFilter');
+            default:
+                return ResponseFormatter::error(null, 'Invalid report type');
+        }
+    }
+
     public function cetak_excel_atasan_permohonan(){
         $usr_email = Auth::user()->usrl_email;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPermohonanAtasan($usr_email), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
-    }
-    public function cetak_pdf_atasan_verifikasi(){
-        $ict = $this->HigherLevelServices->getDataWithFilter('A1', 'A2', null, null);
-        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Permohonan', compact('ict'))->render();
-        return ResponseFormatter::success($data, 'Successfully Print Report');
     }
     public function cetak_excel_atasan_verifikasi(){
         $usr_email = Auth::user()->usr_email;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportVerifikasiAtasan($usr_email), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
-    public function cetak_pdf_atasan_reject(){
-        $ict = $this->HigherLevelServices->getDataWithFilter('RA1', 'RA2', 'RR', null);
-        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Reject', compact('ict'))->render();
-        return ResponseFormatter::success($data, 'Successfully Print Report');
-    }
     public function cetak_excel_atasan_reject(){
         $usr_email = Auth::user()->usr_email;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportRejectAtasan($usr_email), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
-    public function cetak_pdf_atasan_assignment_request(){
-        $ict = $this->HigherLevelServices->getDataWithFilter('NT', 'RT', null, null);
-        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Sedang_Dikerjakan', compact('ict'))->render();
-        return ResponseFormatter::success($data, 'Successfully Print Report');
-    }
     public function cetak_excel_atasan_assignment_request(){
         $usr_email = Auth::user()->usr_email;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportAtasanAssignmentRequest($usr_email), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
-    }
-    public function cetak_pdf_atasan_sedang_dikerjakan(){
-        $ict = $this->HigherLevelServices->getDataWithFilter('T', null, null, null);
-        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Sedang_Dikerjakan', compact('ict'))->render();
-        return ResponseFormatter::success($data, 'Successfully Print Report');
     }
     public function cetak_excel_atasan_sedang_dikerjakan(){
         $usr_email = Auth::user()->usr_email;

@@ -239,7 +239,7 @@ export default {
       this.$dialog.open(qrcode, {
         props: {
           header: 'Preview Barcode',
-          style: { width: '25vw'},
+          style: { width: '20vw'},
           breakpoints: {'760px': '75vw','440px': '90vw'},
           modal: true
         },
@@ -260,16 +260,16 @@ export default {
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
-            severity:'error', summary: 'Error', detail:'Session login expired'
-          });
-          localStorage.clear();
-          localStorage.setItem('Expired','true')
-          setTimeout( () => this.$router.push('/login'),2000);
-           }
+              severity:'error', summary: 'Error', detail:'Session login expired'
+            });
+            localStorage.clear();
+            localStorage.setItem('Expired','true')
+            setTimeout( () => this.$router.push('/login'),2000);
+          }
           else if(error.response.status == 403){
             this.$router.push('/access');
           }
-        });
+      });
     },
     DeleteMas(invent_code_dtl){
        this.$confirm.require({

@@ -109,50 +109,49 @@ class IctRequestPersonnelController extends Controller
         $data['request'] = $ictService->detailNoRequest($code);
         return ResponseFormatter::success($data, 'Successfully get data');
     }
-    public function cetak_pdf_personnel_assignment_request(){
-        $ict = $this->personnelService->getDetailWithFilter('NT');
-        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Sedang_Dikerjakan', compact('ict'))->render();
+
+    public function cetak_pdf($filter, $viewName, $methodService){
+        $ict = $this->personnelService->$methodService($filter);
+        $data['htmlContent'] = View::make($viewName, compact('ict'))->render();
         return ResponseFormatter::success($data, 'Successfully Print Report');
     }
+
+    public function printPdfByFilter(Request $request){
+        switch($request->report_type){
+            case 'assignment_request':
+                return $this->cetak_pdf('NT', 'pdf.Laporan_IctRequest_Sedang_Dikerjakan', 'getDataWithFilter');
+            case 'reject':
+                return $this->cetak_pdf('RT', 'pdf.Laporan_IctDetailReject', 'getDetailWithFilter');
+            case 'sedang_dikerjakan':
+                return $this->cetak_pdf('T', 'pdf.Laporan_IctRequest_Sudah_Dikerjakan', 'getDetailWithFilter');
+            case 'sudah_dikerjakan':
+                return $this->cetak_pdf('D', 'pdf.Laporan_IctRequest_Sudah_Dikerjakan', 'getDetailWithFilter');
+            case 'selesai':
+                return $this->cetak_pdf('C', 'pdf.Laporan_IctRequest_Selesai', 'getDetailWithFilter');
+            default:
+                return ResponseFormatter::error(null, 'Invalid report type');
+        }
+    }
+
     public function cetak_excel_personnel_assignment_request(){
         $usr_fullname = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelAssignmentRequest($usr_fullname), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
-    }
-    public function cetak_pdf_personnel_reject(){
-        $ict = $this->personnelService->getDetailWithFilter('RT');
-        $data['htmlContent'] = View::make('pdf.Laporan_IctDetailReject', compact('ict'))->render();
-        return ResponseFormatter::success($data, 'Successfully Print Report');
     }
     public function cetak_excel_personnel_reject(){
         $usr_fullname = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelReject($usr_fullname), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
-    public function cetak_pdf_personnel_sedang_dikerjakan(){
-        $ict = $this->personnelService->getDetailWithFilter('T');
-        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'))->render();
-        return ResponseFormatter::success($data, 'Successfully Print Report');
-    }
     public function cetak_excel_personnel_sedang_dikerjakan(){
         $usr_fullname = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelSedangDikerjakan($usr_fullname), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
-    public function cetak_pdf_personnel_sudah_dikerjakan(){
-        $ict = $this->personnelService->getDetailWithFilter('D');
-        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Sudah_Dikerjakan', compact('ict'))->render();
-        return ResponseFormatter::success($data, 'Successfully Print Report');
-    }
     public function cetak_excel_personnel_sudah_dikerjakan(){
         $usr_fullname = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelSudahDikerjakan($usr_fullname), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
-    }
-    public function cetak_pdf_personnel_selesai(){
-        $ict = $this->personnelService->getDetailWithFilter('C');
-        $data['htmlContent'] = View::make('pdf.Laporan_IctRequest_Selesai', compact('ict'))->render();
-        return ResponseFormatter::success($data, 'Successfully Print Report');
     }
     public function cetak_excel_personnel_selesai(){
         $usr_fullname = Auth::user()->usr_id;
