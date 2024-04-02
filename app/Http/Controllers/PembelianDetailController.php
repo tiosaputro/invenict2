@@ -23,16 +23,15 @@ class PembelianDetailController extends Controller
     protected $to;
     protected $userMenu;
     function __construct(){
-        $this->middleware('auth:sanctum');
-        $this->to = "/pembelian-peripheral";
-        $this->middleware(function ($request, $next) {
-          $this->userMenu = Mng_User::menu();
-            if($this->userMenu->contains($this->to)){    
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/pembelian-peripheral";
+            $this->userMenu = Mng_User::menu();
+            if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
-                return response(["message"=>"Cannot Access"],403);
+                return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     function index($code){
         $dtl = DB::table('purchase_dtl as pd')

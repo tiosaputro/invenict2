@@ -12,32 +12,27 @@ class MngMenuController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-        $this->to = "/mng-menu";
-        $this->middleware(function ($request, $next) {
+    public function __construct(){
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/mng-menu";
             $this->userMenu = Mng_User::menu();
             if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
                 return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
-    public function index()
-    {
+    public function index(){
         $data = Mng_menu::getData();
         return response()->json($data);
 
     }
-    public function getParent()
-    {
+    public function getParent(){
         $data = Mng_menu::getParent();
         return response()->json($data);
     }
-    public function save(Request $request)
-    {
+    public function save(Request $request){
         $message = [
             'mod_id.required' => 'Module Name Belum Diisi',
             'menu_name.required' => 'Menu Name Belum Diisi',
@@ -71,13 +66,11 @@ class MngMenuController extends Controller
         ]);
         return ResponseFormatter::success($createMenu, 'Successfully Created data menu');
     }
-    public function edit($code)
-    {
+    public function edit($code){
         $menu = Mng_menu::find($code);
         return response()->json($menu);
     }
-    public function update(Request $request, $code)
-    {
+    public function update(Request $request, $code){
         $message = [
             'mod_id.required' => 'Module Name Belum Diisi',
             'menu_name.required' => 'Menu Name Belum Diisi',
@@ -112,8 +105,7 @@ class MngMenuController extends Controller
 
         return ResponseFormatter::success($menu, 'Successfully Updated data menu');
     }
-    public function delete($menu_id)
-    {
+    public function delete($menu_id){
         $menu = Mng_menu::find($menu_id)->delete();
 
         return ResponseFormatter::success($menu, 'Successfully Deleted data menu');

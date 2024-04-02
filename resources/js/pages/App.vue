@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import AppTopBar from "./AppTopbar.vue";
-import AppMenu from "./AppMenu.vue";
-import AppFooter from "./AppFooter.vue";
+import AppTopBar from "./Layout/AppTopbar.vue";
+import AppMenu from "./Layout/AppMenu.vue";
+import AppFooter from "./Layout/AppFooter.vue";
 
 export default {
     emits: ["change-theme"],

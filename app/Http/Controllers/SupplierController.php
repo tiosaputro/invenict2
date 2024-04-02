@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Supplier;
 use App\Models\Mng_user;
 use App\Exports\SupplierExport;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,16 +16,15 @@ class SupplierController extends Controller
     protected $to;
     protected $userMenu;
     function __construct(){
-        $this->middleware('auth:sanctum');
-        $this->to = "/referensi-supplier";
-        $this->middleware(function ($request, $next) {
-          $this->userMenu = Mng_User::menu();
-            if($this->userMenu->contains($this->to)){    
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/referensi-supplier";
+            $this->userMenu = Mng_User::menu();
+            if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
-                return response(["message"=>"Cannot Access"],403);
+                return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     function index(){
         $supp = Supplier::select('suplier_code','suplier_name','suplier_contact','suplier_fax')
@@ -51,21 +49,8 @@ class SupplierController extends Controller
             'notlp2.numeric' => 'Masukan No. Tlp-2 dengan benar',
             'fax.numeric' => 'Masukan Fax dengan benar'
         ];
-        if($request->notlp2) {
-            $request->validate([
-                'code' => 'required|unique:suplier_mst,suplier_code',
-                'nama'=>'required',
-                'alamat1'=>'required',
-                'kota'=>'required',
-                'provinsi'=>'required',
-                'email' => 'required',
-                'fax' => 'required|numeric',
-                'notlp1' => 'required|numeric',
-                'notlp2' => 'numeric',
-                'contact'=> 'required|alpha'
-            ],$message);
-         }
-        $request->validate([
+        
+        $rules = [
             'code' => 'required|unique:suplier_mst,suplier_code',
             'nama'=>'required',
             'alamat1'=>'required',
@@ -75,8 +60,14 @@ class SupplierController extends Controller
             'fax' => 'required|numeric',
             'notlp1' => 'required|numeric',
             'contact'=> 'required|alpha'
-        ],$message);
-        $supp = Supplier::Create([
+        ];
+        if($request->filled('notlp2')) {
+            $rules['notlp2'] = 'numeric';
+        }
+        
+        $request->validate($rules, $message);
+        
+        $supp = Supplier::create([
             'suplier_code' => $request->code,
             'suplier_name' => $request->nama,
             'suplier_contact' => $request->contact,
@@ -87,7 +78,7 @@ class SupplierController extends Controller
             'suplier_email'=> $request->email,
             'suplier_fax' => $request->fax,
             'suplier_tlp1' => $request->notlp1,
-            'suplier_tlp2' => $request->notlp2,
+            'suplier_tlp2' => $request->notlp2 ?? null,
             'suplier_status' => "T",
             'creation_date' => now(),
             'created_by' => Auth::user()->usr_id,
@@ -142,17 +133,17 @@ class SupplierController extends Controller
         ];
         if($request->suplier_tlp2){
 
-        $request->validate([
-            'suplier_name' => 'required',
-            'suplier_contact' => 'required|alpha',
-            'suplier_address1' => 'required',
-            'suplier_city' => 'required',
-            'suplier_prov' => 'required',
-            'suplier_email' => 'required',
-            'suplier_fax' => 'required|numeric',
-            'suplier_tlp1' => 'required|numeric',
-            'suplier_tlp2' => 'numeric'
-        ],$message);
+            $request->validate([
+                'suplier_name' => 'required',
+                'suplier_contact' => 'required|alpha',
+                'suplier_address1' => 'required',
+                'suplier_city' => 'required',
+                'suplier_prov' => 'required',
+                'suplier_email' => 'required',
+                'suplier_fax' => 'required|numeric',
+                'suplier_tlp1' => 'required|numeric',
+                'suplier_tlp2' => 'numeric'
+            ],$message);
         }
         $request->validate([
             'suplier_name' => 'required',

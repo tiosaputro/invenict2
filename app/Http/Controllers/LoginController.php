@@ -99,7 +99,7 @@ class LoginController extends Controller
             ];
             return json_encode($response, 200);
         } else {
-            $password = 'P@ssw0rd27';
+            $password = 'P@ssw0rd';
             $createUser = Mng_user::createUser($request->streetaddress, $request->division, $password, $request->company, $request->physicaldeliveryofficename, $request->displayname, $request->samaccountname, $emailUser);
             $dataUser = Mng_user::where('usr_id', $createUser->usr_id)->first();
             $token = $dataUser->createToken('ApiToken')->plainTextToken;

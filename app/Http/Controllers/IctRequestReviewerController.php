@@ -36,21 +36,20 @@ class IctRequestReviewerController extends Controller
     protected $IctServices;
     protected $IctDetailServices;
     protected $Pekerjaservices;
-    function __construct(IctRequestReviewerServices $services, IctServices $service, IctDetailServices $servicess, PekerjaServices $pekerja ){
+    public function __construct(IctRequestReviewerServices $services, IctServices $service, IctDetailServices $servicess, PekerjaServices $pekerja ){
         $this->reviewerServices = $services;
         $this->IctServices = $service;
         $this->IctDetailServices = $servicess;
         $this->Pekerjaservices = $pekerja;
-        $this->middleware('auth:sanctum');
-        $this->to = "/ict-request-reviewer";
-        $this->middleware(function ($request, $next) {
-          $this->userMenu = Mng_User::menu();
-            if($this->userMenu->contains($this->to)){    
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/ict-request-reviewer";
+            $this->userMenu = Mng_User::menu();
+            if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
-                return response(["message"=>"Cannot Access"],403);
+                return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     function index($code){
         $data['detail'] = $this->IctDetailServices->getDataDetailRequest($code,NULL,NULL,NULL);
@@ -228,13 +227,6 @@ class IctRequestReviewerController extends Controller
         ->ORDERBY('im.ireq_date','DESC')
         ->get();
         return response()->json($ict);
-    }
-    function detailRequestToMail($ireq_id){
-        $ict = Ict::find($ireq_id);
-        $fromemail = DB::table('location_refs')->select('loc_email')->where('loc_code',$ict->ireq_loc)->first();
-        $usr_fullname = Auth::user()->usr_id;
-        $requestor = DB::table('mng_users')->select('usr_fullname')->where('usr_name',$ict->ireq_requestor)->first();
-        return response()->json(['requestor'=>$requestor->usr_fullname,'noreq'=>$ict->ireq_no,'fromemail'=>$fromemail->loc_email,'usr_fullname'=>$usr_fullname],200);
     }
     function updateAssignPerRequest(Request $request){
         $ict = Ict::where('ireq_id',$request->id)->first();

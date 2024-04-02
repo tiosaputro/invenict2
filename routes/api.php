@@ -35,7 +35,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\PembelianDetailController;
 use App\Http\Controllers\SupervisorController;
 use Illuminate\Support\Facades\Route;
-use PhpOffice\PhpSpreadsheet\Style\Supervisor;
+use App\Http\Controllers\MngUserDomainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,7 +81,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/edit-kategori/{code}/{type}',[LookupsKategoriController::class,'editKategori']);
     Route::put('/update-kategori/{code}/{type}',[LookupsKategoriController::class,'updateKategori']);
     Route::delete('/delete-kategori/{lookup_code}/{lookup_type}',[LookupsKategoriController::class,'deleteKategori']);
-  //lookup brand
+
+    //lookup brand
     Route::get('/ref-lookup-brand', [LookupsBrandController::class,'lookupBrand']);
     Route::post('/add-brand',[LookupsBrandController::class,'saveBrand']);
     Route::get('/edit-brand/{code}/{type}',[LookupsBrandController::class,'editBrand']);
@@ -98,6 +99,10 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //pekerja
     Route::get('/get-pekerja',[PekerjaController::class,'getPekerja']);
+
+    //userdomain
+    Route::get('/get-user-domain',[MngUserDomainController::class,'index']);
+    Route::get('/update-user-domain',[MngUserDomainController::class,'update']);
     
     //master peripheral
     Route::get('/mas',[MasterController::class,'index']);
@@ -233,7 +238,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/delete-catalog/{catalog_id}',[CatalogController::class,'delete']);
 
     //Mng_menu
-    Route::post('/get-menu-user',[MngMenuController::class,'getMenuUser']);
     Route::get('/menu',[MngMenuController::class,'index']);
     Route::get('/get-parent',[MngMenuController::class,'getParent']);
     Route::get('/edit-menu/{code}',[MngMenuController::class,'edit']);
@@ -243,15 +247,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //dashboard
     Route::get('/data-dashboard',[DashboardController::class,'index']);
-    Route::get('/getCountUser',[DashboardController::class,'countUser']);
-    Route::get('/getCountDivisi1',[DashboardController::class,'countHigherLevel']);
-    Route::get('/getCountReviewerBentu',[DashboardController::class,'CountReviewerBentu']);
-    Route::get('/getCountReviewerKurau',[DashboardController::class,'CountReviewerKurau']);
-    Route::get('/getCountReviewerJakarta',[DashboardController::class,'CountReviewerJakarta']);
-    Route::get('/getCountDivisi3',[DashboardController::class,'countPersonnel']);
-    Route::get('/getCountDivisi4',[DashboardController::class,'countIctManager']);
-    Route::get('/getCountAdmin',[DashboardController::class,'countAdmin']);
-    Route::get('/status-per-divisi',[DashboardController::class,'countPerStatusPerDivisi']);
     Route::get('/count-per-status',[DashboardController::class,'countPerStatus']);
     Route::get('/get-tahun',[DashboardController::class,'getTahun']);
     Route::get('/get-tahun-user/{bulanUser}',[DashboardController::class,'getTahunUser']);
@@ -291,7 +286,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-remark-reviewer/{ireq_id}',[IctRequestReviewerController::class,'getRemarkReviewer']);
     Route::post('/save-remark-reviewer',[IctRequestReviewerController::class,'SaveRemarkReviewer']);
     Route::get('/updateStatusClosingDetail/{ireqd_id}/{ireq_no}',[IctRequestReviewerController::class,'updateStatusClosingDetail']);
-    Route::get('/detailrequest-tomail/{ireq_id}',[IctRequestReviewerController::class,'detailRequestToMail']);
     Route::post('/sendMailtoRequestor',[IctRequestReviewerController::class,'sendMailtoRequestor']);
     Route::post('/print-out-pdf-reviewer',[IctRequestReviewerController::class,'printPdfByFilter']);
     Route::put('/updateAssignPerDetailFromReject/{code}',[IctRequestReviewerController::class,'updateAssignFromReject']);
@@ -323,12 +317,12 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //ict request requestor
     Route::get('/get-ict',[IctRequestRequestorController::class,'getIct']);
-    Route::post('/add-ict',[IctRequestRequestorController::class,'save']);
+    Route::post('/save-request',[IctRequestRequestorController::class,'save']);
     Route::get('/updateStatusSubmit/{ireq_id}',[IctRequestRequestorController::class,'updateStatusSubmit']);
     Route::get('/edit-ict/{code}',[IctRequestRequestorController::class,'edit']);
     Route::put('/update-ict/{code}',[IctRequestRequestorController::class,'update']);
     Route::delete('/delete-ict/{ireq_id}',[IctRequestRequestorController::class,'delete']);
-    Route::get('/getAddReq',[IctRequestRequestorController::class,'getAddReq']);
+    Route::get('/add-request',[IctRequestRequestorController::class,'add']);
     Route::post('/submit-rating',[IctRequestRequestorController::class,'submitRating']);
     Route::get('/getNoreq',[IctRequestRequestorController::class,'getNoreq']);
     Route::get('/getDetail/{noreq}',[IctRequestRequestorController::class,'getDetail']);
@@ -382,7 +376,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-catalog-request/{tipereq}',[IctDetailController::class,'CatalogRequest']);
     Route::get('/ict-detail/{code}',[IctDetailController::class,'index']);
     Route::get('/ict-detail-penugasan/{code}',[IctDetailController::class,'detailPenugasan']);
-    Route::get('/get-detail-done/{code}',[IctDetailController::class,'getDetailDone']);
     Route::post('/add-ict-detail/{code}',[IctDetailController::class,'save']);
     Route::get('/edit-ict-detail/{ireq}/{code}',[IctDetailController::class,'edit']);
     Route::put('/update-ict-detail/{ireq}/{code}',[IctDetailController::class,'update']);
@@ -391,27 +384,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-verif/{code}',[IctDetailController::class,'getDetailVerif']);
     Route::get('/detail/{ireqd_id}/{ireq_id}',[IctDetailController::class,'getDetail']);
     
-    //laporan
-    // Route::get('/req-per-status-excel',[LaporanController::class,'cetak_excel_per_status']);
-    // Route::get('/req-per-status-pdf',[LaporanController::class,'cetak_pdf_per_status']);
-    // Route::get('/req-div-req-per-bulan-pdf/{tahunnRequestor}/{bulanRequestor}',[LaporanController::class,'cetak_pdf_div_req_per_bulan']);
-    // Route::get('/req-div-req-per-bulan-excel/{tahunnRequestor}/{bulanRequestor}',[LaporanController::class,'cetak_excel_div_req_per_bulan']);
-    // Route::get('/req-div-user-per-bulan-excel/{tahunnUser}/{bulanUser}',[LaporanController::class,'cetak_excel_div_user_per_bulan']);
-    // Route::get('/req-div-user-per-bulan-pdf/{tahunnUser}/{bulanUser}',[LaporanController::class,'cetak_pdf_div_user_per_bulan']);
-    // Route::get('/req-div-req-per-tahun-excel/{tahunRequestor}',[LaporanController::class,'cetak_excel_div_req_per_tahun']);
-    // Route::get('/req-div-req-per-tahun-pdf/{tahunRequestor}',[LaporanController::class,'cetak_pdf_div_req_per_tahun']);
-    // Route::get('/req-div-user-per-tahun-excel/{tahunUser}',[LaporanController::class,'cetak_excel_div_user_per_tahun']);
-    // Route::get('/req-div-user-per-tahun-pdf/{tahunUser}',[LaporanController::class,'cetak_pdf_div_user_per_tahun']);
-    // Route::get('/req-div-req-per-status-excel/{statusRequestor}',[LaporanController::class,'cetak_excel_div_req_per_status']);
-    // Route::get('/req-div-req-per-status-pdf/{statusRequestor}',[LaporanController::class,'cetak_pdf_div_req_per_status']);
-    // Route::get('/req-div-user-per-status-excel/{statusUser}',[LaporanController::class,'cetak_excel_div_user_per_status']);
-    // Route::get('/req-div-user-per-status-pdf/{statusUser}',[LaporanController::class,'cetak_pdf_div_user_per_status']);
-    // Route::get('/req-per-personnel-excel',[LaporanController::class,'cetak_excel_per_personnel']);
-    // Route::get('/req-per-personnel-pdf',[LaporanController::class,'cetak_pdf_per_personnel']);
-    // Route::get('/req-per-status-per-personnel-pdf/{ictPersonnel}',[LaporanController::class,'cetak_pdf_per_status_per_personnel']);
-    // Route::get('/req-per-status-per-personnel-excel/{ictPersonnel}',[LaporanController::class,'cetak_excel_per_status_per_personnel']);
-    // Route::post('/filterByDate',[LaporanController::class,'filterByDate']);
-    // Route::get('/cetak-pdf-filter-ict/{start}/{end}/{status}',[LaporanController::class,'cetakPdf']);
     
     //bisnis
     Route::get('/get-bisnis',[BisnisController::class,'getBisnis']);
@@ -424,8 +396,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //report detail request (requestor)
     Route::get('/report-ict-detail-pdf/{code}',[IctDetailController::class,'cetak_pdf']);
-    Route::get('/report-ict-detaill-pdf/{code}',[IctDetailController::class,'cetak_pdff']);
-
     Route::get('/report-ict-detail-excel/{code}',[IctDetailController::class,'cetak_excel']);
     Route::get('/report-ict-detail-excel-tab-reviewer/{code}',[IctDetailController::class,'cetak_excel_tab_reviewer']);
     Route::get('/report-ict-detail-excel-tab-verifikasi/{code}',[IctDetailController::class,'cetak_excel_tab_verifikasi']);
@@ -433,8 +403,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/print-out-ict-request/{code}',[IctDetailController::class,'printout_ictrequest']);
     Route::get('/report-ict-detail-excel-tab-sedang-dikerjakan/{code}',[IctDetailController::class,'cetak_excel_sedang_dikerjakan']);
 
- 
-});
+    
     Route::get('/req-per-status-excel',[LaporanController::class,'cetak_excel_per_status']);
     Route::get('/req-per-status-pdf',[LaporanController::class,'cetak_pdf_per_status']);
     Route::get('/req-div-req-per-bulan-pdf/{tahunnRequestor}/{bulanRequestor}',[LaporanController::class,'cetak_pdf_div_req_per_bulan']);
@@ -455,3 +424,4 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/req-per-status-per-personnel-excel/{ictPersonnel}',[LaporanController::class,'cetak_excel_per_status_per_personnel']);
     Route::post('/filterByDate',[LaporanController::class,'filterByDate']);
     Route::get('/cetak-pdf-filter-ict/{start}/{end}/{status}',[LaporanController::class,'cetakPdf']);
+});

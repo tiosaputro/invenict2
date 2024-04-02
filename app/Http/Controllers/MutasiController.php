@@ -21,16 +21,15 @@ class MutasiController extends Controller
     protected $mutasiServices;
     function __construct(MutasiServices $service){
         $this->mutasiServices = $service;
-        $this->middleware('auth:sanctum');
-        $this->to = "/mutasi-peripheral";
-        $this->middleware(function ($request, $next) {
-          $this->userMenu = Mng_User::menu();
-            if($this->userMenu->contains($this->to)){    
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/mutasi-peripheral";
+            $this->userMenu = Mng_User::menu();
+            if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
-                return response(["message"=>"Cannot Access"],403);
+                return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     public function index(){
         $mutasi = $this->mutasiServices->getDataWithFilter();

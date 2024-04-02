@@ -24,9 +24,8 @@ class IctServices
                   ->whereNull('ireq_dtl.ireq_assigned_to1');
         });
         $data->LEFTJOIN('mng_users ms','im.ireq_requestor','ms.usr_id');
-        $data->LEFTJOIN('mng_users mus','im.ireq_user','mus.usr_id');
+        $data->LEFTJOIN('mng_user_domain mus','im.ireq_user','mus.usr_domain');
         $data->LEFTJOIN('divisi_refs as dr','im.ireq_divisi_user','dr.div_id');
-        $data->LEFTJOIN('user_profile up','im.ireq_user','up.user_id');
         $data->LEFTJOIN('lookup_refs as lr',function ($join) {
             $join->on('ireq_dtl.ireq_status','lr.lookup_code')
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ',[trim(strtolower('ict_status')).'%']);

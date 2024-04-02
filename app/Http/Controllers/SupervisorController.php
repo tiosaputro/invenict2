@@ -15,16 +15,15 @@ class SupervisorController extends Controller
     protected $supervisorService;
     function __construct(SupervisorServices $service){
         $this->supervisorService = $service;
-        $this->middleware('auth:sanctum');
-        $this->to = "/supervisor-refs";
-        $this->middleware(function ($request, $next) {
-          $this->userMenu = Mng_User::menu();
-            if($this->userMenu->contains($this->to)){    
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/supervisor-refs";
+            $this->userMenu = Mng_User::menu();
+            if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
-                return response(["message"=>"Cannot Access"],403);
+                return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     function index(){
         $data['spv'] = $this->supervisorService->getAllData();

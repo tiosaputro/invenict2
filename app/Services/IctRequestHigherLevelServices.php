@@ -41,7 +41,7 @@ class IctRequestHigherLevelServices
         $data->LEFTJOIN('ireq_dtl idd', 'ireq_mst.ireq_id', 'idd.ireq_id');
         $data->LEFTJOIN('lookup_refs lr', 'ireq_mst.ireq_status', 'lr.lookup_code');
         $data->LEFTJOIN('mng_users ms', 'ireq_mst.ireq_requestor', 'ms.usr_id');
-        $data->LEFTJOIN('mng_users mus', 'ireq_mst.ireq_user', 'mus.usr_id');
+        $data->LEFTJOIN('mng_user_domain mus', 'ireq_mst.ireq_user', 'mus.usr_domain');
         $data->WHERE(function ($query) use ($status1, $status2, $status3, $status4) {
             if (!empty($status1)) {
                 $query->WHERE('ireq_mst.ireq_status', $status1);
@@ -78,7 +78,7 @@ class IctRequestHigherLevelServices
     public function getDetailWithFilter($status, $code = null)
     {
         $data = IctDetail::Query();
-        $data->LEFTJOIN('ireq_mst as im', 'ireq_dtl.ireq_id', 'im.ireq_id');
+        $data->LEFTJOIN('ireq_mst im', 'ireq_dtl.ireq_id', 'im.ireq_id');
         $data->LEFTJOIN('supervisor_refs sr', 'im.ireq_spv', 'sr.spv_id');
         $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
             $join->on('ireq_dtl.ireq_assigned_to1', 'vi.usr_id')
@@ -89,19 +89,19 @@ class IctRequestHigherLevelServices
                 ->whereNull('ireq_dtl.ireq_assigned_to1');
         });
         $data->LEFTJOIN('mng_users ms', 'im.ireq_requestor', 'ms.usr_id');
-        $data->LEFTJOIN('mng_users mus', 'im.ireq_user', 'mus.usr_id');
-        $data->LEFTJOIN('lookup_refs as lr', function ($join) {
+        $data->LEFTJOIN('mng_user_domain mus', 'im.ireq_user', 'mus.usr_domain');
+        $data->LEFTJOIN('lookup_refs lr', function ($join) {
             $join->on('ireq_dtl.ireq_status', 'lr.lookup_code')
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
         });
-        $data->LEFTJOIN('lookup_refs as lrs', function ($join) {
+        $data->LEFTJOIN('lookup_refs lrs', function ($join) {
             $join->on('ireq_dtl.ireq_type', 'lrs.lookup_code')
                 ->WHERERaw('LOWER(lrs.lookup_type) LIKE ? ', [trim(strtolower('req_type')) . '%']);
         });
-        $data->LEFTJOIN('catalog_refs as cr', function ($join) {
+        $data->LEFTJOIN('catalog_refs cr', function ($join) {
             $join->on('ireq_dtl.invent_code', 'cr.catalog_id');
         });
-        $data->LEFTJOIN('catalog_refs as crs', function ($join) {
+        $data->LEFTJOIN('catalog_refs crs', function ($join) {
             $join->on('cr.parent_id', 'crs.catalog_id');
         });
         $data->SELECT(

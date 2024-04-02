@@ -11,14 +11,12 @@ class IctRequestorServices
 {
     public function getDataWithFilter($status1, $status2, $status3, $status4, $status5)
     {
-
         $usr_id = Auth::user()->usr_id;
 
         $data = Ict::Query();
         $data->LEFTJOIN('ireq_dtl as idm', 'ireq_mst.ireq_id', 'idm.ireq_id');
         $data->LEFTJOIN('mng_users as mu', 'ireq_mst.ireq_requestor', 'mu.usr_id');
-        $data->LEFTJOIN('mng_users as muu', 'ireq_mst.ireq_user', 'muu.usr_id');
-        $data->LEFTJOIN('user_profile up', 'ireq_mst.ireq_user', 'up.user_id');
+        $data->LEFTJOIN('mng_user_domain muu', 'ireq_mst.ireq_user', 'muu.usr_domain');
         $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
         $data->LEFTJOIN('mng_users usr', 'sr.spv_name', 'usr.usr_id');
         $data->LEFTJOIN('lookup_refs as lr', function ($join) {
@@ -47,7 +45,8 @@ class IctRequestorServices
             DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
             'mu.usr_fullname as ireq_requestor',
             DB::raw('count(DISTINCT(idm.ireq_id)) as count'),
-            'lr.lookup_desc as ireq_status');
+            'lr.lookup_desc as ireq_status'
+        );
         $data->WHERE('ireq_mst.ireq_requestor', $usr_id);
         $data->WHERE(function ($query) use ($status4, $status1, $status2, $status3, $status5) {
             if (isset($status1)) {
@@ -77,11 +76,10 @@ class IctRequestorServices
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_no',
             'ireq_mst.ireq_date',
-            'ireq_mst.ireq_user',
             'ireq_mst.creation_date',
             'ireq_mst.ireq_status',
-            'mu.usr_fullname',
-            'muu.usr_fullname');
+            'mu.usr_fullname'
+        );
         $data->ORDERBY('ireq_mst.ireq_date', 'DESC');
         return $data->get();
     }
@@ -89,9 +87,8 @@ class IctRequestorServices
     {
         $data = IctDetail::query();
         $data->LEFTJOIN('ireq_mst as im', 'ireq_dtl.ireq_id', 'im.ireq_id');
-        $data->LEFTJOIN('user_profile up', 'im.ireq_user', 'up.user_id');
         $data->LEFTJOIN('mng_users as mu', 'im.ireq_requestor', 'mu.usr_id');
-        $data->LEFTJOIN('mng_users as muu', 'im.ireq_user', 'muu.usr_id');
+        $data->LEFTJOIN('mng_user_domain mud', 'im.ireq_user', 'mud.usr_domain');
         $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
             $join->on('ireq_dtl.ireq_assigned_to1', 'vi.usr_id')
                 ->whereNotNull('ireq_dtl.ireq_assigned_to1');
@@ -113,7 +110,8 @@ class IctRequestorServices
             $join->on('cr.parent_id', 'crs.catalog_id');
         });
         $data->SELECT(
-            'muu.usr_fullname as ireq_user',
+            'mud.usr_fullname as ireq_user',
+            'mud.usr_division',
             'mu.usr_fullname as ireq_requestor',
             'mu.usr_fullname',
             'ireq_dtl.ireq_attachment',
@@ -125,7 +123,6 @@ class IctRequestorServices
             'lr.lookup_desc as ireq_status',
             'lrs.lookup_desc as ireq_type',
             DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),
-            'muu.usr_division',
             'im.ireq_date',
             'ireq_dtl.ireq_qty',
             'ireq_dtl.ireq_status as status');
@@ -144,18 +141,31 @@ class IctRequestorServices
     }
     public static function saveRequest($request)
     {
-        $ict = Ict::Create([
-            'ireq_id' => generate_id(),
-            'ireq_date' => now(),
-            'ireq_requestor' => Auth::user()->usr_id,
-            'ireq_user' => $request->usr_name,
-            'ireq_spv' => $request->ireq_spv,
-            'ireq_loc' => Auth::user()->usr_loc,
-            'ireq_prio_level' => $request->priolev,
-            'creation_date' => now(),
-            'created_by' => Auth::user()->usr_id,
-            'program_name' => "Ict_Save",
-        ]);
+        if(!empty($request->ireq_id)){
+            $ict = Ict::where('ireq_id', $request->ireq_id)->first();
+            if($ict){
+                $ict->ireq_prio_level = $request->ireq_prio_level;
+                $ict->ireq_user = $request->ireq_user;
+                // $ict->ireq_spv = $request->ireq_spv;
+                $ict->last_update_date = now();
+                $ict->last_updated_by = Auth::user()->usr_id;
+                $ict->program_name = "Ict_Update";
+                $ict->save();
+            }
+        } else {
+            $ict = Ict::Create([
+                'ireq_id' => generate_id(),
+                'ireq_date' => now(),
+                'ireq_requestor' => Auth::user()->usr_id,
+                'ireq_user' => $request->usr_domain,
+                // 'ireq_spv' => $request->ireq_spv,
+                'ireq_loc' => Auth::user()->usr_loc,
+                'ireq_prio_level' => $request->priolev,
+                'creation_date' => now(),
+                'created_by' => Auth::user()->usr_id,
+                'program_name' => "Ict_Save",
+            ]);
+        }
         return $ict;
     }
     public static function listNoRequest()
@@ -170,9 +180,8 @@ class IctRequestorServices
     {
         $ict = Ict::where('ireq_id', $code)->first();
         $ict->ireq_prio_level = $request->ireq_prio_level;
-        $ict->ireq_type = $request->ireq_type;
         $ict->ireq_user = $request->ireq_user;
-        $ict->ireq_spv = $request->ireq_spv;
+        // $ict->ireq_spv = $request->ireq_spv;
         $ict->last_update_date = now();
         $ict->last_updated_by = Auth::user()->usr_id;
         $ict->program_name = "Ict_Update";

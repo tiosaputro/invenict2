@@ -19,9 +19,9 @@ class IctRequestManagerServices
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_verificator_remark',
             'mus.usr_division',
+            'mus.usr_fullname as ireq_user',
             'mu.usr_email',
             'ms.usr_fullname as ireq_requestor',
-            'mus.usr_fullname as ireq_user',
             'ireq_mst.ireq_status as status',
             'ireq_mst.ireq_no',
             'ireq_mst.ireq_date',
@@ -45,11 +45,10 @@ class IctRequestManagerServices
             $join->on('ireq_mst.ireq_assigned_to2', 'vii.usr_id')
                 ->whereNull('ireq_mst.ireq_assigned_to1');
         });
-        $data->LEFTJOIN('user_profile up', 'ireq_mst.ireq_user', 'up.user_id');
         $data->LEFTJOIN('ireq_dtl idd', 'ireq_mst.ireq_id', 'idd.ireq_id');
         $data->LEFTJOIN('lookup_refs lr', 'ireq_mst.ireq_status', 'lr.lookup_code');
         $data->LEFTJOIN('mng_users ms', 'ireq_mst.ireq_requestor', 'ms.usr_id');
-        $data->LEFTJOIN('mng_users mus', 'ireq_mst.ireq_user', 'mus.usr_id');
+        $data->LEFTJOIN('mng_user_domain mus', 'ireq_mst.ireq_user', 'mus.usr_domain');
         $data->WHERE(function ($query) use ($status1, $status2, $status3, $status4) {
             if (!empty($status1)) {
                 $query->WHERE('ireq_mst.ireq_status', $status1);
@@ -95,9 +94,7 @@ class IctRequestManagerServices
                 ->whereNull('ireq_dtl.ireq_assigned_to1');
         });
         $data->LEFTJOIN('mng_users ms', 'im.ireq_requestor', 'ms.usr_id');
-        $data->LEFTJOIN('mng_users mus', 'im.ireq_user', 'mus.usr_id');
-        $data->LEFTJOIN('divisi_refs as dr', 'im.ireq_divisi_user', 'dr.div_id');
-        $data->LEFTJOIN('user_profile up', 'im.ireq_user', 'up.user_id');
+        $data->LEFTJOIN('mng_user_domain mus', 'im.ireq_user', 'mus.usr_domain');
         $data->LEFTJOIN('lookup_refs as lr', function ($join) {
             $join->on('ireq_dtl.ireq_status', 'lr.lookup_code')
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);

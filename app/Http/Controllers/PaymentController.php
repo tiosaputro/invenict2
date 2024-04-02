@@ -16,16 +16,15 @@ class PaymentController extends Controller
     protected $to;
     protected $userMenu;
     function __construct(){
-        $this->middleware('auth:sanctum');
-        $this->to = "/payment-request";
-        $this->middleware(function ($request, $next) {
-          $this->userMenu = Mng_User::menu();
-            if($this->userMenu->contains($this->to)){    
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/payment-request";
+            $this->userMenu = Mng_User::menu();
+            if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
-                return response(["message"=>"Cannot Access"],403);
+                return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     function index(){
         $pr = DB::table('pr_mst as pr')

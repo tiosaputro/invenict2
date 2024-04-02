@@ -17,16 +17,15 @@ class MngRoleMenuController extends Controller
     protected $userMenu;
     protected $to;
     function __construct(){
-        $this->middleware('auth:sanctum');
-        $this->to = "/mng-role";
-        $this->middleware(function ($request, $next) {
-          $this->userMenu = Mng_User::menu();
-            if($this->userMenu->contains($this->to)){    
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/mng-role";
+            $this->userMenu = Mng_User::menu();
+            if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
-                return response(["message"=>"Cannot Access"],403);
+                return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     function save(Request $request){
         $role = Mng_roles::select('rol_id')->where('rol_name',$request->rol_name)->first();

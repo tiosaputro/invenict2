@@ -17,16 +17,15 @@ class MasterDetailController extends Controller
     protected $to;
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
-        $this->to = "/master-peripheral";
-        $this->middleware(function ($request, $next) {
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/master-peripheral";
             $this->userMenu = Mng_User::menu();
             if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
                 return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     public function index($code)
     {

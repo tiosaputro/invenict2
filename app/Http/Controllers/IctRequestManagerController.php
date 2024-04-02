@@ -34,16 +34,16 @@ class IctRequestManagerController extends Controller
         $this->managerServices = $services;
         $this->IctServices = $service;
         $this->IctDetailServices = $dtlService;
-        $this->middleware('auth:sanctum');
-        $this->to = "/ict-request-manager";
-        $this->middleware(function ($request, $next) {
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/ict-request-manager";
             $this->userMenu = Mng_User::menu();
+        
             if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
                 return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
 
     public function getDataManager(){

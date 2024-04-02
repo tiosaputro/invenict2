@@ -14,16 +14,15 @@ class LocationController extends Controller
     protected $userMenu;
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
-        $this->to = "/referensi-location";
-        $this->middleware(function ($request, $next) {
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/referensi-location";
             $this->userMenu = Mng_User::menu();
             if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
                 return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     public function index()
     {

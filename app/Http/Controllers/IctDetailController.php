@@ -151,6 +151,13 @@ class IctDetailController extends Controller
     }
     public function edit($ireq, $code){
         $data['request'] = $this->Detailservices->FindDetailRequest($ireq, $code);
+        $catalog = Catalog::select('parent_id', 'catalog_id', 'catalog_name',
+            DB::raw("CASE WHEN catalog_type = 'N' Then 'false' WHEN catalog_type = 'L' Then 'true' end as catalog_type"))
+            ->where('catalog_request_type', $data['request']->ireq_type)
+            ->where('catalog_stat', 'T')
+            ->get();
+        $data['tree'] = $this->parseTreeCatalogRequest($catalog);
+        $data['request_type'] = Lookup_Refs::Type();
         return ResponseFormatter::success($data, 'Successfully Get Data');
     }
     public function update(Request $request, $ireq, $code){
@@ -233,28 +240,6 @@ class IctDetailController extends Controller
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%'])
             ->get();
         return view('pdf/Laporan_IctDetailRequest', compact('detail'));
-    }
-    public function cetak_pdff($code){
-        $detail = DB::table('ireq_dtl as id')
-            ->select('id.*', DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"), 'imm.ireq_requestor', 'imm.ireq_no', 'llr.lookup_desc as ireq_type',
-                'vr.name as ireq_bu', 'dr.div_name', DB::raw("TO_CHAR(imm.ireq_date,' dd Mon YYYY') as datee"), DB::raw("TO_CHAR(imm.ireq_date,'HH24:MI') as timee"),
-                'lr.lookup_desc as ireq_status', 'lr.lookup_desc as ireqq_status')
-            ->LEFTJOIN('catalog_refs as cr', function ($join) {
-                $join->on('id.invent_code', 'cr.catalog_id');
-            })
-            ->LEFTJOIN('catalog_refs as crs', function ($join) {
-                $join->on('cr.parent_id', 'crs.catalog_id');
-            })
-            ->leftjoin('ireq_mst as imm', 'id.ireq_id', 'imm.ireq_id')
-            ->leftjoin('lookup_refs as llr', 'id.ireq_type', 'llr.lookup_code')
-            ->leftjoin('lookup_refs as lr', 'id.ireq_status', 'lr.lookup_code')
-            ->leftjoin('vcompany_refs as vr', 'imm.ireq_bu', 'vr.company_code')
-            ->leftjoin('divisi_refs as dr', 'imm.ireq_divisi_user', 'dr.div_id')
-            ->where('id.ireq_id', $code)
-            ->whereRaw('LOWER(llr.lookup_type) LIKE ? ', [trim(strtolower('req_type')) . '%'])
-            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%'])
-            ->get();
-        return view('pdf/tes', compact('detail'));
     }
     public function cetak_excel($code){
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');

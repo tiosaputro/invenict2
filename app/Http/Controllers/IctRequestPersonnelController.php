@@ -29,18 +29,17 @@ class IctRequestPersonnelController extends Controller
     public function __construct(IctRequestPersonnelServices $services, IctDetailServices $servicess){
         $this->personnelService = $services;
         $this->IctDetailService = $servicess;
-        $this->middleware('auth:sanctum');
-        $this->to = "/ict-request-personnel";
-        $this->middleware(function ($request, $next) {
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/ict-request-personnel";
             $this->userMenu = Mng_User::menu();
             if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
                 return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
-    public function getDataPersonnel(){
+    function getDataPersonnel(){
         $data['ict'] = $this->personnelService->getDetailWithFilter('T');
         $data['ict1'] = $this->personnelService->getDetailWithFilter('D');
         $data['ict2'] = $this->personnelService->getDetailWithFilter('C');
@@ -48,7 +47,7 @@ class IctRequestPersonnelController extends Controller
         $data['ict4'] = $this->personnelService->getDetailWithFilter('RT');
         return ResponseFormatter::success($data, 'Successfully Get Data');
     }
-    public function saveRemark(Request $request, $code){
+    function saveRemark(Request $request, $code){
         $dtl = DB::table('ireq_dtl')
             ->where('ireqd_id', $code)
             ->where('ireq_id', $request->ireq_id)
@@ -59,17 +58,17 @@ class IctRequestPersonnelController extends Controller
             ]);
         return ResponseFormatter::success($dtl, 'Successfully Added Remark');
     }
-    public function rejectedByPersonnel(Request $request, $ireq_id){
+    function rejectedByPersonnel(Request $request, $ireq_id){
         $this->personnelService->rejectedByPersonnel($request, $ireq_id);
         return ResponseFormatter::success('Successfully rejected by personnel');
 
     }
-    public function acceptedByPersonnel($ireq_id){
+    function acceptedByPersonnel($ireq_id){
         $this->personnelService->AcceptByPersonnel($ireq_id);
         $this->IctDetailService->cekStatusPenugasan($ireq_id);
         return ResponseFormatter::success('Successfully accepted by personnel');
     }
-    public function updateNote(Request $request, $code){
+    function updateNote(Request $request, $code){
 
         $save = DB::table('ireq_dtl')
             ->where('ireqd_id', $code)
@@ -82,7 +81,7 @@ class IctRequestPersonnelController extends Controller
 
         return ResponseFormatter::success($save, 'Successfully Submitted Note');
     }
-    public function updateStatusDone(Request $request, $code){
+    function updateStatusDone(Request $request, $code){
         DB::table('ireq_dtl')
             ->where('ireqd_id', $request->ireqd_id)
             ->where('ireq_id', $code)
@@ -103,20 +102,20 @@ class IctRequestPersonnelController extends Controller
         SendNotifDoneUser::dispatchAfterResponse($mail_requestor, $datadone);
         return ResponseFormatter::success('Successfully Updated Status');
     }
-    public function getDetailDone($code){
+    function getDetailDone($code){
         $ictService = new IctServices();
         $data['detail'] = $this->IctDetailService->getDataDetailRequest($code, null, null, null);
         $data['request'] = $ictService->detailNoRequest($code);
         return ResponseFormatter::success($data, 'Successfully get data');
     }
 
-    public function cetak_pdf($filter, $viewName, $methodService){
+    function cetak_pdf($filter, $viewName, $methodService){
         $ict = $this->personnelService->$methodService($filter);
         $data['htmlContent'] = View::make($viewName, compact('ict'))->render();
         return ResponseFormatter::success($data, 'Successfully Print Report');
     }
 
-    public function printPdfByFilter(Request $request){
+    function printPdfByFilter(Request $request){
         switch($request->report_type){
             case 'assignment_request':
                 return $this->cetak_pdf('NT', 'pdf.Laporan_IctRequest_Sedang_Dikerjakan', 'getDataWithFilter');
@@ -133,27 +132,27 @@ class IctRequestPersonnelController extends Controller
         }
     }
 
-    public function cetak_excel_personnel_assignment_request(){
+    function cetak_excel_personnel_assignment_request(){
         $usr_fullname = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelAssignmentRequest($usr_fullname), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_personnel_reject(){
+    function cetak_excel_personnel_reject(){
         $usr_fullname = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelReject($usr_fullname), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_personnel_sedang_dikerjakan(){
+    function cetak_excel_personnel_sedang_dikerjakan(){
         $usr_fullname = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelSedangDikerjakan($usr_fullname), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_personnel_sudah_dikerjakan(){
+    function cetak_excel_personnel_sudah_dikerjakan(){
         $usr_fullname = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelSudahDikerjakan($usr_fullname), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_personnel_selesai(){
+    function cetak_excel_personnel_selesai(){
         $usr_fullname = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPersonnelSelesai($usr_fullname), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');

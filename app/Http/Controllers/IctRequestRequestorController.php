@@ -19,6 +19,7 @@ use App\Models\Location;
 use App\Models\Lookup_Refs;
 use App\Models\Mng_user;
 use App\Services\IctRequestorServices;
+use App\Services\MngUserDomainServices;
 use App\Services\SupervisorServices;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -35,19 +36,18 @@ class IctRequestRequestorController extends Controller
 
     public function __construct(IctRequestorServices $services){
         $this->requestorServices = $services;
-        $this->middleware('auth:sanctum');
-        $this->to = "/ict-request";
-        $this->middleware(function ($request, $next) {
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/ict-request";
             $this->userMenu = Mng_User::menu();
             if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
                 return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
 
-    public function getIct(){
+    function getIct(){
         $data['ict'] = $this->requestorServices->getDataWithFilter('P', null, null, 'status', null);
         $data['ict1'] = $this->requestorServices->getDataWithFilter('A1', 'A2', null, null, null);
         $data['ict2'] = $this->requestorServices->getDataWithFilter('RR', 'RA1', 'RA2', null, null);
@@ -62,11 +62,19 @@ class IctRequestRequestorController extends Controller
         return json_encode($data);
 
     }
-    public function save(Request $request){
+    function add(){
+        $data['ref'] = Lookup_Refs::Type();
+        $data['priority'] = Lookup_Refs::Prioritas();
+        $data['requestor'] = Auth::user();
+        $data['userList'] = app(MngUserDomainServices::class)->getAllData();
+        return json_encode($data);
+
+    }
+    function save(Request $request){
         $save = $this->requestorServices->saveRequest($request);
         return ResponseFormatter::success($save, 'Successfully Save Request');
     }
-    public function edit($code){
+    function edit($code){
         $data['ict'] = Ict::SELECT(
             'ireq_mst.ireq_id',
             'mu.usr_fullname as ireq_requestor',
@@ -79,37 +87,30 @@ class IctRequestRequestorController extends Controller
             'mu.usr_division as division_requestor',
             'usr.usr_division as division_user',
             'usr.usr_department as department_user',
-            'usr.usr_nm_perush as company_user'
+            'usr.usr_bu as company_user'
         )
             ->LEFTJOIN('lookup_refs as lr', function ($join) {
                 $join->on('ireq_mst.ireq_type', 'lr.lookup_code')
                     ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('req_type')) . '%']);
             })
-            ->LEFTJOIN('mng_users usr', 'ireq_mst.ireq_user', 'usr.usr_id')
+            ->LEFTJOIN('mng_user_domain usr', 'ireq_mst.ireq_user', 'usr.usr_domain')
             ->LEFTJOIN('mng_users mu', 'ireq_mst.ireq_requestor', 'mu.usr_id')
             ->WHERE('ireq_mst.ireq_id', $code)
             ->first();
 
-        $data['bisnis'] = DB::table('v_company_refs')->get();
-        $data['divisi'] = DB::table('divisi_refs')
-            ->SELECT('div_id as code', DB::raw("(div_code ||'-'|| div_name) as name"))
-            ->ORDERBY('div_name', 'ASC')
-            ->get();
-
         $data['priority'] = Lookup_Refs::Prioritas();
-        $data['userlist'] = Mng_user::orderby('usr_fullname', 'ASC')->get();
-        $data['listSupervisor'] = app(SupervisorServices::class)->getAllData();
+        $data['userlist'] = app(MngUserDomainServices::class)->getAllData();
         return json_encode($data);
     }
-    public function update(Request $request, $code){
+    function update(Request $request, $code){
         $save = $this->requestorServices->updateRequest($request, $code);
         return ResponseFormatter::success($save, 'Successfully Updated Request');
     }
-    public function delete($ireq_id){
+    function delete($ireq_id){
         $save = $this->requestorServices->deleteRequest($ireq_id);
         return ResponseFormatter::success($save, 'Successfully Deleted Request');
     }
-    public function submitRating(Request $request){
+    function submitRating(Request $request){
         if ($request->rating <= '2') {
             $dtl = DB::table('ireq_dtl')
                 ->where('ireqd_id', $request->id)
@@ -130,19 +131,11 @@ class IctRequestRequestorController extends Controller
             return ResponseFormatter::success($dtl, 'Successfully Submitted Rating');
         }
     }
-    public function getAddReq(){
-        $data['ref'] = Lookup_Refs::Type();
-        $data['priority'] = Lookup_Refs::Prioritas();
-        $data['requestor'] = Auth::user();
-        $data['listSupervisor'] = app(SupervisorServices::class)->getAllData();
-        return response()->json($data);
-
-    }
-    public function getNoreq(){
+    function getNoreq(){
         $data = $this->requestorServices->listNoRequest();
         return ResponseFormatter::success($data, 'Successfully get data');
     }
-    public function getNameBu($noreq, $dtl){
+    function getNameBu($noreq, $dtl){
         $ict = DB::table('ireq_mst as im')
             ->SELECT('im.ireq_requestor as req', 'im.ireq_no', 'im.ireq_id', 'vr.name as bu', 'id.ireqd_id', 'im.ireq_user',
                 DB::raw("TO_CHAR(im.ireq_date, 'dd Mon YYYY') as ireq_date"))
@@ -153,7 +146,7 @@ class IctRequestRequestorController extends Controller
             ->first();
         return response()->json($ict);
     }
-    public function detailNoRequest($code){
+    function detailNoRequest($code){
         $ict = DB::table('ireq_mst as im')
             ->LEFTJOIN('divisi_refs as dr', 'im.ireq_divisi_user', 'dr.div_id')
             ->LEFTJOIN('vcompany_refs as vr', 'im.ireq_bu', 'vr.company_code')
@@ -173,7 +166,7 @@ class IctRequestRequestorController extends Controller
             ->get();
         return json_encode($ict);
     }
-    public function updateStatusSubmit($ireq_id){
+    function updateStatusSubmit($ireq_id){
         $ICT = Ict::where('ireq_id', $ireq_id)->first();
         $ICT->ireq_status = 'P';
         $ICT->ireq_date = now();
@@ -201,16 +194,16 @@ class IctRequestRequestorController extends Controller
         SendNotifRequest::dispatchAfterResponse($send_mail, $data, $LINK);
         return ResponseFormatter::success($ICT, 'Successfully Submitted Request');
     }
-    public function getDetail($noreq){
+    function getDetail($noreq){
         $ict = IctDetail::select('ireqd_id as code')->WHERE('ireq_id', $noreq)->get();
         return response()->json($ict);
     }
-    public function cetak_pdf($filter1, $filter2 = null, $filter3 = null, $filter4 = null, $filter5 = null, $viewName, $methodService){
+    function cetak_pdf($filter1, $filter2 = null, $filter3 = null, $filter4 = null, $filter5 = null, $viewName, $methodService){
         $ict = $this->requestorServices->$methodService($filter1, $filter2, $filter3, $filter4, $filter5);
         $data['htmlContent'] = View::make($viewName, compact('ict'))->render();
         return ResponseFormatter::success($data, 'Successfully Print Report');
     }
-    public function printPdfByFilter(Request $request){
+    function printPdfByFilter(Request $request){
         switch($request->report_type){
             case 'permohonan':
                 return $this->cetak_pdf('P', null, null, null, null, 'pdf.Laporan_IctRequest_Permohonan', 'getDataWithFilter');
@@ -232,42 +225,42 @@ class IctRequestRequestorController extends Controller
                 return ResponseFormatter::error(null, 'Invalid report type');
         }
     }
-    public function cetak_excel_permohonan(){
+    function cetak_excel_permohonan(){
         $usr_name = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportPermohonan($usr_name), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_tab_reviewer(){
+    function cetak_excel_tab_reviewer(){
         $usr_name = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportTabReviewer(), 'ICT REQUEST STATUS REPORT LIST ON (Reviewer) ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_verifikasi(){
+    function cetak_excel_verifikasi(){
         $usr_name = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportVerifikasi($usr_name), 'ICT REQUEST STATUS REPORT LIST ON (Terverifikasi) ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_reject(){
+    function cetak_excel_reject(){
         $usr_name = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportReject($usr_name), 'ICT REQUEST STATUS REPORT LIST ON (Direject) ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_assignment_request(){
+    function cetak_excel_assignment_request(){
         $usr_name = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportAssignmentRequest($usr_name), 'ICT REQUEST STATUS REPORT LIST ON (Direject) ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_sedang_dikerjakan(){
+    function cetak_excel_sedang_dikerjakan(){
         $usr_name = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportSedangDikerjakan($usr_name), 'ICT REQUEST STATUS REPORT LIST ON (Sedang Dikerjakan) ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_sudah_dikerjakan(){
+    function cetak_excel_sudah_dikerjakan(){
         $usr_name = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportSudahDikerjakan($usr_name), 'ICT REQUEST STATUS REPORT LIST ON (Sudah Dikerjakan) ' . $newCreation . '.xlsx');
     }
-    public function cetak_excel_selesai(){
+    function cetak_excel_selesai(){
         $usr_name = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportSelesai($usr_name), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');

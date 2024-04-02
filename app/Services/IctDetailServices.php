@@ -22,7 +22,7 @@ class IctDetailServices
                 ->whereNull('ireq_dtl.ireq_assigned_to1');
         });
         $data->LEFTJOIN('mng_users ms', 'im.ireq_requestor', 'ms.usr_id');
-        $data->LEFTJOIN('mng_users mus', 'im.ireq_user', 'mus.usr_id');
+        $data->LEFTJOIN('mng_user_domain mus', 'im.ireq_user', 'mus.usr_domain');
         $data->LEFTJOIN('lookup_refs as lr', function ($join) {
             $join->on('ireq_dtl.ireq_status', 'lr.lookup_code')
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
@@ -173,7 +173,7 @@ class IctDetailServices
             ->LEFTJOIN('location_refs loc', 'im.ireq_loc', 'loc.loc_code')
             ->LEFTJOIN('supervisor_refs sr', 'im.ireq_spv', 'sr.spv_id')
             ->LEFTJOIN('mng_users mus', 'sr.spv_name', 'mus.usr_id')
-            ->LEFTJOIN('mng_users usr', 'im.ireq_user', 'usr.usr_id')
+            ->LEFTJOIN('mng_user_domain usr', 'im.ireq_user', 'usr.usr_domain')
             ->SELECT(
                 'mus.usr_email as spv_mail',
                 'loc.loc_email',
@@ -321,7 +321,7 @@ class IctDetailServices
             ->leftjoin('mng_users usr', 'imm.ireq_verificator', 'usr.usr_id')
             ->leftjoin('mng_users mngr', 'imm.ireq_approver2', 'mngr.usr_id')
             ->leftjoin('location_refs as loc_refs', 'imm.ireq_loc', 'loc_refs.loc_code')
-            ->leftjoin('mng_users as mu', 'imm.ireq_user', 'mu.usr_id')
+            ->leftjoin('mng_user_domain mu', 'imm.ireq_user', 'mu.usr_domain')
             ->leftjoin('lookup_refs as lllr', 'imm.ireq_prio_level', 'lllr.lookup_code')
             ->leftjoin('lookup_refs as llr', 'id.ireq_type', 'llr.lookup_code')
             ->leftjoin('lookup_refs as lr', 'id.ireq_status', 'lr.lookup_code')

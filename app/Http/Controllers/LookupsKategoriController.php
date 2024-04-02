@@ -15,16 +15,15 @@ class LookupsKategoriController extends Controller
     protected $userMenu;
     protected $to;
     public function __construct(){
-        $this->middleware('auth:sanctum');
-        $this->to = "/referensi-kategori";
-        $this->middleware(function ($request, $next) {
+        $this->middleware(['auth:sanctum', function ($request, $next) {
+            $this->to = "/referensi-kategori";
             $this->userMenu = Mng_User::menu();
             if ($this->userMenu->contains($this->to)) {
                 return $next($request);
             } else {
                 return response(["message" => "Cannot Access"], 403);
             }
-        });
+        }]);
     }
     public function lookupKategori(){
         $ref = Lookup_Refs::select('lookup_code', 'lookup_type', DB::raw("CASE WHEN lookup_status = 'T' Then 'Aktif' WHEN lookup_status = 'F' Then 'Tidak Aktif' end as lookup_status"), 'lookup_desc')
