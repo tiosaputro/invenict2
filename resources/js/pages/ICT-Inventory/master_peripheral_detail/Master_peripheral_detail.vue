@@ -213,7 +213,7 @@
   </div>    
 </template>
 <script>
-import qrcode from '../../Features/QRCode.vue'; 
+import qrcode from '../../Components/QRCode.vue'; 
 export default {
   data() {
     return {

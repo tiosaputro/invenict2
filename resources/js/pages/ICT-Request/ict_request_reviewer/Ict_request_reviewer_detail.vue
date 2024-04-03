@@ -33,7 +33,7 @@
           responsiveLayout="scroll"
         >
         
-       <template #header>
+          <template #header>
             <div class="table-header text-right">
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
@@ -65,19 +65,21 @@
           <Column style="min-width:17rem">
             <template #body="slotProps">
               <Button
-                v-if="slotProps.data.cekstatus == 'NT' || slotProps.data.cekstatus == 'RT'"
+                v-if="slotProps.data.status == 'NT' || slotProps.data.status == 'RT'"
                 class="p-button-raised p-button-text mr-2 mt-2"
                 icon="pi pi-user-edit"
                 label="Assign"
                 @click="AssignPerDetail(slotProps.data.ireqd_id)"
               />
               <Button
-                v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.cekstatus == 'RT' || slotProps.data.ireq_assigned_to2 && slotProps.data.cekstatus == 'NT'"
+                v-if="slotProps.data.ireq_assigned_to2 && slotProps.data.status == 'RT' || slotProps.data.ireq_assigned_to2 && slotProps.data.status == 'NT'"
                 class="p-button-raised p-button-text mr-2 mt-2"
                 icon="pi pi-check"
                 label="Submit"
                 @click="Submit(slotProps.data.ireqd_id)"
               />
+              <Button v-if=" slotProps.data.status == 'P'" class="p-button-rounded p-button-info mr-2" icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'"
+                @click=" $router.push({ name: 'Ict Request Reviewer Edit Detail Permohonan', params: {code: this.$route.params.code,ireq: slotProps.data.ireqd_id}})"/>
             </template>
           </Column>
           <template #footer>
@@ -98,6 +100,14 @@
                     v-tooltip.bottom="'Click to print out (PDF)'"
                     icon="pi pi-file-pdf"
                     @click="CetakPdf()"
+                  />
+                  <Button
+                    class="p-button-raised p-button-success mr-2 mt-2"
+                    icon="pi pi-calendar"
+                    label="Add Calendar"
+                    @click="AddToCalendar()"
+                    v-if="this.status == 'P'"
+                    v-tooltip.bottom="'Click to Add Calendar'"
                   />
                 </div>
 			        </div>
@@ -209,7 +219,6 @@
   </div>
 </template>
 <script>
-import html2pdf from 'html2pdf.js';
 
 export default {
   data() {
@@ -228,9 +237,7 @@ export default {
         detail: [],
         filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
-        token: localStorage.getItem('token'),
-        checkname : [],
-        checkto : [],
+        detailRequest:[],
         code:null
     };
   },
@@ -238,6 +245,17 @@ export default {
     this.getIctDetail();
   },
   methods: {
+    AddToCalendar(){
+      const remark = this.detail.map((x)=>x.ireq_remark);
+      const event = {
+          title: "Reminder Request A/n "+this.detailRequest.ireq_requestor +" No Request : "+ this.detailRequest.noreq,
+          description: "Detail Request:\n" +remark,
+          start: this.detailRequest.ireq_date,
+          location: this.detailRequest.loc_desc,
+          duration: [1, "day"],
+        };
+        window.location.assign(ics(event));
+    },
     formatDate(date){
       return this.$moment(date).format("DD MMM YYYY HH:mm");
     },

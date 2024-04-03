@@ -34,6 +34,7 @@ class IctRequestorServices
         $data->SELECT(
             DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title) as spv"),
             DB::RAW("COUNT(ireq_mst.ireq_verificator_remark) as countremark_reviewer"),
+            DB::RAW("COUNT(ireq_mst.ireq_spv) as countspv"),
             'mu.usr_division',
             'ireq_mst.ireq_verificator_remark',
             'ireq_mst.ireq_id',

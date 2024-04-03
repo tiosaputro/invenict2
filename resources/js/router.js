@@ -157,7 +157,7 @@ const routes = [{
     {
         name: 'Scan',
         path: '/scan',
-        component: ()=> import('./pages/Features/Scan.vue'),
+        component: ()=> import('./pages/Components/Scan.vue'),
 
     },
     {

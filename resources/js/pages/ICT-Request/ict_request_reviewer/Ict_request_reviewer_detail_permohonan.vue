@@ -77,16 +77,8 @@
           </Column>
           <Column style="min-width:8rem">
             <template #body= "slotProps">
-              <Button
-                v-if=" slotProps.data.status == 'P'"
-                class="p-button-rounded p-button-info mr-2"
-                icon="pi pi-pencil"
-                v-tooltip.bottom="'Click to edit request'"
-                @click="
-                  $router.push({
-                    name: 'Ict Request Reviewer Edit Detail Permohonan',
-                    params: {code: this.$route.params.code,ireq: slotProps.data.ireqd_id},
-                  })"/>
+              <Button v-if=" slotProps.data.status == 'P'" class="p-button-rounded p-button-info mr-2" icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'"
+                @click=" $router.push({ name: 'Ict Request Reviewer Edit Detail Permohonan', params: {code: this.$route.params.code,ireq: slotProps.data.ireqd_id}})"/>
             </template>
           </Column>
           <template #footer>

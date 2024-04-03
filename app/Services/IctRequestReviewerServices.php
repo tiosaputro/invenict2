@@ -43,15 +43,19 @@ class IctRequestReviewerServices
             'ireq_mst.ireq_no',
             'ireq_mst.ireq_reason',
             'ireq_mst.ireq_date',
+            'ireq_mst.ireq_assigned_to2',
+            'ireq_mst.ireq_assigned_to1',
             'lr.lookup_desc as ireq_status',
             'ireq_mst.ireq_status as status',
             DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title) as spv"),
             DB::raw('count(ireq_mst.ireq_verificator_remark) as count_remark'),
             DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'),
+            DB::raw('count(idd.ireq_assigned_to2) as count_assigned2'),
             DB::raw('count(idd.ireq_id) as ireq_count_id'),
             DB::raw('count(ireq_mst.ireq_spv) as ireq_count_spv'),
             DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
-            DB::raw('count(ireq_mst.ireq_approver2_remark) as count_remark_approver2'), 'ireq_mst.ireq_approver2_remark'
+            DB::raw('count(ireq_mst.ireq_approver2_remark) as count_remark_approver2'), 
+            'ireq_mst.ireq_approver2_remark'
         );
         $data->LEFTJOIN('mng_users mu', 'ireq_mst.ireq_requestor', 'mu.usr_id');
         $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
@@ -85,9 +89,11 @@ class IctRequestReviewerServices
         $data->WHEREIn('ireq_mst.ireq_loc', $this->loc);
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
         $data->GroupBy(
+            'ireq_mst.ireq_assigned_to2',
             'ms.usr_fullname',
             'mud.usr_fullname',
             'mud.usr_division',
+            'ireq_mst.ireq_assigned_to1',
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_reason',
             'ireq_mst.ireq_verificator_remark',
