@@ -1,6 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-const routes = [{
+const routes = [
+    {
+        path: '/',
+        redirect: '/login' // Redirect root URL to login page
+    },
+    {
         name: 'Checking Token SSO',
         path: '/sso/:token',
         component: () => import('./pages/Views/CheckingToken.vue'),

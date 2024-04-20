@@ -1039,7 +1039,7 @@ export default {
           this.loading = false;
        });
     },
-    CetakPdf(ireq_id){
+    PrintOutFormIctRequest(ireq_id){
       this.loading = true;
        this.axios.get('api/print-out-ict-request/' +ireq_id,{headers: {'Authorization': 'Bearer '+this.token}}).then((response)=>{
         let htmlContent = response.data.data.htmlContent;

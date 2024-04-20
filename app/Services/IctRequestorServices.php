@@ -118,6 +118,7 @@ class IctRequestorServices
             'ireq_dtl.ireq_attachment',
             'im.ireq_no',
             'ireq_dtl.ireq_id',
+            'ireq_dtl.ireq_value',
             'ireq_dtl.ireq_remark',
             DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
             'ireq_dtl.ireqd_id',

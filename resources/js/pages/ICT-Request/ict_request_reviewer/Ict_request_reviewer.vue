@@ -41,294 +41,17 @@
                 />
               </TabPanel>
               <TabPanel header="In Progress">
-                    <DataTable
-                    :value="sedangDikerjakan"
-                    :paginator="true"
-                    :rows="10"
-                    :loading="loading"
-                    :filters="filters"
-                    :rowHover="true"
-                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} In Progress"
-                    responsiveLayout="scroll"
-                 >
-                 <template #header>
-                    <div class="table-header text-right">
-                      <span class="p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                      </span>
-                    </div>
-                  </template>
-                  <template #empty>
-                    Not Found
-                  </template>
-                  <template #loading>
-                    Please wait
-                  </template>
-                  <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:2rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:5rem">
-                    <template #body="slotProps">
-                      {{ formatDate(slotProps.data.ireq_date) }}
-                    </template>
-                  </Column>
-                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:4rem"/>
-                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:4rem"/>
-                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="spv" header="User Supervisor" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to" header="Petugas ICT" :sortable="true" style="min-width:4rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
-                  <template #body= "slotProps">
-                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                    </template>
-                  </Column>
-                  <Column headerStyle="min-width:6rem">
-                    <template #body="slotProps">
-                      <Button
-                        v-tooltip.bottom="'Click for request details'"
-                        class="p-button-rounded p-button-secondary"
-                        icon="pi pi-info-circle"
-                        @click="detailTabInProgressDetail(slotProps.data.ireq_id)"
-                      />
-                    </template>
-                  </Column>
-                  <template #footer>
-                      <div class="grid dir-col">
-                      <div class="col">
-                        <div class="box">
-                          <Button
-                            label="Pdf"
-                            class="p-button-raised p-button-danger mr-2"
-                            icon="pi pi-file-pdf"
-                            @click="PrintRequestPdf('sedang_dikerjakan')"
-                          />
-                          <Button 
-                            label="Excel"
-                            class="p-button-raised p-button-success mr-2"
-                            icon="pi pi-print"
-                            @click="CetakExcelSedangDikerjakan()" 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </template>
-                </DataTable>
+                <DataTableRequest :value="sedangDikerjakan" :loading="loading" :showRemark="showRemarkSedangDikerjakan" :showSpv="showSpvSedangDikerjakan"
+                    :filters="filters" printPdf="sedang_dikerjakan" :showPersonnel1="showPersonelSedangDikerjakan" Active="5"
+                />
               </TabPanel>
               <TabPanel header="Done">
-                    <DataTable
-                    :value="sudahDikerjakan"
-                    :paginator="true"
-                    :rows="10"
-                    :loading="loading"
-                    :filters="filters"
-                    :rowHover="true"
-                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Done"
-                    responsiveLayout="scroll"
-                 >
-                 <template #header>
-                    <div class="table-header text-right">
-                      <span class="p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                      </span>
-                    </div>
-                  </template>
-                  <template #empty>
-                    Not Found
-                  </template>
-                  <template #loading>
-                    Please wait
-                  </template>
-                  <Column field="ireq_no" header="No. Request" style="min-width:10rem" :sortable="true"/>
-                  <Column field="ireqd_id" header="No. Detail" style="min-width:10rem" :sortable="true"/>
-                  <Column field="ireq_type" header="Request Type" style="min-width:10rem" :sortable="true"/>
-                  <Column field="kategori" header="Items" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_qty" header="Qty" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_remark" header="Remark" style="min-width:16rem" :sortable="true"/>
-                  <Column field="ireq_date" header="Request Date" style="min-width:10rem" :sortable="true">
-                    <template #body="slotProps">
-                      {{ formatDate(slotProps.data.ireq_date) }}
-                    </template>
-                  </Column>
-                  <Column header="Attachment" style="min-width:10rem">
-                    <template #body="slotProps">
-                      <p v-if="slotProps.data.ireq_attachment == null"></p>
-                      <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                        <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
-                          <i class="pi pi-images px-2"></i>
-                           <span class="px-3">IMAGE</span>
-                        </Button>
-                      </p>
-                      <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                        <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
-                         <i class="pi pi-file-pdf px-2"></i>
-                          <span class="px-4">PDF</span>
-                        </Button>
-                      </p>
-                    </template>  
-                  </Column>
-                  <Column field="ireq_requestor" header="Requestor" style="min-width:8rem" :sortable="true"/>
-                  <Column field="ireq_user" header="User" style="min-width:8rem" :sortable="true"/>
-                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to" header="ICT Personnel" style="min-width:12rem" :sortable="true"/>
-                  <Column field="ireq_status" header="Status" style="min-width:10rem" :sortable="true">
-                  <template #body= "slotProps">
-                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                    </template>
-                  </Column>
-                  <Column style="min-width:15rem">
-                    <template #body="slotProps">
-                     <Button
-                      v-if="slotProps.data.status == 'D'"
-                      class="p-button-raised mr-2"
-                      label="Closing"
-                      v-tooltip.bottom="'Click to closing request'"
-                      @click="ClosingPerDetail(slotProps.data.ireqd_id, slotProps.data.ireq_id)"
-                      />
-                     <Button
-                      label="Pdf"
-                      class="p-button-raised p-button-danger mt-2"
-                      v-tooltip.bottom="'Click to print out (PDF)'"
-                      icon="pi pi-file-pdf"
-                      @click="CetakPdf(slotProps.data.ireq_id)"
-                     />
-                    </template>
-                  </Column>
-                  <template #footer>
-                      <div class="grid dir-col">
-                      <div class="col">
-                        <div class="box">
-                          <Button
-                            label="Pdf"
-                            class="p-button-raised p-button-danger mr-2"
-                            icon="pi pi-file-pdf"
-                            @click="PrintRequestPdf('sudah_dikerjakan')"
-                          />
-                          <Button
-                            label="Excel"
-                            class="p-button-raised p-button-success mr-2"
-                            icon="pi pi-print"
-                            @click="CetakExcelSudahDikerjakan()" 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </template>
-                </DataTable>
+                <DataTableDetail :value="sudahDikerjakan" :loading="loading" @closing-request="ClosingPerDetail"
+                  :filters="filters" printPdf="sudah_dikerjakan" @cetak-pdf="PrintOutFormIctRequest"/>
               </TabPanel>
               <TabPanel header="Close">
-                    <DataTable
-                    :value="selesai"
-                    :paginator="true"
-                    :rows="10"
-                    :loading="loading"
-                    :filters="filters"
-                    :rowHover="true"
-                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Close"
-                    responsiveLayout="scroll"
-                 >
-                 <template #header>
-                    <div class="table-header text-right">
-                      <span class="p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                      </span>
-                    </div>
-                  </template>
-                  <template #empty>
-                    Not Found
-                  </template>
-                  <template #loading>
-                    Please wait
-                  </template>
-                  <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem">
-                   <template #body="slotProps">
-                    <p @click="detailRequest(slotProps.data.ireq_id)" style="cursor:pointer;"> {{slotProps.data.ireq_no}}
-                    </p> 
-                   </template>
-                  </Column>
-                  <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem"/>
-                  <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:16rem"/>
-                  <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
-                    <template #body="slotProps">
-                      {{ formatDate(slotProps.data.ireq_date) }}
-                    </template>
-                  </Column>
-                  <Column header="Attachment" style="min-width:10rem">
-                    <template #body="slotProps">
-                      <p v-if="slotProps.data.ireq_attachment == null"></p>
-                      <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                        <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
-                          <i class="pi pi-images px-2"></i>
-                           <span class="px-3">IMAGE</span>
-                        </Button>
-                      </p>
-                      <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                        <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
-                          <i class="pi pi-file-pdf px-2"></i>
-                           <span class="px-4">PDF</span>
-                        </Button>
-                      </p>
-                    </template>  
-                  </Column>
-                  <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
-                  <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-                  <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem"/>
-                  <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:12rem"/>
-                  <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
-                    <template #body= "slotProps">
-                      <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                    </template>
-                  </Column>
-                  <Column>
-                    <template #body="slotProps">
-                      <Button
-                        label="Pdf"
-                        class="p-button-raised p-button-danger mr-2"
-                        v-tooltip.bottom="'Click to print out (PDF)'"
-                        icon="pi pi-file-pdf"
-                        @click="CetakPdf(slotProps.data.ireq_id)"
-                      />
-                    </template>
-                  </Column>
-                  <template #footer>
-                      <div class="grid dir-col">
-                      <div class="col">
-                        <div class="box">
-                          <Button
-                            label="Pdf"
-                            class="p-button-raised p-button-danger mr-2"
-                            icon="pi pi-file-pdf"
-                            @click="PrintRequestPdf('selesai')"
-                          />
-                          <Button
-                            label="Excel"
-                            class="p-button-raised p-button-success mr-2"
-                            icon="pi pi-print"
-                            @click="CetakExcelSelesai()" 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </template>
-                </DataTable>
+                <DataTableDetail :value="selesai" :loading="loading" :filters="filters" printPdf="selesai" 
+                  @cetak-pdf="PrintOutFormIctRequest" @detail-request="detailRequestNo"/>
               </TabPanel>
             </TabView>
             <Dialog v-model:visible="dialogEditSpv"
@@ -495,9 +218,11 @@
 <script>
 
 import DataTableRequest from '../../Components/Reviewer/DataTableRequestReviewer.vue';
+import DataTableDetail from '../../Components/Reviewer/DataTableDetailReviewer.vue';
 export default {
   components:{
-    DataTableRequest
+    DataTableRequest,
+    DataTableDetail
   },
   data() {
     return {
@@ -535,6 +260,9 @@ export default {
         reject:[],
         penugasan:[],
         sedangDikerjakan:[],
+        showRemarkSedangDikerjakan:[],
+        showSpvSedangDikerjakan:[],
+        showPersonelSedangDikerjakan:[],
         sudahDikerjakan:[],
         selesai:[],
         filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
@@ -585,47 +313,6 @@ export default {
         window.open("mailto:"+frommail+"?subject="+res.data.data.request.noreq);
       });
     },
-    getDetail(ireq_attachment){
-       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
-         var myWindow = window.open(page, "_blank");
-         myWindow.focus();
-    },
-    detailTabRequestDetailPermohonan(ireq_id){
-      localStorage.setItem('active1',0);
-      this.$router.push('/ict-request-reviewer/detail-permohonan/'+ireq_id)
-    },
-    detailTabRequestDetail(ireq_id){
-      localStorage.setItem('active1',0);
-      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
-    },
-    detailTabHigherLevelDetailPermohonan(ireq_id){
-      localStorage.setItem('active1',1);
-      this.$router.push('/ict-request-reviewer/detail-permohonan/'+ireq_id)
-    },
-    detailTabHigherLevelDetail(ireq_id){
-      localStorage.setItem('active1',1);
-      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
-    },
-    detailTabIctManagerDetailPermohonan(ireq_id){
-      localStorage.setItem('active1',2);
-      this.$router.push('/ict-request-reviewer/detail-permohonan/'+ireq_id)
-    },
-    detailTabIctManagerDetail(ireq_id){
-      localStorage.setItem('active1',2);
-      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
-    },
-    detailTabRejectedDetail(ireq_id){
-      localStorage.setItem('active1',3);
-      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
-    },
-    detailTabRequestAssignmentDetail(ireq_id){
-      localStorage.setItem('active1',4);
-      this.$router.push('/ict-request-reviewer/detail/'+ireq_id)
-    },
-    detailTabInProgressDetail(ireq_id){
-      localStorage.setItem('active1',5);
-      this.$router.push('/ict-request-reviewer/detail-penugasan/'+ireq_id)
-    },
     getIct(){
       this.axios.get('api/get-data-reviewer').then((response)=> {
           this.permohonan = response.data.ict;
@@ -649,6 +336,9 @@ export default {
           this.showRemarkPenugasan = this.penugasan.map((x)=>x.count_remark);
           this.showReasonPersonnel = this.penugasan.map((x)=>x.countreason);
           this.sedangDikerjakan = response.data.ict4;
+          this.showRemarkSedangDikerjakan = this.sedangDikerjakan.map((x)=>x.count_remark);
+          this.showSpvSedangDikerjakan = this.sedangDikerjakan.map((x)=>x.ireq_count_spv);
+          this.showPersonelSedangDikerjakan = this.sedangDikerjakan.map((x)=>x.ireq_count_status);
           this.sudahDikerjakan = response.data.ict5;
           this.selesai = response.data.ict6;
           localStorage.setItem('active1',0);
@@ -852,7 +542,7 @@ export default {
           reject: () => {},
         });
     },
-    detailRequest(ireq_id){
+    detailRequestNo(ireq_id){
       this.displayDetailRequest = true;
       this.loadingDetail = true;
       this.axios.get('/api/detail-request-reviewer/' + ireq_id).then((response)=> {
@@ -861,7 +551,7 @@ export default {
         this.loadingDetail = false;
       });
     },
-    CetakPdf(ireq_id){
+    PrintOutFormIctRequest(ireq_id){
       this.loading = true;
        this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
           let htmlContent = response.data.data.htmlContent;
@@ -880,7 +570,7 @@ export default {
           this.loading = false;
        });
     },
-    PrintRequestPdf(type){
+    PrintRequestListByStatusPdf(type){
       this.loading = true;
       this.Type.report_type = type;
        this.axios.post('api/print-out-pdf-reviewer', this.Type).then((response)=>{
@@ -1013,46 +703,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-  .attachment-image {
-      width: 50px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  }
-  .p-button.youtube {
-    cursor:pointer;
-    background: linear-gradient(to left, var(--pink-600) 50%, var(--pink-700) 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: background-position 0.5s ease-out;
-    color: #fff;
-    border-color: var(--pink-700);
-}
-.p-button.youtube:hover {
-    background-position: left bottom;
-}
-.template .p-button.twitter {
-    background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
-    transition: background-position 0.5s ease-out;
-    color: #fff;
-    border-color: var(--blue-500);
-}
-.template .p-button.twitter:hover {
-    background-position: left bottom;
-}
-.template .p-button.twitter i {
-    background-color: var(--blue-500);
-}
-.template .p-button.twitter:focus {
-    box-shadow: 0 0 0 1px var(--blue-200);
-}
-.button-group {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.button-group .p-button {
-  margin: 5px; /* Ruang antara tombol */
-}
-</style>

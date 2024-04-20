@@ -83,7 +83,7 @@ class IctDetailServices
                 'id.ireq_qty',
                 DB::raw('COUNT(id.ireq_assigned_to2) as ireq_count_personnel2'),
                 DB::raw('COUNT(id.ireq_assigned_to1_reason) as ireq_count_reason'),
-                DB::raw('COUNT(id.ireq_assigned_to1) as ireq_count_status'),
+                DB::raw('COUNT(id.ireq_assigned_to1) as ireq_count_personnel1'),
                 DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name"),
                 'llr.lookup_desc as ireq_status',
                 'id.ireq_status as cekStatus')

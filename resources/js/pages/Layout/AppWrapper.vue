@@ -28,11 +28,6 @@ import CheckReviewer from '../Views/CheckVerifReviewer';
 import CheckSso from '../Views/CheckingToken';
 
 export default {
-    watch:{
-        $route() {            
-            this.axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
-        }
-    },
     methods: {
         changeTheme(event) {
             let themeElement = document.getElementById('theme-link');

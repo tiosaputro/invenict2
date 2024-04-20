@@ -1,11 +1,9 @@
 <template>
     <div :class="containerClass" @click="onWrapperClick" v-if="loggedIn">
-        <AppTopBar
-            @menu-toggle="onMenuToggle"
-            :model="menuUser"
-            @menuitem-click="onMenuItemClick"
-        />
-
+        <AppTopBar @menu-toggle="onMenuToggle" :value="menuUser" :user="user" @menuitem-click="onMenuItemClick" />
+        <div class="layout-sidebar" @click="onSidebarClick" v-if="isMobile == true">
+            <AppMenu :model="menuUser" @menuitem-click="onMenuItemClick" />
+        </div>
         <div class="layout-main-container">
             <div class="layout-main">
                 <router-view />
@@ -29,21 +27,14 @@
             </div>
             <AppFooter />
         </div>
-
-        <transition name="layout-mask">
-            <div
-                class="layout-mask p-component-overlay"
-                v-if="mobileMenuActive"
-            ></div>
-        </transition>
     </div>
 </template>
 
 <script>
 import AppTopBar from "./Layout/AppTopbar.vue";
-import AppMenu from "./Layout/AppMenu.vue";
 import AppFooter from "./Layout/AppFooter.vue";
-
+import AppMenu from "./Layout/AppMenu.vue";
+import { MenuServices } from '../services/MenuServices';
 export default {
     emits: ["change-theme"],
     data() {
@@ -54,22 +45,24 @@ export default {
             staticMenuInactive: false,
             overlayMenuActive: false,
             mobileMenuActive: false,
-            token: localStorage.getItem("token"),
             loggedIn: localStorage.getItem("loggedIn"),
             menuUser: [],
+            user:[],
+            isMobile: false
         };
-    },
-    created() {
-        this.create();
     },
     watch: {
         $route() {
-            // this.create();
+            this.isMobile = window.innerWidth <= 768;
+            window.addEventListener('resize', this.updateIsMobile);
             this.menuActive = false;
             this.$toast.removeAllGroups();
         },
     },
     methods: {
+        updateIsMobile() {
+            this.isMobile = window.innerWidth <= 768;
+        },
         create() {
             if (this.windowHeight < 650) {
                 document.documentElement.style.fontSize = "14px";
@@ -78,7 +71,29 @@ export default {
             } else if (this.windowHeight >= 1200) {
                 document.documentElement.style.fontSize = "18px";
             }
+           
+            // Instantiate MenuServices
+            const menuServices = new MenuServices();
 
+            // Get menu and user data
+            menuServices.getdata().then((data) => {
+                this.menuUser = data.tree;
+                this.user = data.user;
+
+                // Check if user data is empty
+                if (!data.user) {
+                    // Clear localStorage and redirect to login if user data is empty
+                    localStorage.clear();
+                    localStorage.setItem("logOut", "true");
+                    this.$router.push("/login");
+                }
+            }).catch((error) => {
+                // Handle error if any
+                console.error("Error fetching data:", error);
+                // You can choose to handle errors here, e.g., displaying a message to the user.
+            });
+
+            // Redirect to dashboard if the current route is "/"
             if (window.location.pathname == "/") {
                 this.$router.push("/dashboard");
             }
@@ -184,8 +199,13 @@ export default {
     },
     components: {
         AppTopBar: AppTopBar,
-        AppMenu: AppMenu,
         AppFooter: AppFooter,
+        AppMenu: AppMenu,
+    },
+    mounted() {
+        this.isMobile = window.innerWidth <= 768;
+        window.addEventListener('resize', this.updateIsMobile);
+        this.create();
     },
 };
 </script>

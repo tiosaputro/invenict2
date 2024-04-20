@@ -109,7 +109,7 @@
                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Rejected"
                   responsiveLayout="scroll"
                 >
-                <template #header>
+                  <template #header>
                     <div class="table-header text-right">
                       <span class="p-input-icon-left">
                         <i class="pi pi-search" />
@@ -1006,7 +1006,7 @@ export default {
           this.loading = false;
        });
     },
-    CetakPdf(ireq_id){
+    PrintOutFormIctRequest(ireq_id){
       this.loading = true;
        this.axios.get('api/print-out-ict-request/' +ireq_id).then((response)=>{
         let htmlContent = response.data.data.htmlContent;

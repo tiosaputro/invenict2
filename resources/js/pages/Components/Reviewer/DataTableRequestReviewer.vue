@@ -54,7 +54,7 @@
                 <div class="col">
                     <div class="box">
                         <Button label="Pdf" class="p-button-raised p-button-danger mr-2" icon="pi pi-file-pdf"
-                            @click="PrintRequestPdf(printPdf)" />
+                            @click="PrintRequestListByStatusPdf(printPdf)" />
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
             };
         },
         methods: {
-            PrintRequestPdf(type) {
+            PrintRequestListByStatusPdf(type) {
                 this.localLoading = true;
                 this.Type.report_type = type;
                 this.axios.post('api/print-out-pdf-requestor', this.Type).then((response) => {
@@ -163,3 +163,46 @@
     };
 
 </script>
+<style lang="scss" scoped>
+  .attachment-image {
+      width: 50px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+  .p-button.youtube {
+    cursor:pointer;
+    background: linear-gradient(to left, var(--pink-600) 50%, var(--pink-700) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: background-position 0.5s ease-out;
+    color: #fff;
+    border-color: var(--pink-700);
+  }
+  .p-button.youtube:hover {
+      background-position: left bottom;
+  }
+  .template .p-button.twitter {
+      background: linear-gradient(to left, var(--blue-400) 50%, var(--blue-500) 50%);
+      background-size: 200% 100%;
+      background-position: right bottom;
+      transition: background-position 0.5s ease-out;
+      color: #fff;
+      border-color: var(--blue-500);
+  }
+  .template .p-button.twitter:hover {
+      background-position: left bottom;
+  }
+  .template .p-button.twitter i {
+      background-color: var(--blue-500);
+  }
+  .template .p-button.twitter:focus {
+      box-shadow: 0 0 0 1px var(--blue-200);
+  }
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .button-group .p-button {
+    margin: 5px; /* Ruang antara tombol */
+  }
+</style>

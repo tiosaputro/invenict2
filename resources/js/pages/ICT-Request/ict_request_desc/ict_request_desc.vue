@@ -9,325 +9,37 @@
                 <h4>ICT Request (Waiting for verification)</h4>
           </template>
         </Toolbar>
-        <DataTable
-          v-if="this.desc == 1"
-          :value="ict"
-          :paginator="true"
-          :rows="10"
-          :loading="loading"
-          :filters="filters"
-          :rowHover="true"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Waiting for verification)"
-          responsiveLayout="scroll"
-        >
-        <template #header>
-          <div class="table-header text-right">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search" />
-                <InputText
-                  v-model="filters['global'].value"
-                  placeholder="Search. . ."
-                />
-            </span>
-          </div>
-        </template>
-        <template #empty>
-            Not Found
-        </template>
-        <template #loading>
-            Please wait
-        </template>
-          <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-                {{ formatDate(slotProps.data.ireq_date) }}
-            </template>
-          </Column>
-          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
-            <template #body= "slotProps">
-              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-            </template>
-          </Column>
-          <Column style="min-width:10rem">
-            <template #body="slotProps">
-              <Button
-                v-if="slotProps.data.ireq_status == null"
-                class="p-button-rounded p-button-info mr-2"
-                v-tooltip.left="'Edit'"
-                icon="pi pi-pencil"
-                @click="
-                      $router.push({
-                      name: 'Edit Ict Request',
-                      params: { code: slotProps.data.ireq_id },})"
-                />
-              <Button
-                v-if="slotProps.data.ireq_status == null"
-                icon="pi pi-trash"
-                v-tooltip.bottom="'Delete'"
-                class="p-button-rounded p-button-danger mr-2"
-                @click="DeleteIct(slotProps.data.ireq_id)"
-              />
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click for request details'"
-                
-                @click="$router.push({
-                      name: 'Ict Request Detail Desc Requestor',
-                      params: { code: slotProps.data.ireq_id }, })"
-                />
-            </template>
-          </Column>
-          <template #footer>
-            <div class="grid dir-col">
-              <div class="col">
-                <div class="box">
-                  <Button
-                    label="Back"
-                    class="p-button-raised p-button mr-2"
-                    icon="pi pi-chevron-left"
-                    @click="$router.push({
-                    name: 'Dashboard'})"
-                  />
-                </div>
-			      </div>
-          </div>
-        </template>
-        </DataTable>
+        <DataTableRequestorRequest 
+          v-if="this.desc == 1" :value="ict" :loading="loading" :showRemark="showRemarkRequestorWaiting" :showSpv="showSpvRequestorWaiting"
+          :filters="filters" printPdf="tab_reviewer" @get-ict="getIct" :showForDashboard=true
+        />
         <Toolbar class="mb-4" v-if="this.desc == 2">
           <template v-slot:start>
                 <h4>ICT Request (Already verified)</h4>
           </template>
         </Toolbar>   
-        <DataTable
-          v-if="this.desc == 2"
-          :value="sdhDiverifikasi"
-          :paginator="true"
-          :rows="10"
-          :loading="loading"
-          :filters="filters"
-          :rowHover="true"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
-          responsiveLayout="scroll"
-        >
-        <template #header>
-          <div class="table-header text-right">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search" />
-                <InputText
-                  v-model="filters['global'].value"
-                  placeholder="Search. . ."
-                />
-            </span>
-          </div>
-        </template>
-        <template #empty>
-            Not Found
-        </template>
-        <template #loading>
-            Please wait
-        </template>
-          <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-                {{ formatDate(slotProps.data.ireq_date) }}
-            </template>
-          </Column>
-          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
-          <template #body= "slotProps">
-              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-            </template>
-          </Column>
-          <Column style="min-width:12rem">
-            <template #body="slotProps">
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click for request details'"
-                @click="$router.push({
-                      name: 'Ict Request Detail Desc Requestor',
-                      params: { code: slotProps.data.ireq_id }, })"
-              />
-            </template>
-          </Column>
-          <template #footer>
-            <div class="grid dir-col">
-              <div class="col">
-                <div class="box">
-                  <Button
-                    label="Back"
-                    class="p-button-raised p-button mr-2"
-                    icon="pi pi-chevron-left"
-                    @click="$router.push({
-                    name: 'Dashboard'})"
-                  />
-                </div>
-			      </div>
-          </div>
-        </template>
-        </DataTable>
+        <DataTableRequestorRequest 
+          v-if="this.desc == 2" :value="sdhDiverifikasi" :loading="loading" :showRemark="showRemarkRequestorVerified" :showSpv="showSpvRequestorVerified"
+          :filters="filters" printPdf="verifikasi" @get-ict="getIct" :showForDashboard=true
+        />
         <Toolbar class="mb-4" v-if="this.desc == 3">
           <template v-slot:start>
                 <h4>ICT Request (Rejected)</h4>
           </template>
         </Toolbar>
-        <DataTable
-          v-if="this.desc == 3"
-          :value="diReject"
-          :paginator="true"
-          :rows="10"
-          :loading="loading"
-          :filters="filters"
-          :rowHover="true"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Rejected)"
-          responsiveLayout="scroll"
-        >
-        <template #header>
-          <div class="table-header text-right">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search" />
-                <InputText
-                  v-model="filters['global'].value"
-                  placeholder="Search. . ."
-                />
-            </span>
-          </div>
-        </template>
-        <template #empty>
-            Not Found
-        </template>
-        <template #loading>
-            Please wait
-        </template>
-          <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-                {{ formatDate(slotProps.data.ireq_date) }}
-            </template>
-          </Column>
-          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
-          <template #body= "slotProps">
-              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-            </template>
-          </Column>
-          <Column>
-            <template #body="slotProps">
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click for request details'"
-                @click="$router.push({
-                      name: 'Ict Request Detail Desc Requestor',
-                      params: { code: slotProps.data.ireq_id }, })"
-              />
-            </template>
-          </Column>
-          <template #footer>
-            <div class="grid dir-col">
-              <div class="col">
-                <div class="box">
-                  <Button
-                    label="Back"
-                    class="p-button-raised p-button mr-2"
-                    icon="pi pi-chevron-left"
-                    @click="$router.push({
-                    name: 'Dashboard'})"
-                  />
-                </div>
-			      </div>
-          </div>
-        </template>
-        </DataTable>
+        <DataTableRequestorRequest 
+          v-if="this.desc == 3" :value="diReject" :loading="loading" :showRemark="showRemarkRequestorRejected" :showSpv="showSpvRequestorRejected"
+          :filters="filters" printPdf="reject" @get-ict="getIct" :showForDashboard=true
+        />
         <Toolbar class="mb-4" v-if="this.desc == 4">
           <template v-slot:start>
                 <h4>ICT Request (In Progress)</h4>
           </template>
         </Toolbar>
-        <DataTable
-          v-if="this.desc == 4"
-          :value="sdgDikerjakan"
-          :paginator="true"
-          :rows="10"
-          :loading="loading"
-          :filters="filters"
-          :rowHover="true"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (In Progress)"
-          responsiveLayout="scroll"
-        >
-        <template #header>
-            <div class="table-header text-right">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search" />
-                        <InputText
-                          v-model="filters['global'].value"
-                          placeholder="Search. . ."
-                        />
-                </span>
-            </div>
-        </template>
-        <template #empty>
-            Not Found
-        </template>
-        <template #loading>
-            Please wait
-        </template>
-          <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-                {{ formatDate(slotProps.data.ireq_date) }}
-            </template>
-          </Column>
-          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
-            <template #body= "slotProps">
-              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-            </template>
-          </Column>
-          <Column>
-            <template #body="slotProps">
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click for request details'"
-                @click="$router.push({
-                      name: 'Ict Request Desc Detail Penugasan',
-                      params: { code: slotProps.data.ireq_id }, })"
-              />
-            </template>
-          </Column>
-          <template #footer>
-            <div class="grid dir-col">
-              <div class="col">
-                <div class="box">
-                  <Button
-                    label="Back"
-                    class="p-button-raised p-button mr-2"
-                    icon="pi pi-chevron-left"
-                    @click="$router.push({
-                    name: 'Dashboard'})"
-                  />
-                </div>
-			      </div>
-          </div>
-        </template>
-        </DataTable>
+        <DataTableRequestorRequest 
+          v-if="this.desc == 4" :value="sdgDikerjakan" :loading="loading" :showRemark="showRemarkRequestorInProgress" :showSpv="showSpvRequestorInProgress"
+          :filters="filters" printPdf="sedang_dikerjakan" @get-ict="getIct" :showForDashboard=true
+        />
         <Toolbar class="mb-4" v-if="this.desc == 5">
           <template v-slot:start>
                 <h4>ICT Request (Done)</h4>
@@ -1996,77 +1708,10 @@
                 <h4>ICT Request (Overall Request)</h4>
           </template>
         </Toolbar>
-        <DataTable
-          v-if="this.desc == 22"
-          :value="total"
-          :paginator="true"
-          :rows="10"
-          :loading="loading"
-          :filters="filters"
-          :rowHover="true"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request"
-          responsiveLayout="scroll"
-        >
-        <template #header>
-          <div class="table-header text-right">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search" />
-                <InputText
-                  v-model="filters['global'].value"
-                  placeholder="Search. . ."
-                />
-            </span>
-          </div>
-        </template>
-        <template #empty>
-            Not Found
-        </template>
-        <template #loading>
-            Please wait
-        </template>
-          <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
-            <template #body="slotProps">
-                {{ formatDate(slotProps.data.ireq_date) }}
-            </template>
-          </Column>
-          <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem"/>
-          <Column field="ireq_status" header="Status" :sortable="true" style="min-width:12rem">
-            <template #body= "slotProps">
-              <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-            </template>
-          </Column>
-          <Column style="min-width:12rem">
-            <template #body="slotProps">
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click for request details'"
-                @click="$router.push({
-                      name: 'Ict Request Detail Desc',
-                      params: { code: slotProps.data.ireq_id }, })"
-              />
-            </template>
-          </Column>
-          <template #footer>
-            <div class="grid dir-col">
-              <div class="col">
-                <div class="box">
-                  <Button
-                    label="Back"
-                    class="p-button-raised p-button mr-2"
-                    icon="pi pi-chevron-left"
-                    @click="$router.push({
-                    name: 'Dashboard'})"
-                  />
-                </div>
-			      </div>
-          </div>
-        </template>
-        </DataTable>
+        <DataTableRequestorRequest 
+          v-if="this.desc == 22" :value="total" :loading="loading" :showRemark="showRemarkRequestorTotal" :showSpv="showSpvRequestorTotal"
+          :filters="filters" printPdf="verifikasi" @get-ict="getIct" :showForDashboard=true
+        />
         <Toolbar class="mb-4" v-if="this.desc == 23">
           <template v-slot:start>
                 <h4>ICT Request (Waiting for verification)</h4>
@@ -3486,77 +3131,10 @@
             <h4>ICT Request (Under review)</h4>
           </template>
         </Toolbar>
-        <DataTable
-          v-if="this.desc == 40"
-          :value="sedangDireview"
-          :paginator="true"
-          :rows="10"
-          :loading="loading"
-          :filters="filters"
-          :rowHover="true"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Under review)"
-          responsiveLayout="scroll"
-        >
-        <template #header>
-          <div class="table-header text-right">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search" />
-                <InputText
-                  v-model="filters['global'].value"
-                  placeholder="Search. . ."
-                />
-            </span>
-          </div>
-        </template>
-        <template #empty>
-            Not Found
-        </template>
-        <template #loading>
-            Please wait
-        </template>
-        <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
-          <template #body="slotProps">
-            {{ formatDate(slotProps.data.ireq_date) }}
-          </template>
-        </Column>
-        <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem"/>
-        <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
-          <template #body= "slotProps">
-            <span :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-          </template>
-        </Column>
-          <Column style="min-width:12rem">
-            <template #body="slotProps">
-              <Button
-                class="p-button-rounded p-button-secondary mr-2"
-                icon="pi pi-info-circle"
-                v-tooltip.bottom="'Click for request details'"
-                @click="$router.push({
-                      name: 'Ict Request Detail Desc',
-                      params: { code: slotProps.data.ireq_id }, })"
-              />
-            </template>
-          </Column>
-          <template #footer>
-            <div class="grid dir-col">
-              <div class="col">
-                <div class="box">
-                  <Button
-                    label="Back"
-                    class="p-button-raised p-button mr-2"
-                    icon="pi pi-chevron-left"
-                    @click="$router.push({
-                    name: 'Dashboard'})"
-                  />
-                </div>
-			      </div>
-          </div>
-        </template>
-        </DataTable>
+        <DataTableRequestorRequest 
+          v-if="this.desc == 40" :value="sedangDireview" :loading="loading" :showRemark="showRemarkRequestorPermohonan" :showSpv="showSpvRequestorPermohonan"
+          :filters="filters" printPdf="permohonan" @get-ict="getIct" :showForDashboard=true
+        />
         <Toolbar class="mb-4" v-if="this.desc == 41">
           <template v-slot:start>
               <h4>ICT Request (Under review)</h4>
@@ -4302,10 +3880,25 @@
   </div>
 </template>
 <script>
-
+import DataTableRequestorRequest from '../../Components/Requestor/request/DataTableRequestRequestor.vue';
 export default {
+  components:{
+    DataTableRequestorRequest
+  },
   data() {
     return {
+        showRemarkRequestorPermohonan:[],
+        showSpvRequestorPermohonan:[],
+        showRemarkRequestorWaiting:[],
+        showSpvRequestorWaiting:[],
+        showRemarkRequestorVerified:[],
+        showSpvRequestorVerified:[],
+        showRemarkRequestorRejected:[],
+        showSpvRequestorRejected:[],
+        showRemarkRequestorTotal:[],
+        showSpvRequestorTotal:[],
+        showRemarkRequestorInProgress:[],
+        showSpvRequestorInProgress:[],
         showPersonelblmDiverifikasi:[],
         showPersonelatasanDivisi:[],
         showPersonelictManager:[],
@@ -4433,13 +4026,25 @@ export default {
       getIct(){
         this.axios.get('api/get-ict').then((response)=> {
           this.ict = response.data.ict6;
+          this.showRemarkRequestorWaiting = this.ict.map((x)=>x.countremark_reviewer);
+          this.showSpvRequestorWaiting = this.ict.map((x)=>x.countspv);
           this.sdhDiverifikasi = response.data.ict1;
+          this.showRemarkRequestorVerified = this.sdhDiverifikasi.map((x)=>x.countremark_reviewer);
+          this.showSpvRequestorVerified = this.sdhDiverifikasi.map((x)=>x.countspv);
           this.diReject = response.data.ict2;
+          this.showRemarkRequestorRejected = this.diReject.map((x)=>x.countremark_reviewer);
+          this.showSpvRequestorRejected = this.diReject.map((x)=>x.countspv);
           this.sdgDikerjakan = response.data.ict9;
+          this.showRemarkRequestorInProgress = this.sdgDikerjakan.map((x)=>x.countremark_reviewer);
+          this.showSpvRequestorInProgress = this.sdgDikerjakan.map((x)=>x.countspv);
           this.sdhDikerjakan = response.data.ict4;
           this.sdhSelesai = response.data.ict5;
           this.sedangDireview = response.data.ict7;
+          this.showRemarkRequestorPermohonan = this.sedangDireview.map((x)=>x.countremark_reviewer);
+          this.showSpvRequestorPermohonan = this.sedangDireview.map((x)=>x.countspv);
           this.total = response.data.ict10;
+          this.showRemarkRequestorTotal = this.total.map((x)=>x.countremark_reviewer);
+          this.showSpvRequestorTotal = this.total.map((x)=>x.countspv);
           this.loading = false;
         }).catch(error=>{
          if (error.response.status == 401) {
@@ -4707,6 +4312,12 @@ export default {
         },
         reject: () => {},
        });
+      },
+      showLoading(){
+        this.loading = true;
+      },
+      hideLoading(){
+        this.loading = false;
       },
       Reject(ireq_id){
         this.dialogReject = true;

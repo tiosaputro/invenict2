@@ -3,19 +3,21 @@
         <router-link to="/dashboard" class="layout-topbar-logo">
             <img alt="Logo" :src="topbarImage()" /> ICT HELPDESK SYSTEM
         </router-link>
-
-        <Menubar
-            :model="items"
-            :pt="{
+        <button v-if="isMobile == true" class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle">
+			<i class="pi pi-bars"></i>
+		</button>
+        <Menubar v-if="isMobile == false"
+            :model="value"
+            pt="{
                 action: ({ props, state, context }) => ({
                     class: context.active ? 'bg-primary-200 border-round-sm' : context.focused ? 'bg-primary-300 border-round-sm' : undefined
                 })
             }"
         />
-
+        
         <button
             class="p-link layout-topbar-menu-button layout-topbar-button"
-            v-styleclass="{
+            v-styleclass="{     
                 selector: '@next',
                 enterClass: 'hidden',
                 enterActiveClass: 'scalein',
@@ -24,25 +26,33 @@
                 hideOnOutsideClick: true,
             }"
         >
-            <i class="pi pi-ellipsis-v"></i>
+            <img
+                :src="'/profile/' + user.usr_foto"
+                class="mr-2"
+                width="30"
+                height="30"
+                alt=""
+                v-if="user.usr_foto"
+            />
+            <img
+                :src="'/images/default-profile.png'"
+                class="mr-2"
+                width="30"
+                height="30"
+                alt=""
+                v-else
+            />
         </button>
-        <ul
-            class="layout-topbar-menu hidden lg:flex origin-top"
-            v-if="this.user.usr_name"
-        >
+        <ul class="layout-topbar-menu hidden lg:flex origin-top" v-if="user">
             <li>
-                <button
-                    class="p-link layout-profile-link"
-                    @click="onClick"
-                    style="object-fit: contain"
-                >
+                <button class="p-link layout-profile-link" @click="onClick" style="object-fit: contain">
                     <img
                         :src="'/profile/' + user.usr_foto"
                         class="mr-2"
                         width="30"
                         height="30"
                         alt=""
-                        v-if="this.user.usr_foto"
+                        v-if="user.usr_foto && isMobile == false"
                     />
                     <img
                         :src="'/images/default-profile.png'"
@@ -50,19 +60,16 @@
                         width="30"
                         height="30"
                         alt=""
-                        v-else
+                        v-else-if="!user.usr_foto && isMobile == false"
                     />
                     <span style="color: var(--newmenubarbuttontext);"
-                        >Hi, {{ toUpper(user.usr_fullname) }}</span
+                        >Hi, {{ user.usr_fullname }}</span
                     >
                 </button>
                 <transition name="layout-submenu-wrapper layout-topbar-button">
                     <ul v-show="expanded">
                         <li>
-                            <button
-                                class="p-link layout-profile-link"
-                                @click="Logout"
-                            >
+                            <button class="p-link layout-profile-link" @click="Logout">
                                 <span style="color: rgb(10, 10, 10)">Logout</span>
                             </button>
                         </li>
@@ -73,34 +80,26 @@
     </div>
 </template>
 <script>
-import AppSubmenu from "./AppSubmenu";
 export default {
+    props: {
+            value: Array,
+            user: Object
+        },
     data() {
         return {
             token: null,
-            user: [],
             expanded: false,
-			items:[],
+            isMobile: false
         };
     },
-    created() {
-        this.getdata();
+    mounted() {
+        this.isMobile = window.innerWidth <= 768;
+        window.addEventListener('resize', this.updateIsMobile);
     },
     methods: {
-		getdata(){
-            if(!this.items.length){
-                this.axios.get("/api/menu-user").then((response) => {
-                    this.items = response.data.data.tree;
-                    this.user = response.data.data.user;
-                }).catch((error) => {
-                    // if (error.response.status == 401) {
-                    //     localStorage.clear();
-                    //     localStorage.setItem("Expired", "true");
-                    //     setTimeout(() => this.$router.push("/login"), 2000);
-                    // }
-                });	
-            }
-		},
+        updateIsMobile() {
+            this.isMobile = window.innerWidth <= 768;
+        },
         toUpper(str) {
             return str
                 .toLowerCase()
@@ -112,7 +111,6 @@ export default {
         },
         Logout() {
             this.axios.get("/api/logout").then(() => {
-                this.user = [];
                 localStorage.clear();
                 localStorage.setItem("logOut", "true");
                 this.$router.push("/login");
@@ -138,9 +136,6 @@ export default {
         darkTheme() {
             return this.$appState.darkTheme;
         },
-    },
-    components: {
-        AppSubmenu: AppSubmenu,
     },
 };
 </script>
