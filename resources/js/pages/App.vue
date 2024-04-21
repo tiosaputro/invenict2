@@ -19,8 +19,6 @@
         </transition>
     </div>
     <div :class="containerClass" @click="onWrapperClick" v-else>
-        <AppTopBar @menu-toggle="onMenuToggle" />
-
         <div class="layout-main-container">
             <div class="layout-main">
                 <router-view />
@@ -72,31 +70,20 @@ export default {
                 document.documentElement.style.fontSize = "18px";
             }
            
-            // Instantiate MenuServices
             const menuServices = new MenuServices();
 
-            // Get menu and user data
             menuServices.getdata().then((data) => {
                 this.menuUser = data.tree;
                 this.user = data.user;
 
-                // Check if user data is empty
                 if (!data.user) {
-                    // Clear localStorage and redirect to login if user data is empty
                     localStorage.clear();
                     localStorage.setItem("logOut", "true");
                     this.$router.push("/login");
                 }
             }).catch((error) => {
-                // Handle error if any
                 console.error("Error fetching data:", error);
-                // You can choose to handle errors here, e.g., displaying a message to the user.
             });
-
-            // Redirect to dashboard if the current route is "/"
-            if (window.location.pathname == "/") {
-                this.$router.push("/dashboard");
-            }
         },
         onWrapperClick() {
             if (!this.menuClick) {

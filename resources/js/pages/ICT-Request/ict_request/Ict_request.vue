@@ -13,37 +13,37 @@
                 <TabPanel header="Request">
                   <DataTableRequest 
                     :value="ict" :loading="loading" :showRemark="showRemarkPermohonan" :showSpv="showSpvPermohonan"
-                    :filters="filters" printPdf="permohonan" @get-ict="getIct"
+                    :filters="filters" printPdf="permohonan" @get-ict="getIct" Active="0"
                   />                 
                 </TabPanel>
                 <TabPanel header="Reviewer">
                   <DataTableRequest 
                     :value="reviewer" :loading="loading" :showRemark="showRemarkReviewer" :showSpv="showSpvReviewer"
-                    :filters="filters" printPdf="tab_reviewer" @get-ict="getIct"
+                    :filters="filters" printPdf="tab_reviewer" @get-ict="getIct" Active="1"
                   />   
                 </TabPanel>
                 <TabPanel header="Verified">
                   <DataTableRequest 
                     :value="verif" :loading="loading" :showRemark="showRemarkVerified" :showSpv="showSpvVerified"
-                    :filters="filters" printPdf="verifikasi" 
+                    :filters="filters" printPdf="verifikasi" Active="2"
                   /> 
                 </TabPanel>
                 <TabPanel header="Rejected">
                   <DataTableRequest 
                     :value="reject" :loading="loading" :showRemark="showRemarkReject" :showSpv="showSpvReject"
-                    :filters="filters" printPdf="reject" showReason="1" 
+                    :filters="filters" printPdf="reject" showReason="1" Active="3"
                   /> 
                 </TabPanel>
                 <TabPanel header="Request Assignment">
                   <DataTableRequest 
                     :value="penugasan" :loading="loading" :showRemark="showRemarkPenugasan" :showSpv="showSpvPenugasan"
-                    :filters="filters" printPdf="assignment_request" showPersonnel1="1" 
+                    :filters="filters" printPdf="assignment_request" showPersonnel1="1" Active="4"
                   /> 
                 </TabPanel>
                 <TabPanel header="In Progress">
                   <DataTableRequest 
                     :value="sedangDikerjakan" :loading="loading" :showRemark="showRemarksedangDikerjakan" :showSpv="showSpvsedangDikerjakan"
-                    :filters="filters" printPdf="sedang_dikerjakan" showPersonnel1="1" 
+                    :filters="filters" printPdf="sedang_dikerjakan" showPersonnel1="1" Active="5"
                   /> 
                 </TabPanel>
                 <TabPanel header="Done">
@@ -58,8 +58,8 @@
   </div>
 </template>
 <script>
-import DataTableRequest from '../../Components/Requestor/request/DataTableRequestRequestor.vue';
-import DataTableDetail from '../../Components/Requestor/request/DataTableDetailRequestor.vue';
+import DataTableRequest from '../../Components/Requestor/DataTableRequestRequestor.vue';
+import DataTableDetail from '../../Components/Requestor/DataTableDetailRequestor.vue';
 export default {
   components:{
     DataTableRequest,

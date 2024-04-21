@@ -265,6 +265,7 @@
 
 <script>
     export default {
+        emits: ['show-loading', 'hide-loading','get-data'],
         props: {
             value: Array,
             loading: Boolean,

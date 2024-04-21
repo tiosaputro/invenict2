@@ -27,15 +27,10 @@
             <Column header="Action" style="min-width:9rem">
                 <template #body="slotProps">
                     <div class="button-group">
-                        <Button v-if="slotProps.data.status == 'P' || slotProps.data.status == null" class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.bottom="'Click for request details'" @click="detailTabRequest(slotProps.data.ireq_id)" />
+                        <Button class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.bottom="'Click for request details'" @click="detailTab(slotProps.data.ireq_id, Active)" />
                         <Button v-if="slotProps.data.ireq_status == null" class="p-button-rounded p-button-info mr-2 mt-2" icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'" @click=" $router.push({ name: 'Edit Ict Request', params: { code: slotProps.data.ireq_id },})" />
                         <Button v-if="slotProps.data.ireq_status == null" icon="pi pi-trash" class="p-button-rounded p-button-danger mr-2 mt-2" @click="DeleteIct(slotProps.data.ireq_id)" v-tooltip.bottom="'Click to delete the request'" />
                         <Button v-if="slotProps.data.count > 0 && slotProps.data.ireq_status == null" class="p-button-rounded p-button-success mr-2 mt-2" icon="pi pi-check" @click="SubmitIct(slotProps.data.ireq_id)" v-tooltip.bottom="'Click to submit request'" />
-                        <Button v-if="slotProps.data.status == 'NA1' || slotProps.data.status == 'NA1'" class="p-button-rounded p-button-secondary mt-2 mr-2" icon="pi pi-info-circle" v-tooltip.bottom="'Click for request details'" @click="detailTabReviewer(slotProps.data.ireq_id)"/>
-                        <Button v-if="slotProps.data.status == 'A1' || slotProps.data.status == 'A2'" class="p-button-rounded p-button-secondary mt-2 mr-2" icon="pi pi-info-circle" v-tooltip.left="'Click for request details'" @click="detailTabVerified(slotProps.data.ireq_id)"/>
-                        <Button v-if="slotProps.data.status == 'RR' || slotProps.data.status == 'RA1' || slotProps.data.status == 'RA2'" class="p-button-rounded p-button-secondary mr-2" icon="pi pi-info-circle" v-tooltip.left="'Click for request details'" @click="detailTabRejected(slotProps.data.ireq_id)"/>
-                        <Button v-if="slotProps.data.status == 'NT' || slotProps.data.status == 'RT'" class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.right="'Click for request details'" @click="detailTabRequestAssignment(slotProps.data.ireq_id)"/>
-                        <Button v-if="slotProps.data.status == 'T'" class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.left="'Click for request details'" @click="detailTabInProgress(slotProps.data.ireq_id)"  />
                     </div>                
                 </template>
             </Column>
@@ -155,22 +150,17 @@
             <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" v-if="showRemarkColumn" />
             <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem" v-if="showReason == '1'"/>
             <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:10rem" v-if="showPersonnel1 == '1'"/>
-            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
+            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:9rem">
                 <template #body= "slotProps">
                     <span :class="'user-request status-' + slotProps.data.status.toLowerCase()" v-if="slotProps.data.status">{{slotProps.data.ireq_status}}</span>
                 </template>
             </Column>
             <Column header="Action">
                 <template #body="slotProps">
-                    <Button v-if="slotProps.data.status == 'P' || slotProps.data.status == null " class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.bottom="'Click for request details'" @click="detailTabRequest(slotProps.data.ireq_id)" />
-                    <Button v-if="slotProps.data.ireq_status == null" class="p-button-rounded p-button-info mr-2 mt-2" icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'" @click=" $router.push({ name: 'Edit Ict Request', params: { code: slotProps.data.ireq_id },})" />
+                    <Button class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.bottom="'Click for request details'" @click="detailTab(slotProps.data.ireq_id, Active)" />
+                    <Button v-if="slotProps.data.ireq_status == null" class="p-button-rounded p-button-info mr-2 mt-2" icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'" @click=" $router.push({ name: 'Edit Ict Request', params: { code: slotProps.data.ireq_id }})" />
                     <Button v-if="slotProps.data.ireq_status == null" icon="pi pi-trash" class="p-button-rounded p-button-danger mr-2 mt-2" @click="DeleteIct(slotProps.data.ireq_id)" v-tooltip.bottom="'Click to delete the request'" />
                     <Button v-if="slotProps.data.count > 0 && slotProps.data.ireq_status == null" class="p-button-rounded p-button-success mt-2 mr-2" icon="pi pi-check" @click="SubmitIct(slotProps.data.ireq_id)" v-tooltip.bottom="'Click to submit request'" />
-                    <Button v-if="slotProps.data.status == 'NA1' || slotProps.data.status == 'NA1'" class="p-button-rounded p-button-secondary mr-2 mr-2" icon="pi pi-info-circle" v-tooltip.bottom="'Click for request details'" @click="detailTabReviewer(slotProps.data.ireq_id)"/>
-                    <Button v-if="slotProps.data.status == 'A1' || slotProps.data.status == 'A2'" class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.left="'Click for request details'" @click="detailTabVerified(slotProps.data.ireq_id)"/>
-                    <Button v-if="slotProps.data.status == 'RR' || slotProps.data.status == 'RA1' || slotProps.data.status == 'RA2'" class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.left="'Click for request details'" @click="detailTabRejected(slotProps.data.ireq_id)"/>
-                    <Button v-if="slotProps.data.status == 'NT' || slotProps.data.status == 'RT'" class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.right="'Click for request details'" @click="detailTabRequestAssignment(slotProps.data.ireq_id)"/>
-                    <Button v-if="slotProps.data.status == 'T'" class="p-button-rounded p-button-secondary mr-2 mt-2" icon="pi pi-info-circle" v-tooltip.left="'Click for request details'" @click="detailTabInProgress(slotProps.data.ireq_id)"  />
                 </template>
             </Column>
             <template #footer>
@@ -193,6 +183,7 @@
 
 <script>
     export default {
+        emits: ['show-loading', 'hide-loading','get-data'],
         props: {
             value: Array,
             loading: Boolean,
@@ -202,10 +193,11 @@
             showRemark: Array,
             showReason: String,
             showPersonnel1: String,
+            Active: String,
             showForDashboard: {
                 type: Boolean,
                 default: false
-            }
+            },
         },
         computed: { 
             showForDashboardFooter() {
@@ -320,28 +312,8 @@
             formatDate(date) {
                 return this.$moment(date).format("DD MMM YYYY HH:mm")
             },
-            detailTabRequest(ireq_id) {
-                localStorage.setItem('active', 0);
-                this.$router.push('/ict-request-detail/' + ireq_id)
-            },
-            detailTabReviewer(ireq_id) {
-                localStorage.setItem('active', 1);
-                this.$router.push('/ict-request-detail/' + ireq_id)
-            },
-            detailTabVerified(ireq_id) {
-                localStorage.setItem('active', 2);
-                this.$router.push('/ict-request-detail/' + ireq_id)
-            },
-            detailTabRejected(ireq_id) {
-                localStorage.setItem('active', 3);
-                this.$router.push('/ict-request-detail/' + ireq_id)
-            },
-            detailTabRequestAssignment(ireq_id) {
-                localStorage.setItem('active', 4);
-                this.$router.push('/ict-request-detail/' + ireq_id)
-            },
-            detailTabInProgress(ireq_id) {
-                localStorage.setItem('active', 5);
+            detailTab(ireq_id, Active) {
+                localStorage.setItem('active', Active);
                 this.$router.push('/ict-request-detail/' + ireq_id)
             },
         }

@@ -58,8 +58,8 @@ class IctRequestPersonnelController extends Controller
             ]);
         return ResponseFormatter::success($dtl, 'Successfully Added Remark');
     }
-    function rejectedByPersonnel(Request $request, $ireq_id){
-        $this->personnelService->rejectedByPersonnel($request, $ireq_id);
+    function rejectedByPersonnel(Request $request){
+        $this->personnelService->rejectedByPersonnel($request);
         return ResponseFormatter::success('Successfully rejected by personnel');
 
     }

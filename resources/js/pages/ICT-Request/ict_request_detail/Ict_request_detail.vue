@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import DataTableDetail from '../../Components/Requestor/detail/DataTableDetailRequest.vue';
+import DataTableDetail from '../../Components/DetailRequest/DataTableDetailRequest.vue';
 export default {
   components:{
     DataTableDetail

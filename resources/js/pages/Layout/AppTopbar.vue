@@ -82,9 +82,9 @@
 <script>
 export default {
     props: {
-            value: Array,
-            user: Object
-        },
+        value: Array,
+        user: Object
+    },
     data() {
         return {
             token: null,

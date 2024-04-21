@@ -18,7 +18,7 @@ class IctRequestPersonnelServices
         $data->RIGHTJOIN('ireq_dtl as id', 'ireq_mst.ireq_id', 'id.ireq_id');
         $data->SELECT(
             'ireq_mst.ireq_date',
-            DB::RAW("COUNT(ireq_mst.ireq_verificator_remark) as countremarkreviewerpenugasan"),
+            DB::RAW("COUNT(ireq_mst.ireq_verificator_remark) as countRemarkReviewer"),
             'mus.usr_division',
             'mus.usr_fullname as ireq_user',
             'ireq_mst.ireq_verificator_remark',
@@ -48,9 +48,13 @@ class IctRequestPersonnelServices
     {
         $data = IctDetail::Query();
         $data->SELECT(
-            DB::raw('COUNT(imm.ireq_verificator_remark) as countRemarkReviewerInProgress'),
+            DB::raw('COUNT(ireq_dtl.ireq_assigned_to1_reason) as countReason'),
+            DB::raw('COUNT(ireq_dtl.ireq_assigned_remark) as countRemarkAssigned'),
+            DB::raw('COUNT(ireq_dtl.ireq_note_personnel) as countNoteAssigned'),
+            DB::raw('COUNT(imm.ireq_verificator_remark) as countRemarkReviewer'),
             'imm.ireq_verificator_remark',
             'ireq_dtl.ireq_attachment',
+            'ireq_dtl.ireq_assigned_to1_reason',
             'imm.ireq_no',
             'ireq_dtl.ireq_assigned_remark',
             'ireq_dtl.ireq_status as status',
@@ -90,6 +94,7 @@ class IctRequestPersonnelServices
             'ireq_dtl.ireq_attachment',
             'imm.ireq_verificator_remark',
             'imm.ireq_no',
+            'ireq_dtl.ireq_assigned_to1_reason',
             'ireq_dtl.ireq_note_personnel',
             'ireq_dtl.ireq_assigned_remark',
             'ireq_dtl.ireq_status',
@@ -112,10 +117,10 @@ class IctRequestPersonnelServices
         $data->ORDERBY('ireq_dtl.ireqd_id', 'ASC');
         return $data->get();
     }
-    public function rejectedByPersonnel($request, $ireq_id)
+    public function rejectedByPersonnel($request)
     {
         $dtl = DB::table('ireq_dtl')
-            ->where('ireq_id', $ireq_id)
+            ->where('ireq_id', $request->ireq_id)
             ->where('ireq_assigned_to1', Auth::user()->usr_id)
             ->update([
                 'ireq_status' => 'RT',
@@ -124,7 +129,7 @@ class IctRequestPersonnelServices
                 'last_updated_by' => Auth::user()->usr_id,
                 'program_name' => "IctDetailController_rbp",
             ]);
-        DB::getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST('$ireq_id'); end;");
+        DB::getPdo()->exec("begin SP_REJECT_PENUGASAN_IREQ_MST('$request->ireq_id'); end;");
         return $dtl;
     }
     public function AcceptByPersonnel($ireq_id)

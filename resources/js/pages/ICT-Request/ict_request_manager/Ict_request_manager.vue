@@ -719,8 +719,8 @@ export default {
     PrintOutFormIctRequest(ireq_id){
       this.loading = true;
        this.axios.get('api/print-out-ict-request/'+ireq_id).then((response)=>{
-        let htmlContent = response.data.data.htmlContent;
-          let norequest = response.data.data.norequest;
+        let htmlContent = response.data.htmlContent;
+          let norequest = response.data.norequest;
           const options = {
             filename: 'Form ICT Request No.'+norequest+'.pdf', 
             jsPDF: { 

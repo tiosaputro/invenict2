@@ -60,7 +60,7 @@ class DashboardController extends Controller
     public function countHigherLevel(){
         $data = $this->dashboardServices->countHigherLevel();
         $grafik['belumdiverifikasihigherlevel'] = collect($data)->whereIN('ireq_status', ['NA1', 'NA2'])->count();
-        $grafik['sedangdireviewhigherlevel'] = collect($data)->where('ireq_status', ['P'])->count();
+        $grafik['sedangdireviewhigherlevel'] = collect($data)->where('ireq_status', 'P')->count();
         $grafik['sudahdiverifikasihigherlevel'] = collect($data)->whereIN('ireq_status', ['A1', 'A2'])->count();
         $grafik['direjecthigherlevel'] = collect($data)->whereIN('ireq_status', ['RA1', 'RR', 'RA2'])->count();
         $grafik['penugasanrequesthigherlevel'] = collect($data)->whereIN('ireq_status', ['NT', 'RT'])->count();
@@ -73,7 +73,7 @@ class DashboardController extends Controller
     public function countReviewerJakarta(){
         $dashboard = $this->dashboardServices->CountDataDashboard();
         $grafik['blmDiverifikasijakarta'] = collect($dashboard)->where('ireq_status', 'P')->where('ireq_loc', 'OJ')->count();
-        $grafik['atasandivisijakarta'] = collect($dashboard)->where('ireq_status', ['NA1', 'A1'])->where('ireq_loc', 'OJ')->count();
+        $grafik['atasandivisijakarta'] = collect($dashboard)->whereIn('ireq_status', ['NA1', 'A1'])->where('ireq_loc', 'OJ')->count();
         $grafik['managerjakarta'] = collect($dashboard)->whereIn('ireq_status', ['NA2', 'A2'])->where('ireq_loc', 'OJ')->count();
         $grafik['rejectjakarta'] = collect($dashboard)->whereIn('ireq_status', ['RR', 'RA1', 'RA2'])->where('ireq_loc', 'OJ')->count();
         $grafik['sdgdikerjakanjakarta'] = collect($dashboard)->where('ireq_status', 'T')->where('ireq_loc', 'OJ')->count();

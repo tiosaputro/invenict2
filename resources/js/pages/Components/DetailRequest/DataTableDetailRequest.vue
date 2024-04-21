@@ -16,15 +16,26 @@
                 </div>
             </template>
         </Toolbar>
-        <DataTable :value="value" :kode="kode" :paginator="true" :rows="10" :loading="loading" :filters="filters" :rowHover="true"
+        <DataTable :value="value" :paginator="true" :rows="10" :loading="loading" :filters="filters" :rowHover="true"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request" responsiveLayout="scroll">
             <template #header>
-                <div class="table-header text-right">
+                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center" v-if="kode.cekstatus == null">
+                    <Button label="Add" class="p-button-raised" v-tooltip.right="'Click to add new detail'"
+                        icon="bi bi-file-earmark-plus" @click="$router.push({
+                        name: 'Add Ict Request Detail',
+                        params: { code: this.$route.params.code }})" 
+                    />
+                    <span class="block mt-2 md:mt-0 p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
+                    </span>
+                </div>
+                <div class="table-header text-right" v-else-if="kode.cekstatus != null">
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
-                        <InputText v-model="filters['global'].value" placeholder="Search..." />
+                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
                     </span>
                 </div>
             </template>
@@ -36,27 +47,50 @@
             </template>
             <Column field="ireqd_id" header="No. Detail" :sortable="true">
                 <template #body="slotProps">
-                    <p @click="detailRequest(slotProps.data.ireq_id)" style="cursor:pointer;">
-                        {{slotProps.data.ireq_no}}
+                    <p @click="detailRequest(slotProps.data.ireqd_id)" style="cursor:pointer;">
+                        {{slotProps.data.ireqd_id}}
                     </p>
                 </template>
             </Column>
-            <Column>
+            <Column field="ireq_type" header="Request Type" :sortable="true"/>
+            <Column style="min-width:6rem">
                 <template #body="slotProps">
-                    <Button label="Pdf" class="p-button-raised p-button-danger p-button-sm mt-2" v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf" @click="CetakPdf(slotProps.data.ireq_id)" />
+                    <Button v-if=" slotProps.data.ireq_status == null" class="p-button-rounded p-button-info mr-2"
+                        icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'" @click="
+                        $router.push({
+                            name: 'Edit Ict Request Detail',
+                            params: {code: this.$route.params.code, ireq: slotProps.data.ireqd_id}})" 
+                    />
+                    <Button v-if=" slotProps.data.ireq_status == null" icon="pi pi-trash"
+                        v-tooltip.bottom="'Click to delete request'" class="p-button-rounded p-button-danger mr-2"
+                        @click="DeleteIct(slotProps.data.ireqd_id,this.$route.params.code)" 
+                    />
                 </template>
             </Column>
-            <template #footer v-if="showForDashboardFooter">
+            <template #footer>
                 <div class="grid dir-col">
                     <div class="col">
                         <div class="box">
-                        <Button
-                            label="Back"
-                            class="p-button-raised p-button mr-2"
-                            icon="pi pi-chevron-left"
-                            @click="$router.push({
-                            name: 'Dashboard'})"
-                        />
+                            <Button
+                                v-if="showForDashboardFooter"
+                                label="Back"
+                                class="p-button-raised p-button mr-2"
+                                icon="pi pi-chevron-left"
+                                @click="$router.push({
+                                name: 'Dashboard'})"
+                            />
+                            <Button v-if="showForDashboardFooter == false" label="Back" class="p-button-raised p-button mr-2"
+                                v-tooltip.bottom="'Click to back'" icon="pi pi-chevron-left" @click="$router.push({
+                                name: 'Ict Request'})" 
+                            />
+                            <Button label="Pdf" class="p-button-raised p-button-danger mt-2"
+                                v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf"
+                                v-if="kode.cekstatus != null" @click="CetakPdf()" 
+                            />
+                            <Button class="p-button-raised p-button-success mr-2" icon="pi pi-check" label="Submit"
+                                v-if="value.length && kode.cekstatus == null" @click="SubmitIct()"
+                                v-tooltip.bottom="'Click to submit request'" 
+                            />
                         </div>
                     </div>
                 </div>
@@ -71,71 +105,43 @@
           class="fluid"
         >
             <div class="field grid">
-                <label class="col-fixed" style="width:100px">No Request</label>
+                <label class="col-fixed" style="width:100px">Request Type</label>
                   <InputText
                     type="text"
-                    v-model="detail.ireq_no"
+                    v-model="detail.ireq_type"
                     disabled
                   />
             </div>
             <div class="field grid">
-                <label class="col-fixed" style="width:100px">Request Date</label>
+                <label class="col-fixed" style="width:100px">Items</label>
                   <InputText
-                    :value="formattedRequestDate"
+                    type="text"
+                    v-model="detail.name"
                     disabled
                   />
             </div> 
             <div class="field grid">
-                <label class="col-fixed" style="width:100px">Requestor</label>
+                <label class="col-fixed" style="width:100px">Qty</label>
                     <InputText
-                      v-model="detail.ireq_requestor"
+                      v-model="detail.ireq_qty"
                       disabled
                     />
             </div>
             <div class="field grid">
-                <label class="col-fixed" style="width:100px">User</label>
+                <label class="col-fixed" style="width:100px">Remark</label>
                   <InputText
                     disabled
-                    v-model= "detail.ireq_user"
+                    v-model= "detail.ireq_remark"
                   />
             </div>
-            <div class="field grid">
-                <label class="col-fixed" style="width:100px">User Division</label>
+            <div class="field grid" v-if="detail.ireq_count_personnel1 > 0">
+                <label class="col-fixed" style="width:100px">ICT Personnel</label>
                   <InputText
-                      v-model="detail.usr_division"
+                      v-model="detail.ireq_assigned_to"
                       disabled
                   />
             </div>
-            <div class="field grid" v-if="detail.countspv > 0">
-                <label class="col-fixed" style="width:100px">Supervisor</label>
-                  <InputText
-                    v-model="detail.spv"
-                    disabled
-                  />
-            </div>
-            <div class="field grid" v-if="detail.countremark_reviewer > 0">
-                <label class="col-fixed" style="width:100px">Remark Reviewer</label>
-                  <InputText
-                    v-model="detail.ireq_verificator_remark"
-                    disabled
-                  />
-            </div>
-            <div class="field grid" v-if="detail.ireq_reason">
-                <label class="col-fixed" style="width:100px">Reason</label>
-                  <InputText
-                    v-model="detail.ireq_reason"
-                    disabled
-                  />
-            </div>
-            <div class="field grid" v-if="detail.ireq_assigned_to">
-                <label class="col-fixed" style="width:100px">ICT Personnel</label>
-                  <InputText
-                    type="text"
-                    v-model="detail.ireq_assigned_to"
-                    disabled
-                  />
-            </div>
-            <div class="field grid" v-if="detail.ireq_status">
+            <div class="field grid">
                 <label class="col-fixed" style="width:100px">Status</label>
                   <InputText
                     type="text"
@@ -168,18 +174,18 @@
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request" responsiveLayout="scroll">
             <template #header>
                 <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
-                    v-if="kode.status == null">
+                    v-if="kode.cekstatus == null">
                     <Button label="Add" class="p-button-raised" v-tooltip.right="'Click to add new detail'"
                         icon="bi bi-file-earmark-plus" @click="$router.push({
                         name: 'Add Ict Request Detail',
-                        params: { code: code },
+                        params: { code: this.$route.params.code },
                     })" />
                     <span class="block mt-2 md:mt-0 p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value" placeholder="Search. . ." />
                     </span>
                 </div>
-                <div class="table-header text-right" v-else-if="kode.status != null">
+                <div class="table-header text-right" v-else-if="kode.cekstatus != null">
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value" placeholder="Search. . ." />
@@ -223,26 +229,35 @@
                         :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
                 </template>
             </Column>
-            <Column style="min-width:12rem">
+            <Column style="min-width:9rem">
                 <template #body="slotProps">
                     <Button v-if=" slotProps.data.ireq_status == null" class="p-button-rounded p-button-info mr-2"
                         icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'" @click="
-                  $router.push({
-                    name: 'Edit Ict Request Detail',
-                    params: {code: this.$route.params.code, ireq: slotProps.data.ireqd_id},
-                  })" />
+                        $router.push({
+                            name: 'Edit Ict Request Detail',
+                            params: {code: this.$route.params.code, ireq: slotProps.data.ireqd_id},
+                        })" 
+                    />
                     <Button v-if=" slotProps.data.ireq_status == null" icon="pi pi-trash"
                         v-tooltip.bottom="'Click to delete request'" class="p-button-rounded p-button-danger mr-2"
-                        @click="DeleteIct(slotProps.data.ireqd_id,this.$route.params.code)" />
+                        @click="DeleteIct(slotProps.data.ireqd_id,this.$route.params.code)" 
+                    />
                 </template>
             </Column>
             <template #footer>
                 <div class="grid dir-col">
                     <div class="col">
                         <div class="box">
-                            <Button label="Back" class="p-button-raised p-button mr-2"
-                                v-tooltip.bottom="'Click to back'" icon="pi pi-chevron-left" @click="$router.push({
-                                name: 'Ict Request'})" 
+                            <Button
+                                v-if="showForDashboardFooter"
+                                label="Back"
+                                v-tooltip.bottom="'Click to dashboard'"
+                                class="p-button-raised p-button mr-2"
+                                icon="pi pi-chevron-left"
+                                @click="$router.push({ name: 'Dashboard'})"
+                            />
+                            <Button v-else label="Back" class="p-button-raised p-button mr-2"
+                                v-tooltip.bottom="'Click to back'" icon="pi pi-chevron-left" @click="$router.push({ name: 'Ict Request'})" 
                             />
                             <Button label="Pdf" class="p-button-raised p-button-danger mt-2"
                                 v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf"
@@ -261,6 +276,7 @@
 </template>
 <script>
     export default {
+        emits: ['show-loading', 'hide-loading','get-data'],
         props: {
             value: Array,
             loading: Boolean,
@@ -280,7 +296,7 @@
             },
             showForDashboardFooter() {
                 return (
-                    (this.showForDashboard == TRUE)
+                    (this.showForDashboard === true)
                 );
             },
             formattedRequestDate() {
@@ -300,6 +316,12 @@
             window.addEventListener('resize', this.updateIsMobile);
         },
         methods: {
+            detailRequest(ireqd_id){
+                const requestData = this.value.find(item => item.ireqd_id === ireqd_id);
+                this.header = " Detail Request No. "+ requestData.ireqd_id
+                this.detail = requestData;
+                this.dialogDetailRequest = true;
+            },
             updateIsMobile() {
                 this.isMobile = window.innerWidth <= 768;
             },
@@ -315,16 +337,16 @@
                     acceptLabel: "Yes",
                     rejectLabel: "No",
                     accept: () => {
-                    this.$toast.add({
-                        severity: "info",
-                        summary: "Confirmed",
-                        detail: "Record deleted",
-                        life: 3000,
-                    });
-                    this.axios.delete('/api/delete-ict-detail/' +id+'/'+code).then(()=>{
-                        this.$emit("show-loading");
-                        this.getIctDetail();
-                    });
+                        this.$toast.add({
+                            severity: "info",
+                            summary: "Confirmed",
+                            detail: "Record deleted",
+                            life: 3000,
+                        });
+                        this.axios.delete('/api/delete-ict-detail/' +id+'/'+code).then(()=>{
+                            this.$emit("show-loading");
+                            this.getIctDetail();
+                        });
                     },
                     reject: () => {},
                 });
@@ -339,15 +361,15 @@
                     acceptLabel: "Yes",
                     rejectLabel: "No",
                     accept: () => {
-                    this.$toast.add({
-                        severity: "info",
-                        summary: "Confirmed",
-                        detail: "Successfully Submit",
-                        life: 3000,
-                    });
-                    this.$emit("show-loading");
-                    this.axios.get('/api/updateStatusSubmit/' +this.$route.params.code);
-                    setTimeout( () => this.$router.push('/ict-request'),1000);
+                        this.$toast.add({
+                            severity: "info",
+                            summary: "Confirmed",
+                            detail: "Successfully Submit",
+                            life: 3000,
+                        });
+                        this.$emit("show-loading");
+                        this.axios.get('/api/updateStatusSubmit/' +this.$route.params.code);
+                        setTimeout( () => this.$router.push('/ict-request'),1000);
                     },
                     reject: () => {},
                 })

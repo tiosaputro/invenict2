@@ -1,3 +1,5 @@
+
+import router from '../router';
 export class MenuServices {
     getdata() {
         return axios.get('/api/menu-user')
@@ -6,6 +8,9 @@ export class MenuServices {
                 tree: res.data.data.tree,
                 user: res.data.data.user
             };
+        }).catch((error) => {
+            console.error('Error fetching data:', error);
+            return router.push('login');
         });
     }
 }

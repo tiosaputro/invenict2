@@ -341,7 +341,7 @@ Route::middleware('auth:sanctum')->group(function(){
     //ict request personnel 
     Route::get('/get-sedang-dikerjakan',[IctRequestPersonnelController::class,'getDataPersonnel']);
     Route::get('/get-detail-done-personnel/{code}',[IctRequestPersonnelController::class,'getDetailDone']);
-    Route::put('/rejectPersonnel/{ireq_id}',[IctRequestPersonnelController::class,'rejectedByPersonnel']);
+    Route::post('/rejectPersonnel',[IctRequestPersonnelController::class,'rejectedByPersonnel']);
     Route::get('/acceptPersonnel/{ireq_id}',[IctRequestPersonnelController::class,'acceptedByPersonnel']);
     Route::put('/save-remark-assigned/{code}',[IctRequestPersonnelController::class,'saveRemark']);
     Route::put('/update-note/{code}',[IctRequestPersonnelController::class,'updateNote']);
