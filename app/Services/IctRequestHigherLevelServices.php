@@ -15,6 +15,7 @@ class IctRequestHigherLevelServices
     {
         $data = Ict::query();
         $data->SELECT(
+            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title) as spv"),
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_verificator_remark',
             'mus.usr_division',
@@ -26,8 +27,14 @@ class IctRequestHigherLevelServices
             'ireq_mst.ireq_reason',
             'ireq_mst.ireq_date',
             'lr.lookup_desc as ireq_status',
+            DB::raw('count(ireq_mst.ireq_verificator_remark) as count_remark_reviewer'),
+            DB::raw('count(ireq_mst.ireq_approver2_remark) as count_remark_manager'),
+            DB::raw('count(ireq_mst.ireq_spv) as count_spv'),
+            DB::raw('count(idd.ireq_assigned_to1) as count_personnel1'),
+            DB::raw('count(idd.ireq_id) as ireq_count_id'),
             DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
-            'ireq_mst.ireq_approver2_remark');
+            'ireq_mst.ireq_approver2_remark'
+        );
         $data->LEFTJOIN('mng_users mu', 'ireq_mst.ireq_requestor', 'mu.usr_id');
         $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
         $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
@@ -39,6 +46,8 @@ class IctRequestHigherLevelServices
                 ->whereNull('ireq_mst.ireq_assigned_to1');
         });
         $data->LEFTJOIN('ireq_dtl idd', 'ireq_mst.ireq_id', 'idd.ireq_id');
+        $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
+        $data->LEFTJOIN('mng_users usr', 'sr.spv_name', 'usr.usr_id');
         $data->LEFTJOIN('lookup_refs lr', 'ireq_mst.ireq_status', 'lr.lookup_code');
         $data->LEFTJOIN('mng_users ms', 'ireq_mst.ireq_requestor', 'ms.usr_id');
         $data->LEFTJOIN('mng_user_domain mus', 'ireq_mst.ireq_user', 'mus.usr_domain');
@@ -59,6 +68,7 @@ class IctRequestHigherLevelServices
         $data->where('sr.spv_name', Auth::user()->usr_id);
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
         $data->GroupBy(
+            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title)"),
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_verificator_remark',
             'mus.usr_division',

@@ -21,18 +21,7 @@
             :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request" responsiveLayout="scroll">
             <template #header>
-                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center" v-if="kode.cekstatus == null">
-                    <Button label="Add" class="p-button-raised" v-tooltip.right="'Click to add new detail'"
-                        icon="bi bi-file-earmark-plus" @click="$router.push({
-                        name: 'Add Ict Request Detail',
-                        params: { code: this.$route.params.code }})" 
-                    />
-                    <span class="block mt-2 md:mt-0 p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                    </span>
-                </div>
-                <div class="table-header text-right" v-else-if="kode.cekstatus != null">
+                <div class="table-header text-right">
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value" placeholder="Search. . ." />
@@ -45,15 +34,15 @@
             <template #loading>
                 Please wait
             </template>
-            <Column field="ireqd_id" header="No. Detail" :sortable="true">
+            <Column header="Description" :sortable="true" style="min-width:9rem">
                 <template #body="slotProps">
-                    <p @click="detailRequest(slotProps.data.ireqd_id)" style="cursor:pointer;">
-                        {{slotProps.data.ireqd_id}}
+                    <p @click="detailRequest(slotProps.data.ireqd_id)">
+                        Req Type : {{ slotProps.data.ireq_type }} 
+                        Items: {{ slotProps.data.name }}
                     </p>
                 </template>
             </Column>
-            <Column field="ireq_type" header="Request Type" :sortable="true"/>
-            <Column style="min-width:6rem">
+            <Column header="Action" style="min-width:6rem">
                 <template #body="slotProps">
                     <Button v-if=" slotProps.data.ireq_status == null" class="p-button-rounded p-button-info mr-2"
                         icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'" @click="
@@ -254,7 +243,7 @@
                                 v-tooltip.bottom="'Click to dashboard'"
                                 class="p-button-raised p-button mr-2"
                                 icon="pi pi-chevron-left"
-                                @click="$router.push({ name: 'Dashboard'})"
+                                @click="$router.push({ name: 'Desc'})"
                             />
                             <Button v-else label="Back" class="p-button-raised p-button mr-2"
                                 v-tooltip.bottom="'Click to back'" icon="pi pi-chevron-left" @click="$router.push({ name: 'Ict Request'})" 
@@ -312,6 +301,7 @@
             };
         },
         mounted() {
+            console.log(this.showForDashboard);
             this.isMobile = window.innerWidth <= 768;
             window.addEventListener('resize', this.updateIsMobile);
         },

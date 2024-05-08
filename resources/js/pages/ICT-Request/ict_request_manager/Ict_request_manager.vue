@@ -11,562 +11,79 @@
                 </Toolbar>
                 <TabView ref="tabview1" v-model:activeIndex="active2">
                     <TabPanel header="Waiting For Verification">
-                        <DataTable :value="blmdiverifikasi" :paginator="true" :rows="10" :loading="loading"
-                            :filters="filters" :rowHover="true"
-                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Waiting For Verification"
-                            responsiveLayout="scroll">
-                            <template #header>
-                                <div class="table-header text-right">
-                                    <span class="p-input-icon-left">
-                                        <i class="pi pi-search" />
-                                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                                    </span>
-                                </div>
-                            </template>
-                            <template #empty>
-                                Not Found
-                            </template>
-                            <template #loading>
-                                Please wait
-                            </template>
-                            <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    {{ formatDate(slotProps.data.ireq_date) }}
-                                </template>
-                            </Column>
-                            <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem" />
-                            <Column field="usr_division" header="User Division" :sortable="true"
-                                style="min-width:10rem" />
-                            <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true"
-                                style="min-width:12rem" v-if="this.showRemarkWaiting.some(el=> el > 0)" />
-                            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
-                                <template #body="slotProps">
-                                    <span
-                                        :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                                </template>
-                            </Column>
-                            <Column style="min-width:8rem">
-                                <template #body="slotProps">
-                                    <Button class="p-button-rounded p-button-secondary mr-2" icon="pi pi-info-circle"
-                                        v-tooltip.bottom="'Click for request details'"
-                                        @click="detailTabWaiting(slotProps.data.ireq_id)" />
-                                    <Button v-if="slotProps.data.status == 'NA2'"
-                                        class="p-button-rounded p-button-success mr-2" icon="pi pi-check-square"
-                                        v-tooltip.bottom="'Click to verification'"
-                                        @click="Verifikasi(slotProps.data.ireq_id)" />
-                                </template>
-                            </Column>
-                            <template #footer>
-                                <div class="grid dir-col">
-                                    <div class="col">
-                                        <div class="box">
-                                            <Button label="Pdf" class="p-button-raised p-button-danger mr-2"
-                                                icon="pi pi-file-pdf" @click="PrintOutRequestPdf('permohonan')" />
-                                            <Button label="Excel" class="p-button-raised p-button-success mr-2"
-                                                icon="pi pi-print" @click="CetakExcelBlmDiverifikasi()" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </DataTable>
+                        <DataTableRequest :value="blmdiverifikasi" :loading="loading" :showRemarkReviewer="showRemarkReviewerWaiting" :showRemarkManager="showRemarkManagerWaiting"
+                            :showSpv="showSpvWaiting" printPdf="permohonan" :showPersonnel1="showPersonnelWaiting" @get-data="getIct" 
+                            Active="0" @show-loading="showLoading" @hide-loading="hideLoading"
+                        />
                     </TabPanel>
                     <TabPanel header="Approved">
-                        <DataTable :value="sdhdiverifikasi" :paginator="true" :rows="10" :loading="loading"
-                            :filters="filters" :rowHover="true"
-                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Approved"
-                            responsiveLayout="scroll">
-                            <template #header>
-                                <div class="table-header text-right">
-                                    <span class="p-input-icon-left">
-                                        <i class="pi pi-search" />
-                                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                                    </span>
-                                </div>
-                            </template>
-                            <template #empty>
-                                Not Found
-                            </template>
-                            <template #loading>
-                                Please wait
-                            </template>
-                            <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    {{ formatDate(slotProps.data.ireq_date) }}
-                                </template>
-                            </Column>
-                            <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem" />
-                            <Column field="usr_division" header="User Division" :sortable="true"
-                                style="min-width:10rem" />
-                            <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true"
-                                style="min-width:12rem" v-if="this.showRemarksdhdiverifikasi.some(el=> el > 0)" />
-                            <Column field="ireq_approver2_remark" header="Remark ICT Manager" :sortable="true"
-                                style="min-width:12rem"
-                                v-if="this.showRemarkApproversdhdiverifikasi.some(el=> el > 0)" />
-                            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:18rem">
-                                <template #body="slotProps">
-                                    <span
-                                        :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                                </template>
-                            </Column>
-                            <Column>
-                                <template #body="slotProps">
-                                    <Button class="p-button-rounded p-button-secondary mr-2" icon="pi pi-info-circle"
-                                        v-tooltip.bottom="'Click for request details'"
-                                        @click="detailTabApproved(slotProps.data.ireq_id)" />
-                                </template>
-                            </Column>
-                            <template #footer>
-                                <div class="grid dir-col">
-                                    <div class="col">
-                                        <div class="box">
-                                            <Button label="Pdf" class="p-button-raised p-button-danger mr-2"
-                                                icon="pi pi-file-pdf" @click="PrintOutRequestPdf('verifikasi')" />
-                                            <Button label="Excel" class="p-button-raised p-button-success mr-2"
-                                                icon="pi pi-print" @click="CetakExcelSudahDiverifikasi()" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </DataTable>
+                        <DataTableRequest :value="sdhdiverifikasi" :loading="loading" :showRemarkReviewer="showRemarkReviewerApproved" :showRemarkManager="showRemarkManagerApproved"
+                            :showSpv="showSpvApproved" printPdf="verifikasi" :showPersonnel1="showPersonnelApproved" @get-data="getIct" 
+                            Active="1" @show-loading="showLoading" @hide-loading="hideLoading"
+                        />
                     </TabPanel>
                     <TabPanel header="Rejected">
-                        <DataTable :value="reject" :paginator="true" :rows="10" :loading="loading" :filters="filters"
-                            :rowHover="true"
-                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Rejected"
-                            responsiveLayout="scroll">
-                            <template #header>
-                                <div class="table-header text-right">
-                                    <span class="p-input-icon-left">
-                                        <i class="pi pi-search" />
-                                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                                    </span>
-                                </div>
-                            </template>
-                            <template #empty>
-                                Not Found
-                            </template>
-                            <template #loading>
-                                Please wait
-                            </template>
-                            <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:12rem" />
-                            <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:12rem">
-                                <template #body="slotProps">
-                                    {{ formatDate(slotProps.data.ireq_date) }}
-                                </template>
-                            </Column>
-                            <Column field="ireq_requestor" header="Requestor" :sortable="true"
-                                style="min-width:12rem" />
-                            <Column field="ireq_user" header="User" :sortable="true" style="min-width:12rem" />
-                            <Column field="usr_division" header="User Division" :sortable="true"
-                                style="min-width:12rem" />
-                            <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_reason" header="Reason" :sortable="true" style="min-width:12rem" />
-                            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
-                                <template #body="slotProps">
-                                    <span
-                                        :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                                </template>
-                            </Column>
-                            <Column style="min-width:12rem">
-                                <template #body="slotProps">
-                                    <Button class="p-button-rounded p-button-secondary mr-2" icon="pi pi-info-circle"
-                                        v-tooltip.bottom="'Click for request details'"
-                                        @click="detailTabRejected(slotProps.data.ireq_id)" />
-                                </template>
-                            </Column>
-                            <template #footer>
-                                <div class="grid dir-col">
-                                    <div class="col">
-                                        <div class="box">
-                                            <Button label="Pdf" class="p-button-raised p-button-danger mr-2"
-                                                icon="pi pi-file-pdf" @click="PrintOutRequestPdf('reject')" />
-                                            <Button label="Excel" class="p-button-raised p-button-success mr-2"
-                                                icon="pi pi-print" @click="CetakExcelDireject()" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </DataTable>
+                        <DataTableRequest :value="reject" :loading="loading" :showRemarkReviewer="showRemarkReviewerRejected" :showRemarkManager="showRemarkManagerRejected"
+                            :showSpv="showSpvRejected" printPdf="reject" :showPersonnel1="showPersonnelRejected" @get-data="getIct" 
+                            Active="2" @show-loading="showLoading" @hide-loading="hideLoading" showReason="1"
+                        />
                     </TabPanel>
                     <TabPanel header="Request Assignment">
-                        <DataTable :value="penugasan" :paginator="true" :rows="10" :loading="loading" :filters="filters"
-                            :rowHover="true"
-                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request Assignment"
-                            responsiveLayout="scroll">
-                            <template #header>
-                                <div class="table-header text-right">
-                                    <span class="p-input-icon-left">
-                                        <i class="pi pi-search" />
-                                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                                    </span>
-                                </div>
-                            </template>
-                            <template #empty>
-                                Not Found
-                            </template>
-                            <template #loading>
-                                Please wait
-                            </template>
-                            <Column field="ireq_no" header="No.Request" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    {{ formatDate(slotProps.data.ireq_date) }}
-                                </template>
-                            </Column>
-                            <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem" />
-                            <Column field="usr_division" header="User Division" :sortable="true"
-                                style="min-width:10rem" />
-                            <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true"
-                                style="min-width:10rem" />
-                            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:14rem">
-                                <template #body="slotProps">
-                                    <span
-                                        :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                                </template>
-                            </Column>
-                            <Column>
-                                <template #body="slotProps">
-                                    <Button class="p-button-rounded p-button-secondary mr-2" icon="pi pi-info-circle"
-                                        v-tooltip.bottom="'Click for request details'"
-                                        @click="detailTabRequestAssignment(slotProps.data.ireq_id)" />
-                                </template>
-                            </Column>
-                            <template #footer>
-                                <div class="p-grid p-dir-col">
-                                    <div class="p-col">
-                                        <div class="box">
-                                            <Button label="Pdf" class="p-button-raised p-button-danger mr-2"
-                                                icon="pi pi-file-pdf"
-                                                @click="PrintOutRequestPdf('assignment_request')" />
-                                            <Button label="Excel" class="p-button-raised p-button-success mr-2"
-                                                icon="pi pi-print" @click="CetakExcelAssignmentRequest()" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </DataTable>
+                        <DataTableRequest :value="penugasan" :loading="loading" :showRemarkReviewer="showRemarkReviewerPenugasan" :showRemarkManager="showRemarkManagerRejected"
+                            :showSpv="showSpvPenugasan" printPdf="assignment_request" :showPersonnel1="showPersonnelRejected" @get-data="getIct" 
+                            Active="3" @show-loading="showLoading" @hide-loading="hideLoading" showReason="1"
+                        />
                     </TabPanel>
                     <TabPanel header="In Progress">
-                        <DataTable :value="sedangDikerjakan" :paginator="true" :rows="10" :loading="loading"
-                            :filters="filters" :rowHover="true"
-                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} In Progress"
-                            responsiveLayout="scroll">
-                            <template #header>
-                                <div class="table-header text-right">
-                                    <span class="p-input-icon-left">
-                                        <i class="pi pi-search" />
-                                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                                    </span>
-                                </div>
-                            </template>
-                            <template #empty>
-                                Not Found
-                            </template>
-                            <template #loading>
-                                Please wait
-                            </template>
-                            <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    {{ formatDate(slotProps.data.ireq_date) }}
-                                </template>
-                            </Column>
-                            <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem" />
-                            <Column field="usr_division" header="User Division" :sortable="true"
-                                style="min-width:10rem" />
-                            <Column field="spv" header="Supervisor" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_assigned_to" header="Personnel (ICT)" :sortable="true"
-                                style="min-width:12rem" />
-                            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    <span
-                                        :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                                </template>
-                            </Column>
-                            <Column style="min-width:10rem">
-                                <template #body="slotProps">
-                                    <Button class="p-button-rounded p-button-secondary mr-2" icon="pi pi-info-circle"
-                                        v-tooltip.bottom="'Click for request details'"
-                                        @click="detailTabRequestInProgress(slotProps.data.ireq_id)" />
-                                </template>
-                            </Column>
-                            <template #footer>
-                                <div class="grid dir-col">
-                                    <div class="col">
-                                        <div class="box">
-                                            <Button label="Pdf" class="p-button-raised p-button-danger mr-2"
-                                                icon="pi pi-file-pdf"
-                                                @click="PrintOutRequestPdf('sedang_dikerjakan')" />
-                                            <Button label="Excel" class="p-button-raised p-button-success mr-2"
-                                                icon="pi pi-print" @click="CetakExcelSedangDikerjakan()" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </DataTable>
+                        <DataTableRequest :value="sedangDikerjakan" :loading="loading" :showRemarkReviewer="showRemarkReviewerInProgress" :showRemarkManager="showRemarkManagerInProgress"
+                            :showSpv="showSpvInProgress" printPdf="reject" :showPersonnel1="showPersonnelInProgress" @get-data="getIct" 
+                            Active="4" @show-loading="showLoading" @hide-loading="hideLoading"
+                        />
                     </TabPanel>
                     <TabPanel header="Done">
-                        <DataTable :value="sudahDikerjakan" :paginator="true" :rows="10" :loading="loading"
-                            :filters="filters" :rowHover="true"
-                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Done"
-                            responsiveLayout="scroll">
-                            <template #header>
-                                <div class="table-header text-right">
-                                    <span class="p-input-icon-left">
-                                        <i class="pi pi-search" />
-                                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                                    </span>
-                                </div>
-                            </template>
-                            <template #empty>
-                                Not Found
-                            </template>
-                            <template #loading>
-                                Please wait
-                            </template>
-                            <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem" />
-                            <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem" />
-                            <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    {{ formatDate(slotProps.data.ireq_date) }}
-                                </template>
-                            </Column>
-                            <Column header="Attachment" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    <p v-if="slotProps.data.ireq_attachment == null"></p>
-                                    <p
-                                        v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                                        <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)"
-                                            aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
-                                            <i class="pi pi-images px-2"></i>
-                                            <span class="px-3">IMAGE</span>
-                                        </Button>
-                                    </p>
-                                    <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                                        <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)"
-                                            aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
-                                            <i class="pi pi-file-pdf px-2"></i>
-                                            <span class="px-4">PDF</span>
-                                        </Button>
-                                    </p>
-                                </template>
-                            </Column>
-                            <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem" />
-                            <Column field="usr_division" header="User Division" :sortable="true"
-                                style="min-width:10rem" />
-                            <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true"
-                                style="min-width:10rem" />
-                            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    <span
-                                        :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                                </template>
-                            </Column>
-                            <Column>
-                                <template #body="slotProps">
-                                    <Button label="Pdf" class="p-button-raised p-button-danger p-button-sm mr-2"
-                                        v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf"
-                                        @click="CetakPdf(slotProps.data.ireq_id)" />
-                                </template>
-                            </Column>
-                            <template #footer>
-                                <div class="grid dir-col">
-                                    <div class="col">
-                                        <div class="box">
-                                            <Button label="Pdf" class="p-button-raised p-button-danger mr-2"
-                                                icon="pi pi-file-pdf" @click="PrintOutRequestPdf('sudah_dikerjakan')" />
-                                            <Button label="Excel" class="p-button-raised p-button-success mr-2"
-                                                icon="pi pi-print" @click="CetakExcelSudahDikerjakan()" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </DataTable>
+                        <DataTableDetail :value="sudahDikerjakan" @show-loading="showLoading" @hide-loading="hideLoading" @get-data="getIct" :loading="loading" printPdf="sudah_dikerjakan"/> 
                     </TabPanel>
                     <TabPanel header="Close">
-                        <DataTable :value="selesai" :paginator="true" :rows="10" :loading="loading" :filters="filters"
-                            :rowHover="true"
-                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Close"
-                            responsiveLayout="scroll">
-                            <template #header>
-                                <div class="table-header text-right">
-                                    <span class="p-input-icon-left">
-                                        <i class="pi pi-search" />
-                                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                                    </span>
-                                </div>
-                            </template>
-                            <template #empty>
-                                Not Found
-                            </template>
-                            <template #loading>
-                                Please wait
-                            </template>
-                            <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireqd_id" header="No.Detail" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem" />
-                            <Column field="kategori" header="Items" :sortable="true" style="min-width:10rem" />
-                            <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem" />
-                            <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    {{ formatDate(slotProps.data.ireq_date) }}
-                                </template>
-                            </Column>
-                            <Column header="Attachment" style="min-width:10rem">
-                                <template #body="slotProps">
-                                    <p v-if="slotProps.data.ireq_attachment == null"></p>
-                                    <p
-                                        v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                                        <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)"
-                                            aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
-                                            <i class="pi pi-images px-2"></i>
-                                            <span class="px-3">IMAGE</span>
-                                        </Button>
-                                    </p>
-                                    <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                                        <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)"
-                                            aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
-                                            <i class="pi pi-file-pdf px-2"></i>
-                                            <span class="px-4">PDF</span>
-                                        </Button>
-                                    </p>
-                                </template>
-                            </Column>
-                            <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem" />
-                            <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true"
-                                style="min-width:10rem" />
-                            <Column field="usr_division" header="User Division" :sortable="true"
-                                style="min-width:10rem" />
-                            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:8rem">
-                                <template #body="slotProps">
-                                    <span
-                                        :class="'status-bagde status-' + slotProps.data.status.toLowerCase()">{{slotProps.data.ireq_status}}</span>
-                                </template>
-                            </Column>
-                            <Column>
-                                <template #body="slotProps">
-                                    <Button label="Pdf" class="p-button-raised p-button-danger p-button-sm mr-2"
-                                        v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf"
-                                        @click="CetakPdf(slotProps.data.ireq_id)" />
-                                </template>
-                            </Column>
-                            <template #footer>
-                                <div class="grid dir-col">
-                                    <div class="col">
-                                        <div class="box">
-                                            <Button label="Pdf" class="p-button-raised p-button-danger mr-2"
-                                                icon="pi pi-file-pdf" @click="PrintOutRequestPdf('selesai')" />
-                                            <Button label="Excel" class="p-button-raised p-button-success mr-2"
-                                                icon="pi pi-print" @click="CetakExcelSelesai()" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </DataTable>
+                        <DataTableDetail :value="selesai" @show-loading="showLoading" @hide-loading="hideLoading" @get-data="getIct" :loading="loading" printPdf="selesai"/> 
                     </TabPanel>
                 </TabView>
-                <Dialog v-model:visible="dialogReject" :style="{ width: '400px' }" header="ICT Request" :modal="true"
-                    class="field">
-                    <div class="field">
-                        <div class="field grid">
-                            <label class="col-fixed w-9rem">Reason</label>
-                            <div class="co-fixed w-9rem">
-                                <Textarea :autoResize="true" type="text" v-model="reason.ket" rows="5"
-                                    placeholder="Enter Reason" :class="{ 'p-invalid': submitted && !reason.ket }" />
-                                <small v-if="submitted && !reason.ket" class="p-error">
-                    Reason Not Filled
-                    </small>
-                  </div>
-                </div>
-              </div>
-              <template #footer>
-                  <Button label="Yes" @click="updateReject()" class="p-button" autofocus />
-                  <Button label="No" @click="cancelReject()" class="p-button-text" />
-              </template>
-            </Dialog>
-            <Dialog v-model:visible="dialogApprove"
-              :style="{ width: '400px' }"
-              header="ICT Request"
-              :modal="true"
-              class="field"
-            >
-            <div class="field">
-              <div class="field grid">
-                <label class="col-fixed w-9rem">Remark</label>
-                  <div class="co-fixed w-9rem">
-                    <Textarea
-                      :autoResize="true"
-                      type="text"
-                      v-model="reason.remark"
-                      rows="5"
-                      placeholder="IF Required"
-                    />
-                  </div>
-                </div>
-              </div>
-              <template #footer>
-                  <Button label="Yes" @click="approve()" class="p-button" autofocus />
-                  <Button label="No" @click="cancelApprove()" class="p-button-text" />
-              </template>
-            </Dialog>
-            <Dialog header="Confirmation" v-model:visible="ConfirmationVerifikasi" :style="{width: '350px'}" :modal="true">
-                  <div class="confirmation-content">
-                      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                      <span>Verification Request</span>
-                  </div>
-                  <template #footer>
-                      <Button label="Reject" icon="pi pi-times" @click="rejectRequest" class="p-button-raised p-button-danger p-button-text"/>
-                      <Button label="Approve" icon="pi pi-check" @click="approveRequest" class="p-button-raised p-button-text" autofocus />
-                  </template>
-            </Dialog>
       </div>
     </div>
   </div>
 </template>
 <script>
 
+import DataTableRequest from "../../Components/IctManager/Request/DataTableRequestIctManager.vue";
+import DataTableDetail from "../../Components/IctManager/Request/DataTableDetailIctManager.vue";
+
 export default {
+   components:{
+    DataTableRequest,
+    DataTableDetail
+  },
   data() {
     return {
+        showRemarkReviewerWaiting:[],
+        showRemarkManagerWaiting:[],
+        showSpvWaiting:[],
+        showPersonnelWaiting:[],
+        showRemarkReviewerApproved:[],
+        showRemarkManagerApproved:[],
+        showSpvApproved:[],
+        showPersonnelApproved:[],
+        showRemarkReviewerRejected:[],
+        showRemarkManagerRejected:[],
+        showSpvRejected:[],
+        showPersonnelRejected:[],
+        showRemarkReviewerPenugasan:[],
+        showRemarkManagerPenugasan:[],
+        showSpvPenugasan:[],
+        showPersonnelPenugasan:[],
+        showRemarkReviewerInProgress:[],
+        showRemarkManagerInProgress:[],
+        showSpvInProgress:[],
+        showPersonnelInProgress:[],
         active2:JSON.parse(localStorage.getItem('active2')),
-        dialogReject:false,
-        dialogApprove:false,
-        ConfirmationVerifikasi:false,
-        reason :{
-          ket:null,
-          remark:null,
-        },
-        submitted:false,
         loading: true,
         blmdiverifikasi: [],
         penugasan:[],
@@ -576,57 +93,47 @@ export default {
         sdhdiverifikasi: [],
         reject:[],
         filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
-        code:null,
-        showRemarkWaiting:[],
-        showRemarksdhdiverifikasi:[],
-        showRemarkApproversdhdiverifikasi:[],
         Type:{
           'report_type': ''
         },
     };
   },
   created() {
-    this.getPermohonan();
+    this.getIct();
   },
   methods: {
-    getDetail(ireq_attachment){
-       var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
-         var myWindow = window.open(page, "_blank");
-         myWindow.focus();
+    showLoading(){
+      this.loading = true;
     },
-    detailTabWaiting(ireq_id){
-      localStorage.setItem('active2',0);
-      this.$router.push('/ict-request-manager-detail/'+ireq_id);
+    hideLoading(){
+      this.loading = false;
     },
-    detailTabApproved(ireq_id){
-      localStorage.setItem('active2',1);
-      this.$router.push('/ict-request-manager-detail/'+ireq_id);
-    },
-    detailTabRejected(ireq_id){
-      localStorage.setItem('active2',2);
-      this.$router.push('/ict-request-manager-detail/'+ireq_id);
-    },
-    detailTabRequestAssignment(ireq_id){
-      localStorage.setItem('active2',3);
-      this.$router.push('/ict-request-manager/detail-penugasan/'+ireq_id);
-    },
-    detailTabRequestInProgress(ireq_id){
-      localStorage.setItem('active2',4);
-      this.$router.push('/ict-request-manager/detail-penugasan/'+ireq_id);
-    },
-    getPermohonan(){
+    getIct(){
       this.axios.get('api/get-data-manager').then((response)=> {
         this.blmdiverifikasi = response.data.data.ict;
-        this.showRemarkWaiting = this.blmdiverifikasi.map((x)=>x.count_remark);
         this.sdhdiverifikasi = response.data.data.ict1;
-        this.showRemarksdhdiverifikasi = this.sdhdiverifikasi.map((x)=>x.count_remark);
-        this.showRemarkApproversdhdiverifikasi = this.sdhdiverifikasi.map((x)=>x.count_remark_approver2);
         this.reject = response.data.data.ict2;
         this.penugasan = response.data.data.ict6;
         this.sedangDikerjakan = response.data.data.ict3;
         this.sudahDikerjakan = response.data.data.ict4;
         this.selesai = response.data.data.ict5;
-        this.loading = false;
+
+        const properties = [
+          { name: 'Waiting', data: this.blmdiverifikasi },
+          { name: 'Approved', data: this.sdhdiverifikasi },
+          { name: 'Rejected', data: this.reject },
+          { name: 'Penugasan', data: this.penugasan },
+          { name: 'InProgress', data: this.sedangDikerjakan }
+        ];
+
+        properties.forEach(({ name, data }) => {
+          this['showRemarkReviewer' + name] = data.map(x => x.count_remark_reviewer);
+          this['showRemarkManager' + name] = data.map(x => x.count_remark_manager);
+          this['showSpv' + name] = data.map(x => x.count_spv);
+          this['showPersonnel' + name] = data.map(x => x.count_personnel1);
+        });
+
+this.loading = false;
         localStorage.setItem('active2',0);
       }).catch(error=>{
          if (error.response.status == 401) {
@@ -641,99 +148,6 @@ export default {
             this.$router.push('/login');
            }
         });
-    },
-    formatDate(date) {
-      return this.$moment(date).format("DD MMM YYYY HH:mm")
-    },
-    Verifikasi(ireq_id){
-      this.code = ireq_id;
-      this.ConfirmationVerifikasi = true;
-    },
-    approve(){
-      this.$toast.add({
-        severity: "info",
-        summary: "Success Message",
-        detail: "Successfully approved this request",
-        life : 1000
-      });
-      this.axios.put('/api/abm/' +this.code,this.reason).then(()=>{
-        this.cancelApprove();
-        this.loading = true;
-        this.getPermohonan();
-      });
-    },
-    rejectRequest(){
-      this.ConfirmationVerifikasi = false;
-      this.dialogReject = true;
-    },
-    approveRequest(){
-      this.ConfirmationVerifikasi = false;
-      this.dialogApprove = true;
-    },
-    cancelReject(){
-      this.dialogReject = false;
-      this.code = null;
-      this.reason.ket = null;
-      this.submitted = false;
-    },
-    cancelApprove(){
-      this.dialogApprove = false;
-      this.code = null;
-      this.reason.remark = null;
-    },
-    updateReject(){
-      this.submitted = true;
-        if(this.reason.ket != null){
-          this.axios.put('/api/rbm/'+ this.code, this.reason).then(()=>{
-            this.dialogReject = false;
-              this.$toast.add({
-                severity: "info",
-                summary: "Success Message",
-                detail: "Successfully rejected this request",
-                life: 1000
-              });
-               this.cancelReject();
-               this.loading = true;
-               this.getPermohonan();
-            });
-        }
-    },
-    PrintOutRequestPdf(type){
-      this.loading = true;
-      this.Type.report_type = type;
-       this.axios.post('api/print-out-pdf-manager', this.Type).then((response)=>{
-        let htmlContent = response.data.data.htmlContent;
-        const options = {
-          filename: 'ICT Request List.pdf',
-          jsPDF: { 
-            unit: 'mm', 
-            format: 'a4',
-            orientation: 'landscape', 
-          }
-        };
-        
-        this.$html2pdf().set(options).from(htmlContent).save();
-        this.loading = false;
-       });
-    },
-    PrintOutFormIctRequest(ireq_id){
-      this.loading = true;
-       this.axios.get('api/print-out-ict-request/'+ireq_id).then((response)=>{
-        let htmlContent = response.data.htmlContent;
-          let norequest = response.data.norequest;
-          const options = {
-            filename: 'Form ICT Request No.'+norequest+'.pdf', 
-            jsPDF: { 
-              unit: 'mm', 
-              format: 'a4', 
-              orientation: 'landscape', 
-            }
-          };
-
-          
-          this.$html2pdf().set(options).from(htmlContent).save();
-          this.loading = false;
-       });
     },
     CetakExcelBlmDiverifikasi(){
       const date = new Date();

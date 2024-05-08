@@ -316,12 +316,12 @@ const routes = [
     },
     //ict_request_divisi1
     {
-        name: 'Ict Request Divisi 1',
+        name: 'Ict Request Higher Level',
         path: '/ict-request-higher-level',
         component: ()=> import('./pages/ICT-Request/Approval_atasan/Ict_request_divisi1.vue'),
     },
     {
-        name: 'Ict Request Divisi 1 Detail',
+        name: 'Ict Request Higher Level Detail',
         path: '/ict-request-higher-level-detail/:code',
         component: ()=> import('./pages/ICT-Request/Approval_atasan/Ict_request_divisi1_detail.vue'),
     },
@@ -652,11 +652,6 @@ const routes = [
         name: 'Ict Request Manager Detail',
         path: '/ict-request-manager-detail/:code',
         component: ()=> import('./pages/ICT-Request/ict_request_manager/Ict_request_manager_detail.vue'),
-    },
-    {
-        name: 'Ict Request Manager Detail Penugasan',
-        path: '/ict-request-manager/detail-penugasan/:code',
-        component: ()=> import('./pages/ICT-Request/ict_request_manager/Ict_request_manager_detail_penugasan.vue'),
     },
     {
         name: 'Ict Request Verifikasi From Email ICT Manager',

@@ -72,7 +72,7 @@
                     class="p-button-raised p-button mr-2"
                     icon="pi pi-chevron-left"
                     @click="$router.push({
-                      name: 'Ict Request Divisi 1'})"
+                      name: 'Ict Request Higher Level'})"
                   />
                   <Button
                     label="Approve"

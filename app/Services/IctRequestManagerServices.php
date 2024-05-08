@@ -28,11 +28,13 @@ class IctRequestManagerServices
             'ireq_mst.ireq_reason',
             'lr.lookup_desc as ireq_status',
             'ireq_mst.ireq_status as status',
-            DB::raw('count(ireq_mst.ireq_verificator_remark) as count_remark'),
-            DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'),
+            DB::raw('count(ireq_mst.ireq_verificator_remark) as count_remark_reviewer'),
+            DB::raw('count(ireq_mst.ireq_spv) as count_spv'),
+            DB::raw('count(idd.ireq_assigned_to1) as count_personnel1'),
             DB::raw('count(idd.ireq_id) as ireq_count_id'),
             DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
-            DB::raw('count(ireq_mst.ireq_approver2_remark) as count_remark_approver2'), 'ireq_mst.ireq_approver2_remark');
+            DB::raw('count(ireq_mst.ireq_approver2_remark) as count_remark_manager'), 
+            'ireq_mst.ireq_approver2_remark');
         $data->LEFTJOIN('divisi_refs dr', 'ireq_mst.ireq_divisi_user', 'dr.div_id');
         $data->LEFTJOIN('mng_users mu', 'ireq_mst.created_by', 'mu.usr_id');
         $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
@@ -77,7 +79,8 @@ class IctRequestManagerServices
             'mu.usr_email',
             'lr.lookup_desc',
             'ireq_mst.ireq_status',
-            'ireq_mst.ireq_approver2_remark');
+            'ireq_mst.ireq_approver2_remark'
+        );
         $data->ORDERBY('ireq_mst.ireq_date', 'DESC');
         return $data->get();
     }
@@ -129,7 +132,8 @@ class IctRequestManagerServices
             DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as kategori"),
             'im.ireq_date',
             'mus.usr_division',
-            'ireq_dtl.ireq_qty');
+            'ireq_dtl.ireq_qty'
+        );
         if (!empty($status)) {
             $data->WHERE('ireq_dtl.ireq_status', $status);
         }

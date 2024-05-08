@@ -56,8 +56,8 @@
 </template>
 <script>
 
-import DataTableRequest from '../../Components/Reviewer/DataTableRequestReviewer.vue';
-import DataTableDetail from '../../Components/Reviewer/DataTableDetailReviewer.vue';
+import DataTableRequest from '../../Components/Reviewer/Request/DataTableRequestReviewer.vue';
+import DataTableDetail from '../../Components/Reviewer/Request/DataTableDetailReviewer.vue';
 export default {
   components:{
     DataTableRequest,

@@ -12,45 +12,39 @@
             <TabView v-model:activeIndex="active">
                 <TabPanel header="Request">
                   <DataTableRequest 
-                    :value="ict" :loading="loading" :showRemark="showRemarkPermohonan" :showSpv="showSpvPermohonan"
-                    :filters="filters" printPdf="permohonan" @get-ict="getIct" Active="0"
+                    :value="ict" :loading="loading" :showRemark="showRemarkPermohonan" :showSpv="showSpvPermohonan" printPdf="permohonan" @get-ict="getIct" Active="0"
                   />                 
                 </TabPanel>
                 <TabPanel header="Reviewer">
                   <DataTableRequest 
-                    :value="reviewer" :loading="loading" :showRemark="showRemarkReviewer" :showSpv="showSpvReviewer"
-                    :filters="filters" printPdf="tab_reviewer" @get-ict="getIct" Active="1"
+                    :value="reviewer" :loading="loading" :showRemark="showRemarkReviewer" :showSpv="showSpvReviewer" printPdf="tab_reviewer" @get-ict="getIct" Active="1"
                   />   
                 </TabPanel>
                 <TabPanel header="Verified">
                   <DataTableRequest 
-                    :value="verif" :loading="loading" :showRemark="showRemarkVerified" :showSpv="showSpvVerified"
-                    :filters="filters" printPdf="verifikasi" Active="2"
+                    :value="verif" :loading="loading" :showRemark="showRemarkVerified" :showSpv="showSpvVerified" printPdf="verifikasi" Active="2"
                   /> 
                 </TabPanel>
                 <TabPanel header="Rejected">
                   <DataTableRequest 
-                    :value="reject" :loading="loading" :showRemark="showRemarkReject" :showSpv="showSpvReject"
-                    :filters="filters" printPdf="reject" showReason="1" Active="3"
+                    :value="reject" :loading="loading" :showRemark="showRemarkReject" :showSpv="showSpvReject" printPdf="reject" showReason="1" Active="3"
                   /> 
                 </TabPanel>
                 <TabPanel header="Request Assignment">
                   <DataTableRequest 
-                    :value="penugasan" :loading="loading" :showRemark="showRemarkPenugasan" :showSpv="showSpvPenugasan"
-                    :filters="filters" printPdf="assignment_request" showPersonnel1="1" Active="4"
+                    :value="penugasan" :loading="loading" :showRemark="showRemarkPenugasan" :showSpv="showSpvPenugasan" printPdf="assignment_request" showPersonnel1="1" Active="4"
                   /> 
                 </TabPanel>
                 <TabPanel header="In Progress">
                   <DataTableRequest 
-                    :value="sedangDikerjakan" :loading="loading" :showRemark="showRemarksedangDikerjakan" :showSpv="showSpvsedangDikerjakan"
-                    :filters="filters" printPdf="sedang_dikerjakan" showPersonnel1="1" Active="5"
+                    :value="sedangDikerjakan" :loading="loading" :showRemark="showRemarksedangDikerjakan" :showSpv="showSpvsedangDikerjakan" printPdf="sedang_dikerjakan" showPersonnel1="1" Active="5"
                   /> 
                 </TabPanel>
                 <TabPanel header="Done">
-                  <DataTableDetail :value="sudahDikerjakan" @show-loading="showLoading" @hide-loading="hideLoading" @get-ict="getIct" :loading="loading" :filters="filters" printPdf="sudah_dikerjakan"/> 
+                  <DataTableDetail :value="sudahDikerjakan" @show-loading="showLoading" @hide-loading="hideLoading" @get-data="getIct" :loading="loading" printPdf="sudah_dikerjakan"/> 
                 </TabPanel>
                 <TabPanel header="Close">
-                  <DataTableDetail :value="selesai" @show-loading="showLoading" @hide-loading="hideLoading" @get-ict="getIct" :loading="loading" :filters="filters" printPdf="selesai" /> 
+                  <DataTableDetail :value="selesai" @show-loading="showLoading" @hide-loading="hideLoading" @get-data="getIct" :loading="loading" printPdf="selesai" /> 
                 </TabPanel>
             </TabView>
       </div>
@@ -58,8 +52,8 @@
   </div>
 </template>
 <script>
-import DataTableRequest from '../../Components/Requestor/DataTableRequestRequestor.vue';
-import DataTableDetail from '../../Components/Requestor/DataTableDetailRequestor.vue';
+import DataTableRequest from '../../Components/Requestor/Request/DataTableRequestRequestor.vue';
+import DataTableDetail from '../../Components/Requestor/Request/DataTableDetailRequestor.vue';
 export default {
   components:{
     DataTableRequest,

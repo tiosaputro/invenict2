@@ -99,24 +99,6 @@
                     />
                 </div>
               </div>
-              <!-- <div class="field grid" v-if="this.request.usr_name">
-                <label class="col-fixed w-9rem">Your Supervisor</label>
-                  <div class="col-fixed w-9rem">
-                      <Dropdown 
-                        v-model ="request.ireq_spv"
-                        :options="spvList"
-                        optionLabel="spvnamejob"
-                        optionValue="spv_id"
-                        :class="{ 'p-invalid': error.ireq_spv }"
-                        placeholder="Select One"
-                        :filter="true"
-                        :showClear="true"
-                     />
-                        <small v-if="error.ireq_spv" class="p-error">
-                          {{error.ireq_spv}}
-                        </small>
-                  </div>
-              </div> -->
               <div class="form-group">
                  <Button
                   v-if="this.loading == false"
@@ -144,6 +126,7 @@ export default {
   data() {
     return {
       requestorDomain:'',
+      requestorDepartment:'',
       requestfor:'',
       isDisabledUser:false,
       isShowClear:true,
@@ -153,9 +136,11 @@ export default {
       error:[],
       userList:[],
       requestor:{
-        'usr_domain' : null
+        'usr_domain' : null,
+        'requestor_name' : null,
+        "usr_nm_perush" : null,
+        "usr_division" : null
       },
-      // spvList:[],
       request:{
         tgl: new Date(),
         priolev:null,
@@ -175,18 +160,18 @@ export default {
     changeUser(){
           if(this.requestfor == 1){
               this.request.usr_domain = this.requestorDomain;
-              this.request.usr_department = this.requestor.usr_department;
+              this.request.usr_department = this.requestorDepartment;
               this.request.usr_bu_id = this.requestor.usr_nm_perush;
               this.request.usr_div_id = this.requestor.usr_division;
               this.isDisabledUser = true;
               this.isShowClear = false;
             } else if(this.requestfor == 2) {
               this.request.usr_domain = '';
-              this.isShowClear = true;
-              this.isDisabledUser = false;
               this.request.usr_department = '';
               this.request.usr_bu_id = '';
               this.request.usr_div_id = '';
+              this.isDisabledUser = false;
+              this.isShowClear = true;
           }
     },
     getDataBuDvision(code){
@@ -197,7 +182,7 @@ export default {
       }
     },
     getDataById(usr_domain, propertyToGet) {
-        const result =  this.userList.filter(item => item.usr_domain === usr_domain);
+        const result = this.userList.filter(item => item.usr_domain === usr_domain);
         return result.map(item => item[propertyToGet]).join(', ');
     },
     getData(){
@@ -207,6 +192,7 @@ export default {
         this.requestor = response.data.requestor;
         this.request.requestor_name = this.requestor.usr_fullname;
         this.requestorDomain = this.requestor.usr_domain;
+        this.requestorDepartment = this.requestor.usr_department;
         this.level = response.data.priority;
         this.userList = response.data.userList;
         // this.spvList =  response.data.listSupervisor;

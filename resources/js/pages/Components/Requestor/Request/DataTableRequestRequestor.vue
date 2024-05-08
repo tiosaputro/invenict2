@@ -37,9 +37,11 @@
             style="cursor: pointer"
           >
             {{ slotProps.data.ireq_no }}
+            <i class="pi pi-info-circle"></i>
           </p>
         </template>
       </Column>
+      
       <Column header="Action" style="min-width: 9rem">
         <template #body="slotProps">
           <div class="button-group">
@@ -83,6 +85,63 @@
         </template>
       </Column>
     </DataTable>
+    <Dialog
+      v-model:visible="dialogDetailRequest"
+      :breakpoints="{ '960px': '95vw' }"
+      :style="{ width: '600px' }"
+      :header="this.header"
+      :modal="true"
+      class="fluid"
+    >
+      <table>
+        <tr>
+          <th>No Request</th>
+          <td><InputText type="text" v-model="detail.ireq_no" readonly /></td>
+        </tr>
+        <tr>
+          <th>Request Date</th>
+          <td><InputText :value="formattedRequestDate" readonly /></td>
+        </tr>
+        <tr>
+          <th>Requestor</th>
+          <td><InputText v-model="detail.ireq_requestor" readonly /></td>
+        </tr>
+        <tr>
+          <th>User</th>
+          <td><InputText readonly v-model="detail.ireq_user" /></td>
+        </tr>
+        <tr>
+          <th>User Division</th>
+          <td><InputText v-model="detail.usr_division" readonly /></td>
+        </tr>
+        <tr v-if="detail.countspv > 0">
+          <th>Supervisor</th>
+          <td><InputText v-model="detail.spv" readonly /></td>
+        </tr>
+        <tr v-if="detail.countremark_reviewer > 0">
+          <th>Remark Reviewer</th>
+          <td>
+            <InputText v-model="detail.ireq_verificator_remark" readonly />
+          </td>
+        </tr>
+        <tr v-if="detail.ireq_reason">
+          <th>Reason</th>
+          <td><InputText v-model="detail.ireq_reason" readonly /></td>
+        </tr>
+        <tr v-if="detail.ireq_assigned_to">
+          <th>ICT Personnel</th>
+          <td>
+            <InputText type="text" v-model="detail.ireq_assigned_to" readonly />
+          </td>
+        </tr>
+        <tr v-if="detail.ireq_status">
+          <th>Status</th>
+          <td>
+            <InputText type="text" v-model="detail.ireq_status" readonly />
+          </td>
+        </tr>
+      </table>
+    </Dialog>
   </div>
   <div v-else>
     <DataTable
@@ -103,13 +162,13 @@
             <i class="pi pi-search" />
             <InputText
               v-model="filters['global'].value"
-              placeholder="Search. . ."
+              placeholder="Search..."
             />
           </span>
         </div>
       </template>
       <template #empty> Not Found </template>
-      <template #loading> Loading ICT Request data. Please wait. </template>
+      <template #loading> Please wait </template>
       <Column
         field="ireq_no"
         header="No. Request"
@@ -120,7 +179,7 @@
         field="ireq_date"
         header="Request Date"
         :sortable="true"
-        style="min-width: 10rem"
+        style="min-width: 12rem"
       >
         <template #body="slotProps">
           {{ formatDate(slotProps.data.ireq_date) }}
@@ -130,13 +189,13 @@
         field="ireq_requestor"
         header="Requestor"
         :sortable="true"
-        style="min-width: 8rem"
+        style="min-width: 10rem"
       />
       <Column
         field="ireq_user"
         header="User"
         :sortable="true"
-        style="min-width: 8rem"
+        style="min-width: 10rem"
       />
       <Column
         field="usr_division"
@@ -145,42 +204,89 @@
         style="min-width: 10rem"
       />
       <Column
+        field="spv"
+        header="Supervisor"
+        :sortable="true"
+        style="min-width: 12rem"
+        v-if="showSpvColumn"
+      />
+      <Column
         field="ireq_verificator_remark"
         header="Remark Reviewer"
         :sortable="true"
-        style="min-width: 12rem"
-        v-if="showRemarkReviewerColumn"
+        v-if="showRemarkColumn"
       />
-      <Column style="min-width: 10rem">
+      <Column
+        field="ireq_reason"
+        header="Reason"
+        :sortable="true"
+        style="min-width: 12rem"
+        v-if="showReason == '1'"
+      />
+      <Column
+        field="ireq_assigned_to"
+        header="ICT Personnel"
+        :sortable="true"
+        style="min-width: 10rem"
+        v-if="showPersonnel1 == '1'"
+      />
+      <Column
+        field="ireq_status"
+        header="Status"
+        :sortable="true"
+        style="min-width: 9rem"
+      >
+        <template #body="slotProps">
+          <span
+            :class="
+              'user-request status-' + slotProps.data.status.toLowerCase()
+            "
+            v-if="slotProps.data.status"
+            >{{ slotProps.data.ireq_status }}</span
+          >
+        </template>
+      </Column>
+      <Column header="Action">
         <template #body="slotProps">
           <Button
             class="p-button-rounded p-button-secondary mr-2 mt-2"
             icon="pi pi-info-circle"
             v-tooltip.bottom="'Click for request details'"
+            @click="detailTab(slotProps.data.ireq_id, Active, showForDashboard)"
+          />
+          <Button
+            v-if="slotProps.data.ireq_status == null"
+            class="p-button-rounded p-button-info mr-2 mt-2"
+            icon="pi pi-pencil"
+            v-tooltip.bottom="'Click to edit request'"
             @click="
               $router.push({
-                name: 'Ict Request Divisi 3 Detail',
+                name: 'Edit Ict Request',
                 params: { code: slotProps.data.ireq_id },
               })
             "
           />
           <Button
-            class="p-button-rounded p-button-info mr-2 mt-2"
-            icon="pi pi-check"
-            v-tooltip.bottom="'Click for accept request'"
-            @click="acceptRequest(slotProps.data.ireq_id)"
+            v-if="slotProps.data.ireq_status == null"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger mr-2 mt-2"
+            @click="DeleteIct(slotProps.data.ireq_id)"
+            v-tooltip.bottom="'Click to delete the request'"
           />
           <Button
-            class="p-button-rounded p-button-danger mr-2 mt-2"
-            icon="bi bi-x-square"
-            v-tooltip.bottom="'Click for reject request'"
-            @click="rejectRequest(slotProps.data.ireq_id)"
+            v-if="
+              slotProps.data.count > 0 && slotProps.data.ireq_status == null
+            "
+            class="p-button-rounded p-button-success mt-2 mr-2"
+            icon="pi pi-check"
+            @click="SubmitIct(slotProps.data.ireq_id)"
+            v-tooltip.bottom="'Click to submit request'"
           />
         </template>
       </Column>
       <template #footer>
-        <div class="p-grid p-dir-col">
-          <div class="p-col">
+        <div class="grid p-dir-col">
+          <div class="col">
             <div class="box">
               <Button
                 v-if="showForDashboardFooter"
@@ -193,108 +299,30 @@
                 label="Pdf"
                 class="p-button-raised p-button-danger mr-2"
                 icon="pi pi-file-pdf"
-                @click="printPdfRequestListByStatus(printRequestListByStatus)"
+                @click="PrintRequestListByStatusPdf(printPdf)"
               />
               <!-- <Button label="Excel" class="p-button-raised p-button-success mr-2" icon="pi pi-print"
-                                @click="CetakExcelAssignmentRequest()" /> -->
+                                @click="CetakExcelPermohonan()" /> -->
             </div>
           </div>
         </div>
       </template>
     </DataTable>
   </div>
-  <Dialog
-    v-model:visible="dialogEdit"
-    :style="{ width: '500px' }"
-    header="Dialog Reject Request"
-    :modal="true"
-    class="fluid"
-  >
-    <div class="fluid">
-      <div class="field grid">
-        <label class="col-fixed w-9rem" style="width: 100px">Reason</label>
-        <div class="col-fixed w-9rem">
-          <Textarea
-            v-model="editDetail.ireq_reason"
-            :autoResize="true"
-            rows="5"
-            cols="20"
-            placeholder="Give a reason"
-            :class="{ 'p-invalid': submitted && !editDetail.ireq_reason }"
-          />
-          <small v-if="submitted && !editDetail.ireq_reason" class="p-error">
-            Reason not filled
-          </small>
-        </div>
-      </div>
-    </div>
-    <template #footer>
-      <Button label="Yes" @click="submitReject()" class="p-button" autofocus />
-      <Button label="No" @click="cancelReject()" class="p-button-text" />
-    </template>
-  </Dialog>
-  <Dialog
-    v-model:visible="dialogDetailRequest"
-    :breakpoints="{ '960px': '75vw' }"
-    :style="{ width: '600px' }"
-    :header="this.header"
-    :modal="true"
-    class="fluid"
-  >
-    <table>
-      <tr>
-        <th>No Request</th>
-        <td><InputText type="text" v-model="detail.ireq_no" readonly /></td>
-      </tr>
-      <tr>
-        <th>Request Date</th>
-        <td><InputText :value="formattedRequestDate" readonly /></td>
-      </tr>
-      <tr>
-        <th>Requestor</th>
-        <td><InputText v-model="detail.ireq_requestor" readonly /></td>
-      </tr>
-      <tr>
-        <th>User</th>
-        <td><InputText readonly v-model="detail.ireq_user" /></td>
-      </tr>
-      <tr>
-        <th>User Division</th>
-        <td><InputText v-model="detail.usr_division" readonly /></td>
-      </tr>
-      <tr v-if="detail.countspv > 0">
-        <th>Supervisor</th>
-        <td><InputText v-model="detail.spv" readonly /></td>
-      </tr>
-      <tr v-if="detail.countremark_reviewer > 0">
-        <th>Remark Reviewer</th>
-        <td><InputText v-model="detail.ireq_verificator_remark" readonly /></td>
-      </tr>
-      <tr v-if="detail.ireq_reason">
-        <th>Reason</th>
-        <td><InputText v-model="detail.ireq_reason" readonly /></td>
-      </tr>
-      <tr v-if="detail.ireq_assigned_to">
-        <th>ICT Personnel</th>
-        <td>
-          <InputText type="text" v-model="detail.ireq_assigned_to" readonly />
-        </td>
-      </tr>
-      <tr v-if="detail.ireq_status">
-        <th>Status</th>
-        <td><InputText type="text" v-model="detail.ireq_status" readonly /></td>
-      </tr>
-    </table>
-  </Dialog>
 </template>
+
 <script>
 export default {
   emits: ["show-loading", "hide-loading", "get-data"],
   props: {
     value: Array,
     loading: Boolean,
-    showRemarkReviewer: Array,
-    printRequestListByStatus: String,
+    printPdf: String,
+    showSpv: Array,
+    showRemark: Array,
+    showReason: String,
+    showPersonnel1: String,
+    Active: String,
     showForDashboard: {
       type: Boolean,
       default: false,
@@ -304,10 +332,11 @@ export default {
     showForDashboardFooter() {
       return this.showForDashboard == true;
     },
-    showRemarkReviewerColumn() {
-      return (
-        this.showRemarkReviewer && this.showRemarkReviewer.some((el) => el > 0)
-      );
+    showSpvColumn() {
+      return this.showSpv && this.showSpv.some((el) => el > 0);
+    },
+    showRemarkColumn() {
+      return this.showRemark && this.showRemark.some((el) => el > 0);
     },
     formattedRequestDate() {
       return this.formatDate(this.detail.ireq_date);
@@ -319,20 +348,16 @@ export default {
   },
   data() {
     return {
+      header: null,
+      dialogDetailRequest: false,
+      Type: {
+        report_type: "",
+      },
+      isMobile: false,
+      detail: [],
       filters: {
         global: { value: null, matchMode: this.$FilterMatchMode.CONTAINS },
       },
-      isMobile: false,
-      editDetail: {
-        ireq_id: "",
-        ireq_reason: "",
-      },
-      dialogEdit: false,
-      submitted: false,
-      isMobile: false,
-      header: null,
-      dialogDetailRequest: false,
-      detail: [],
     };
   },
   methods: {
@@ -345,62 +370,57 @@ export default {
     updateIsMobile() {
       this.isMobile = window.innerWidth <= 768;
     },
-    formatDate(date) {
-      return this.$moment(date).format("DD MMM YYYY HH:mm");
-    },
-    acceptRequest(ireq_id) {
+    DeleteIct(code) {
       this.$confirm.require({
-        message: "Are you sure to accept this request?",
-        header: "Confirmation",
+        message: "Are you sure you want to delete this record data?",
+        header: "Delete Confirmation",
         icon: "pi pi-info-circle",
-        acceptClass: "p-button",
+        acceptClass: "p-button-danger",
         acceptLabel: "Yes",
         rejectLabel: "No",
         accept: () => {
-          this.$emit("show-loading");
-          this.$toast.add({
-            severity: "info",
-            summary: "Message Succes",
-            detail: "Accept Request Success",
-            life: 1000,
-          });
-          this.axios.get("/api/acceptPersonnel/" + ireq_id).then(() => {
+          this.axios.delete("api/delete-ict/" + code).then(() => {
+            this.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Record deleted",
+              life: 3000,
+            });
+            this.loading = true;
             this.$emit("get-data");
           });
         },
         reject: () => {},
       });
     },
-    rejectRequest(ireq_id) {
-      this.editDetail.ireq_id = ireq_id;
-      this.dialogEdit = true;
-    },
-    cancelReject() {
-      this.dialogEdit = false;
-      this.editDetail = [];
-      this.submitted = false;
-    },
-    submitReject() {
-      this.submitted = true;
-      if (this.editDetail.ireq_reason != "") {
-        this.$emit("show-loading");
-        this.axios.post("/api/rejectPersonnel", this.editDetail).then(() => {
-          this.$toast.add({
-            severity: "success",
-            summary: "Success Message",
-            detail: "Successfully rejected request",
-            life: 3000,
+    SubmitIct(code) {
+      this.$confirm.require({
+        message: "Are you sure you want to submit this request?",
+        header: "Confirmation Submit",
+        icon: "pi pi-info-circle",
+        acceptClass: "p-button",
+        acceptLabel: "Yes",
+        rejectLabel: "No",
+        accept: () => {
+          this.$emit("show-loading");
+          this.axios.get("api/updateStatusSubmit/" + code).then(() => {
+            this.$emit("get-data");
+            this.$toast.add({
+              severity: "info",
+              summary: "Confirmed",
+              detail: "Successfully Submit",
+              life: 3000,
+            });
           });
-          this.cancelReject();
-          this.$emit("get-data");
-        });
-      }
+        },
+        reject: () => {},
+      });
     },
-    printPdfRequestListByStatus(status = null) {
+    PrintRequestListByStatusPdf(type) {
       this.$emit("show-loading");
-      this.Type.report_type = status;
+      this.Type.report_type = type;
       this.axios
-        .post("api/print-out-pdf-personnel", this.Type)
+        .post("api/print-out-pdf-requestor", this.Type)
         .then((response) => {
           let htmlContent = response.data.data.htmlContent;
           const options = {
@@ -411,35 +431,40 @@ export default {
               orientation: "landscape",
             },
           };
+
           this.$html2pdf().set(options).from(htmlContent).save();
           this.$emit("hide-loading");
         });
     },
-    CetakExcelAssignmentRequest() {
-      const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY");
-      this.$emit("show-loading");
-      this.axios
-        .get("api/report-ict-excel-personnel-assignment-request", {
-          headers: {
-            "Content-Type":
-              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    formatDate(date) {
+      return this.$moment(date).format("DD MMM YYYY HH:mm");
+    },
+    detailTab(ireq_id, Active, showForDashboard) {
+      if (showForDashboard === true) {
+        this.$router.push({
+          path: "/ict-request-detail/" + ireq_id,
+          query: {
+            showForDashboard: true,
           },
-          responseType: "arraybuffer",
-        })
-        .then((response) => {
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute(
-            "download",
-            "ICT REQUEST STATUS REPORT LIST ON " + today + ".xlsx"
-          );
-          document.body.appendChild(link);
-          link.click();
-          this.$emit("hide-loading");
         });
+      } else {
+        localStorage.setItem("active", Active);
+        this.$router.push("/ict-request-detail/" + ireq_id);
+      }
     },
   },
 };
 </script>
+<style lang="scss" scoped>
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.button-group .p-button {
+  margin: 5px; /* Ruang antara tombol */
+}
+th {
+  padding-right: 10px; /* Adjust the value as needed */
+}
+</style>
