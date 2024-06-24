@@ -175,6 +175,8 @@ export default {
                             localStorage.setItem("active1", 0);
                             localStorage.setItem("active2", 0);
                             localStorage.setItem("active3", 0);
+                            localStorage.setItem("active4", 0);
+                            
                             setTimeout(
                                 () => this.$router.push("/dashboard"),
                                 1000

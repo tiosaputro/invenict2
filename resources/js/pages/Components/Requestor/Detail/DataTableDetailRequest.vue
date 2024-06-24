@@ -21,7 +21,19 @@
             :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request" responsiveLayout="scroll">
             <template #header>
-                <div class="table-header text-right">
+                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+                    v-if="kode.cekstatus == null">
+                    <Button label="Add" class="p-button-raised" v-tooltip.right="'Click to add new detail'"
+                        icon="bi bi-file-earmark-plus" @click="$router.push({
+                        name: 'Add Ict Request Detail',
+                        params: { code: this.$route.params.code },
+                    })" />
+                    <span class="block mt-2 md:mt-0 p-input-icon-left">
+                        <i class="pi pi-search" />
+                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
+                    </span>
+                </div>
+                <div class="table-header text-right" v-else-if="kode.cekstatus != null">
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value" placeholder="Search. . ." />

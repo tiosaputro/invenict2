@@ -37,6 +37,7 @@
             style="cursor: pointer"
           >
             {{ slotProps.data.ireq_no }}
+            <i class="pi pi-info-circle"></i>
           </p>
         </template>
       </Column>
@@ -563,6 +564,6 @@ export default {
   margin: 5px;
 }
 th {
-  padding-right: 10px; /* Adjust the value as needed */
+  padding-right: 10px;
 }
 </style>

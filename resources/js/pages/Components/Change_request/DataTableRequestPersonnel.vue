@@ -37,6 +37,7 @@
             style="cursor: pointer"
           >
             {{ slotProps.data.ireq_no }}
+            <i class="pi pi-info-circle"></i>
           </p>
         </template>
       </Column>
@@ -48,7 +49,7 @@
               icon="pi pi-info-circle"
               v-tooltip.bottom="'Click for request details'"
               @click="
-                detailTab(slotProps.data.ireq_id, Active, showForDashboard)
+                TabToDetail(slotProps.data.ireq_id, Active, showForDashboard)
               "
             />
             <Button
@@ -295,6 +296,7 @@ export default {
     loading: Boolean,
     showRemarkReviewer: Array,
     printRequestListByStatus: String,
+    Active: String,
     showForDashboard: {
       type: Boolean,
       default: false,
@@ -336,6 +338,10 @@ export default {
     };
   },
   methods: {
+    TabToDetail(ireq_id = null, Active) {
+      localStorage.setItem("active4", Active);
+      this.$router.push("/ict-request-personnel-detail/" + ireq_id);
+    },
     detailRequest(ireq_id) {
       const requestData = this.value.find((item) => item.ireq_id === ireq_id);
       this.header = " Detail Request No. " + requestData.ireq_no;

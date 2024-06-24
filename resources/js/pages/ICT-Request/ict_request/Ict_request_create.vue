@@ -22,7 +22,7 @@
               </div>
               <div class="field grid" v-if="this.requestfor">
                 <label class="col-fixed w-9rem">Priority Level</label>
-                 <div class="col-fixed w-9rem">
+                 <div class="col-fixed w-10rem">
                      <Dropdown 
                         v-model="request.priolev"
                         :options="level"
@@ -38,19 +38,19 @@
               </div>
               <div class="field grid" v-if="this.requestfor">
                 <label class="col-fixed w-9rem">Requestor</label>
-                 <div class="col-fixed w-9rem">
+                 <div class="col-fixed w-10rem">
                   <InputText
                     type="text"
                     v-model="request.requestor_name"
-                    disabled
+                    readonly
                   />
                  </div>
               </div>
               <div class="field grid" v-if="this.requestfor" >
                 <label class="col-fixed w-9rem">User</label>
-                 <div class="col-fixed w-9rem">
+                 <div class="col-fixed w-10rem">
                   <Dropdown 
-                        :disabled="isDisabledUser"
+                        :readonly="isDisabledUser"
                         v-model ="request.usr_domain"
                         :options="userList"
                         optionLabel="usr_fullname"
@@ -75,7 +75,7 @@
                         <InputText
                           type="text"
                           v-model="request.usr_bu_id"
-                          disabled
+                          readonly
                         />
                       </div>
               </div>
@@ -85,7 +85,7 @@
                     <InputText
                       type="text"
                       v-model="request.usr_div_id"
-                      disabled
+                      readonly
                     />
                 </div>
               </div>
@@ -95,7 +95,7 @@
                     <InputText
                       type="text"
                       v-model="request.usr_department"
-                      disabled
+                      readonly
                     />
                 </div>
               </div>

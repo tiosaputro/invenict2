@@ -12,28 +12,28 @@
             <TabView ref="tabview1">
               <TabPanel header="Assignment Request">
                 <DataTableRequest :value="penugasan" :showRemarkReviewer="countRemarkReviewerPenugasan" :loading="loading" @get-data="getData"
-                  @show-loading="showLoading" @hide-loading="hideLoading" printRequestListByStatus="assignment_request"
+                  @show-loading="showLoading" @hide-loading="hideLoading" printRequestListByStatus="assignment_request" Active="0"
                 />
               </TabPanel>
               <TabPanel header="Rejected">
                 <DataTableDetail :value="reject" :showReason="countReasonRejected" :showRemarkReviewer="countRemarkReviewerRejected" 
-                  :showRemarkAssigned="countRemarkAssignedRejected" printRequestListByStatus="reject" :showRemarkRequestor="true" :loading="loading" @get-data="getData" @show-loading="showLoading" @hide-loading="hideLoading"/>
+                  :showRemarkAssigned="countRemarkAssignedRejected" printRequestListByStatus="reject" :showRemarkRequestor="true" Active="1" :loading="loading" @get-data="getData" @show-loading="showLoading" @hide-loading="hideLoading"/>
               </TabPanel>
               <TabPanel header="In Progress">
                 <DataTableDetail :value="sedangDikerjakan" :showRemarkReviewer="countRemarkReviewerInProgress" 
-                  :showRemarkAssigned="countRemarkAssignedInProgress" printRequestListByStatus="sedang_dikerjakan" :showRemarkRequestor="true" :showNoteAssigned="countNoteAssignedInProgress" :loading="loading" @get-data="getData" @show-loading="showLoading" 
+                  :showRemarkAssigned="countRemarkAssignedInProgress" printRequestListByStatus="sedang_dikerjakan" :showRemarkRequestor="true" Active="2" :showNoteAssigned="countNoteAssignedInProgress" :loading="loading" @get-data="getData" @show-loading="showLoading" 
                   @hide-loading="hideLoading"
                 />
               </TabPanel>
               <TabPanel header="Done">
                 <DataTableDetail :value="sudahDikerjakan" :showRemarkReviewer="countRemarkReviewerDone" 
-                  :showRemarkAssigned="countRemarkAssignedDone" :showRemarkRequestor="true" :showNoteAssigned="countNoteAssignedDone" :loading="loading" @get-data="getData" @show-loading="showLoading" 
+                  :showRemarkAssigned="countRemarkAssignedDone" :showRemarkRequestor="true" :showNoteAssigned="countNoteAssignedDone" Active="3" :loading="loading" @get-data="getData" @show-loading="showLoading" 
                   @hide-loading="hideLoading" printRequestListByStatus="sudah_dikerjakan"
                 /> 
               </TabPanel>
               <TabPanel header="Close">
                 <DataTableDetail :value="selesai" :showRemarkReviewer="countRemarkReviewerClose" 
-                  :showRemarkAssigned="countRemarkAssignedClose" :showRemarkRequestor="true" :showNoteAssigned="countNoteAssignedClose" :loading="loading" @get-data="getData" @show-loading="showLoading" 
+                  :showRemarkAssigned="countRemarkAssignedClose" :showRemarkRequestor="true" :showNoteAssigned="countNoteAssignedClose" Active="4" :loading="loading" @get-data="getData" @show-loading="showLoading" 
                   @hide-loading="hideLoading" printRequestListByStatus="selesai"
                 /> 
               </TabPanel>
