@@ -125,7 +125,7 @@ export default {
             error: false,
             errorr: false,
             submitted: false,
-            loggedIn: null,
+            loggedIn: null
         };
     },
     mounted() {
@@ -167,20 +167,16 @@ export default {
                             localStorage.clear();
                             localStorage.setItem("loggedIn", "true");
                             localStorage.setItem("token", response.data.token);
-                            localStorage.setItem(
-                                "usr_loc",
-                                response.data.usr_loc
-                            );
+                            localStorage.setItem("usr_loc",response.data.usr_loc);
                             localStorage.setItem("active", 0);
                             localStorage.setItem("active1", 0);
                             localStorage.setItem("active2", 0);
                             localStorage.setItem("active3", 0);
                             localStorage.setItem("active4", 0);
                             
-                            setTimeout(
-                                () => this.$router.push("/dashboard"),
-                                1000
-                            );
+                            setTimeout(() =>{
+                                    this.$router.push("/dashboard")
+                            }, 1000);
                         })
                         .catch((error) => {
                             this.submitted = false;

@@ -12,7 +12,7 @@
             <label>: {{ kode.noreq }} </label>
             <br />
             <label style="width: 110px">Request Date</label>
-            <label>: {{ formatDate(kode.ireq_date) }}</label>
+            <label>: {{ formatDateWithOutSecond(kode.ireq_date) }}</label>
           </div>
         </template>
       </Toolbar>
@@ -44,8 +44,8 @@
         <Column header="Description" :sortable="true" style="min-width: 9rem">
           <template #body="slotProps">
             <p @click="detailRequest(slotProps.data.ireqd_id)">
-              Req Type : {{ slotProps.data.ireq_type }} 
-              Items: {{ slotProps.data.name }}
+              This request pertains to a <b>{{ slotProps.data.ireq_type }}</b> requirement for <b>{{ slotProps.data.name }}</b>.
+              <i class="pi pi-info-circle"/>
             </p>
           </template>
         </Column>
@@ -381,6 +381,9 @@
       },
       formatDate(date) {
         return this.$moment(date).format("DD MMM YYYY HH:mm");
+      },
+      formatDateWithOutSecond(date) {
+        return this.$moment(date).format("DD MMM YYYY");
       },
       CetakPdf() {
         this.$emit("show-loading");

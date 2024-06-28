@@ -41,137 +41,9 @@
           </p>
         </template>
       </Column>
-      <Column header="Action" headerStyle="min-width:10rem">
+      <Column headerStyle="min-width:8rem">
         <template #body="slotProps">
-          <div class="button-group">
-            <Button
-              class="p-button-rounded p-button-secondary mr-2 mt-2"
-              icon="pi pi-info-circle"
-              v-tooltip.bottom="'Click for request details'"
-              @click="TabToDetail(slotProps.data.ireq_id, Active)"
-            />
-            <Button
-              v-if="slotProps.data.status == 'P'"
-              class="p-button-rounded p-button-secondary mr-2 mt-2"
-              icon="pi pi-pencil"
-              v-tooltip.bottom="'Click for Edit Supervisor'"
-              @click="editDataSpv(slotProps.data.ireq_id)"
-            />
-            <Button
-              v-if="slotProps.data.status == 'P'"
-              class="p-button-rounded p-button-warning mr-2 mt-2"
-              @click="
-                SendEmail(slotProps.data.usr_email, slotProps.data.ireq_id)
-              "
-              icon="bi bi-envelope-check-fill"
-              v-tooltip.bottom="
-                'Click to send email to ' + slotProps.data.usr_email
-              "
-            />
-            <Button
-              v-if="slotProps.data.status == 'P'"
-              class="p-button-rounded p-button-danger mr-2 mt-2"
-              @click="Reject(slotProps.data.ireq_id)"
-              v-tooltip.bottom="'Click to reject request'"
-              icon="bi bi-x-square"
-            />
-            <Button
-              v-if="
-                slotProps.data.status !== 'RR' &&
-                slotProps.data.status !== 'RA1' &&
-                slotProps.data.status !== 'RA2' &&
-                slotProps.data.status !== 'D' &&
-                slotProps.data.status !== 'C'
-              "
-              icon="bi bi-chat-quote"
-              class="p-button-rounded p-button mr-2 mt-2"
-              @click="Remark(slotProps.data.ireq_id)"
-              v-tooltip.bottom="'Click to add remark'"
-            />
-            <Button
-              v-if="
-                slotProps.data.ireq_count_status !=
-                  slotProps.data.ireq_count_id &&
-                slotProps.data.ireq_count_spv > 0 &&
-                slotProps.data.status == 'P'
-              "
-              class="p-button-rounded mr-2 mt-2"
-              @click="ApproveAtasan(slotProps.data.ireq_id)"
-              icon="bi bi-file-earmark-arrow-up"
-              v-tooltip.bottom="'Click to higher level approval'"
-            />
-            <Button
-              v-if="
-                (slotProps.data.ireq_count_status !=
-                  slotProps.data.ireq_count_id &&
-                  slotProps.data.ireq_count_spv > 0 &&
-                  slotProps.data.status == 'P') ||
-                slotProps.data.status === 'A1'
-              "
-              class="p-button-rounded mr-2 mt-2"
-              @click="ApproveManager(slotProps.data.ireq_id)"
-              v-tooltip.bottom="'Click to ICT manager approval'"
-              icon="bi bi-file-earmark-arrow-up-fill"
-            />
-            <Button
-              v-if="
-                slotProps.data.status === 'P' ||
-                slotProps.data.status === 'A1' ||
-                slotProps.data.status === 'A2' ||
-                slotProps.data.status == 'RT'
-              "
-              class="p-button-rounded mr-2 mt-2"
-              @click="
-                AssignPerRequest(
-                  slotProps.data.ireq_id,
-                  slotProps.data.ireq_assigned_to1
-                )
-              "
-              icon="bi bi-person-workspace"
-              v-tooltip.bottom="'Click to Assign Per Request'"
-            />
-            <Button
-              v-if="
-                slotProps.data.status === 'P' ||
-                slotProps.data.status === 'A1' ||
-                slotProps.data.status === 'A2'
-              "
-              class="p-button-rounded mr-2 mt-2"
-              @click="
-                $router.push({
-                  name: 'Ict Request Reviewer Assign Per Detail',
-                  params: { code: slotProps.data.ireq_id },
-                })
-              "
-              icon="bi bi-people"
-              v-tooltip.bottom="'Click to Assign Per Detail'"
-            />
-            <Button
-              v-if="
-                slotProps.data.ireq_count_status ==
-                  slotProps.data.ireq_count_id &&
-                slotProps.data.status !== 'NT' &&
-                slotProps.data.status !== 'RT' &&
-                slotProps.data.status !== 'T' &&
-                slotProps.data.status !== 'C'
-              "
-              class="p-button-rounded p-button-success mr-2 mt-2"
-              @click="Submit(slotProps.data.ireq_id)"
-              icon="bi bi-send-check"
-              v-tooltip.bottom="'Click to submit'"
-            />
-            <Button
-              v-if="
-                slotProps.data.count_assigned2 > 0 &&
-                slotProps.data.status == 'RT'
-              "
-              class="p-button-rounded p-button-success mr-2 mt-2"
-              @click="Submit(slotProps.data.ireq_id)"
-              icon="bi bi-send-check"
-              v-tooltip.bottom="'Click to submit'"
-            />
-          </div>
-          <!-- <SpeedDial :model="getButtonModel(slotProps)" mask direction="down" :class="{ 'centered-speed-dial': isMobile }" class="custom-speed-dial"/> -->
+          <SplitButton label="Action" class="p-button p-button-success p-button-small" :model="GetItems(slotProps)" />
         </template>
       </Column>
       <template #footer>
@@ -314,9 +186,10 @@
           >
         </template>
       </Column>
-      <Column headerStyle="min-width:10rem">
+      <Column headerStyle="min-width:9rem">
         <template #body="slotProps">
-          <div class="button-group">
+          <SplitButton label="Action" class="p-button p-button-success p-button-small" :model="GetItems(slotProps)" />
+          <!-- <div class="button-group">
             <Button
               class="p-button-rounded p-button-secondary mr-2 mt-2"
               icon="pi pi-info-circle"
@@ -443,7 +316,7 @@
               icon="bi bi-send-check"
               v-tooltip.bottom="'Click to submit'"
             />
-          </div>
+          </div> -->
         </template>
       </Column>
       <template #footer>
@@ -726,14 +599,104 @@ export default {
     window.addEventListener("resize", this.updateIsMobile);
   },
   methods: {
-    getButtonModel(slotProps) {
-      return this.ButtonList.map((button) => ({
-        label: button.label,
-        icon: button.icon,
-        tooltip: button.tooltip,
-        command: () =>
-          button.clickHandler(...button.args.map((arg) => slotProps.data[arg])),
-      }));
+    GetItems(slotProps){
+      const items = [
+        {
+          label: 'Detail Request',
+          icon: "pi pi-info-circle",
+          command: () => {
+            this.TabToDetail(slotProps.data.ireq_id, this.Active);
+          }
+        }
+      ];
+
+      if (slotProps.data.status === 'P') {
+        items.push(
+          {
+            label: 'Update Supervisor',
+            icon: "pi pi-pencil",
+            command: () => {
+              this.editDataSpv(slotProps.data.ireq_id);
+            }
+          },
+          {
+            label: 'Send Mail',
+            icon: "bi bi-envelope-check-fill",
+            command: () => {
+              this.SendEmail(slotProps.data.usr_email, slotProps.data.ireq_id);
+            }
+          },
+          {
+            label: 'Reject Request',
+            icon: "bi bi-x-square",
+            command: () => {
+              this.Reject(slotProps.data.ireq_id);
+            }
+          },
+        );
+      }
+
+      if (!['RR', 'RA1', 'RA2', 'D', 'C'].includes(slotProps.data.status)) {
+        items.push({
+          label: 'Add Remark',
+          icon: "bi bi-chat-quote",
+          command: () => {
+            this.Remark(slotProps.data.ireq_id);
+          }
+        });
+      }
+
+      if ( slotProps.data.ireq_count_status !== slotProps.data.ireq_count_id && slotProps.data.ireq_count_spv > 0 && slotProps.data.status === 'P') {
+        items.push({
+          label: 'Higher Level Approval',
+          icon: "bi bi-file-earmark-arrow-up",
+          command: () => {
+            this.ApproveAtasan(slotProps.data.ireq_id);
+          }
+        });
+      }
+
+      if ( slotProps.data.ireq_count_status != slotProps.data.ireq_count_id && slotProps.data.status === 'A1'){
+        items.push({
+          label: 'ICT Manager Approval',
+          icon: "bi bi-file-earmark-arrow-up-fill",
+          command: () => {
+            this.ApproveManager(slotProps.data.ireq_id);
+          }
+        });
+      }
+
+      if (slotProps.data.status === 'P' || slotProps.data.status === 'A1' || slotProps.data.status === 'A2' || slotProps.data.status == 'RT') {
+        items.push({
+          label: 'Assign Per Request',
+          icon: "bi bi-person-workspace",
+          command: () => {
+            this.AssignPerRequest(slotProps.data.ireq_id, slotProps.data.ireq_assigned_to1);
+          }
+        });
+      }
+
+      if(slotProps.data.status === 'P' || slotProps.data.status === 'A1' || slotProps.data.status === 'A2'){
+        items.push({
+          label: 'Assign Per Detail',
+          icon: "bi bi-people",
+          command: () => {
+            this.$router.push({ name: 'Ict Request Reviewer Assign Per Detail', params: { code: slotProps.data.ireq_id }})
+          }
+        });
+      }
+
+      if(slotProps.data.ireq_count_status == slotProps.data.ireq_count_id && slotProps.data.status !== 'NT' && slotProps.data.status !== 'RT' && slotProps.data.status !== 'T' && slotProps.data.status !== 'C' || slotProps.data.count_assigned2 > 0 && slotProps.data.status == 'RT' || slotProps.data.ireq_count_spv > 0 && slotProps.data.status == 'P' ){
+        items.push({
+          label: 'Submit',
+          icon: "bi bi-send-check",
+          command: () => {
+            this.Submit(slotProps.data.ireq_id);
+          }
+        });
+      }
+
+      return items;
     },
     detailRequest(ireq_id = null) {
       const requestData = this.value.find((item) => item.ireq_id === ireq_id);
@@ -961,6 +924,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.p-button-small {
+  padding: 0.25em 0.5em;
+  font-size: 0.875em;
+}
+.custom-split-button .p-splitbutton-menubutton {
+  display: none;
+}
+
+.custom-split-button .p-button-label {
+  display: none;
+}
 .centered-speed-dial {
   position: relative;
   left: auto;

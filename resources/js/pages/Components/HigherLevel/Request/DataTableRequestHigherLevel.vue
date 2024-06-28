@@ -507,7 +507,7 @@ export default {
         detail: "Successfully approved this request",
         life: 1000,
       });
-      this.axios.put("/api/updateStatusPermohonan/" + this.code).then(() => {
+      this.axios.get("/api/updateStatusPermohonan/" + this.code).then(() => {
         this.cancelApprove();
         this.$emit("show-loading");
         this.$emit("get-data");

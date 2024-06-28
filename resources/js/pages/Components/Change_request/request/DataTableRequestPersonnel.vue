@@ -45,41 +45,28 @@
         <template #body="slotProps">
           <div class="button-group">
             <Button
-              class="p-button-rounded p-button-secondary mr-2 mt-2"
-              icon="pi pi-info-circle"
-              v-tooltip.bottom="'Click for request details'"
-              @click="
-                TabToDetail(slotProps.data.ireq_id, Active, showForDashboard)
-              "
-            />
-            <Button
-              v-if="slotProps.data.ireq_status == null"
-              class="p-button-rounded p-button-info mr-2 mt-2"
-              icon="pi pi-pencil"
-              v-tooltip.bottom="'Click to edit request'"
-              @click="
-                $router.push({
-                  name: 'Edit Ict Request',
-                  params: { code: slotProps.data.ireq_id },
-                })
-              "
-            />
-            <Button
-              v-if="slotProps.data.ireq_status == null"
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-danger mr-2 mt-2"
-              @click="DeleteIct(slotProps.data.ireq_id)"
-              v-tooltip.bottom="'Click to delete the request'"
-            />
-            <Button
-              v-if="
-                slotProps.data.count > 0 && slotProps.data.ireq_status == null
-              "
-              class="p-button-rounded p-button-success mr-2 mt-2"
-              icon="pi pi-check"
-              @click="SubmitIct(slotProps.data.ireq_id)"
-              v-tooltip.bottom="'Click to submit request'"
-            />
+            class="p-button-rounded p-button-secondary mr-2 mt-2"
+            icon="pi pi-info-circle"
+            v-tooltip.bottom="'Click for request details'"
+            @click="
+              $router.push({
+                name: 'Ict Request Divisi 3 Detail',
+                params: { code: slotProps.data.ireq_id },
+              })
+            "
+          />
+          <Button
+            class="p-button-rounded p-button-info mr-2 mt-2"
+            icon="pi pi-check"
+            v-tooltip.bottom="'Click for accept request'"
+            @click="acceptRequest(slotProps.data.ireq_id)"
+          />
+          <Button
+            class="p-button-rounded p-button-danger mr-2 mt-2"
+            icon="bi bi-x-square"
+            v-tooltip.bottom="'Click for reject request'"
+            @click="rejectRequest(slotProps.data.ireq_id)"
+          />
           </div>
         </template>
       </Column>
@@ -290,7 +277,7 @@
 </template>
 <script>
 export default {
-  emits: ["show-loading", "hide-loading", "get-data"],
+  emits: ["show-loading", "hide-loading", "get-data", "Active"],
   props: {
     value: Array,
     loading: Boolean,

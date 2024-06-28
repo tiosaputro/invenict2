@@ -70,6 +70,10 @@ class IctDetailServices
             ->select(
                 DB::raw("COALESCE(vi2.official_name,vi1.official_name) AS ireq_assigned_to"),
                 'id.ireq_attachment',
+                'im.ireq_no',
+                'mus.usr_division',
+                'mus.usr_fullname as ireq_user',
+                'ms.usr_fullname as ireq_requestor',
                 'id.ireq_id',
                 'id.ireq_assigned_to1_reason',
                 'id.invent_code',
@@ -88,6 +92,9 @@ class IctDetailServices
                 'llr.lookup_desc as ireq_status',
                 'id.ireq_status as cekStatus')
             ->leftJoin('vpekerja_ict as vi1', 'id.ireq_assigned_to1', 'vi1.usr_id')
+            ->leftjoin('ireq_mst im','id.ireq_id','im.ireq_id')
+            ->LEFTJOIN('mng_user_domain mus', 'im.ireq_user', 'mus.usr_domain')
+            ->LEFTJOIN('mng_users ms', 'im.ireq_requestor', 'ms.usr_id')
             ->leftJoin('vpekerja_ict as vi2', function ($join) {
                 $join->on('id.ireq_assigned_to2', 'vi2.usr_id')
                     ->whereNotNull('id.ireq_assigned_to2');
@@ -109,6 +116,10 @@ class IctDetailServices
             ->where('id.ireq_id', $code)
             ->groupBy(
                 DB::raw("COALESCE(vi2.official_name,vi1.official_name)"),
+                'im.ireq_no',
+                'mus.usr_division',
+                'ms.usr_fullname',
+                'mus.usr_fullname',
                 'id.ireq_attachment',
                 'id.ireq_id',
                 'id.ireq_assigned_to1_reason',

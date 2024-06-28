@@ -43,8 +43,8 @@
   </div>
 </template>
 <script>
-import DataTableRequest from '../../Components/Change_request/DataTableRequestPersonnel.vue';
-import DataTableDetail from '../../Components/Change_request/DataTableDetailPersonnel.vue';
+import DataTableRequest from '../../Components/Change_request/request/DataTableRequestPersonnel.vue';
+import DataTableDetail from '../../Components/Change_request/request/DataTableDetailPersonnel.vue';
 export default {
   components:{
     DataTableRequest,
@@ -108,7 +108,11 @@ export default {
           if(error.response.status == 403){
              this.$router.push('/access');
           }
+          if(error.response.status == 401){
+             this.$router.push('/login');
+          }
         });
+        
     },
   },
 };

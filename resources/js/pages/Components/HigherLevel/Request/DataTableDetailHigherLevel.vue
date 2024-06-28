@@ -19,13 +19,14 @@
             <template #loading>
                 Please wait
             </template>
-            <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:9rem">
+            <Column field="ireq_no" header="Description" :sortable="true" style="min-width:9rem">
                 <template #body="slotProps">
-                    <p @click="detailRequest(slotProps.data.ireqd_id)" style="cursor:pointer;"> {{slotProps.data.ireq_no}}
+                    <p @click="detailRequest(slotProps.data.ireqd_id, slotProps.data.ireq_no)" style="cursor:pointer;"> 
+                        This request pertains to a <b>{{ slotProps.data.ireq_type }}</b> requirement for <b>{{ slotProps.data.name }}</b>.
+                        <i class="pi pi-info-circle"/>
                     </p>
                 </template>
             </Column>
-            <Column field="ireqd_id" header="No. Detail" :sortable="true" />
             <Column>
                 <template #body="slotProps">
                     <Button label="Pdf" class="p-button-raised p-button-danger p-button-sm mt-2" v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf" @click="CetakPdf(slotProps.data.ireq_id)" />
@@ -275,9 +276,9 @@
                     this.$emit('hide-loading');
                 });
             },
-            detailRequest(ireqd_id = null){
-                const requestData = this.value.find(item => item.ireqd_id === ireqd_id);
-                this.header = " Detail Request No. "+ requestData.ireq_no
+            detailRequest(ireqd_id = null, ireq_no = null){
+                const requestData = this.value.find(item => item.ireqd_id === ireqd_id && item.ireq_no == ireq_no);
+                this.header = " Detail Request No. "+ ireq_no
                 this.detail = requestData;
                 this.dialogDetailRequest = true;
             },

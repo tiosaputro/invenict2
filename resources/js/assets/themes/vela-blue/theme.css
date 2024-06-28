@@ -5504,10 +5504,10 @@ input::placeholder {
     user-select: none;
 }
 .p-tieredmenu .p-menuitem-link .p-menuitem-text {
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(20, 19, 19, 0.87);
 }
 .p-tieredmenu .p-menuitem-link .p-menuitem-icon {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(15, 14, 14, 0.6);
     margin-right: 0.5rem;
 }
 .p-tieredmenu .p-menuitem-link .p-submenu-icon {
@@ -5517,10 +5517,10 @@ input::placeholder {
     background: rgba(255, 255, 255, 0.03);
 }
 .p-tieredmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
-    color: rgba(255, 255, 255, 0.87);
+    color: rgb(81, 185, 72);
 }
 .p-tieredmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon {
-    color: rgba(255, 255, 255, 0.87);
+    color: rgb(81, 185, 72);
 }
 .p-tieredmenu .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon {
     color: rgba(255, 255, 255, 0.87);
@@ -5531,7 +5531,7 @@ input::placeholder {
     box-shadow: inset 0 0 0 1px #93cbf9;
 }
 .p-tieredmenu.p-tieredmenu-overlay {
-    background: #1f2d40;
+    background: #ebebeb;
     border: 1px solid #304562;
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
         0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);

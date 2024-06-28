@@ -75,7 +75,15 @@ export default {
             menuServices.getdata().then((data) => {
                 this.menuUser = data.tree;
                 this.user = data.user;
-
+                if(this.isMobile ){
+                    this.menuUser[0] = {
+                    label: "Home",
+                    to: "/dashboard",
+                    items: [
+                        { label: "Dashboard", to: "/dashboard", items: null }
+                    ]
+                };
+                }
                 if (!data.user) {
                     localStorage.clear();
                     localStorage.setItem("logOut", "true");

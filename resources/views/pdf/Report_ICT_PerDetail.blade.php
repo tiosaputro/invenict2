@@ -22,12 +22,10 @@
 
         .flex-grow-1 {
             flex-grow: 1;
-            /* Allow the column to grow to fill available space */
         }
 
         .flex-grow-0 {
             flex-grow: 0;
-            /* Prevent the column from growing */
         }
 
         .invoice .contacts {
@@ -63,13 +61,6 @@
             margin-left: 2px;
             margin-right: -10px;
         }
-
-        /* #invoice{
-        padding: 30px;
-        size: A4;
-        size: 7in 9.25in;
-        margin: 27mm 16mm 27mm 16mm;
-    } */
         #invoice {
             padding: 20px;
             size: A4;
@@ -175,7 +166,6 @@
         .textareacss {
             resize: none;
             border: 2px solid;
-            /* Changed border style */
             font-weight: bold;
             overflow: hidden;
             margin: 1px auto 1px 1px;
@@ -191,7 +181,6 @@
             padding: 10px;
             width: 100%;
             height: 100%;
-            /* need to set height for this to work in Chrome */
         }
 
         .cell-wrap {

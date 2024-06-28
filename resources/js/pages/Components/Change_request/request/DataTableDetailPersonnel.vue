@@ -3,8 +3,7 @@
         <DataTable :value="value" :paginator="true" :rows="10" :loading="loading" :filters="filters" :rowHover="true"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request"
-            responsiveLayout="scroll">
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request" responsiveLayout="scroll">
             <template #header>
                 <div class="table-header text-right">
                     <span class="p-input-icon-left">
@@ -19,13 +18,15 @@
             <template #loading>
                 Loading ICT Request data. Please wait.
             </template>
-            <Column field="ireq_no" header="No. Request" :sortable="true" style="min-width:10rem"> 
+            <Column field="ireq_no" header="Description" :sortable="true" style="min-width:10rem">
                 <template #body="slotProps">
-                    <p @click="detailRequest(slotProps.data.ireqd_id)" style="cursor:pointer;"> {{slotProps.data.ireq_no}}
+                    <p @click="detailRequest(slotProps.data.ireqd_id, slotProps.data.ireq_no)" style="cursor:pointer;">
+                        This request pertains to a <b>{{ slotProps.data.ireq_type }}</b> requirement for <b>{{
+                            slotProps.data.name }}</b>.
+                        <i class="pi pi-info-circle" />
                     </p>
                 </template>
             </Column>
-            <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:10rem" />
             <Column style="min-width:8rem">
                 <template #body="slotProps">
                     <Button v-if="slotProps.data.status == 'T'" class="p-button-rounded p-button-secondary mr-2 mt-2"
@@ -37,16 +38,17 @@
                     <Button v-if="slotProps.data.status == 'T'" class="p-button-rounded p-button-danger mr-2 mt-2"
                         icon="bi bi-journals" v-tooltip.bottom="'Click to create remark'"
                         @click="createRemark(slotProps.data.ireqd_id, slotProps.data.ireq_id)" />
-                    <Button v-if="slotProps.data.status == 'D' || slotProps.data.status == 'C' " label="Pdf" class="p-button-raised p-button-danger mr-2 mt-2"
-                        v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf"
-                        @click="PrintOutFormIctRequest(slotProps.data.ireq_id)" />
+                    <Button v-if="slotProps.data.status == 'D' || slotProps.data.status == 'C' " label="Pdf"
+                        class="p-button-raised p-button-danger mr-2 mt-2" v-tooltip.bottom="'Click to print out (PDF)'"
+                        icon="pi pi-file-pdf" @click="PrintOutFormIctRequest(slotProps.data.ireq_id)" />
                 </template>
             </Column>
             <template #footer>
                 <div class="p-grid p-dir-col">
                     <div class="p-col">
                         <div class="box">
-                            <Button v-if="showForDashboardFooter" label="Back" class="p-button-raised p-button mr-2" icon="pi pi-chevron-left" @click="$router.push({ name: 'Dashboard'})"/>
+                            <Button v-if="showForDashboardFooter" label="Back" class="p-button-raised p-button mr-2"
+                                icon="pi pi-chevron-left" @click="$router.push({ name: 'Dashboard'})" />
                             <Button label="Pdf" class="p-button-raised p-button-danger mr-2" icon="pi pi-file-pdf"
                                 @click="printPdfRequestListByStatus(printRequestListByStatus)" />
                             <!-- <Button label="Excel" class="p-button-raised p-button-success mr-2" icon="pi pi-print"
@@ -61,8 +63,7 @@
         <DataTable :value="value" :paginator="true" :rows="10" :loading="loading" :filters="filters" :rowHover="true"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request"
-            responsiveLayout="scroll">
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request" responsiveLayout="scroll">
             <template #header>
                 <div class="table-header text-right">
                     <span class="p-input-icon-left">
@@ -82,8 +83,10 @@
             <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem" />
             <Column field="name" header="Items" :sortable="true" style="min-width:10rem" />
             <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:10rem" />
-            <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem" v-if="showRemarkReviewerColumn"/>
-            <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:10rem" v-if="showRemarkRequestorColumn"/>
+            <Column field="ireq_verificator_remark" header="Remark Reviewer" :sortable="true" style="min-width:12rem"
+                v-if="showRemarkReviewerColumn" />
+            <Column field="ireq_remark" header="Remark Requestor" :sortable="true" style="min-width:10rem"
+                v-if="showRemarkRequestorColumn" />
             <Column field="ireq_date" header="Request Date" :sortable="true" style="min-width:10rem">
                 <template #body="slotProps">
                     {{ formatDate(slotProps.data.ireq_date) }}
@@ -92,12 +95,14 @@
             <Column header="Attachment" style="min-width:10rem">
                 <template #body="slotProps">
                     <p v-if="slotProps.data.ireq_attachment == null"></p>
-                    <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
-                        <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image" style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
+                    <p
+                        v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='jpeg'|| slotProps.data.ireq_attachment.split('.').pop()=='jpg' || slotProps.data.ireq_attachment.split('.').pop()=='png'">
+                        <img :src="'/attachment_request/' +slotProps.data.ireq_attachment" class="attachment-image"
+                            style="cursor:pointer;" @click="getDetail(slotProps.data.ireq_attachment)" />
                     </p>
                     <p v-else-if="slotProps.data.ireq_attachment.split('.').pop()=='pdf'">
-                        <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)" aria-label="Youtube"
-                            v-tooltip.bottom="'Click to detail attachment'">
+                        <Button class="youtube p-0" @click="getDetail(slotProps.data.ireq_attachment)"
+                            aria-label="Youtube" v-tooltip.bottom="'Click to detail attachment'">
                             <i class="pi pi-file-pdf px-2"></i>
                             <span class="px-4">PDF</span>
                         </Button>
@@ -107,9 +112,12 @@
             <Column field="ireq_requestor" header="Requestor" :sortable="true" style="min-width:8rem" />
             <Column field="ireq_user" header="User" :sortable="true" style="min-width:8rem" />
             <Column field="usr_division" header="User Division" :sortable="true" style="min-width:10rem" />
-            <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true" style="min-width:10rem" v-if="showReasonColumn" />
-            <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem" v-if="showRemarkAssignedColumn"/>
-            <Column field="ireq_note_personnel" header="Note Assigned" :sortable="true" style="min-width:12rem" v-if="showNoteAssignedColumn"/>
+            <Column field="ireq_assigned_to1_reason" header="Reason" :sortable="true" style="min-width:10rem"
+                v-if="showReasonColumn" />
+            <Column field="ireq_assigned_remark" header="Remark Assigned" :sortable="true" style="min-width:12rem"
+                v-if="showRemarkAssignedColumn" />
+            <Column field="ireq_note_personnel" header="Note Assigned" :sortable="true" style="min-width:12rem"
+                v-if="showNoteAssignedColumn" />
             <Column style="min-width:8rem">
                 <template #body="slotProps">
                     <Button v-if="slotProps.data.status == 'T'" class="p-button-rounded p-button-secondary mr-2 mt-2"
@@ -121,16 +129,17 @@
                     <Button v-if="slotProps.data.status == 'T'" class="p-button-rounded p-button-danger mr-2 mt-2"
                         icon="bi bi-journals" v-tooltip.bottom="'Click to create remark'"
                         @click="createRemark(slotProps.data.ireqd_id, slotProps.data.ireq_id)" />
-                    <Button v-if="slotProps.data.status == 'D' || slotProps.data.status == 'C' " label="Pdf" class="p-button-raised p-button-danger mr-2 mt-2"
-                        v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf"
-                        @click="PrintOutFormIctRequest(slotProps.data.ireq_id)" />
+                    <Button v-if="slotProps.data.status == 'D' || slotProps.data.status == 'C' " label="Pdf"
+                        class="p-button-raised p-button-danger mr-2 mt-2" v-tooltip.bottom="'Click to print out (PDF)'"
+                        icon="pi pi-file-pdf" @click="PrintOutFormIctRequest(slotProps.data.ireq_id)" />
                 </template>
             </Column>
             <template #footer>
                 <div class="p-grid p-dir-col">
                     <div class="p-col">
                         <div class="box">
-                            <Button v-if="showForDashboardFooter" label="Back" class="p-button-raised p-button mr-2" icon="pi pi-chevron-left" @click="$router.push({ name: 'Dashboard'})"/>
+                            <Button v-if="showForDashboardFooter" label="Back" class="p-button-raised p-button mr-2"
+                                icon="pi pi-chevron-left" @click="$router.push({ name: 'Dashboard'})" />
                             <Button label="Pdf" class="p-button-raised p-button-danger mr-2" icon="pi pi-file-pdf"
                                 @click="printPdfRequestListByStatus(printRequestListByStatus)" />
                             <!-- <Button label="Excel" class="p-button-raised p-button-success mr-2" icon="pi pi-print"
@@ -141,7 +150,8 @@
             </template>
         </DataTable>
     </div>
-    <Dialog v-model:visible="dialogEdit" :style="{ width: '500px' }" header="Dialog Reject Request" :modal="true" class="fluid">
+    <Dialog v-model:visible="dialogEdit" :style="{ width: '500px' }" header="Dialog Reject Request" :modal="true"
+        class="fluid">
         <div class="fluid">
             <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:100px">Reason</label>
@@ -149,16 +159,16 @@
                     <Textarea v-model="editDetail.ireq_reason" :autoResize="true" rows="5" cols="20"
                         placeholder="Give a reason" :class="{ 'p-invalid': submitted && !editDetail.ireq_reason }" />
                     <small v-if="submitted && !editDetail.ireq_reason" class="p-error">
-                      Reason not filled
+                        Reason not filled
                     </small>
-                  </div>
+                </div>
             </div>
         </div>
         <template #footer>
             <Button label="Yes" @click="submitReject()" class="p-button" autofocus />
             <Button label="No" @click="cancelReject()" class="p-button-text" />
         </template>
-    </Dialog>  
+    </Dialog>
     <Dialog v-model:visible="dialogRemark" :style="{ width: '500px' }" header="Dialog Create Remark" :modal="true"
         class="fluid">
         <div class="fluid">
@@ -190,7 +200,7 @@
             <Button label="Yes" @click="submitRemark()" class="p-button" autofocus />
             <Button label="No" @click="cancelRemark()" class="p-button-text" />
         </template>
-    </Dialog>  
+    </Dialog>
     <Dialog v-model:visible="dialogNote" :style="{ width: '500px' }" header="Dialog Create Note" :modal="true"
         class="fluid">
         <div class="fluid">
@@ -213,7 +223,8 @@
             <div class="field grid">
                 <label class="col-fixed w-9rem" style="width:100px">Note</label>
                 <div class="col-fixed w-9rem">
-                    <Textarea v-model="note.ireq_reason" placeholder="If required" :autoResize="true" rows="5" cols="20" />
+                    <Textarea v-model="note.ireq_reason" placeholder="If required" :autoResize="true" rows="5"
+                        cols="20" />
                 </div>
             </div>
         </div>
@@ -266,66 +277,100 @@
             <Button label="No" @click="cancelStatus()" class="p-button-text" />
         </template>
     </Dialog>
-    <Dialog v-model:visible="dialogDetailRequest" :breakpoints="{'960px': '75vw'}" :style="{ width: '600px' }"
+    <Dialog v-model:visible="dialogDetailRequest" :breakpoints="{ '960px': '95vw' }" :style="{ width: '600px' }"
         :header="this.header" :modal="true" class="fluid">
-        <div class="field grid">
-            <label class="col-fixed" style="width:100px">No Request</label>
-            <InputText type="text" v-model="detail.ireq_no" disabled />
-        </div>
-        <div class="field grid">
-            <label class="col-fixed" style="width:100px">No. Detail</label>
-            <InputText disabled v-model="detail.ireqd_id" />
-        </div>
-        <div class="field grid">
-            <label class="col-fixed" style="width:100px">Request Type</label>
-            <InputText v-model="detail.ireq_type" disabled />
-        </div>
-        <div class="field grid">
-            <label class="col-fixed" style="width:100px">Items</label>
-            <InputText disabled v-model="detail.name" />
-        </div>
-        <div class="field grid">
-            <label class="col-fixed" style="width:100px">Qty</label>
-            <InputText v-model="detail.ireq_qty" disabled />
-        </div>
-        <div class="field grid" v-if="detail.countremarkreviewer > 0">
-            <label class="col-fixed" style="width:100px">Remark Reviewer</label>
-            <InputText v-model="detail.ireq_verificator_remark" disabled />
-        </div>
-        <div class="field grid">
-            <label class="col-fixed" style="width:100px">Request Date</label>
-            <InputText :value="formattedRequestDate" disabled />
-        </div>
-        <div class="field grid">
-            <label class="col-fixed" style="width:100px">Requestor</label>
-            <InputText v-model="detail.ireq_requestor" disabled />
-        </div>
-        <div class="field grid">
-            <label class="col-fixed" style="width:100px">User</label>
-            <InputText v-model="detail.ireq_user" disabled />
-        </div>
-        <div class="field grid">
-            <label class="col-fixed" style="width:100px">User Division</label>
-            <InputText type="text" v-model="detail.usr_division" disabled />
-        </div>
-        <div class="field grid" v-if="detail.ireq_assigned_to1_reason">
-            <label class="col-fixed" style="width:100px">Reason</label>
-            <InputText type="text" v-model="detail.ireq_assigned_to1_reason" disabled />
-        </div>
-        <div class="field grid" v-if="detail.ireq_assigned_remark">
-            <label class="col-fixed" style="width:100px">Remark Assigned</label>
-            <InputText type="text" v-model="detail.ireq_assigned_remark" disabled />
-        </div>
-        <div class="field grid" v-if="detail.ireq_note_personnel">
-            <label class="col-fixed" style="width:100px">Note Assigned</label>
-            <InputText type="text" v-model="detail.ireq_note_personnel" disabled />
-        </div>
+        <table>
+            <tr>
+                <th>No Request</th>
+                <td>
+                    <InputText type="text" v-model="detail.ireq_no" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th>No. Detail</th>
+                <td>
+                    <InputText :value="detail.ireqd_id" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th>Request Type</th>
+                <td>
+                    <InputText :value="detail.ireq_type" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th>Items</th>
+                <td>
+                    <InputText :value="detail.name" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th>Qty</th>
+                <td>
+                    <InputText :value="detail.ireq_qty" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th>Request Date</th>
+                <td>
+                    <InputText :value="formattedRequestDate" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th>Requestor</th>
+                <td>
+                    <InputText v-model="detail.ireq_requestor" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th>User</th>
+                <td>
+                    <InputText readonly v-model="detail.ireq_user" />
+                </td>
+            </tr>
+            <tr>
+                <th>User Division</th>
+                <td>
+                    <InputText v-model="detail.usr_division" readonly />
+                </td>
+            </tr>
+            <tr v-if="detail.countspv > 0">
+                <th>Supervisor</th>
+                <td>
+                    <InputText v-model="detail.spv" readonly />
+                </td>
+            </tr>
+            <tr v-if="detail.countremark_reviewer > 0">
+                <th>Remark Reviewer</th>
+                <td>
+                    <InputText v-model="detail.ireq_verificator_remark" readonly />
+                </td>
+            </tr>
+            <tr v-if="detail.ireq_reason">
+                <th>Reason</th>
+                <td>
+                    <InputText v-model="detail.ireq_reason" readonly />
+                </td>
+            </tr>
+            <tr v-if="detail.ireq_assigned_to">
+                <th>ICT Personnel</th>
+                <td>
+                    <InputText type="text" v-model="detail.ireq_assigned_to" readonly />
+                </td>
+            </tr>
+            <tr v-if="detail.ireq_status">
+                <th>Status</th>
+                <td>
+                    <InputText type="text" v-model="detail.ireq_status" readonly />
+                </td>
+            </tr>
+        </table>
     </Dialog>
-     
+
 </template>
 <script>
     export default {
-        emits: ['show-loading', 'hide-loading','get-data'],
+        emits: ['show-loading', 'hide-loading','get-data', 'Active'],
         props: {
             value: Array,
             loading: Boolean,
@@ -338,6 +383,7 @@
             printRequestListByStatus: String,
             showRemarkAssigned: Array,
             showNoteAssigned: Array,
+            Active: String,
             showRemarkRequestor: {
                 type: Boolean,
                 default: false
@@ -411,14 +457,10 @@
                 filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
             };
         },
-        mounted() {
-            this.isMobile = window.innerWidth <= 768;
-            window.addEventListener('resize', this.updateIsMobile);
-        },
         methods: {
-            detailRequest(ireq_id){
-                const requestData = this.value.find(item => item.ireqd_id === ireq_id);
-                this.header = " Detail Request No. "+ requestData.ireq_no
+            detailRequest(ireqd_id = null, ireq_no = null){
+                const requestData = this.value.find(item => item.ireqd_id === ireqd_id && item.ireq_no == ireq_no);
+                this.header = " Detail Request No. "+ ireq_no
                 this.detail = requestData;
                 this.dialogDetailRequest = true;
             },

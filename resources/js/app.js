@@ -73,10 +73,10 @@ import TreeSelect from 'primevue/treeselect';
 import VueAxios from 'vue-axios';
 import { ViFileTypePdf,FcImageFile,FaExclamationTriangle,GiPadlock   } from "oh-vue-icons/icons";
 addIcons(ViFileTypePdf,FcImageFile,FaExclamationTriangle,GiPadlock  );
-
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
     next();
+    
 });
 
 const app = createApp(AppWrapper);

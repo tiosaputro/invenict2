@@ -13,7 +13,7 @@
           <label>: {{ this.kode.noreq }} </label>
           <br />
           <label style="width: 110px">Request Date</label>
-          <label>: {{ formatDate(this.kode.ireq_date) }}</label>
+          <label>: {{ formatDateWithOutSecond(this.kode.ireq_date) }}</label>
         </div>
       </template>
     </Toolbar>
@@ -45,15 +45,20 @@
       <Column header="Description" :sortable="true" style="min-width: 9rem">
         <template #body="slotProps">
           <p @click="detailRequest(slotProps.data.ireqd_id)">
-            Req Type : {{ slotProps.data.ireq_type }} 
-            Items: {{ slotProps.data.name }}
+            This request pertains to a
+            <b>{{ slotProps.data.ireq_type }}</b> requirement for
+            <b>{{ slotProps.data.name }}</b
+            >.
             <i class="pi pi-info-circle"></i>
           </p>
         </template>
       </Column>
       <Column header="Action" style="min-width: 6rem">
         <template #body="slotProps">
-          <Button v-if=" slotProps.data.status == 'NT' || slotProps.data.status == 'RT' "
+          <Button
+            v-if="
+              slotProps.data.status == 'NT' || slotProps.data.status == 'RT'
+            "
             class="p-button-raised p-button-text mr-2 mt-2"
             icon="pi pi-user-edit"
             label="Assign"
@@ -242,7 +247,10 @@
       </Column>
       <Column style="min-width: 15rem">
         <template #body="slotProps">
-          <Button v-if=" slotProps.data.status == 'NT' || slotProps.data.status == 'RT' "
+          <Button
+            v-if="
+              slotProps.data.status == 'NT' || slotProps.data.status == 'RT'
+            "
             class="p-button-raised p-button-text mr-2 mt-2"
             icon="pi pi-user-edit"
             label="Assign"
@@ -328,36 +336,72 @@
 
   <Dialog
     v-model:visible="dialogDetailRequest"
-    :breakpoints="{ '960px': '75vw' }"
+    :breakpoints="{ '960px': '95vw' }"
     :style="{ width: '600px' }"
     :header="this.header"
     :modal="true"
     class="fluid"
   >
-    <div class="field grid">
-      <label class="col-fixed" style="width: 100px">Request Type</label>
-      <InputText type="text" v-model="detail.ireq_type" disabled />
-    </div>
-    <div class="field grid">
-      <label class="col-fixed" style="width: 100px">Items</label>
-      <InputText type="text" v-model="detail.name" disabled />
-    </div>
-    <div class="field grid">
-      <label class="col-fixed" style="width: 100px">Qty</label>
-      <InputText v-model="detail.ireq_qty" disabled />
-    </div>
-    <div class="field grid">
-      <label class="col-fixed" style="width: 100px">Remark</label>
-      <InputText disabled v-model="detail.ireq_remark" />
-    </div>
-    <div class="field grid" v-if="detail.ireq_count_personnel1 > 0">
-      <label class="col-fixed" style="width: 100px">ICT Personnel</label>
-      <InputText v-model="detail.ireq_assigned_to" disabled />
-    </div>
-    <div class="field grid">
-      <label class="col-fixed" style="width: 100px">Status</label>
-      <InputText type="text" v-model="detail.ireq_status" disabled />
-    </div>
+    <table>
+      <tr>
+        <th>No Request</th>
+        <td><InputText type="text" v-model="detail.ireq_no" readonly /></td>
+      </tr>
+      <tr>
+        <th>No. Detail</th>
+        <td><InputText :value="detail.ireqd_id" readonly /></td>
+      </tr>
+      <tr>
+        <th>Request Type</th>
+        <td><InputText :value="detail.ireq_type" readonly /></td>
+      </tr>
+      <tr>
+        <th>Items</th>
+        <td><InputText :value="detail.name" readonly /></td>
+      </tr>
+      <tr>
+        <th>Qty</th>
+        <td><InputText :value="detail.ireq_qty" readonly /></td>
+      </tr>
+      <tr>
+        <th>Request Date</th>
+        <td><InputText :value="formattedRequestDate" readonly /></td>
+      </tr>
+      <tr>
+        <th>Requestor</th>
+        <td><InputText v-model="detail.ireq_requestor" readonly /></td>
+      </tr>
+      <tr>
+        <th>User</th>
+        <td><InputText readonly v-model="detail.ireq_user" /></td>
+      </tr>
+      <tr>
+        <th>User Division</th>
+        <td><InputText v-model="detail.usr_division" readonly /></td>
+      </tr>
+      <tr v-if="detail.countspv > 0">
+        <th>Supervisor</th>
+        <td><InputText v-model="detail.spv" readonly /></td>
+      </tr>
+      <tr v-if="detail.countremark_reviewer > 0">
+        <th>Remark Reviewer</th>
+        <td><InputText v-model="detail.ireq_verificator_remark" readonly /></td>
+      </tr>
+      <tr v-if="detail.ireq_reason">
+        <th>Reason</th>
+        <td><InputText v-model="detail.ireq_reason" readonly /></td>
+      </tr>
+      <tr v-if="detail.ireq_assigned_to">
+        <th>ICT Personnel</th>
+        <td>
+          <InputText type="text" v-model="detail.ireq_assigned_to" readonly />
+        </td>
+      </tr>
+      <tr v-if="detail.ireq_status">
+        <th>Status</th>
+        <td><InputText type="text" v-model="detail.ireq_status" readonly /></td>
+      </tr>
+    </table>
   </Dialog>
   <Dialog
     v-model:visible="dialogAssign"
@@ -504,7 +548,7 @@ export default {
   methods: {
     detailRequest(ireqd_id) {
       const requestData = this.value.find((item) => item.ireqd_id === ireqd_id);
-      this.header = " Detail Request No. " + requestData.ireqd_id;
+      this.header = " Detail Request No. " + requestData.ireq_no;
       this.detail = requestData;
       this.dialogDetailRequest = true;
     },
@@ -513,6 +557,9 @@ export default {
     },
     formatDate(date) {
       return this.$moment(date).format("DD MMM YYYY HH:mm");
+    },
+    formatDateWithOutSecond(date) {
+      return this.$moment(date).format("DD MMM YYYY");
     },
     CetakPdf() {
       this.$emit("show-loading");

@@ -46,7 +46,7 @@ export default {
                 }
             }
             else{
-                this.$router.push('/loginn/'+this.$route.params.status+'/'+this.verif.ireq_id)
+                this.$router.push('/login/'+this.$route.params.status+'/'+this.verif.ireq_id)
             }
            }
         });

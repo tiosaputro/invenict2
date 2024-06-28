@@ -43,8 +43,7 @@ export default {
         }
     },
     cekUser(){
-    var token = localStorage.getItem('token');
-      this.axios.get('/api/cek-user', {headers: {'Authorization': 'Bearer '+token}}).then((response)=>{
+      this.axios.get('/api/cek-user').then((response)=>{
         this.checkto = response.data.map((x)=> x.to)
         this.checkname = response.data.map((x)=> x.name)
         if(this.checkname.includes("Scan Legality") || this.checkto.includes("/scan-qr-code")){

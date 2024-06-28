@@ -16,24 +16,13 @@
                 </div>
             </template>
         </Toolbar>
-        <DataTable :value="value" :paginator="true" :rows="10" :loading="loading" :filters="filters" :rowHover="true"
+        <DataTable :value="value" :paginator="true" :rows="25" :loading="loading" :filters="filters" :rowHover="true"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request" responsiveLayout="scroll">
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
+            responsiveLayout="scroll">
             <template #header>
-                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
-                    v-if="kode.cekstatus == null">
-                    <Button label="Add" class="p-button-raised" v-tooltip.right="'Click to add new detail'"
-                        icon="bi bi-file-earmark-plus" @click="$router.push({
-                            name: 'Add Ict Request Detail',
-                            params: { code: this.$route.params.code },
-                        })" />
-                    <span class="block mt-2 md:mt-0 p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                    </span>
-                </div>
-                <div class="table-header text-right" v-else-if="kode.cekstatus != null">
+                <div class="table-header text-right">
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value" placeholder="Search. . ." />
@@ -44,7 +33,7 @@
                 Not Found
             </template>
             <template #loading>
-                Please wait
+                Loading data. Please wait.
             </template>
             <Column header="Description" :sortable="true" style="min-width:9rem">
                 <template #body="slotProps">
@@ -55,38 +44,14 @@
                     </p>
                 </template>
             </Column>
-            <Column header="Action" style="min-width:6rem">
-                <template #body="slotProps">
-                    <Button v-if="slotProps.data.ireq_status == null" class="p-button-rounded p-button-info mr-2"
-                        icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'" @click="
-                            $router.push({
-                                name: 'Edit Ict Request Detail',
-                                params: { code: this.$route.params.code, ireq: slotProps.data.ireqd_id }
-                            })" />
-                    <Button v-if="slotProps.data.ireq_status == null" icon="pi pi-trash"
-                        v-tooltip.bottom="'Click to delete request'" class="p-button-rounded p-button-danger mr-2"
-                        @click="DeleteIct(slotProps.data.ireqd_id, this.$route.params.code)" />
-                </template>
-            </Column>
             <template #footer>
-                <div class="grid dir-col">
-                    <div class="col">
+                <div class="p-grid p-dir-col">
+                    <div class="p-col">
                         <div class="box">
-                            <Button v-if="showForDashboardFooter" label="Back" class="p-button-raised p-button mr-2"
+                            <Button label="Back" class="p-button-raised p-button p-mr-2 p-mb-2"
                                 icon="pi pi-chevron-left" @click="$router.push({
-                                    name: 'Dashboard'
+                                    name: 'Ict Request Divisi 3'
                                 })" />
-                            <Button v-if="showForDashboardFooter == false" label="Back"
-                                class="p-button-raised p-button mr-2" v-tooltip.bottom="'Click to back'"
-                                icon="pi pi-chevron-left" @click="$router.push({
-                                    name: 'Ict Request'
-                                })" />
-                            <Button label="Pdf" class="p-button-raised p-button-danger mt-2"
-                                v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf"
-                                v-if="kode.cekstatus != null" @click="CetakPdf()" />
-                            <Button class="p-button-raised p-button-success mr-2" icon="pi pi-check" label="Submit"
-                                v-if="value.length && kode.cekstatus == null" @click="SubmitIct()"
-                                v-tooltip.bottom="'Click to submit request'" />
                         </div>
                     </div>
                 </div>
@@ -119,10 +84,10 @@
                         <InputText readonly v-model="detail.ireq_remark" />
                     </td>
                 </tr>
-                <tr v-if="detail.ireq_count_personnel1 > 0">
+                <tr v-if="detail.ireq_assigned_to">
                     <th>ICT Personnel</th>
                     <td>
-                        <InputText v-model="detail.usr_division" readonly />
+                        <InputText v-model="detail.ireq_assigned_to" readonly />
                     </td>
                 </tr>
                 <tr>
@@ -151,24 +116,14 @@
                 </div>
             </template>
         </Toolbar>
-        <DataTable :value="value" :paginator="true" :rows="10" :loading="loading" :filters="filters" :rowHover="true"
+
+        <DataTable :value="value" :paginator="true" :rows="25" :loading="loading" :filters="filters" :rowHover="true"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Request" responsiveLayout="scroll">
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} ICT Request (Detail)"
+            responsiveLayout="scroll">
             <template #header>
-                <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
-                    v-if="kode.cekstatus == null">
-                    <Button label="Add" class="p-button-raised" v-tooltip.right="'Click to add new detail'"
-                        icon="bi bi-file-earmark-plus" @click="$router.push({
-                            name: 'Add Ict Request Detail',
-                            params: { code: this.$route.params.code },
-                        })" />
-                    <span class="block mt-2 md:mt-0 p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText v-model="filters['global'].value" placeholder="Search. . ." />
-                    </span>
-                </div>
-                <div class="table-header text-right" v-else-if="kode.cekstatus != null">
+                <div class="table-header text-right">
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value" placeholder="Search. . ." />
@@ -179,12 +134,13 @@
                 Not Found
             </template>
             <template #loading>
-                Please wait
+                Loading data. Please wait.
             </template>
-            <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem" />
+            <Column field="ireqd_id" header="No. Detail" :sortable="true" style="min-width:5rem" />
+            <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:8rem" />
             <Column field="name" header="Items" :sortable="true" style="min-width:12rem" />
             <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem" />
-            <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem" />
+            <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:14rem" />
             <Column header="Attachment" style="min-width:10rem">
                 <template #body="slotProps">
                     <p v-if="slotProps.data.ireq_attachment == null"></p>
@@ -205,43 +161,15 @@
                     </p>
                 </template>
             </Column>
-            <Column field="ireq_assigned_to" header="ICT Personnel" :sortable="true" style="min-width:12rem"
-                v-if="showPersonnelColumn" />
-            <Column field="ireq_status" header="Status" :sortable="true" style="min-width:6rem">
-                <template #body="slotProps">
-                    <span v-if="slotProps.data.status"
-                        :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{ slotProps.data.ireq_status }}</span>
-                </template>
-            </Column>
-            <Column style="min-width:9rem">
-                <template #body="slotProps">
-                    <Button v-if="slotProps.data.ireq_status == null" class="p-button-rounded p-button-info mr-2"
-                        icon="pi pi-pencil" v-tooltip.bottom="'Click to edit request'" @click="
-                            $router.push({
-                                name: 'Edit Ict Request Detail',
-                                params: { code: this.$route.params.code, ireq: slotProps.data.ireqd_id },
-                            })" />
-                    <Button v-if="slotProps.data.ireq_status == null" icon="pi pi-trash"
-                        v-tooltip.bottom="'Click to delete request'" class="p-button-rounded p-button-danger mr-2"
-                        @click="DeleteIct(slotProps.data.ireqd_id, this.$route.params.code)" />
-                </template>
-            </Column>
+            <Column field="ireq_assigned_to1" header="ICT Personnel" :sortable="true" style="min-width:12rem" />
             <template #footer>
-                <div class="grid dir-col">
-                    <div class="col">
+                <div class="p-grid p-dir-col">
+                    <div class="p-col">
                         <div class="box">
-                            <Button v-if="showForDashboardFooter" label="Back" v-tooltip.bottom="'Click to dashboard'"
-                                class="p-button-raised p-button mr-2" icon="pi pi-chevron-left"
-                                @click="$router.push({ name: 'Desc' })" />
-                            <Button v-else label="Back" class="p-button-raised p-button mr-2"
-                                v-tooltip.bottom="'Click to back'" icon="pi pi-chevron-left"
-                                @click="$router.push({ name: 'Ict Request' })" />
-                            <Button label="Pdf" class="p-button-raised p-button-danger mt-2"
-                                v-tooltip.bottom="'Click to print out (PDF)'" icon="pi pi-file-pdf"
-                                v-if="kode.cekstatus != null" @click="CetakPdf()" />
-                            <Button class="p-button-raised p-button-success mr-2" icon="pi pi-check" label="Submit"
-                                v-if="value.length && kode.cekstatus == null" @click="SubmitIct()"
-                                v-tooltip.bottom="'Click to submit request'" />
+                            <Button label="Back" class="p-button-raised p-button p-mr-2 p-mb-2"
+                                icon="pi pi-chevron-left" @click="$router.push({
+                                    name: 'Ict Request Divisi 3'
+                                })" />
                         </div>
                     </div>
                 </div>
@@ -262,6 +190,10 @@ export default {
             type: Boolean,
             default: false
         }
+    },
+    mounted() {
+        this.isMobile = window.innerWidth <= 768;
+        window.addEventListener('resize', this.updateIsMobile);
     },
     computed: {
         showPersonnelColumn() {
@@ -286,12 +218,18 @@ export default {
             header: null
         };
     },
-    mounted() {
-        this.isMobile = window.innerWidth <= 768;
-        window.addEventListener('resize', this.updateIsMobile);
-    },
     methods: {
-        detailRequest(ireqd_id) {
+        getDetail(ireq_attachment = null) {
+            var page = process.env.MIX_APP_URL + '/attachment_request/' + ireq_attachment;
+            var myWindow = window.open(page, "_blank");
+            myWindow.focus();
+        },
+        getStatus() {
+            this.axios.get('/api/getStatusIct').then((response) => {
+                this.status = response.data;
+            });
+        },
+        detailRequest(ireqd_id = null) {
             const requestData = this.value.find(item => item.ireqd_id === ireqd_id);
             this.header = " Detail Request No. " + requestData.ireqd_id
             this.detail = requestData;
@@ -305,52 +243,6 @@ export default {
         },
         formatDateWithOutSecond(date) {
             return this.$moment(date).format("DD MMM YYYY");
-        },
-        DeleteIct(id = null, code = null) {
-            this.$confirm.require({
-                message: "Are you sure you want to delete this record data?",
-                header: "Delete Confirmation",
-                icon: "pi pi-info-circle",
-                acceptClass: "p-button-danger",
-                acceptLabel: "Yes",
-                rejectLabel: "No",
-                accept: () => {
-                    this.$toast.add({
-                        severity: "info",
-                        summary: "Confirmed",
-                        detail: "Record deleted",
-                        life: 3000,
-                    });
-                    this.axios.delete('/api/delete-ict-detail/' + id + '/' + code).then(() => {
-                        this.$emit("show-loading");
-                        this.getIctDetail();
-                    });
-                },
-                reject: () => { },
-            });
-        },
-        SubmitIct() {
-            this.$confirm.require({
-                message: "Are you sure you want to submit this request?",
-                header: "Confirmation Submit",
-                icon: "pi pi-info-circle",
-                acceptClass: "p-button-success",
-                rejectClass: "p-button-danger",
-                acceptLabel: "Yes",
-                rejectLabel: "No",
-                accept: () => {
-                    this.$toast.add({
-                        severity: "info",
-                        summary: "Confirmed",
-                        detail: "Successfully Submit",
-                        life: 3000,
-                    });
-                    this.$emit("show-loading");
-                    this.axios.get('/api/updateStatusSubmit/' + this.$route.params.code);
-                    setTimeout(() => this.$router.push('/ict-request'), 1000);
-                },
-                reject: () => { },
-            })
         },
         CetakPdf() {
             this.$emit("show-loading");

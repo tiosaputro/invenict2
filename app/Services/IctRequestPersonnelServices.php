@@ -64,7 +64,7 @@ class IctRequestPersonnelServices
             'ireq_dtl.ireq_qty',
             'ireq_dtl.ireq_remark',
             'ireq_dtl.ireqd_id',
-            DB::raw("COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1) AS ireq_assigned_to"),
+            DB::raw("COALESCE(vi.official_name,vii.official_name) AS ireq_assigned_to"),
             'llr.lookup_desc as ireq_status',
             'lr.lookup_desc as ireq_type',
             'imm.ireq_date',
@@ -73,15 +73,23 @@ class IctRequestPersonnelServices
             'mus.usr_division',
             DB::raw("(crs.catalog_name ||' - '|| cr.catalog_name) as name")
         );
-        $data->leftJoin('catalog_refs as cr', function ($join) {
+        $data->leftJoin('catalog_refs cr', function ($join) {
             $join->on('ireq_dtl.invent_code', 'cr.catalog_id');
         });
-        $data->leftJoin('catalog_refs as crs', function ($join) {
+        $data->leftJoin('catalog_refs crs', function ($join) {
             $join->on('cr.parent_id', 'crs.catalog_id');
         });
-        $data->LEFTJOIN('lookup_refs as lr', 'ireq_dtl.ireq_type', 'lr.lookup_code');
-        $data->LEFTJOIN('ireq_mst as imm', 'ireq_dtl.ireq_id', 'imm.ireq_id');
-        $data->LEFTJOIN('lookup_refs as llr', 'ireq_dtl.ireq_status', 'llr.lookup_code');
+        $data->LEFTJOIN('lookup_refs lr', 'ireq_dtl.ireq_type', 'lr.lookup_code');
+        $data->LEFTJOIN('ireq_mst imm', 'ireq_dtl.ireq_id', 'imm.ireq_id');
+        $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
+            $join->on('imm.ireq_assigned_to1', 'vi.usr_id')
+                ->whereNotNull('imm.ireq_assigned_to1');
+        });
+        $data->LEFTJOIN('vpekerja_ict vii', function ($join) {
+            $join->on('imm.ireq_assigned_to2', 'vii.usr_id')
+                ->whereNull('imm.ireq_assigned_to1');
+        });
+        $data->LEFTJOIN('lookup_refs llr', 'ireq_dtl.ireq_status', 'llr.lookup_code');
         $data->LEFTJOIN('mng_users ms', 'imm.ireq_requestor', 'ms.usr_id');
         $data->LEFTJOIN('mng_user_domain mus', 'imm.ireq_user', 'mus.usr_domain');
         if (!empty($status)) {
@@ -103,7 +111,7 @@ class IctRequestPersonnelServices
             'ireq_dtl.ireq_qty',
             'ireq_dtl.ireq_remark',
             'ireq_dtl.ireqd_id',
-            DB::raw("COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1)"),
+            DB::raw("COALESCE(vi.official_name,vii.official_name)"),
             'mus.usr_division',
             'imm.ireq_user',
             'llr.lookup_desc',

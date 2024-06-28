@@ -18,6 +18,7 @@ const routes = [
     {
         name: 'Login',
         path: '/login',
+        meta: { oldPath: null},
         component: () => import('./pages/Views/Login.vue'),
 
     },
@@ -694,5 +695,6 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
+
 
 export default router;
