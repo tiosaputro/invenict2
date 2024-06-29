@@ -15,7 +15,7 @@ class IctRequestHigherLevelServices
     {
         $data = Ict::query();
         $data->SELECT(
-            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title) as spv"),
+            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabatan) as spv"),
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_verificator_remark',
             'mus.usr_division',
@@ -36,7 +36,6 @@ class IctRequestHigherLevelServices
             'ireq_mst.ireq_approver2_remark'
         );
         $data->LEFTJOIN('mng_users mu', 'ireq_mst.ireq_requestor', 'mu.usr_id');
-        $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
         $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
             $join->on('ireq_mst.ireq_assigned_to1', 'vi.usr_id')
                 ->whereNotNull('ireq_mst.ireq_assigned_to1');
@@ -46,8 +45,7 @@ class IctRequestHigherLevelServices
                 ->whereNull('ireq_mst.ireq_assigned_to1');
         });
         $data->LEFTJOIN('ireq_dtl idd', 'ireq_mst.ireq_id', 'idd.ireq_id');
-        $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
-        $data->LEFTJOIN('mng_users usr', 'sr.spv_name', 'usr.usr_id');
+        $data->LEFTJOIN('mng_users usr', 'ireq_mst.ireq_spv', 'usr.usr_id');
         $data->LEFTJOIN('lookup_refs lr', 'ireq_mst.ireq_status', 'lr.lookup_code');
         $data->LEFTJOIN('mng_users ms', 'ireq_mst.ireq_requestor', 'ms.usr_id');
         $data->LEFTJOIN('mng_user_domain mus', 'ireq_mst.ireq_user', 'mus.usr_domain');
@@ -68,7 +66,7 @@ class IctRequestHigherLevelServices
         $data->where('sr.spv_name', Auth::user()->usr_id);
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
         $data->GroupBy(
-            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title)"),
+            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabatan)"),
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_verificator_remark',
             'mus.usr_division',
@@ -89,7 +87,6 @@ class IctRequestHigherLevelServices
     {
         $data = IctDetail::Query();
         $data->LEFTJOIN('ireq_mst im', 'ireq_dtl.ireq_id', 'im.ireq_id');
-        $data->LEFTJOIN('supervisor_refs sr', 'im.ireq_spv', 'sr.spv_id');
         $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
             $join->on('ireq_dtl.ireq_assigned_to1', 'vi.usr_id')
                 ->whereNotNull('ireq_dtl.ireq_assigned_to1');
@@ -98,6 +95,7 @@ class IctRequestHigherLevelServices
             $join->on('ireq_dtl.ireq_assigned_to2', 'vii.usr_id')
                 ->whereNull('ireq_dtl.ireq_assigned_to1');
         });
+        $data->LEFTJOIN('mng_users usr', 'im.ireq_spv', 'usr.usr_id');
         $data->LEFTJOIN('mng_users ms', 'im.ireq_requestor', 'ms.usr_id');
         $data->LEFTJOIN('mng_user_domain mus', 'im.ireq_user', 'mus.usr_domain');
         $data->LEFTJOIN('lookup_refs lr', function ($join) {
@@ -121,6 +119,7 @@ class IctRequestHigherLevelServices
             'ms.usr_fullname',
             'mus.usr_fullname as ireq_user',
             'mus.usr_division as division_user',
+            'usr.usr_fullname as spv_name',
             'ms.usr_email as user_mail',
             'im.ireq_reason',
             'im.ireq_no',

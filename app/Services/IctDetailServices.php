@@ -182,14 +182,14 @@ class IctDetailServices
             })
             ->LEFTJOIN('mng_users mu', 'im.ireq_requestor', 'mu.usr_id')
             ->LEFTJOIN('location_refs loc', 'im.ireq_loc', 'loc.loc_code')
-            ->LEFTJOIN('supervisor_refs sr', 'im.ireq_spv', 'sr.spv_id')
+            ->LEFTJOIN('mng_users mng_users','im.ireq_spv','mng_users.usr_id')
             ->LEFTJOIN('mng_users mus', 'sr.spv_name', 'mus.usr_id')
             ->LEFTJOIN('mng_user_domain usr', 'im.ireq_user', 'usr.usr_domain')
             ->SELECT(
                 'mus.usr_email as spv_mail',
                 'loc.loc_email',
                 'mu.usr_fullname',
-                'sr.spv_name',
+                'mng_users.usr_fullname as spv_name',
                 'mu.usr_email as requestor_mail',
                 'im.ireq_no',
                 'id.ireqd_id',
@@ -288,8 +288,8 @@ class IctDetailServices
                 'mngr.usr_jabatan as manager_job_title',
                 'id.ireq_qty',
                 'mu.usr_fullname as ireq_requestor',
-                'mus.usr_fullname as ireq_spv',
-                'sr.spv_job_title',
+                'mng_users.usr_fullname as ireq_spv',
+                'mng_users.usr_jabatan as spv_job_title',
                 'id.ireq_remark',
                 'lllr.lookup_desc as prio_level',
                 'imm.ireq_no',
@@ -327,8 +327,7 @@ class IctDetailServices
                     ->whereNull('id.ireq_assigned_to1');
             })
             ->leftjoin('ireq_mst as imm', 'id.ireq_id', 'imm.ireq_id')
-            ->leftjoin('supervisor_refs sr', 'imm.ireq_spv', 'sr.spv_id')
-            ->leftjoin('mng_users mus', 'sr.spv_name', 'mus.usr_id')
+            ->LEFTJOIN('mng_users mng_users','imm.ireq_spv','mng_users.usr_id')
             ->leftjoin('mng_users usr', 'imm.ireq_verificator', 'usr.usr_id')
             ->leftjoin('mng_users mngr', 'imm.ireq_approver2', 'mngr.usr_id')
             ->leftjoin('location_refs as loc_refs', 'imm.ireq_loc', 'loc_refs.loc_code')

@@ -15,13 +15,9 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    public function example(Request $request)
-    {
-        return view('app');
-    }
     public function index(Request $request)
     {
-        if (env('APP_ENV') != 'local') { //use ldap
+        if (env('APP_ENV') != 'local') { //*use ldap
             $ldap = new ldap_connection();
             $userlogin = str_contains($request->email, '@');
             if (!$userlogin) {
@@ -41,7 +37,7 @@ class LoginController extends Controller
                     $dataUser = Mng_user::find($createUser->usr_id);
                     $token = $dataUser->createToken('ApiToken')->plainTextToken;
 
-                } else { // if exists
+                } else { //* if exists
                     Mng_user::updateUser($check);
                     $dataUser = Mng_user::find($checkUser->usr_id);
                     $token = $checkUser->createToken('ApiToken')->plainTextToken;
@@ -55,7 +51,7 @@ class LoginController extends Controller
             } else {
                 return response()->json(['message' => 'Periksa Kembali Akun Anda!!', 'state' => 'failed'], 401);
             }
-        } else { // if local
+        } else { //* if local
             $userlogin = str_contains($request->email, '@');
             if (!$userlogin) {
                 $userlogin = $request->email . '@emp-one.com';

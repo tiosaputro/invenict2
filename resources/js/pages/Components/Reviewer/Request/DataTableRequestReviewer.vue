@@ -357,9 +357,9 @@
           <Dropdown
             v-model="editSpv.ireq_spv"
             :options="listSpv"
-            optionValue="spv_id"
+            optionValue="usr_domain"
             :filter="true"
-            optionLabel="spvnamejob"
+            optionLabel="name"
             placeholder="Choose One"
             :showClear="true"
           />
@@ -488,7 +488,7 @@
         <th>User Division</th>
         <td><InputText v-model="detail.usr_division" readonly /></td>
       </tr>
-      <tr v-if="detail.countspv > 0">
+      <tr v-if="detail.ireq_count_spv > 0">
         <th>Supervisor</th>
         <td><InputText v-model="detail.spv" readonly /></td>
       </tr>

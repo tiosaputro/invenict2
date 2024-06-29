@@ -15,7 +15,7 @@ class IctRequestManagerServices
     {
         $data = Ict::query();
         $data->SELECT(
-            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title) as spv"),
+            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabatan) as spv"),
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_verificator_remark',
             'mus.usr_division',
@@ -37,8 +37,7 @@ class IctRequestManagerServices
             'ireq_mst.ireq_approver2_remark');
         $data->LEFTJOIN('divisi_refs dr', 'ireq_mst.ireq_divisi_user', 'dr.div_id');
         $data->LEFTJOIN('mng_users mu', 'ireq_mst.created_by', 'mu.usr_id');
-        $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
-        $data->LEFTJOIN('mng_users usr', 'sr.spv_name', 'usr.usr_id');
+        $data->LEFTJOIN('mng_users usr', 'ireq_mst.ireq_spv', 'usr.usr_id');
         $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
             $join->on('ireq_mst.ireq_assigned_to1', 'vi.usr_id')
                 ->whereNotNull('ireq_mst.ireq_assigned_to1');
@@ -67,7 +66,7 @@ class IctRequestManagerServices
         });
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
         $data->GroupBy(
-            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title)"),
+            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabaran)"),
             'ms.usr_fullname',
             'ireq_mst.ireq_reason',
             'mus.usr_fullname',
@@ -88,6 +87,7 @@ class IctRequestManagerServices
     {
         $data = IctDetail::Query();
         $data->LEFTJOIN('ireq_mst as im', 'ireq_dtl.ireq_id', 'im.ireq_id');
+        $data->LEFTJOIN('mng_users usr', 'im.ireq_spv', 'usr.usr_id');
         $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
             $join->on('ireq_dtl.ireq_assigned_to1', 'vi.usr_id')
                 ->whereNotNull('ireq_dtl.ireq_assigned_to1');
@@ -120,6 +120,7 @@ class IctRequestManagerServices
             'ms.usr_fullname',
             'mus.usr_fullname as ireq_user',
             'mus.usr_division as division_user',
+            'usr.usr_fullname as spv_name',
             'im.ireq_reason',
             'im.ireq_no',
             'im.ireq_verificator_remark',

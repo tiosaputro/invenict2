@@ -173,15 +173,15 @@ class IctDetail extends Model
                       ->whereNull('im.ireq_assigned_to1');
             })
             ->LEFTJOIN('mng_users mu','im.ireq_requestor','mu.usr_id')
-            ->LEFTJOIN('location_refs loc','im.ireq_loc','loc.loc_code')
-            ->LEFTJOIN('supervisor_refs sr','im.ireq_spv','sr.spv_id')
             ->LEFTJOIN('mng_users mus','sr.spv_name','mus.usr_id')
             ->LEFTJOIN('mng_users usr','im.ireq_user','usr.usr_id')
+            ->LEFTJOIN('location_refs loc','im.ireq_loc','loc.loc_code')
+            ->LEFTJOIN('mng_users mng_users','im.ireq_spv','mng_users.usr_id')
             ->SELECT(
                 'mus.usr_email as spv_mail',
                 'loc.loc_email',
                 'mu.usr_fullname',
-                'sr.spv_name',
+                'mng_users.usr_fullname as spv_name',
                 'mu.usr_email as user_mail',
                 'im.ireq_no',
                 'id.ireqd_id',

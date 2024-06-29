@@ -47,7 +47,7 @@ class IctRequestReviewerServices
             'ireq_mst.ireq_assigned_to1',
             'lr.lookup_desc as ireq_status',
             'ireq_mst.ireq_status as status',
-            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title) as spv"),
+            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabatan) as spv"),
             DB::raw('count(ireq_mst.ireq_verificator_remark) as count_remark'),
             DB::raw('count(idd.ireq_assigned_to1) as ireq_count_status'),
             DB::raw('count(idd.ireq_assigned_to2) as count_assigned2'),
@@ -58,8 +58,7 @@ class IctRequestReviewerServices
             'ireq_mst.ireq_approver2_remark'
         );
         $data->LEFTJOIN('mng_users mu', 'ireq_mst.ireq_requestor', 'mu.usr_id');
-        $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
-        $data->LEFTJOIN('mng_users usr', 'sr.spv_name', 'usr.usr_id');
+        $data->LEFTJOIN('mng_users usr', 'ireq_mst.ireq_spv', 'usr.usr_id');
         $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
             $join->on('ireq_mst.ireq_assigned_to1', 'vi.usr_id')
                 ->whereNotNull('ireq_mst.ireq_assigned_to1');
@@ -97,7 +96,7 @@ class IctRequestReviewerServices
             'ireq_mst.ireq_id',
             'ireq_mst.ireq_reason',
             'ireq_mst.ireq_verificator_remark',
-            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title)"),
+            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabatan)"),
             DB::raw("COALESCE(vi.official_name,vii.official_name)"),
             'ireq_mst.ireq_status', 'ireq_mst.ireq_no', 'ireq_mst.ireq_date',
             'mu.usr_email',
@@ -131,8 +130,7 @@ class IctRequestReviewerServices
         $data->LEFTJOIN('mng_users ms', 'im.ireq_requestor', 'ms.usr_id');
         $data->LEFTJOIN('mng_user_domain mus', 'im.ireq_user', 'mus.usr_domain');
         $data->LEFTJOIN('divisi_refs as dr', 'im.ireq_divisi_user', 'dr.div_id');
-        $data->LEFTJOIN('supervisor_refs sr', 'im.ireq_spv', 'sr.spv_id');
-        $data->LEFTJOIN('mng_users usr', 'usr.usr_id', 'sr.spv_name');
+        $data->LEFTJOIN('mng_users usr', 'im.ireq_spv', 'usr.usr_id');
         $data->LEFTJOIN('lookup_refs as lr', function ($join) {
             $join->on('ireq_dtl.ireq_status', 'lr.lookup_code')
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
@@ -155,7 +153,6 @@ class IctRequestReviewerServices
             'mus.usr_fullname as ireq_user',
             'usr.usr_fullname as spv_name',
             'mus.usr_division as division_user',
-            'sr.spv_name as spv_id',
             'im.ireq_no',
             'im.ireq_reason',
             'im.ireq_verificator_remark',
@@ -391,5 +388,15 @@ class IctRequestReviewerServices
         $body = $request->body;
         SendNotifToRequestor::dispatchAfterResponse($Ict, $to, $footer, $body);
         return $Ict;
+    }
+    public function SaveSpv($request){
+        $data = Ict::find($request->ireq_id);
+        $data->ireq_spv = $request->ireq_spv;
+        $data->last_update_date = now();
+        $data->last_updated_by = Auth::user()->usr_id;
+        $data->program_name = "IctRequestReviewerController__saveSpv";
+        $data->save();
+        
+        return $data;
     }
 }

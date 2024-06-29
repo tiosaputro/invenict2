@@ -17,8 +17,7 @@ class IctRequestorServices
         $data->LEFTJOIN('ireq_dtl as idm', 'ireq_mst.ireq_id', 'idm.ireq_id');
         $data->LEFTJOIN('mng_users as mu', 'ireq_mst.ireq_requestor', 'mu.usr_id');
         $data->LEFTJOIN('mng_user_domain muu', 'ireq_mst.ireq_user', 'muu.usr_domain');
-        $data->LEFTJOIN('supervisor_refs sr', 'ireq_mst.ireq_spv', 'sr.spv_id');
-        $data->LEFTJOIN('mng_users usr', 'sr.spv_name', 'usr.usr_id');
+        $data->LEFTJOIN('mng_users usr', 'ireq_mst.ireq_spv', 'usr.usr_id');
         $data->LEFTJOIN('lookup_refs as lr', function ($join) {
             $join->on('ireq_mst.ireq_status', 'lr.lookup_code')
                 ->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
@@ -32,7 +31,7 @@ class IctRequestorServices
                 ->whereNull('ireq_mst.ireq_assigned_to1');
         });
         $data->SELECT(
-            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title) as spv"),
+            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabatan) as spv"),
             DB::RAW("COUNT(ireq_mst.ireq_verificator_remark) as countremark_reviewer"),
             DB::RAW("COUNT(ireq_mst.ireq_spv) as countspv"),
             'mu.usr_division',
@@ -67,7 +66,7 @@ class IctRequestorServices
             }
         });
         $data->groupBy(
-            DB::raw("(usr.usr_fullname ||' - '|| sr.spv_job_title)"),
+            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabatan)"),
             DB::raw("COALESCE(vi.official_name,vii.official_name)"),
             'ireq_mst.ireq_reason',
             'lr.lookup_desc',
@@ -88,6 +87,7 @@ class IctRequestorServices
     {
         $data = IctDetail::query();
         $data->LEFTJOIN('ireq_mst as im', 'ireq_dtl.ireq_id', 'im.ireq_id');
+        $data->LEFTJOIN('mng_users usr', 'im.ireq_spv', 'usr.usr_id');
         $data->LEFTJOIN('mng_users as mu', 'im.ireq_requestor', 'mu.usr_id');
         $data->LEFTJOIN('mng_user_domain mud', 'im.ireq_user', 'mud.usr_domain');
         $data->LEFTJOIN('vpekerja_ict vi', function ($join) {
@@ -115,6 +115,7 @@ class IctRequestorServices
             'mud.usr_division',
             'mu.usr_fullname as ireq_requestor',
             'mu.usr_fullname',
+            'usr.usr_fullname as spv_name',
             'ireq_dtl.ireq_attachment',
             'im.ireq_no',
             'ireq_dtl.ireq_id',

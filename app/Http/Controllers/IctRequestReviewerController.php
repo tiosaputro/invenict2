@@ -23,9 +23,9 @@ use App\Exports\IctExportReviewerAssignmentRequest;
 use App\Exports\IctExportReviewerSedangDikerjakan;
 use App\Exports\IctExportReviewerSudahDikerjakan;
 use App\Exports\IctExportReviewerSelesai;
-use App\Services\SupervisorServices;
 use App\Services\PekerjaServices;
 use App\Models\Lookup_Refs;
+use App\Services\UserDomainServices;
 use Illuminate\Support\Facades\View;
 
 class IctRequestReviewerController extends Controller
@@ -60,17 +60,16 @@ class IctRequestReviewerController extends Controller
     }
     function editSpv($code){
         $data['request'] = $this->IctServices->detailNoRequest($code);
-        $data['listSupervisor'] = app(SupervisorServices::class)->getAllData();
+        $data['listSupervisor'] = app(UserDomainServices::class)->getAllData();
         return ResponseFormatter::success($data,'Successfully Get Data'); 
     }
     function saveSpv(Request $request){
-       $data = Ict::find($request->ireq_id);
-       $data->ireq_spv = $request->ireq_spv;
-       $data->last_update_date = now();
-       $data->last_updated_by = Auth::user()->usr_id;
-       $data->program_name = "IctRequestReviewerController__saveSpv";
-       $data->save();
-       return ResponseFormatter::success($data,'Successfully Get Data'); 
+        $check = Mng_user::where('usr_domain',$request->ireq_spv)->first();
+        if(!empty($check)){
+            $request->ireq_spv = $check->usr_id;
+            $data = $this->reviewerServices->SaveSpv($request);
+        }
+        return ResponseFormatter::success($data,'Successfully Get Data'); 
     }
     function sendMailtoRequestor(Request $request){
         $this->reviewerServices->sendMailToRequestor($request);

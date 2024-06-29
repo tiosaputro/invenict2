@@ -80,8 +80,8 @@ class Mng_User extends Authenticatable
                 'rol_id' => $role->rol_id,
                 'urol_stat' => 'T',
                 'creation_date' => now(),
-                'created_by'=> 'INVENICT',
-                'program_name'=>'Mng_user'
+                'created_by'=> $idUser,
+                'program_name'=>'Mng_user@createUser'
         ]);
         return $data;
     }
@@ -109,8 +109,8 @@ class Mng_User extends Authenticatable
         $data->program_name = 'Mng_user@updateUser';
         $data->save();
     }
-    public static function findUser($email){
-        $user = Mng_user::where('usr_fullname','like',$email)->first();
+    public static function findUserByUserDomain($mail){
+        $user = Mng_user::where('usr_domain','like',$mail)->first();
         return $user;
     }
     public static function menu(){
