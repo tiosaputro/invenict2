@@ -386,7 +386,7 @@ export default {
               detail: "Record deleted",
               life: 3000,
             });
-            this.loading = true;
+            this.$emit("show-loading");
             this.$emit("get-data");
           });
         },
