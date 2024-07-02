@@ -32,5 +32,8 @@ class Mng_usr_roles extends Model
         $role = Mng_usr_roles::select('rol_id')->where('usr_id',$code)->pluck('rol_id');
         return $role;
      }
+     public static function addRole($role){
+        
+     }
 
 }

@@ -63,7 +63,7 @@ class IctRequestHigherLevelServices
                 $query->whereNotNull('ireq_mst.ireq_status');
             }
         });
-        $data->where('sr.spv_name', Auth::user()->usr_id);
+        $data->where('ireq_mst.ireq_spv', Auth::user()->usr_id);
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
         $data->GroupBy(
             DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabatan)"),
@@ -140,7 +140,7 @@ class IctRequestHigherLevelServices
         if (!empty($code)) {
             $data->WHERE('im.ireq_id', $code);
         }
-        $data->WHERE('sr.spv_name', Auth::user()->usr_id);
+        $data->WHERE('im.ireq_spv', Auth::user()->usr_id);
         $data->ORDERBY('im.ireq_date', 'DESC');
         $data->ORDERBY('ireq_dtl.ireqd_id', 'ASC');
         return $data->get();

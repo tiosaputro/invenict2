@@ -48,7 +48,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakanadmin}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
+						<i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 							<div class="text-900 font-medium text-xl">{{count.sudahdikerjakanadmin}}</div>
 						</div>
 						<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-							<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color: red;"></i>
+							<i class="bi bi-check2-all text-xl" style="font-size: 4rem; color: red;"></i>
 						</div>
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 							<div class="text-900 font-medium text-xl">{{count.sudahselesaiadmin}}</div>
 						</div>
 						<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-							<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
+							<i class="bi bi-check2-all text-xl" style="font-size: 4rem; color : green;"></i>
 						</div>
 					</div>
 				</div>
@@ -87,7 +87,7 @@
 							<div class="text-900 font-medium text-xl">{{count.countrequestadmin}}</div>
 						</div>
 						<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-							<i class="pi pi-book text-xl" style="fontSize: 4rem; color : green;"></i>
+							<i class="pi pi-book text-xl" style="font-size: 4rem; color : green;"></i>
 						</div>
 					</div>
 				</div>
@@ -165,7 +165,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakanmanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
+						<i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -204,7 +204,7 @@
 						<div class="text-900 font-medium text-xl">{{count.totalrequestmanager}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-book text-xl" style="fontSize: 3.5rem; color: green;"></i>
+						<i class="pi pi-book text-xl" style="font-size: 3.5rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -295,7 +295,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sdhdikerjakanbentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
+						<i class="bi bi-check2-all text-xl" style="font-size: 3.5rem; color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -308,7 +308,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sdhselesaibentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+						<i class="bi bi-check2-all text-xl"  style="font-size: 3.5rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -321,7 +321,7 @@
 						<div class="text-900 font-medium text-xl">{{count.totalRequestbentu}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+						<i class="pi pi-book text-xl"  style="font-size: 3.5rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -412,7 +412,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sdhdikerjakankurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
+						<i class="bi bi-check2-all text-xl" style="font-size: 3.5rem; color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -425,7 +425,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sdhselesaikurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+						<i class="bi bi-check2-all text-xl"  style="font-size: 3.5rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -438,7 +438,7 @@
 						<div class="text-900 font-medium text-xl">{{count.totalRequestkurau}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+						<i class="pi pi-book text-xl"  style="font-size: 3.5rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -529,7 +529,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sdhdikerjakanjakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="fontSize: 3.5rem; color: red;"></i>
+						<i class="bi bi-check2-all text-xl" style="font-size: 3.5rem; color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -542,7 +542,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sdhselesaijakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+						<i class="bi bi-check2-all text-xl"  style="font-size: 3.5rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -555,7 +555,7 @@
 						<div class="text-900 font-medium text-xl">{{count.totalRequestjakarta}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-book text-xl"  style="fontSize: 3.5rem; color: green;"></i>
+						<i class="pi pi-book text-xl"  style="font-size: 3.5rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -672,7 +672,7 @@
 						<div class="text-900 font-medium text-xl">{{count.direjecthigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-times text-xl" style="fontSize: 4rem; color: red;"></i>
+						<i class="pi pi-times text-xl" style="font-size: 4rem; color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -698,7 +698,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakanhigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
+						<i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -711,7 +711,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sudahdikerjakanhigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color: red;"></i>
+						<i class="bi bi-check2-all text-xl" style="font-size: 4rem; color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -724,7 +724,7 @@
 						<div class="text-900 font-medium text-xl">{{ count.sudahselesaihigherlevel }}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
+						<i class="bi bi-check2-all text-xl" style="font-size: 4rem; color : green;"></i>
 					</div>
 				</div>
 			</div>
@@ -737,7 +737,7 @@
 						<div class="text-900 font-medium text-xl">{{count.totalhigherlevel}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-book text-xl" style="fontSize: 4rem; color : green;"></i>
+						<i class="pi pi-book text-xl" style="font-size: 4rem; color : green;"></i>
 					</div>
 				</div>
 			</div>
@@ -789,7 +789,7 @@
 						<div class="text-900 font-medium text-xl">{{count.direjectrequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-times text-xl" style="fontSize: 4rem; color: red;"></i>
+						<i class="pi pi-times text-xl" style="font-size: 4rem; color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -802,7 +802,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sedangdikerjakanrequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="pi pi-spin pi-spinner" style="fontSize: 2rem; color: green;"></i>
+						<i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: green;"></i>
 					</div>
 				</div>
 			</div>
@@ -815,7 +815,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sudahdikerjakanrequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color: red;"></i>
+						<i class="bi bi-check2-all text-xl" style="font-size: 4rem; color: red;"></i>
 					</div>
 				</div>
 			</div>
@@ -828,7 +828,7 @@
 						<div class="text-900 font-medium text-xl">{{count.sudahselesairequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-check2-all text-xl" style="fontSize: 4rem; color : green;"></i>
+						<i class="bi bi-check2-all text-xl" style="font-size: 4rem; color : green;"></i>
 					</div>
 				</div>
 			</div>
@@ -841,7 +841,7 @@
 						<div class="text-900 font-medium text-xl">{{count.countrequestrequestor}}</div>
 					</div>
 					<div class="flex align-items-center justify-content-center bg-gray-100 border-round" style="width:2.5rem;height:2.5rem">
-						<i class="bi bi-journal-bookmark-fill text-xl" style="fontSize: 4rem; color : green;"></i>
+						<i class="bi bi-journal-bookmark-fill text-xl" style="font-size: 4rem; color : green;"></i>
 					</div>
 				</div>
 			</div>

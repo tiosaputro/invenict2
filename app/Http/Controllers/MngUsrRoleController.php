@@ -72,7 +72,7 @@ class MngUsrRoleController extends Controller
         $role = Mng_usr_roles::getRole($code);
         return response()->json($role);
     }
-    public function update(Request $request, $code){
+    public static function update(Request $request, $code){
         $role = $request->role;
         $roles = Mng_usr_roles::where('usr_id', $code)->first();
         $createday = $roles->creation_date;

@@ -74,7 +74,7 @@ class MngUserController extends Controller
         $check = $ldap->findUser($userDomain);
         if ($check) {
             $user = Mng_user::create([
-                'usr_id' => generate_id_number(),
+                'usr_id' => generate_id(),
                 'usr_name' => str_replace('"', '', $check['displayname']),
                 'usr_fullname' => str_replace('"', '', $check['name']),
                 'usr_alamat' => str_replace('"', '', $check['streetaddress']),

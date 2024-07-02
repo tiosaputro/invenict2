@@ -54,7 +54,7 @@ class Mng_User extends Authenticatable
     public static function createUser($request){
         $location = strtoupper(str_replace('"','',$request['physicaldeliveryofficename']));
         $checkLocation = Location::select('loc_code')->where('loc_desc','like',$location)->first();
-        $idUser = generate_id_number();
+        $idUser = generate_id();
         $data = Mng_user::create([
             'usr_id'=> $idUser,
             'usr_fullname'=>strtoupper(str_replace('"','',$request['displayname'])),

@@ -12,10 +12,7 @@
         </div>
 
         <transition name="layout-mask">
-            <div
-                class="layout-mask p-component-overlay"
-                v-if="mobileMenuActive"
-            ></div>
+            <div class="layout-mask p-component-overlay" v-if="mobileMenuActive"></div>
         </transition>
     </div>
     <div :class="containerClass" @click="onWrapperClick" v-else>
@@ -45,7 +42,7 @@ export default {
             mobileMenuActive: false,
             loggedIn: localStorage.getItem("loggedIn"),
             menuUser: [],
-            user:[],
+            user: [],
             isMobile: false
         };
     },
@@ -69,21 +66,27 @@ export default {
             } else if (this.windowHeight >= 1200) {
                 document.documentElement.style.fontSize = "18px";
             }
-           
+
             const menuServices = new MenuServices();
 
             menuServices.getdata().then((data) => {
                 this.menuUser = data.tree;
                 this.user = data.user;
-                if(this.isMobile ){
-                    this.menuUser[0] = {
+                if (this.isMobile) {
+                this.menuUser[0] = {
                     label: "Home",
                     to: "/dashboard",
                     items: [
                         { label: "Dashboard", to: "/dashboard", items: null }
                     ]
                 };
-                }
+            } else if(!this.isMobile) {
+                this.menuUser[0] = {
+                    label: "Home",
+                    to: "/dashboard",
+                    items: null
+                };
+            }
                 if (!data.user) {
                     localStorage.clear();
                     localStorage.setItem("logOut", "true");
@@ -207,6 +210,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../App.scss";
+
 ::v-deep(.custom-scrolltop) {
     width: 2rem;
     height: 2rem;

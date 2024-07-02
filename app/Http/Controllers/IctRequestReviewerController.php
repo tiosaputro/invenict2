@@ -25,8 +25,10 @@ use App\Exports\IctExportReviewerSudahDikerjakan;
 use App\Exports\IctExportReviewerSelesai;
 use App\Services\PekerjaServices;
 use App\Models\Lookup_Refs;
+use App\Models\Mng_usr_roles;
 use App\Services\UserDomainServices;
 use Illuminate\Support\Facades\View;
+use App\Helpers\ldap_connection;
 
 class IctRequestReviewerController extends Controller
 {
@@ -64,12 +66,24 @@ class IctRequestReviewerController extends Controller
         return ResponseFormatter::success($data,'Successfully Get Data'); 
     }
     function saveSpv(Request $request){
-        $check = Mng_user::where('usr_domain',$request->ireq_spv)->first();
-        if(!empty($check)){
-            $request->ireq_spv = $check->usr_id;
+        $checkLogin = Mng_user::where('usr_domain',$request->ireq_spv)->first();
+        
+        if(!empty($checkLogin)){
+            $this->reviewerServices->CheckIsHigherLevel($checkLogin->usr_id);
+            $request->ireq_spv = $checkLogin->usr_id;
             $data = $this->reviewerServices->SaveSpv($request);
         }
-        return ResponseFormatter::success($data,'Successfully Get Data'); 
+        else{
+            $ldap = new ldap_connection();
+            $check = $ldap->findUser($request->ireq_spv);
+            if($check){
+                $createUser = Mng_user::createUser($check);
+                $this->reviewerServices->CheckIsHigherLevel($createUser->usr_id);
+                $request->ireq_spv = $createUser->usr_id;
+                $data = $this->reviewerServices->SaveSpv($request);
+            }
+            return ResponseFormatter::success($data,'Successfully Get Data'); 
+        }
     }
     function sendMailtoRequestor(Request $request){
         $this->reviewerServices->sendMailToRequestor($request);

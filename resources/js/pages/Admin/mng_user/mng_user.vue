@@ -41,7 +41,6 @@
           <template #loading>
             Loading data. Please wait.
           </template>
-          <Column field="usr_id" header="User ID" :sortable="true" style="min-width:8 rem"/>
           <Column field="usr_fullname" header="User Fullname" :sortable="true" style="min-width:10rem"/>
           <Column field="usr_name" header="User Name" :sortable="true" style="min-width:8rem"/>
           <Column field="usr_domain" header="User Domain" :sortable="true" style="min-width:10rem"/>

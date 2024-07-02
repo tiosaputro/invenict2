@@ -16,6 +16,9 @@ use App\Models\Link;
 use App\Models\Lookup_Refs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Mng_usr_roles;
+use App\Models\Mng_roles;
+use App\Http\Controllers\MngUsrRoleController;
 
 class IctRequestReviewerServices
 {
@@ -398,5 +401,37 @@ class IctRequestReviewerServices
         $data->save();
         
         return $data;
+    }
+    
+    public function CheckIsHigherLevel($id){
+        $UserRole = Mng_usr_roles::select('rol_id')->where('usr_id', $id)->get();
+        $roleApproval = Lookup_Refs::select('lookup_code')->where('lookup_type','role_approval_spv')->first();
+        foreach($UserRole as $val){
+            $check[] = $val->rol_id;
+        }
+        if(in_array($roleApproval->lookup_code,$check)){
+            return true;
+        } else{
+            $role = $check;
+            array_push($role,$roleApproval->lookup_code);
+            $roles = Mng_usr_roles::where('usr_id', $id)->first();
+            $createday = $roles->creation_date;
+            $created_by = $roles->created_by;
+            Mng_usr_roles::where('usr_id', $id)->delete();
+            foreach ($role as $r) {
+                $create = Mng_usr_roles::create([
+                    'usr_id' => $id,
+                    'rol_id' => $r,
+                    'urol_stat' => 'T',
+                    'creation_date' => $createday,
+                    'created_by' => $created_by,
+                    'last_updated_by' => Auth::user()->usr_id,
+                    'last_updated_date' => now(),
+                    'program_name' => 'MngUsrRoleController_UPDATE',
+                ]);
+            }
+            return $create;
+        }
+        
     }
 }
