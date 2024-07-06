@@ -17,8 +17,6 @@ use App\Models\Lookup_Refs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Mng_usr_roles;
-use App\Models\Mng_roles;
-use App\Http\Controllers\MngUsrRoleController;
 
 class IctRequestReviewerServices
 {

@@ -31,7 +31,7 @@ class MngUserDomainController extends Controller
         $data = $this->domainService->getAllData();
         return ResponseFormatter::success($data,'Successfully get data');
     }
-    function update(){
+    public function update(){
         $ldap = new ldap_connection();
         $filter = "(&(description=User)(|(useraccountcontrol=66048)(useraccountcontrol=512)))"; //filter user enable
         $dataDir = $ldap->getAllData($filter);
@@ -53,7 +53,7 @@ class MngUserDomainController extends Controller
                 $user->usr_department = $row['usr_department'];
                 $user->usr_division = $row['usr_division'];
                 $user->usr_bu = $row['usr_bu'];
-                $user->created_by = Auth::user()->usr_id;
+                $user->created_by = (Auth::user()) ? Auth::user()->usr_id : 'INVENICT' ;
                 $user->created_at = now();
                 $user->save();
             }
@@ -61,4 +61,5 @@ class MngUserDomainController extends Controller
         }
         return ResponseFormatter::success('Tidak ada data yang diperbaharui!');
     }
+
 }
