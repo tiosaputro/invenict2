@@ -336,6 +336,12 @@
                 icon="pi pi-file-pdf"
                 @click="PrintRequestListByStatusPdf(printPdf)"
               />
+              <!-- <Button
+                label="Excel"
+                class="p-button-raised p-button-success mr-2"
+                icon="pi pi-file-excel"
+                @click="PrintRequestListByStatusExcel(printExcel)"
+              /> -->
             </div>
           </div>
         </div>
@@ -343,8 +349,7 @@
     </DataTable>
   </div>
 
-  <Dialog
-    v-model:visible="dialogEditSpv"
+  <Dialog v-model:visible="dialogEditSpv"
     :style="{ width: '400px' }"
     header="Form Dialog Edit SPV"
     :modal="true"
@@ -366,13 +371,20 @@
         </div>
       </div>
     </div>
+    <div class="p-fluid">
+      <div class="field grid">
+        <div class="col">
+          <Checkbox v-model="editSpv.ireq_spv_acting" binary variant="filled" />
+        <label for="ingredient1" class="ml-2"> Acting </label>
+        </div>
+      </div>
+    </div>
     <template #footer>
       <Button label="Save" @click="submitSpv()" class="p-button" autofocus />
       <Button label="Cancel" @click="cancelSpv()" class="p-button-text" />
     </template>
   </Dialog>
-  <Dialog
-    v-model:visible="dialogReject"
+  <Dialog v-model:visible="dialogReject"
     :style="{ width: '400px' }"
     header="Form Dialog Reject"
     :modal="true"
@@ -401,8 +413,7 @@
       <Button label="Cancel" @click="cancelReject()" class="p-button-text" />
     </template>
   </Dialog>
-  <Dialog
-    v-model:visible="dialogAssign"
+  <Dialog v-model:visible="dialogAssign"
     :style="{ width: '500px' }"
     header="Assign Per-Request"
     :modal="true"
@@ -430,8 +441,7 @@
       <Button label="Cancel" @click="cancelAssign()" class="p-button-text" />
     </template>
   </Dialog>
-  <Dialog
-    v-model:visible="dialogRemark"
+  <Dialog v-model:visible="dialogRemark"
     :style="{ width: '400px' }"
     header="Form Dialog Remark"
     :modal="true"
@@ -459,8 +469,7 @@
       <Button label="Cancel" @click="cancelRemark()" class="p-button-text" />
     </template>
   </Dialog>
-  <Dialog
-    v-model:visible="dialogDetailRequest"
+  <Dialog v-model:visible="dialogDetailRequest"
     :breakpoints="{ '960px': '95vw' }"
     :style="{ width: '600px' }"
     :header="this.header"
@@ -520,6 +529,7 @@ export default {
   props: {
     value: Array,
     loading: Boolean,
+    printExcel: String,
     printPdf: String,
     showSpv: Array,
     showRemark: Array,
@@ -737,7 +747,7 @@ export default {
       this.$emit("show-loading");
       this.Type.report_type = type;
       this.axios
-        .post("api/print-out-pdf-requestor", this.Type)
+        .post("api/print-out-pdf-reviewer", this.Type)
         .then((response) => {
           let htmlContent = response.data.data.htmlContent;
           const options = {
@@ -748,10 +758,27 @@ export default {
               orientation: "landscape",
             },
           };
-
+          this.Type.report_type = null;
           this.$html2pdf().set(options).from(htmlContent).save();
           this.$emit("hide-loading");
         });
+    },
+    PrintRequestListByStatusExcel(type){
+      const date = new Date();
+      const today = this.$moment(date).format("DD MMM YYYY")
+      this.$emit("show-loading");
+      this.Type.report_type = type;
+       this.axios.post('api/print-out-excel-reviewer', this.Type, {headers: { 'Content-Type': 'application/json'},responseType: 'blob',}).
+        then((response)=>{
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+          this.$emit("hide-loading");
+          this.Type.report_type = null;
+       });
     },
     formatDate(date) {
       return this.$moment(date).format("DD MMM YYYY HH:mm");

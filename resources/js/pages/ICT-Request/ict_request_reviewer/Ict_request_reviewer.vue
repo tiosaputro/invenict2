@@ -13,34 +13,34 @@
               <TabPanel header="Request">
                 <DataTableRequest :value="permohonan" :loading="loading" :showRemark="showRemarkPermohonan" :showSpv="showSpvPermohonan"
                      printPdf="permohonan" :showPersonnel1="showPersonelPermohonan" showTotalDetail ="1" @get-data="getIct" 
-                    Active="0" @show-loading="showLoading" @hide-loading="hideLoading"
+                    Active="0" @show-loading="showLoading" @hide-loading="hideLoading" printExcel="permohonan"
                 />  
               </TabPanel>
               <TabPanel header="Higher Level">
                 <DataTableRequest :value="atasandivisi" :loading="loading" :showRemark="showRemarkAtasanDivisi" :showSpv="showSpvAtasanDivisi"
                      printPdf="atasan" :showPersonnel1="showPersonelAtasanDivisi" @get-data="getIct" 
-                    @show-loading="showLoading" @hide-loading="hideLoading" Active="1"
+                    @show-loading="showLoading" @hide-loading="hideLoading" Active="1" printExcel="atasan_divisi"
                 />  
               </TabPanel>
               <TabPanel header="ICT Manager">
                 <DataTableRequest :value="manager" :loading="loading" :showRemark="showRemarkManager" :showSpv="showSpvManager"
                      printPdf="manager" :showPersonnel1="showPersonelmanager" @get-data="getIct" 
-                    @show-loading="showLoading" @hide-loading="hideLoading" Active="2"
+                    @show-loading="showLoading" @hide-loading="hideLoading" Active="2" printExcel="ict_manager"
                 /> 
               </TabPanel>
               <TabPanel header="Rejected">
                 <DataTableRequest :value="reject" :loading="loading" :showRemark="showRemarkManager" :showSpv="showSpvManager"
-                  @show-loading="showLoading" @hide-loading="hideLoading"  printPdf="reject" @get-data="getIct" showReason="1" Active="3"
+                  @show-loading="showLoading" @hide-loading="hideLoading" printExcel="reject" printPdf="reject" @get-data="getIct" showReason="1" Active="3"
                 />
               </TabPanel>
               <TabPanel header="Request Assignment">
                 <DataTableRequest :value="penugasan" :loading="loading" :showRemark="showRemarkPenugasan" :showSpv="showSpvPenugasan"
-                     printPdf="assignment_request" :showPersonnel1="showPersonelPenugasan" @get-data="getIct" 
+                     printPdf="assignment_request" printExcel="assignment_request" :showPersonnel1="showPersonelPenugasan" @get-data="getIct" 
                     @show-loading="showLoading" @hide-loading="hideLoading" :showReasonPersonnel="showReasonPersonnel" Active="4"
                 />
               </TabPanel>
               <TabPanel header="In Progress">
-                <DataTableRequest :value="sedangDikerjakan" :loading="loading" :showRemark="showRemarkSedangDikerjakan" :showSpv="showSpvSedangDikerjakan" @show-loading="showLoading" @hide-loading="hideLoading"  printPdf="sedang_dikerjakan" :showPersonnel1="showPersonelSedangDikerjakan" Active="5"/>
+                <DataTableRequest :value="sedangDikerjakan" :loading="loading" printExcel="sedang_dikerjakan" :showRemark="showRemarkSedangDikerjakan" :showSpv="showSpvSedangDikerjakan" @show-loading="showLoading" @hide-loading="hideLoading"  printPdf="sedang_dikerjakan" :showPersonnel1="showPersonelSedangDikerjakan" Active="5"/>
               </TabPanel>
               <TabPanel header="Done">
                 <DataTableDetail :value="sudahDikerjakan" @get-data="getIct" :loading="loading" @show-loading="showLoading" @hide-loading="hideLoading" printPdf="sudah_dikerjakan"/>
@@ -149,118 +149,6 @@ export default {
           }
         });    
     },  
-    CetakExcelPermohonan(){
-      const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY")
-      this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-permohonan',{headers: {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          this.loading = false;
-       });
-    },
-    CetakExcelAtasanDivisi(){
-      const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY")
-      this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-atasan-divisi',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          this.loading = false;
-       });
-    },
-    CetakExcelIctManager(){
-       const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY")
-      this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-ict-manager',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          this.loading = false;
-       });
-    },
-    CetakExcelReject(){
-       const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY")
-      this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-reject',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          this.loading = false;
-       });
-    },
-    CetakExcelAssignmentRequest(){
-      const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY")
-      this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-assignment-request',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          this.loading = false;
-       });
-    },
-    CetakExcelSedangDikerjakan(){
-       const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY")
-      this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-sedang-dikerjakan',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          this.loading = false;
-       });
-    },
-    CetakExcelSudahDikerjakan(){
-       const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY")
-      this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-sudah-dikerjakan',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          this.loading = false;
-       });
-    },
-    CetakExcelSelesai(){
-       const date = new Date();
-      const today = this.$moment(date).format("DD MMM YYYY")
-      this.loading = true;
-       this.axios.get('api/report-ict-excel-reviewer-selesai',{headers: { 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},responseType: 'arraybuffer',}).then((response)=>{
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'ICT REQUEST STATUS REPORT LIST ON '+today+'.xlsx');
-          document.body.appendChild(link);
-          link.click();
-          this.loading = false;
-       });
-    },
   },
 };
 </script>

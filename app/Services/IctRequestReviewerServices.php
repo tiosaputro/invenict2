@@ -130,7 +130,6 @@ class IctRequestReviewerServices
         });
         $data->LEFTJOIN('mng_users ms', 'im.ireq_requestor', 'ms.usr_id');
         $data->LEFTJOIN('mng_user_domain mus', 'im.ireq_user', 'mus.usr_domain');
-        $data->LEFTJOIN('divisi_refs as dr', 'im.ireq_divisi_user', 'dr.div_id');
         $data->LEFTJOIN('mng_users usr', 'im.ireq_spv', 'usr.usr_id');
         $data->LEFTJOIN('lookup_refs as lr', function ($join) {
             $join->on('ireq_dtl.ireq_status', 'lr.lookup_code')
@@ -153,6 +152,7 @@ class IctRequestReviewerServices
             'ms.usr_email as mail_requestor',
             'mus.usr_fullname as ireq_user',
             'usr.usr_fullname as spv_name',
+            'usr.usr_id as spv_id',
             'mus.usr_division as division_user',
             'im.ireq_no',
             'im.ireq_reason',

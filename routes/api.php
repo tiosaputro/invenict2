@@ -288,6 +288,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/updateStatusClosingDetail/{ireqd_id}/{ireq_no}',[IctRequestReviewerController::class,'updateStatusClosingDetail']);
     Route::post('/sendMailtoRequestor',[IctRequestReviewerController::class,'sendMailtoRequestor']);
     Route::post('/print-out-pdf-reviewer',[IctRequestReviewerController::class,'printPdfByFilter']);
+    Route::post('/print-out-excel-reviewer',[IctRequestReviewerController::class,'printOutExcel']);
     Route::put('/updateAssignPerDetailFromReject/{code}',[IctRequestReviewerController::class,'updateAssignFromReject']);
     Route::get('/report-ict-excel-reviewer-permohonan',[IctRequestReviewerController::class,'cetak_excel_reviewer_permohonan']);
     Route::get('/report-ict-excel-reviewer-atasan-divisi',[IctRequestReviewerController::class,'cetak_excel_reviewer_atasan_divisi']);
@@ -362,6 +363,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-permohonan',[IctRequestHigherLevelController::class,'getPermohonan']);   
     Route::get('/get-verif-higher-level/{code}',[IctRequestHigherLevelController::class,'getDetailVerif']);
     Route::get('/ict-detail-higher-level/{code}',[IctRequestHigherLevelController::class,'detailRequest']);
+    Route::get('/ict-detail-higher-level-verification/{code}',[IctRequestHigherLevelController::class,'detailRequestApproval']);
+    Route::post('/approval-for-verification',[IctRequestHigherLevelController::class,'RequestApproval']);
     Route::post('/print-out-pdf-higher-level',[IctRequestHigherLevelController::class,'printPdfByFilter']);
     Route::get('/report-ict-excel-atasan-permohonan',[IctRequestHigherLevelController::class,'cetak_excel_atasan_permohonan']);
     Route::get('/report-ict-excel-atasan-verifikasi',[IctRequestHigherLevelController::class,'cetak_excel_atasan_verifikasi']);

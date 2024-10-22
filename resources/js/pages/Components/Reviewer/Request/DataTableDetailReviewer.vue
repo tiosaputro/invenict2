@@ -455,7 +455,7 @@ export default {
             jsPDF: {
               unit: "mm",
               format: "a4",
-              orientation: "landscape",
+              orientation: "potrait",
             },
           };
 

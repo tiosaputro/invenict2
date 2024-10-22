@@ -66,7 +66,7 @@ class IctRequestManagerServices
         });
         $data->WHERERaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('ict_status')) . '%']);
         $data->GroupBy(
-            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabaran)"),
+            DB::raw("(usr.usr_fullname ||' - '|| usr.usr_jabatan)"),
             'ms.usr_fullname',
             'ireq_mst.ireq_reason',
             'mus.usr_fullname',

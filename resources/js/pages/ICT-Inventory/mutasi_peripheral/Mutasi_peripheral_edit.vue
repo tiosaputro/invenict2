@@ -15,8 +15,8 @@
                     <label class="col-fixed w-9rem" style="width:145px">Peripheral</label>
                     <div class="field col-12 md:col-6">
                       <InputText
-                      v-model="mut.invent_code"
-                      disabled
+                      v-model="mut.invent_desc"
+                      readonly
                       />
                     </div>
                   </div>
@@ -25,7 +25,7 @@
                     <div class="field col-12 md:col-6">
                       <InputText
                        v-model="mut.invent_sn"
-                       disabled
+                       readonly
                       />
                     </div>
                   </div>
@@ -72,78 +72,42 @@
                       </DatePicker>
                   </div>
               </div>
-                <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">Location</label>
-                    <div class="col-10 md:col-4">
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:145px">Location</label>
+                  <div class="col-10 md:col-4">
                     <InputText
                       type ="text"
                       v-model="mut.imutasi_lokasi"
-                      placeholder="Masukan Lokasi. . ."
-                      :class="{ 'p-invalid': submitted && !mut.imutasi_lokasi }"
+                      placeholder="Input Location"
+                      :class="{'p-invalid': submitted && !mut.imutasi_lokasi}"
                     />
-                      <small class="p-error" v-if="submitted && !mut.imutasi_lokasi"
-                        >Lokasi Belum Diisi.
-                      </small>
+                    <small class="p-error" v-if="submitted && !mut.imutasi_lokasi">
+                      Lokasi Belum Diisi.
+                    </small>
                   </div>
               </div>
-                <div class="field grid">
-                  <label class="col-fixed w-9rem" style="width:145px">User</label>
-                    <div class="col-12 md:col-6">
-                      <InputText
-                          type="text"
-                          v-model="mut.imutasi_pengguna"
-                          placeholder="Masukan Pengguna . . ."
-                          :class="{ 'p-invalid': submitted && !mut.imutasi_pengguna }"
-                        />
-                        
-                      <small class="p-error" v-if="submitted && !mut.imutasi_pengguna"
-                        >Pengguna Belum Diisi.
+              <div class="field grid">
+                <label class="col-fixed w-9rem" style="width:145px">User</label>
+                  <div class="col-12 md:col-6">
+                    <Dropdown v-model="mut.user_id" :options="listUser" optionLabel="usr_fullname"
+                      optionValue="usr_id" :showClear="true" :filter="true" @change="getBuDiv()"
+                      placeholder="Select" :class="{ 'p-invalid': submitted && !mut.user_id }" />
+                      <small class="p-error" v-if="submitted && !mut.user_id">Pengguna Belum Diisi.</small>
+                      <small v-if="errors.user_id" class="p-error">
+                        {{ errors.user_id[0] }}
                       </small>
-                      <small v-if="errors.user" class="p-error">
-                          {{ errors.user[0] }}
-                      </small>
-                </div>
+                  </div>
               </div>
               <div class="field grid">
                   <label class="col-fixed w-9rem" style="width:145px">User Division</label>
                     <div class="col-12 md:col-6">
-                      <Dropdown 
-                        v-model="mut.imutasi_divisi"
-                        :options="divisi"
-                        optionLabel="name"
-                        optionValue="code"
-                        :showClear="true"
-                        :filter="true"
-                        placeholder="Select"
-                        :class="{ 'p-invalid': submitted && !mut.imutasi_divisi }"
-                      />
-                      <small class="p-error" v-if="submitted && !mut.imutasi_divisi"
-                        >User Division not filled.
-                      </small>
-                      <small v-if="errors.imutasi_divisi" class="p-error">
-                          {{ errors.imutasi_divisi[0] }}
-                      </small>
+                      <InputText v-model="mut.imutasi_divisi" readonly/>
                 </div>
               </div>
               <div class="field grid">
                   <label class="col-fixed w-9rem" style="width:145px">Business Unit</label>
                     <div class="col-12 md:col-6">
-                      <Dropdown 
-                        v-model="mut.imutasi_bu"
-                        :options="bu"
-                        optionLabel="name"
-                        optionValue="code"
-                        :showClear="true"
-                        :filter="true"
-                        placeholder="Select"
-                        :class="{ 'p-invalid': submitted && !mut.imutasi_bu }"
-                      />
-                      <small class="p-error" v-if="submitted && !mut.imutasi_bu"
-                        >Business Unit not filled.
-                      </small>
-                      <small v-if="errors.imutasi_bu" class="p-error">
-                          {{ errors.imutasi_bu[0] }}
-                      </small>
+                      <InputText v-model="mut.imutasi_bu" readonly/>
                 </div>
               </div>
                <div class="field grid">
@@ -197,32 +161,36 @@ export default {
       kode: null,
       fromdate: new Date(),
       todate: '',
-      ket:null,
-      user:null,
-      lokasi:null,
       detail:[],
       kodeperi:[],
-      divisi:[],
-      invent_bu:null,
-      invent_sn:null,
-      invent_divisi:null,
+      listUser:[],
       sn:[],
-      bu:[],
-      mutasi:[],
-      mut:[],
+      mut:{
+        invent_bu:null,
+        invent_sn:null,
+        invent_divisi:null,
+        ket:null,
+        user:null,
+        lokasi:null,
+        invent_desc: null,
+        imutasi_tgl_dari:null,
+        imutasi_tgl_sd:null,
+        imutasi_lokasi:null
+      },
       mask:{
         input: 'DD MMM YYYY'
       },
     };
   },
-  mounted(){
+  created(){
     this.getMutasi();
   },
   methods: {
     getMutasi(){
       this.axios.get('/api/edit-mut/'+this.$route.params.code).then((response)=>{
-        this.mut = response.data.data;
-        this.getKode();
+        this.mut = response.data.data.mut;
+        this.listUser = response.data.data.listUser;
+        this.getBuDiv();
       }).catch(error=>{
           if (error.response.status == 401){
             this.$toast.add({
@@ -237,13 +205,14 @@ export default {
           }
         });
     }, 
-    getKode(){
-      this.axios.get('/api/get-kode-peripheral').then((response)=>{
-        this.kodeperi = response.data.data.kode;
-        this.divisi = response.data.data.divisi;
-        this.bu = response.data.data.bu;
+    getBuDiv(){
+      if(this.mut.user_id){
+        this.axios.get('/api/data-divbu/'+this.mut.user_id).then((response)=>{
+        this.mut.imutasi_divisi = response.data.division;
+        this.mut.imutasi_bu = response.data.bu;
       });
-    },
+      }
+    },    
     UpdateMutasi() {
       this.$confirm.require({
         message: "Are you sure to update this data?",
@@ -257,7 +226,6 @@ export default {
         if (
             this.mut.imutasi_tgl_dari != null &&
             this.mut.imutasi_keterangan != null &&
-            this.mut.imutasi_pengguna != null &&
             this.mut.imutasi_divisi != null &&
             this.mut.imutasi_bu != null &&
             this.mut.imutasi_lokasi != null 

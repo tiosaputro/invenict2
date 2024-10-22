@@ -11,12 +11,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Services\MasterServices;
 
 class MasterController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct(){
+    protected $masterServices;
+    public function __construct(MasterServices $services){
+        $this->masterServices = $services;
         $this->middleware(['auth:sanctum', function ($request, $next) {
             $this->to = "/master-peripheral";
             $this->userMenu = Mng_User::menu();
@@ -28,25 +31,16 @@ class MasterController extends Controller
         }]);
     }
     public function index(){
-        $mas = DB::table('invent_mst as im')
-            ->LEFTJOIN('invent_dtl as id', 'im.invent_code', 'id.invent_code')
-            ->leftjoin('lookup_refs as lr', 'im.invent_brand', 'lr.lookup_code')
-            ->SELECT('im.invent_code', DB::RAW('COUNT(id.invent_code) as countstok'),
-                'im.invent_type', 'lr.lookup_desc as invent_brand',
-                'im.invent_desc')
-            ->whereRaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('merk')) . '%'])
-            ->groupBy('im.invent_code', 'im.invent_type', 'lr.lookup_desc', 'im.invent_desc')
-            ->orderBy('im.invent_code', 'ASC')
-            ->get();
+        $mas = $this->masterServices->getDataWithFilter();
         return ResponseFormatter::success($mas, 'Successfully get data');
     }
     public function getAddMaster(){
-        $merk = Lookup_Refs::Merk();
-        $kondisi = Lookup_Refs::Kondisi();
-        $nama = Lookup_Refs::Kategori_peripheral();
-        $bisnis = DB::table('v_company_refs')->get();
+        $data['merk'] = Lookup_Refs::Merk();
+        $data['kondisi'] = Lookup_Refs::Kondisi();
+        $data['nama'] = Lookup_Refs::Kategori_peripheral();
+        $data['bisnis'] = DB::table('v_company_refs')->get();
 
-        return ResponseFormatter::success(array('merk' => $merk, 'kondisi' => $kondisi, 'bisnis' => $bisnis, 'nama' => $nama), 'Successfully get data');
+        return ResponseFormatter::success($data, 'Successfully get data');
     }
     public function save(Request $request){
         $message = [
@@ -185,7 +179,7 @@ class MasterController extends Controller
         return response()->json($mas);
     }
     public function getPeripheral(){
-        $kode = DB::table('invent_mst as im')
+        $data['kode'] = DB::table('invent_mst as im')
             ->leftJoin('lookup_refs as lr', function ($join) {
                 $join->on('im.invent_brand', 'lr.lookup_code')
                     ->whereRaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('merk')) . '%']);
@@ -194,9 +188,9 @@ class MasterController extends Controller
             ->orderBy('im.invent_desc', 'ASC')
             ->get();
 
-        $divisi = DB::table('divisi_refs')->select('div_id as code', 'div_name as name')->orderBy('div_name', 'ASC')->get();
-        $bu = DB::table('vcompany_refs')->select('company_code as code', 'name')->orderBy('name', 'ASC')->get();
-        return ResponseFormatter::success(array('kode' => $kode, 'divisi' => $divisi, 'bu' => $bu), 'Successfully get data');
+        $data['divisi'] = DB::table('divisi_refs')->select('div_id as code', 'div_name as name')->orderBy('div_name', 'ASC')->get();
+        $data['bu'] = DB::table('vcompany_refs')->select('company_code as code', 'name')->orderBy('name', 'ASC')->get();
+        return ResponseFormatter::success($data, 'Successfully get data');
     }
     public function getSn($kode){
         $sn = DB::table('invent_dtl')

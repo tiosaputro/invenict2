@@ -8,6 +8,7 @@ class Mutasi extends Model
 {
     protected $fillable = [
         'imutasi_id',
+        'imutasi_no',
         'invent_code_dtl',
         'imutasi_tgl_dari',
         'imutasi_tgl_sd',
@@ -25,4 +26,5 @@ class Mutasi extends Model
     protected $table='invent_mutasi';
     protected $primaryKey='imutasi_id';
     public $timestamps = false;
+    public $incrementing = false;
 }

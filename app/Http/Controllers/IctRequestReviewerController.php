@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use App\Models\Ict;
 use App\Models\IctDetail;
 use App\Helpers\ResponseFormatter;
@@ -25,7 +24,6 @@ use App\Exports\IctExportReviewerSudahDikerjakan;
 use App\Exports\IctExportReviewerSelesai;
 use App\Services\PekerjaServices;
 use App\Models\Lookup_Refs;
-use App\Models\Mng_usr_roles;
 use App\Services\UserDomainServices;
 use Illuminate\Support\Facades\View;
 use App\Helpers\ldap_connection;
@@ -66,24 +64,27 @@ class IctRequestReviewerController extends Controller
         return ResponseFormatter::success($data,'Successfully Get Data'); 
     }
     function saveSpv(Request $request){
-        $checkLogin = Mng_user::where('usr_domain',$request->ireq_spv)->first();
-        
-        if(!empty($checkLogin)){
-            $this->reviewerServices->CheckIsHigherLevel($checkLogin->usr_id);
-            $request->ireq_spv = $checkLogin->usr_id;
-            $data = $this->reviewerServices->SaveSpv($request);
-        }
-        else{
+        $CheckisUser = Mng_user::where('usr_domain', $request->ireq_spv)->first();
+
+        if (!$CheckisUser) {
             $ldap = new ldap_connection();
             $check = $ldap->findUser($request->ireq_spv);
-            if($check){
-                $createUser = Mng_user::createUser($check);
-                $this->reviewerServices->CheckIsHigherLevel($createUser->usr_id);
-                $request->ireq_spv = $createUser->usr_id;
-                $data = $this->reviewerServices->SaveSpv($request);
+
+            if (!$check) {
+                return ResponseFormatter::error(null, 'User not found');
             }
-            return ResponseFormatter::success($data,'Successfully Get Data'); 
+
+            $CheckisUser = Mng_user::createUser($check);
         }
+
+        if (!$request->ireq_spv_acting) {
+            $this->reviewerServices->CheckIsHigherLevel($CheckisUser->usr_id);
+        }
+
+        $request->ireq_spv = $CheckisUser->usr_id;
+        $data = $this->reviewerServices->SaveSpv($request);
+
+        return ResponseFormatter::success($data, 'Successfully Get Data');
     }
     function sendMailtoRequestor(Request $request){
         $this->reviewerServices->sendMailToRequestor($request);
@@ -325,65 +326,50 @@ class IctRequestReviewerController extends Controller
         ]);
         return ResponseFormatter::success($save,'Successfully Assigned');
     }
-    function cetak_pdf($filter1, $filter2 = null, $filter3 = null, $filter4 = null, $viewName, $methodService){
+    function cetak_pdf($filter1, $filter2 = null, $filter3 = null, $filter4 = null, $viewName, $methodService) {
         $ict = $this->reviewerServices->$methodService($filter1, $filter2, $filter3, $filter4);
         $data['htmlContent'] = View::make($viewName, compact('ict'))->render();
         return ResponseFormatter::success($data, 'Successfully Print Report');
     }
-    function printPdfByFilter(Request $request){
-        switch($request->report_type){
-            case 'permohonan':
-                return $this->cetak_pdf('P', null, null, null, 'pdf.Laporan_IctRequest_Permohonan', 'getDataWithFilter');
-            case 'atasan':
-                return $this->cetak_pdf('NA1', 'A1', null, null,  'pdf.Laporan_IctRequest_Permohonan', 'getDataWithFilter');
-            case 'manager':
-                return $this->cetak_pdf('NA2', 'A2', null, null,  'pdf.Laporan_IctRequest_Permohonan', 'getDataWithFilter');
-            case 'verifikasi':
-                return $this->cetak_pdf('A1', 'A2', null, null, 'pdf.Laporan_IctRequest_Verifikasi', 'getDataWithFilter');
-            case 'selesai':
-                return $this->cetak_pdf('C', null, null, null, 'pdf.Laporan_IctRequest_Selesai', 'getDetailWithFilter');
-            case 'sudah_dikerjakan':
-                return $this->cetak_pdf('D', null, null, null, 'pdf.Laporan_IctRequest_Sudah_Dikerjakan', 'getDetailWithFilter');
-            case 'sedang_dikerjakan':
-                return $this->cetak_pdf('T', null, null, null, 'pdf.Laporan_IctRequest_Sedang_Dikerjakan', 'getDataWithFilter');
-            case 'assignment_request':
-                return $this->cetak_pdf('NT', 'RT', null, null, 'pdf.Laporan_IctRequest_Sedang_Dikerjakan', 'getDataWithFilter');
-            case 'reject':
-                return $this->cetak_pdf('RA1', 'RA2', 'RR', null, 'pdf.Laporan_IctRequest_Reject', 'getDataWithFilter');
-            default:
-                return ResponseFormatter::error(null, 'Invalid report type');
+    
+    function printPdfByFilter(Request $request) {
+        // Mapping of report types to parameters
+        $reportParams = [
+            'permohonan' => ['P', null, null, null, 'pdf.Laporan_IctRequest_Permohonan', 'getDataWithFilter'],
+            'atasan' => ['NA1', 'A1', null, null, 'pdf.Laporan_IctRequest_Permohonan', 'getDataWithFilter'],
+            'manager' => ['NA2', 'A2', null, null, 'pdf.Laporan_IctRequest_Permohonan', 'getDataWithFilter'],
+            'verifikasi' => ['A1', 'A2', null, null, 'pdf.Laporan_IctRequest_Verifikasi', 'getDataWithFilter'],
+            'selesai' => ['C', null, null, null, 'pdf.Laporan_IctRequest_Selesai', 'getDetailWithFilter'],
+            'sudah_dikerjakan' => ['D', null, null, null, 'pdf.Laporan_IctRequest_Sudah_Dikerjakan', 'getDetailWithFilter'],
+            'sedang_dikerjakan' => ['T', null, null, null, 'pdf.Laporan_IctRequest_Sedang_Dikerjakan', 'getDataWithFilter'],
+            'assignment_request' => ['NT', 'RT', null, null, 'pdf.Laporan_IctRequest_Sedang_Dikerjakan', 'getDataWithFilter'],
+            'reject' => ['RA1', 'RA2', 'RR', null, 'pdf.Laporan_IctRequest_Reject', 'getDataWithFilter'],
+        ];
+    
+        // Check if the report type exists in the mapping
+        if (array_key_exists($request->report_type, $reportParams)) {
+            return $this->cetak_pdf(...$reportParams[$request->report_type]);
         }
+    
+        return ResponseFormatter::error(null, 'Invalid report type');
     }
-    function cetak_excel_reviewer_permohonan(){
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerPermohonan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
-    }
-    function cetak_excel_reviewer_atasan_divisi(){
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerAtasanDivisi,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
-    }
-    function cetak_excel_reviewer_ict_manager(){
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerIctManager,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
-    }
-    function cetak_excel_reviewer_reject(){
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportRejectReviewer,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
-    }
-    function cetak_excel_reviewer_assignment_request(){
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerAssignmentRequest,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
-    }
-    function cetak_excel_reviewer_sedang_dikerjakan(){
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerSedangDikerjakan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
-    }
-    function cetak_excel_reviewer_sudah_dikerjakan(){
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerSudahDikerjakan,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
-    }
-    function cetak_excel_reviewer_selesai(){
-        $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
-        return Excel::download(new IctExportReviewerSelesai,'ICT REQUEST STATUS REPORT LIST ON '.$newCreation.'.xlsx');
+    function printOutExcel(Request $request) {
+        $type = $request->report_type;
+        $exportClassMap = [
+            'permohonan' => IctExportReviewerPermohonan::class,
+            'atasan_divisi' => IctExportReviewerAtasanDivisi::class,
+            'ict_manager' => IctExportReviewerIctManager::class,
+            'reject' => IctExportRejectReviewer::class,
+            'assignment_request' => IctExportReviewerAssignmentRequest::class,
+            'sedang_dikerjakan' => IctExportReviewerSedangDikerjakan::class,
+            'sudah_dikerjakan' => IctExportReviewerSudahDikerjakan::class,
+            'selesai' => IctExportReviewerSelesai::class,
+        ];
+    
+        $exportClass = $exportClassMap[$type];
+        $newCreation = now()->timezone('Asia/Jakarta')->format('d M Y');
+        $prefix = 'ICT REQUEST STATUS REPORT LIST';
+    
+        return Excel::download(new $exportClass, "{$prefix} ON {$newCreation}.xlsx");
     }
 }

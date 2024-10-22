@@ -230,7 +230,6 @@ class IctRequestRequestorController extends Controller
         return Excel::download(new IctExportPermohonan($usr_name), 'ICT REQUEST STATUS REPORT LIST ON ' . $newCreation . '.xlsx');
     }
     function cetak_excel_tab_reviewer(){
-        $usr_name = Auth::user()->usr_id;
         $newCreation = Carbon::parse(Carbon::now())->copy()->tz('Asia/Jakarta')->format('d M Y');
         return Excel::download(new IctExportTabReviewer(), 'ICT REQUEST STATUS REPORT LIST ON (Reviewer) ' . $newCreation . '.xlsx');
     }

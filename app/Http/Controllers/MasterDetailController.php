@@ -10,13 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Services\MasterDetailServices;
 
 class MasterDetailController extends Controller
 {
     protected $userMenu;
     protected $to;
-    public function __construct()
-    {
+    protected $DetailServices;
+    public function __construct(MasterDetailServices $service){
+        $this->DetailServices = $service;
         $this->middleware(['auth:sanctum', function ($request, $next) {
             $this->to = "/master-peripheral";
             $this->userMenu = Mng_User::menu();
@@ -29,10 +31,7 @@ class MasterDetailController extends Controller
     }
     public function index($code)
     {
-        $dtl = MasterDetail::select('invent_sn', 'invent_code_dtl', 'invent_code', 'invent_lokasi_previous', 'invent_lokasi_update', 'invent_pengguna_previous', 'invent_pengguna_update')
-            ->where('invent_code', $code)
-            ->orderBy('creation_date', 'DESC')
-            ->get();
+        $dtl = $this->DetailServices->getDataWithFilter();
 
         $mas = DB::table('invent_mst as im')
             ->leftjoin('lookup_refs as lr', 'im.invent_brand', 'lr.lookup_code')

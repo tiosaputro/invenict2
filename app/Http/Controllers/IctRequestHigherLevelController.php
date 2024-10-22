@@ -44,7 +44,7 @@ class IctRequestHigherLevelController extends Controller
             } else {
                 return response(["message" => "Cannot Access"], 403);
             }
-        }]);
+        }])->except(['detailRequestApproval', 'RequestApproval']);
     }
     function approveByAtasan($code){
         $this->HigherLevelServices->ApprovedByAtasan($code);
@@ -76,6 +76,21 @@ class IctRequestHigherLevelController extends Controller
         $data['request_type'] = Lookup_Refs::Type();
         return ResponseFormatter::success($data, 'Successfully Get Data Detail Request');
     }
+
+    function detailRequestApproval($code){
+        $data['detail'] = $this->IctDetailServices->getDataDetailRequest($code, null, null, null);
+        $data['request'] = $this->IctServices->detailNoRequest($code);
+        return ResponseFormatter::success($data, 'Successfully Get Data Detail Request');
+    }
+
+    function RequestApproval(Request $request){
+        if($request->status === 'Approve'){
+            $this->approveByAtasan($request->code);
+        } else if($request->status === 'Reject'){
+            $this->rejectByAtasan(new Request($request->all()), $request->code);
+        }
+    }
+
     function getDetailVerif($code){
         $data['detail'] = IctDetail::detailVerification($code);
         $data['norequest'] = Ict::detailNoRequest($code);

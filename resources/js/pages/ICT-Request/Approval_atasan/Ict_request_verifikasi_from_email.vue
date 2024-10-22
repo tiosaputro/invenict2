@@ -76,14 +76,14 @@
                   />
                   <Button
                     label="Approve"
-                    v-if="this.kode.cekStatus == 'P'"
+                    v-if="this.kode.cekstatus == 'NA1'"
                     class="p-button-raised p-button-success mr-2"
                     icon="pi pi-check-square"
                     @click="Approve()"
                   />
                   <Button 
                     label="Reject"
-                    v-if="this.kode.cekStatus == 'P'"
+                    v-if="this.kode.cekstatus == 'NA1'"
                     class="p-button-raised p-button-danger mr-2"
                     icon="pi pi-times-circle"
                     @click="this.dialogReject = true" 
@@ -142,13 +142,18 @@ export default {
   data() {
     return {
         loading: true,
+        reason: {
+          ket : null
+        },
         dialogReject: false,
         confirmationVerifikasi:false,
         submitted:false,
         verif: [],
         kode:[],
-        reason:{
-            ket:null,
+        detail:{
+          'code' : null,
+          'status' : null,
+          'ket' : null
         },
         filters: { 'global': {value: null, matchMode: this.$FilterMatchMode.CONTAINS} },
         code : this.$route.params.code,
@@ -193,29 +198,49 @@ export default {
             summary: "Success Message",
             detail: "Successfully approved the request",
           });
-          this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code);
-          setTimeout( () =>  this.$router.push('/ict-request-higher-level'),1000);
+          this.detail = { 
+            'code' : this.$route.params.code,
+            'status' : 'Approve'
+          }
+          this.ApprovalRequest(this.detail);
+          // this.axios.get('/api/updateStatusPermohonan/' +this.$route.params.code);
+          setTimeout( () =>  this.$router.push('/dashboard'),1000);
         },
         reject: () => {},
       });
       },
       rejectRequest(){
-      this.confirmationVerifikasi = false;
-      this.dialogReject = true;
+        this.confirmationVerifikasi = false;
+        this.dialogReject = true;
+      },
+      ApprovalRequest(detail){
+        this.axios.post('/api/approval-for-verification', this.detail).then(()=>{
+          this.detail = {
+            'code'    : null,
+            'status'  : null,
+            'ket'  : null
+          }
+        });
       },
       updateReject(){
-      this.confirmationVerifikasi = false;
+        this.confirmationVerifikasi = false;
           this.submitted = true;
            if(this.reason.ket != null){
-            this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason).then(()=>{
+            // this.axios.put('/api/updateStatusReject/'+this.$route.params.code, this.reason).then(()=>{
+              this.detail = { 
+                'code' : this.$route.params.code,
+                'status' : 'Reject',
+                'ket'  : this.reason.ket
+              }
+              this.ApprovalRequest(this.detail);
               this.dialogReject = false;
               this.$toast.add({
                 severity: "info",
                 summary: "Success Message",
                 detail: "Successfully rejected the request",
               });
-              setTimeout( () => this.$router.push('/ict-request-higher-level'),1000);
-            });
+              setTimeout( () => this.$router.push('/dashboard'),1000);
+            // });
           }
       },
       cancelReject(){
@@ -224,7 +249,7 @@ export default {
         this.submitted = false;
       },
       getNoreq(){
-      this.axios.get('/api/ict-detail-higher-level/'+ this.$route.params.code).then((response)=>{
+        this.axios.get('/api/ict-detail-higher-level-verification/'+ this.$route.params.code).then((response)=>{
         this.kode = response.data.data.request;
         if(this.kode.cekstatus =='NA1'){
           this.verif = response.data.data.detail;
