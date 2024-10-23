@@ -25,6 +25,7 @@ class MutasiServices
             'imm.invent_code',
             'imm.invent_type',
             'id.invent_sn',
+            'invent_mutasi.imutasi_no',
             'invent_mutasi.imutasi_pengguna as user_id'
         );
         $data->leftjoin('invent_dtl id','invent_mutasi.invent_code_dtl','id.invent_code_dtl');

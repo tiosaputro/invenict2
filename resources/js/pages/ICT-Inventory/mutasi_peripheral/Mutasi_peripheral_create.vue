@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="field grid ">
-                            <label class="col-fixed w-9rem" style="width:145px">From Date</label>
+                            <label class="col-fixed w-9rem" style="width:145px">Out Date</label>
                             <div class="col-12 md:col-6">
                                 <DatePicker v-model="mutasi.fromdate" :masks="mask">
                                     <template v-slot="{ inputValue, togglePopover }">
@@ -46,7 +46,7 @@
                                             <input
                                                 class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
                                                 :value="inputValue" @click="togglePopover"
-                                                placeholder="Pilih Dari Tanggal" readonly />
+                                                placeholder="Choose Out Date" readonly />
                                             <Button icon="pi pi-calendar" v-if="!mutasi.fromdate"
                                                 @click="togglePopover" />
                                             <Button icon="pi pi-trash" class="p-button-danger" v-else
@@ -54,12 +54,12 @@
                                         </div>
                                     </template>
                                 </DatePicker>
-                                <small class="p-error" v-if="submitted && !mutasi.fromdate"> Dari Tgl Belum Diisi.
+                                <small class="p-error" v-if="submitted && !mutasi.fromdate"> Out Date Not Filled.
                                 </small>
                             </div>
                         </div>
                         <div class="field grid">
-                            <label class="col-fixed w-9rem" style="width:145px">To Date</label>
+                            <label class="col-fixed w-9rem" style="width:145px">In Date</label>
                             <div class="col-12 md:col-6">
                                 <DatePicker v-model="mutasi.todate" :masks="mask" :min-date="mutasi.fromdate">
                                     <template v-slot="{ inputValue, togglePopover }">
@@ -67,7 +67,7 @@
                                             <input
                                                 class="bg-white text-gray-900 w-full py-2 px-3 appearance-none border rounded-l focus:outline-none"
                                                 :value="inputValue" @click="togglePopover"
-                                                placeholder="Pilih SD Tanggal" readonly />
+                                                placeholder="Choose In Date" readonly />
                                             <Button icon="pi pi-calendar" v-if="!mutasi.todate"
                                                 @click="togglePopover" />
                                             <Button icon="pi pi-trash" class="p-button-danger" v-else

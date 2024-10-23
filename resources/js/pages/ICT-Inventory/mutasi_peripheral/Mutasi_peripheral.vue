@@ -44,6 +44,7 @@
           <template #loading>
             Loading data. Please wait.
           </template>
+          <Column field="imutasi_no" header="No" :sortable="true" style="min-width:10rem"/>
           <Column field="invent_desc" header="Peripheral" :sortable="true" style="min-width:11em">
             <template #body="slotProps">
               <p @click="detailKode(slotProps.data.invent_code_dtl)" style="cursor:pointer;"> {{slotProps.data.invent_desc}}
