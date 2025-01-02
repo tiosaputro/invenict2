@@ -89,9 +89,16 @@ axios.interceptors.request.use((config) => {
     }
     return config;
 });
+const appUrl = process.env.MIX_APP_URL || 'http://localhost/invenict2/public';
 app.config.globalProperties.$moment = moment;
 app.config.globalProperties.$html2pdf = html2pdf;
 app.config.globalProperties.$FilterMatchMode = FilterMatchMode;
+app.config.globalProperties.$baseUrl = appUrl
+
+// Set Axios default base URL
+axios.defaults.baseURL = process.env.MIX_APP_URL || 'http://localhost/invenict2/public';
+const token = localStorage.getItem('token');
+axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 app.config.globalProperties.$appState = reactive({ theme: 'vela-blue'});
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });

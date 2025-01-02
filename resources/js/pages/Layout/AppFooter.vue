@@ -15,7 +15,7 @@
 
     <!-- Copyright -->
     <div class="text-center p-3">
-	  <img alt="Logo" :src="footerImage()" height="30" class="mr-2" >  © 2022 Copyright ICT
+	  <img :src="`${$baseUrl}/assets/layout/images/logo-emp.png`" alt="Emp" width="80"/> ICT HELPDESK SYSTEM
   	</div>
     <!-- Copyright -->
   </footer>
@@ -46,9 +46,6 @@
           this.target = 'mailto:icthelpdesk.admin-kurau@emp.id?subject=%20help%20for%20app%20usage&body=';
         }
       },
-			footerImage() {
-				return this.$appState.darkTheme ? '/assets/layout/images/logo-emp.png' : '/assets/layout/images/logo-emp.png';
-			}
 		},
 		computed: {
 			darkTheme() {

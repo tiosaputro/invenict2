@@ -1,7 +1,7 @@
 <template>
     <div class="layout-topbar">
         <router-link to="/dashboard" class="layout-topbar-logo">
-            <img alt="Logo" :src="topbarImage()" /> ICT HELPDESK SYSTEM
+            <img :src="`${$baseUrl}/assets/layout/images/logo-emp.png`" alt="Logo" /> ICT HELPDESK SYSTEM
         </router-link>
         <button v-if="isMobile == true" class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle">
 			<i class="pi pi-bars"></i>
