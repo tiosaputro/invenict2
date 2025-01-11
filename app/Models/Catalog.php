@@ -10,6 +10,7 @@ class Catalog extends Model
         'catalog_id',
         'catalog_name',
         'catalog_desc',
+        'catalog_priority',
         'catalog_type',
         'catalog_request_type',
         'catalog_stat',

@@ -23,4 +23,7 @@ const mix = require('laravel-mix');
         },
     });
 
+    // Copy PrimeIcons fonts to the public/fonts directory
+    mix.copy('node_modules/primeicons/fonts', 'public/fonts');
+
 

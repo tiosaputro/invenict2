@@ -13,6 +13,7 @@ use App\Exports\IctExportVerifikasi;
 use App\Helpers\ResponseFormatter;
 use App\Jobs\SendNotifRequest;
 use App\Models\Ict;
+
 use App\Models\IctDetail;
 use App\Models\Link;
 use App\Models\Location;
@@ -70,7 +71,20 @@ class IctRequestRequestorController extends Controller
 
     }
     function save(Request $request){
-        $save = $this->requestorServices->saveRequest($request);
+        // Get the file from the request (assuming it's named 'detailRequest')
+        $file = $request->file('detailRequest');  // Handle file here
+
+        // // Validate the file (optional)
+        // $request->validate([
+        //     'detailRequest' => 'required|file|mimes:jpg,png,pdf|max:10240',
+        // ]);
+        $save = $this->requestorServices->saveRequest($request->input('request'));
+        $saveDetail = app(IctDetailController::class)->NewSaveRequest(
+            $request, 
+            $save->ireq_id, 
+            $save->ireq_type,
+            $file
+        );
         return ResponseFormatter::success($save, 'Successfully Save Request');
     }
     function edit($code){

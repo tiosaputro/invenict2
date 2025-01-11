@@ -60,42 +60,44 @@
         <Dialog v-model:visible="dialogDetailRequest" :breakpoints="{ '960px': '75vw' }" :style="{ width: '600px' }"
             :header="this.header" :modal="true" class="fluid">
             <table>
-                <tr>
-                    <th>Request Type</th>
-                    <td>
-                        <InputText type="text" v-model="detail.ireq_type" readonly />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Items</th>
-                    <td>
-                        <InputText :value="detail.name" readonly />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Qty</th>
-                    <td>
-                        <InputText v-model="detail.ireq_qty" readonly />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Remark</th>
-                    <td>
-                        <InputText readonly v-model="detail.ireq_remark" />
-                    </td>
-                </tr>
-                <tr v-if="detail.ireq_assigned_to">
-                    <th>ICT Personnel</th>
-                    <td>
-                        <InputText v-model="detail.ireq_assigned_to" readonly />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Status</th>
-                    <td>
-                        <InputText v-model="detail.ireq_status" readonly />
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <th>Request Type</th>
+                        <td>
+                            <InputText type="text" v-model="detail.ireq_type" readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Items</th>
+                        <td>
+                            <InputText :value="detail.name" readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Qty</th>
+                        <td>
+                            <InputText v-model="detail.ireq_qty" readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Remark</th>
+                        <td>
+                            <InputText readonly v-model="detail.ireq_remark" />
+                        </td>
+                    </tr>
+                    <tr v-if="detail.ireq_assigned_to">
+                        <th>ICT Personnel</th>
+                        <td>
+                            <InputText v-model="detail.ireq_assigned_to" readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>
+                            <InputText v-model="detail.ireq_status" readonly />
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </Dialog>
     </div>

@@ -105,6 +105,23 @@
                   </small>
                 </div>
               </div>
+              <div class="field grid">
+                <label style="width:120px">Catalog Priority</label>
+                 <div class="col-3 md-6">
+                  <Dropdown
+                      v-model="catalog.catalog_priority"
+                      :options="priority"
+                      :showClear="true"
+                      optionLabel="nama"
+                      optionValue="code"
+                      placeholder="Choose One"
+                      :class="{ 'p-invalid': errors.catalog_priority }"
+                    />
+                   <small v-if="errors.catalog_priority" class="p-error">
+                      {{ errors.catalog_priority[0] }}
+                  </small>
+                </div>
+              </div>
               
               <div class="form-group">
                  <Button
@@ -141,6 +158,11 @@ export default {
       requesttype:[
         { nama: "Peripheral", code: "P" },
         { nama: "Service", code: "S" },
+      ],
+      priority:[
+        { nama: "Low", code: "L" },
+        { nama: "Normal", code: "N" },
+        { nama: "High", code: "H" },
       ],
       modul:[],
       parent:[],

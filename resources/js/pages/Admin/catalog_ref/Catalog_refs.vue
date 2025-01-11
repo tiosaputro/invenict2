@@ -43,6 +43,7 @@
           <Column field="catalog_id" header="Catalog ID" :sortable="true"/>
           <Column field="catalog_name" header="Catalog Name" :sortable="true" style="min-width:10rem"/>
           <Column field="catalog_request_type" header="Catalog Type" :sortable="true" style="min-width:10rem"/>
+          <Column field="catalog_priority" header="Catalog Priority" :sortable="true" style="min-width:10rem"/>
           <Column field="catalog_desc" header="Catalog Desc" :sortable="true" style="min-width:10rem"/>
           <Column headerStyle="min-width:8rem">
             <template #body="slotProps">

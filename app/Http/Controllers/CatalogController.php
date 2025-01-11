@@ -26,7 +26,7 @@ class CatalogController extends Controller
         });
     }
     public function index(){
-        $catalog = Catalog::select('catalog_id', 'catalog_name', 'catalog_desc', DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"))
+        $catalog = Catalog::select('catalog_id', 'catalog_name', 'catalog_desc', DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"), DB::raw("CASE WHEN catalog_priority = 'L' Then 'LOW' WHEN catalog_priority = 'N' Then 'Normal' WHEN catalog_priority = 'H' Then 'High' end as catalog_priority"))
             ->get();
         return ResponseFormatter::success($catalog, "Successfully get data catalog");
 
@@ -49,6 +49,7 @@ class CatalogController extends Controller
             'catalog_type' => $request->catalog_type,
             'catalog_desc' => $request->catalog_desc,
             'catalog_stat' => $request->catalog_stat,
+            'catalog_priority' => $request->catalog_priority,
             'catalog_request_type' => $request->catalog_request_type,
             'parent_id' => $request->parent_id,
             'created_by' => Auth::user()->usr_id,
@@ -79,6 +80,7 @@ class CatalogController extends Controller
         $cat->catalog_name = $request->catalog_name;
         $cat->catalog_type = $request->catalog_type;
         $cat->catalog_desc = $request->catalog_desc;
+        $cat->catalog_priority = $request->catalog_priority;
         $cat->catalog_stat = $request->catalog_stat;
         $cat->catalog_request_type = $request->catalog_request_type;
         $cat->parent_id = $request->parent_id;

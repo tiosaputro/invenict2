@@ -265,7 +265,7 @@
                 <div class="col-fixed w-9rem">
                     <Dropdown v-model="editStatus.status" :filter="true" optionLabel="name" optionValue="code"
                         :options="status" placeholder="Pilih Status"
-                        :class="{ 'p-invalid': submitted && !editStatus.status }" />
+                        :class="{ 'p-invalid': submitted && !editStatus.status }"/>
                     <small v-if="submitted && !editStatus.status" class="p-error">
                         Status Belum Diisi
                     </small>
@@ -280,6 +280,7 @@
     <Dialog v-model:visible="dialogDetailRequest" :breakpoints="{ '960px': '95vw' }" :style="{ width: '600px' }"
         :header="this.header" :modal="true" class="fluid">
         <table>
+            <tbody>
             <tr>
                 <th>No Request</th>
                 <td>
@@ -364,6 +365,7 @@
                     <InputText type="text" v-model="detail.ireq_status" readonly />
                 </td>
             </tr>
+        </tbody>
         </table>
     </Dialog>
 

@@ -94,6 +94,7 @@
       class="fluid"
     >
       <table>
+        <tbody>
         <tr>
           <th>No Request</th>
           <td><InputText type="text" v-model="detail.ireq_no" readonly /></td>
@@ -140,6 +141,7 @@
             <InputText type="text" v-model="detail.ireq_status" readonly />
           </td>
         </tr>
+      </tbody>
       </table>
     </Dialog>
   </div>

@@ -355,4 +355,40 @@ class IctDetailController extends Controller
         $data['pekerja'] = $this->Pekerjaservices->getPekerja();
         return ResponseFormatter::success($data, 'Successfully Get Data');
     }
+    public function NewsaveRequest($request, $ireq_id, $ireq_type, $files){
+        $details = [];
+        foreach ($request->input('detailRequest') as $index => $detail) {
+            $detail = json_decode($detail, true);
+            $invent_code = key($detail['catalog']);
+            // Handle file upload for each detailRequest item
+            if ($request->hasFile('detailRequest.' . $index . '.attachment')) {
+                $file = $request->file('detailRequest.' . $index . '.attachment');
+                
+                if ($file->isValid()) {
+                    $nama_file = time() . '.' . $file->getClientOriginalExtension();  // Generate a unique file name
+                    $file->move(public_path('attachment_request'), $nama_file);  // Store the file in the 'attachment_request' folder
+                } else {
+                    $nama_file = '';  // Default if the file is invalid or not uploaded
+                }
+            } else {
+                $nama_file = '';  // Default if no file is uploaded
+            }
+    
+            // Save the detail record with the file (if any)
+            $details[] = IctDetail::create([
+                'ireq_id' => $ireq_id,
+                'ireq_type' => $ireq_type,
+                'invent_code' => $invent_code,
+                'ireq_qty' => $detail['qty'] ?? null, // Nullable if qty is not provided
+                'ireq_remark' => $detail['remark'],
+                'ireq_attachment' => $nama_file,  // Save the file name
+                'creation_date' => now(),
+                'created_by' => Auth::user()->usr_id,
+                'program_name' => "IctDetail_Save",
+            ]);
+        }
+    
+        // Return a success response
+        return ResponseFormatter::success($details, 'Successfully created detail requests');
+    }
 }

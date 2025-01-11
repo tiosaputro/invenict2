@@ -142,13 +142,14 @@ class IctRequestorServices
         $data->ORDERBY('ireq_dtl.ireqd_id', 'ASC');
         return $data->get();
     }
-    public static function saveRequest($request)
+    public static function saveRequest($data)
     {
-        if(!empty($request->ireq_id)){
-            $ict = Ict::where('ireq_id', $request->ireq_id)->first();
+        $request = json_decode($data, true);
+        if(!empty($request['ireq_id'])){
+            $ict = Ict::where('ireq_id', $request['ireq_id'])->first();
             if($ict){
-                $ict->ireq_prio_level = $request->ireq_prio_level;
-                $ict->ireq_user = $request->ireq_user;
+                // $ict->ireq_prio_level = $request->ireq_prio_level;
+                $ict->ireq_user = $request['ireq_user'];
                 // $ict->ireq_spv = $request->ireq_spv;
                 $ict->last_update_date = now();
                 $ict->last_updated_by = Auth::user()->usr_id;
@@ -160,10 +161,10 @@ class IctRequestorServices
                 'ireq_id' => generate_id(),
                 'ireq_date' => now(),
                 'ireq_requestor' => Auth::user()->usr_id,
-                'ireq_user' => $request->usr_domain,
+                'ireq_user' => $request['usr_domain'],
                 // 'ireq_spv' => $request->ireq_spv,
                 'ireq_loc' => Auth::user()->usr_loc,
-                'ireq_prio_level' => $request->priolev,
+                // 'ireq_prio_level' => $request['priolev'],
                 'creation_date' => now(),
                 'created_by' => Auth::user()->usr_id,
                 'program_name' => "Ict_Save",

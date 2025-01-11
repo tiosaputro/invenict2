@@ -477,48 +477,50 @@
     class="fluid"
   >
     <table>
-      <tr>
-        <th>No Request</th>
-        <td><InputText type="text" v-model="detail.ireq_no" readonly /></td>
-      </tr>
-      <tr>
-        <th>Request Date</th>
-        <td><InputText :value="formattedRequestDate" readonly /></td>
-      </tr>
-      <tr>
-        <th>Requestor</th>
-        <td><InputText v-model="detail.ireq_requestor" readonly /></td>
-      </tr>
-      <tr>
-        <th>User</th>
-        <td><InputText readonly v-model="detail.ireq_user" /></td>
-      </tr>
-      <tr>
-        <th>User Division</th>
-        <td><InputText v-model="detail.usr_division" readonly /></td>
-      </tr>
-      <tr v-if="detail.ireq_count_spv > 0">
-        <th>Supervisor</th>
-        <td><InputText v-model="detail.spv" readonly /></td>
-      </tr>
-      <tr v-if="detail.countremark_reviewer > 0">
-        <th>Remark Reviewer</th>
-        <td><InputText v-model="detail.ireq_verificator_remark" readonly /></td>
-      </tr>
-      <tr v-if="detail.ireq_reason">
-        <th>Reason</th>
-        <td><InputText v-model="detail.ireq_reason" readonly /></td>
-      </tr>
-      <tr v-if="detail.ireq_assigned_to">
-        <th>ICT Personnel</th>
-        <td>
-          <InputText type="text" v-model="detail.ireq_assigned_to" readonly />
-        </td>
-      </tr>
-      <tr v-if="detail.ireq_status">
-        <th>Status</th>
-        <td><InputText type="text" v-model="detail.ireq_status" readonly /></td>
-      </tr>
+      <tbody>
+        <tr>
+          <th>No Request</th>
+          <td><InputText type="text" v-model="detail.ireq_no" readonly /></td>
+        </tr>
+        <tr>
+          <th>Request Date</th>
+          <td><InputText :value="formattedRequestDate" readonly/></td>
+        </tr>
+        <tr>
+          <th>Requestor</th>
+          <td><InputText v-model="detail.ireq_requestor" readonly/></td>
+        </tr>
+        <tr>
+          <th>User</th>
+          <td><InputText readonly v-model="detail.ireq_user"/></td>
+        </tr>
+        <tr>
+          <th>User Division</th>
+          <td><InputText v-model="detail.usr_division" readonly/></td>
+        </tr>
+        <tr v-if="detail.ireq_count_spv > 0">
+          <th>Supervisor</th>
+          <td><InputText v-model="detail.spv" readonly /></td>
+        </tr>
+        <tr v-if="detail.countremark_reviewer > 0">
+          <th>Remark Reviewer</th>
+          <td><InputText v-model="detail.ireq_verificator_remark" readonly /></td>
+        </tr>
+        <tr v-if="detail.ireq_reason">
+          <th>Reason</th>
+          <td><InputText v-model="detail.ireq_reason" readonly /></td>
+        </tr>
+        <tr v-if="detail.ireq_assigned_to">
+          <th>ICT Personnel</th>
+          <td>
+            <InputText type="text" v-model="detail.ireq_assigned_to" readonly />
+          </td>
+        </tr>
+        <tr v-if="detail.ireq_status">
+          <th>Status</th>
+          <td><InputText type="text" v-model="detail.ireq_status" readonly /></td>
+        </tr>
+      </tbody>
     </table>
   </Dialog>
 </template>

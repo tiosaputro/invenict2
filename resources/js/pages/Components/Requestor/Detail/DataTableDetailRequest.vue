@@ -95,6 +95,7 @@
         <Dialog v-model:visible="dialogDetailRequest" :breakpoints="{ '960px': '75vw' }" :style="{ width: '600px' }"
             :header="this.header" :modal="true" class="fluid">
             <table>
+                <tbody>
                 <tr>
                     <th>Request Type</th>
                     <td>
@@ -131,6 +132,7 @@
                         <InputText v-model="detail.ireq_status" readonly />
                     </td>
                 </tr>
+                </tbody>
             </table>
         </Dialog>
     </div>
@@ -181,7 +183,7 @@
             <template #loading>
                 Please wait
             </template>
-            <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem" />
+            <!-- <Column field="ireq_type" header="Request Type" :sortable="true" style="min-width:10rem" /> -->
             <Column field="name" header="Items" :sortable="true" style="min-width:12rem" />
             <Column field="ireq_qty" header="Qty" :sortable="true" style="min-width:6rem" />
             <Column field="ireq_remark" header="Remark" :sortable="true" style="min-width:12rem" />
@@ -291,6 +293,11 @@ export default {
         window.addEventListener('resize', this.updateIsMobile);
     },
     methods: {
+        getDetail(ireq_attachment){
+            var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+            var myWindow = window.open(page, "_blank");
+            myWindow.focus();
+        },
         detailRequest(ireqd_id) {
             const requestData = this.value.find(item => item.ireqd_id === ireqd_id);
             this.header = " Detail Request No. " + requestData.ireqd_id
