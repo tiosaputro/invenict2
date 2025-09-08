@@ -93,61 +93,51 @@ class IctDetailController extends Controller
         return ResponseFormatter::success($data, 'Successfully Get Data');
     }
     public function save(Request $request, $code){
+        $nama_file = '';
         if ($request->file) {
             $nama_file = time() . '.' . $request->file->getClientOriginalExtension();
             $request->file->move(public_path('attachment_request'), $nama_file);
-        } else {
-            $nama_file = '';
         }
+
+        $message = [
+            'catalog.required' => 'Catalog not filled',
+            'qty.required' => 'Qty not filled',
+            'qty.numeric' => 'Qty must be numeric',
+            'ket.required' => 'Remark not filled',
+        ];
+
+        // Validasi berdasarkan tipe permintaan
+        $rules = [
+            'ket' => 'required',
+            'catalog' => 'required',
+        ];
         if ($request->tipereq == 'P') {
-            $message = [
-                'catalog.required' => 'Catalog not filled',
-                'qty.required' => 'Qty not filled',
-                'qty.numeric' => 'Qty not filled',
-                'ket.required' => 'Remark not filled',
-            ];
-            $request->validate([
-                'catalog' => 'required',
-                'qty' => 'required|numeric',
-                'ket' => 'required',
-            ], $message);
-
-            $dtl = IctDetail::create([
-                'ireq_id' => $code,
-                'ireq_type' => $request->tipereq,
-                'invent_code' => $request->catalog,
-                // 'ireq_desc'=> $request->desk,
-                'ireq_qty' => $request->qty,
-                'ireq_remark' => $request->ket,
-                'ireq_attachment' => $nama_file,
-                'creation_date' => now(),
-                'created_by' => Auth::user()->usr_id,
-                'program_name' => "IctDetail_Save",
-            ]);
-            return ResponseFormatter::success($dtl, 'Successfully Created request');
-        } else {
-            $message = [
-                'ket.required' => 'Remark not filled',
-                'catalog.required' => 'Catalog not filled',
-            ];
-            $request->validate([
-                'ket' => 'required',
-                'catalog' => 'required',
-            ], $message);
-
-            $dtl = IctDetail::create([
-                'ireq_id' => $code,
-                'ireq_type' => $request->tipereq,
-                'invent_code' => $request->catalog,
-                // 'ireq_desc'=> $request->desk,
-                'ireq_remark' => $request->ket,
-                'ireq_attachment' => $nama_file,
-                'creation_date' => now(),
-                'created_by' => Auth::user()->usr_id,
-                'program_name' => "IctDetail_Save",
-            ]);
-            return ResponseFormatter::success($dtl, 'Successfully Created detail request');
+            $rules['qty'] = 'required|numeric';
         }
+        $request->validate($rules, $message);
+
+        // Data yang akan disimpan
+        $data = [
+            'ireq_id' => $code,
+            'ireq_type' => $request->tipereq,
+            'invent_code' => $request->catalog,
+            'ireq_remark' => $request->ket,
+            'ireq_attachment' => $nama_file,
+            'creation_date' => now(),
+            'created_by' => Auth::user()->usr_id,
+            'program_name' => "IctDetail_Save",
+        ];
+        // Tambahkan `ireq_qty` jika tipe permintaan adalah 'P'
+        if ($request->tipereq == 'P') {
+            $data['ireq_qty'] = $request->qty;
+        }
+
+        // Simpan data ke database
+        $dtl = IctDetail::create($data);
+
+        // Respons sukses
+        $message = $request->tipereq == 'P' ? 'Successfully Created request' : 'Successfully Created detail request';
+        return ResponseFormatter::success($dtl, $message);
     }
     public function edit($ireq, $code){
         $data['request'] = $this->Detailservices->FindDetailRequest($ireq, $code);
@@ -356,39 +346,41 @@ class IctDetailController extends Controller
         return ResponseFormatter::success($data, 'Successfully Get Data');
     }
     public function NewsaveRequest($request, $ireq_id, $ireq_type, $files){
-        $details = [];
+        $details = [];  
+        $jsonString = $request->input('request');
+        $requestData = json_decode($jsonString, true);  
+        $requestType = $requestData['request_type'];  
         foreach ($request->input('detailRequest') as $index => $detail) {
             $detail = json_decode($detail, true);
             $invent_code = key($detail['catalog']);
-            // Handle file upload for each detailRequest item
             if ($request->hasFile('detailRequest.' . $index . '.attachment')) {
                 $file = $request->file('detailRequest.' . $index . '.attachment');
                 
                 if ($file->isValid()) {
-                    $nama_file = time() . '.' . $file->getClientOriginalExtension();  // Generate a unique file name
-                    $file->move(public_path('attachment_request'), $nama_file);  // Store the file in the 'attachment_request' folder
+                    $nama_file = time() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('attachment_request'), $nama_file); 
                 } else {
-                    $nama_file = '';  // Default if the file is invalid or not uploaded
+                    $nama_file = '';  
                 }
             } else {
-                $nama_file = '';  // Default if no file is uploaded
+                $nama_file = '';  
             }
     
-            // Save the detail record with the file (if any)
             $details[] = IctDetail::create([
                 'ireq_id' => $ireq_id,
                 'ireq_type' => $ireq_type,
                 'invent_code' => $invent_code,
-                'ireq_qty' => $detail['qty'] ?? null, // Nullable if qty is not provided
+                'ireq_qty' => $detail['qty'] ?? null,
+                'ireq_status' => 'P',
+                'ireq_type' => $requestType,
                 'ireq_remark' => $detail['remark'],
-                'ireq_attachment' => $nama_file,  // Save the file name
+                'ireq_attachment' => $nama_file,
                 'creation_date' => now(),
                 'created_by' => Auth::user()->usr_id,
                 'program_name' => "IctDetail_Save",
             ]);
         }
     
-        // Return a success response
         return ResponseFormatter::success($details, 'Successfully created detail requests');
     }
 }

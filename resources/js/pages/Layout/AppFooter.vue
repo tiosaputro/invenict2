@@ -15,7 +15,7 @@
 
     <!-- Copyright -->
     <div class="text-center p-3">
-	  <img :src="`${$baseUrl}/assets/layout/images/logo-emp.png`" alt="Emp" width="80"/> ICT HELPDESK SYSTEM
+	    <img :src="`${$baseUrl}/assets/layout/images/logo-emp.png`" alt="Emp" width="80"/> ICT HELPDESK SYSTEM
   	</div>
     <!-- Copyright -->
   </footer>

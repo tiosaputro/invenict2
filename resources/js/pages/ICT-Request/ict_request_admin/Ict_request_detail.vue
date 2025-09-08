@@ -225,53 +225,24 @@ export default {
         reject: () => {},
       })
     },
-    CetakPdf(){
-      this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.code).then((response)=>{
-        let htmlContent = response.data.htmlContent;
-         let RequestNo = response.data.norequest;
-         const options = {
-            filename: 'Form ICT Request No. '+RequestNo+'.pdf',
-            jsPDF: { 
-              unit: 'mm', 
-              format: 'a4',
-              orientation: 'landscape',
-              width: 210,
-              height: 297
-            }
-          };
-
-          this.$html2pdf().set(options).from(htmlContent).save();
-          this.loading = false;
-       });
+    CetakPdf() {
+      this.loading = true
+      const ireq_id = this.$route.params.code;
+      this.axios.get('/api/print-out-ict-request/' + ireq_id, {
+        headers: { 'Authorization': 'Bearer ' + this.token },
+        responseType: 'blob'
+      }).then((response) => {
+        const file = new Blob([response.data], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        const link = document.createElement('a');
+        link.href = fileURL;
+        link.setAttribute('download', 'ICT_Request_' + ireq_id + '.pdf');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        this.loading = false
+      }).catch(() => this.loading = false);
     },
-    // CetakExcel(){
-    //   window.open('/api/report-ict-detail-excel/' +this.code);
-    // },
-    // CetakPdfReject(){
-    //   window.open('/api/print-out-ict-request/' +this.code);
-    // },
-    // CetakExcelReject(){
-    //   window.open('/api/report-ict-detail-excel-tab-reject/' +this.code);
-    // },
-    // CetakPdfTabReviewer(){
-    //   window.open('/api/report-ict-detail-pdf-tab-reviewer/' +this.code);
-    // },
-    // CetakExcelTabReviewer(){
-    //   window.open('/api/report-ict-detail-excel-tab-reviewer/' +this.code);
-    // },
-    // CetakPdfTabVerifikasi(){
-    //   window.open('/api/report-ict-detail-pdf-tab-verifikasi/' +this.code);
-    // },
-    // CetakExcelTabVerifikasi(){
-    //   window.open('/api/report-ict-detail-excel-tab-verifikasi/' +this.code);
-    // },
-    // CetakPdfTabSedangDikerjakan(){
-    //   window.open('/api/report-ict-detail-pdf-tab-sedang-dikerjakan/' +this.code);
-    // },
-    // CetakExcelTabSedangDikerjakan(){
-    //   window.open('/api/report-ict-detail-excel-tab-sedang-dikerjakan/' +this.code);
-    // },
   },
 };
 </script>

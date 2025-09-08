@@ -92,7 +92,7 @@ input::placeholder {
 
 .p-disabled,
 .p-component:disabled {
-    color: #151313;
+    /* color: #151313; */
 }
 
 .p-error {

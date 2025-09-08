@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseFormatter;
@@ -12,10 +11,12 @@ class DashboardController extends Controller
 {
     protected $dashboardServices;
 
-    public function __construct(DashboardServices $services){
+    public function __construct(DashboardServices $services)
+    {
         $this->dashboardServices = $services;
     }
-    public function index(){
+    public function index()
+    {
         $cekrole = Mng_User::roles();
         if ($cekrole->contains('Admin')) {
             $admin = $this->countAdmin();
@@ -37,121 +38,159 @@ class DashboardController extends Controller
             return ($personel);
         } elseif ($cekrole->contains('Atasan Requestor Divisi')) {
             $higherlevel = $this->countHigherLevel();
-            return($higherlevel);
+            return ($higherlevel);
         } elseif ($cekrole->contains('Requestor Divisi') || ($cekrole->contains('Requestor Divisi'))) {
             $requestor = $this->countUser();
-            return($requestor);
+            return ($requestor);
         }
     }
-    public function countUser(){
-        $usr_id = Auth::user()->usr_id;
+
+    private function countStatuses($dashboard, $usr_id = null)
+    {
+        $statuses = [
+            'belumdiverifikasi' => ['NA1', 'NA2'],
+            'sudahdiverifikasi' => ['A1', 'A2'],
+            'sedangdireview'    => ['P'],
+            'direject'          => ['RR', 'RA1', 'RA2', 'RT'],
+            'sedangdikerjakan'  => ['T', 'NT'],
+            'sudahdikerjakan'   => ['D'],
+            'sudahselesai'      => ['C'],
+            'countrequest'      => null,
+        ];
+
+        $grafik = [];
+        foreach ($statuses as $key => $status) {
+            if ($status) {
+                $grafik[$key . 'requestor'] = collect($dashboard)->whereIN('ireq_status', $status)->when($usr_id, function ($query) use ($usr_id) {
+                    return $query->where('ireq_requestor', $usr_id);
+                })->count();
+            } else {
+                $grafik[$key . 'requestor'] = collect($dashboard)->whereNotNull('ireq_status')->when($usr_id, function ($query) use ($usr_id) {
+                    return $query->where('ireq_requestor', $usr_id);
+                })->count();
+            }
+        }
+
+        return $grafik;
+    }
+
+    public function countUser()
+    {
         $dashboard = $this->dashboardServices->CountDataDashboard();
-        $grafik['belumdiverifikasirequestor'] = collect($dashboard)->whereIN('ireq_status', ['NA1', 'NA2'])->where('ireq_requestor', $usr_id)->count();
-        $grafik['sudahdiverifikasirequestor'] = collect($dashboard)->whereIN('ireq_status', ['A1', 'A2'])->where('ireq_requestor', $usr_id)->count();
-        $grafik['sedangdireviewrequestor'] = collect($dashboard)->where('ireq_status', 'P')->where('ireq_requestor', $usr_id)->count();
-        $grafik['direjectrequestor'] = collect($dashboard)->whereIN('ireq_status', ['RR', 'RA1', 'RA2', 'RT'])->where('ireq_requestor', $usr_id)->count();
-        $grafik['sedangdikerjakanrequestor'] = collect($dashboard)->whereIN('ireq_status', ['T', 'NT'])->where('ireq_requestor', $usr_id)->count();
-        $grafik['sudahdikerjakanrequestor'] = collect($dashboard)->where('ireq_status', 'D')->where('ireq_requestor', $usr_id)->count();
-        $grafik['sudahselesairequestor'] = collect($dashboard)->where('ireq_status', 'C')->where('ireq_requestor', $usr_id)->count();
-        $grafik['countrequestrequestor'] = collect($dashboard)->whereNotNull('ireq_status')->where('ireq_requestor', $usr_id)->count();
+        $grafik    = $this->countStatuses($dashboard, Auth::user()->usr_id);
 
         return ResponseFormatter::success($grafik, 'Successfully Get Data Dashboard');
     }
-    public function countHigherLevel(){
-        $data = $this->dashboardServices->countHigherLevel();
-        $grafik['belumdiverifikasihigherlevel'] = collect($data)->whereIN('ireq_status', ['NA1', 'NA2'])->count();
-        $grafik['sedangdireviewhigherlevel'] = collect($data)->where('ireq_status', 'P')->count();
-        $grafik['sudahdiverifikasihigherlevel'] = collect($data)->whereIN('ireq_status', ['A1', 'A2'])->count();
-        $grafik['direjecthigherlevel'] = collect($data)->whereIN('ireq_status', ['RA1', 'RR', 'RA2'])->count();
-        $grafik['penugasanrequesthigherlevel'] = collect($data)->whereIN('ireq_status', ['NT', 'RT'])->count();
-        $grafik['sedangdikerjakanhigherlevel'] = collect($data)->whereIN('ireq_status', ['T'])->count();
-        $grafik['sudahdikerjakanhigherlevel'] = collect($data)->whereIN('ireq_status', ['D'])->count();
-        $grafik['sudahselesaihigherlevel'] = collect($data)->whereIN('ireq_status', ['C'])->count();
-        $grafik['totalhigherlevel'] = collect($data)->whereNotNull('ireq_status')->count();
+    public function countHigherLevel()
+    {
+        $data   = $this->dashboardServices->countHigherLevel();
+        $grafik = $this->countStatuses($data);
         return ResponseFormatter::success($grafik, 'Successfully Get Data Dashboard');
     }
-    public function countReviewerJakarta(){
+
+    private function countGrafik($dashboard, $location, $locationValues)
+    {
+        $grafik                     = [];
+        $grafik['blmDiverifikasi']  = collect($dashboard)->where('ireq_status', 'P')->whereIn($location, $locationValues)->count();
+        $grafik['atasandivisi']     = collect($dashboard)->whereIn('ireq_status', ['NA1', 'A1'])->whereIn($location, $locationValues)->count();
+        $grafik['manager']          = collect($dashboard)->whereIn('ireq_status', ['NA2', 'A2'])->whereIn($location, $locationValues)->count();
+        $grafik['reject']           = collect($dashboard)->whereIn('ireq_status', ['RR', 'RA1', 'RA2'])->whereIn($location, $locationValues)->count();
+        $grafik['sdgdikerjakan']    = collect($dashboard)->where('ireq_status', 'T')->whereIn($location, $locationValues)->count();
+        $grafik['sdhdikerjakan']    = collect($dashboard)->where('ireq_status', 'D')->whereIn($location, $locationValues)->count();
+        $grafik['sdhselesai']       = collect($dashboard)->where('ireq_status', 'C')->whereIn($location, $locationValues)->count();
+        $grafik['penugasanRequest'] = collect($dashboard)->whereIn('ireq_status', ['NT', 'RT'])->whereIn($location, $locationValues)->count();
+        $grafik['totalRequest']     = collect($dashboard)->whereNotNull('ireq_status')->whereIn($location, $locationValues)->count();
+        return $grafik;
+    }
+
+    public function countReviewerJakarta()
+    {
         $dashboard = $this->dashboardServices->CountDataDashboard();
-        $grafik['blmDiverifikasijakarta'] = collect($dashboard)->where('ireq_status', 'P')->where('ireq_loc', 'OJ')->count();
-        $grafik['atasandivisijakarta'] = collect($dashboard)->whereIn('ireq_status', ['NA1', 'A1'])->where('ireq_loc', 'OJ')->count();
-        $grafik['managerjakarta'] = collect($dashboard)->whereIn('ireq_status', ['NA2', 'A2'])->where('ireq_loc', 'OJ')->count();
-        $grafik['rejectjakarta'] = collect($dashboard)->whereIn('ireq_status', ['RR', 'RA1', 'RA2'])->where('ireq_loc', 'OJ')->count();
-        $grafik['sdgdikerjakanjakarta'] = collect($dashboard)->where('ireq_status', 'T')->where('ireq_loc', 'OJ')->count();
-        $grafik['sdhdikerjakanjakarta'] = collect($dashboard)->where('ireq_status', 'D')->where('ireq_loc', 'OJ')->count();
-        $grafik['sdhselesaijakarta'] = collect($dashboard)->where('ireq_status', 'C')->where('ireq_loc', 'OJ')->count();
-        $grafik['penugasanRequestjakarta'] = collect($dashboard)->whereIn('ireq_status', ['NT', 'RT'])->where('ireq_loc', 'OJ')->count();
-        $grafik['totalRequestjakarta'] = collect($dashboard)->whereNotNull('ireq_status')->where('ireq_loc', 'OJ')->count();
+        $grafik    = $this->countGrafik($dashboard, 'ireq_loc', ['OJ']);
         return ResponseFormatter::success($grafik, 'Successfully Get Data Dashboard');
     }
-    public function countReviewerKurau(){
+    public function countReviewerKurau()
+    {
         $dashboard = $this->dashboardServices->CountDataDashboard();
-        $grafik['blmDiverifikasikurau'] = collect($dashboard)->where('ireq_status', 'P')->where(function ($query) {return $query->where('ireq_loc', 'OK')->OrWhere('ireq_loc', 'FK');})->count();
-        $grafik['atasandivisikurau'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_status', 'NA1')->orwhere('ireq_status', 'A1');})->where('ireq_loc', 'OK')->OrWhere('ireq_loc', 'FK')->count();
-        $grafik['managerkurau'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_status', 'NA2')->orwhere('ireq_status', 'A2');})->where('ireq_loc', 'OK')->OrWhere('ireq_loc', 'FK')->count();
-        $grafik['rejectkurau'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_status', 'RR')->orwhere('ireq_status', 'RA1')->orwhere('ireq_status', 'RA2');})->where(function ($query) {return $query->where('ireq_loc', 'OK')->OrWhere('ireq_loc', 'FK');})->count();
-        $grafik['sdgdikerjakankurau'] = collect($dashboard)->where('ireq_status', 'T')->where(function ($query) {return $query->where('ireq_loc', 'OK')->OrWhere('ireq_loc', 'FK');})->count();
-        $grafik['sdhdikerjakankurau'] = collect($dashboard)->where('ireq_status', 'D')->where(function ($query) {return $query->where('ireq_loc', 'OK')->OrWhere('ireq_loc', 'FK');})->count();
-        $grafik['sdhselesaikurau'] = collect($dashboard)->where('ireq_status', 'C')->where(function ($query) {return $query->where('ireq_loc', 'OK')->OrWhere('ireq_loc', 'FK');})->count();
-        $grafik['penugasanRequestkurau'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_status', 'NT')->orwhere('ireq_status', 'RT');})->where('ireq_loc', 'OK')->OrWhere('ireq_loc', 'FK')->count();
-        $grafik['totalRequestkurau'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_loc', 'OK')->orwhere('ireq_loc', 'FK');})->whereNotNull('ireq_status')->count();
+        $grafik    = $this->countGrafik($dashboard, 'ireq_loc', ['OK', 'FK']);
+        return ResponseFormatter::success($grafik, 'Successfully Get Data Dashboard');
+    }
+    public function countReviewerBentu()
+    {
+        $dashboard = $this->dashboardServices->CountDataDashboard();
+        $grafik    = $this->countGrafik($dashboard, 'ireq_loc', ['OB', 'FB']);
 
         return ResponseFormatter::success($grafik, 'Successfully Get Data Dashboard');
     }
-    public function countReviewerBentu(){
-        $dashboard = $this->dashboardServices->CountDataDashboard();
-        $grafik['blmDiverifikasibentu'] = collect($dashboard)->where('ireq_status', 'P')->where(function ($query) {return $query->where('ireq_loc', 'OB')->OrWhere('ireq_loc', 'FB');})->count();
-        $grafik['atasandivisibentu'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_status', 'NA1')->orwhere('ireq_status', 'A1');})->where('ireq_loc', 'OB')->OrWhere('ireq_loc', 'FB')->count();
-        $grafik['managerbentu'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_status', 'NA2')->orwhere('ireq_status', 'A2');})->where('ireq_loc', 'OB')->OrWhere('ireq_loc', 'FB')->count();
-        $grafik['rejectbentu'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_status', 'RR')->orwhere('ireq_status', 'RA1')->orwhere('ireq_status', 'RA2');})->where(function ($query) {return $query->where('ireq_loc', 'OB')->OrWhere('ireq_loc', 'FB');})->count();
-        $grafik['sdgdikerjakanbentu'] = collect($dashboard)->where('ireq_status', 'T')->where(function ($query) {return $query->where('ireq_loc', 'OB')->OrWhere('ireq_loc', 'FB');})->count();
-        $grafik['sdhdikerjakanbentu'] = collect($dashboard)->where('ireq_status', 'D')->where(function ($query) {return $query->where('ireq_loc', 'OB')->OrWhere('ireq_loc', 'FB');})->count();
-        $grafik['sdhselesaibentu'] = collect($dashboard)->where('ireq_status', 'C')->where(function ($query) {return $query->where('ireq_loc', 'OB')->OrWhere('ireq_loc', 'FB');})->count();
-        $grafik['penugasanRequestbentu'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_status', 'NT')->orwhere('ireq_status', 'RT');})->where('ireq_loc', 'OB')->OrWhere('ireq_loc', 'FB')->count();
-        $grafik['totalRequestbentu'] = collect($dashboard)->where(function ($query) {return $query->where('ireq_loc', 'OB')->orwhere('ireq_loc', 'FB');})->whereNotNull('ireq_status')->count();
-
-        return ResponseFormatter::success($grafik, 'Successfully Get Data Dashboard');
-    }
-    public function countPersonnel(){
+    public function countPersonnel()
+    {
         $data = $this->dashboardServices->countPersonnel();
-        $grafik['penugasanrequestPersonnel'] = collect($data)->where('ireq_status', 'NT')->where('ireq_assigned_to1', Auth::user()->usr_id)->count();
-        $grafik['rejectedPersonnel'] = collect($data)->where('ireq_status', 'RT')->where('ireq_assigned_to1', Auth::user()->usr_id)->count();
-        $grafik['belumselesaiPersonnel'] = collect($data)->where('ireq_status', 'T')->where(DB::raw('COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1)'), Auth::user()->usr_id)->count();
-        $grafik['sudahdikerjakanPersonnel'] = collect($data)->where('ireq_status', 'D')->where(DB::raw('COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1)'), Auth::user()->usr_id)->count();
-        $grafik['sudahselesaiPersonnel'] = collect($data)->where('ireq_status', 'C')->where(DB::raw('COALESCE(ireq_dtl.ireq_assigned_to2,ireq_dtl.ireq_assigned_to1)'), Auth::user()->usr_id)->count();
+        $grafik['penugasanrequestPersonnel'] = collect($data)
+            ->where('ireq_status', 'NT')
+            ->where('ireq_assigned_to1', Auth::user()->usr_id)
+            ->count();
 
+        $grafik['rejectedPersonnel'] = collect($data)
+            ->where('ireq_status', 'RT')
+            ->where('ireq_assigned_to1', Auth::user()->usr_id)
+            ->count();
+
+        $grafik['belumselesaiPersonnel'] = collect($data)
+            ->where('ireq_status', 'T')
+            ->filter(function ($item) {
+                return ($item->ireq_assigned_to2 ?? $item->ireq_assigned_to1) == Auth::user()->usr_id;
+            })
+            ->count();
+
+        $grafik['sudahdikerjakanPersonnel'] = collect($data)
+            ->where('ireq_status', 'D')
+            ->filter(function ($item) {
+                return ($item->ireq_assigned_to2 ?? $item->ireq_assigned_to1) == Auth::user()->usr_id;
+            })
+            ->count();
+
+        $grafik['sudahselesaiPersonnel'] = collect($data)
+            ->where('ireq_status', 'C')
+            ->filter(function ($item) {
+                return ($item->ireq_assigned_to2 ?? $item->ireq_assigned_to1) == Auth::user()->usr_id;
+            })
+            ->count();
         return ResponseFormatter::success($grafik, 'Successfully Get Data Dashboard');
     }
-    public function countIctManager(){
-        $dashboard = $this->dashboardServices->CountDataDashboard();
-        $grafik['blmdiverifikasimanager'] = collect($dashboard)->whereIN('ireq_status', ['NA1', 'NA2'])->count();
+    public function countIctManager()
+    {
+        $dashboard                          = $this->dashboardServices->CountDataDashboard();
+        $grafik['blmdiverifikasimanager']   = collect($dashboard)->whereIN('ireq_status', ['NA1', 'NA2'])->count();
         $grafik['sudahdiverifikasimanager'] = collect($dashboard)->whereIN('ireq_status', ['A1', 'A2'])->count();
-        $grafik['sedangdireviewmanager'] = collect($dashboard)->where('ireq_status', 'P')->count();
-        $grafik['direjectmanager'] = collect($dashboard)->whereIN('ireq_status', ['RA2', 'RR', 'RA1'])->count();
-        $grafik['penugasanrequestmanager'] = collect($dashboard)->whereIN('ireq_status', ['NT', 'RT'])->count();
-        $grafik['sedangdikerjakanmanager'] = collect($dashboard)->where('ireq_status', 'T')->count();
-        $grafik['sudahdikerjakanmanager'] = collect($dashboard)->where('ireq_status', 'D')->count();
-        $grafik['sudahselesaimanager'] = collect($dashboard)->where('ireq_status', 'C')->count();
-        $grafik['totalrequestmanager'] = collect($dashboard)->whereNotNull('ireq_status')->count();
+        $grafik['sedangdireviewmanager']    = collect($dashboard)->where('ireq_status', 'P')->count();
+        $grafik['direjectmanager']          = collect($dashboard)->whereIN('ireq_status', ['RA2', 'RR', 'RA1'])->count();
+        $grafik['penugasanrequestmanager']  = collect($dashboard)->whereIN('ireq_status', ['NT', 'RT'])->count();
+        $grafik['sedangdikerjakanmanager']  = collect($dashboard)->where('ireq_status', 'T')->count();
+        $grafik['sudahdikerjakanmanager']   = collect($dashboard)->where('ireq_status', 'D')->count();
+        $grafik['sudahselesaimanager']      = collect($dashboard)->where('ireq_status', 'C')->count();
+        $grafik['totalrequestmanager']      = collect($dashboard)->whereNotNull('ireq_status')->count();
 
         return ResponseFormatter::success($grafik, 'Successfully Get Data Dashboard');
     }
-    public function countAdmin(){
-        $dashboard = $this->dashboardServices->CountDataDashboard();
+    public function countAdmin()
+    {
+        $dashboard                        = $this->dashboardServices->CountDataDashboard();
         $grafik['belumdiverifikasiadmin'] = collect($dashboard)->whereIN('ireq_status', ['P', 'NA1', 'NA2'])->count();
         $grafik['sudahdiverifikasiadmin'] = collect($dashboard)->whereIN('ireq_status', ['A1', 'A2'])->count();
-        $grafik['direjectadmin'] = collect($dashboard)->whereIN('ireq_status', ['RA2', 'RR', 'RA1'])->count();
-        $grafik['sudahdikerjakanadmin'] = collect($dashboard)->whereIN('ireq_status', ['NT', 'RT'])->count();
-        $grafik['sedangdikerjakanadmin'] = collect($dashboard)->where('ireq_status', 'T')->count();
-        $grafik['sudahdikerjakanadmin'] = collect($dashboard)->where('ireq_status', 'D')->count();
-        $grafik['sudahselesaiadmin'] = collect($dashboard)->where('ireq_status', 'C')->count();
-        $grafik['totalRequestadmin'] = collect($dashboard)->whereNotNull('ireq_status')->count();
+        $grafik['direjectadmin']          = collect($dashboard)->whereIN('ireq_status', ['RA2', 'RR', 'RA1'])->count();
+        $grafik['sudahdikerjakanadmin']   = collect($dashboard)->whereIN('ireq_status', ['NT', 'RT'])->count();
+        $grafik['sedangdikerjakanadmin']  = collect($dashboard)->where('ireq_status', 'T')->count();
+        $grafik['sudahdikerjakanadmin']   = collect($dashboard)->where('ireq_status', 'D')->count();
+        $grafik['sudahselesaiadmin']      = collect($dashboard)->where('ireq_status', 'C')->count();
+        $grafik['totalRequestadmin']      = collect($dashboard)->whereNotNull('ireq_status')->count();
         return ResponseFormatter::success($grafik, 'Successfully Get Data Dashboard');
     }
-    public function getTahun(){
-        $data['grafik'] = DB::table('VREQ_MST_TAHUN')->get();
-        $data['grafik1'] = DB::table('VREQ_MST_STATUS')->get();
-        $data['grafik2'] = DB::table('VREQ_MST_BULAN')->get();
-        $data['grafik3'] = DB::table('VREQ_PER_STATUS')->get();
+    public function getTahun()
+    {
+        $data['grafik']    = DB::table('VREQ_MST_TAHUN')->get();
+        $data['grafik1']   = DB::table('VREQ_MST_STATUS')->get();
+        $data['grafik2']   = DB::table('VREQ_MST_BULAN')->get();
+        $data['grafik3']   = DB::table('VREQ_PER_STATUS')->get();
         $data['personnel'] = DB::table('ireq_dtl')
             ->select(DB::raw("COALESCE(ireq_assigned_to2,ireq_assigned_to1) AS ireq_assigned_to"), DB::raw("count(ireqd_id) as jumlah"))
             ->whereNotNull('ireq_assigned_to1')
@@ -165,7 +204,8 @@ class DashboardController extends Controller
 
         return response()->json($data, 200);
     }
-    public function getTahunUser($bulanUser){
+    public function getTahunUser($bulanUser)
+    {
         $grafik = DB::table('ireq_mst as im')
             ->select(DB::raw("TO_CHAR(im.ireq_date,'yyyy') as tahun"))
             ->whereMonth('im.ireq_date', $bulanUser)
@@ -174,7 +214,8 @@ class DashboardController extends Controller
             ->get();
         return response()->json($grafik);
     }
-    public function getTahunRequestor($bulanUser){
+    public function getTahunRequestor($bulanUser)
+    {
         $grafik = DB::table('ireq_mst as im')
             ->select(DB::raw("TO_CHAR(im.ireq_date,'yyyy') as tahun"))
             ->whereMonth('im.ireq_date', $bulanUser)
@@ -183,11 +224,13 @@ class DashboardController extends Controller
             ->get();
         return response()->json($grafik);
     }
-    public function countStatusPerDivisi(){
+    public function countStatusPerDivisi()
+    {
         $grafik = DB::table('vreg_per_divuser_status')->get();
         return response()->json($grafik);
     }
-    public function countPerDivUserTahun($tahunUser){
+    public function countPerDivUserTahun($tahunUser)
+    {
         $grafik = DB::table('ireq_mst as im')
             ->leftjoin('divisi_refs as dr', 'im.ireq_divisi_user', 'dr.div_id')
             ->select('dr.div_name', DB::raw("count(im.ireq_id) as jumlah"))
@@ -197,7 +240,8 @@ class DashboardController extends Controller
             ->get();
         return response()->json($grafik);
     }
-    public function countPerDivRequestorTahun($tahunRequestor){
+    public function countPerDivRequestorTahun($tahunRequestor)
+    {
         $grafik = DB::table('ireq_mst as im')
             ->leftjoin('divisi_refs as dr', 'im.ireq_divisi_requestor', 'dr.div_id')
             ->select('dr.div_name', DB::raw("count(im.ireq_id) as jumlah"))
@@ -207,7 +251,8 @@ class DashboardController extends Controller
             ->get();
         return response()->json($grafik);
     }
-    public function countPerDivUserBulan($tahunnUser, $bulanUser){
+    public function countPerDivUserBulan($tahunnUser, $bulanUser)
+    {
         $grafik = DB::table('ireq_mst as im')
             ->leftjoin('divisi_refs as dr', 'im.ireq_divisi_user', 'dr.div_id')
             ->select('dr.div_name', DB::raw("count(im.ireq_id) as jumlah"), DB::raw("TO_CHAR(im.ireq_date,'Month') as bulan"))
@@ -218,7 +263,8 @@ class DashboardController extends Controller
             ->get();
         return response()->json($grafik);
     }
-    public function countPerDivRequestorBulan($tahunRequestor, $bulanRequestor){
+    public function countPerDivRequestorBulan($tahunRequestor, $bulanRequestor)
+    {
         $grafik = DB::table('ireq_mst as im')
             ->leftjoin('divisi_refs as dr', 'im.ireq_divisi_requestor', 'dr.div_id')
             ->select('dr.div_name', DB::raw("count(im.ireq_id) as jumlah"),
@@ -230,7 +276,8 @@ class DashboardController extends Controller
             ->get();
         return response()->json($grafik);
     }
-    public function countPerDivUserStatus($statusUser){
+    public function countPerDivUserStatus($statusUser)
+    {
         $grafik = DB::table('ireq_mst as imm')
             ->select('dr.div_name', DB::raw("count(imm.ireq_id) as jumlah"), 'lr.lookup_desc as name')
             ->leftjoin('divisi_refs as dr', 'imm.ireq_divisi_user', 'dr.div_id')
@@ -242,7 +289,8 @@ class DashboardController extends Controller
             ->get();
         return response()->json($grafik);
     }
-    public function countPerDivRequestorStatus($statusRequestor){
+    public function countPerDivRequestorStatus($statusRequestor)
+    {
         $grafik = DB::table('ireq_mst as imm')
             ->select('dr.div_name', DB::raw("count(imm.ireq_id) as jumlah"), 'lr.lookup_desc as name')
             ->leftjoin('divisi_refs as dr', 'imm.ireq_divisi_requestor', 'dr.div_id')
@@ -254,11 +302,13 @@ class DashboardController extends Controller
             ->get();
         return response()->json($grafik);
     }
-    public function countPerPersonnel(){
+    public function countPerPersonnel()
+    {
         $grafik = DB::table('VREQ_PER_ICTPERSON')->get();
         return response()->json($grafik);
     }
-    public function countPerStatusIct($ictPersonnel){
+    public function countPerStatusIct($ictPersonnel)
+    {
         $grafik = DB::table('ireq_dtl as id')
             ->leftjoin('lookup_refs as lr', 'id.ireq_status', 'lr.lookup_code')
             ->select(DB::raw("count(id.ireq_id) as jumlah"), 'lr.lookup_desc as status')
@@ -279,7 +329,8 @@ class DashboardController extends Controller
             ->get();
         return response()->json($grafik);
     }
-    public function getStatus(){
+    public function getStatus()
+    {
         $status = DB::table('VREQ_MST_STATUS')->get();
         return response()->json($status);
     }

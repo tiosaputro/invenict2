@@ -56,12 +56,15 @@ class MngUserController extends Controller
         ], $message);
 
         $image = $request->image;
-        $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-        $replace = substr($image, 0, strpos($image, ',') + 1);
-        $fotoo = str_replace($replace, '', $image);
-        $foto = str_replace(' ', '+', $fotoo);
-        $nama_file = time() . "." . $extension;
-        Storage::disk('profile')->put($nama_file, base64_decode($foto));
+        if(!empty($image)){
+            $extension = explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+            $replace = substr($image, 0, strpos($image, ',') + 1);
+            $fotoo = str_replace($replace, '', $image);
+            $foto = str_replace(' ', '+', $fotoo);
+            $nama_file = time() . "." . $extension;
+            Storage::disk('profile')->put($nama_file, base64_decode($foto));
+        }
+        
         $ldap = new ldap_connection();
         $userDomain = str_contains($request->usr_domain, '@');
         if (!$userDomain) {
@@ -86,7 +89,7 @@ class MngUserController extends Controller
                 'usr_email' => str_replace('"', '', $check['mail']),
                 'usr_nip' => str_replace('"', '', $check['employeeid']),
                 'usr_jabatan' => str_replace('"', '', $check['extensionattribute15']),
-                'usr_foto' => $nama_file,
+                'usr_foto' => $nama_file ?? null,
                 'created_by' => Auth::user()->usr_id,
                 'creation_date' => now(),
                 'usr_loc' => $request->usr_loc,

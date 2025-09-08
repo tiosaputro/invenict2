@@ -38,7 +38,8 @@ class Ict extends Model
         'last_updated_by',
         'program_name',
         'ireq_date_closing',
-        'ireq_loc'
+        'ireq_loc',
+        'ireq_prio_level_reason'
     ];
     protected $table ='ireq_mst';
     protected $primaryKey ='ireq_id';

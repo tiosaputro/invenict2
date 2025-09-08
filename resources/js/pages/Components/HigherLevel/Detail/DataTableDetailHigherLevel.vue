@@ -387,27 +387,21 @@
       },
       CetakPdf() {
         this.$emit("show-loading");
-        this.axios
-          .get("/api/print-out-ict-request/" + this.$route.params.code, {
-            headers: { Authorization: "Bearer " + this.token },
-          })
-          .then((response) => {
-            let htmlContent = response.data.htmlContent;
-            let RequestNo = response.data.norequest;
-            const options = {
-              filename: "Form ICT Request No. " + RequestNo + ".pdf",
-              jsPDF: {
-                unit: "mm",
-                format: "a4",
-                orientation: "landscape",
-                width: 210,
-                height: 297,
-              },
-            };
-  
-            this.$html2pdf().set(options).from(htmlContent).save();
-            this.$emit("hide-loading");
-          });
+        const code = this.$route.params.code;
+        this.axios.get('/api/print-out-ict-request/' + ireq_id, {
+          headers: { 'Authorization': 'Bearer ' + this.token },
+          responseType: 'blob'
+        }).then((response) => {
+          const file = new Blob([response.data], { type: 'application/pdf' });
+          const fileURL = URL.createObjectURL(file);
+          const link = document.createElement('a');
+          link.href = fileURL;
+          link.setAttribute('download', 'ICT_Request_' + ireq_id + '.pdf');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          this.$emit("hide-loading");
+        }).catch(() => this.$emit("hide-loading"));
       },
     },
   };

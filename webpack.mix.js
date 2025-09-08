@@ -1,29 +1,23 @@
 const mix = require('laravel-mix');
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- | 
- */
+const webpack = require('webpack');
 
  mix.js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
     .options({
-        processCssUrls: true, // Ensure CSS URLs are processed correctly
+        processCssUrls: true, 
     })
     .webpackConfig({
         output: {
-            publicPath: '/invenict2/public/', // Ensure chunks load from the correct base path
-            chunkFilename: 'js/[name].js', // Customize chunk filenames
+            publicPath: '/invenict2/public/',
+            chunkFilename: 'js/[name].js',
         },
+        plugins: [
+            new webpack.DefinePlugin({
+                __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false), // Set to `true` for detailed mismatch logs
+            }),
+        ],
     });
-
-    // Copy PrimeIcons fonts to the public/fonts directory
     mix.copy('node_modules/primeicons/fonts', 'public/fonts');
 
 

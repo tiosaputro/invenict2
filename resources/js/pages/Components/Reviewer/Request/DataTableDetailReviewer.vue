@@ -448,22 +448,26 @@ export default {
     PrintOutFormIctRequest(ireq_id) {
       this.$emit("show-loading");
       this.axios
-        .get("api/print-out-ict-request/" + ireq_id)
+        .get("/api/print-out-ict-request/" + ireq_id, {
+          headers: { Authorization: "Bearer " + this.token },
+        })
         .then((response) => {
           let htmlContent = response.data.htmlContent;
-          let norequest = response.data.norequest;
+          let RequestNo = response.data.norequest;
           const options = {
-            filename: "Form ICT Request No." + norequest + ".pdf",
+            filename: "Form ICT Request No. " + RequestNo + ".pdf",
             jsPDF: {
               unit: "mm",
               format: "a4",
-              orientation: "potrait",
+              orientation: "landscape",
+              width: 210,
+              height: 297,
             },
           };
 
           this.$html2pdf().set(options).from(htmlContent).save();
           this.$emit("hide-loading");
-        });
+      }).catch(() => this.$emit("hide-loading"));
     },
     getDetail(ireq_attachment) {
       var page =

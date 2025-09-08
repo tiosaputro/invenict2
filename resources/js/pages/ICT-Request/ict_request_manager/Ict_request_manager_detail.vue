@@ -62,23 +62,9 @@ export default {
     },
     CetakPdf(){
       this.loading = true;
-       this.axios.get('/api/print-out-ict-request/' +this.$route.params.code).then((response)=>{
-        let htmlContent = response.data.htmlContent;
-         let RequestNo = response.data.norequest;
-         const options = {
-            filename: 'Form ICT Request No. '+RequestNo+'.pdf',
-            jsPDF: { 
-              unit: 'mm', 
-              format: 'a4',
-              orientation: 'landscape',
-              width: 210,
-              height: 297
-            }
-          };
-
-          this.$html2pdf().set(options).from(htmlContent).save();
-          this.loading = false;
-       });
+        const code = this.$route.params.code;
+        window.open('/api/print-out-ict-request/' + code, '_blank');
+        this.loading = false;
     },
     showLoading(){
       this.loading = true;

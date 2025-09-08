@@ -26,8 +26,10 @@ class CatalogController extends Controller
         });
     }
     public function index(){
-        $catalog = Catalog::select('catalog_id', 'catalog_name', 'catalog_desc', DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"), DB::raw("CASE WHEN catalog_priority = 'L' Then 'LOW' WHEN catalog_priority = 'N' Then 'Normal' WHEN catalog_priority = 'H' Then 'High' end as catalog_priority"))
-            ->get();
+        $catalog = Catalog::select('catalog_id', 'catalog_name', 'catalog_desc', 
+                    DB::raw("CASE WHEN catalog_request_type = 'P' Then 'Peripheral' WHEN catalog_request_type = 'S' Then 'Service' end as catalog_request_type"), 
+                    DB::raw("CASE WHEN catalog_priority = 'L' Then 'LOW' WHEN catalog_priority = 'N' Then 'Normal' WHEN catalog_priority = 'H' Then 'High' end as catalog_priority"))
+                    ->get();
         return ResponseFormatter::success($catalog, "Successfully get data catalog");
 
     }

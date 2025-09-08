@@ -96,42 +96,42 @@
             :header="this.header" :modal="true" class="fluid">
             <table>
                 <tbody>
-                <tr>
-                    <th>Request Type</th>
-                    <td>
-                        <InputText type="text" v-model="detail.ireq_type" readonly />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Items</th>
-                    <td>
-                        <InputText :value="detail.name" readonly />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Qty</th>
-                    <td>
-                        <InputText v-model="detail.ireq_qty" readonly />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Remark</th>
-                    <td>
-                        <InputText readonly v-model="detail.ireq_remark" />
-                    </td>
-                </tr>
-                <tr v-if="detail.ireq_count_personnel1 > 0">
-                    <th>ICT Personnel</th>
-                    <td>
-                        <InputText v-model="detail.usr_division" readonly />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Status</th>
-                    <td>
-                        <InputText v-model="detail.ireq_status" readonly />
-                    </td>
-                </tr>
+                    <tr>
+                        <th>Request Type</th>
+                        <td>
+                            <InputText type="text" v-model="detail.ireq_type" readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Items</th>
+                        <td>
+                            <InputText :value="detail.name" readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Qty</th>
+                        <td>
+                            <InputText v-model="detail.ireq_qty" readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Remark</th>
+                        <td>
+                            <InputText readonly v-model="detail.ireq_remark" />
+                        </td>
+                    </tr>
+                    <tr v-if="detail.ireq_count_personnel1 > 0">
+                        <th>ICT Personnel</th>
+                        <td>
+                            <InputText v-model="detail.usr_division" readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>
+                            <InputText v-model="detail.ireq_status" readonly />
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </Dialog>
@@ -191,7 +191,7 @@
                 <template #body="slotProps">
                     <p v-if="slotProps.data.ireq_attachment == null"></p>
                     <p
-                        v-else-if="slotProps.data.ireq_attachment.split('.').pop() == 'jpeg' || slotProps.data.ireq_attachment.split('.').pop() == 'jpg' || slotProps.data.ireq_attachment.split('.').pop() == 'png'">
+                        v-else-if="slotProps.data.ireq_attachment.split('.').pop() == 'jpeg' || slotProps.data.ireq_attachment.split('.').pop() == 'jpg' || slotProps.data.ireq_attachment.split('.').pop() == 'png' || slotProps.data.ireq_attachment.split('.').pop() == 'PNG'">
                         <Button class="twitter p-0" @click="getDetail(slotProps.data.ireq_attachment)"
                             aria-label="Twitter" v-tooltip.bottom="'Click to detail attachment'">
                             <i class="pi pi-images px-2"></i>
@@ -212,7 +212,8 @@
             <Column field="ireq_status" header="Status" :sortable="true" style="min-width:6rem">
                 <template #body="slotProps">
                     <span v-if="slotProps.data.status"
-                        :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{ slotProps.data.ireq_status }}</span>
+                        :class="'user-request status-' + slotProps.data.status.toLowerCase()">{{
+                            slotProps.data.ireq_status }}</span>
                 </template>
             </Column>
             <Column style="min-width:9rem">
@@ -293,8 +294,8 @@ export default {
         window.addEventListener('resize', this.updateIsMobile);
     },
     methods: {
-        getDetail(ireq_attachment){
-            var page = process.env.MIX_APP_URL+'/attachment_request/'+ireq_attachment;
+        getDetail(ireq_attachment) {
+            var page = process.env.MIX_APP_URL + '/attachment_request/' + ireq_attachment;
             var myWindow = window.open(page, "_blank");
             myWindow.focus();
         },
@@ -361,23 +362,21 @@ export default {
         },
         CetakPdf() {
             this.$emit("show-loading");
-            this.axios.get('/api/print-out-ict-request/' + this.$route.params.code, { headers: { 'Authorization': 'Bearer ' + this.token } }).then((response) => {
-                let htmlContent = response.data.htmlContent;
-                let RequestNo = response.data.norequest;
-                const options = {
-                    filename: 'Form ICT Request No. ' + RequestNo + '.pdf',
-                    jsPDF: {
-                        unit: 'mm',
-                        format: 'a4',
-                        orientation: 'landscape',
-                        width: 210,
-                        height: 297
-                    }
-                };
-
-                this.$html2pdf().set(options).from(htmlContent).save();
-                this.$emit("hide-loading")
-            });
+            const code = this.$route.params.code;
+            this.axios.get('/api/print-out-ict-request/' + ireq_id, {
+                headers: { 'Authorization': 'Bearer ' + this.token },
+                responseType: 'blob'
+            }).then((response) => {
+                const file = new Blob([response.data], { type: 'application/pdf' });
+                const fileURL = URL.createObjectURL(file);
+                const link = document.createElement('a');
+                link.href = fileURL;
+                link.setAttribute('download', 'ICT_Request_' + ireq_id + '.pdf');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                this.$emit("hide-loading");
+            }).catch(() => this.$emit("hide-loading"));
         },
     }
 };

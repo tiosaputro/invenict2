@@ -1,477 +1,326 @@
 <!DOCTYPE html>
-
+<html>
 <head>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
-        id="bootstrap-css" type="text/css" />
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
-<title> ICT REQUEST REPORT {{ date('d M Y') }}</title>
-<style>
-    @media screen {
-        .row {
-            margin-left: -5px;
-            margin-right: -5px;
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* ===== Global A4 Page Settings ===== */
+        html, body {
+            width: 210mm;
+            height: 297mm;
+            margin: 0;
+            padding: 0;
+            font-size: 10pt;
+            font-family: Arial, sans-serif;
         }
 
-        .row::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-
-        .flex-grow-1 {
-            flex-grow: 1;
-        }
-
-        .flex-grow-0 {
-            flex-grow: 0;
-        }
-
-        .invoice .contacts {
-            margin-bottom: 20px
-        }
-
-        .invoice .invoice-to {
-            text-align: left
-        }
-
-        .invoice .invoice-to .to {
-            margin-top: 0;
-            margin-bottom: 0
-        }
-
-        .invoice .company-details {
-            text-align: right
-        }
-
-        .invoice .company-details .name {
-            margin-top: 0;
-            margin-bottom: 0
-        }
-
-        p {
-            font-weight: bold;
-        }
-
-        .column {
-            float: left;
-            width: 50%;
-            padding: 5px;
-            margin-left: 2px;
-            margin-right: -10px;
-        }
         #invoice {
-            padding: 20px;
-            size: A4;
-            margin: 0;
-        }
-
-        .csssolution {
-            resize: none;
-            border: solid 2px;
-            font-weight: bold;
-            overflow: hidden;
-            margin: 1px;
-            padding: 1px;
-            width: 550pt;
-            min-height: 120px;
-            text-align: left;
-            outline: none;
-        }
-
-        .invoice table {
-            width: 100%;
-            border: solid 2px;
-            border-collapse: collapse;
-            border-spacing: 0;
-            margin-bottom: 1px;
-        }
-
-        .invoice table th {
-            font-size: 16px;
-            table-layout: fixed;
-            overflow: hidden;
-        }
-
-
-        .invoice table tbody tr:last-child td {
-            border: solid 2px;
-            page-break-after: auto;
-        }
-
-        .invoice {
-            font-size: 12px !important;
-            overflow: hidden !important;
-        }
-
-        .invoice footer {
-            width: 100%;
-            text-align: center;
-            font-weight: bold;
-            color: black;
-            border-top: 1px solid #3989c6;
-            overflow: hidden;
-            bottom: 0;
-        }
-
-        .invoice>div:last-child {
-            page-break-after: auto;
-        }
-
-        .invoice {
-            background-color: #FFF;
-            min-height: 680px;
-            padding: 30px;
-            size: A4;
-            margin: 0;
-        }
-
-        .invoice header {
-            padding: 10px 0;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #3989c6
-        }
-
-        .invoice main {
-            padding-bottom: 50px
-        }
-
-        .invoice table {
-            width: 100%;
-            border-collapse: collapse;
-            border-spacing: 0;
-            margin-bottom: 20px;
-            border: solid 2px;
-            overflow: hidden;
-        }
-
-        .invoice table th {
-            overflow: hidden;
-            font-weight: 400;
-            font-size: 16px;
-            table-layout: fixed;
-            border: solid 2px;
-
-        }
-
-        .column {
-            float: left;
-            width: 50%;
-            padding: 5px;
-            margin-left: 2px;
-            margin-right: -10px;
-        }
-
-        .textareacss {
-            resize: none;
-            border: 2px solid;
-            font-weight: bold;
-            overflow: hidden;
-            margin: 1px auto 1px 1px;
-            padding: 1px;
-            min-width: 99%;
-            min-height: 170px;
-            outline: none;
-        }
-
-        .wrap {
-            display: table;
-            table-layout: fixed;
-            padding: 10px;
             width: 100%;
             height: 100%;
+            padding: 10mm;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .invoice {
+            height: 100%;
+            page-break-inside: avoid;
+        }
+
+        /* ===== Section spacing ===== */
+        .wrap {
+            max-height: 230mm;
+            overflow: hidden;
+            display: table;
+            width: 100%;
+            margin-top: 15px;
         }
 
         .cell-wrap {
             display: table-cell;
-            table-layout: fixed;
             vertical-align: top;
-            height: 100%;
-        }
-
-        .cell-wrap.left {
             width: 50%;
             padding-right: 5px;
         }
 
+        /* ===== Table styling ===== */
         table {
-            border-collapse: collapse;
-            border-spacing: 0;
-            table-layout: fixed;
-            border: solid 2px;
-            height: 80%;
             width: 100%;
-            border: solid 2px;
+            border-collapse: collapse;
+            page-break-inside: avoid;
+            margin-bottom: 10px;
         }
 
-        table td {
-            padding: 10px;
-            height: 15px;
-            border: solid 2px;
-            font-weight: bold;
+        table th, table td {
+            border: 1px solid #000;
+            font-size: 10pt;
+            padding: 3px;
             text-align: center;
-            background-color: #7CB9E8;
+            word-wrap: break-word;
         }
 
         table th {
-            border: solid 2px;
             font-weight: bold;
-            text-align: center;
-            padding: 5px;
-
+            background-color: #7CB9E8;
         }
-    }
 
-</style>
+        /* ===== Textarea / Remarks ===== */
+        .textareacss {
+            max-height: 120px;
+            overflow: hidden;
+            border: 1px solid #000;
+            padding: 5px;
+            font-weight: bold;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+        }
 
+        /* ===== QR Code ===== */
+        .qrcode {
+            width: 70px;
+            height: 70px;
+        }
+
+        /* ===== Section headers ===== */
+        .section-header {
+            font-weight: bold;
+            font-size: 12pt;
+            margin-bottom: 5px;
+        }
+
+        /* ===== Paragraph styling ===== */
+        p {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        /* ===== Space between tables ===== */
+        .wrap + .wrap {
+            margin-top: 15px;
+        }
+
+        /* ===== Fit content inside cells ===== */
+        td, th {
+            overflow: hidden;
+        }
+
+        /* ===== Optional: smaller font for long tables ===== */
+        .small-font {
+            font-size: 9pt;
+        }
+
+    </style>
+</head>
+<body>
 <div id="invoice">
-    <div class="invoice overflow-auto">
-        <div style="min-width: 600px">
-            <header>
-                <div class="row">
-                    <div class="col">
-                        <a>
-                            <img src="{{asset('assets/layout/images/logo-emp.png')}}" width="200"
-                                data-holder-rendered="true" />
-                        </a>
-                    </div>
-                    <div class="col company-details">
-                        <h2 class="name">
-                            <a>
-                                <p>ICT SERVICE REQUEST </p>
-                            </a>
-                        </h2>
+    <div class="invoice">
+        <header>
+            <div class="row align-items-center">
+                <!-- Bagian kiri: logo + teks -->
+                <div class="col-6" style="display: flex; align-items: center;">
+                    <img src="{{ asset('assets/layout/images/logo-emp.png') }}" width="150" alt="Logo">
+                    <span style="font-size: 18pt; font-weight: bold; margin-left: 10px;">
+                        ICT Helpdesk System
+                    </span>
+                </div>
+                <!-- Bagian kanan: judul + no request -->
+                <div class="col-6 text-right">
+                    <h2 style="margin: 0; font-size: 20pt;">ICT SERVICE REQUEST</h2>
+                    <p style="margin: 0; font-size: 12pt;">No.request: {{ $detail[0]->ireq_no }}</p>
+                </div>
+            </div>
+            <!-- Garis pembatas horizontal -->
+            <hr style="border: 2px solid #000; margin-top: 10px; margin-bottom: 20px;">
+        </header>
+
+
+        <main>
+            <!-- I. Description -->
+            <div class="row mb-2">
+                <div class="col-8">
+                    <p>I. Description Of Request / Problem Experienced</p>
+                    <div class="textareacss">
+                        @php $no = 1; @endphp
+                        @foreach($detail as $d)
+                            @if($no > 3)
+                                ... @break
+                            @endif
+                            {{ $no++ }}. {{ $d->ireq_remark }}<br>
+                        @endforeach
                     </div>
                 </div>
-            </header>
-            <main>
-                <div class="row contacts">
-                    <div class="col invoice-to">
-                        <p style="text-align:left;font-size:16px;">Please submit to Helpdesk Supervisor (27th Floor) Or
-                            Call Hotline Number Extension 511
-                            <span style="float:right;font-size:18px;">
-                                No.request : {{$detail[0]->ireq_no}}
-                            </span>
-                        </p>
-                    </div>
+                <div class="col-4">
+                    <p>Priority Level</p>
+                    <textarea class="textareacss" readonly>{{ $detail[0]->prio_level }}</textarea>
                 </div>
-                <div class="row contacts" contenteditable="false">
-                    <div class="col invoice-to flex-grow-1">
-                        <div class="address" style="font-weight:bold;font-size:16px;">I. Description Of Request/Problem
-                            Experienced</div>
-                        <div class="textareacss"
-                            style="font-weight: bold; padding-right: 10px; width: calc(100% - 520px); overflow-wrap: break-word;">
-                            @php $no = 1 @endphp
-                            @foreach($detail as $d) {{$no++}}.{{$d->ireq_remark}}<br />@endforeach
-                        </div>
-                    </div>
-                    <div class="col invoice-to flex-grow-0">
-                        <div class="address" style="font-weight:bold;font-size:16px;">Priority Level</div>
-                        <textarea rows="8" cols="26" class="textareacss"
-                            readonly>{{$detail[0]->prio_level}}  </textarea>
-                    </div>
-                </div>
-                @php
+            </div>
+
+            @php
                 $appname = env('APP_URL');
                 $linkRequester = "{$appname}/check/requestor/{$link->link_id}";
                 $linkIctManager = "{$appname}/check/ictmanager/{$link->link_id}";
                 $linkHigherLevel = "{$appname}/check/higherlevel/{$link->link_id}";
-                @endphp
-                <div class="wrap">
-                    <div class="cell-wrap left">
-                        <table class="left">
-                            <p style="font-size:16px;"> II. Requester / Reported By : </p>
-                            <tr>
-                                <th>{{$detail[0]->ireq_requestor}}</th>
-                                <th>{{$detail[0]->division_user}}</th>
-                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkRequester)
-                                    !!}<br>{{ formatDate($detail[0]->ireq_date, 'd M Y H:i')}}</th>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>Divison</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="cell-wrap right">
-                        <table class="right">
-                            <p style="font-size:16px;"> Approved By : (For new installation/software loan) </p>
-                            @if($detail[0]->ireq_approver1_date || $detail[0]->status == "NA1")
-                            <tr>
-                                <th>{{$detail[0]->ireq_spv}}</th>
-                                <th>{{$detail[0]->spv_job_title}}</th>
-                                @if($detail[0]->status == "RA1")
-                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel)
-                                    !!}<br><strong>Rejected</strong> on
-                                    {{formatDate($detail[0]->ireq_approver1_date, 'd M Y H:i')}}</th>
-                                @elseif($detail[0]->status == "NA1")
-                                <th rowspan="2" style="font-size:12pt; font-weight:bold;">Waiting Approval</th>
-                                @else
-                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkHigherLevel)
-                                    !!}<br><strong>Approved</strong> on
-                                    {{ formatDate($detail[0]->ireq_approver1_date, 'd M Y H:i')}}</th>
-                                @endif
+            @endphp
 
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>Position</td>
-                            </tr>
-                            @else
-                            <tr>
-                                @if($detail[0]->cekstatus == 'P' )
-                                <th rowspan="2" style="font-weight:bold;">This request is not yet in higher level
-                                    approval stage</th>
-                                @else
-                                <th rowspan="2" style="font-weight:bold;">This request does not require approval from
-                                    higher level</th>
-                                @endif
-                            </tr>
-                            <tr>
-                                <!-- <td></td> -->
-                            </tr>
-                            @endif
-                        </table>
-                    </div>
-                </div> <!-- wrap -->
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <div class="row contacts">
-                    <div class="col invoice-to">
-                        <p style="font-size:16px;"> III. IT Use Only</p>
-                        <table>
-                            <p style="font-size:16px;"> Approved By : (Note : Sr. Manager approval needed for new
-                                equipment/software/tools)</p>
-                            @if($detail[0]->ireq_approver2_date || $detail[0]->status == 'NA2')
-                            <tr>
-                                <th>{{$detail[0]->manager_ict_name}}</th>
-                                <th>{{$detail[0]->manager_job_title}}</th>
-                                @if($detail[0]->status=='RA2')
-                                <th rowspan="2" style="font-size:10pt;">{!!
-                                    QrCode::errorCorrection('L')->size(80)->generate($linkIctManager) !!} <br>
-                                    <strong>Rejected</strong> On
-                                    {{ formatDate($detail[0]->ireq_approver2_date, 'd M y H:i') }}</th>
-                                @elseif($detail[0]->status=='NA2')
-                                <th rowspan="2" style="font-size:10pt;"> Waiting Approval</th>
-                                @else
-                                <th rowspan="2" style="font-size:10pt;">{!! QrCode::size(80)->generate($linkIctManager)
-                                    !!} <br><strong>Approved</strong> On
-                                    {{ formatDate($detail[0]->ireq_approver2_date, 'd M y H:i') }}</th>
-                                @endif
-                                <th>{{$detail[0]->ireq_approver2_remark}}</th>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>Position</td>
-                                <td>Remarks(Including OE if required)</td>
-                            </tr>
-                            @else
-                            <tr>
-                                @if($detail[0]->cekstatus == 'P' || $detail[0]->cekstatus == 'NA1' ||
-                                $detail[0]->cekstatus == 'A1' )
-                                <th rowspan="2" style="font-weight:bold;">This request is not yet in ICT Manager
-                                    approval stage</th>
-                                @else
-                                <th rowspan="2" style="font-weight:bold;">This request does not require approval from
-                                    ICT Manager</th>
-                                @endif
-                            </tr>
-                            <tr>
-
-                            </tr>
-                            @endif
-                        </table>
-                    </div>
+            <!-- II. Requester -->
+            <div class="wrap mb-2">
+                <div class="cell-wrap">
+                    <table>
+                        <tr>
+                            <th colspan="3">II. Requester / Reported By</th>
+                        </tr>
+                        <tr>
+                            <td>{{ $detail[0]->ireq_requestor }}</td>
+                            <td>{{ $detail[0]->division_user ?? '-' }}</td>
+                            <td rowspan="2">
+                                {!! QrCode::size(70)->generate($linkRequester) !!}
+                                <br>{{ formatDate($detail[0]->ireq_date, 'd M Y H:i') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>Division</td>
+                        </tr>
+                    </table>
                 </div>
-        </div>
-        <div class="row contacts">
-            <div class="col invoice-to">
-                <p style="font-size:16px;">IV. Request Review</p>
+
+                <!-- II. Approved By Supervisor -->
+                <div class="cell-wrap">
+                    <table>
+                        <tr>
+                            <th colspan="3">Approved By (Supervisor)</th>
+                        </tr>
+                        @if($detail[0]->ireq_approver1_date || $detail[0]->status == 'NA1')
+                        <tr>
+                            <td>{{ $detail[0]->ireq_spv ?? 'Tanpa Supervisor' }}</td>
+                            <td>{{ $detail[0]->spv_job_title ?? '-' }}</td>
+                            <td rowspan="2">
+                                {!! QrCode::size(70)->generate($linkHigherLevel) !!}
+                                <br>
+                                @if($detail[0]->status == "RA1")
+                                    <strong>Rejected</strong> on {{ formatDate($detail[0]->ireq_approver1_date, 'd M Y H:i') }}
+                                @elseif($detail[0]->status == "NA1")
+                                    Waiting Approval
+                                @else
+                                    <strong>Approved</strong> on {{ formatDate($detail[0]->ireq_approver1_date, 'd M Y H:i') }}
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>Position</td>
+                        </tr>
+                        @else
+                        <tr>
+                            <td colspan="3">This request is not yet in higher level approval stage</td>
+                        </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+
+            <!-- III. ICT Manager Approval -->
+            <div class="wrap mb-2">
                 <table>
-                    @if($detail[0]->ireq_verificator)
                     <tr>
-                        <th width="200px">{{$detail[0]->ireq_verificator}}</th>
-                        <th>{{$detail[0]->ireq_verificator_remark}}</th>
-                        <th width="200px">{{$detail[0]->ireq_loc}}</th>
+                        <th colspan="4">III. IT Use Only (ICT Manager Approval)</th>
+                    </tr>
+                    @if($detail[0]->ireq_approver2_date || $detail[0]->status == 'NA2')
+                    <tr>
+                        <td>{{ $detail[0]->manager_ict_name ?? 'Tanpa Manager' }}</td>
+                        <td>{{ $detail[0]->manager_job_title ?? '-' }}</td>
+                        <td rowspan="2">
+                            {!! QrCode::size(70)->generate($linkIctManager) !!}
+                            <br>
+                            @if($detail[0]->status=='RA2')
+                                <strong>Rejected</strong> On {{ formatDate($detail[0]->ireq_approver2_date, 'd M Y H:i') }}
+                            @elseif($detail[0]->status=='NA2')
+                                Waiting Approval
+                            @else
+                                <strong>Approved</strong> On {{ formatDate($detail[0]->ireq_approver2_date, 'd M Y H:i') }}
+                            @endif
+                        </td>
+                        <td>{{ $detail[0]->ireq_approver2_remark ?? '-' }}</td>
                     </tr>
                     <tr>
-                        <td width="200px">Received By</td>
-                        <td>Remark</td>
-                        <td width="200px">Problem Area</td>
+                        <td>Name</td>
+                        <td>Position</td>
+                        <td>Remarks</td>
                     </tr>
                     @else
                     <tr>
-                        <th rowspan="2" style="font-weight:bold;">Waiting for Verification</th>
-                    </tr>
-                    <tr>
-
+                        <td colspan="4">This request is not yet in ICT Manager approval stage</td>
                     </tr>
                     @endif
                 </table>
             </div>
-        </div>
-        <div class="row contacts">
-            <div class="col invoice-to">
-                <p></p>
-                <table>
-                    @if($detail[0]->ireq_assigned_date)
-                    @foreach($detail as $det)
-                    <tr>
-                        <th width="90px">{{$det->ireqd_id}}</th>
-                        <!-- <th>{{$det->ireq_remark}}</th> -->
-                        <th>{{$det->ireq_assigned_to}}</th>
-                        <th width="150px">{{formatDate($det->ireq_assigned_date, 'd M y')}}</th>
-                        <th width="150px">{{formatDate($det->ireq_date_closing, 'd M y')}}</th>
-                        <th>{{$det->assigned_remark_detail}}</th>
-                        <th>{{$det->ireq_status}}</th>
-                    </tr>
-                    @endforeach
-                    <tr>
-                        <td width="90px">No Detail</td>
-                        <!-- <td>Description </td> -->
-                        <td>Assigned To</td>
-                        <td width="150px">Date Assigned</td>
-                        <td width="150px">Date Completed</td>
-                        <td>Remark</td>
-                        <td>Status</td>
-                    </tr>
-                    @else
-                    <tr>
-                        <th rowspan="2" style="font-weight:bold">This request is not yet in the assignment stage</th>
-                    </tr>
-                    <tr>
 
-                    </tr>
-                    @endif
-                </table>
+            <!-- IV. Verification & Assignment -->
+            <div class="wrap" style="margin-top:20px;">
+                <div class="cell-wrap full-width">
+                    <p class="section-header">IV. Request Review</p>
+                    <table>
+                        @if($detail[0]->ireq_verificator)
+                            <tr>
+                                <th width="200px">{{$detail[0]->ireq_verificator}}</th>
+                                <th>{{$detail[0]->ireq_verificator_remark}}</th>
+                                <th width="200px">{{$detail[0]->ireq_loc}}</th>
+                            </tr>
+                            <tr>
+                                <td width="200px">Received By</td>
+                                <td>Remark</td>
+                                <td width="200px">Problem Area</td>
+                            </tr>
+                        @else
+                            <tr>
+                                <th colspan="3" style="font-weight:bold; text-align:center;">
+                                    Waiting for Verification
+                                </th>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
-        </div>
 
+            <div class="wrap" style="margin-top:15px;">
+                <div class="cell-wrap full-width">
+                    <p class="section-header">V. Assignment / Task Detail</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="90px">No Detail</th>
+                                <th>Assigned To</th>
+                                <th width="150px">Date Assigned</th>
+                                <th width="150px">Date Completed</th>
+                                <th>Remark</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if($detail[0]->ireq_assigned_date)
+                                @foreach($detail as $det)
+                                <tr>
+                                    <td width="90px">{{$det->ireqd_id}}</td>
+                                    <td>{{$det->ireq_assigned_to}}</td>
+                                    <td width="150px">{{formatDate($det->ireq_assigned_date, 'd M y')}}</td>
+                                    <td width="150px">{{formatDate($det->ireq_date_closing, 'd M y')}}</td>
+                                    <td>{{$det->assigned_remark_detail}}</td>
+                                    <td>{{$det->ireq_status}}</td>
+                                </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="6" style="font-weight:bold; text-align:center;">
+                                        This request is not yet in the assignment stage
+                                    </td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </main>
-        <!-- <footer>
-                <strong>This PDF was created on a system and is valid without the signature and seal.</strong>
-            </footer> -->
     </div>
-    <!-- <div></div> -->
 </div>
-</div>
-
-<script>
-    $('#printInvoice').click(function () {
-        Popup($('.invoice')[0].outerHTML);
-
-        function Popup(data) {
-            window.print();
-            return true;
-        }
-    });
-
-</script>
+</body>
+</html>

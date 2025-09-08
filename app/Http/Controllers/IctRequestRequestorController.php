@@ -71,15 +71,9 @@ class IctRequestRequestorController extends Controller
 
     }
     function save(Request $request){
-        // Get the file from the request (assuming it's named 'detailRequest')
-        $file = $request->file('detailRequest');  // Handle file here
-
-        // // Validate the file (optional)
-        // $request->validate([
-        //     'detailRequest' => 'required|file|mimes:jpg,png,pdf|max:10240',
-        // ]);
+        $file = $request->file('detailRequest');
         $save = $this->requestorServices->saveRequest($request->input('request'));
-        $saveDetail = app(IctDetailController::class)->NewSaveRequest(
+        app(IctDetailController::class)->NewSaveRequest(
             $request, 
             $save->ireq_id, 
             $save->ireq_type,
@@ -124,25 +118,19 @@ class IctRequestRequestorController extends Controller
         return ResponseFormatter::success($save, 'Successfully Deleted Request');
     }
     function submitRating(Request $request){
-        if ($request->rating <= '2') {
-            $dtl = DB::table('ireq_dtl')
-                ->where('ireqd_id', $request->id)
-                ->where('ireq_id', $request->ireq_id)
-                ->update([
-                    'ireq_value' => $request->rating,
-                    'ireq_note' => $request->ket,
-                ]);
-
-            return ResponseFormatter::success($dtl, 'Successfully Submitted Rating');
-        } else {
-            $dtl = DB::table('ireq_dtl')
-                ->where('ireqd_id', $request->id)
-                ->where('ireq_id', $request->ireq_id)
-                ->update([
-                    'ireq_value' => $request->rating,
-                ]);
-            return ResponseFormatter::success($dtl, 'Successfully Submitted Rating');
-        }
+        $updateData = ['ireq_value' => $request->rating];  
+  
+        // Add note only if the rating is 2 or less  
+        if ($request->rating <= 2) {  
+            $updateData['ireq_note'] = $request->ket;  
+        }  
+        
+        $dtl = DB::table('ireq_dtl')  
+            ->where('ireqd_id', $request->id)  
+            ->where('ireq_id', $request->ireq_id)  
+            ->update($updateData);  
+        
+        return ResponseFormatter::success($dtl, 'Successfully Submitted Rating');  
     }
     function getNoreq(){
         $data = $this->requestorServices->listNoRequest();

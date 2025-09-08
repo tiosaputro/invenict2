@@ -1,15 +1,14 @@
 <template>
     <div class="layout-topbar">
         <router-link to="/dashboard" class="layout-topbar-logo">
-            <img :src="`${$baseUrl}/assets/layout/images/logo-emp.png`" alt="Logo" /> ICT HELPDESK SYSTEM
+            <img :src="`${$baseUrl}/assets/layout/images/logo-emp.png`" alt="Logo" />
+            <span class="header-text">ICT HELPDESK SYSTEM</span>
         </router-link>
         <button v-if="isMobile == true" class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle">
 			<i class="pi pi-bars"></i>
 		</button>
         <Menubar v-if="isMobile == false"
-            :model="value"
-            pt="{
-                action: ({ props, state, context }) => ({
+            :model="value" pt="{ action: ({ props, state, context }) => ({
                     class: context.active ? 'bg-primary-200 border-round-sm' : context.focused ? 'bg-primary-300 border-round-sm' : undefined
                 })
             }"
@@ -27,7 +26,7 @@
             }"
         >
             <img
-                :src="'/profile/' + user.usr_foto"
+                :src="`${$baseUrl}/profile/`+user.usr_foto"
                 class="mr-2"
                 width="30"
                 height="30"
@@ -35,7 +34,7 @@
                 v-if="user.usr_foto"
             />
             <img
-                :src="'/images/default-profile.png'"
+                :src="`${$baseUrl}/images/default-profile.png`"
                 class="mr-2"
                 width="30"
                 height="30"
@@ -47,7 +46,7 @@
             <li>
                 <button class="p-link layout-profile-link" @click="onClick" style="object-fit: contain">
                     <img
-                        :src="'/profile/' + user.usr_foto"
+                        :src="`${$baseUrl}/profile/`+user.usr_foto"
                         class="mr-2"
                         width="30"
                         height="30"
@@ -55,7 +54,7 @@
                         v-if="user.usr_foto && isMobile == false"
                     />
                     <img
-                        :src="'/images/default-profile.png'"
+                        :src="`${$baseUrl}/images/default-profile.png`"
                         class="mr-2"
                         width="30"
                         height="30"
@@ -140,6 +139,20 @@ export default {
 };
 </script>
 <style scoped>
+.layout-topbar-logo {
+    display: flex;
+    align-items: center; /* sejajar vertikal */
+}
+
+.layout-topbar-logo img {
+    width: 150px;       /* ukuran logo */
+}
+
+.layout-topbar-logo .header-text {
+    font-size: 14pt;    /* teks besar */
+    font-weight: bold;  /* tebal */
+    margin-left: 10px;  /* jarak dari logo */
+}
 /* Dropdown Button */
 .dropbtn {
     background-color: #04aa6d;
