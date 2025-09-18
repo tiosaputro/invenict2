@@ -125,7 +125,7 @@
                 </div>
                 <!-- Bagian kanan: judul + no request -->
                 <div class="col-6 text-right">
-                    <h2 style="margin: 0; font-size: 20pt;">ICT SERVICE REQUEST</h2>
+                    <h2 style="margin: 0; font-size: 20pt;">ICT REQUEST</h2>
                     <p style="margin: 0; font-size: 12pt;">No.request: {{ $detail[0]->ireq_no }}</p>
                 </div>
             </div>
@@ -151,7 +151,7 @@
                 </div>
                 <div class="col-4">
                     <p>Priority Level</p>
-                    <textarea class="textareacss" readonly>{{ $detail[0]->prio_level }}</textarea>
+                    <textarea class="textareacss">{{ $detail[0]->prio_level }}</textarea>
                 </div>
             </div>
 
@@ -192,7 +192,7 @@
                         </tr>
                         @if($detail[0]->ireq_approver1_date || $detail[0]->status == 'NA1')
                         <tr>
-                            <td>{{ $detail[0]->ireq_spv ?? 'Tanpa Supervisor' }}</td>
+                            <td>{{ $detail[0]->ireq_spv ?? '-' }}</td>
                             <td>{{ $detail[0]->spv_job_title ?? '-' }}</td>
                             <td rowspan="2">
                                 {!! QrCode::size(70)->generate($linkHigherLevel) !!}
@@ -212,7 +212,11 @@
                         </tr>
                         @else
                         <tr>
-                            <td colspan="3">This request is not yet in higher level approval stage</td>
+                            @if($detail[0]->cekstatus == 'P' )
+                                <td rowspan="3" style="font-weight:bold;">This request is not yet in higher level approval stage</td>
+                            @else
+                                <td rowspan="3" style="font-weight:bold;">This request does not require approval from higher level</td>
+                            @endif
                         </tr>
                         @endif
                     </table>
@@ -245,11 +249,15 @@
                     <tr>
                         <td>Name</td>
                         <td>Position</td>
-                        <td>Remarks</td>
+                        <td>Remarks(Including OE if required)</td>
                     </tr>
                     @else
                     <tr>
-                        <td colspan="4">This request is not yet in ICT Manager approval stage</td>
+                        @if($detail[0]->cekstatus == 'P' || $detail[0]->cekstatus == 'NA1' || $detail[0]->cekstatus == 'A1' )
+                            <td rowspan="4" style="font-weight:bold;">This request is not yet in ICT Manager approval stage</td>
+                        @else
+                            <td rowspan="4" style="font-weight:bold;">This request does not require approval from ICT Manager</td>
+                        @endif
                     </tr>
                     @endif
                 </table>
@@ -262,14 +270,14 @@
                     <table>
                         @if($detail[0]->ireq_verificator)
                             <tr>
-                                <th width="200px">{{$detail[0]->ireq_verificator}}</th>
-                                <th>{{$detail[0]->ireq_verificator_remark}}</th>
-                                <th width="200px">{{$detail[0]->ireq_loc}}</th>
+                                <th width="200px">Received By</th>
+                                <th>Remark</th>
+                                <th width="200px">Problem Area</th>
                             </tr>
                             <tr>
-                                <td width="200px">Received By</td>
-                                <td>Remark</td>
-                                <td width="200px">Problem Area</td>
+                                <td width="200px">{{$detail[0]->ireq_verificator}}</td>
+                                <td>{{$detail[0]->ireq_verificator_remark}}</td>
+                                <td width="200px">{{$detail[0]->ireq_loc}}</td>
                             </tr>
                         @else
                             <tr>
@@ -302,8 +310,8 @@
                                 <tr>
                                     <td width="90px">{{$det->ireqd_id}}</td>
                                     <td>{{$det->ireq_assigned_to}}</td>
-                                    <td width="150px">{{formatDate($det->ireq_assigned_date, 'd M y')}}</td>
-                                    <td width="150px">{{formatDate($det->ireq_date_closing, 'd M y')}}</td>
+                                    <td width="150px">{{formatDate($det->ireq_assigned_date, 'd M Y H:i')}}</td>
+                                    <td width="150px">{{formatDate($det->ireq_date_closing, 'd M Y H:i')}}</td>
                                     <td>{{$det->assigned_remark_detail}}</td>
                                     <td>{{$det->ireq_status}}</td>
                                 </tr>

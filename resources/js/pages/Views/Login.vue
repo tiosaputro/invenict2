@@ -15,16 +15,7 @@
                     style="width: 250px"
                 />
             </div>
-            <div
-                class="co l-12 xl:col-6"
-                style="
-                    border-radius: 10px;
-                    border: 0.5px solid #fefefe20;
-                    background: #fefefe10;
-                    backdrop-filter: blur(10px);
-                    width: 35em !important;
-                "
-            >
+            <div class="co l-12 xl:col-6" style=" border-radius: 10px; border: 0.5px solid #fefefe20; background: #fefefe10; backdrop-filter: blur(10px); width: 35em !important;">
                 <div
                     class="h-full w-full m-0 py-7 px-4"
                     style="padding: 0em 1em 1em 1em !important"
@@ -46,11 +37,7 @@
                         </div>
                         <div
                             class="w-full md:w-10 mx-auto"
-                            style="
-                                width: auto !important;
-                                margin: 0em !important;
-                            "
-                        >
+                            style=" width: auto !important; margin: 0em !important; ">
                             <label
                                 for="email1"
                                 class="block text-sm font-medium mb-2"
@@ -59,10 +46,10 @@
                             <InputText
                                 type="text"
                                 v-model="email"
+                                placeholder="my.name/my.name@emp-one.com"
                                 style="text-transform: lowercase; padding: 1rem"
                                 class="w-full mb-3"
                                 :class="{ 'p-invalid': submitted && !email }"
-                                placeholder="Your Username"
                             />
                             <small class="p-error" v-if="submitted && !email"
                                 >Username Not Filled.
@@ -77,7 +64,7 @@
                             >
                             <Password
                                 v-model="password"
-                                placeholder="Your Password"
+                                placeholder="........"
                                 class="w-full mb-3"
                                 :toggleMask="true"
                                 :class="{ 'p-invalid': submitted && !password }"

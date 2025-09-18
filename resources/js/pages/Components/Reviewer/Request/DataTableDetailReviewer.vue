@@ -446,28 +446,50 @@ export default {
       return this.$moment(date).format("DD MMM YYYY HH:mm");
     },
     PrintOutFormIctRequest(ireq_id) {
-      this.$emit("show-loading");
       this.axios
-        .get("/api/print-out-ict-request/" + ireq_id, {
-          headers: { Authorization: "Bearer " + this.token },
-        })
-        .then((response) => {
-          let htmlContent = response.data.htmlContent;
-          let RequestNo = response.data.norequest;
-          const options = {
-            filename: "Form ICT Request No. " + RequestNo + ".pdf",
-            jsPDF: {
-              unit: "mm",
-              format: "a4",
-              orientation: "landscape",
-              width: 210,
-              height: 297,
-            },
-          };
+  .get("/api/print-out-ict-request/" + ireq_id, {
+    headers: { Authorization: "Bearer " + this.token },
+  })
+  .then((response) => {
+    let htmlContent = response.data.htmlContent;
+    let RequestNo = response.data.norequest;
 
-          this.$html2pdf().set(options).from(htmlContent).save();
-          this.$emit("hide-loading");
-      }).catch(() => this.$emit("hide-loading"));
+    // Inject HTML ke hidden div supaya jadi DOM element
+    let container = document.createElement("div");
+    container.innerHTML = htmlContent;
+    document.body.appendChild(container);
+
+    const options = {
+      margin: 0.5,
+      filename: "Form_ICT_Request_No_" + RequestNo + ".pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "A4", orientation: "landscape" },
+    };
+
+    this.$html2pdf()
+      .set(options)
+      .from(container)
+      .toPdf()
+      .get("pdf")
+      .then((pdf) => {
+        // Paksa download cross browser
+        const blob = pdf.output("blob");
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = options.filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        // Bersihkan container
+        document.body.removeChild(container);
+        this.$emit("hide-loading");
+      });
+  })
+  .catch(() => this.$emit("hide-loading"));
     },
     getDetail(ireq_attachment) {
       var page =
@@ -536,4 +558,13 @@ export default {
   margin: 5px;
   /* Ruang antara tombol */
 }
+@media print {
+  body {
+    zoom: 85%; /* perkecil semua konten */
+  }
+  table {
+    font-size: 11px;
+  }
+}
+
 </style>
