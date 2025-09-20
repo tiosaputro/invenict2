@@ -35,9 +35,10 @@ class MasterDetailController extends Controller
 
         $mas = DB::table('invent_mst as im')
             ->leftjoin('lookup_refs as lr', 'im.invent_brand', 'lr.lookup_code')
+            ->leftjoin('invent_dtl as id', 'im.invent_code', 'id.invent_code')
             ->select(DB::raw("(im.invent_desc ||' - '|| lr.lookup_desc ||' - '|| im.invent_type) as name"))
             ->whereRaw('LOWER(lr.lookup_type) LIKE ? ', [trim(strtolower('merk')) . '%'])
-            ->where('im.invent_code', $code)
+            ->where('id.invent_code', $code)
             ->first();
         return ResponseFormatter::success(array('dtl' => $dtl, 'mas' => $mas), 'Successfully get data');
     }
