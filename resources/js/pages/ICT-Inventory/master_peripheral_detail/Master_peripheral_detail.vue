@@ -204,7 +204,7 @@
               <div class="field grid">
                 <label class="col-fixed" style="width:100px"></label>
                   <div class="card">
-                    <img v-if="this.detail.invent_photo" :src="'/master_peripheral/' +detail.invent_photo" class="master-image" />
+                    <img v-if="this.detail.invent_photo" :src="`${$baseUrl}/master_peripheral/` + detail.invent_photo" class="master-image" />
                   </div>
               </div>
         </Dialog>  

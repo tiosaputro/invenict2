@@ -146,7 +146,7 @@
             </form>
             </div>
           <div class="col-sm-6">
-            <img :src="'/master_peripheral/' + mut.invent_photo" class="mutasi-image" />
+            <img :src="`${$baseUrl}/master_peripheral/` + mut.invent_photo" class="mutasi-image" />
           </div>
        </div>
       </div>

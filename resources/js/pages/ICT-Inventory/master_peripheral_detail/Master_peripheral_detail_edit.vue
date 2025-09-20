@@ -153,7 +153,7 @@
                 <div class="col-10 md-6">
                   <div class="card" style="height: 20 rem;">
                      <img :src="preview" class="master-image" v-if="preview"/>
-                    <img :src="'/master_peripheral/' +detail.invent_photo" class="master-image" v-else />
+                      <img :src="`${$baseUrl}/master_peripheral/` + detail.invent_photo" class="master-image" v-else/>
                   </div>
                 </div>
             </div>

@@ -142,7 +142,7 @@
             </form>
             </div>
           <div class="col-sm-6">
-            <img :src="'/master_peripheral/' + detail.photo" class="mutasi-image" v-if="this.mutasi.invent_sn" />
+            <img :src="`${$baseUrl}/master_peripheral/` + detail.photo" class="mutasi-image" v-if="this.mutasi.invent_sn" />
           </div>
        </div>
       </div>
