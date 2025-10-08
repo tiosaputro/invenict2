@@ -148,8 +148,8 @@ class IctRequestorServices
         if(!empty($request['ireq_id'])){
             $ict = Ict::where('ireq_id', $request['ireq_id'])->first();
             if($ict){
-                $ict->ireq_prio_level = $request->ireq_prio_level;
-                $ict->ireq_prio_level_reason = $request->ireq_prio_level_reason;
+                $ict->ireq_prio_level = $request['ireq_prio_level'];
+                $ict->ireq_prio_level_reason = $request['ireq_prio_level_reason'];
                 $ict->ireq_user = $request['ireq_user'];
                 // $ict->ireq_spv = $request->ireq_spv;
                 $ict->last_update_date = now();
@@ -158,7 +158,7 @@ class IctRequestorServices
                 $ict->save();
             }
         } else {
-            $ict = Ict::Create([
+            $data = [
                 'ireq_id' => generate_id(),
                 'ireq_date' => now(),
                 'ireq_status' => 'P',
@@ -167,11 +167,16 @@ class IctRequestorServices
                 // 'ireq_spv' => $request->ireq_spv,
                 'ireq_loc' => Auth::user()->usr_loc,
                 'ireq_prio_level' => $request['priolev'],
-                'ireq_prio_level_reason' => $request['ireq_prio_level_reason'],
                 'creation_date' => now(),
                 'created_by' => Auth::user()->usr_id,
                 'program_name' => "Ict_Save",
-            ]);
+            ];
+
+            if (!empty($request['ireq_prio_level_reason'])) {
+                $data['ireq_prio_level_reason'] = $request['ireq_prio_level_reason'];
+            }
+
+            $ict = Ict::create($data);
         }
         return $ict;
     }
